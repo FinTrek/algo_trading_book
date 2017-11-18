@@ -1,0 +1,135 @@
+\select@language {english}
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}From Trading Floors to Electronic Trading}{1}
+\contentsline {section}{\numberline {1.2}Liquidity and Market Making}{3}
+\contentsline {section}{\numberline {1.3}Algorithmic Trading: Some Basic Elements}{7}
+\contentsline {section}{\numberline {1.4}Low Frequency vs. High Frequency Trading Strategies}{12}
+\contentsline {section}{\numberline {1.5}Risk and Regulation in Quantitative Trading}{12}
+\contentsline {section}{\numberline {1.6}Trading in Other Asset Classes}{12}
+\contentsline {part}{I\hspace {1em}Foundations: Basic Models and Empirics}{17}
+\contentsline {chapter}{\numberline {2}Univariate Time Series Models}{21}
+\contentsline {section}{\numberline {2.1}Trades and Quotes Data and their Aggregation: From Point Processes to Discrete Time Series}{22}
+\contentsline {section}{\numberline {2.2}Trading Decisions as Short-Term Forecast Decisions}{24}
+\contentsline {section}{\numberline {2.3}Time Series Models for Aggregated Data: Modeling the Mean}{25}
+\contentsline {subsection}{\numberline {2.3.1}Stochastic Processes: Some Properties}{25}
+\contentsline {subsection}{\numberline {2.3.2}Some Basic Models and Descriptive Tools}{30}
+\contentsline {subsection}{\numberline {2.3.3}Specification and Estimation of ARIMA Models}{40}
+\contentsline {subsection}{\numberline {2.3.4}Testing for Nonstationary (Unit Root) in ARIMA Models}{50}
+\contentsline {subsection}{\numberline {2.3.5}Forecasting for ARIMA Processes}{52}
+\contentsline {section}{\numberline {2.4}Stylized Models for Asset Returns}{55}
+\contentsline {section}{\numberline {2.5}Time Series Models for Aggregated Data: Modeling the Variance}{59}
+\contentsline {section}{\numberline {2.6}Stylized Models for Variance of Asset Returns}{64}
+\contentsline {section}{\numberline {2.7}Other Topics: Bet Size etc.}{65}
+\contentsline {section}{\numberline {2.8}Exercises (starred items have $R$-codes available)}{65}
+\contentsline {chapter}{\numberline {3}Multivariate Time Series Models}{71}
+\contentsline {section}{\numberline {3.1}Multiple Time Series Modeling and Co-integration}{71}
+\contentsline {subsection}{\numberline {3.1.1}Introduction}{71}
+\contentsline {subsection}{\numberline {3.1.2}Co-integration, Co-movement and commonality in Multiple Time Series}{73}
+\contentsline {subsection}{\numberline {3.1.3}Multivariate Regression}{79}
+\contentsline {chapter}{\numberline {4}Advanced Topics}{85}
+\contentsline {subsection}{\numberline {4.0.1}State-Space Modeling}{85}
+\contentsline {section}{\numberline {4.1}A Model for Volume-Volatility Relationship}{88}
+\contentsline {section}{\numberline {4.2}Regime Switching and Change-Point Models}{90}
+\contentsline {section}{\numberline {4.3}Models for Point Processes}{94}
+\contentsline {subsection}{\numberline {4.3.1}Stylized Models for High Frequency Financial Data}{95}
+\contentsline {subsection}{\numberline {4.3.2}Models for Multiple Assets: High-Frequency Context}{100}
+\contentsline {section}{\numberline {4.4}Time Aggregation and Loss of Information}{101}
+\contentsline {section}{\numberline {4.5}Realized Volatility and Econometric Models}{101}
+\contentsline {section}{\numberline {4.6}Analytics from Machine Learning Literature}{102}
+\contentsline {part}{II\hspace {1em}Trading Algorithms}{105}
+\contentsline {chapter}{\numberline {5}Statistical Trading Strategies and Back-Testing}{107}
+\contentsline {section}{\numberline {5.1}Introduction to Trading Strategies: Origin and History}{107}
+\contentsline {section}{\numberline {5.2}Trading Rules for Time Aggregated Data}{108}
+\contentsline {subsection}{\numberline {5.2.1}Filter Rules}{109}
+\contentsline {subsection}{\numberline {5.2.2}Moving Average Variants and Oscillators}{111}
+\contentsline {section}{\numberline {5.3}Patterns Discovery via Non-Parametric Smoothing Methods}{113}
+\contentsline {section}{\numberline {5.4}A Decomposition Algorithm}{115}
+\contentsline {section}{\numberline {5.5}Fair Value Models}{117}
+\contentsline {section}{\numberline {5.6}Back-Testing and Data Snooping: In-Sample and Out-of-Sample Performance Evaluation}{118}
+\contentsline {section}{\numberline {5.7}Pairs Trading}{120}
+\contentsline {subsection}{\numberline {5.7.1}Distance-Based Algorithms}{121}
+\contentsline {subsection}{\numberline {5.7.2}Co-Integration}{123}
+\contentsline {subsection}{\numberline {5.7.3}Some General Comments}{125}
+\contentsline {subsection}{\numberline {5.7.4}Practical Considerations}{127}
+\contentsline {section}{\numberline {5.8}Cross-Sectional Momentum Strategies}{129}
+\contentsline {section}{\numberline {5.9}Multiple Indicators and Boosting Methods}{133}
+\contentsline {section}{\numberline {5.10}Evaluation of Strategies: Various Measures}{135}
+\contentsline {section}{\numberline {5.11}Extraneous Signals: Trading Volume, Volatility, etc.}{136}
+\contentsline {subsection}{\numberline {5.11.1}Filter Rules based on return and volume}{139}
+\contentsline {subsection}{\numberline {5.11.2}An illustrative example}{140}
+\contentsline {section}{\numberline {5.12}Market Segmentation and Inconsistent Pricing across Markets}{147}
+\contentsline {section}{\numberline {5.13}Supplements and Problems}{147}
+\contentsline {chapter}{\numberline {6}News Analytics: From Market Attention and Sentiment to Trading}{157}
+\contentsline {section}{\numberline {6.1}Introduction to News Analytics: Behavioral Finance and Investor Cognitive Biases}{157}
+\contentsline {section}{\numberline {6.2}Market Micro Structure and Liquidity}{162}
+\contentsline {section}{\numberline {6.3}Automated News Analysis and Market Sentiment}{162}
+\contentsline {section}{\numberline {6.4}News Analytics and its Applications to Trading}{164}
+\contentsline {section}{\numberline {6.5}Discussion / Future of Social Media News}{173}
+\contentsline {chapter}{\numberline {7}Active Portfolio Management and Dynamic Investment Strategies}{175}
+\contentsline {section}{\numberline {7.1}Introduction to Modern Portfolio Theory}{175}
+\contentsline {subsection}{\numberline {7.1.1}Mean-Variance Portfolio Theory}{176}
+\contentsline {subsection}{\numberline {7.1.2}Multifactor Models}{179}
+\contentsline {subsection}{\numberline {7.1.3}Tests Related to CAPM and APT}{180}
+\contentsline {subsection}{\numberline {7.1.4}An Illustrative Example}{182}
+\contentsline {subsection}{\numberline {7.1.5}Summary of Models and Implications for Investing}{184}
+\contentsline {section}{\numberline {7.2}Statistical Underpinnings}{187}
+\contentsline {subsection}{\numberline {7.2.1}Portfolio Allocation Using Regularization}{191}
+\contentsline {subsection}{\numberline {7.2.2}Portfolio Strategies: Some General Findings}{193}
+\contentsline {section}{\numberline {7.3}Dynamic Portfolio Selection}{195}
+\contentsline {section}{\numberline {7.4}Portfolio Tracking and Rebalancing}{197}
+\contentsline {section}{\numberline {7.5}Transaction Costs, Shorting and Liquidity Constraints}{199}
+\contentsline {section}{\numberline {7.6}Alphas, Betas, Information Ratios and Realized Returns}{202}
+\contentsline {section}{\numberline {7.7}Supplements and Problems}{202}
+\contentsline {part}{III\hspace {1em}Execution Algorithms}{209}
+\contentsline {chapter}{\numberline {8}Electronic Exchanges and Dynamics of Limit Order Books}{211}
+\contentsline {section}{\numberline {8.1}Limit Order Book (LOB): Basic Description and Characteristics}{214}
+\contentsline {section}{\numberline {8.2}Data from LOB and Relevant Questions}{216}
+\contentsline {section}{\numberline {8.3}Models for LOB dynamics, based on Level I and Level II data}{219}
+\contentsline {subsection}{\numberline {8.3.1}Application of a Hawkes process}{228}
+\contentsline {subsection}{\numberline {8.3.2}One-Dimensional Models}{233}
+\contentsline {subsection}{\numberline {8.3.3}An extension}{237}
+\contentsline {subsection}{\numberline {8.3.4}Two-Dimensional models}{237}
+\contentsline {subsection}{\numberline {8.3.5}Limitations and findings}{240}
+\contentsline {section}{\numberline {8.4}Models for Level II and Level III data}{241}
+\contentsline {section}{\numberline {8.5}Estimation of Hidden Orders}{241}
+\contentsline {section}{\numberline {8.6}Volume Imbalance and Other Indicators}{241}
+\contentsline {section}{\numberline {8.7}Hidden Markov Models (HMM) for dynamic market microstructure: Estimation of Parameter and States}{241}
+\contentsline {section}{\numberline {8.8}Appendix: Adaptive Particle Filters in HMM}{241}
+\contentsline {section}{\numberline {8.9}Supplements and Problems}{241}
+\contentsline {chapter}{\numberline {9}Algorithmic Trading In Electronic Platforms}{243}
+\contentsline {section}{\numberline {9.1}Execution Algorithms: History and Review}{244}
+\contentsline {subsection}{\numberline {9.1.1}Bertsimas and Lo Model}{245}
+\contentsline {subsection}{\numberline {9.1.2}Almgren and Chriss Model}{246}
+\contentsline {subsection}{\numberline {9.1.3}Obizhaeva and Wang Model}{249}
+\contentsline {subsection}{\numberline {9.1.4}Easley, De Prado and O'Hara Model}{252}
+\contentsline {section}{\numberline {9.2}Multiple Exchanges: Smart Order Routing}{253}
+\contentsline {section}{\numberline {9.3}Market Impact Models: Permanent and Temporary Impacts}{258}
+\contentsline {section}{\numberline {9.4}Microstructure Noise Models for Multiple Stocks: Issues of Synchronizations, etc.}{275}
+\contentsline {section}{\numberline {9.5}Simultaneous Execution Algorithms for Multiple Instruments}{275}
+\contentsline {section}{\numberline {9.6}A Stochastic Adaptive Control Approach to Optimal Execution}{275}
+\contentsline {section}{\numberline {9.7}Role of Market Makers in Limit Order Markets}{275}
+\contentsline {section}{\numberline {9.8}Open Issues}{275}
+\contentsline {section}{\numberline {9.9}Supplements and Problems}{275}
+\contentsline {chapter}{\numberline {10}Algorithmic Trading: Some Potential Research Issues}{277}
+\contentsline {section}{\numberline {10.1}Extending the Algorithms to Derivative markets}{277}
+\contentsline {section}{\numberline {10.2}Developing a Trading Platforms for Simultaneous Execution of Assets}{277}
+\contentsline {section}{\numberline {10.3}Future of Algorithmic Trading}{277}
+\contentsline {part}{IV\hspace {1em}Informatics and Regulatory Issues}{279}
+\contentsline {chapter}{\numberline {11}Informatics and Computation for Algorithmic Trading}{281}
+\contentsline {section}{\numberline {11.1}Model for electronic Trading Platforms}{281}
+\contentsline {subsection}{\numberline {11.1.1}Trading Rules}{281}
+\contentsline {subsection}{\numberline {11.1.2}Access to Order Book; Information Flow and the Infrastructure}{281}
+\contentsline {subsection}{\numberline {11.1.3}High Frequency vs. Low Frequency Set Up}{281}
+\contentsline {section}{\numberline {11.2}Current Practices and Alternative Trading Systems}{281}
+\contentsline {subsection}{\numberline {11.2.1}Computer Networks and Broadcasting}{281}
+\contentsline {subsection}{\numberline {11.2.2}Data Center and Co-location Service}{281}
+\contentsline {subsection}{\numberline {11.2.3}Dark Pools}{281}
+\contentsline {section}{\numberline {11.3}Developing Modern Trading Platforms}{281}
+\contentsline {chapter}{\numberline {12}Risk Management and Regulatory Issues}{283}
+\contentsline {section}{\numberline {12.1}Operational Risk and Information Technology Risk}{283}
+\contentsline {section}{\numberline {12.2}Risk Management: Pre-trade and Post-trade}{283}
+\contentsline {section}{\numberline {12.3}Circuit Breakers}{283}
+\contentsline {section}{\numberline {12.4}Order-to-trade Ratio and Quote Stuffing}{283}
+\contentsline {section}{\numberline {12.5}Regulation of Parallel Processes}{283}
+\contentsline {section}{\numberline {12.6}Information Access and Fairness Issues}{283}
+\contentsline {chapter}{Bibliography}{285}

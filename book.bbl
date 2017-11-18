@@ -1,0 +1,1445 @@
+\begin{thebibliography}{100}
+
+\bibitem{admati1988theory}
+A.~R. Admati and P.~Pfleiderer.
+\newblock A theory of intraday patterns: Volume and price variability.
+\newblock {\em Review of Financial studies}, 1(1):3--40, 1988.
+
+\bibitem{ait2005often}
+{A{\"\i}t-Sahalia, Y. and Mykland, P. A. and Zhang, L.}
+\newblock How often to sample a continuous-time process in the presence of
+  market microstructure noise.
+\newblock {\em Review of Financial studies}, 18(2):351--416, 2005.
+
+\bibitem{akaike74}
+H.~Akaike.
+\newblock {A new look at the statistical model identification}.
+\newblock {\em IEEE Transactions on Automatic Control}, AC--19:716--723, 1974.
+
+\bibitem{alm2008}
+R.~Almgren.
+\newblock {Execution costs}.
+\newblock {\em Encyclopedia of Quantitative Finance}, pages 1--5, 2008.
+
+\bibitem{alm2000}
+R.~Almgren and N.~Chriss.
+\newblock {Optimal execution of portfolio transactions}.
+\newblock {\em The Journal of Risk}, 3:5--39, 2000.
+
+\bibitem{athl}
+R.~Almgren, C.~Thum, E.~Hauptmann, and H.~Li.
+\newblock {Equity market impact}.
+\newblock {\em Risk}, 18(7):57--62, 2005.
+
+\bibitem{Ananto1}
+S.~Anatolyev and A.~Gerko.
+\newblock {A Trading Approach to Testing for Predictability}.
+\newblock {\em The Journal of Bunsincer Economics Statistics}, 23:455--461,
+  2005.
+
+\bibitem{Ananto2}
+S.~Anatolyev and A.~Gerko.
+\newblock {Modeling Financial Return Dynamics via Decomposition}.
+\newblock {\em The Journal of Bunsincer Economics Statistics}, 28:232--245,
+  2010.
+
+\bibitem{andersen}
+T.~G. Andersen.
+\newblock {Return Volatility and Trading Volume: An Information Flow
+  Interpretation of Stochastic Volatility}.
+\newblock {\em The Journal of Finance}, 51:116--204, 1996.
+
+\bibitem{andersen1998}
+T.~G. Andersen and T.~Bollerslev.
+\newblock {Answering the Skeptics: Yes, Standard Volatility Models do provide
+  Accurate Forecasts}.
+\newblock {\em International Economic Review}, 39:885--905, 1998.
+
+\bibitem{andersontw}
+T.W. Anderson.
+\newblock {Estimating linear restrictions on regression coefficients for
+  multivariate normal distributions}.
+\newblock {\em Annals of Mathematical Statistics}, 22:327--351, 1951.
+
+\bibitem{andersontw2}
+T.W. Anderson.
+\newblock {\em {An Introduction to Multivariate Statistical Analysis}}.
+\newblock Second Edition. New York, Wiley, 1984.
+
+\bibitem{anderwalk}
+T.W. Anderson and A.M. Walker.
+\newblock {On the asymptotic distribution of the autocorrelations of a sample
+  from a linear stochastic process}.
+\newblock {\em Annals of Mathematical Statistics}, 35:1296--1303, 1964.
+
+\bibitem{timmerman}
+A.~Ang and A.~Timmermann.
+\newblock {Regime Changes and Financial Markets}.
+\newblock {\em Annual Review of Finance and Economics}, 4:313--337, 2012.
+
+\bibitem{antweiler2004all}
+W.~Antweiler and M.~Z. Frank.
+\newblock Is all that talk just noise? {T}he information content of internet
+  stock message boards.
+\newblock {\em The Journal of Finance}, 59(3):1259--1294, 2004.
+
+\bibitem{asquith2010}
+P.~Asquith, R.~Oman, and C.~Safaya.
+\newblock {Short sales and trade classification algorithms}.
+\newblock {\em The Journal of Financial Markets}, 13:157--173, 2010.
+
+\bibitem{bajgrowicz2012technical}
+P.~Bajgrowicz and O.~Scaillet.
+\newblock Technical trading revisited: False discoveries, persistence tests,
+  and transaction costs.
+\newblock {\em The Journal of Financial Economics}, 106(3):473--491, 2012.
+
+\bibitem{baker2006investor}
+M.~Baker and J.~Wurgler.
+\newblock Investor sentiment and the cross-section of stock returns.
+\newblock {\em The Journal of Finance}, 61(4):1645--1680, 2006.
+
+\bibitem{baker2007investor}
+M.~Baker and J.~Wurgler.
+\newblock Investor sentiment in the stock market.
+\newblock {\em The Journal of Economic Perspectives}, 21(2):129--151, 2007.
+
+\bibitem{bandi}
+F.M. Bandi and J.R. Russell.
+\newblock {Separating Microstructure Noise from Volatility}.
+\newblock {\em The Journal of Financial Economics}, 79:655--692, 2006.
+
+\bibitem{vishny}
+N.~Barberis, A.~Shleifer, and R.~Vishny.
+\newblock {A model of investor sentiment}.
+\newblock {\em The Journal of Financial Economics}, 49:307--343, 1998.
+
+\bibitem{barndorff2002econometric}
+O.~E. Barndorff-Nielsen and N.~Shephard.
+\newblock Econometric analysis of realized volatility and its use in estimating
+  stochastic volatility models.
+\newblock {\em The Journal of the Royal Statistical Society: Series B
+  (Statistical Methodology)}, 64(2):253--280, 2002.
+
+\bibitem{barras2010false}
+L.~Barras, O.~Scaillet, and R.~Wermers.
+\newblock False discoveries in mutual fund performance: Measuring luck in
+  estimated alphas.
+\newblock {\em The Journal of Finance}, 65(1):179--216, 2010.
+
+\bibitem{bertrand}
+P.~Bertrand and C.~Protopopescu.
+\newblock The statistics of the information ratio.
+\newblock {\em International Journal of Business}, 15:71--86, 2010.
+
+\bibitem{berlo}
+D.~Bertsimas and A.~W. Lo.
+\newblock {Optimal Control of Executions Costs}.
+\newblock {\em The Journal of Financial Markets}, 1:1--50, 1998.
+
+\bibitem{bewyang}
+R.~Bewley and M.~Yang.
+\newblock {Tests for cointegration based on canonical correlation analysis}.
+\newblock {\em The Journal of the American Statistical Association},
+  90:990--996, 1995.
+
+\bibitem{spalt}
+B.~Biais, P.~Hillion, and C.~Spatt.
+\newblock {An Empirical Analysis of the Limit Order Book and the Order Flow in
+  the Paris Bourse}.
+\newblock {\em {The Journal of Finance}}, 50:1655--1689, 1995.
+
+\bibitem{black71}
+F.~Black.
+\newblock {Towards a Fully Automated Exchange, Part I}.
+\newblock {\em Financial Analysts Journal}, 27:29--34, 1971.
+
+\bibitem{blackcap}
+F.~Black.
+\newblock {Capital market equilibrium with restricted borrowing}.
+\newblock {\em The Journal of Business}, 45:444--454, 1972.
+
+\bibitem{blacklit}
+F.~Black and R.~Litterman.
+\newblock {Global Portfolio Optimization}.
+\newblock {\em Financial Analysts Journal}, 48 No. 5:28--43, 1992.
+
+\bibitem{blumeohar}
+L.~Blume, D.~Easley, and M.~O'Hara.
+\newblock {Market Statistics and Technical Analysis: The role of volume}.
+\newblock {\em The Journal of Finance}, 49:153--181, 1994.
+
+\bibitem{bollerslev1986}
+T.~Bollerslev.
+\newblock {Generalized Autoregressive Conditional hetero skedasticity}.
+\newblock {\em The Journal of Econometrics}, 31:307--327, 1986.
+
+\bibitem{borkoheidle}
+M.~Borkovec and H.~G. Heidle.
+\newblock {Building and Evaluating a Transaction Cost Model: A Primer}.
+\newblock {\em The Journal of Trading}, 5:57--77, 2010.
+
+\bibitem{bossaerts1988common}
+P.~Bossaerts.
+\newblock Common nonstationary components of asset prices.
+\newblock {\em The Journal of Economic Dynamics and Control}, 12(2):347--364,
+  1988.
+
+\bibitem{bouchaud2009}
+J.~P. Bouchaud, J.~D. Farmer, and F.~Lillo.
+\newblock {\em {How markets digest supply and demand and slowly incorporate
+  information info prices}}.
+\newblock Academic Press, 2009.
+
+\bibitem{bouchaud2004}
+J.~P. Bouchaud, Y.~Gefen, M.~Potters, and M.~Wyart.
+\newblock {Fluctuations and response in financial markets: The subtle nature of
+  "random" price changes}.
+\newblock {\em Quantitative Finance}, 4:176--190, 2004.
+
+\bibitem{bouchardmezard}
+J-P. Bouchaud, M.~Mezard, and M.~Potters.
+\newblock {Statistical properties of stock order books: empirical results and
+  models}.
+\newblock {\em Quantitative Finance}, 2:251--256, 2002.
+
+\bibitem{bho}
+D.~Bowen, M.~C. Hutchinson, and N.~O'Sullivan.
+\newblock {High-Frequency Equity Pairs Trading: Transaction Costs, Speed of
+  Execution and Patterns in Returns}.
+\newblock {\em The Journal of Trading, Summer}, pages 31--38, 2010.
+
+\bibitem{box77}
+G.E.P. Box and G.C. Tiao.
+\newblock {A canonical analysis of multiple time series}.
+\newblock {\em Biometrika}, 64:355--365, 1977.
+
+\bibitem{bguwang}
+P.~Boyle, L.~Garlappi, R.~Uppal, and T.~Wang.
+\newblock {Keynes Meets Markowitz: The Trade-off between familiarity and
+  diversification}.
+\newblock {\em Management Science}, 58:253--272, 2012.
+
+\bibitem{brandes2007}
+Y.~Brandes, I.~Domowitz, B.~Jiu, and H.~Yegerman.
+\newblock {\em {Algorithms, trading costs and order size, Algorithmic Trading:
+  A Buy side Handbook, 2nd ed.}}
+\newblock The Trade (London), 2007.
+
+\bibitem{bransc}
+M.W. Brandt and P.~Santa-Clara.
+\newblock {Dynamic Portfolio Selection by Augmenting the Asset Space}.
+\newblock {\em {The Journal of Finance}}, 61:2187--2217, 2006.
+
+\bibitem{breiman1996bagging}
+L.~Breiman.
+\newblock Bagging predictors.
+\newblock {\em Machine learning}, 24(2):123--140, 1996.
+
+\bibitem{breiman1999prediction}
+L.~Breiman.
+\newblock Prediction games and arcing algorithms.
+\newblock {\em Neural Computation}, 11(7):1493--1517, 1999.
+
+\bibitem{brill81}
+D.R. Brillinger.
+\newblock {\em {Time Series: Data Analysis and Theory}}.
+\newblock expanded edition. San Francisco: Holden-Day, 1981.
+
+\bibitem{BLL}
+W.~Brock, J.~Lakonishok, and B.~LeBaron.
+\newblock {Simple Technical Trading Rules and the Stochastic Properties of
+  Sotck Returns}.
+\newblock {\em The Journal of Finance}, 47:1731--1764, 1992.
+
+\bibitem{brodic}
+J.~Brodie, I.~Daubechies, C.~De Mol, D.~Giannone, and I.~Lace.
+\newblock {Sparse and Stable Markowitz Portfolios}.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  106:12267--12272, 2009.
+
+\bibitem{brownless}
+C.~Brownless, F.~Cipollini, and G.M. Gallo.
+\newblock Intra-daily volume modeling and prediction for algorithmic trading.
+\newblock {\em The Journal of Financial Econometrics}, 9:489--518, 2011.
+
+\bibitem{bruder}
+B.~Bruder, N.~Gaussel, J-C. Richard, and T.~Roncalli.
+\newblock {Regularization of Portfolio Allocation}.
+\newblock {\em {White Paper Issue \#10}}, 2013.
+
+\bibitem{campbellgross}
+J.Y. Campbell, S.J. Grossman, and J.~Wang.
+\newblock {Trading Volume and Serial Correlation in Stock Returns}.
+\newblock {\em The Quarterly Journal of Economics}, 108:905--939, 1993.
+
+\bibitem{campbellmaclo}
+J.Y. Campbell, A.W. Lo, and A.C. MacKinlay.
+\newblock {\em {The Econometrics of Financial Markets}}.
+\newblock Princeton University Press, New Jersey, 1996.
+
+\bibitem{carhart1997persistence}
+M.~M. Carhart.
+\newblock On persistence in mutual fund performance.
+\newblock {\em The Journal of Finance}, 52(1):57--82, 1997.
+
+\bibitem{chaboud}
+A.P. Chaboud, B.~Chiquoine, E.~Hjalmarsson, and C.~Vega.
+\newblock {Rise of the machines: Algorithmic trading in the foreign exchange
+  market}.
+\newblock {\em The Journal of Finance}, 69:2045--2084, 2014.
+
+\bibitem{chakrabarty2012short}
+B.~Chakrabarty, P.~C. Moulton, and A.~Shkilko.
+\newblock Short sales, long sales, and the lee--ready trade classification
+  algorithm revisited.
+\newblock {\em The Journal of Financial Markets}, 15(4):467--491, 2012.
+
+\bibitem{chanfong}
+K.~Chan and W-M. Fong.
+\newblock {Trade Size, Order imbalance and the Volatility-Volume Relation}.
+\newblock {\em The Journal of Financial Economics}, 57:247--273, 2000.
+
+\bibitem{lakon}
+L.~Chan and J.~Lakonishok.
+\newblock {institutional Equity Trading Costs, NYSE versus Nasdaq}.
+\newblock {\em The Journal of Finance}, 52:713--735, 1997.
+
+\bibitem{chan1995}
+L.~K.~C. Chan and J.~Lakonishok.
+\newblock {The behacior of stock prices around institutional trades}.
+\newblock {\em The Journal of Finance}, 50:1147--1174, 1995.
+
+\bibitem{chan1997}
+L.~K.~C. Chan and J.~Lakonishok.
+\newblock {Institutional Equity Trading Costs: NYSE Versus Nasdaq}.
+\newblock {\em The Journal of Finance}, 52(2):176--190, 1997.
+
+\bibitem{chenecforce}
+N.F. Chen, R.~Roll, and S.A. Ross.
+\newblock Economic forces and the stock market.
+\newblock {\em The Journal of Business}, 59:383--403, 1986.
+
+\bibitem{chib}
+S.~Chib.
+\newblock {Estimation and comparison of multiple change-point models}.
+\newblock {\em The Journal of Econometrics}, 86:221--241, 1998.
+
+\bibitem{chiya2004}
+C.~Chiyachantana, P.~K. Jain, C.~Jiang, and R.~A. Wood.
+\newblock {International Evidence on Institutional Trading Behavior and Price
+  Impact}.
+\newblock {\em The Journal of Finance}, 59:869--898, 2004.
+
+\bibitem{chorroll}
+T.~Chordia, R.~Roll, and A.~Subrahmanyam.
+\newblock {Order imbalance, liquidity, and market returns}.
+\newblock {\em The Journal of Financial Economics}, 65:111--130, 2002.
+
+\bibitem{clark}
+P.~K. Clark.
+\newblock {A Subordinated Stochastic Process Model with Finite Variance for
+  Speculative Prices}.
+\newblock {\em Econometrica}, 41:135--155, 1973.
+
+\bibitem{conrad1998}
+J.~Conrad and G.~Kaul.
+\newblock {An Anatomy of Trading Strategies}.
+\newblock {\em Review of Financial Studies}, 11:489--519, 1998.
+
+\bibitem{conniden}
+J.S. Conrad, A.~Hameed, and C.~Niden.
+\newblock {Volume and Autocovariances in Short-horizon individual security
+  reutrns}.
+\newblock 49:1305--1329, 1994.
+
+\bibitem{contk}
+R.~Cont and A.~Kukanov.
+\newblock Optimal order placement in limit order markets.
+\newblock {\em Quantitative Finance}, 17:21--39, 2017.
+
+\bibitem{contkulst}
+R.~Cont, A.~Kukanov, and S.~Stoikov.
+\newblock The price impact of order book events.
+\newblock {\em The Journal of Financial Econometrics}, 12:47--88, 2014.
+
+\bibitem{contstoi}
+R.~Cont, S.~Stoikov, and R.~Talreja.
+\newblock {A Stochastic Model for Order Book Dynamics}.
+\newblock {\em Operations Research}, 58:549--563, 2010.
+
+\bibitem{cooper}
+M.~Cooper.
+\newblock {Filter values based on price and volume in individual security
+  overreaction}.
+\newblock {\em Review of Financial Studies}, 12:901--935, 1999.
+
+\bibitem{cow2}
+A.~Cowles.
+\newblock {Can Stock Market Forecasters Forecast}.
+\newblock {\em Econometrica}, 1:309--324, 1933.
+
+\bibitem{cow1}
+A.~Cowles.
+\newblock {Stock Market Forecasting}.
+\newblock {\em Econometrica}, 12:206--214, 1944.
+
+\bibitem{cox1966}
+D.~R. Cox and P.~A.~W. Lewis.
+\newblock {The Statistical Analysis of Series of Events}.
+\newblock {\em Chapman and Hall, London}, 1966.
+
+\bibitem{cutler1988moves}
+D.~M. Cutler, J.~M. Poterba, and L.~H. Summers.
+\newblock {\em What moves stock prices?}, volume~15.
+\newblock National Bureau of Economic Research Cambridge, Mass., USA, 1989.
+
+\bibitem{da2011search}
+S.~Da, J.~Engelberg, and P.~Gao.
+\newblock In search of attention.
+\newblock {\em The Journal of Finance}, 66(5):1461--1499, 2011.
+
+\bibitem{da2015sum}
+Z.~Da, J.~Engelberg, and P.~Gao.
+\newblock The sum of all fears investor sentiment and asset prices.
+\newblock {\em Review of Financial Studies}, 28(1):1--32, 2015.
+
+\bibitem{dahlhaus2006}
+R.~Dahlhaus and S.~Subba Rao.
+\newblock {Statistical Inference for Time-Varying ARCH Processes}.
+\newblock {\em The Annals of Statistics}, 34:1075--1114, 2006.
+
+\bibitem{daley2003}
+D.~J. Daley and D.~Vere-Jones.
+\newblock {\em {An Introduction to the Theory of Point Processes, Volume I:
+  Elementary Theory and Methods}}.
+\newblock Springer, New York, 2003.
+
+\bibitem{daniels1966autocorrelation}
+H.~E. Daniels.
+\newblock Autocorrelation between first differences of mid-ranges.
+\newblock {\em Econometrica: Journal of the Econometric Society}, pages
+  215--219, 1966.
+
+\bibitem{daschen}
+{Das, S.R., and Chen, M.Y.}
+\newblock Yahoo! for amazon: Sentiment extraction from small talk on the web.
+\newblock {\em Management Science}, 53:1375--1388, 2007.
+
+\bibitem{ssw}
+{DeLong, B.J., and Shleifer, A., and Summers, L.H., and Walmann, R.J.}
+\newblock Noise trader risk in financial markets.
+\newblock {\em The Journal of Political Economy}, 98:703--738, 1990.
+
+\bibitem{demig}
+V.~DeMiguel, L.~Garlappi, and R.~Uppal.
+\newblock {Optimal versus na\"ive diversification: How inefficient is the $1/N$
+  portfolio strategy?}
+\newblock {\em {The Review of Financial Studies}}, 22:1915--1953, 2009.
+
+\bibitem{dempster}
+A.P. Dempster, N-M. Laird, and D.B. Rubin.
+\newblock {Maximum Likelihood from Incomplete Data via the EM Algorithm}.
+\newblock {\em The Journal of the Royal Statistical Society, Series B},
+  39:1--38, 1977.
+
+\bibitem{dickey1986}
+D.~A. Dickey, W.~R. Bell, and R.~B. Miller.
+\newblock {Unit roots in time series models: tests and implications}.
+\newblock {\em American Statistician}, 40:12--26, 1986.
+
+\bibitem{dickey1979}
+D.~A. Dickey and W.~A. Fuller.
+\newblock {Distribution of the estimates for autoregressive time series with a
+  unit root}.
+\newblock {\em The Journal of the American Statistical Association},
+  74:427--431, 1979.
+
+\bibitem{do2010does}
+B.~Do and R.~Faff.
+\newblock Does simple pairs trading still work?
+\newblock {\em The Financial Analysts Journal}, 66(4):83--95, 2010.
+
+\bibitem{domo2001}
+I.~Domowitz, J.~Glen, and A.~Madhavan.
+\newblock {Liquidity, Volatility and Equity Trading costs across countries and
+  over time}.
+\newblock {\em International Finance}, 4:221--255, 2001.
+
+\bibitem{doye}
+I.~Domowitz and H.~Yegerman.
+\newblock {The cost of algorithmic trading: A first look at comparative
+  performance}.
+\newblock {\em Algorithmic Trading: Precision, Control, Execution}, 2005.
+
+\bibitem{dufour}
+A.~Dufour and R.~Engle.
+\newblock {Time and the price impact of a trade}.
+\newblock {\em The Journal of Finance}, 55(2):467--498, 2000.
+
+\bibitem{prado3}
+D.~Easley, M.L. De~Prado, and M.~O'Hara.
+\newblock {Flow Toxicity and Liquidity in a High Frequency World}.
+\newblock {\em Review of Financial Studies}, 25:1457--1493, 2012.
+
+\bibitem{prado2}
+D.~Easley, M.L. De~Prado, and M.~O'Hara.
+\newblock {Optimal Execution Horizon}.
+\newblock {\em Mathematical Finance}, 25:640--672, 2015.
+
+\bibitem{easleyo}
+D.~Easley and M.~O' Hara.
+\newblock {Price, trade size, and information in security markets}.
+\newblock {\em The Journal of Financial Economics}, 19:69--90, 1987.
+
+\bibitem{easley1992}
+D.~Easley and M.~O' Hara.
+\newblock {Time and the Process of Security Price Adjustment}.
+\newblock {\em The Journal of Finance}, 19:69--90, 1992.
+
+\bibitem{paper}
+D.~Easley, N.~Kiefer, M.~O'Hara, and J.~Paperman.
+\newblock {Liquidity, Information and Infrequently traded stocks}.
+\newblock {\em The Journal of Finance}, 51:1405--1536, 1996.
+
+\bibitem{easley}
+D.~Easley, M.~Lopez~de Prado, and M.~(Ed.) O'Hara.
+\newblock {\em High-frequency Trading: New Realities for Traders, Markets and
+  Regulators}.
+\newblock Risk Books, New York, 2 edition, 2014.
+
+\bibitem{efron}
+B.~Efron, T.~Hastie, I.~Johnstone, and R.~Tibshirani.
+\newblock {Least Angle Regression}.
+\newblock {\em Annals of Statistics}, 32:407--499, 2004.
+
+\bibitem{engelberg2009anatomy}
+J.~Engelberg, P.~Gao, and R.~Jagannathan.
+\newblock An anatomy of pairs trading: the role of idiosyncratic news, common
+  information and liquidity.
+\newblock In {\em Third Singapore International Conference on Finance}, 2009.
+
+\bibitem{engle2007}
+R.~Engle and R.~Ferstenberg.
+\newblock {Execution Risk}.
+\newblock {\em The Journal of Portfolio Management}, 33(4):34--44, 2007.
+
+\bibitem{englelunde}
+R.~Engle and A.~Lunde.
+\newblock {Trades and Quotes: A Bivariate Point Process}.
+\newblock {\em The Journal Financial Economics}, 1:159--188, 2003.
+
+\bibitem{engle1982}
+R.~F. Engle.
+\newblock {Autoregressive conditional heteroscedasticity with estimates of the
+  variance of United Kingdom inflations}.
+\newblock {\em Econometrica}, 50:987--1007, 1982.
+
+\bibitem{engle2012}
+R.~F. Engle, R.~Ferstenberg, and J.~R. Russell.
+\newblock {Measuring and modeling execution cost and risk}.
+\newblock {\em The Journal of Portfolio Management}, 38(2):14--28, 2012.
+
+\bibitem{engle1987co}
+R.~F. Engle and C.~W.~J. Granger.
+\newblock {Co-integration and Error Correction: Representation, Estimation, and
+  Testing}.
+\newblock {\em Econometrica}, 55:251--276, 1987.
+
+\bibitem{engle1983}
+R.~F. Engle and D.~Kraft.
+\newblock {\em {Multiperiod forecast error variances of inflation estimated
+  from ARCH models, in: A. Zellner, ed: Applied time series analysis of
+  economic data}}.
+\newblock Bureau of the census, Washington, DC, 1983.
+
+\bibitem{engle1998}
+R.~F. Engle and J.~R. Russell.
+\newblock {Autoregressive Conditioned Duration: A New Model for Irregularly
+  Spaced Transaction Data}.
+\newblock {\em Econometrics}, 66:1127--1162, 1998.
+
+\bibitem{koz93}
+R.F. Engle and S.~Kozicki.
+\newblock {Testing for Common Features}.
+\newblock {\em The Journal of Business and Economic Statistics}, 11:369--380,
+  1993.
+
+\bibitem{epps}
+T.~W. Epps and M.~L. Epps.
+\newblock {The Stochastic Dependence of Security Price Changes and Transaction
+  Volumes: Implications for the Mixture-of-Distribution Hypothesis}.
+\newblock {\em Econometrica}, 44:305--321, 1976.
+
+\bibitem{ffk}
+F.~J. Fabozzi, S.~M. Focardi, and P.~N. Kolm.
+\newblock {\em {Quantitative Equity Investing: Techniques and Strategies}}.
+\newblock Wiley and Sons, 2006.
+
+\bibitem{famablume}
+E.~F. Fama and M.~E. Blume.
+\newblock {Filter Rules and Stock - Market Trading}.
+\newblock {\em The Journal of Business}, 39:226--241, 1966.
+
+\bibitem{fama2015}
+E.~F. Fama and K.~R. French.
+\newblock A five-factor after pricing model.
+\newblock {\em The Journal of Financial Economics}, 116:1--22, 2015.
+
+\bibitem{fama2015international}
+E.~F. Fama and K.~R. French.
+\newblock International tests of a five-factor asset pricing model.
+\newblock {\em Fama-Miller Working Paper}, 2015.
+
+\bibitem{fansq}
+J.~Fan, Y.~Fan, and J.~Lv.
+\newblock {High dimensional covariance matrix estimation using a factor model}.
+\newblock {\em The Journal of Econometrics}, 147:187--197, 2008.
+
+\bibitem{vickers}
+J.~Fan, F.~Han, and B.~Vickers.
+\newblock {Robust inference of risks of large portfolios}.
+\newblock {\em {The Journal of Econometrics}}, 194:298--308, 2016.
+
+\bibitem{fanzhanyu}
+J.~Fan, J.~Zhang, and K.~Yu.
+\newblock {Vast Portfolio Selection with Cross-Exposure Constraints}.
+\newblock {\em {The Journal of the American Statistical Association}},
+  107:592--606, 2012.
+
+\bibitem{farmer2012}
+J.~D. Farmer, A.~Gerig, F.~Lillo, and H.~Waelbroeck.
+\newblock {How Efficiency Shapes Market Impact}.
+\newblock {\em http://arxiv.org/abs/11025457}, 2012.
+
+\bibitem{fersie}
+W.E. Ferson and A.F. Siegel.
+\newblock {The use of conditioning information in portfolios}.
+\newblock {\em {The Journal of Finance}}, 56:967--982, 2001.
+
+\bibitem{foumen}
+T.~Foucault and A.~J. Menkveld.
+\newblock {Competition for Order Flow and Smart Order Routing Systems}.
+\newblock {\em The Journal of Finance}, pages 119--157, 2008.
+
+\bibitem{frazped}
+A.~Frazzini and L.H. Pedersen.
+\newblock Betting against beta.
+\newblock {\em The Journal of Financial Economics}, 111:1--25, 2014.
+
+\bibitem{freund1995decision}
+Y.~Freund and R.~E. Schapire.
+\newblock A desicion-theoretic generalization of on-line learning and an
+  application to boosting.
+\newblock In {\em European Conference on Computational Learning Theory}, pages
+  23--37. Springer, 1995.
+
+\bibitem{freund1996experiments}
+Y.~Freund and R.~E. Schapire.
+\newblock Experiments with a new boosting algorithm.
+\newblock In {\em International Conference on Machine Learning}, volume~96,
+  pages 148--156. Morgan Kaufmann Publishers Inc., San Francisco, CA, 1996.
+
+\bibitem{freund1997decision}
+Y.~Freund and R.~E. Schapire.
+\newblock A desicion-theoretic generalization of on-line learning and an
+  application to boosting.
+\newblock In {\em Journal of Computer and System Sciences}, volume~55, pages
+  119--139, 1997.
+
+\bibitem{friedman2001greedy}
+J.~Friedman.
+\newblock Greedy function approximation: a gradient boosting machine.
+\newblock {\em Annals of statistics}, pages 1189--1232, 2001.
+
+\bibitem{friedman2000additive}
+J.~Friedman, T.~Hastie, and R.~Tibshirani.
+\newblock Additive logistic regression: a statistical view of boosting (with
+  discussion and a rejoinder by the authors).
+\newblock {\em The Annals of Statistics}, 28(2):337--407, 2000.
+
+\bibitem{frino}
+A.~Frino, E.~Jarnecic, and A.~Lepone.
+\newblock {The determinants of price impact of block trades: Further evidence}.
+\newblock {\em Abacus}, 43(2):94--106, 2007.
+
+\bibitem{froot1999stock}
+K.~A. Froot and E.~M. Dabora.
+\newblock How are stock prices affected by the location of trade?
+\newblock {\em The Journal of Financial Economics}, 53(2):189--216, 1999.
+
+\bibitem{fryzlewicz2008}
+P.~Fryzlewicz, T.~Sapatinas, and S.~Subba Rao.
+\newblock {Normalized Least-Squared Estimation in Time-Varying ARCH Models}.
+\newblock {\em The Annals of Statistics}, 36:742--786, 2008.
+
+\bibitem{fuller1996}
+W.~A. Fuller.
+\newblock {\em {Introduction to Statistical Time Series, Second Edition}}.
+\newblock John Wiley, New York, 1996.
+
+\bibitem{grt}
+A.~R. Gallant, P.~E. Rossi, and G.~Tauchen.
+\newblock {Nonlinear Dynamic Structures}.
+\newblock {\em Econometrica}, 61:871--908, 1993.
+
+\bibitem{garth}
+P.H. Garthwaite.
+\newblock An interpretation of partial least squares.
+\newblock {\em The Journal of the American Statistical Association},
+  89:122--127, 1994.
+
+\bibitem{ggr}
+E.~Gatev, W.~N. Goetzmann, and R.~G. Rouwenhorst.
+\newblock {Pairs Trading: Performance of a Relative Value Arbitrage Rule}.
+\newblock {\em The Review of Financial Studies}, 19:797--827, 2006.
+
+\bibitem{gatheral}
+J.~Gatheral.
+\newblock {No-Dynamic-Arbitrage and Market Impact}.
+\newblock {\em Quantitative Finance}, 10:769--759, 2010.
+
+\bibitem{gencay}
+R.~Gencay.
+\newblock {The predictibility of security returns with simple technical trading
+  rules}.
+\newblock {\em The Journal of Empirical Finance}, 5:347--359, 1998.
+
+\bibitem{gervais2001high}
+S.~Gervais, R.~Kaniel, and D.~H. Mingelgrin.
+\newblock The high-volume return premium.
+\newblock {\em The Journal of Finance}, 56(3):877--919, 2001.
+
+\bibitem{germing}
+S.~Gervais, R.~Kaniel, and D.H. Mingelgrin.
+\newblock {The High-Volume Return Premium}.
+\newblock {\em The Journal of Finance}, 56:877--919, 2001.
+
+\bibitem{jasiak}
+E.~Ghysels, C.~Gourieroux, and J.~Jasiak.
+\newblock {Stochastic volatility duration models}.
+\newblock {\em The Journal of Econometrics}, 119:413--433, 2004.
+
+\bibitem{gibbons}
+M.R. Gibbons, S.A. Ross, and J.~Shanken.
+\newblock {A test of the efficiency of a given portfolio}.
+\newblock {\em Econometrica}, 57:1121--1152, 1989.
+
+\bibitem{glosten94}
+L.~Glosten.
+\newblock {Is the Electronic Open Limit Order Book Inevitable}.
+\newblock {\em {The Journal of Finance}}, 49:1127--1161, 1994.
+
+\bibitem{glostenmilgrom}
+L.~R. Glosten and P.~R. Milgrom.
+\newblock {Bid, ask and transaction prices in a specialist market with
+  hetero-geneously informed traders}.
+\newblock {\em The Journal Financial Economics}, 14:71--100, 1985.
+
+\bibitem{gongra}
+J.~Gonzalo and C.W.J. Granger.
+\newblock {Estimation of common long-term memory components in cointegrated
+  systems}.
+\newblock {\em The Journal of Business and Economic Statistics}, 13:27--35,
+  1995.
+
+\bibitem{grin2000}
+R.~C. Grinold and R.~N. Kahn.
+\newblock {\em {Active Portfolio Management, Second Edition}}.
+\newblock McGraw - Hill, 2000.
+
+\bibitem{klub}
+{Gro{\ss}-Klussmann, A., and Hautsch, N.}
+\newblock When machines read the news: Using automated text analytics to
+  quantify high frequency news-implied market reactions.
+\newblock {\em The Journal of Empirical Finance}, 18:321--340, 2011.
+
+\bibitem{89ham}
+J.D. Hamilton.
+\newblock {A new approach to the economic analysis of nonstationary time series
+  and the business cycle}.
+\newblock {\em Econometrica}, 57:357--384, 1989.
+
+\bibitem{90ham}
+J.D. Hamilton.
+\newblock {Analysis of Time Series subject to changes in regime}.
+\newblock {\em The Journal of Econometrics}, 45:39--70, 1990.
+
+\bibitem{jdham}
+J.D. Hamilton.
+\newblock {Macroeconomic regimes and Regime Shifts, Handbook of
+  Macroeconomics}.
+\newblock 2:163--201, 2016.
+
+\bibitem{hansen2005}
+P.~R. Hansen.
+\newblock A test for superior predictive ability.
+\newblock {\em The Journal of Business and Economic Statistics}, 23:365--380,
+  2005.
+
+\bibitem{oye}
+M.~O' Hara and M.~Ye.
+\newblock {Is market fragmentation harming market quality}.
+\newblock {\em The Journal of Financial Economics}, pages 454--474, 2011.
+
+\bibitem{harrispan}
+L.E. Harris and V.~Panchapagesan.
+\newblock {The information content of the limit order book: evidence from NYSE
+  specialist trading decisions}.
+\newblock {\em {The Journal of Financial Markets}}, 8:25--67.
+
+\bibitem{harvey1989kalman}
+A.~C. Harvey.
+\newblock {\em Forecasting, Structural Time Series Models and the Kalman
+  Filter}.
+\newblock Cambridge University Press, Cambridge, 1989.
+
+\bibitem{habbrooksaar}
+J.~Hasbrook and G.~Saar.
+\newblock Technology and liquidity provision: The blurring of traditional
+  definitions.
+\newblock {\em The Journal of Financial Markets}, 12:143--172, 2009.
+
+\bibitem{hasbrouk}
+J.~Hasbrouk.
+\newblock {Measuring the information content of stock trades}.
+\newblock {\em The Journal of Financial Economics}, 46:179--207, 1991.
+
+\bibitem{hauthuang}
+N.~Hautsch and R.~Huang.
+\newblock The market impact of a limit order.
+\newblock {\em The Journal of Economic Dynamics and Control}, 36:501--522,
+  2012.
+
+\bibitem{helland88}
+I.S. Helland.
+\newblock On the structure of partial least squares regression.
+\newblock {\em Communications in Statistics, Simulation and Computation},
+  B17:581--607, 1988.
+
+\bibitem{helland90}
+I.S. Helland.
+\newblock Partial least squares regression and statistical models.
+\newblock {\em Scandinavian Journal of Statistics}, 17:97--114, 1990.
+
+\bibitem{hendershott2014}
+T.~Hendershott, J.~Brogaard, and R.~Riordon.
+\newblock {High Frequency Trading and Price Discovery}.
+\newblock {\em Review of Financial Studies}, 27:2267--2306, 2014.
+
+\bibitem{hjm}
+T.~Hendershott, C.~M. Jones, and A.~J. Menkveld.
+\newblock {Does Algorithmic Trading Improve Liquidity?}
+\newblock {\em The Journal of Finance}, pages 1--3, 2011.
+
+\bibitem{hender2011}
+T.~Hendershott, C.~M. Jones, and A.~J. Menkveld.
+\newblock {Does Algorithmic Trading Improve Liquidity?}
+\newblock {\em The Journal of Finance}, 66(1):1--33, 2011.
+
+\bibitem{hernderrio}
+T.~Hendershott and R.~Riordan.
+\newblock {Algorithmic Trading and Informaiton}.
+\newblock {\em http://faculty.haas.berkley.edu/hender/ATInformation.pdf}, 2011.
+
+\bibitem{hendersea}
+T.~Hendershott and M.~Seasholes.
+\newblock {Market Maker Inventories and Stock Prices}.
+\newblock {\em American Economic Review}, 97:210--214, 2007.
+
+\bibitem{ho1981}
+T.~Ho and H.R. Stoll.
+\newblock {Optimal dealer pricing under transactions and return uncertainty}.
+\newblock {\em The Journal of Financial Economics}, 9:47--73, 1981.
+
+\bibitem{Hogan}
+S.~Hogan, R.~Jarrow, M.~Teo, and M.~Warachka.
+\newblock {Testing market efficiency using statistical arbitrage with
+  application to momentum and value strategies}.
+\newblock {\em The Journal of Financial Economics}, 73:525--565, 2004.
+
+\bibitem{holthausen1990}
+R.~W. Holthausen, R.~W. Leftwich, and D.~Mayers.
+\newblock {Large-block transactions, the speed of response, and temporary and
+  permanent stock-price effect}.
+\newblock {\em The Journal of Financial Economics}, 26:71--95, 1990.
+
+\bibitem{hsukuan2010}
+P.~H. Hsu, Y.~C. Hsu, and C.~M. Kuan.
+\newblock Testing the predictive ability of technical analysis using a new
+  stepwise test without data snooping bias.
+\newblock {\em The Journal of Empirical Finance}, 17:471--484, 2010.
+
+\bibitem{huang}
+{Huang, D., and Jiang, F., and Tu, J., and Zhou, G.}
+\newblock Investor sentiment aligned: A powerful predictor of stock returns.
+\newblock {\em Review of Financial Studies}, 28:791--837, 2015.
+
+\bibitem{Hub}
+G.~Huberman.
+\newblock {Familiarity breeds investment}.
+\newblock {\em Review of Financial Studies}, 14:659--680, 2001.
+
+\bibitem{huberstan}
+G.~Huberman and W.~Stanzl.
+\newblock {Price manipulation and quasi-arbitrage}.
+\newblock {\em Econometrica}, 72:1247--1275, 2004.
+
+\bibitem{hvid2006}
+S.~Hvidkjaer.
+\newblock {A Trade-Based Analysis of Momentum}.
+\newblock {\em Review of Financial Studies}, 119:457--491, 2006.
+
+\bibitem{jagma}
+R.~Jagannathan and T.~Ma.
+\newblock {Risk Reduction in Large Portfolios: Why Imposing the Wrong
+  Constraints Helps}.
+\newblock {\em {The Journal of Finance}}, 58:1651--1683, 2003.
+
+\bibitem{jarque80}
+C.M. Jarque and A.K. Beru.
+\newblock {Efficient tests for normality, homoscedasticity and serial
+  independence of regression residuals}.
+\newblock {\em Economic Letters}, 6:255--259, 1980.
+
+\bibitem{Jeqa}
+N.~Jegadeesh.
+\newblock {Discussion of LMW (2000)}.
+\newblock {\em The Journal of Finance}, pages 1765--1770, 2000.
+
+\bibitem{JeTit1993}
+N.~Jegadeesh and S.~Titman.
+\newblock {Returns to buying winners and selling loses: Implications for Stock
+  Market Efficiency}.
+\newblock {\em The Journal of Finance}, 48:65--91, 1993.
+
+\bibitem{JeTi}
+N.~Jegadeesh and S.~Titman.
+\newblock {Profitability of momentum strategies: An evaluation of alternative
+  explanations}.
+\newblock {\em The Journal of Finance}, 56:699--720, 2001.
+
+\bibitem{JeTit}
+N.~Jegadeesh and S.~Titman.
+\newblock {Cross-sectional Time Series determinants of momentum returns}.
+\newblock {\em Review of Financial Studies}, 15:143--157, 2002.
+
+\bibitem{shuap}
+W.~Jiang, L.~Shu, and D.W. Apley.
+\newblock {Adaptive CUSUM procedures with EWMA-based shift estimators}.
+\newblock {\em IIE Transactions}, 40:992--1003, 2008.
+
+\bibitem{jobkor}
+J.D. Jobson and B.~Korkie.
+\newblock {Estimation for Markowitz Efficient Portfolios}.
+\newblock {\em The Journal of American Statistical Association}, 75:544--554,
+  1980.
+
+\bibitem{johansen1988statistical}
+S.~Johansen.
+\newblock Statistical analysis of cointegration vectors.
+\newblock {\em The Journal of economic dynamics and control}, 12(2):231--254,
+  1988.
+
+\bibitem{johansen1991estimation}
+S.~Johansen.
+\newblock Estimation and hypothesis testing of cointegration vectors in
+  gaussian vector autoregressive models.
+\newblock {\em Econometrica: Journal of the Econometric Society}, pages
+  1551--1580, 1991.
+
+\bibitem{jones1994}
+C.~Jones, G.~Kaul, and M.~Lipson.
+\newblock {Information, trading and volatility}.
+\newblock {\em The Journal of Financial Economics}, 36:127--154, 1994.
+
+\bibitem{lemmon}
+R.N. Kahn and M.~Lemmon.
+\newblock {Smart Beta: The Owner's Manual}.
+\newblock {\em {The Journal of Portfolio Management}}, 41(2):76--83, 2015.
+
+\bibitem{keim1996}
+D.~B. Keim and A.~Madhavan.
+\newblock {The upstairs market for large-block transactions: Analysis and
+  measurement of price effects}.
+\newblock {\em Review of Financial Studies}, 9:1--36, 1996.
+
+\bibitem{madhavan}
+D.B Keim and A.~Madhavan.
+\newblock {Transaction Costs and Investment style: an inter-exchange analysis
+  of institutional equity trades}.
+\newblock {\em The Journal of Financial Economics}, 46:265--292, 1997.
+
+\bibitem{keynes1937general}
+J.~M. Keynes.
+\newblock The general theory of employment.
+\newblock {\em The Quarterly Journal of Economics}, pages 209--223, 1937.
+
+\bibitem{kora2004}
+A.~Korajczyk and R.~Sadka.
+\newblock {Are Momentum Profits Robust to Trading Costs?}
+\newblock {\em The Journal of Finance}, LIX:1039--1081, 2004.
+
+\bibitem{kourtis}
+A.~Kourtis.
+\newblock {On the distribution and estimation of trading costs}.
+\newblock {\em {The Journal of Empirical Finance}}, 29:230--245, 2014.
+
+\bibitem{kyle1985}
+A.~Kyle.
+\newblock {Continuous Time Auctions and Insider Trading}.
+\newblock {\em Econometrics}, 53:1315--1336, 1985.
+
+\bibitem{lai1}
+T.~L. Lai and H.~Xing.
+\newblock {\em {Statistical Models and Methods for Financial Markets}}.
+\newblock Springer, 2008.
+
+\bibitem{laixing}
+T.L. Lai and H.~Xing.
+\newblock {Stochastic Change-Point ARX GARCH Models and their applications to
+  econometric times series}.
+\newblock {\em Statistica Sinica}, 23:1573--1594, 2013.
+
+\bibitem{laixingchen}
+T.L. Lai, H.~Xing, and Z.~Chen.
+\newblock {Mean-Variance Portfolio Optimization when Means and Covariances are
+  Unknown}.
+\newblock {\em The Annals of Applied Statistics}, 5:798--823, 2011.
+
+\bibitem{Lako}
+J.~Lakonishok, A.~Shleifer, and R.~W. Vishny.
+\newblock Contrarian investment, extrapolation, and risk.
+\newblock {\em The Journal of Finance}, 49(5):1541--1578, 1994.
+
+\bibitem{wolf}
+O.~Ledoit and M.~Wolf.
+\newblock {Improved Estimation of the Covariance Matrix of Stock Returns with
+  an Application to Portfolio Selection}.
+\newblock {\em {The Journal of Empirical Finance}}, 10:603--621, 2003.
+
+\bibitem{lee2000}
+C.~M. Lee and B.~Swaminathan.
+\newblock {Price Momentum and Trading Volume}.
+\newblock {\em The Journal of Finance}, LV:2017--2069, 2000.
+
+\bibitem{leeready}
+C.M. Lee and M.~Ready.
+\newblock {Inferring trade direction from intradaily data}.
+\newblock {\em The Journal of Finance}, 46:733--746, 1991.
+
+\bibitem{leewilks}
+Y.S. Lee.
+\newblock {Some results on the distribution of Wilks' likelihood-ratio
+  criterion}.
+\newblock {\em Biometrika}, 59:649--664, 1972.
+
+\bibitem{lew2002}
+J.~Lewellen.
+\newblock {Momentum and Autocorrelation in Stock Returns}.
+\newblock {\em Review of Financial Studies}, 15:65--91, 2002.
+
+\bibitem{liewzhang}
+{Liew, J.K--S., and Guo, S., and Zhang, T.}
+\newblock Tweet sentiments and crowd--sourced earnings estimates as valuable
+  sources of information around earnings releases.
+\newblock {\em The Journal of Alternative Investments}, Winter Issue:1--20,
+  2017.
+
+\bibitem{farmermantegna}
+F.~Lillo, J.~D. Farmer, and R.~Mantegna.
+\newblock {Master curve for price impact function}.
+\newblock {\em Nature}, 421:129--130, 2003.
+
+\bibitem{lint65}
+J.~Lintner.
+\newblock {The valuation of risky assets and the selection of risky investment
+  in stock portfolios and capital budgets}.
+\newblock {\em Review of Economics and Statistics}, 47:13--37, 1965.
+
+\bibitem{llmsw}
+G.~Llorente, R.~Michaely, G.~Saar, and J.~Wang.
+\newblock Dynamic volume-return relation of individual stocks.
+\newblock 15:1005--1047, 2002.
+
+\bibitem{LoMWang}
+A.~W. Lo, H.~Mamaysky, and J.~Wang.
+\newblock {Foundation of Technical Analysis: Computational Algorithms,
+  Statistical Inference and Empirical Implementation}.
+\newblock {\em The Journal of Finance}, LV(4):1705--1765, 2000.
+
+\bibitem{awlo}
+A.W. Lo.
+\newblock The statistics of sharpe ratios.
+\newblock {\em Financial Analysis Journal}, pages 36--52, 2002.
+
+\bibitem{lo1990}
+A.W. Lo and A.~C. MacKinlay.
+\newblock {When are Contrarian Profits due to Stock Market Overreaction?}
+\newblock {\em Review of Financial Studies}, 3:175--205, 1990.
+
+\bibitem{maczhang}
+A.W. Lo, A.C. MacKinlay, and J.~Zhang.
+\newblock Econometric models of limit-order executions.
+\newblock {\em {The Journal of Financial Economics}}, 65:31--71, 2002.
+
+\bibitem{loeb}
+T.~F. Loeb.
+\newblock {Trading Cost: The Critical Link between Investment Information and
+  Results}.
+\newblock {\em Financial Analyst Journal}, 39(3):39--44, 1983.
+
+\bibitem{lovenz2011}
+J.~Lorenz and R.~Almgren.
+\newblock {Mean-Variance Optimal Adaptive Execution}.
+\newblock {\em Applied Mathematical Finance}, 18(4):395--422, 2011.
+
+\bibitem{madhaven1997}
+A.~Madhavan, M.~Richardson, and M.~Roomans.
+\newblock {Why do security prices change? A transaction-level analysis of NYSE
+  stocks}.
+\newblock {\em Review of Financial Studies}, 10(4):1035--1064, 1997.
+
+\bibitem{malkiel}
+B.~G. Malkiel.
+\newblock {\em {A Random Walk Down Wall Street: The Time-Tested Strategy for
+  Successful Investing, 10th Edition}}.
+\newblock Norton, 2012.
+
+\bibitem{markport}
+H.~Markowitz.
+\newblock {\em {Portfolio Selection: Efficient Diversification of
+  Investments}}.
+\newblock Wiley: New York, 1959.
+
+\bibitem{mcleod1983}
+A.~I. McLeod and W.~K. Li.
+\newblock {Diagnostic checking ARMA time series models using squared-residual
+  autocorrelations}.
+\newblock {\em The Journal of Time Series Analysis}, 4:269--273, 1983.
+
+\bibitem{menkhoff2012}
+L.~Menkhoff, L.~Sarno, M.~Schmeling, and A.~Schrimpf.
+\newblock {Currency Momentum Strategies}.
+\newblock {\em The Journal of Financial Economics}, 106:660--684, 2012.
+
+\bibitem{MalTay}
+L.~Menkhoff and M.~P. Taylor.
+\newblock {The Obstinate Passion of Foreign Exchange Professionals: Technical
+  Analysis}.
+\newblock {\em The Journal of Economic Literature}, XLV:936--972, 2007.
+
+\bibitem{merton}
+R.C. Merton.
+\newblock {On estimating the expected return on the market}.
+\newblock {\em {The Journal of Financial Economics}}, 8:323--336, 1980.
+
+\bibitem{mertonint}
+R.T. Merton.
+\newblock {An intertemporal capital asset pricing model}.
+\newblock {\em Econometrica}, 41:867--887, 1973.
+
+\bibitem{michaud}
+R.O. Michaud.
+\newblock {\em {Efficient Asset Management}}.
+\newblock Harvard Business School Press, Boston, 1989.
+
+\bibitem{mitra2}
+G.~Mitra and L.~Mitra.
+\newblock {\em The Handbook of New Analytics in Finance (Ed)}.
+\newblock Wiley Finance, 2011.
+
+\bibitem{moorman}
+T.~Moorman.
+\newblock {An empirical investigation of methods to reduce transaction costs}.
+\newblock {\em {The Journal of Empirical Finance}}, 29:230--245, 2014.
+
+\bibitem{moro2009market}
+E.~Moro, J.~Vicente, L.~G. Moyano, A.~Gerig, J.~D. Farmer, G.~Vaglica,
+  F.~Lillo, and R.~N. Mantegna.
+\newblock Market impact and trading profile of hidden orders in stock markets.
+\newblock {\em Physical Review E}, 80(6):066102, 2009.
+
+\bibitem{mos2012}
+T.~J. Moskowitz, Y.~H. Ooi, and L.~H. Pedersen.
+\newblock {Time Series Momentum}.
+\newblock {\em The Journal of Financial Economics}, 104:228--250, 2012.
+
+\bibitem{obizhaeva}
+A.A. Obizhaeva and J.~Wang.
+\newblock {Optimal trading strategy and supply/demand dynamics}.
+\newblock {\em The Journal of Financial Markets}, 16:1--32, 2013.
+
+\bibitem{ohara}
+M.~O'Hara.
+\newblock {Presidential Address: Liquidity and Price Discovery}.
+\newblock {\em The Journal of Finance}, 58:1335--1354, 2003.
+
+\bibitem{okunev2003}
+J.~Okunev and D.~White.
+\newblock {Do Momentum - Based Strategies Still Work in Foreign Currency
+  Markets?}
+\newblock {\em The Journal of Financial and Quantitative Analysis},
+  38:425--447, 2003.
+
+\bibitem{ord1997estimation}
+J.~K. Ord, A.~B. Koehler, and R.~D. Snyder.
+\newblock Estimation and prediction for a class of dynamic nonlinear
+  statistical models.
+\newblock {\em The Journal of the American Statistical Association},
+  92(440):1621--1629, 1997.
+
+\bibitem{pachfab}
+D.A. Pachamanova and F.J. Fabozzi.
+\newblock {Recent Trends in Equity Portfolio Construction Analytics}.
+\newblock {\em {The Journal of Portfolio Management}}, 40:137--151, 2014.
+
+\bibitem{parlour2003}
+C.~Parlour and D.~Seppi.
+\newblock {Liquidity - Based Competition for Order Flow}.
+\newblock {\em Review of Financial Studies}, 16:301--343, 2003.
+
+\bibitem{parseppi}
+C.A. Parlour and D.J. Seppi.
+\newblock {\em {Limit Order Markets -- A Survey, In Handbook of Financial
+  Intermediation and Banking, Edited by A. Thakor and A. Boot}}.
+\newblock Elsevier, Amsterdam, 2008.
+
+\bibitem{pastor}
+L.~Pastor and R.F. Stambough.
+\newblock {The Equity Premium and Structural Breaks}.
+\newblock {\em {The Journal of Finance}}, 56:1207--1239, 2001.
+
+\bibitem{pattim}
+A.J. Patton and A.~Timmermann.
+\newblock {Monotonicity in asset returns: New tests with applications to the
+  term structure, the CAPM, and the portfolio sorts}.
+\newblock {\em {The Journal of Financial Economics}}, 98:605--625, 2010.
+
+\bibitem{peterson}
+R.L. Peterson.
+\newblock {\em The Power of Minds over Markets}.
+\newblock Wiley Finance, 2016.
+
+\bibitem{pilgup}
+K.C. Pillai and A.K. Gupta.
+\newblock {On the exact distribution of Wilks' criterion}.
+\newblock {\em Biometrika}, 56:109--118, 1969.
+
+\bibitem{rao1973}
+C.R. Rao.
+\newblock {\em Linear Statistical inference and its applications}.
+\newblock Wiley-Interscience, New York, 2 edition, 1973.
+
+\bibitem{ready}
+M.~J. Ready.
+\newblock {Profits from Technical Trading Rules}.
+\newblock {\em Financial Management}, Autumn:43--61, 2002.
+
+\bibitem{reinsel1992vector}
+G.~C. Reinsel and S.~K. Ahn.
+\newblock Vector autoregressive models with unit roots and reduced rank
+  structure: estimation. likelihood ratio test, and forecasting.
+\newblock {\em The Journal of Time Series Analysis}, 13(4):353--375, 1992.
+
+\bibitem{2002reinsel}
+G.C. Reinsel.
+\newblock {\em {Element of Multivariate Time Series Analysis, Second Edition}}.
+\newblock Springer-Verlag, New York, 2002.
+
+\bibitem{velurein}
+G.C. Reinsel and R.~Velu.
+\newblock {\em {Multivariate Reduced-Rank Regression, Theory and Application}}.
+\newblock Springer-Verlag, New York, 1998.
+
+\bibitem{romano2005}
+J.~P. Romano and M.~Wolf.
+\newblock Stepwise multiple testing as formalized data snooping.
+\newblock {\em Econometrica}, 73:1237--1282, 2005.
+
+\bibitem{rossarb}
+S.A. Ross.
+\newblock {The arbitrage theory of capital asset pricing}.
+\newblock {\em The Journal of Economic Theory}, 13:341--360, 1976.
+
+\bibitem{Ryd}
+T.~H. Rydberg and N.~Shephard.
+\newblock {Dynamic Trade - by - Trade Price Movement: Decomposition and
+  Models}.
+\newblock {\em The Journal of Financial Econometrics}, 1:2--25, 2003.
+
+\bibitem{snow}
+S.~Satchell and A.~Snowcraft.
+\newblock {A demystification of the Black-Litterman model: Managing
+  quantitative and traditional portfolio construction}.
+\newblock {\em The Journal of Asset Management}, 1:138--150, 2000.
+
+\bibitem{satish}
+V.~Satish, A.~Saxena, and M.~Palmer.
+\newblock {Predicting intraday trading volume and volume percentages}.
+\newblock {\em The Journal of Trading}, 9:15--25, 2014.
+
+\bibitem{schatzoff}
+M.~Schatzoff.
+\newblock {Exact distribution of Wilks' likelihood ratio criterion}.
+\newblock {\em Biometrika}, 53:347--358, 1966.
+
+\bibitem{sch78}
+G.~Schwarz.
+\newblock Estimating the dimension of a model.
+\newblock {\em Annals of Statistics}, 6:401--404, 1978.
+
+\bibitem{scruggs}
+J.~T. Scruggs.
+\newblock {Noise Trader Risk: Evidence from the Siamese Twins}.
+\newblock {\em The Journal of Financial Markets}, 10:76--105, 2007.
+
+\bibitem{seppi97}
+D.~Seppi.
+\newblock {Liquidity Provision with Limit Orders and a Strategic Specialist}.
+\newblock {\em {Review of Financial Studies}}, 10:103--150, 1997.
+
+\bibitem{sharpcap}
+W.F. Sharpe.
+\newblock {Capital asset prices: a theory of market equilibrium under
+  conditions of risk}.
+\newblock {\em The Journal of Finance}, 19:425--442, 1964.
+
+\bibitem{shumway2011arima}
+R.~H. Shumway and D.~S. Stoffer.
+\newblock Arima models.
+\newblock In {\em Time Series Analysis and Its Applications}, pages 83--171.
+  Springer, 2011.
+
+\bibitem{smithfarm}
+E.~Smith, D.J. Farmer, L.~Gillemot, and S.~Krishnamunthy.
+\newblock Statistical theory of the continuous double auction.
+\newblock {\em Quantitative Finance}, 3:481--514, 2003.
+
+\bibitem{srivkhat}
+M.S. Srivastava and C.G. Khatri.
+\newblock {\em {An Introduction to Multivariate Statistics}}.
+\newblock New York: North Holland, 1979.
+
+\bibitem{stamb}
+{Stambaugh, R., and Yu, J., and Yuan, Y.}
+\newblock The short of it: Investor sentiment and anomalies.
+\newblock {\em Journal of Financial Economics}, 104:288--302, 2012.
+
+\bibitem{statman2006investor}
+M.~Statman, S.~Thorley, and K.~Vorkink.
+\newblock Investor overconfidence and trading volume.
+\newblock {\em Review of Financial Studies}, 19(4):1531--1565, 2006.
+
+\bibitem{hstoll}
+H.R. Stoll.
+\newblock {Electronic Trading in Stock Markets}.
+\newblock {\em {The Journal of Economic Perspectives}}, 20:153--174, 2006.
+
+\bibitem{sullivan1999data}
+R.~Sullivan, A.~Timmermann, and H.~White.
+\newblock Data snooping, technical trading rule performance, and the bootstrap.
+\newblock {\em The Journal of Finance}, 54:1647--1691, 1999.
+
+\bibitem{sweet}
+R.~J. Sweeney.
+\newblock {Some New Filter Rule Tests: Methods and Results}.
+\newblock {\em The Journal of Financial and Quantitative Analysis},
+  20(3):285--300, 1988.
+
+\bibitem{tauchenpitts}
+G.~E. Tauchen and M.~Pitts.
+\newblock {The Price Variability-Volume Relationship on Speculative Markets}.
+\newblock {\em Econometrica}, 51:485--505, 1983.
+
+\bibitem{tetlock2007giving}
+P.~C. Tetlock.
+\newblock Giving content to investor sentiment: The role of media in the stock
+  market.
+\newblock {\em The Journal of Finance}, 62(3):1139--1168, 2007.
+
+\bibitem{toth2011anomalous}
+B.~Toth, Y.~Lemperiere, C.~Deremble, J.~De~Lataillade, J.~Kockelkoren, and J-P
+  Bouchaud.
+\newblock Anomalous price impact and the critical nature of liquidity in
+  financial markets.
+\newblock {\em Physical Review X}, 1(2):021006, 2011.
+
+\bibitem{tsay}
+R.~Tsay.
+\newblock {\em {Analysis of Financial Time Series, Third Edition}}.
+\newblock Wiley, 2010.
+
+\bibitem{jtu}
+J.~Tu and G.~Zhou.
+\newblock {Markowitz meets Talmud: A Combination of Sophisticated and Na\"ive
+  Diversification}.
+\newblock {\em {The Journal of Financial Economics}}, 99:204--215, 2011.
+
+\bibitem{uhlenbeck}
+G.E. Uhlenbeck and L.S. Ornstein.
+\newblock {On the Theory of Brownian Motion}.
+\newblock {\em Physical Review}, 36:823--841, 1930.
+
+\bibitem{vah93}
+F.~Vahid and R.F. Engle.
+\newblock {Common Trends and common cycles}.
+\newblock {\em The Journal of Applied Econometrics}, 8:341--360, 1993.
+
+\bibitem{unpub}
+R.~Velu, A.~Gretchika, M.~Benaroch, D.~Nehren, and K.~Kuber.
+\newblock {Market Impact: To Trade Small or to Trade Seldom? Evidence from
+  Algorithmic Execution Data.}
+\newblock {\em Unpublished}, 2015.
+
+\bibitem{velucanon}
+R.P. Velu, D.W. Wichern, and G.C. Reinsel.
+\newblock {A note on non-stationarity and canonical analysis of multiple time
+  series models}.
+\newblock {\em The Journal of Times Series Analysis}, 8:479--487, 1987.
+
+\bibitem{weiss1984}
+A.~A. Weiss.
+\newblock {ARMA models with ARCH errors}.
+\newblock {\em The Journal of Time Series Analysis}, 5:129--143, 1984.
+
+\bibitem{west1997}
+M.~West and J.~Harrison.
+\newblock {\em Bayesian Forecasting and Dynamic Models, Second Edition}.
+\newblock Springer-Verlag, New York, 1997.
+
+\bibitem{white1999}
+H.~White.
+\newblock A reality check for data snooping.
+\newblock {\em Econometrica}, 68:1097--1126, 1999.
+
+\bibitem{wold}
+H.~Wold.
+\newblock {\em PLS regression}, volume~6.
+\newblock Eds. N.L. Johnson and S. Kotz, 1984.
+
+\bibitem{working1960note}
+H.~Working.
+\newblock Note on the correlation of first differences of averages in a random
+  chain.
+\newblock {\em Econometrica: Journal of the Econometric Society}, pages
+  916--918, 1960.
+
+\bibitem{yang2011}
+J.~W. Yang.
+\newblock {Transaction duration and asymmetric price impact of trades -
+  Evidence from Australia}.
+\newblock {\em The Journal of Empirical Finance}, 18:91--102, 2011.
+
+\bibitem{yuyuan}
+{Yu, J., and Yuan, Y.}
+\newblock {Investor sentiment and the mean--variance relation}.
+\newblock {\em {The Journal of Financial Economics}}, {100}:{367--381}, {2011}.
+
+\bibitem{zar}
+E.~Zarinelli, M.~Treccani, J.D. Farmer, and F.~Lollo.
+\newblock Beyond the square root: Evidence for logarithmic dependence of market
+  impact on size and participation rate.
+\newblock {\em Market Microstructure and Liquidity}, 1:1--31, 2015.
+
+\end{thebibliography}

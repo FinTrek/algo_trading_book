@@ -1,0 +1,6 @@
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {12.1}Operational Risk and Information Technology Risk}{283}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {12.2}Risk Management: Pre-trade and Post-trade}{283}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {12.3}Circuit Breakers}{283}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {12.4}Order-to-trade Ratio and Quote Stuffing}{283}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {12.5}Regulation of Parallel Processes}{283}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {12.6}Information Access and Fairness Issues}{283}

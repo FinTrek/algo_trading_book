@@ -1,0 +1,9 @@
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {4.0.1}State-Space Modeling}{85}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {4.1}A Model for Volume-Volatility Relationship}{88}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {4.2}Regime Switching and Change-Point Models}{90}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {4.3}Models for Point Processes}{93}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {4.3.1}Stylized Models for High Frequency Financial Data}{95}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {4.3.2}Models for Multiple Assets: High-Frequency Context}{100}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {4.4}Time Aggregation and Loss of Information}{101}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {4.5}Realized Volatility and Econometric Models}{101}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {4.6}Analytics from Machine Learning Literature}{102}

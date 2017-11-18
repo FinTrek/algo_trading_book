@@ -1,0 +1,69 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: book.aux
+A level-1 auxiliary file: chapters/chapter_intro/ch_intro.aux
+A level-1 auxiliary file: chapters/parts/part_one/part_one.aux
+A level-1 auxiliary file: chapters/chapter_uvts/ch_uvts.aux
+A level-1 auxiliary file: chapters/chapter_mvts/ch_mvts.aux
+A level-1 auxiliary file: chapters/chapter_advanced/ch_advanced.aux
+A level-1 auxiliary file: chapters/chapter_stat_ts/ch_stat_ts.aux
+A level-1 auxiliary file: chapters/chapter_news_an/ch_news_an.aux
+A level-1 auxiliary file: chapters/chapter_apm/ch_apm.aux
+A level-1 auxiliary file: chapters/chapter_el_exch/ch_el_exch.aux
+A level-1 auxiliary file: chapters/chapter_exec_ts/ch_exec_ts.aux
+A level-1 auxiliary file: chapters/chapter_exec_ts_res/ch_exec_ts_res.aux
+A level-1 auxiliary file: chapters/chapter_tech/ch_tech.aux
+A level-1 auxiliary file: chapters/chapter_rm_reg/ch_rm_reg.aux
+The style file: plain.bst
+Reallocated field_info (elt_size=4) to 11187 items from 5000.
+Database file #1: bibtex.bib
+Warning--I didn't find a database entry for "ISDA"
+Warning--I didn't find a database entry for "DoddFrank"
+Warning--I didn't find a database entry for "kalman"
+Warning--I didn't find a database entry for "????"
+Warning--empty journal in conniden
+Warning--empty journal in jdham
+Warning--empty year in harrispan
+Warning--empty journal in llmsw
+You've used 265 entries,
+            2118 wiz_defined-function locations,
+            1815 strings with 36118 characters,
+and the built_in function-call counts, 86255 in all, are:
+= -- 8964
+> -- 3499
+< -- 20
++ -- 1397
+- -- 1114
+* -- 6020
+:= -- 14449
+add.period$ -- 798
+call.type$ -- 265
+change.case$ -- 1327
+chr.to.int$ -- 0
+cite$ -- 269
+duplicate$ -- 3085
+empty$ -- 6864
+format.name$ -- 1114
+if$ -- 17705
+int.to.chr$ -- 0
+int.to.str$ -- 265
+missing$ -- 292
+newline$ -- 1328
+num.names$ -- 530
+pop$ -- 1050
+preamble$ -- 1
+purify$ -- 1087
+quote$ -- 0
+skip$ -- 2107
+stack$ -- 0
+substring$ -- 7112
+swap$ -- 404
+text.length$ -- 20
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 1006
+warning$ -- 4
+while$ -- 1004
+width$ -- 268
+write$ -- 2887
+(There were 8 warnings)

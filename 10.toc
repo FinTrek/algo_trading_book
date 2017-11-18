@@ -1,0 +1,3 @@
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {10.1}Extending the Algorithms to Derivative markets}{277}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {10.2}Developing a Trading Platforms for Simultaneous Execution of Assets}{277}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {10.3}Future of Algorithmic Trading}{277}

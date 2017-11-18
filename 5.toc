@@ -1,0 +1,21 @@
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.1}Introduction to Trading Strategies: Origin and History}{107}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.2}Trading Rules for Time Aggregated Data}{108}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {5.2.1}Filter Rules}{109}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {5.2.2}Moving Average Variants and Oscillators}{111}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.3}Patterns Discovery via Non-Parametric Smoothing Methods}{113}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.4}A Decomposition Algorithm}{115}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.5}Fair Value Models}{117}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.6}Back-Testing and Data Snooping: In-Sample and Out-of-Sample Performance Evaluation}{118}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.7}Pairs Trading}{120}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {5.7.1}Distance-Based Algorithms}{121}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {5.7.2}Co-Integration}{123}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {5.7.3}Some General Comments}{124}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {5.7.4}Practical Considerations}{126}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.8}Cross-Sectional Momentum Strategies}{129}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.9}Multiple Indicators and Boosting Methods}{133}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.10}Evaluation of Strategies: Various Measures}{135}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.11}Extraneous Signals: Trading Volume, Volatility, etc.}{136}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {5.11.1}Filter Rules based on return and volume}{139}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {5.11.2}An illustrative example}{140}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.12}Market Segmentation and Inconsistent Pricing across Markets}{146}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {5.13}Supplements and Problems}{147}

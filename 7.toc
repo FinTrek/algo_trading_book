@@ -1,0 +1,14 @@
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {7.1}Introduction to Modern Portfolio Theory}{175}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {7.1.1}Mean-Variance Portfolio Theory}{176}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {7.1.2}Multifactor Models}{179}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {7.1.3}Tests Related to CAPM and APT}{179}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {7.1.4}An Illustrative Example}{182}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {7.1.5}Summary of Models and Implications for Investing}{184}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {7.2}Statistical Underpinnings}{187}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {7.2.1}Portfolio Allocation Using Regularization}{191}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {7.2.2}Portfolio Strategies: Some General Findings}{192}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {7.3}Dynamic Portfolio Selection}{195}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {7.4}Portfolio Tracking and Rebalancing}{197}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {7.5}Transaction Costs, Shorting and Liquidity Constraints}{199}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {7.6}Alphas, Betas, Information Ratios and Realized Returns}{202}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {7.7}Supplements and Problems}{202}

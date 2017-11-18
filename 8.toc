@@ -1,0 +1,14 @@
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {8.1}Limit Order Book (LOB): Basic Description and Characteristics}{213}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {8.2}Data from LOB and Relevant Questions}{216}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {8.3}Models for LOB dynamics, based on Level I and Level II data}{219}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {8.3.1}Application of a Hawkes process}{228}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {8.3.2}One-Dimensional Models}{233}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {8.3.3}An extension}{237}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {8.3.4}Two-Dimensional models}{237}
+\chapcontentsline{chapsubsection}{\raggedright \subnumberline {8.3.5}Limitations and findings}{240}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {8.4}Models for Level II and Level III data}{241}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {8.5}Estimation of Hidden Orders}{241}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {8.6}Volume Imbalance and Other Indicators}{241}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {8.7}Hidden Markov Models (HMM) for dynamic market microstructure: Estimation of Parameter and States}{241}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {8.8}Appendix: Adaptive Particle Filters in HMM}{241}
+\chapcontentsline{chapsection}{\raggedright \ssubnumberline {8.9}Supplements and Problems}{241}
