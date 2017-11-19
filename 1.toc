@@ -1,6 +1,0 @@
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {1.1}From Trading Floors to Electronic Trading}{1}
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {1.2}Liquidity and Market Making}{2}
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {1.3}Algorithmic Trading: Some Basic Elements}{7}
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {1.4}Low Frequency vs. High Frequency Trading Strategies}{12}
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {1.5}Risk and Regulation in Quantitative Trading}{12}
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {1.6}Trading in Other Asset Classes}{12}

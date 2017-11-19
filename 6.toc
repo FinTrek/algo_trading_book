@@ -1,5 +1,0 @@
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {6.1}Introduction to News Analytics: Behavioral Finance and Investor Cognitive Biases}{157}
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {6.2}Market Micro Structure and Liquidity}{162}
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {6.3}Automated News Analysis and Market Sentiment}{162}
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {6.4}News Analytics and its Applications to Trading}{164}
-\chapcontentsline{chapsection}{\raggedright \ssubnumberline {6.5}Discussion / Future of Social Media News}{173}
