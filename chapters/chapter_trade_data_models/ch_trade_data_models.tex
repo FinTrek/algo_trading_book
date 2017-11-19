@@ -38,7 +38,7 @@ Before we formally present the models, we want to provide a review of how the an
 \noindent \textbf{Slope of LOB:} To begin with we can consider the slope of the order book both on the demand side and on the supply side using the quotes on both sides various depths (see Figure~\ref{fig:limitstocks}). This provides information on order book imbalance that can be helpful for the trader to decide on the optimal time to enter or to exist the market (see Figure~\ref{fig:limitstocks}). It is observed from Figure~\ref{fig:limitstocks} that the bid-ask spread is at least twice the difference between quotes at successive depths. Thus the slope of the book is steeper closer to the best quotes. \\
 	\begin{figure}[!ht]
 	   \centering
-	   \includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/limitstocks.png} 
+	   \includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/limitstocks.png} 
 	\caption{The Limit Order Book for Stocks. (A) Plots the cross-sectional average (across with tick$=$FF 0.1) of the time-series averages of the five best ask and bid quotes and their associated depth. (B) plots the cross-sectional average (across stocks with tick$=$FF 1) of the time-series averages of the five best ask and bid quotes and their associated depth.\label{fig:limitstocks}}
 	\end{figure}
 
@@ -184,7 +184,7 @@ Other questions such as the probability that the mid price goes up when the spre
 The model was evaluated using data sets from Tokyo Stock Exchange. The model is shown to capture realistic features of the order book profile.
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.9\textwidth]{chapters/chapter_el_exch/figures/intertime.png} 
+   	\includegraphics[width=0.9\textwidth]{chapters/chapter_trade_data_models/figures/intertime.png} 
    	\caption{Distribution of inter-arrival times of market orders for stock BNPP.PA (Chakraborti et al. 2011). \label{fig:intertimefig}}
 	\end{figure}
 
@@ -203,7 +203,7 @@ Zhao (2010)~\cite{} proposes a model based on marked point process when the mark
 where the number of exponent kernels, $P$, is fixed and $t_i^n$ is the $i$th jumping time of the $m$th variate. The scale and decay parameters, $\alpha^{mn}$ and $\beta^{mn}$ express the influence of the past events $t_i^n$ of type `$n$'. The baseline model in (\ref{eqn:lambdamdoub}) does not incorporate the effect of bid-ask spread on order flow. It is shown in Anderson, Cont and Vinkovskaya (2010)~\cite{} that $\alpha$ and $\beta$ parameters do depend on the bid-ask spread. A simulated Hawkes process is given in Figure~\ref{fig:hawkes}. The main characteristic of the Hawkes process is that intensity goes up at each event and decays exponentially between events. 
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.9\textwidth]{chapters/chapter_el_exch/figures/hawkes.png} 
+   	\includegraphics[width=0.9\textwidth]{chapters/chapter_trade_data_models/figures/hawkes.png} 
    	\caption{Simulated two-dimensional Hawkes process (Toke 2011). \label{fig:hawkes}}
 	\end{figure}
 
@@ -252,7 +252,7 @@ We want to illustrate the model with an application. We will first look at the s
 The data at hand is INET data for XOM (Exxon Mobil) for the 1st of September 2010. The first step was to look at the submission frequency of the Limit Orders during the trading day. Figure~\ref{fig:freqsubmitarrivals} shows such frequency plot and we can see how in the first hour a half and in the last half an hour of the trading day there is a much higher submission frequency (with peaks of 25/30 orders submitted per second) than during the rest of the day (around 5--10 orders per second).
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/freqsubmit.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/freqsubmit.png} 
    	\caption{Frequency of Limit Order submission for 09/01/2010 (time in minutes after market opening). \label{fig:freqsubmitarrivals}}
 	\end{figure}
 
@@ -308,12 +308,12 @@ In this particular case, LOs stay in the book for much longer if they are on the
 The next step was to observe changes in the behavior of the book when moving further away from the market. We looked into the order submission and cancellation frequencies as a function of distance from the market price. Figure~\ref{fig:canfreq} and Figure~\ref{fig:freqsubmit1} show that most LO are submitted and cancelled at the market (respectively, 40\% and almost 30\%) and that the rates drop sharply with each price level further away from it. This supports the conclusion that the very small percentage of executed LO is not caused by the fact that most LO are submitted far away from the market and hence don't get the chance to get executed. We can also see how approximately 70\% (96\%) of all Limit Orders is placed in the top 5 (20) levels of the book and that 69\% (96\%) of all cancellations also occurs in the top 5 (20) levels. This a first indication of the fact that Level III data offers more information than Level II since with the top 5 levels of the book we were only able to capture around 70\% of all the occurring events. However, this also indicates that there is no need to use all the information provided in Level III data since by looking at only the top 20 levels of the book we are still able to capture nearly all of the occurring events. Both plots show a very similar behavior for the buy and sell side which led us to assume an almost symmetric behavior of the book. This assumption was later tested and confirmed at a 99\% confidence level with a two-sided Kolmogorov-Smirnov Test. 
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/subfreqnear.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/subfreqnear.png} 
    	\caption{Submission frequencies--Distance near touch price \\ Kolmogorov-Smirnov Test Statistics$=0.61 \to$ fail to reject null at 1\% sig. level \label{fig:subfreqnear}}
 	\end{figure}
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/canfreqnear.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/canfreqnear.png} 
    	\caption{Cancellation Frequencies--Distance from near touch price \\ Kolmogorov-Smirnov Test Statistic$=0.83\to$ fail to reject null at 1\% sig. level \label{fig:canfreqnear}}
 	\end{figure}
 
@@ -321,7 +321,7 @@ The next step was to observe changes in the behavior of the book when moving fur
 Better understanding what happens to the LOs once they enter the book is key in developing a more accurate way of choosing when to submit a LO or a MO. For this reason we also looked at the cancellation frequencies as a function of position in the queue and we found that (Figure~\ref{fig:canfreq}) most of the cancellations occur when the LO are in 4th or 5th position in the queue. In this case as well, we carried out a test of the assumption of a symmetric behavior of the book which confirmed previous similar findings. However, it would be more interesting to look at the cancellation frequencies as a function of overall distance from the market (as a measure of distance from possible execution). 
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/canfreq.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/canfreq.png} 
    	\caption{Cancellation Frequencies---position in queue. \label{fig:canfreq}}
 	\end{figure}
 
@@ -329,7 +329,7 @@ Better understanding what happens to the LOs once they enter the book is key in 
 With two more trading days (3rd and 9th of September 2013) data available, we are able to study the robustness of the above results. The submission and cancellation frequencies as a function of relative price which were symmetric for the 1st of September were not symmetric anymore on the 3rd of September. In this trading day, Figure~\ref{fig:freqsubmit1}, the peak of activity on the buy side occurred 12 price levels away from the market. This seems to suggest that on the 3rd of September the markets were betting that the price of XOM would drop in the foreseeable future, possibly reacting to some new event. A closer investigation of that time period revealed in the previous days the announcement by Exxon Mobil of the plan of closing a refinery which then led to a drop in the price shortly after 09/03/2010.
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/losubcanfreq.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/losubcanfreq.png} 
    	\caption{LO submission and cancellation frequencies. \label{fig:losubcanfreq}}
 	\end{figure}
 
@@ -337,18 +337,18 @@ With two more trading days (3rd and 9th of September 2013) data available, we ar
 A second interesting difference was in the amount of volume on the two sides of the book (Figure~\ref{fig:losubcanfreq}). Across the 3 days there was a significant volume imbalance with considerably more volume on the sell side than on the buy side but the amount of imbalance between the two sides changes significantly across the three days. Overall there is no explanation as to why there would be such a strong volume imbalance in favor of the sell side other than some kind of temporary anomaly. These findings seem to point out the fact that the shape and behavior of the LOB change dramatically across different days and that, in order to capture some kind of more general/average behavior of the book, many more days of data are required. 
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/freqsubmit.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/freqsubmit.png} 
    	\caption{Frequency of Limit Order submission for 09/01/2010 (time in minutes after market opening). \label{fig:freqsubmit1}}
 	\end{figure}
 	\begin{figure}
 	\centering
 	\begin{subfigure}
 	  \centering
-	  \includegraphics[width=.4\linewidth]{chapters/chapter_el_exch/figures/timevol1.png}
+	  \includegraphics[width=.4\linewidth]{chapters/chapter_trade_data_models/figures/timevol1.png}
 	\end{subfigure}%
 	\begin{subfigure}
 	  \centering
-	  \includegraphics[width=.4\linewidth]{chapters/chapter_el_exch/figures/timevol1.png}
+	  \includegraphics[width=.4\linewidth]{chapters/chapter_trade_data_models/figures/timevol1.png}
 	\end{subfigure}
 	\caption{Frequency of Limit Order submission for 09/01/2010 (time in minutes after market opening). \label{fig:freqsubmit2}}
 	\end{figure}
@@ -424,12 +424,12 @@ An important limitation of this basic Hawkes Process model is that each event ha
 We then compared the performance of this ``size-adjusted'' model with the ``basic'' one by using the before mentioned \emph{Multivariate Random Time Chance} Theorem and looking at the Q-Q plot of the compensators for the two models. Figure~\ref{fig:lobuysideadj} and Figure~\ref{fig:losellsideadj} show how in both case (buy and sell Limit Orders) adjusting for size doesn't improve the fit of the model. This result is somewhat counter-intuitive given that more than 70\% of all Limit Orders are of size 100 shares and that this should imply that any deviation from this size explanation is that trading strategies are successful in concealing the true intension of the traders and that there is no significant information left in the size of the LO once that the strategies are implemented and the orders are submitted. 
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/lobuysideadj.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/lobuysideadj.png} 
    	\caption{LO--buy side with size adjustment and without. \label{fig:lobuysideadj}}
 	\end{figure}
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/losellsideadj.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/losellsideadj.png} 
    	\caption{LO--sell side with size adjustment and without. \label{fig:losellsideadj}}
 	\end{figure}
 
@@ -458,7 +458,7 @@ and we have 5 parameters for each dimension of the model for a total of 10 param
 There appears to be some asymmetry in the cross-excitation effects with the occurrence of an event on the sell side having a stronger impact on the likeliness of occurrence of an event on the buy side rather than the other way round ($\alpha^{BS}>\alpha^{SB}$). On the other hand though, since $\beta^{BS}<\beta^{SB}$, the effect on the sell side of an occurrence on the buy side is more persistent than that of an event on the buy side on the sell side (2.22 seconds vs. 1.49 seconds).
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/asymcross.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/asymcross.png} 
    	\caption{Asymmetry in cross-excitation effect. \label{fig:asymcross}}
 	\end{figure}
 The self-excitation components of the model are rather similar for both dimensions and it is interesting to point out the very short persistence of the self-excitation effect in both cases (about 0.02 seconds).
@@ -467,7 +467,7 @@ The self-excitation components of the model are rather similar for both dimensio
 In order to evaluate whether the two key features of a model based on Hawkes processes (path dependency of the order flow and the possibility of modeling the relation between the various dimensions) are really helpful in improving the performance of the model, we decided to compare the performance of our model to that of a bi-dimensional model based on two independent Poisson Processes (which by definition of Poisson process cannot account for any dependency in the order flow and by construction assume independence between the two dimensions). The results proved to be very encouraging with a remarkably better fit to the empirical data for the Hawkes Process based model (Figure~\ref{fig:4hawkes6}).
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/4hawkes6.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/4hawkes6.png} 
    	\caption{Top--Fit of Hawkes Process (buy \& sell); Bottom--Fit of Poisson Process (buy \& sell). \label{fig:4hawkes6}}
 	\end{figure}
 
@@ -486,7 +486,7 @@ Following a similar procedure, we build a bi-dimensional model for the Market Or
 Finally, we compared the performance of our model to that of the bi-dimensional Poisson Process. Similarly to the LO case, the model at hand significantly outperforms the Poisson Process one for both dimensions. 
 	\begin{figure}[!ht]
    	\centering
-   	\includegraphics[width=0.75\textwidth]{chapters/chapter_el_exch/figures/4fig.png} 
+   	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/4fig.png} 
    	\caption{Top--Fit of Hawkes Process (buy \& sell); Bottom--Fit of Poisson Process (buy \& sell). \label{fig:4fig6}}
 	\end{figure}
 
