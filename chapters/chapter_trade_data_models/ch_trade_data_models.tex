@@ -1,8 +1,7 @@
 % !TEX root = ../../book.tex
-%\hfill
-%\par\vspace{\baselineskip}
 
 \chapter{Modeling Trade Data}
+
 \section{Normalizing Analytics}
 One of the challenging aspects of execution unlike other algorithmic trading subject is the large number of different types of stocks such strategies have to apply to. The same strategy will need to work for super liquid instruments that trade like water at the minimum tick size, and illiquid stocks that trade only very infrequently at wide spreads; Stock that have very stable and large sizes at the inside markets, and stocks whose nbbo changes many times every second. To complicate matters further the market micro-structure of each stock is not constant throughout the day or even between one day and the next in often predictable manner and execution strategies are expected to adapt to those changes. For example, immediately after the open there is a lot of trading activity as investor incorporate the effect of overnight news. The increased uncertainty on the stock valuation is reflected by a much higher volatility and spread. Once the period of so called Price Discovery is over (usually within 15-30m in US markets), the trading behavior settles in and activity is reduced and so do spreads and volatility. Activity the resumes towards the end of the day in particular due to the  fact that many funds are marked to the day's closing price. An example of inter-day variabilty is the impact due to Special Days such as futures, and options expiration, earning announcements, etc. In such occasion the activity patterns of the stocks are systematically different (e.g. the trading activity during futures/options expiration is heavily tilted towards the close since the settlement prices are related to the closing price on that day).
 

@@ -3,6 +3,9 @@
 \chapter{Advanced Topics}
 
 
+In this chapter we want to discuss some advanced methods that are applicable in the context of trading. This chapter is broadly divided into two main areas; the first covers topics which are extensions of models discussed in Chapter 2 in the low frequency context. Although the state-space modeling is discussed in the context of ARIMA, its scope is much wider. We also outline the established methodology for studying regime switching, but indicate the areas of further research where predicting ahead using signals form the past when the regime shift is likely to occur. This is followed by a discussion on using volume information to study the price volatility. With the increased exploitation of price behavior data, it has become necessary to look for additional signals. The second area of this chapter focuses on the models from point processes to study the higher frequency data. Here our approach has been to provide an intuitive discussion of main tools; as readers will realize, the trade data is quite noisy and there is a great deal of scope to do research especially in non-parametric modeling of arrivals and cancellations in the limit order market. 
+
+
 \section{State-Space Modeling} 
 
 
@@ -83,68 +86,6 @@ An alternative set-up, alternative to (\ref{eqn:2thirdzt}) and (\ref{eqn:2hatz})
 	Z_t = \Phi Z_{t-1} + \alpha N_t 
 	\end{equation}
 This model studied in Ord, Koehler, and Snyder (1997)~\cite{ord1997estimation} with a single source of error $(N_t)$ is shown to be closely related to various exponential smoothing procedures. There are other formulations of state-space models, such as structural models by Harvey (1989)~\cite{harvey1989kalman} and dynamic linear models of West and Harrison (1997)~\cite{west1997} that are found to be useful for model building.
-
-
-\section{A Model for Volume-Volatility Relationship}
-
-
-While the price information via returns and the volatility can be modeled through methods described earlier, it has become important to incorporate other relevant trading data to augment the trading strategies. To that effect, we want to seek some guidance from economic theory how that information is linked to price movements.
-
-In the market microstructure theory, it is assumed that price movements occur primarily due to the arrival of new information and this information is incorporated efficiently into market price. Other variables such as trading volume, bid-ask spread and market liquidity are observed to be related to the volatility of the returns. Early empirical studies have documented a positive relationship between daily trading volume and volatility (See Clark (1973)~\cite{clark}). Epps and Epps (1976)~\cite{epps} and Tauchen and Pitts (1983)~\cite{tauchenpitts} assume that the volume and price are driven by the underlying `latent' information ($I$) and provide a theoretical framework to incorporate this information. Assuming that there are fixed number of traders who trade in a day and the number of daily equilibria, $I$ is random because the number of new pieces of information is random, the return and the volume are written as a bivariate normal mixture model with the same mixing variable $I$. Conditional on $I$:
-	\begin{equation}\label{eqn:2rtVt}
-	\begin{split}
-	 r_t&= \sigma_1\sqrt{I_t}Z_{1t} \\
-	 V_t&= \mu_VI_t + \sigma_2\sqrt{I_t}Z_{2t}
-	 \end{split}
-	 \end{equation}
-where $Z_{1t}$ and $Z_{2t}$ are standard normal variables and $Z_{1t}, Z_{2t}$, and $I_t$ are mutually independent. Thus the volatility-volume relationship,
-	\begin{equation}\label{eqn:2covVt}
-	\begin{split}
-	\Cov(r_t^2,V_t)& = E(r_{t}^2V_t) - E(r_t^2) \,E(V_t) \\ 
-	&= \sigma_1^2\mu_V \Var(I_t) > 0
-	\end{split}
-	\end{equation}
-is positive due to the variance in $I_t$. If there is no new information or if there is no variation in the mixing variable, $\Var(I_t)= 0$ and thus the relationship vanishes. The theory of arrival rates suggest a
-Poisson distribution and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in (\ref{eqn:2rtVt}) are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their findings: \\
-
-
-\noindent\textbf{Stylized Facts 5 (Volume--Volatility Relationship):} 
-
-\begin{itemize}
-\item  Positive correlation between conditional volatility and volume.
-
-\item Large price movements are followed by high volume.
-
-\item Conditioning on lagged volume substantially attenuates the leverage (which is an asymmetry in the conditional variance of current price change against past price change) effect.
-
-\item After conditioning on lagged value, there is a positive risk-return relation.
-\end{itemize}
-
-
-Andersen (1996)~\cite{andersen} modifies the model (\ref{eqn:2rtVt}) by integrating the microstructure
-setting of Glosten and Milgrom (1985)~\cite{glostenmilgrom} with the stochastic volatility, that is built on weaker conditions on the information arrival process. While the first equation in (\ref{eqn:2rtVt}) remains the same, the volume $V_t$ has informed and noise components, $V_t = IV_t + NV_t$. Noise trading component, $NV_t$ is taken as a time homogeneous Poisson process, $P_0(m_0)$. Therefore, the systematic variation in trading is mainly due to informed volume. Then $IV_t|I_t \sim \text{Poisson}(I_t\mu)$ and thus
-	\begin{equation}\label{eqn:2VtIt}
-	V_t|I_t \sim \text{Poisson}(m_0 + I_t m_1)
-	\end{equation}
-It is easy to see $\Cov(r_t^2,V_t) = \sigma^2m_1 \Var(I_t) > 0$ under this setting as well. These models clearly indicate that the intraday return volatility and volume processes jointly contain predictable elements.
-
-
-There are other studies that focus on the trading volume and returns relationship and we mention only a select few here. Campbell, Grossman, and Wang (1993)~\cite{campbellgross} demonstrate for individual large stocks and stock indices the first-order daily auto-correlation in the returns tend to decline with volume. The authors develop a theoretical model where the economy has two assets, risk-free asset and a stock and there are two types of investors, one with constant risk aversion and the other with risk aversion changing over time. Under this set-up, it is implied that a decline in a stock price on a high-volume day is more likely than a decline on a low-volume day to be associated with an increase in the expected stock return.
-
-
-Gervais, Kaniel, and Mingelgrin (2001)~\cite{gervais2001high} investigate the role of trading activity in providing information about future prices. It is shown that periods of extremely high (low) volume tend to be followed by positive (negative) excess returns. The formation period for identifying extreme trading volume is a day or a week, but the effect lasts at least twenty days and holds across all stock sizes. To test if this information can be used profitably, the authors construct a trading strategy, by sending buy (sell) limit orders at the existing bid (ask) price, at the end of the formation period. If the orders are not taken, they are converted into market orders at the closing. The strategy is shown to result in profits, in particular with the small-medium firm stocks, after adjusting for the transaction costs. The model used for the empirical framework is the vector autoregressive model discussed later, with an addition of a set of exogenous control variables:
-	\begin{equation}\label{eqn:2Ytphi}
-Y_t = \Phi_0+\sum_{j=1}^p\Phi_jY_{t-j}+\sum_{l=1}^LB_lX_{t-l}+\epsilon_t
-	\end{equation}
-
-
-The components of $Y_t$ include stock or market related variables such as detrended log of stock turnover, the stock return and the value weighted market return. The control variables are market volatility based on the daily return standard deviation and the dispersion which is the cross-sectional standard deviation of the security returns. The impulse response functions are used to aggregate the overall relationship among the endogenous variables. Statman, Thorley, and Vorkink (2006)~\cite{statman2006investor} show that the trading volume is dependent on past returns over many months and it is argued that this may be due to the overconfidence of the investors.
-
-
-These and other studies generally confirm the information content of the volume and turnover of stocks traded; strategies to exploit these, especially in a high frequency context, will be examined in Chapter 3. We will discuss how intra-day flow of volume can be related to price changes. 
-
-
-In algorithmic trading a key ingredient of many strategies is forecast of intra-day volume. Typically a parent order is split into several child orders and the timing of the submission of child orders could depend on the volume forecast for an interval of time that is considered for trading. Brownless, Cipollini and Gallo (2011)~\cite{brownless} provide prediction model for intra-day volume. This will be described in detail in the next chapter.
 
 
 \section{Regime Switching and Change-Point Models}
@@ -238,6 +179,97 @@ The adaptive CUSUM chart is effective at detecting a range of mean shift sizes. 
 
 
 In practical applications of these regime-shifting models, it is not easy to discern between a single outlier and persistent level shift. Valid measures that can distinguish these two situations on a timely basis could be very valuable to a trader. 
+
+
+We provide two examples to illustrate the application of the models (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) in the broader context of this book. The slope in a local linear trend is a random walk. Specifically,
+	\begin{equation}\label{eqn:randomwalk}
+	\begin{split}
+	p_t&= \mu_t+ e_t \\
+	\mu_t&= \mu_{t-1} + \delta_{t-1} + \eta_{0t} \\
+	\delta_t&=\delta_{t-1}+\eta_{1t}
+	\end{split}
+	\end{equation}
+Here the trend is composed of level `$\mu_t$' and slope `$\delta_t$'. The slope `$\delta_t$' when written as 
+	\begin{equation}\label{eqn:slopewritten}
+	\delta_t= D+ e(\delta_{t-1} - D)+ \eta_{1t}
+	\end{equation}
+in AR(1) form is sometimes known as generalized local linear trend. These models can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}); the updating process given in (\ref{eqn:2hatz}) can be used to accommodate a wide range of models.
+
+
+Menkveld, Koopman and Lucas (2007)~\cite{menkkoop} study the price discovery process for stocks that are cross-listed in two different markets via state-space models. The question if the trading location matters more than business location is of intent to finance researchers. Consider a stock traded in Amsterdam and in NY exchanges. Because of the time difference, there is only an hour of overlap in trading. Ignoring this aspect, write the two-dimensional price vector as
+	\begin{equation}
+	\begin{split}
+	p_t&=\mu_t + e_T \\
+	&=\mu_t + \theta(\mu_t-\mu_{t-1}) + e_t
+	\end{split}
+	\end{equation}
+as the observational equation and the state equation is
+	\begin{equation}
+	\mu_t= \mu_{t-1} + \xi_t
+	\end{equation}
+The above can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) with appropriate choice of `$\Phi$' and `$H$' matrices. 
+
+
+\section{A Model for Volume-Volatility Relationship}
+
+
+While the price information via returns and the volatility can be modeled through methods described earlier, it has become important to incorporate other relevant trading data to augment the trading strategies. To that effect, we want to seek some guidance from economic theory how that information is linked to price movements.
+
+In the market microstructure theory, it is assumed that price movements occur primarily due to the arrival of new information and this information is incorporated efficiently into market price. Other variables such as trading volume, bid-ask spread and market liquidity are observed to be related to the volatility of the returns. Early empirical studies have documented a positive relationship between daily trading volume and volatility (See Clark (1973)~\cite{clark}). Epps and Epps (1976)~\cite{epps} and Tauchen and Pitts (1983)~\cite{tauchenpitts} assume that the volume and price are driven by the underlying `latent' information ($I$) and provide a theoretical framework to incorporate this information. Assuming that there are fixed number of traders who trade in a day and the number of daily equilibria, $I$ is random because the number of new pieces of information is random, the return and the volume are written as a bivariate normal mixture model with the same mixing variable $I$. Conditional on $I$:
+	\begin{equation}\label{eqn:2rtVt}
+	\begin{split}
+	 r_t&= \sigma_1\sqrt{I_t}Z_{1t} \\
+	 V_t&= \mu_VI_t + \sigma_2\sqrt{I_t}Z_{2t}
+	 \end{split}
+	 \end{equation}
+where $Z_{1t}$ and $Z_{2t}$ are standard normal variables and $Z_{1t}, Z_{2t}$, and $I_t$ are mutually independent. Thus the volatility-volume relationship,
+	\begin{equation}\label{eqn:2covVt}
+	\begin{split}
+	\Cov(r_t^2,V_t)& = E(r_{t}^2V_t) - E(r_t^2) \,E(V_t) \\ 
+	&= \sigma_1^2\mu_V \Var(I_t) > 0
+	\end{split}
+	\end{equation}
+is positive due to the variance in $I_t$. If there is no new information or if there is no variation in the mixing variable, $\Var(I_t)= 0$ and thus the relationship vanishes. The theory of arrival rates suggest a
+Poisson distribution and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in (\ref{eqn:2rtVt}) are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their findings: \\
+
+
+\noindent\textbf{Stylized Facts 5 (Volume--Volatility Relationship):} 
+
+\begin{itemize}
+\item  Positive correlation between conditional volatility and volume.
+
+\item Large price movements are followed by high volume.
+
+\item Conditioning on lagged volume substantially attenuates the leverage (which is an asymmetry in the conditional variance of current price change against past price change) effect.
+
+\item After conditioning on lagged value, there is a positive risk-return relation.
+\end{itemize}
+
+
+Andersen (1996)~\cite{andersen} modifies the model (\ref{eqn:2rtVt}) by integrating the microstructure
+setting of Glosten and Milgrom (1985)~\cite{glostenmilgrom} with the stochastic volatility, that is built on weaker conditions on the information arrival process. While the first equation in (\ref{eqn:2rtVt}) remains the same, the volume $V_t$ has informed and noise components, $V_t = IV_t + NV_t$. Noise trading component, $NV_t$ is taken as a time homogeneous Poisson process, $P_0(m_0)$. Therefore, the systematic variation in trading is mainly due to informed volume. Then $IV_t|I_t \sim \text{Poisson}(I_t\mu)$ and thus
+	\begin{equation}\label{eqn:2VtIt}
+	V_t|I_t \sim \text{Poisson}(m_0 + I_t m_1)
+	\end{equation}
+It is easy to see $\Cov(r_t^2,V_t) = \sigma^2m_1 \Var(I_t) > 0$ under this setting as well. These models clearly indicate that the intraday return volatility and volume processes jointly contain predictable elements.
+
+
+There are other studies that focus on the trading volume and returns relationship and we mention only a select few here. Campbell, Grossman, and Wang (1993)~\cite{campbellgross} demonstrate for individual large stocks and stock indices the first-order daily auto-correlation in the returns tend to decline with volume. The authors develop a theoretical model where the economy has two assets, risk-free asset and a stock and there are two types of investors, one with constant risk aversion and the other with risk aversion changing over time. Under this set-up, it is implied that a decline in a stock price on a high-volume day is more likely than a decline on a low-volume day to be associated with an increase in the expected stock return.
+
+
+Gervais, Kaniel, and Mingelgrin (2001)~\cite{gervais2001high} investigate the role of trading activity in providing information about future prices. It is shown that periods of extremely high (low) volume tend to be followed by positive (negative) excess returns. The formation period for identifying extreme trading volume is a day or a week, but the effect lasts at least twenty days and holds across all stock sizes. To test if this information can be used profitably, the authors construct a trading strategy, by sending buy (sell) limit orders at the existing bid (ask) price, at the end of the formation period. If the orders are not taken, they are converted into market orders at the closing. The strategy is shown to result in profits, in particular with the small-medium firm stocks, after adjusting for the transaction costs. The model used for the empirical framework is the vector autoregressive model discussed later, with an addition of a set of exogenous control variables:
+	\begin{equation}\label{eqn:2Ytphi}
+Y_t = \Phi_0+\sum_{j=1}^p\Phi_jY_{t-j}+\sum_{l=1}^LB_lX_{t-l}+\epsilon_t
+	\end{equation}
+
+
+The components of $Y_t$ include stock or market related variables such as detrended log of stock turnover, the stock return and the value weighted market return. The control variables are market volatility based on the daily return standard deviation and the dispersion which is the cross-sectional standard deviation of the security returns. The impulse response functions are used to aggregate the overall relationship among the endogenous variables. Statman, Thorley, and Vorkink (2006)~\cite{statman2006investor} show that the trading volume is dependent on past returns over many months and it is argued that this may be due to the overconfidence of the investors.
+
+
+These and other studies generally confirm the information content of the volume and turnover of stocks traded; strategies to exploit these, especially in a high frequency context, will be examined in Chapter 3. We will discuss how intra-day flow of volume can be related to price changes. 
+
+
+In algorithmic trading a key ingredient of many strategies is forecast of intra-day volume. Typically a parent order is split into several child orders and the timing of the submission of child orders could depend on the volume forecast for an interval of time that is considered for trading. Brownless, Cipollini and Gallo (2011)~\cite{brownless} provide prediction model for intra-day volume. This will be described in detail in the next chapter.
 
 
 \section{Models for Point Processes}
@@ -494,4 +526,6 @@ interval.
 \item Average price, VWAP, realized volatility and aggregate volume.
 
 \item By relating the returns and volatility estimates based on average price to realized volatility, identify the optimal duration for aggregation that will cancel out the market friction but pick up the true information. (You may want to refer to Bandi and Russell (2006)~\cite{bandi}). 
+\end{enumerate}
+
 \end{enumerate}

@@ -57,7 +57,7 @@ To illustrate the aggregation methods, we will initially focus on price of the s
 \end{itemize}
 
 
-The typical daily data (also called price bans) that is available from popular sources such as Yahoo finance provide information in opening, closing, high and low prices along with the volume. This type of aggregation can be done for shorter duration, such as five minutes and this largely results in smoothed data that can cancel out market frictions and yet capture the price variations. 
+The typical daily data (also called price bars) that is available from popular sources such as Yahoo finance provide information on opening, closing, high and low prices along with the volume. This type of aggregation can be done for shorter duration, such as five minutes and this largely results in smoothed data that can cancel out market frictions and yet capture the price variations. 
 
 
 It is possible that for infrequently traded stocks, some time intervals may not contain any trading activity. For heavily traded stocks, the duration can be very small and thus may not provide any consequential information. We will address ways to analyze high-frequency data later in this chapter. To begin with, we discuss the analysis for data aggregated over fixed time intervals. Depending on the size of the interval, the data can be called low frequency or high frequency but the time series methods that we discussed here apply to \textit{all} aggregated data.
@@ -403,7 +403,7 @@ Note that the process $\{Y_t\}$ defined above actually satisfies the relation $Y
 
 \noindent\textbf{General Order Autoregressive Processes} \\
 
-While stock price data exhibit simpler structures such as AR(1) in daily aggregation and MA(1) in smaller time unit shown to have more complex dependencies. These are best captured by higher order models. 
+While stock price data exhibit simpler structures such as AR(1) in daily aggregation and MA(1) in smaller time unit aggregation such as five minutes, the volume of trading is shown to have more complex dependencies. These are best captured by higher order ARMA models. 
 
 Consider the general order AR($p$) process $\{Y_t\}$ defined by
 	\begin{equation}\label{eqn:ytsum}
@@ -529,7 +529,7 @@ If $X_t$ is an ARMA$(p_1,q_1)$ process and $Y_t$ is an ARMA$(p_2,q_2)$ process, 
 \end{thm}
 
 
-These types of models have potential applications in studying aggregate market behavior of several series. Also where the observed series may be viewed as the sum of the true process of interest plus observational error or noise (as in the classical ``signal-plus-noise'' model), and in the use of structural component models where an observed time series is represented as the sum of unobservable components that correspond to factors such as trend, seasonality, stationary variations, and so on. There are modeled more completely via Kalman filter that is presented in Chapter 4. 
+These types of models have potential applications in studying aggregate market behavior of several series. Also where the observed series may be viewed as the sum of the true process of interest plus observational error or noise (as in the classical ``signal-plus-noise'' model), and in the use of structural component models where an observed time series is represented as the sum of unobservable components that correspond to factors such as trend, seasonality, stationary variations, and so on. These are modeled more compactly via Kalman filter that is presented in Chapter 4. 
 
 
 \subsection{Specification and Estimation of ARIMA Models} \hfill
@@ -987,7 +987,7 @@ tailed distribution such as a power-law or Pareto. \\
 than when they tend to rise, thus drawdowns tend to be larger than upward rises. \\
 
 
-These stylized facts are particularly important for risk management of strategies, and how they could be incorporated in trading decisions is still a subject of much research and will be discussed later. The thicker tail distribution warrants that the chance of extreme values are more likely to occur than what is predicted by a normal distribution and the asymmetry indicates that there is a different between positive and negative sides of variance (volatility). 
+These stylized facts are particularly important for risk management of strategies, and how they could be incorporated in trading decisions is still a subject of much research and will be discussed later. The thicker tail distribution warrants that the chance of extreme values are more likely to occur than what is predicted by a normal distribution and the asymmetry indicates that there is a difference between positive and negative sides of variance (volatility). 
 
 
 \section{Time Series Models for Aggregated Data: Modeling the Variance}
@@ -1130,7 +1130,7 @@ intraday returns.
 In this section we will mainly focus on the first item and the others will be discussed in a later section on high frequency data.
 
 
-Consider $r_t = \ln{(p_t) - \ln{(p_{t-1})}}$, return of an asset. We observed that `$r_t$' exhibits no serial correlation. This does not imply that the series `$r_t$' consists of independent observations. The plot of $r_t^2$ given in Figure~\ref{fig:} clearly indicates that volatility tends to cluster over certain time spans. The autocorrelations in Figure~\ref{fig:exchrate} confirms that there is some time dependence for the volatility. In fact, there is some long range dependence that spans up to sixty days. \\
+Consider $r_t = \ln{(p_t) - \ln{(p_{t-1})}}$, return of an asset. We observed that `$r_t$' exhibits no serial correlation. This does not imply that the series `$r_t$' consists of independent observations. The plot of $r_t^2$ given in Figure~\ref{fig:exchrate} clearly indicates that volatility tends to cluster over certain time spans. The autocorrelations in Figure~\ref{fig:exchrate} confirms that there is some time dependence for the volatility. In fact, there is some long range dependence that spans up to sixty days. \\
 
 
 \noindent\textbf{Stylized fact 4:} Volatility clustering: High volatility events tend to cluster in time and this can be measured through positive correlations that exist over several lags.

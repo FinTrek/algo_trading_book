@@ -2,10 +2,10 @@
 
 \chapter{Multivariate Time Series Models}
 
-The methods developed in this chapter are natural extensions of the methods presented in Chapter 2 in the multivariate setting. But the underlying data is of large dimension and hence they present some unique challenges. These include unwieldy estimation problems as well as making meaningful interpretation of the estimates. But these methods are essential to address portfolio construction trading issues. We want to present some basic tools in multivariate regression and tools for dimension-reduction, which provide a foundation for modeling multiple time series. Although multivariate ARMA models are well-studied in the literature, the focus has been on the multivariate (vector) autoregressive (VAR) models which falls neatly in the framework of multivariate regression with constraints on the regression coefficient matrices that account for stationarity. Thus a good understanding of regression will lay a solid foundation for studying VAR models.
+The methods developed in this chapter are natural extensions of the methods presented in Chapter 2 in the multivariate setting. But the underlying data is of large dimension and hence they present some unique challenges. These include unwieldy estimation problems as well as making meaningful interpretation of the estimates. But these methods are essential to address portfolio construction and trading issues. We want to present some basic tools in multivariate regression and tools for dimension-reduction, which provide a foundation for modeling multiple time series. Although multivariate ARMA models are well-studied in the literature, the focus has been on the multivariate (vector) autoregressive (VAR) models which falls neatly in the framework of multivariate regression with constraints on the regression coefficient matrices that account for stationarity. Thus a good understanding of multivariate regression will lay a solid foundation for studying VAR models.
 
 
-In the area of multivariate analysis, there are two broad themes that have emerged over time. one that typically involves exploring the variations in a set of interrelated variables and two involves investigating the simultaneous relationships between two or more sets of variables. In either case, the themes involve explicit modeling of the relationships or dimension-reduction of the sets of variables. The multivariate regression introduced in Section 3.1 and its variants are the preferred tools principal components or canonical correlations are the tools used for addressing dimension-reduction issues. Both act as complementary tools and data analysis may want to make use of these tools for a thorough analysis of multivariate data. 
+In the area of multivariate analysis, there are two broad themes that have emerged over time. one that typically involves exploring the variations in a set of interrelated variables and two, involves investigating the simultaneous relationships between two or more sets of variables. In either case, the themes involve explicit modeling of the relationships or dimension-reduction of the sets of variables. The multivariate regression introduced in Section 3.1 and its variants are the preferred tools for the parametric modeling and descriptive tools such as principal components or canonical correlations are the tools used for addressing dimension-reduction issues (Section 3.2). Both act as complementary tools and data analyst may want to make use of these tools for a thorough analysis of multivariate data. 
 
 
 \section{Multivariate Regression} 
@@ -126,7 +126,7 @@ A related problem of interest is the prediction of values of a new response vect
 	\end{equation}
 
 
-\subsection{Dimension-Reduction via Reduced-Rank Regression}
+\section{Dimension-Reduction via Reduced-Rank Regression}
 
 
 In many practical situations, there is a need to reduce the number of parameters in model (\ref{eqn:5lmyk}) and we approach the problem through the assumption of lower rank of the matrix $C$ in model (\ref{eqn:5lmyk}). More formally, in the model $Y_k=CX_k+\epsilon_k$ we assume that
@@ -137,7 +137,7 @@ The rank condition (\ref{eqn:rankC}) has two related practical implications. Fir
 	\begin{equation}\label{eqn:lprimeC}
 	l_i'C=0, \quad i=1,2,\ldots,(m-r)
 	\end{equation}
-and these restrictions themselves are often not known a priori in the sense that $l_1,\ldots,l_{m-r}$ are unknown. Premultiplying (\ref{eqn:})	by $l_i'$, we have
+and these restrictions themselves are often not known a priori in the sense that $l_1,\ldots,l_{m-r}$ are unknown. Premultiplying (\ref{eqn:5lmyk})	by $l_i'$, we have
 	\begin{equation}\label{eqn:lprimeY}
 	l_i'Y_k=l_i'\epsilon_k.
 	\end{equation}
@@ -148,7 +148,7 @@ The second implication that is somewhat complimentary to (\ref{eqn:lprimeC}) is 
 	\begin{equation}\label{eqn:Ceqab}
 	C=AB
 	\end{equation}
-where $A$ is of dimension $m \times r$ and $B$ is of dimension $r \times n$, but both have rank $r$. Note that the $r$ columns of the left matrix factor $A$ in (\ref{eqn:Ceqab}) can be viewed as a basis for the column space of $C$, while the $r$ rows of $B$ form a basis for the row space. The model (\ref{eqn:}) can then be written as
+where $A$ is of dimension $m \times r$ and $B$ is of dimension $r \times n$, but both have rank $r$. Note that the $r$ columns of the left matrix factor $A$ in (\ref{eqn:Ceqab}) can be viewed as a basis for the column space of $C$, while the $r$ rows of $B$ form a basis for the row space. The model (\ref{eqn:5lmyk}) can then be written as
 	\begin{equation}\label{eqn:ykabxk}
 	Y_k=A(BX_k)+\epsilon_k, \quad k=1,2,\ldots,T
 	\end{equation}
@@ -158,30 +158,27 @@ where $BX_k$ is of reduced dimension with only $r$ components. A practical use o
 As we shall see shortly, reduced-rank estimation will be obtained as a certain reduced-rank approximation of the full-rank least squares estimate of the regression coefficient matrix. Therefore, for presentation of reduced-rank estimation, we first need an important result called the Householder-Young or Eckart-Young Theorem (Eckart and Young, 1936), which presents the tools for approximating a full-rank matrix by a matrix of lower rank. The solution is related to the singular value decomposition of the full-rank matrix. These results form the basis of most of the well-known dimension-reduction techniques such as principal components. \\
 
 
-\noindent \textbf{Result 2:} Let $A$ be a $m \times m$ symmetric matrix with eigenvalues $\lambda_1 \geq \cdots \geq \lambda_m$, and denote the corresponding normalized eigenvectors as $P_1,\ldots,P+m$. The supremum of $\sum_{i=1}^r X_i'AX_i=\text{tr}(X'AX)$, with $X=[X_1,\ldots,X_r]$, over all the sets of $r \leq m$ mutually orthonormal vectors $X_1,\ldots,X_r$ is equal to $\sum_{i=1}^r \lambda_i$ and is attained when the $X_i=P_i$, $i=1,\ldots,r$. \\
+\begin{result}\label{res:2}
+Let $A$ be a $m \times m$ symmetric matrix with eigenvalues $\lambda_1 \geq \cdots \geq \lambda_m$, and denote the corresponding normalized eigenvectors as $P_1,\ldots,P+m$. The supremum of $\sum_{i=1}^r X_i'AX_i=\text{tr}(X'AX)$, with $X=[X_1,\ldots,X_r]$, over all the sets of $r \leq m$ mutually orthonormal vectors $X_1,\ldots,X_r$ is equal to $\sum_{i=1}^r \lambda_i$ and is attained when the $X_i=P_i$, $i=1,\ldots,r$. 
+\end{result}
 
 
 The eigenvectors $P_i$ are (essentially) unique, of course, if the eigenvalues $\lambda_i$ are distinct, but the choice of eigenvectors will not be unique if some eigenvalues among the first $r$ are not distinct. \\
 
 
-\noindent \textbf{Result 3:} Let $S$ be a matrix of order $m \times n$ and of rank $m$. The Euclidean norm, $\text{tr}[(S-P)(S-P)']$, is minimum among matrices $P$ of the same order  as $S$ but of rank $r$ ($\leq m$), when $P=MM'S$, where $M$ is $m \times r$ and the columns of $M$ are the first $r$ (normalized) eigenvectors of $SS'$, that is, the normalized eigenvectors corresponding to the $r$ largest eigenvalues of $SS'$. \\
+\begin{result} \label{res:3} 
+Let $S$ be a matrix of order $m \times n$ and of rank $m$. The Euclidean norm, $\text{tr}[(S-P)(S-P)']$, is minimum among matrices $P$ of the same order  as $S$ but of rank $r$ ($\leq m$), when $P=MM'S$, where $M$ is $m \times r$ and the columns of $M$ are the first $r$ (normalized) eigenvectors of $SS'$, that is, the normalized eigenvectors corresponding to the $r$ largest eigenvalues of $SS'$. 
+\end{result}
 
 
 \noindent \textbf{Remark---Singular Value Decomposition.} The positive square roots of the eigenvalues of $SS'$ are referred to as the singular values of the matrix $S$. In general, an $m \times n$ matrix $S$, of rank $s$, can be expressed in the \emph{singular value decomposition} as $S=V \Lambda U'$, where $\Lambda=\text{diag}(\lambda_1,\ldots,\lambda_s)$ with $\lambda_1^2 \geq \cdots \geq \lambda_s^2 >0$ being the nonzero eigenvalues of $SS'$, $V=[V_1,\ldots,V_s]$ is an $m \times s$ matrix such that $V'V=I_s$, and $U=[U_1,\ldots,U_s]$ is $n \times s$ such that $U'U=I_s$. The columns $V_i$ are the normalized eigenvectors of $SS'$ corresponding to the $\lambda_i^2$, and $U_i=\frac{1}{\lambda_i}S'V_i$, $i=1,\ldots,s$. \\
 
 
-We restrate the multivariate regression model before we present with the esitmation of the relevant parameters. From (\ref{eqn:ykabxk}), the reduced-rank regression model is 
-	\begin{equation}\label{eqn:ykabxk2}
-	Y_k=A(BX_k)+\epsilon_k, \quad k=1,2,\ldots,T
-	\end{equation}
-where $A$ is of dimension $m \times r$, $B$ of dimension $r \times n$ and the vectors $\epsilon_k$ are assumed to be independent with mean zero and covariance matrix $\Sigma_{\epsilon\epsilon}$, where $\Sigma_{\epsilon\epsilon}$ is positive-definite. 
-
-
-For ML estimation of model (\ref{eqn:ykabxk2}), ket $\mathbf{Y}=[Y_1,\ldots,Y_T]$ and $\mathbf{X}=[X_1,\ldots,X_T]$, where $T$ denotes the number of vector observations. Assuming the $\epsilon_k$ are independent and identically distributed (iid), following a multivariate normal distribution with mean 0 and covariance matrix $\Sigma_{\epsilon\epsilon}$, the solution is given as 
+For ML estimation of model (\ref{eqn:ykabxk}), let $\mathbf{Y}=[Y_1,\ldots,Y_T]$ and $\mathbf{X}=[X_1,\ldots,X_T]$, where $T$ denotes the number of vector observations. Assuming the $\epsilon_k$ are independent and identically distributed (iid), following a multivariate normal distribution with mean 0 and covariance matrix $\Sigma_{\epsilon\epsilon}$, the solution is given as 
 	\begin{equation}\label{eqn:covarmatrixsol}
 	\hat{A}^{(r)}=\Gamma^{-1/2}[\hat{V}_1,\ldots,\hat{V}_r], \quad \hat{B}^{(r)}[\hat{V}_1,\ldots,\hat{V}_r]' \Gamma^{1/2} \hat{\Sigma}_{yx} \hat{\Sigma}_{xx}^{-1},
 	\end{equation}
-where $\hat{\Sigma}_{yx}=(1/T)\mathbf{Y}\mathbf{X}'$, $\hat{\Sigma}_{xx}=(1/T)\mathbf{X}\mathbf{X}'$, and $\hat{V}_j$ is the eigenvector that corresponds to the $j$th largest eigenvalue $\hat{\lambda}_j^2$ of $\Gamma^{1/2}\hat{\Sigma}_{yx} \hat{\Sigma}_{xx}^{-1} \hat{\Sigma}_{xy}\Gamma^{1/2}$, with the choice $\Gamma=\tilde{\Sigma}_{\epsilon\epsilon}^{-1}$. The solution is based on the singular value decomposition of the standardized matrix $\tilde{\Sigma}_{\epsilon\epsilon}^{-1/2} \tilde{c} \hat{\Sigma}_{xx}^{1/2}$, where $\tilde{c}$ is the least-square estimate of full-rank $C$. The estimates of the constraints, $\ell_j$'s are obtained from the smallest $(m-r)$ eigenvalues of the same matrix and scaled as, $\hat{\ell}_j'=\hat{V}_j\, \Gamma^{1/2}$. 
+where $\hat{\Sigma}_{yx}=(1/T)\mathbf{Y}\mathbf{X}'$, $\hat{\Sigma}_{xx}=(1/T)\mathbf{X}\mathbf{X}'$, and $\hat{V}_j$ is the eigenvector that corresponds to the $j$th largest eigenvalue $\hat{\lambda}_j^2$ of $\Gamma^{1/2}\hat{\Sigma}_{yx} \hat{\Sigma}_{xx}^{-1} \hat{\Sigma}_{xy}\Gamma^{1/2}$, with the choice $\Gamma=\tilde{\Sigma}_{\epsilon\epsilon}^{-1}$. The solution is based on the singular value decomposition of the standardized matrix $\tilde{\Sigma}_{\epsilon\epsilon}^{-1/2} \tilde{C} \hat{\Sigma}_{xx}^{1/2}$, where $\tilde{c}$ is the least-square estimate of full-rank $C$. The estimates of the constraints, $l_j$'s are obtained from the smallest $(m-r)$ eigenvalues of the same matrix and scaled as, $\hat{l}_j'=\hat{V}_j' \, \Gamma^{1/2}$. 
 
 
 It should be mentioned, perhaps, that estimation results are sensitive to the choice of scaling of the response variables $Y_k$, and in applications it is often suggested that the component variables $y_{ik}$ be standardized to have unit variances before applying the LS procedure. \\
@@ -209,7 +206,7 @@ The principal component problem can be represented as a reduced-rank problem, in
 	\begin{equation}\label{eqn:ykabyk}
 	Y_k= ABY_k + \epsilon_k
 	\end{equation}
-(with $X_k \equiv Y_k$). From the solutions of ?, by setting $\Gamma=I_m$, we have $A^{(r)}=[V_1,\ldots,V_r]$ and $B^{(r)}=V'$ because $\Sigma_{yx}=\Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $\ell_i$ in (\ref{eqn:varycovy}) are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$ in (\ref{eqn:ykabyk}). If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_k$ appear to be superfluous but the model (\ref{eqn:ykabyk}) could be a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \\
+(with $X_k \equiv Y_k$). From the solutions of Result \ref{res:3}, by setting $\Gamma=I_m$, we have $A^{(r)}=[V_1,\ldots,V_r]$ and $B^{(r)}=V'$ because $\Sigma_{yx}=\Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $\ell_i$ in (\ref{eqn:varycovy}) are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$ in (\ref{eqn:ykabyk}). If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_k$ appear to be superfluous but the model (\ref{eqn:ykabyk}) could be a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \\
 
 
 \noindent \textbf{Canonical Correlation Analysis:} \\
@@ -236,39 +233,15 @@ where $V_*=[V_1,^*,\ldots,V_r^*]$ and $V_j^*$ is the (normalized) eigenvector co
 
 Denoting by $g_j'$ and $h_j'$ the $j$th rows of the matrices $G$ and $H$, respectively, the $j$th pair of canonical variates are defined to be $\xi_j=g_j'X$ and $\omega_j=h_j'Y$, $j=1,2,\ldots,m$ ($m \leq n$). The correlation between $\xi_j$ and $\omega_j$ is the $j$th canonical correlation coefficient and hence, since $\Cov(\eta_j,\omega_j)={V_j^*}' R_*V_j^*=\rho_j^2$, $\Var(\xi_j)={V_j^*}' R_*V_j^*=\rho_j^2$, and $\Var(\omega_j)={V_j^*}' V_j^*=1$, we have $\Corr(\xi_j,\omega_j)=\rho_j$ and the $\rho_j$'s are the canonical correlations between $X$ and $Y$. The canonical variates possess the property that $\xi_1$ and $\omega_1$ have the largest correlation among all possible linear combinations of $X$ and $Y$, $\xi_2$ and $\omega_2$ have the largest possible correlation among all linear combinations of $X$ and $Y$ that are uncorrelated with $\xi_1$ and $\omega_1$ and so on. We shall compare the Result 4 with Result 3. Because $\Sigma_{\epsilon\epsilon}=\Sigma_{yy}-\Sigma_{yx}\Sigma_{xx}^{-1}\Sigma_{xy}$, the correspondence with results for the choice $\Gamma=\Sigma_{yy}^{-1}$ is fairly simple. It can be shown that,
 	\begin{equation}\label{eqn:rhojsqlambj}
-	\rho_j^2=\lambda_j^2/(1+\lambda_j)^2.
+	\rho_j^2=\lambda_j^2/(1+\lambda_j^2).
 	\end{equation}
 and $G$ and $H$ matrices can be obtained from the rescaled versions of $\hat{V}$, used in Result 3. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 \section{Multiple Time Series Modeling}
 
 
-Multiple time series analysis is concerned with modeling and estimation of dynamic relationships among m related time series $y_{1t},\ldots,y_{mt}$, based on observations on these series over $T$ equally spaced time points $t=1,...,T$, and also between these series and potential exogenous time series variables $x_{1t},\ldots,x_{nt}$, observed over the same time period. We shall explore the use of these techniques in statistical arbitrage in leveraging multiple markets in Chapter 3. We first introduce a general model for multiple time series modeling, but will specialize to vector autoregressive (VAR) models for more detailed investigation. As some concepts are similar to those of the univariate models discussed in Section 2.3, the presentation will be brief.
+Multiple time series analysis is concerned with modeling and estimation of dynamic relationships among m related time series $y_{1t},\ldots,y_{mt}$, based on observations on these series over $T$ equally spaced time points $t=1,...,T$, and also between these series and potential exogenous time series variables $x_{1t},\ldots,x_{nt}$, observed over the same time period. We shall explore the use of these techniques in statistical arbitrage in leveraging multiple markets in Chapter 5. We first introduce a general model for multiple time series modeling, but will specialize to vector autoregressive (VAR) models for more detailed investigation. As some concepts are similar to those of the univariate models discussed in Section 2.3, the presentation will be brief.
 
 
 Let $Y_t=(y_{1t},\ldots, y_{mt})'$ be an $m \times 1$ multiple time series vector of response variables and let $X_t=(x_{1t}, \ldots, x_{nt})'$ be an $n \times 1$ vector of input or predictor time series variables. Let $\epsilon_t$ denote an $m \times 1$ white noise vector of errors, independently distributed over time with $E(\epsilon_t)=0$ and $\Cov(\epsilon_t)=\Sigma_{\epsilon\epsilon}$, a positive-definite matrix. We consider the multivariate time series model
@@ -320,10 +293,12 @@ Here $\tilde{\Sigma_i}$ is the maximum likelihood estimate of $\Sigma_i$ where t
 Two important properties of VAR$(p)$ model models are worth noting and will be used later. First modeling several variables jointly usually results in lower order vector model as the marginal models for the individual variables can result in a higher order of autoregressive moving average terms that may be hard to interpret. \\
 
 
-\noindent \textbf{Result 1:} If $Y_t$ is a $m$-dimensional series following VAR$(p)$, the components of $Y_t$ follow ARMA with maximal orders $[mp,(m-1)p]$. Second in many practical situations a certain linear combination of $Y_t$ is important to study, particularly in dimension reduction aspect whether using the principal components or canonical variables. The linear combination can still exhibit time series dependence. \\
+\begin{result} If $Y_t$ is a $m$-dimensional series following VAR$(p)$, the components of $Y_t$ follow ARMA with maximal orders $[mp,(m-1)p]$. Second in many practical situations a certain linear combination of $Y_t$ is important to study, particularly in dimension reduction aspect whether using the principal components or canonical variables. The linear combination can still exhibit time series dependence. 
+\end{result}
 
 
-\noindent \textbf{Result 2:} Let $Y_t \sim \text{VAR}(p)$, then $Z_t=l'Y_t$, where $l$ is a $m \times 1$ known vector, follows ARMA with maximum orders $[mp,(m-1)p]$. 
+\begin{result} Let $Y_t \sim \text{VAR}(p)$, then $Z_t=l'Y_t$, where $l$ is a $m \times 1$ known vector, follows ARMA with maximum orders $[mp,(m-1)p]$. 
+\end{result}
 
 
 \section{Co-integration, Co-movement and commonality in Multiple Time Series\label{sec:comts}}
@@ -450,6 +425,7 @@ Critical values of the asymptotic distribution of (\ref{eqn:2negT}) have been ob
 
 \section{Illustrative Examples}
 
+\section{Multivariate GARCH Models}
 
 \section{Exercises}
 
