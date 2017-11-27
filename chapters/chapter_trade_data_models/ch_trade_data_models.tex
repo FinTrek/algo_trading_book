@@ -8,15 +8,85 @@ One of the challenging aspects of execution unlike other algorithmic trading sub
 
 One could (and in some cases actually should) apply different strategies to achieve the same benchmark for different types of stocks and different days or time of day but that is never done as it would be completely unwieldy and prohibitively expensive to build and maintain. What is one to do?
 
-The common practitioner's approach is to parametrize many of the trading decisions using normalizing analytics, variables that help adapt the decision to a particular situation. This section will provide a review of the most common analytics and give pointers with regards to modeling approaches for each. The subject is quite extensive and would likely fill a medium-sized book on it's own. Thus in this section we'll only be able to provide a cursory treatment of the subject but it should be sufficient as a starting point for anybody attempting to build basic Execution Algorithms and a foundation for deepening the subject.
+The common practitioner's approach is to parametrize many of the trading decisions using normalizing features, variables that help adapt the decision to a particular situation. This section will provide a review of the most common analytics and give pointers with regards to modeling approaches for each.  
+
+The subject is quite extensive and would likely fill a medium-sized book on it's own. Additionally this subject, while extremely important in practice has gotten very limited treatment in academic research.
+
+Thus ,while probably not scientifically satisfying, in this section we are forces to provide only a relatively coarse treatment of the subject from a practitioner perspective. It should however be sufficient as a starting point for anybody attempting to build basic Execution Algorithms and a foundation for deepening the subject.
+
 \subsection{Basic Analytics}
-\subsubsection{Daily Volume}
-\subsubsection{Microstructure Analytics}
-\subsubsection{Venue volume distribution}
-\subsection{Static Profiles}
-\subsubsection{Volume Profiles}
-\subsubsection{Volatility Profiles}
-\subsubsection{Spread Profiles}
+\subsubsection{Order Size  Normalization: The Daily Volume}
+A trader needs to execute an order for 1M shares of XYZ. Is this a big order she will have to carefully manage or a tiny order she can simply "fire and forget".  Intuitively due to large difference in stock characteristics and liquidity order size must be clearly viewed as a relative measure. The most commonly used by practitioners is the Average Daily Volume (ADV). Even a simple measure like this is cause of a lot of confusion lack of standard approaches and while the term ADV has a specific mathematical meaning it should be considered as a generic term for metrics that forecast the expected next day volume of a stock. 
+
+As a baseline metric that 64 days Mean or Median daily volume are probably the most commonly used metric in the investment community. The 64 days horizon reflects length of a quarterly earning cycle and thus it's viewed as incorporating  all the seasonal effects of the daily volume.
+ 
+%TBD Might want to have a graph of an 64d volume for a stable stock to show the spikes in various predictable places (earnings day, special days, etc)?%
+
+%TODO Academic research on Daily Volume
+
+\subsubsection{Time-scale Normalization }
+Trading dynamics have an intrinsic timescale that varies significantly across the stock universe and it is often important to take this into consideration. For instance many of the normalizing analytics we'll discuss in the next section are based on intraday averages. The sampling bin size used should not be the same for each stock or one would have spurious statistical effects but rather it should sample at a rate that is consistent with how frequently things change.  As a trivial example measuring the average number of trades every 1s for a very illiquid stock that trades 10 times in a day would clearly have little practical value. 
+
+Evaluating the state of an order during execution should also take the intrisic timescale (often called Characteristic Time) into consideration. For example on would not post a slice of the order passively and re-evaluate his decision after 1s if in average the queue in front for the order takes 3 minutes to clear.
+
+Practitioner have found that a good normalization variable for such timescale is to look at the median time it takes for the quote to move. This metric is often called Turnover Time. 
+
+Turnover time can be defined as:
+%TODO what is the right way to mathematically represent turnover time?
+
+While clearly more sophisticated approaches can and have been the important thing is to use it in a consistent fashion across  the various concerns. That usually leads to a much more stable behavior and improved decision making.
+
+\subsubsection{Return Normalization: Quote Volatility}
+%TODO
+
+
+\subsubsection{Microstructure Normalization}
+%% One critical concern one has to take in trading, in particular when trading very large sizes,  is the minimization of information leakage. Any unusual trading pattern that can be measured in the market data that could reveal to other participant that there is a large buyer or seller in the market could have dramatic deleterious effects on the the stock price. As such it is important to mask the intention by using "standard" behavior. This is another common use of normalizing variables. %%
+
+The following is a brief overview of these decision and what analtyics are commonly used.
+%TODO
+
+\subsection{Intraday Normalization: Profiles}
+Incorporating intraday seasonality it's a critical component of competent decision making in execution strategies. Intraday seasonality arise from primarily behavioral and practical reasons around trading discontinutities such as the open and the close (and the lunch break period in certain asian markets) and other scheduled events ( e.g. the US open for European markets). Information dissemination tends to cluster around such times and so then does trading activity. This is compounded by various conventions on how to value certain instruments and other benchmarks. In this section with ignore the fact that certain markets have lunch breaks. This clearly complicates but does not change the overall picture or approach and it's a relatively trivial extension to the treatment of profiles. 
+  
+The standard practice to incorporate that is to normalize decisions via intrarday profiles, essentially functions (usually discrete) that provides the value either absolute but more often relative (either as a multiplier or as a percentage) of some daily measure. While most microstructure variables showcase some of this seasonality the most used profiles are:
+\begin{itemize}
+\item Volume Distribution: The percentage of the expected daily volume that will trade in a particular bin.
+\item Volatility Distribution: The percentage of the expected daily volatility that will trade in a particular bin.
+\item Spread Multiplier: The percentage deviation from the average spread in a particular bin
+\end{itemize}
+
+Of particular importance is the Volume Distribution (or profile) as this is the single most important variable used to create a VWAP strategy. For such a strategy, well see, that the volume profile is directly used as the execution schedule for the strategy. This will ensure that the strategy trades a proportionally larger slice of the order at times when more  volume is expected to trade and thus reduce the risk of trading at prices away from the period VWAP.
+
+Volume is most invariably shaped like a flattened U. Volatility and spread both are shaped vaguely exponentially. Volume is clustered around the opening auction(s) and the first several minutes after the open. This makes intuitive sense as the market is re-opening after a trading halt and all new information accrued during the break needs to be incorporated. Spread and Volatility are also large over this period signifying the increased uncertainty around the stock valuation. After this period of heightened activity trading settles in and volume flattens out only to pick up again in the period before the closing auction as investment firms that  
+
+
+\paragraph{Building Intraday Profiles}
+Building stable profiles presents non trivial challenges at multiple levels both quantitative, logistical and data related. It will often boil down to matter of trade-offs, data availability, and cost to build and maintain. We provide some hopefully valuable pointers that should allow the reader to navigate around the hurdles and avoid common pitfalls
+
+\subparagraph{Number of Profile Bins}
+The decision of the # of profile bins is a trade-off between required precision and granularity during the most active periods of the day and the lack of stability due to lack of data/change in each bin. 1 minute bin is the most common choice in the industry.
+
+\subparagraph{Per Stock Profiles vs. Clustered Profiles}
+One of the first decisions to be made is whether to create individual profiles for each stock in the universe or use some sort of clustering/grouping. With a universe of several thousand different trading instrument it might be impractical to build and maintain stable individual profiles. Additionally the stability of the profiles is important in order for their use to be effective. Overly illiquid and slowly moving stock will usually make for poor single stock profiles.
+A practical and common approach is too use a statistical clustering approach using the L2 norm as distance measure and using a grid search to identify the number of clusters that provides good separation using for example the elbow method (TBD add reference)
+
+\subparagraph{Fitting Approaches}
+There are many modeling approaches that are used in practice but there is limited systematic research in this space. 
+%TODO Add pointers to exeisting research
+
+While this would clearly fit within the supervised learning family of method more often than not no actual fitting takes place but some form of per-bin averaging over a certain length of history after which some form of smoothing is applied.
+
+Care must be take to remove from the data-set days with predictable differences in profile shape. These "special days" should be modeled separately and we'll provide some pointers in a later paragraph. If one uses some form of regression model the special day could be incorporated as a dummy variable.
+
+\subparagraph{Length of History}
+Another common open question is the length of history that should be used. The more data is used the more stable to profiles are however unless great care is given to various seasonal effects and continues changes in market microstructure there is the risk for the profile no to incorporate more recent shifts. This is a particular concern in recent times as the explosion of ETF trading has been consistently shifting more and more volume towards the close. The length of history can be used as a hyperparameter to be trained on a per cluster basis.
+
+\subparagraph{Volume Profile Smoothing}
+intrady volume profiles tend to be extremely noisy and require smoothing to be effective. It was estimated (reference?) that without smoothing the volume profile perform worse than considering completely flat profiles. However care mus be taken to avoid smoothing over real behavioral discontinuities (e.g there is a predictable spike in volume in European profiles coincident with the US opening). These spikes usually are preceded by a period of reduce trading activity due to traders waiting for the predictable event. So care has to be take not to smooth these spikes to avoid spread this over previous bins that could cause the algorithm to overtrade during the period of reduced trading. On common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and the re-applying the spike afterward. It has been shown that this approach improves the overall predictability of the profile
+
+\subparagraph{Special Days}
+Special days, as previously discussed, present additional challenges due to the limited number of datapoints available (e.g triple witching occurs only 4 time a year). So using larger clusters (one cluster as a limit) is often the only option. In order to maintain some of the  cluster characteristics a common approach is to use a "difference" profile.
 
 \subsection{Advanced Analytics}
 \subsubsection{Remainder of the Day Volume}
