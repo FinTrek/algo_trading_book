@@ -8,10 +8,7 @@ With the advent of electronic trading a vast amount of data on orders is now rec
 The movement whether it is due to pure market frictions or due to information related to a stock is captured through a drift term that needs to be carefully monitored. Because time series models for discrete time units are well-studied and are still widely used by the traders in the form of aggregated price-bars, we focus on these methods in Sections 2--3 to 2.6. We broadly classify these methods into modeling the mean (return) and into modeling the variance (volatility). As these techniques are well-documented and can be found elsewhere, we only present a brief overview. The established facts about the stock returns and variances are reviewed along with the methodology as these will provide expected benchmarks; successful algorithms as one would notice, generally exploit the deviations from these benchmarks.
 
 
-In Section 2.7, the time series models are augmented with other stock-related information such as volume. The flow of volume is taken to provide indirectly the flow of information about a stock. As trading now is taking a portfolio point of view, it is important to study multiple stocks together and discrete multiple time-series models provide a framework and these are presented in Section 2.9. Models that deal with the print-processes and the high-frequency analytical tools are covered in the rest of the chapter. 
-
-
-\section{Trades and Quotes Data and their Aggregation: From Point Processes to Discrete Time Series}
+\section{Trades and Quotes Data and their Aggregation: From Point Processes to Discrete Time Series \label{sec:tradesandquotes}}
 
 
 In its simplest form, the trading activities of equity through an exchange that opens at 9:30~a.m. and closes at 4~p.m. can be described by a sequence of time stamps (``ticks'') $t_0 < t_1 < \cdots < t_n$ and the ``marks'' $y_i$ at time $t_i$, in which $t_0$ denotes 9:30~a.m. and after and $t_n$ denotes the time of the last trade that occurs before or at 4~p.m. The marks $y_i$ can be price, volume of an order placed on either the buy or sell side of the trade and in general can represent the characteristics of the order book at the time of $i$th activity (see Figure~\ref{fig:tradeactline}). The events with the marks associated with the ticks can be described mathematically by a marked point process. But our goal here is to first show how these data can be aggregated over regularly spaced time intervals and methods for linear homogeneous time series will be described to analyze the aggregated data and later some tools that are relevant for the analysis of point processes will be presented.
@@ -60,6 +57,9 @@ To illustrate the aggregation methods, we will initially focus on price of the s
 \end{itemize}
 
 
+The typical daily data (also called price bars) that is available from popular sources such as Yahoo finance provide information on opening, closing, high and low prices along with the volume. This type of aggregation can be done for shorter duration, such as five minutes and this largely results in smoothed data that can cancel out market frictions and yet capture the price variations. 
+
+
 It is possible that for infrequently traded stocks, some time intervals may not contain any trading activity. For heavily traded stocks, the duration can be very small and thus may not provide any consequential information. We will address ways to analyze high-frequency data later in this chapter. To begin with, we discuss the analysis for data aggregated over fixed time intervals. Depending on the size of the interval, the data can be called low frequency or high frequency but the time series methods that we discussed here apply to \textit{all} aggregated data.
 	\begin{figure}[!ht]
 	\includegraphics[width=4in]{chapters/chapter_uvts/figures/33d1.jpg}
@@ -100,9 +100,9 @@ Let $p_{it}$ denote the price of the $i$th asset at time $t$ and let $p_t = (p_{
 Predicting stock market behavior has been studied extensively starting in the early 20th century. Cowles (1933, 1944)~\cite{cow2,cow1} evaluated the performance of the stock market forecasters. Analyzing the performance of several financial services that made some 7500 recommendations on common stocks over a period, January 1, 1925 to July 1, 1952, it was pointed out the record was worse than the performance of average common stock by 1.43\% annually. Thus `buy-and-hold' strategy out-performed the stock picking strategies of those days. In fact, a much harsher assessment is made: ``A review of the various statistical tests, applied to the records for this period, of these 24 forecasters, indicates that the most successful records are little, if any, better than what might be expected to result from pure chance. There is some evidence, on the other hand, to indicate that the least successful records are worse than what could reasonably be attributed to chance.'' Many of these comments are still valid and have stood the test of the time. Yet, we will demonstrate in this book that there are opportunities for statistical arbitrage. The key is to have access to relevant information and use the appropriate techniques to exploit this in a timely manner. 
 
 
-\section{Time Series Models for Aggregated Data: Modeling the Mean}
+\section{Time Series Models for Aggregated Data: Modeling the Mean \label{sec:modelingthemean}}
 
-In this section we present a broad overview of the time series models for data aggregated over discrete time intervals. 
+In this section we present a broad overview of the time series models for data aggregated over discrete time intervals. This data as mentioned in Section~\ref{sec:tradesandquotes} is called price bars and the methodologies discussed in Section~\ref{sec:modelingthemean} here apply to any aggregated data for fixed time unit of aggregation that is of equal length. 
 
 \subsection{Stochastic Processes: Some Properties} \hfill
 
@@ -385,7 +385,7 @@ For time series which may exhibit seasonal correlation, such as certain financia
 	\[	
 	W_t = \mu + \epsilon_t - \tau_S \, \epsilon_{t-S}
 	\]
-Then we find that $\gamma(0)= \sigma^2(1+\tau_S^2)$, $\gamma(S) = - \tau_S / (1+\tau_S^2)$,  and $\rho(j)=0$ for all $j \neq 0, \pm S$. Hence this process exhibits nonzero autocorrelation only at the seasonal lag $S$. This model is known as a seasonal MA model of seasonal order 1 (and period $S$), and its generalizations are useful when modeling seasonal differences $W_t = Y_t - Y_{t-S}$ of an original seasonal time series $\{Y_t\}$.  In the context of financial data, this could be used to model the so called Monday and Friday effects.
+Then we find that $\gamma(0)= \sigma^2(1+\tau_S^2)$, $\gamma(S) = - \tau_S / (1+\tau_S^2)$,  and $\rho(j)=0$ for all $j \neq 0, \pm S$. Hence this process exhibits nonzero autocorrelation only at the seasonal lag $S$. This model is known as a seasonal MA model of seasonal order 1 (and period $S$), and its generalizations are useful when modeling seasonal differences $W_t = Y_t - Y_{t-S}$ of an original seasonal time series $\{Y_t\}$.  In the context of financial data, this could be used to model the so called Monday and Friday effects on price and vaolatility.
 \end{ex}      
 
 
@@ -397,12 +397,13 @@ Consider the process (\ref{eqn:yt}) with coefficients given by $\psi_j = \phi^j$
 In particular, $\gamma(0) = \Var(Y_t) = \sigma^2_{\epsilon}/(1-\phi^2)$. Hence the autocorrelation function of $\{Y_t\}$ is $\rho(s)= \gamma(s)/\gamma(0)= \phi^s$, $ s \geq 0$ which declines exponentially (geometrically) as the lag $s$ increases.
 
 
-Note that the process $\{Y_t\}$ defined above actually satisfies the relation $Y_t= \phi \, Y_{t-1} + \delta+\epsilon_t$, $t=\ldots,-1,0,1,\ldots$, with $\delta = \mu(1-\phi)$. This process is called a first-order autoregressive process, and is a special case of the general class of autoregressive processes which is discussed below. Also note that if the value of $\phi$ in the above is taken as  $\phi = 1$, then the arguments for stationarity of $\{Y_t\}$ no longer hold, since $\sum_{j=0}^{\infty} |\psi_j| = 1+1+\cdots$ does not converge. We see that in this case the process is actually a (nonstationary) random walk satisfying the relation  $Y_t = Y_{t-1}+\epsilon_t$, a common representation of the behavior of the stock prices under the efficient marker hypothesis. 
+Note that the process $\{Y_t\}$ defined above actually satisfies the relation $Y_t= \phi \, Y_{t-1} + \delta+\epsilon_t$, $t=\ldots,-1,0,1,\ldots$, with $\delta = \mu(1-\phi)$. This process is called a first-order autoregressive process, and is a special case of the general class of autoregressive processes which is discussed below. Also note that if the value of $\phi$ in the above is taken as  $\phi = 1$, then the arguments for stationarity of $\{Y_t\}$ no longer hold, since $\sum_{j=0}^{\infty} |\psi_j| = 1+1+\cdots$ does not converge. We see that in this case the process is actually a (nonstationary) random walk satisfying the relation  $Y_t = Y_{t-1}+\epsilon_t$, a common representation of the behavior of the stock prices under the efficient market hypothesis. 
 \end{ex}
 
 
 \noindent\textbf{General Order Autoregressive Processes} \\
 
+While stock price data exhibit simpler structures such as AR(1) in daily aggregation and MA(1) in smaller time unit aggregation such as five minutes, the volume of trading is shown to have more complex dependencies. These are best captured by higher order ARMA models. 
 
 Consider the general order AR($p$) process $\{Y_t\}$ defined by
 	\begin{equation}\label{eqn:ytsum}
@@ -507,7 +508,7 @@ or $Y_t = W_t + W_{t-1} + W_{t-2} + \cdots$. Using the differencing operator not
 The differencing operation is useful in eliminating ``random changes in level'' or ``random trends'' in a (homogeneous) nonstationary series $\{Y_t\}$, thus transforming the series to a stationary series $W_t = Y_t - Y_{t-1}$. Differencing is a more general method of removing trend behavior in a series than to fit a deterministic trend function to the series by regression methods. Differencing is appropriate to apply to processes which contain a stochastic trend component (not a deterministic trend component), and stochastic trend behavior is often more likely to be present in financial time series than deterministic trend behavior.
 
 
-Some observations are in order. First, if a series does not require differencing, over differencing will lead to unnecessarily more complicated models. Second, the differencing can sometimes wipe out all the information leaving series with white noise behavior. Third, there are identifiability issues in ARMA models; it is possible to model the same series with various ARMA structures, but we will follow the principle of parsimony in modeling. 
+Some observations are in order. First, if a series does not require differencing, over differencing will lead to unnecessarily more complicated models. Second, the differencing can sometimes wipe out all the information leaving series with white noise behavior. Third, there are identifiability issues in ARMA models; it is possible to model the same data with various ARMA structures, but we will follow the principle of parsimony in modeling. 
 
 
 \begin{ex}[Autoregressive Integrated Moving Average Model]
@@ -528,7 +529,7 @@ If $X_t$ is an ARMA$(p_1,q_1)$ process and $Y_t$ is an ARMA$(p_2,q_2)$ process, 
 \end{thm}
 
 
-These types of models have potential applications in studying aggregate market behavior of several series. Also where the observed series may be viewed as the sum of the true process of interest plus observational error or noise (as in the classical ``signal-plus-noise'' model), and in the use of structural component models where an observed time series is represented as the sum of unobservable components that correspond to factors such as trend, seasonality, stationary variations, and so on. We will provide financial time series examples later in the chapter.
+These types of models have potential applications in studying aggregate market behavior of several series. Also where the observed series may be viewed as the sum of the true process of interest plus observational error or noise (as in the classical ``signal-plus-noise'' model), and in the use of structural component models where an observed time series is represented as the sum of unobservable components that correspond to factors such as trend, seasonality, stationary variations, and so on. These are modeled more compactly via Kalman filter that is presented in Chapter 4. 
 
 
 \subsection{Specification and Estimation of ARIMA Models} \hfill
@@ -582,7 +583,7 @@ We review some general characteristics of the sample and theoretical ACF and PAC
 \end{enumerate}
 
 
-Although the sample autocorrelation and partial autocorrelation functions are extremely useful in model identification, there are sometimes cases involving mixed ARMA models where they will not provide unambiguous results. There has been considerable interest in developing additional tools for use at the model identification stage. Interested readers can refer to standard texts in time series such as Shumway and Stoffer (2011)\cite{shumway2011arima}. \\
+Although the sample autocorrelation and partial autocorrelation functions are extremely useful in model identification, sometimes there are cases involving mixed ARMA models where they will not provide unambiguous results. There has been considerable interest in developing additional tools for use at the model identification stage. Interested readers can refer to standard texts in time series such as Shumway and Stoffer (2011)\cite{shumway2011arima}. \\
 
 
 \noindent\textit{Use of model selection criteria}. Another approach to model selection is the use of information criteria such as AIC proposed by Akaike (1974)~\cite{akaike74} or the BIC of Schwarz (1978)~\cite{sch78}. In the implementation of this approach, a range of potential models is estimated and for each, a criterion such as AIC or BIC (normalized by sample size $T$), given by
@@ -651,7 +652,7 @@ We can eliminate $\sigma_{\varepsilon}^2$ from the above two equations and obtai
 
 
 \begin{ex}[AR($p$) Model]
- For the AR($p$) model, the method of moments estimates of the $\phi_1$ parameters come directly from solving the system of the first $p$ sample Yule-Walker equations in \cite{berlo}.
+ For the AR($p$) model, the method of moments estimates of the $\phi_1$ parameters come directly from solving the system of the first $p$ sample Yule-Walker equations in \ref{eqn:rhos2}.
 
 In matrix notation, these equations can be written as $R_p\hat{\phi} = R_p^{-1}r_p$. These estimates are generally known as the \textit{Yule-Walker estimates} for the AR($p$) model. The corresponding estimate of $\sigma_{\varepsilon}^2$ is based on equation $\sigma_{\varepsilon}^2 = \gamma(0)[1 - \phi_1\rho(1) - \cdots - \phi_p\rho(p)]$, so that the estimate is $\hat{\sigma}_{\varepsilon}^2 = \hat{\gamma}(0)[1 - \hat{\phi}_1\hat{\rho}(1) - \cdots - \hat{\phi}_p\hat{\rho}(p)],$ where $\hat{\gamma}(0)$ is the sample variance of the series $W_t$.
 \end{ex}
@@ -742,7 +743,7 @@ and the conditional log-likelihood function is given by
 	\begin{equation}\label{eqn:llowstar}
 	l_*(\phi,\theta,\delta,\sigma^2) = -\frac{T - p}{2} \log(\sigma^2) - \frac{1}{2\sigma^2}S_*(\phi,\theta,\delta),
 	\end{equation}
-where $S_* = S_*(\phi,\theta,\delta) = \sum_{t=p+1}^T\varepsilon_t^{02}$ is the condition sum of squares function. The conditional MLE or conditional LSE of $\phi,\theta$ and $\delta$ are the values which minimizes $S_*$, and the corresponding estimate of $\sigma^2$ is $\hat{\sigma}^2 = [1/(T - p)]\sum_{t=p+1}^T \hat{\varepsilon}^{02} = [1/(T - p)]S_*(\hat{\phi},\hat{\theta},\hat{\delta})$, where the residual $\hat{\varepsilon}_t^0$ are computed from the LSE's $\hat{\phi}_i,\hat{\theta}_i,$ and $\delta$ and the starting values. In the conditional approach, the most common procedure is to set $\varepsilon_p^0 = 0,\ldots,\varepsilon_{p+1-q}^0 = 0$, that is, use zero starting values for the initial $\varepsilon_t$'s. A nonlinear least squares numerical procedure such as Gauss-Newton or Newton-Raphson is used to find the values which minimize $S_*$. These methods are iterative and are based on a linear approximation of a nonlinear model. Interested readers should refer to the classical texts in this area.
+where $S_* = S_*(\phi,\theta,\delta) = \sum_{t=p+1}^T {\varepsilon_t^0}^2$ is the condition sum of squares function. The conditional MLE or conditional LSE of $\phi,\theta$ and $\delta$ are the values which minimizes $S_*$, and the corresponding estimate of $\sigma^2$ is $\hat{\sigma}^2 = [1/(T - p)]\sum_{t=p+1}^T (\hat{\varepsilon}^0)^2 = [1/(T - p)]S_*(\hat{\phi},\hat{\theta},\hat{\delta})$, where the residual $\hat{\varepsilon}_t^0$ are computed from the LSE's $\hat{\phi}_i,\hat{\theta}_i,$ and $\delta$ and the starting values. In the conditional approach, the most common procedure is to set $\varepsilon_p^0 = 0,\ldots,\varepsilon_{p+1-q}^0 = 0$, that is, use zero starting values for the initial $\varepsilon_t$'s. A nonlinear least squares numerical procedure such as Gauss-Newton or Newton-Raphson is used to find the values which minimize $S_*$. These methods are iterative and are based on a linear approximation of a nonlinear model. Interested readers should refer to the classical texts in this area.
 
 
 We briefly present the results with the two most applicable models in finance.
@@ -753,7 +754,7 @@ Let $Y_t = \varepsilon_t - \theta\varepsilon_{t-1}$, write $Z_t = -\partial\vare
 \end{ex}
 
 
-\begin{ex}[MA(1,1) Model]
+\begin{ex}[ARMA(1,1) Model]
  With $Y_t - \phi Y_{t-1} = \varepsilon_t - \theta\varepsilon_{t-1}$, the derivatives $Z_{1t} = -\partial\varepsilon_t/\partial\phi$ and $Z_{2t} = -\partial\varepsilon_t/\partial\theta$ are determined recursively from the relations
 	\[
 	\frac{\partial\varepsilon_t}{\partial\phi} = -Y_{t-1} + \theta\, \frac{\partial\varepsilon_{t-1}}{\partial\phi}, \enskip \frac{\partial\varepsilon_t}{\partial\theta} = \varepsilon_{t-1} + \theta \, \frac{\partial\varepsilon_{t-1}}{\partial\theta},
@@ -773,7 +774,7 @@ Note that when $\phi = \theta$ the asymptotic variances of $\hat{\phi}$ and $\ha
 \noindent\textbf{Model Diagnostics} \\
 
 
-As several models can be entertained from the specification tools such as ACF and PACF, one quick way to check if all the informative dependencies are captured is to use the model residuals and examine if these residuals reflect the features that are assumed. One key feature is the assumption of independence that can be tested through ACF. Another feature is the constancy in the variance which again can be examined by the plot of squared residuals versus time scale and the time dependence by the ACF of the squared residuals. Thus residuals or functions of the residuals play an important role in model diagnostics. \\
+As several models can be entertained from the specification tools such as ACF and PACF, one quick way to check if all the informative dependencies are captured is to use the model residuals and examine if these residuals reflect the features that are assumed. One key feature is the assumption of independence that can be tested through ACF. Another feature is the constancy in the variance which again can be examined by the plot of squared residuals versus time scale and the time dependence by the ACF of the squared residuals. Thus residuals or functions of the residuals play an important role in model diagnostics. The descriptive tools should be complemented with visualization tools. \\
 
 
 \noindent \textbf{Model Validation} \\
@@ -786,7 +787,7 @@ Ideally we should have two random samples from the same population; a training s
 	\begin{equation}\label{eqn:pmse}
 	\text{PMSE} = \sum_{t=1}^{n_2} \frac{(y_{n_1+t} - \,\hat{y}_{n_1+t})^2}{n_2}
 	\end{equation}
-with the MSE of the fitted model. While other forms of cross-validation methods are applicable to non-dependent data, for time series data, to apportion the data into data sets with non-overlapping behavior requires knowing in the first place what the appropriate model is. So we suggest simply using the out of sample method.
+with the MSE of the fitted model. While other forms of cross-validation methods are applicable to non-dependent data, for time series data, to apportion the data into data sets with non-overlapping behavior requires knowing in the first place what the appropriate model is. So we suggest simply using the out-of-sample method.
 
 
 \subsection{Testing for Nonstationary (Unit Root) in ARIMA Models} \hfill
@@ -853,7 +854,7 @@ When conditional LS estimation of an AR(3) model for $Y_t$, as represented in (\
 	\end{tabular}
 	\end{table}
 
-The use of the unit root test statistics will become apparent when we discuss pairs trading based on co-integration (see Chapter 3). A precondition for forming co-integrated pairs is that each series must be non-stationary on its own. 
+The use of the unit root test statistics will become apparent when we discuss pairs trading based on co-integration (see Chapter 6). A precondition for forming co-integrated pairs is that each series must be non-stationary on its own. 
 \end{ex}
 
 
@@ -927,17 +928,17 @@ So the ``eventual'' forecast function $\hat{Y}_t(l)$ is a straight line with a d
 \section{Stylized Models for Asset Returns}
 
 
-It is generally known that the securities market is extremely efficient in reflecting information about stocks: When new information arrives, it gets incorporated in the price without delay. Thus the efficient market hypothesis, is widely accepted by financial economists. It is implied that neither technical analysts that study the past prices in an attempt to predict future prices nor fundamental analysts of financial information related to company earnings and asset values would carry any advantage over the returns obtained from a randomly selected portfolio of individual stocks.
+It is generally known that the securities market is extremely efficient in quickly absorbing information about stocks: When new information arrives, it gets incorporated in the price without delay. Thus the efficient market hypothesis, is widely accepted by financial economists. It is implied that neither technical analysts that study the past prices in an attempt to predict future prices nor fundamental analysts of financial information related to company earnings and asset values would carry any advantage over the returns obtained from a randomly selected portfolio of individual stocks.
 
 
 The efficient market hypothesis is usually associated with the idea of the ``random walk'', which implies that all future price changes represent random departures from past prices. As stated in Malkiel (2012)~\cite{malkiel}: ``The logic of the random walk is that if the flow of information is unimpeded and information is immediately reflected in stock prices, then tomorrow's price change will reflect only tomorrow's news and will be independent of the price changes today. But news by definition is unpredictable, and, thus resulting price changes must be unpredictable and random.''
 
 
-The random walk (RW) model (Example~\ref{ex:}) without the drift term can be stated as:
+The random walk (RW) model (Example~\ref{ex:driftwalk}) without the drift term can be stated as:
 	\begin{equation}\label{eqn:2pteq}
 	p_t = p_{t-1} + \varepsilon_t
 	\end{equation}
-where $\varepsilon_t \sim N(0,\sigma^2)$ i.i.d and $p_t = \ln{(P_t)}$. Note as observed earlier this model is a particular case of AR(1) model if the constant term is assumed to be zero and the slope, $\phi$, is assumed to be one. Thus, the RW model is a non-stationary model and considering $\varepsilon_t = p_t - p_{t-1}=r_t$ is the differencing of the series, $p_t$, makes the series $\varepsilon_t$ stationary. Note $r_t \approx \frac{P_t - P_{t-1}}{P_{t-1}}$ and the returns are purely random and are unpredictable. The decision concerning the need for differencing is based, informally, on the features of time series plot of $p_t$, its sample autocorrelation function; that is, its failure to dampen out sufficiently quickly. \\
+where $\varepsilon_t \sim N(0,\sigma^2)$ i.i.d and $p_t = \ln{(P_t)}$. Note as observed earlier this model is a particular case of AR(1) model if the constant term is assumed to be zero and the slope, $\phi$, is assumed to be one. Thus, the RW model is a non-stationary model and considering $\varepsilon_t = p_t - p_{t-1}=r_t$ is the differencing of the series, $p_t$, makes the series $\varepsilon_t$ stationary. Note $r_t \approx \frac{P_t - P_{t-1}}{P_{t-1}}$,  the returns are purely random and are unpredictable. The decision concerning the need for differencing is based, informally, on the features of time series plot of $p_t$, its sample autocorrelation function; that is, its failure to dampen out sufficiently quickly. \\
 
 
 \noindent\textbf{Testing for a RW model:} Consider the AR(1) model $p_t = \phi p_{t-1} + \varepsilon_t$, $t = 1,\ldots,T$ and $p_0$ is fixed; we want to test $\phi = 1$. The details of this test are given in Section 2.3.4, along with the table of the percentiles of the distribution of the test statistics. While the results for testing for non-stationarity for higher order autoregressive models were discussed earlier, the price series once differenced does not generally exhibit autocorrelation structure that requires modeling beyond AR(1).
@@ -949,11 +950,10 @@ It will become obvious in subsequent discussions, that in order to exploit any p
 \noindent\textbf{Stylized fact 1: Absence of Autocorrelation in returns:} Linear autocorrelations are often insignificant for a lower frequency data. 
 
 
-To illustrate the main ideas, we consider the exchange rate between USD and GBP; these are daily closing rates from Jan 4, 1999 to Sept 16, 2013. The time series plot of the data in (Figure~\ref{fig:exchrate}) clearly indicates that the price is non-stationary and it is confirmed by the never dying autocorrelation function in (Figure~\ref{fig:exchrate}). The LS estimate of $\hat{\phi}= 0.9996$ and $s_e= 0.00958$ and $\sum_{t=2}^Tp_{t-1}^2= 10431$, provides a value of $\hat{\tau} = -0.001$ from (\ref{eqn:hattaunew}) which confirms that the series is a RW. The differenced series, $r_t = \ln{(p_t)} - \ln{(p_{t-1})}$ is plotted in (Figure~\ref{fig:exchrate}) and its autocorrelation function is given in (Figure~\ref{fig:exchrate}). Thus it would appear that return series is a white noise process.
+To illustrate the main ideas, we consider the exchange rate between USD and GBP; these are daily closing rates from Jan 4, 1999 to Sept 16, 2013. The time series plot of the data in (Figure~\ref{fig:exchrate}) clearly indicates that the price is non-stationary and it is confirmed by the never dying autocorrelation function in (Figure~\ref{fig:exchrate}). The LS estimate of $\hat{\phi}= 0.9996$ and $s_e= 0.00958$ and $\sum_{t=2}^Tp_{t-1}^2= 10431$, provides a value of $\hat{\tau} = -0.001$ from (\ref{eqn:hattaunew}) which confirms that the series is a random walk. The differenced series, $r_t = \ln{(p_t)} - \ln{(p_{t-1})}$ is plotted in (Figure~\ref{fig:exchrate}) and its autocorrelation function is given in (Figure~\ref{fig:exchrate}). Thus it would appear that return series is a white noise process.
 
 
-Many industry analysts tend to look at not just the closing price but also the so called price bars that consist of open, high, low and close prices. Select averages over these four quantities are monitored to study the stock momentum. Two such quantities are pivot, the average of high, low and close prices; and mid-range, the average of high and low prices. The plot of the pivot for the exchange rate is overlaid on the closing price in Figure~\ref{fig:timegbp}. It is not easy to distinguish between the two series from this plot, but an important property of the (aggregated) pivot series is worth noting here. The autocorrelation of the returns dated on pivot series at lag 1 is quite significant (Figure~\ref{fig:timegbp}). This happens mainly due to `aggregation' of data as observed by Working (1960)~\cite{working1960note} and by Daniels (1966)~\cite{daniels1966autocorrelation}. Working (1960) \cite{working1960note} shows that if the average is computed over `$m$' terms in each time segment (in this illustration, a day) the first order correlation is $\frac{(m^2-1)}{2(2m^2+1)}$. When $m= 3$, we can expect the lag 1 autocorrelation to be about 0.21. Daniels (1966)~\cite{daniels1966autocorrelation} observes that we could expect
-lag 1 autocorrelation in the order of 0.4 for the mid-range series. Thus, the main point of this discussion is that the aggregation of prices (which is the basis of several low-frequency analysis) induces the autocorrelation, but it has nothing to do with reflecting market efficiency.
+Many industry analysts tend to look at not just the closing price but also the so called price bars that consist of open, high, low and close prices. Select averages over these four quantities are monitored to study the stock momentum. Two such quantities discussed in the literature are pivot, the average of high, low and close prices; and mid-range, the average of high and low prices. The plot of the pivot for the exchange rate is overlaid on the closing price in Figure~\ref{fig:timegbp}. It is not easy to distinguish between the two series from this plot, but an important property of the (aggregated) pivot series is worth-noting here. The autocorrelation of the returns dated on pivot series at lag 1 is quite significant (Figure~\ref{fig:timegbp}). This happens mainly due to `aggregation' of data as observed by Working (1960)~\cite{working1960note} and by Daniels (1966)~\cite{daniels1966autocorrelation}. Working (1960) \cite{working1960note} shows that if the average is computed over `$m$' terms in each time segment (in this illustration, a day) the first order correlation is $\frac{(m^2-1)}{2(2m^2+1)}$. When $m= 3$, we can expect the lag 1 autocorrelation to be about 0.21. Daniels (1966)~\cite{daniels1966autocorrelation} observes that we could expect lag 1 autocorrelation in the order of 0.4 for the mid-range series. Thus, the main point of this discussion is that the aggregation of prices (which is the basis of several low-frequency analysis) induces the autocorrelation by construction, but it does not reflect market inefficiency.
 	\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{chapters/chapter_uvts/figures/31graphs.eps}
@@ -984,10 +984,10 @@ tailed distribution such as a power-law or Pareto. \\
 
 
 \noindent\textbf{Stylized fact 3:} Asymmetry: When prices fall, they tend to fall faster
-than they tend to rise, thus drawdowns tend to be larger than upward rises. \\
+than when they tend to rise, thus drawdowns tend to be larger than upward rises. \\
 
 
-These stylized facts are particularly important for risk management of strategies, and how they could be incorporated in trading decisions is still a subject of much research and will be discussed later.
+These stylized facts are particularly important for risk management of strategies, and how they could be incorporated in trading decisions is still a subject of much research and will be discussed later. The thicker tail distribution warrants that the chance of extreme values are more likely to occur than what is predicted by a normal distribution and the asymmetry indicates that there is a difference between positive and negative sides of variance (volatility). 
 
 
 \section{Time Series Models for Aggregated Data: Modeling the Variance}
@@ -1021,7 +1021,7 @@ Assuming that $\omega_1 < 1$ ($\omega_0$ and $\omega_1 \geq 0$ is always assumed
 	\begin{equation}\label{eqn:2htw}
 	h_t = \omega_0 + \omega_1\varepsilon_{t-1}^2 = \sigma^2(1 - \omega_1) + \omega_1\varepsilon_{t-1}^2 = \sigma^2 + \omega_1(\varepsilon_{t-1}^2 - \sigma^2),
 	\end{equation}
-or in the form of deviation from the unconditional variance as $h_t - \sigma^2= \omega_1(\varepsilon_{t-1}^2 - \sigma^2)$. So the conditional variance will be above the unconditional variance whenever $\varepsilon_{t-1}^2$ exceeds its unconditional variance $\sigma^2$. If $\varepsilon_t$ were conditionally normally distributed, given the past, the fourth unconditional moment $E(\varepsilon_t^4)$ will exceed $3\sigma^4$ (the value in the normal distribution), so that the marginal distribution of $\varepsilon_t$ will exhibit fatter tails that the normal distribution. Conditional variances of multi-step ahead forecast errors can also be established to depend on the past squared errors. These basic results indicated for the ARCH(1) model also tend to hold for the higher order ARCH$(q)$ models. A basic impact of the ARCH errors in a process is in assessment of the accuracy of forecast, since the forecast errors will have conditional variances (given the past) that depend on the past. This allows for formation of correct and more informative (conditional) prediction intervals that would be obtained under the usual assumption that conditional error variances were constant independent of the past.
+or in the form of deviation from the unconditional variance as $h_t - \sigma^2= \omega_1(\varepsilon_{t-1}^2 - \sigma^2)$. So the conditional variance will be above the unconditional variance whenever $\varepsilon_{t-1}^2$ exceeds its unconditional variance $\sigma^2$. If $\varepsilon_t$ were conditionally normally distributed, given the past, the fourth unconditional moment $E(\varepsilon_t^4)$ will exceed $3\sigma^4$ (the value in the normal distribution), so that the marginal distribution of $\varepsilon_t$ will exhibit fatter tails that the normal distribution. Conditional variances of multi-step ahead forecast errors can also be established to depend on the past squared errors. These basic results indicated that the properties of the ARCH(1) model also tend to hold for the higher order ARCH$(q)$ models. A basic impact of the ARCH errors in a process is in assessment of the accuracy of forecast, since the forecast errors will have conditional variances (given the past) that depend on the past. This allows for formation of correct and more informative (conditional) prediction intervals that would be obtained under the usual assumption that conditional error variances were constant independent of the past.
 
 
 Now consider briefly the popular GARCH(1,1) model, $h_t = E(\varepsilon_t^2|\varepsilon_{t-1},\cdots) = \omega_0 + \omega_1\varepsilon_{t-1}^2 + \beta_1h_{t-1}$. Similar to the result for the ARCH(1) model, assuming that $\omega_1 + \beta_1 < 1$, it is readily shown that the unconditional variance of $\varepsilon_t$ is equal to $\sigma^2 = Var(\varepsilon_t) = \omega_0/[1 - (\omega_1 + \beta_1)]$. Let $v_t = \varepsilon_t^2 - h_t$, so that the r.v.'s $v_t$ have zero mean, and they are serially uncorrelated since
@@ -1044,11 +1044,11 @@ For maximum likelihood (ML) estimation of models with ARCH or GARCH errors, assu
 As there are other excellent sources to learn about ARCH and GARCH models (see Tsay (2010)~\cite{tsay}, Chapter 3), we have limited our discussion to some basic details. \\
 
 
-\noindent\textbf{Preliminary Testing for ARCH Effect:} The test is the omnibus test similar to Ljung-Box test that examines the presence of autocorrelation up to certain number of lags, which is equivalent to testing, $H_0: \alpha_1 = \alpha_2 \cdots = \alpha_q = 0$ in the model
+\noindent\textbf{Preliminary Testing for ARCH Effect:} The test is the omnibus test similar to Ljung-Box test that examines the presence of autocorrelation up to certain number of lags, which is equivalent to testing, $H_0: \alpha_1 = \alpha_2= \cdots = \alpha_q = 0$ in the model
 	\begin{equation}\label{eqn:2eptsq}
 	\varepsilon_t^2 = \alpha_0 + \alpha_1\varepsilon_{t-1}^2 + \cdots + \alpha_q\varepsilon_{t-q}^2 + a_t
 	\end{equation}
-where $a_t$ is white noise series; note that $\{a_t\}$ does not need to follow a normal distribution. The usual $F$-test used in regression can be applied here; Let $R^2$ be the coefficient of determination that result from (\ref{eqn:}) when $\hat{\varepsilon}_t$'s are used; then
+where $a_t$ is white noise series; note that $\{a_t\}$ does not need to follow a normal distribution. The usual $F$-test used in regression can be applied here; Let $R^2$ be the coefficient of determination that result from (\ref{eqn:2eptsq}) when $\hat{\varepsilon}_t$'s are used; then
 	\begin{equation}\label{eqn:2F}
 	F = \frac{R^2/q}{(1 - R^2)/(T - 2q - 1)} \sim \chi^2/q
 	\end{equation}
@@ -1062,21 +1062,21 @@ We use $\chi^2$ instead of $F$ due to the fact that $\varepsilon_t$'s are estima
 	\begin{equation}\label{eqn:2eptsqrt}
 	\varepsilon_t = \sqrt{h_t} \cdot a_t,\qquad h_t = w_0 + w_1h_{t-1} + (1 - w_1)\varepsilon_{t-1}^2
 	\end{equation}
-If $h_t$ is proxied by $\varepsilon_t^2$, the above model leads to $\varepsilon_t^2 - \varepsilon_{t-1}^2 = w_0 + w_1(\varepsilon_{t-1}^2 - \varepsilon_{t-2}^2)$, which is similar in form to non-stationary autoregressive model. In practice because of level shifts in volatility, IGARCH appears to be a natural model to fit. Because the IGARCH(1,1) is similar to ARIMA(0,1,1), the model can be taken as an exponential smoothing model for the $\varepsilon_t^2$ series; By iterative substitutions, we can show that
+If $h_t$ is proxied by $\varepsilon_t^2$, the above model leads to $\varepsilon_t^2 - \varepsilon_{t-1}^2 = w_0 + w_1(\varepsilon_{t-1}^2 - \varepsilon_{t-2}^2)$, which is similar in form to non-stationary autoregressive model. In practice because of frequent level shifts in volatility, IGARCH appears to be a natural model to fit. Because the IGARCH(1,1) is similar to ARIMA(0,1,1), the model can be taken as an exponential smoothing model for the $\varepsilon_t^2$ series; By iterative substitutions, we can show that
 	\begin{equation}\label{eqn:2ht1w}
 	h_t = (1 - w_1)(\varepsilon_{t-1}^2 + w_1\varepsilon_{t-2}^2 + w_1^2\varepsilon_{t-3}^2 \cdots)
 	\end{equation}
 where $w_1$ can be taken as a discount factor. \\
 
 
-\noindent\textbf{Prediction Performance of GARCH:} The predictive power of GARCH based on ex-post forecast evaluation criteria tend to suggest that the model provide poor forecasts, although the in-sample parameter estimates turn out to be highly significant. As Andersen and Bollerslev (1998)~\cite{andersen1998} note, in the model (\ref{eqn:2ept}), the latent volatility, $h_t$, evolves over time. The approach to evaluate the performance of the model for $h_t$ via $\hat{\varepsilon}_t^2$ is not appropriate. While $\hat{\varepsilon}_t^2$ provides an unbiased estimate of $h_t$, it is a noisy measurement due to idiosyncratic error terms associated with it; these error terms maybe due to the result of compounding frictions in the trading process. This will be clarified when we discuss the analysis of high-frequency data. \\
+\noindent\textbf{Prediction Performance of GARCH:} The predictive power of GARCH based on ex-post forecast evaluation criteria tend to suggest that the model provides poor forecasts, although the in-sample parameter estimates turn out to be highly significant. As Andersen and Bollerslev (1998)~\cite{andersen1998} note, in the model (\ref{eqn:2ept}), the latent volatility, $h_t$, evolves over time. The approach to evaluate the performance of the model for $h_t$ via $\hat{\varepsilon}_t^2$ is not appropriate. While $\hat{\varepsilon}_t^2$ provides an unbiased estimate of $h_t$, it is a noisy measurement due to idiosyncratic error terms associated with it; these error terms maybe due to the result of compounding frictions in the trading process. This will be further clarified when we discuss the analysis of high-frequency data. \\
 
 
-\noindent \textbf{Time--Varying ARCH Processes (tvARCH):} The underlying assumptions of ARCH models is stationarity and with changing pace of economic conditions the assumption of stationarity is not appropriate for modeling financial returns over long intervals. We may obtain a better fit by relaxing the assumption of stationarity. Dahlhaus and Subba Rao (2006)~\cite{dahlhaus2006} generalize the ARCH model with time-varying parameters:
+\noindent \textbf{Time--Varying ARCH Processes (tvARCH):} The underlying assumptions of ARCH models is stationarity and with changing pace of economic conditions, the assumption of stationarity is not appropriate for modeling financial returns over long intervals. We may obtain a better fit by relaxing the assumption of stationarity. Dahlhaus and Subba Rao (2006)~\cite{dahlhaus2006} generalize the ARCH model with time-varying parameters:
 	\begin{equation}\label{eqn:2eptsqrtht}
 	\varepsilon_t = \sqrt{h_t}\cdot a_t,\quad h_t = w_0(t) + \sum_{j=1}^{\infty}w_j(t)\varepsilon_{t-j}^2
 	\end{equation}
-which $a_t$'s are i.i.d. with mean zero and variance, one. By rescaling the parameters to unit intervals, the tvARCH process can be approximated by a stationary ARCH process. A broad class of models resulting from (\ref{eqn:}) can be stated as:
+which $a_t$'s are i.i.d. with mean zero and variance, one. By rescaling the parameters to unit intervals, the tvARCH process can be approximated by a stationary ARCH process. A broad class of models resulting from (\ref{eqn:2eptsqrtht}) can be stated as:
 	\begin{equation}\label{eqn:2eptN}
 	\varepsilon_{t,N} = \sqrt{h_{t,N}}\cdot a_t,\quad h_{t,N} = w_0\left(\frac{t}{N}\right) + \sum_{j=1}^pw_j \left(\frac{t}{N}\right) \varepsilon_{t-j,N}^2
 	\end{equation}
@@ -1110,7 +1110,7 @@ The kernel $w$ is a function defined on $[-\frac{1}{2},\frac{1}{2}]$ which is of
 and use $k_{t_0,N}(s_{k-1},N) = \hat{\mu}_{t_0,N} + s_{k-1\cdot N}$ as the weight function. Thus the estimation is a two-stage scheme. For the bandwidth selection, the cross-validation method based on a subsample of the observations is suggested.
 
 
-The methodology presented here is useful because of the changing nature of financial volatility. Real data applications will be discussed in Chapter 3.
+The methodology presented here is useful because of the changing nature of financial volatility. Real data applications will be discussed in Chapter 5. Here the volatility at the low frequency level is estimated by $r_t^2$, where $r_t$, the returns is based on closing prices of successive days. Alternative approaches to estimating volatility using aggregate prices bars or high frequency data will be discussed in Chapter 4. 
 
 
 \section{Stylized Models for Variance of Asset Returns}
@@ -1130,7 +1130,7 @@ intraday returns.
 In this section we will mainly focus on the first item and the others will be discussed in a later section on high frequency data.
 
 
-Consider $r_t = \ln{(p_t) - \ln{(p_{t-1})}}$, return of an asset. We observed that `$r_t$' exhibits no serial correlation. This does not imply that the series `$r_t$' consists of independent observations. The plot of $r_t^2$ given in Figure~\ref{fig:} clearly indicates that volatility tends to cluster over certain time spans. The autocorrelations in Figure~\ref{fig:} confirms that there is some time dependence for the volatility. In fact, there is some long range dependence that spans up to sixty days. \\
+Consider $r_t = \ln{(p_t) - \ln{(p_{t-1})}}$, return of an asset. We observed that `$r_t$' exhibits no serial correlation. This does not imply that the series `$r_t$' consists of independent observations. The plot of $r_t^2$ given in Figure~\ref{fig:exchrate} clearly indicates that volatility tends to cluster over certain time spans. The autocorrelations in Figure~\ref{fig:exchrate} confirms that there is some time dependence for the volatility. In fact, there is some long range dependence that spans up to sixty days. \\
 
 
 \noindent\textbf{Stylized fact 4:} Volatility clustering: High volatility events tend to cluster in time and this can be measured through positive correlations that exist over several lags.
@@ -1174,7 +1174,7 @@ The Lagrange Multiplier test with $q=5$ also gives $R^2= 0.065$, that $T\cdot R^
 Among the conditional heteroscedasticity models ARCH/GARCH that were discussed in the last section, GARCH is simple to use and also results in more parsimonious modeling. Therefore, we present only the estimated GARCH model here. For exchange rate data, the estimated GARCH model is $\hat{\sigma}_t^2 = 2.61 \times 10^{-7} + 0.037r_{t-1}^2 + 0.95\hat{\sigma}_{t-1}^2$. Observe that the coefficients $r_{t-1}^2$ and $\hat{\sigma}_{t-1}^2$ add up to unity approximately and thus indicating the volatility is best modeled through IGARCH, which seems to hold generally for many asset volatilities.
 
 
-\section{Other Topics: Bet Size etc.}
+
 
 
 
@@ -1262,79 +1262,5 @@ Here $p_t^*$ is the ``true'' value of a security and $p_t$ is the observed trade
 \end{enumerate}
 
 
-\textbf{Questions 8--10 refer to Level III data descried below:} \\
-
-
-The dataset consists of (CSV) file that contains the entire trading session, including early and late hours from 6:00~a.m. to 8:00~p.m. EST. It contains intraday depth book activity several major tickers from up to 5 major national exchanges: Nasdaq, Direct Edge, NYSE, ARCA, and BATS (exact number of exchanges depends on the historical period). All messages are consolidates into one file ordered by timestamp. This dataset allows to build a full national depth book (super book) at any moment intraday. 
-
-\begin{table}[h!]
-   \caption{Column Format}
-   \centering
-   \begin{tabular}{p{2cm}p{8cm}} 
-   \textbf{Column} & \text{Description} \\ \hline
-   Timestamp & Number of milliseconds after the midnight. \\ \hline
-   Ticker & Equity symbol (up to 8 characters) \\ \hline
-   Order & Unique order ID. \\ \hline
-   T & Message type. Allowed Values: \newline
-	~~\llap{\textbullet}~~ ``B''--Add buy order \newline
-	~~\llap{\textbullet}~~ ``S''--Add sell order \newline
-	~~\llap{\textbullet}~~ ``E''--Execute outstanding order in part \newline
-	~~\llap{\textbullet}~~ ``F''--Execute outstanding order in full \newline
-	~~\llap{\textbullet}~~ ``D''--Delete outstanding order in full \newline 
-	~~\llap{\textbullet}~~ ``X''--Bulk volume for the cross event \newline
-	~~\llap{\textbullet}~~ ``T''--Execute non-displayed order  \\ \hline
-   Shares & Order quantity, available for the ``B'', ``S'', ``E'', ``X'', ``C'', ``T'' messages. Zero for ``F'' and ``D'' messages. \\ \hline
-   Price & Order price, available for the ``B'', ``S'', ``X'', and ``T'' order messages. Zero for cancellation and executions. The last 4 digits are decimal digits. The decimal portion is padded on the right with zeros. The decimal point is implied by position; it does not appear inside the price field. Divide by 10000 to convert into currency value. \\ \hline
-   MPID & Market Participant ID associated with the transaction (4 characters) \\ \hline
-   MCID &U Market Center Code (originating exchange--1 character)
-   \end{tabular}
-\end{table}
-
-
-For the analysis of Problems 8--10, we consider the data for CISCO.
-
- 
-\item You need to aggregate the data into 5-min intervals before answering the following.
-\begin{enumerate}[(a)]
-\item Let $x_t$ denote the number of trades in the $t$th 5-minute interval. Ignore the time gaps between trading days. Plot the time series and its ACF. Determine if there are intraday period patterns in the series.
-
-\item Using the last transaction in the $t$th 5-minute interval as the stock price in that interval, plot the
-time series $y_t$ of 5-minute returns during the period and the corresponding ACF.
-
-\item Consider the bivariate time series ($x_t$, $y_t$). How does $y_t$ vary with $x_t$? Are there intraday periodic patterns in ($x_t$, $y_t$)?
-
-\item Plot the durations of the transaction times for Mondays and Fridays. Is there any difference in the
-patterns?
-
-\item Fit GARCH models for the durations and interpret the coefficients.
-
-\item Is there any particular exchange that offers better price?
-\end{enumerate}
-
-
-
-\item Use the transaction data in Problem 8. There are seventy-eight five-minute intervals in a trading day. Let $d_i$ be the average of all log durations for the $i$th 5-minute interval across all trading days. Let $t_j$ be tick time of a trade during the $i$th 5-minute interval, define an adjusted duration as $\Delta t_j^* = \Delta t_j/\exp(d_i)$ where $\Delta t_j = t_j - t_{j-1}$.
-\begin{enumerate}[(a)]
-\item Is there a diurnal pattern in the adjusted duration series?
-
-\item Build EACD and WACD models for the adjusted duration and compare them. Now aggregate the data over the 5-minute intervals; Let $r_t$ be the return and $V_t$ is the volume of transactions in the $t$th interval.
-
-\item Is there any relationship between the volume $V_t$ and volatility $r_t^2$ . If there is develop a model that will capture the dependence of volatility on volume. Let $\overline{p}_t$ be the average price in the $t$th 5-minute
-interval.
-\end{enumerate}
-
-
-\item Use the CISCO execution data only; aggregate at various time intervals: 1~min, 2~min, \dots, 15~min. For these levels record
-\begin{enumerate}[(a)]
-\item Average price, VWAP, realized volatility and aggregate volume.
-
-\item By relating the returns and volatility estimates based on average price to realized volatility, identify the optimal duration for aggregation that will cancel out the market friction but pick up the true information. (You may want to refer to Bandi and Russell (2006)~\cite{bandi}). 
-\end{enumerate}
-
-
-
 
 \end{enumerate}
-
-
-
