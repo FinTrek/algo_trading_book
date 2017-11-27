@@ -1,7 +1,8 @@
 % !TEX root = ../../book.tex
+%\hfill
+%\par\vspace{\baselineskip}
 
 \chapter{Modeling Trade Data}
-
 \section{Normalizing Analytics}
 One of the challenging aspects of execution unlike other algorithmic trading subject is the large number of different types of stocks such strategies have to apply to. The same strategy will need to work for super liquid instruments that trade like water at the minimum tick size, and illiquid stocks that trade only very infrequently at wide spreads; Stock that have very stable and large sizes at the inside markets, and stocks whose nbbo changes many times every second. To complicate matters further the market micro-structure of each stock is not constant throughout the day or even between one day and the next in often predictable manner and execution strategies are expected to adapt to those changes. For example, immediately after the open there is a lot of trading activity as investor incorporate the effect of overnight news. The increased uncertainty on the stock valuation is reflected by a much higher volatility and spread. Once the period of so called Price Discovery is over (usually within 15-30m in US markets), the trading behavior settles in and activity is reduced and so do spreads and volatility. Activity the resumes towards the end of the day in particular due to the  fact that many funds are marked to the day's closing price. An example of inter-day variabilty is the impact due to Special Days such as futures, and options expiration, earning announcements, etc. In such occasion the activity patterns of the stocks are systematically different (e.g. the trading activity during futures/options expiration is heavily tilted towards the close since the settlement prices are related to the closing price on that day).
 
@@ -64,7 +65,7 @@ Volume is most invariably shaped like a flattened U. Volatility and spread both 
 Building stable profiles presents non trivial challenges at multiple levels both quantitative, logistical and data related. It will often boil down to matter of trade-offs, data availability, and cost to build and maintain. We provide some hopefully valuable pointers that should allow the reader to navigate around the hurdles and avoid common pitfalls
 
 \subparagraph{Number of Profile Bins}
-The decision of the # of profile bins is a trade-off between required precision and granularity during the most active periods of the day and the lack of stability due to lack of data/change in each bin. 1 minute bin is the most common choice in the industry.
+The decision of the numbers of profile bins is a trade-off between required precision and granularity during the most active periods of the day and the lack of stability due to lack of data/change in each bin. 1 minute bin is the most common choice in the industry.
 
 \subparagraph{Per Stock Profiles vs. Clustered Profiles}
 One of the first decisions to be made is whether to create individual profiles for each stock in the universe or use some sort of clustering/grouping. With a universe of several thousand different trading instrument it might be impractical to build and maintain stable individual profiles. Additionally the stability of the profiles is important in order for their use to be effective. Overly illiquid and slowly moving stock will usually make for poor single stock profiles.
@@ -85,7 +86,7 @@ Another common open question is the length of history that should be used. The m
 intrady volume profiles tend to be extremely noisy and require smoothing to be effective. It was estimated (reference?) that without smoothing the volume profile perform worse than considering completely flat profiles. However care mus be taken to avoid smoothing over real behavioral discontinuities (e.g there is a predictable spike in volume in European profiles coincident with the US opening). These spikes usually are preceded by a period of reduce trading activity due to traders waiting for the predictable event. So care has to be take not to smooth these spikes to avoid spread this over previous bins that could cause the algorithm to overtrade during the period of reduced trading. On common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and the re-applying the spike afterward. It has been shown that this approach improves the overall predictability of the profile
 
 \subparagraph{Special Days}
-Special days, as previously discussed, present additional challenges due to the limited number of datapoints available (e.g triple witching occurs only 4 time a year). So using larger clusters (one cluster as a limit) is often the only option. In order to maintain some of the  cluster characteristics a common approach is to use a "difference" profile.
+Special days, as previously discussed, present additional challenges due to the limited number of datapoints available (e.g triple witching occurs only 4 time a year). So using larger clusters (one cluster as a limit) is often the only option. In order to maintain some of the  cluster characteristics a common approach is to use a "difference" profile created by a normalized per-bin ratio between the regular day profile and the special day profile. This gives a profile that capture the special day systematic shift. This difference profile can then been applied to the cluster profile.
 
 \subsection{Advanced Analytics}
 \subsubsection{Remainder of the Day Volume}
