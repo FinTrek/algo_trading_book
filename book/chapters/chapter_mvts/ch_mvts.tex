@@ -206,18 +206,18 @@ The principal component problem can be represented as a reduced-rank problem, in
 	\begin{equation}\label{eqn:ykabyk}
 	Y_k= ABY_k + \epsilon_k
 	\end{equation}
-(with $X_k \equiv Y_k$). From the solutions of Result \ref{res:3}, by setting $\Gamma=I_m$, we have $A^{(r)}=[V_1,\ldots,V_r]$ and $B^{(r)}=V'$ because $\Sigma_{yx}=\Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $\ell_i$ in (\ref{eqn:varycovy}) are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$ in (\ref{eqn:ykabyk}). If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_k$ appear to be superfluous but the model (\ref{eqn:ykabyk}) could be a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \\
+(with $X_k \equiv Y_k$). From the solutions of Result~\ref{res:3}, by setting $\Gamma=I_m$, we have $A^{(r)}=[V_1,\ldots,V_r]$ and $B^{(r)}=V'$ because $\Sigma_{yx}=\Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $\ell_i$ in (\ref{eqn:varycovy}) are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$ in (\ref{eqn:ykabyk}). If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_k$ appear to be superfluous but the model (\ref{eqn:ykabyk}) could be a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \\
 
 
 \noindent \textbf{Canonical Correlation Analysis:} \\
 
 
-\noindent Canonical correlation analysis was introduced by Hotelling (1935, 1936) as a method of summarizing relationships between two sets of variables. The objective is to find that linear combination of one set of variables which is most highly correlated with any linear combination of a second set of variables. The technique has received attention from theoretical statisticians but because of difficulty in interpretation of the canonical variates, its use is not widespread in some disciplines. By exploring the connection between the reduced-rank regression and canonical correlations, we provide an additional method of interpreting the canonical variates. Because the role of any descriptive tool such as canonical correlations is in better model building, the connection we display below provides an avenue for interpreting and further using the canonical correlations. 
+\noindent Canonical correlation analysis was introduced by Hotelling~(1935, 1936) as a method of summarizing relationships between two sets of variables. The objective is to find that linear combination of one set of variables which is most highly correlated with any linear combination of a second set of variables. The technique has received attention from theoretical statisticians but because of difficulty in interpretation of the canonical variates, its use is not widespread in some disciplines. By exploring the connection between the reduced-rank regression and canonical correlations, we provide an additional method of interpreting the canonical variates. Because the role of any descriptive tool such as canonical correlations is in better model building, the connection we display below provides an avenue for interpreting and further using the canonical correlations. 
 
 
 More formally, in canonical correlation analysis, for random vectors $X$ and $Y$ of dimensions $n$ and $m$, respectively, the purpose is to obtain an $r \times n$ matrix $G$ and an $r \times m$ matrix $H$, so that the $r$-vector variates $\xi=GX$ and $\omega=HY$ will capture as much of the covariances between $X$ and $Y$ as possible. The following result summarizes how this is done. \\
 
-\noindent \textbf{Result 4:} We assume $\Sigma_{yy}$ is nonsingular. Then the $r \times n$ matrix $G$ and the $r \times m$ matrix $H$, with $H \Sigma_{yy}H'=I_r$, that minimize simultaneously all the eigenvalues of
+\begin{result}\label{res:4} We assume $\Sigma_{yy}$ is nonsingular. Then the $r \times n$ matrix $G$ and the $r \times m$ matrix $H$, with $H \Sigma_{yy}H'=I_r$, that minimize simultaneously all the eigenvalues of
 	\begin{equation}\label{eqn:EHYGX}
 	E[(HY-GX)(HY-GX)']
 	\end{equation}
@@ -229,6 +229,7 @@ where $V_*=[V_1,^*,\ldots,V_r^*]$ and $V_j^*$ is the (normalized) eigenvector co
 	\begin{equation}\label{eqn:eigenlargestmatrix}
 	R_*=\Sigma_{yy}^{-1/2} \Sigma_{yx} \Sigma_{xx}^{-1} \Sigma_{xy} \Sigma_{yy}^{-1/2}.
 	\end{equation}
+\end{result}
 
 
 Denoting by $g_j'$ and $h_j'$ the $j$th rows of the matrices $G$ and $H$, respectively, the $j$th pair of canonical variates are defined to be $\xi_j=g_j'X$ and $\omega_j=h_j'Y$, $j=1,2,\ldots,m$ ($m \leq n$). The correlation between $\xi_j$ and $\omega_j$ is the $j$th canonical correlation coefficient and hence, since $\Cov(\eta_j,\omega_j)={V_j^*}' R_*V_j^*=\rho_j^2$, $\Var(\xi_j)={V_j^*}' R_*V_j^*=\rho_j^2$, and $\Var(\omega_j)={V_j^*}' V_j^*=1$, we have $\Corr(\xi_j,\omega_j)=\rho_j$ and the $\rho_j$'s are the canonical correlations between $X$ and $Y$. The canonical variates possess the property that $\xi_1$ and $\omega_1$ have the largest correlation among all possible linear combinations of $X$ and $Y$, $\xi_2$ and $\omega_2$ have the largest possible correlation among all linear combinations of $X$ and $Y$ that are uncorrelated with $\xi_1$ and $\omega_1$ and so on. We shall compare the Result 4 with Result 3. Because $\Sigma_{\epsilon\epsilon}=\Sigma_{yy}-\Sigma_{yx}\Sigma_{xx}^{-1}\Sigma_{xy}$, the correspondence with results for the choice $\Gamma=\Sigma_{yy}^{-1}$ is fairly simple. It can be shown that,
@@ -293,11 +294,11 @@ Here $\tilde{\Sigma_i}$ is the maximum likelihood estimate of $\Sigma_i$ where t
 Two important properties of VAR$(p)$ model models are worth noting and will be used later. First modeling several variables jointly usually results in lower order vector model as the marginal models for the individual variables can result in a higher order of autoregressive moving average terms that may be hard to interpret. \\
 
 
-\begin{result} If $Y_t$ is a $m$-dimensional series following VAR$(p)$, the components of $Y_t$ follow ARMA with maximal orders $[mp,(m-1)p]$. Second in many practical situations a certain linear combination of $Y_t$ is important to study, particularly in dimension reduction aspect whether using the principal components or canonical variables. The linear combination can still exhibit time series dependence. 
+\begin{result}\label{res:5} If $Y_t$ is a $m$-dimensional series following VAR$(p)$, the components of $Y_t$ follow ARMA with maximal orders $[mp,(m-1)p]$. Second in many practical situations a certain linear combination of $Y_t$ is important to study, particularly in dimension reduction aspect whether using the principal components or canonical variables. The linear combination can still exhibit time series dependence. 
 \end{result}
 
 
-\begin{result} Let $Y_t \sim \text{VAR}(p)$, then $Z_t=l'Y_t$, where $l$ is a $m \times 1$ known vector, follows ARMA with maximum orders $[mp,(m-1)p]$. 
+\begin{result}\label{res:6} Let $Y_t \sim \text{VAR}(p)$, then $Z_t=l'Y_t$, where $l$ is a $m \times 1$ known vector, follows ARMA with maximum orders $[mp,(m-1)p]$. 
 \end{result}
 
 
@@ -423,9 +424,34 @@ where the $\hat{\rho}_i$ are the $d = m\!-\!r$ smallest sample partial canonical
 Critical values of the asymptotic distribution of (\ref{eqn:2negT}) have been obtained by simulation by Johansen (1988)~\cite{johansen1988statistical} and Reinsel and Ahn (1992)~\cite{reinsel1992vector} and can be used in the test of $H_0$. It is known that inclusion of a constant term in the estimation of the nonstationary AR model affects the limiting distribution of the estimators and test statistics. Testing for this and other model variations can be found elsewhere in the literature (see Johansen (1991)~\cite{johansen1991estimation}, Engle and Granger (1987)~\cite{engle1987co}, etc.). 
 
 
-\section{Illustrative Examples}
-
 \section{Multivariate GARCH Models}
+
+
+It is well known that financial volatilities across assets and markets move together over time. It is of interest to study how a shock in one market increases the volatility on another market and in general, how correlations among asset returns change over time. For example, in the computation of hedge-ratio which is the slope of the regression line of spot returns on the futures return, both the covariance between spot and future returns and the variance of future returns, that can change over time are involved. It must be noted that variances and covariances are generally sensitive to mean shifts. In addition, unlike modeling the mean behavior where fewer number of quantities involved, modeling the variance-covariance behavior involves larger number of quantities and hence various models that account for some redundancy are proposed in the literature. We cover only a select few in this section. Interested readers should refer to the excellent survey paper by Bauwens, Laurent and Rombouts (2006)~\cite{laurent}.
+
+
+The regression model (\ref{eqn:5lmyk}), to begin with can be written as
+	\begin{equation}\label{eqn:3relabel}
+	Y_t= \mu_t+\epsilon_t
+	\end{equation}
+where $\mu_t=cx_t$ and $\epsilon_t \sim N(0,\Sigma_{\epsilon\epsilon})$. As $\Sigma_{\epsilon\epsilon}$ is taken to be positive definite, it can be written as $\Sigma_{\epsilon\epsilon}=H^{1/2} \cdot H^{1/2}$, where $H^{1/2}$ is the positive square root of the $\Sigma_{\epsilon\epsilon}$ matrix. Thus $\epsilon_t=H^{1/2}a_t$ where $a_t \sim N(0,I_m)$. When the covariance matrix, $\Sigma_{\epsilon\epsilon}$ changes over time, it can be characterized by
+	\begin{equation}
+	\epsilon_t=H^{1/2}_t a_t
+	\end{equation}
+where $H_t$ is the conditional variance-covariance matrix.
+
+
+There are two versions of model formulation of the elements of the $H_t$-matrix. Note this $m \times m$ matrix, because of symmetry has only $[m \times (m+1)]/2$ distinct elements. Writing $h_t=\text{Vech}(H_t)$ that stacks these elements as a vector, the $\text{Vec}(1,1)$ model is defined as:
+	\begin{equation}\label{eqn:vecmodel}
+	h_t= c + A \eta_{t-1} + G h_{t-1}
+	\end{equation}
+where $\eta_t=\text{Vec}(\epsilon_t \epsilon_t')$, $A$ and $G$ are square matrices of dimension $\frac{m(m+1)}{2}$ and `$c$' is a column vector of the same dimension. Because of the larger dimensionality, various constraints on $A$ and $G$ are suggested. Another formulation that models $H_t$ directly is suggested in Engle and Kroner (1995)~\cite{kroner}:
+	\begin{equation}\label{eqn:kroner}
+	H_t=C^*\prime C^* + \sum_{k=1}^K A_k^*\prime \epsilon_{t-1} \epsilon_{t-1}' A_k^* + \sum_{k=1}^K G_k^* H_{t-1}G_k^*
+	\end{equation}
+where $C^*$, $A_k^*$ and $G_k^*$ are $m \times m$ matrices with $C^*$ being upper triangular. Here `$K$' denotes the lag dependence. Further reduction is suggested by assuming $A_k^*$ and $G_k^*$ are rank one matrices. These rank one matrices result from the assumption that the changing variance elements are determined by a varying factor. Indirectly it implies that the time-varying part of $H_t$ has reduced rank. 
+
+\section{Illustrative Examples}
 
 \section{Exercises}
 

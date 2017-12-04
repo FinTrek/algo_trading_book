@@ -88,6 +88,35 @@ An alternative set-up, alternative to (\ref{eqn:2thirdzt}) and (\ref{eqn:2hatz})
 This model studied in Ord, Koehler, and Snyder (1997)~\cite{ord1997estimation} with a single source of error $(N_t)$ is shown to be closely related to various exponential smoothing procedures. There are other formulations of state-space models, such as structural models by Harvey (1989)~\cite{harvey1989kalman} and dynamic linear models of West and Harrison (1997)~\cite{west1997} that are found to be useful for model building.
 
 
+We provide two examples to illustrate the application of the models (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) in the broader context of this book. The slope in a local linear trend is a random walk. Specifically,
+	\begin{equation}\label{eqn:randomwalk}
+	\begin{split}
+	p_t&= \mu_t+ e_t \\
+	\mu_t&= \mu_{t-1} + \delta_{t-1} + \eta_{0t} \\
+	\delta_t&=\delta_{t-1}+\eta_{1t}
+	\end{split}
+	\end{equation}
+Here the trend is composed of level `$\mu_t$' and slope `$\delta_t$'. The slope `$\delta_t$' when written as 
+	\begin{equation}\label{eqn:slopewritten}
+	\delta_t= D+ e(\delta_{t-1} - D)+ \eta_{1t}
+	\end{equation}
+in AR(1) form is sometimes known as generalized local linear trend. These models can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}); the updating process given in (\ref{eqn:2hatz}) can be used to accommodate a wide range of models.
+
+
+Menkveld, Koopman and Lucas (2007)~\cite{menkkoop} study the price discovery process for stocks that are cross-listed in two different markets via state-space models. The question if the trading location matters more than business location is of intent to finance researchers. Consider a stock traded in Amsterdam and in NY exchanges. Because of the time difference, there is only an hour of overlap in trading. Ignoring this aspect, write the two-dimensional price vector as
+	\begin{equation}
+	\begin{split}
+	p_t&=\mu_t + e_T \\
+	&=\mu_t + \theta(\mu_t-\mu_{t-1}) + e_t
+	\end{split}
+	\end{equation}
+as the observational equation and the state equation is
+	\begin{equation}
+	\mu_t= \mu_{t-1} + \xi_t
+	\end{equation}
+The above can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) with appropriate choice of `$\Phi$' and `$H$' matrices. 
+
+
 \section{Regime Switching and Change-Point Models}
 
 
@@ -179,35 +208,6 @@ The adaptive CUSUM chart is effective at detecting a range of mean shift sizes. 
 
 
 In practical applications of these regime-shifting models, it is not easy to discern between a single outlier and persistent level shift. Valid measures that can distinguish these two situations on a timely basis could be very valuable to a trader. 
-
-
-We provide two examples to illustrate the application of the models (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) in the broader context of this book. The slope in a local linear trend is a random walk. Specifically,
-	\begin{equation}\label{eqn:randomwalk}
-	\begin{split}
-	p_t&= \mu_t+ e_t \\
-	\mu_t&= \mu_{t-1} + \delta_{t-1} + \eta_{0t} \\
-	\delta_t&=\delta_{t-1}+\eta_{1t}
-	\end{split}
-	\end{equation}
-Here the trend is composed of level `$\mu_t$' and slope `$\delta_t$'. The slope `$\delta_t$' when written as 
-	\begin{equation}\label{eqn:slopewritten}
-	\delta_t= D+ e(\delta_{t-1} - D)+ \eta_{1t}
-	\end{equation}
-in AR(1) form is sometimes known as generalized local linear trend. These models can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}); the updating process given in (\ref{eqn:2hatz}) can be used to accommodate a wide range of models.
-
-
-Menkveld, Koopman and Lucas (2007)~\cite{menkkoop} study the price discovery process for stocks that are cross-listed in two different markets via state-space models. The question if the trading location matters more than business location is of intent to finance researchers. Consider a stock traded in Amsterdam and in NY exchanges. Because of the time difference, there is only an hour of overlap in trading. Ignoring this aspect, write the two-dimensional price vector as
-	\begin{equation}
-	\begin{split}
-	p_t&=\mu_t + e_T \\
-	&=\mu_t + \theta(\mu_t-\mu_{t-1}) + e_t
-	\end{split}
-	\end{equation}
-as the observational equation and the state equation is
-	\begin{equation}
-	\mu_t= \mu_{t-1} + \xi_t
-	\end{equation}
-The above can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) with appropriate choice of `$\Phi$' and `$H$' matrices. 
 
 
 \section{A Model for Volume-Volatility Relationship}
