@@ -7,7 +7,7 @@
 *.bbl
 *.blg
 *.idx
-
+*.synctex.gz
 
 # OS generated files #
 ######################
