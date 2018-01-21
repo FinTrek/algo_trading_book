@@ -1,8 +1,117 @@
 % !TEX root = ../../book.tex
 
 \chapter{Market Impact Models}
-\section{Overview of Market Impact Models}
 
+\section{Introduction}
+Market Impact (MI in short) is the single most important concern in trading. It is also the least understood.  
+It is something the trader experiences but it cannot be directly measured (only the execution costs are directly observed) but only estimated ex-post and even then barely. We (think) we know where it comes from  and we intuitively feel that we can, at least partially, control it through our trading approach but we really don't fully understand it's dynamics and how to affect them.
+
+To complicate matter further, large scale trading decisions most often arise from some expectation of price momentum. This means that trading will often occur in the presence of market drift (alpha) and the realized execution cost will be a combination of alpha and impact. In ex-post analysis how to decompose  the alpha from the expected impact is extremely arduous, if at all possible, and it's a particular constant concern of any quantitatively driven (and not) investment as it is critically important to achieve optimal execution. For instance If we found that most of the cost was due to price drift the best option would be to accelerate the trading and paying more in impact to capture the more attractive prices. Conversely if the cost is mostly drive by impact then it would behooves us to slow down our trading to minimize impact.
+
+Additional complications are due the complexity of the market structure with it's different trading modes (continuous trading, auctions, etc) and types of venues (lit venues, gray pools, dark pools) requires an ability to measure the impact differential of trading in a particular way in a particular venue if one hopes to optimally access that liquidity.
+
+Unlike many of the more practical topics in this book MI has been extensively studied by academics for decades on it's own or as part of the more general problem of Optimal Execution which we will cover in the next chapter. Unfortunately the research is often so abstract, stylized and mathematically cumbersome that it has only marginally (and very slowly at that) impacted (pun intended) the daily lives of traders and portfolio managers. 30+ years since the seminal work by Kyle (1985)~\cite{kyle1985} that launched the large body of work on market impact the industry most used transaction cost model ( model estimating the expected cost of an order implicitly incorporating market impact) is   the Bloomberg TCA, a simple heuristic and (as far as anybody can tell) un-calibrated model of the form:
+
+\begin{equation}\label{eq:bb_tca}
+		tc = 0.33\sqrt{\frac{Q}{ADV}} + 0.5 ba_{sp}
+\end{equation}
+
+where $Q$ is the order size, $ADV$ is the average daily volume, $\sigma$ is the stock volatility and $ba_{sp}$ is the average bid-ask spread. 
+
+This book cannot hope to cover this massive topic in any detail but it will strive to build in the reader an intuition of the drivers of MI. It will then introduce them to the most common approached to market impact modeling used in practice with some insight on how to approach them. The chapter will end with an historical review of the most relevant theoretical and empirical research in the area of market impact to support the reader who wants to go into more detail.
+
+\section{What is Market Impact}
+There are several definitions of market impact, some are more insightful than others. One general and intuitive one is:
+\begin{displayquote}
+\textbf{Market Impact is the cumulative market-wise response of the arrival  of new order flow.}
+\end{displayquote}
+
+This definition incorporates the effect of both trades and order submission (or cancellation) ;It also includes the effects that, while changing the overall system "hidden state", does not immediately lead to a price change.
+
+There are multiple likely components to this response:
+\begin{itemize}
+\item The first is a purely "mechanical" one. The removal of liquidity, either via a trade or via cancellation, can lead to a change to the prevailing mid-price.
+\item The next one is "economical". Any change in the shape of the order book alters the supply/demand equilibrium leading to a re-establishment of the local equilibrium price. 
+\item Another one could be called "speculative". A price move might lead participants to expect the initiation (or continuation) of a momentum trend triggering some "me-too" trading in the same direction.
+\item Then there would likely be an "arbitrage" component where participants try to step in to provide liquidity in prevision of the price move and immediately get out of it at a better price (?)
+\end{itemize} 
+
+These effects (and others) are then propagated throughout the system with various levels of feedback loops leading to very complicated "chaos-like" macro dynamics. There is also evidence that these effect are amplified by the "novelty" of the price move meaning that the behavior is highly path dependent. 
+
+\section{Transaction Costs}
+As discussed MI is quantity that cannot be directly observed. What is observed are the prices that one pays to execute an order of a certain size, for a particular instrument, over a specified time period.  These prices incorporate several different components that can be roughly grouped in 4 specific categories:
+\begin{enumerate}
+\item Explicit Costs: These are costs that one, in theory at least, knows in advance. These include exchange fees, clearing cost, taxes, etc. They also include all the fixed cost for connectivity, market data, etc. Part of these costs are independent of how the order is traded and depend only on the number of shares traded and total notional (e.g. clearing fees, taxes). Other costs are implementation dependent since they depend on the choice of venue (different venues have different feed schedules) and on the decision of what order aggressiveness (in most venues one is charged to take liquidity while receives a rebate for providing liquidity).
+\item Spread Costs: It is often necessary to cross the spread to take liquidity and the price we achieve is thus higher by the prevailing price (usually defined as the mid-point). If we manage to execute passively the spread cost could be negative.
+\item Market Impact
+
+%\item Opportunity Cost: the loss (or gain) incurred due to the order not completing. For example if on trades with limit orders in a trending market the uncertainty in getting executed could lead to an opportunity loss of taking liquidity immediately at better prices before the price moves. On large order scale opportunity cost comes from trader's decision not to trade the full order in one day or fixing a maximum trading price that leads to the order not completing. Assuming the trader will have to eventually complete the order she might find the market conditions to be much worse.
+
+%\item Delay/Slippage costs. It might take time for the trading decision to hit the exchange and by then the sought after liquidity might already have evaporated.
+%\end{itemize}
+
+%We then apply a likely seplificationTo make things simpler let's just altogether ignore the explicit costs. We also assume that the order is fully traded so in this initial treatment we can ignore opportunity cost as well. We shall see later that MI and Opportunity Cost, in a broad sense, are at the opposite side of the Optimal Execution 'Tug of War' in the sense that an execution strategy cannot optimize both but will need to balance the two with regards to higher level considerations such as expectation of alpha or trading instructions.
+
+\item Exogenous Price Evolution: Somewhat of an oversimplification but this is the theoretical price path that would have happened had we not traded.
+\end{enumerate}
+
+\subsection{A Gentle Introduction to TC Modeling}
+We begin a more in depth treatment of the subject by looking at the most commonly use TC models: Average TC models. These are macro level models that estimate the cost as a function of broad order and execution strategy characteristics. We simplify the picture to focus on the most important aspects: we ignore all the explicit costs and the exogenous price evolution. This last part is an oversimplification but can rationalized by a few assumptions:
+\begin{itemize}
+ \item We are interested in a expected transaction cost thus assuming that we look at average costs over thousands of orders.
+ \item Prices behave, to a large extent as random walks.
+ \item We assume that the arrival of orders is uncorrelated to the specific price trajectory for the day of trading. 
+ \end{itemize} 
+
+Under these assumptions the price evolution accounts only to uncorrelated noise in the cost estimate and can be ignored. Thus in our simplified framework for transaction cost we have two remaining component: market impact and spread costs. 
+\begin{equation}\label{eq:tc_1}
+		tc = f(mi,sc)
+\end{equation}
+
+In most cases an additional simplification is added in that the two components are additive:
+
+ \begin{equation}\label{eq:tc_2}
+		tc = mi + sc
+\end{equation}
+ 
+Let's start with the simpler component: Spread Costs. As the name implies this component the cost due to crossing the spread on a portion of the order. If we were crossing the spread every time we trade this component could be modeled as half the average bid ask spread $ba_sp$. In general during the execution of an order we'll sometime trade  and aggressively where we pay the half spread and sometime trade passively where we are paid the half spread. Since execution strategies are by definition liquidity demanders the ratio will be tilted towards the aggressive trading thus the most basic spread cost can be model as a portion $\beta$ of $bs_sp$. That is usually where the practitioner stops. If we wanted to look deeper would could note that the spread cost could depend on other features. For example it seems intuitive that the more urgency one has, the more often she'll be willing to cross the spread. Thus the spread cost could also be a function of an urgency parameter, often proxied by the avg trading rate $\nu$.  Once you incorporate bid ask spread and the trading rate we can, on first approximation, assume that the spread cost is not dependent on other stock and order characteristics.
+
+\begin{equation}\label{eq:tc_3}
+		tc = mi + \beta ba_{sp}
+\end{equation}
+
+Let's finally turn our attention to avg market impact. Clearly the size of the order $Q$ is the primary driver of market impact. As we discussed in chapter 8 (TBD Chapter Ref) size alone it's less explanatory as 100,000 shares of a ultra liquid stock will certainly have less impact than an illiquid stock that trade only 200,000 shares per day. So a normalized order size $\frac{Q}{ADV}$ is usually used. Additionally it is well known that, all else being equal, the more volatile the stock is the more the expected cost. What is the intuition here? One way to think about it is that volatility (and spread to some extent) is a measure of  uncertainty around the "True" value of the stock. One would the expect that the effects of "sensing" a large order in the market would be magnified. Note that volatility is correlated to spread so higher volatility stocks will have a spread cost that is also higher.
+
+So new update for our average TC model is:
+
+\begin{equation}\label{eq:tc_3}
+		tc = f(\frac{Q}{ADV}, \sigma) + \beta ba_{sp}
+\end{equation}
+
+What doe the function $f$ look like? Most models assume a multiplicative relationship with power law relationship for both relative size and volatility:
+
+\begin{equation}\label{eq:tc_3}
+		f =\alpha  \sigma^{\delta} (\frac{Q}{ADV})^{\gamma}
+\end{equation}
+
+It is a well studied fact in MI research that the exponent $\gamma$ for relative size is less than one (relatively) well approximated by a square root law. There are several theories for why this is the case. (NEEDS QUOTE). For the exponent $\delta$ of volatility there is more debate and the data seem to point that the model is somewhat mispecified. On one hand there is some evidence that a stock twice as volatile is twice as expensive to trade so many models have $\delta = 1$. On the other hand when one looks at it over time, and compare average costs in different volatility regimes it has been shown that if the whole market where to double in volatility like in the height of the 2008 financial crisis, the average costs did not double. They jumped by about (NEED NUMBER) implining $\delta <1$. One way to account for that would be to use two measures of volatility: overall market  $\sigma_M$ with an exponent less than 1 and relative volatility $\frac{\sigma}{\sigma_M}$ that has exponent of 1. That being said this is mostly never done in practice. The most common approach is to re-calibrate the model over time fixing $\delta=1$ and allowing the $\alpha_t$ (to r to absorb the effect of the change in regime. We thus come to the "standard" functional form for a TC model:
+
+\begin{equation}\label{eq:tc_3}
+		f =\alpha  \sigma \sqrt{\frac{Q}{ADV}} +  \beta ba_{sp}
+\end{equation}
+
+The shrewd observer will notice immediately that something is amiss. We have discussed that MI and thus TCs are highly dependent on the approach used for trading but the standard model does not seem to incorporate anything that accounts for the trading strategy. One important reason for this has to do with data availability. One one looks to the data available to a practitioner to calibrate one such a model it is very hard to get a dataset that will allow to calibrate the average effect of the use of a different strategy to trade the same amount of stock over the same amount of time. (To Be Discussed)
+
+\subsection{Calibration of a simple TC model}
+
+\section{Intraday Market Impact Model}
+
+\subsection{Stylized Model}
+
+\subsection{Propagator Style Models}
+
+\section{Historical Review of Market Impact Research}
+TO BE CLEANED UP
 One of the main focuses of Algorithmic Trading is minimizing costs of trade execution. When a large order is executed in the market, it causes market impact (MI), which is commonly defined as the deviation of the post-trade market price from the market price that could have prevailed had the trade not occurred (Fabozzi, Focardi and Kolm (2006)~\cite{ffk}). To alleviate MI and the implied transaction cost (TC), a trader may use an algorithmic trading system to slice a large ``parent'' order into a sequence of ``child'' orders. While a slicing strategy is typically motivated by the liquidity constraint associated with executing a large order in one print, it is usually balanced against the risk and opportunity costs associated with the execution of a sequence of child orders over a longer duration as discussed earlier.
 
 

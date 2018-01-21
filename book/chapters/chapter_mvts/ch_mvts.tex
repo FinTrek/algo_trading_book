@@ -434,14 +434,14 @@ The regression model (\ref{eqn:5lmyk}), to begin with can be written as
 	\begin{equation}\label{eqn:3relabel}
 	Y_t= \mu_t+\epsilon_t
 	\end{equation}
-where $\mu_t=cx_t$ and $\epsilon_t \sim N(0,\Sigma_{\epsilon\epsilon})$. As $\Sigma_{\epsilon\epsilon}$ is taken to be positive definite, it can be written as $\Sigma_{\epsilon\epsilon}=H^{1/2} \cdot H^{1/2}$, where $H^{1/2}$ is the positive square root of the $\Sigma_{\epsilon\epsilon}$ matrix. Thus $\epsilon_t=H^{1/2}a_t$ where $a_t \sim N(0,I_m)$. When the covariance matrix, $\Sigma_{\epsilon\epsilon}$ changes over time, it can be characterized by
+where $\mu_t=CX_t$ and $\epsilon_t \sim N(0,\Sigma_{\epsilon\epsilon})$. As $\Sigma_{\epsilon\epsilon}$ is taken to be positive definite, it can be written as $\Sigma_{\epsilon\epsilon}=H^{1/2} \cdot H^{1/2}$, where $H^{1/2}$ is the positive square root of the $\Sigma_{\epsilon\epsilon}$ matrix. Thus $\epsilon_t=H^{1/2}a_t$ where $a_t \sim N(0,I_m)$. When the covariance matrix, $\Sigma_{\epsilon\epsilon}$ changes over time, it can be characterized by
 	\begin{equation}
 	\epsilon_t=H^{1/2}_t a_t
 	\end{equation}
 where $H_t$ is the conditional variance-covariance matrix.
 
 
-There are two versions of model formulation of the elements of the $H_t$-matrix. Note this $m \times m$ matrix, because of symmetry has only $[m \times (m+1)]/2$ distinct elements. Writing $h_t=\text{Vech}(H_t)$ that stacks these elements as a vector, the $\text{Vec}(1,1)$ model is defined as:
+There are two versions of model formulation of the elements of the $H_t$-matrix. Note this $m \times m$ matrix, because of symmetry has only $[m \times (m+1)]/2$ distinct elements. Writing $h_t=\text{Vech}(H_t)$ that stacks these elements as a vector, the $\text{Vec}(1,1)$ model similar to Garch(1,1) in the univariate case is defined as:
 	\begin{equation}\label{eqn:vecmodel}
 	h_t= c + A \eta_{t-1} + G h_{t-1}
 	\end{equation}
@@ -451,7 +451,64 @@ where $\eta_t=\text{Vec}(\epsilon_t \epsilon_t')$, $A$ and $G$ are square matric
 	\end{equation}
 where $C^*$, $A_k^*$ and $G_k^*$ are $m \times m$ matrices with $C^*$ being upper triangular. Here `$K$' denotes the lag dependence. Further reduction is suggested by assuming $A_k^*$ and $G_k^*$ are rank one matrices. These rank one matrices result from the assumption that the changing variance elements are determined by a varying factor. Indirectly it implies that the time-varying part of $H_t$ has reduced rank. 
 
+
+One way to simplify the structure for $H_t$ is to assume that $H_t$ is based on `$K$' underlying factors:
+	\begin{equation}\label{eqn:factorH}
+	H_t= \Omega + \sum_{k=1}^K w_k w_k' f_{k,t}
+	\end{equation}
+where $\Omega$ is a positive definite matrix, $w_k$'s are vectors of factor weights and $f_{k,t}$'s are the factors. The factors are then allowed to follow Garch(1,1) structure:
+	\begin{equation}\label{eqn:garchfactor}
+	f_{k,t}= a_k + \alpha_k \left(\beta_k' \epsilon_{t-1}\right)^2 + \gamma_k f_{k,t-1}
+	\end{equation}
+where $a_k,\alpha_k,\gamma_k$ are scalars and $\beta_k$ is a vector. Note this is somewhat a simplified version of (\ref{eqn:kroner}) and is easy to model. See Engle, Ng and Rothschild (1990)~\cite{engleng} for details. 
+
+
+Empirical applications of the models face the curve of dimensionality. As the number of variables ($m$) increases, the number of conditional variances and covariances, $\frac{m(m+1)}{2}$ increases exponentially. Also any applications should guarantee that the estimated volatility matrices are positive definite. Recall that a descriptive approach in the case of independent (with no temporal dependence) observations the principal component analysis (PCA) plays an important role. It is based on the eigenvalue decomposition of the variance-covariance matrix, as discussed in Section~3.2. Hu and Tsay (2014)~\cite{hutsay14} extend this idea by defining a generated kurtosis matrix for multivariate volatility and by carrying out the spectral decomposition of this matrix. Note that this matrix is based on the fourth moment, both serial and cross-sectional of a vector time series.
+
+
+To start with assume that the conditional volatility matrix, $\Sigma_t=E(y_ty_t' \;|\; F_{t-1})$, where $F_{t-1}$ denotes the information available at time `$t-1$', can be modeled as
+	\begin{equation}\label{eqn:vtmodel}
+	\text{Vec}(\Sigma_t)= c_0 + \sum_{i=1}^\infty c_i \text{Vec}(y_{t-i} y_{t-i}')
+	\end{equation}
+which is in the form of ARCH model. The $m^2$-dimensional `$c_0$' vector and $m^2 \times m^2$ matrices `$c_i$' are restricted so that `$\Sigma_t$' is a positive-definite matrix. Define the lag-$l$ generated kurtosis matrix, for $l \geq 0$,
+	\begin{equation}\label{eqn:kurtosismat}
+	\gamma_l = \sum_{i=1}^m \sum_{j=1}^m \Cov^2(y_t y_t', x_{ij \cdot t - l} )
+	\end{equation}
+where $x_{ij \cdot t - l}$ is a function of $y_{i \cdot t-l} y_{j \cdot t-l}$ for $1 \leq i,j \leq m$. The cumulative kurtosis matrix is then defined as,
+	\begin{equation}\label{eqn:cumkurt}
+	\Gamma_k=\sum_{l=1}^k \gamma_l
+	\end{equation}
+For the linearly transformed series, $z_t=My_t$ where $M$ is a $m \times m$ full-rank matrix; note $\Cov(z_tz_t', x_{t-1})=M' \Cov(y_ty_t', x_{t-1})M$ and if there is no ARCH effect, $\gamma_l$'s and hence $\Gamma_k$ must be singular. The principal volatility components (PVC) matrix, $M$ is obtained from the eigenvalue decomposition of $M$:
+	\begin{equation}\label{eqn:obtainM}
+	\Gamma_kM= M \Lambda
+	\end{equation}
+with $m_v$ is the $v$th PVC, note $m_v'\gamma_{l \cdot ij} m_v$ is a measure of dependence in volatility. Thus the smaller values of $\Lambda$ would indicate that certain combinations will be independent of volatility dependence which implies that there is common volatility component. The larger values of $\Lambda$ would provide the most volatile combinations via the eigenvectors, $m_v$. 
+
+
 \section{Illustrative Examples}
+
+
+As mentioned in the introduction to this chapter, the application of multivariate time serise models is in the area of linking multiple markets or multiple assets. There is some commonality among certain equities due to common fundamentals or industry factors that have impact on that performance. Whenever there is a deviation from expected commonality or co-movement, it provides trading opportunities. This is the basis of the so called `pairs trading' that is discussed in detail in Chapter 5. Also the methodologies discussed in this chapter are useful for portfolio analysis (Chapter 7) as well. The example that we present in this section is mainly for illustrating the methodologies discussed in this chapter as other applications will be taken up elsewhere.
+
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/exchangerates.png}
+	\caption{Plot of Exchange Rates. \label{fig:exchrt}}
+	\end{figure}
+
+
+We consider the exchange rates of British Pound, Norwegian Kroner, Swedish Kroner, Swiss Franc, Canadian Dollar, Singapore Dollar, and Australian Dollar all stated against US Dollar. The weekly data is from March 22, 2000 to October 26, 2011 and it is the same data that was used in Hu and Tsay (2014)~\cite{hutsay14}. Thus $Y_t$ is a seven dimensional vector of time series. The return series $r_t$ is calculated as $r_t=\ln(y_t) - \ln(y_{t-1})$. The plot of $y_t$ is given in Figure~\ref{fig:exchrt} and to make the comparison easier, the first observation in all series are set to unity. Clearly the series are non-stationary and exhibit common upward and downward movements. The plot of returns and volatilities are given in Figures~\ref{fig:returnsfig} and \ref{fig:volfig}, respectively. They clearly indicate the periods of high volatilities in 2008--2009. 
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/returns.png}
+	\caption{Plot of Returns. \label{fig:returnsfig}}
+	\end{figure}
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/volatilities.png}
+	\caption{Plot of Volatilities. \label{fig:volfig}}
+	\end{figure}
+
 
 \section{Exercises}
 
