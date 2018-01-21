@@ -127,47 +127,84 @@ While often overlooked, or merely considered as an after thought in the developm
 Commonly used reference data falls into different categories:
 
 \begin{itemize}
-\item Symbology mapping: ISIN, SEDOLS, RIC, BBG Tickers, ... .
+\item \textbf{Symbology Mapping:} ISIN, SEDOL, RIC, Bloomberg Tickers, ... 
 
-Quantitative strategies often leverage data from a variety of sources. Different providers key their data with different instrument identifiers depending on asset class or regional conventions, or sometime use their own proprietary identifiers (e.g. Reuter Identification Code - RIC, Bloomberg Ticker). 
+Quantitative strategies often leverage data from a variety of sources. Different providers key their data with different instrument identifiers depending on asset class or regional conventions, or sometime use their own proprietary identifiers (e.g. Reuter Identification Code - RIC, Bloomberg Ticker), therefore making symbology mapping the first step in any data join exercise. Such data is not static, one of the symbols can change on a given day and others remain unchanged for some time, complicating historical data joins even more.
 
-It is important to note that such mapping needs to be persisted as point-in-time data and allow for historical "as of date" usage. Over the course of time, some instruments undergo ticker changes (for example from ABC to EDF on date T) without necessarily any particular change on the underlying asset. In such case, market data recorded day-by-day in a trade database will change from being keyed on ABC to being keyed on EDF after the ticker change date T. In order to efficiently backtest strategies over a period of time spanning T, or produce aggregated data (30-day average volume, return over the period, ...), one needs a robust mapping that will allow to seamlessly query the data for the underlying asset such as:
+It is important to note that such mapping needs to be persisted as point-in-time data and allow for historical "as of date" usage. Over the course of time, some instruments undergo ticker changes (for example from ABC to EDF on date $T_0$) without necessarily any particular change on the underlying asset. In such cases, market data recorded day-by-day in a trade database will change from being keyed on ABC to being keyed on EDF after the ticker change date $T_0$. This has large implications for practitioners working on datasets to build and backtest quantitative strategies. The symbology mapping should allow both backward and forward handling of the changes.
 
-SELECT close price FROM tradeTable WHERE date within [ T-30,  T+10], symbol=EDF
+For instance, in the simple example mentioned, in order to efficiently backtest strategies over a period of time spanning $T_0$, one needs a robust mapping that will allow to seamlessly query the data for the underlying asset in a variety of scenarios such as:
+
+\begin{itemize}
+\item Signal generation: 30-day backward close time series as of date T < $T_0$:
+
+{\tt select close from data where date in [T-30,  T], sym=ABC}
+
+\item Signal generation: 30-day backward close time series as of date T = $T_0$+10:
+
+{\tt select close from data where date in [$T_0$-20,  $T_0$+10], sym=EDF}
+
+\item Position holding: 30-day forward close time series as of date T = $T_0$-10
+
+{\tt select close from data where date in [$T_0$-10,  $T_0$+20], sym=ABC}
+
+\end{itemize}
 
 
-Also: both backward and forward mapping for proper backtesting 
+\item \textbf{Corporate Actions Calendars:} stock and cash dividends (both announcement date and ex date), stock splits, reverse splits, rights offer, mergers and acquisitions, spin off, free float or shares outstanding adjustments, quotation suspension.
 
-Also, it is not uncommon to have only one of the symbols change on a given day and others remain unchanged for some time, complicating historical data joins even more.
+Corporate actions impact the continuity of price and volume time series and, as such, need to be recorded in order to produce adjusted time series. The most common events are dividend distributions. On the day the dividend is paid, the corresponding amount is removed from the stock price, creating a jump in the price time series. The announcement date might also see the stock experience added volatility as investors react to the news. Consequently, recording these events proves to be valuable in the design of quantitative strategies as one can assess the effect on performance of dividends announcement or payment, and decide to either not hold a security that has an upcoming dividend announcement or, conversely, to build strategies that look to benefit from the added volatility. 
 
-\item Corporate actions: stock dividends and cash dividends (announcement date and ex date), splits, reverse splits, mergers and acquisitions, spin off, rights offer, quote suspension (eg China), free float, shares outstanding.
+Additional types of corporate actions generating discontinuity in historical time series are stock splits or reverse splits and right offers. When the price of a stock becomes either too low or too high, a company might seek to split it to bring the price back to a level that is more conducive to liquid trading on exchanges\footnote{A very low price creates trading frictions as the minimum price increment might represent a large cost relative to the stock price. A very high price might also deter retail investors from investing into a security as it requires them to deploy too much capital per unit.}. When a stock experiences a 2:1 split, everything else being equal, its price will be halved and its volume will double. In order to prevent the time series to show a 50\% drop in price, all historical data will then need to be adjusted backward to reflect the split.
 
+Mergers \& Acquisitions and Spin-offs are also regular events in the lifecycle of corporations. Their history needs to be recorded in order to account for the resulting changes in valuation that might affect a given ticker or tickers. These situations can also be exploited by trading strategies known as Merger Arbitrage.
 
-\item Static data: country, currency, quote factor, sectors (different classifications might be necessary: GICS, ICB, TOPIX 33, ...), trade andquote lot, primary exchange or MIC.
+Stocks quotation can be suspended as a cooling mechanism (often at the request of the underlying company) to prevent excess price volatility when significant information is about to be released to the market. Depending on the situation, the suspension can be temporary and intraday, or can last for extended periods of time if the market place allows it\footnote{For instance, it was the case for a large number of companies in China in 2016.}. Suspensions result in gaps in time series and are worth keeping track of as they can impact strategies backtesting (inability to to enter or exit a position, uncertainty in the pricing of composite assets if a given stock has a significant weight in ETFs or Indexes). 
+Some markets will also suspend trading if the price swings more than a predefined amount (limit up / limit down situations) for either a period of time or for the remainder of the trading session.
 
-\item Exchange hours, lunch break, holidays, tick tables, DST adjustments to gmt (eg significant impact on intraday liquidity patterns in Brazil), limit up or down constraints and short sell constraints, disrupted days (exchange outage or disruption, market data issues, ...)
+\item \textbf{Static Data:} country, sector, primary exchange, currency and quote factor.
 
-\item Primary tickers to composite ticker mapping
+Pure static data is also relevant for the development of quantitative trading strategies. In particular, country, currency and sector are useful to group instruments based on their fundamental similarities. A well known example is the usage of sectors to group stocks in order to create pairs trading strategies. It is worth mentioning that there exist different types of sector classifications (e.g. GICS\textsuperscript\textregistered from S\&P, ICB\textsuperscript\textregistered from FTSE) offering several levels of granularity\footnote{The Global Industry Classification Standard (GICS) structure consists of 11 sectors, 24 industry groups, 68 industries and 157 sub-industries. An example of this hierarchical structure would be: Industrials / Capital Goods / Machinery / Agricultural \& Farm Machinery.}, and that different classifications might be better suited to different asset classes or countries. The constituents of the Japanese index TOPIX, for instance, are classified into 33 sectors that are thought to better reflect the fundamental structure of the Japanese economy and the existence of large diversified conglomerates. 
 
-\item Market data condition codes to keep/process, dark/lit, blocks, reporting (off book, corrections, auctions, regular, dark, cancelled, Spread, ...)
+Maintaining a table of the quotation currency per instrument is also necessary in order to be able to aggregate positions at a portfolio level. Some exchanges allow the quotation of prices in currencies different from the one of the country in which the exchange is located \footnote{For example, Jardine Matheson Holdings quotes in USD on the Singapore exchange while most of the other securities quote in Singapore Dollars.}. Additionally, the Quote Factor associated with the quotation currency time series needs to be stored. To account for the wide range of currency values and preserve pricing precision, market data providers might be publishing FX rates with a factor of 100 or 1000. Hence, to convert prices to USD one needs to multiply by the quote factor: $usd price = local price * fx * quote factor$. Similarly, some exchanges quote prices in cents, and the associated quotation currency is reflected with a small cap letter: GBP/GBp, ZAR/ZAr, ILS/ILs, ...).
 
-\item Special day calendars: half days, index rebalance, options and futures expiries, month end, quarter end, Japan SQ, Taiwan trading on Saturdays to make up for golden week, Korea market hour changes for nationwide SAT exam, Gulf countries trading on Sundays instead of Fridays, ... Ramadan in turkey, ... 
+\item \textbf{Exchange Specific Data:} Exchange sessions hours, lunch break, holidays, tick tables, trade and quote lots, DST adjustments to gmt (eg significant impact on intraday liquidity patterns in Brazil), limit up or down constraints and short sell constraints, disrupted days (exchange outage or disruption, market data issues, ...)
+
+\item \textbf{Market Data Condition Codes:} 
+
+With ever-growing market microstructure complexity, market data dissemination has grown proportionally complex as well. While it is possible to store daily data as a single entry per day and per instrument, investors building intraday strategies likely need to collect tick by tick data of all the events occurring in the market place. To help classify events, exchanges and market data providers attribute so-called condition codes to the trades and quotes they publish. These condition codes vary per exchange and per asset class, and each market event can be attributed several codes at once. So, to aggregate intraday market data properly and efficiently, and decide which events to keep and which ones to exclude, it is necessary to build a mapping table of these condition codes and their meaning: auction trade, lit or dark trade, cancelled or corrected trade, regular trade, off-exchange trade reporting, block-size trade, trade originating from a multi-leg order such as an option spread trade, ... 
+
+For instance, in order to assess accessible liquidity for a trading algorithm, trades that are published for reporting purposes (e.g. negotiated transactions that happened off-exchange) need to be excluded. Execution algorithms also leverage extensively intraday liquidity distribution metrics to gauge their own participation in auctions and continuous sessions, or in lit versus dark venues, therefore requiring a precise classification of intraday market data. 
+
+\item \textbf{Special Day Calendars:} 
+
+Over the course of a year, certain days present liquidity characteristics that need to be accounted for in both execution strategies or alpha generation. Here too, the diversity of events across markets and asset classes can be quite challenging to handle. Among the irregular events that affect liquidity in equities markets and need to be accounted for, we can mention the following non-exhaustive list for illustration purposes: half trading days following Christmas and Thanksgiving in the U.S. or on the Ramadan eve in Turkey; Taiwanese market opening on the weekend to make up for lost trading days during holiday periods; Korean market changing its trading hours on the day of the nationwide university entrance exam; Brazilian market opening late on the day following the Carnival; etc. 
+
+There are also special days that are more regular and easier to handle. The last trading days of the months and quarters, for instance, tend to see additional trading activity as investors rebalance their portfolios. Similarly, options and futures expiry days (quarterly/monthly expiry, 'Triple Witching'\footnote{Triple witching days happen four times a year on the third Friday of March, June, September and December. On these days, the contracts for stock index futures, stock index options and stock options expire concurrently.} in the U.S., Special Quotations in Japan, etc.) tend to also have relative excess trading volume and different intraday patterns resulting from hedging activity and portfolios adjustments. Consequently, they often need to be handled separately, in particular when modeling volume. As most execution strategies make use of relatively short interval volume metrics (e.g. 30-day ADV), one single data point can be enough to impact the overall level inferred. Similarly autoregressive models of low order might underperform both on special days and on the days following them. As a result, modelers often opt for removing special days from datasets and model normal days first. Then, special days are modeled separately, either independently or using the normal days as a baseline. 
+
+In order to reflect changes in the market and remain consistent with index inclusion rules, most indexes need to undergo regular updates of their constituents as well as their respective weights. Most of the significant indexes do so at regular intervals (annually, semi-annually or quarterly) on a pre-announced date. At the close of business of that day, some stocks might be added to the index while others are removed, or the weight of each stock in the index might be increased or decreased. These events, known as index rebalances, are particularly relevant to passive investors who are tracking the impacted index. In order for them to minimize the tracking error to their benchmark index, they need to also adjust their holdings accordingly. Additionally, as most funds are benchmarked at the close price, there is an incentive for fund managers to try to rebalance their holdings at a price as close as possible to the official close price of the day the index rebalance becomes effective. As a result, on these days, intraday volume distribution is significantly skewed toward the end of day and requires adjustment of execution strategies.
+
+It is worth noting that a special day calendar usage need not be limited to the country where the event occurs. On days when the U.S. Equities market is closed, there is usually also a significant drop in volume traded in European markets, so it is always valuable to investigate the cross sectional effect of special days.
+
 
 \item Futures expiries and handling of most liquid contract, irregular periodicity of contracts (e.g. European index fut monthly expiry vs US ones quarterly, Grains Fut matching the crop cycles), contract size, overnight and day sessions
 
 \item Options chain, expiry calendar
 
-\item Earning calendars (dates and times / backward and forward)
+\item \textbf{Market-Moving News Releases:} 
 
-\item Market moving news releases: central banks (FED, ECB, BOE, SNB, BOJ,...), non farm payrolls, crude inventories, PMI, specialized sector events such as FDA results for the healthcare and biotech sectors  .... (Dates and times / backward and forward)
+Macro-economic announcements are known for their ability to move markets substantially. Consequently, it is necessary to maintain a calendar of their occurrences in order to assess their impact on strategies and decide how to best react to them. The most common ones are central banks announcements or meeting minutes releases of the major economies (FED/FOMC, ECB, BOE, BOJ, SNB), Non-Farm Payrolls, PMI, Crude Oil Inventories, etc.
+
+While these news releases impact the broad market or some wide sectors, there are also stock specific releases that need to be tracked. 
+Earning calendars (dates and times / backward and forward), specialized sector events such as FDA results for the healthcare and biotech sectors  .... (Dates and times / backward and forward)
 
 \item ticker changes 
 
-\item Related tickers: dual listed/fungible securities in US and Canada, local and foreign boards in Thailand, 
+\item Related tickers: Primary tickers to composite ticker mapping, dual listed/fungible securities in US and Canada, local and foreign boards in Thailand, 
 
 \item Latency tables (routing, market data collection)
 
-\item composites: time series of constituents, time series of divisor (eg change in free float,...), time series of cash components, mapping to underlying ticker, 
+\item \textbf{Composite Assets:} time series of constituents, time series of divisor (eg change in free float,...), time series of cash components, mapping to underlying ticker, 
 
 \end{itemize}
 
