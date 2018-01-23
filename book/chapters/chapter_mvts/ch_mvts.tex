@@ -343,7 +343,7 @@ The asymptotic theory holds for the LR testing for the rank of the coefficient m
 The description of canonical correlations can be found in a standard multivariate text (see Anderson (1963)). It is based on the concept of maximizing the correlations between two linear combinations of $Y_t$ and $Y_{t-1}^*$. The linear vectors are related to the eigenvectors of $R_*=\hat{\Gamma}_{(0)}^{-1/2}\, \hat{\Gamma}_*' \,\hat{\Gamma}_p^{-1}\, \Gamma_* \,\Gamma_{(0)}^{-1/2}$ that correspond to the `$r$' largest eigenvalues. Because of the fact that $\tilde{\Sigma}_{\epsilon\epsilon}=\hat{\Gamma}_{(0)} - \hat{\Gamma}_*' \,\hat{\Gamma}_p^{-1} \, \Gamma_*$, the eigenvalues $\hat{\lambda}_j^2$ and $\hat{\rho}_j^2$ - the canonical correlations are related as stated above.
 
 
-We briefly address one additional issue unique to time series analysis.  This is the aspect of nonstationarity of the vector time series process \{$Y_t$\} and the relation of nonstationarity to the canonical correlation analysis. Thus, in the comovement and the cointegration analysis, the canonical correlations as descriptive tools play an important role.
+We briefly address one additional issue unique to time series analysis.  This is the aspect of nonstationarity of the vector time series process \{$Y_t$\} and the relation of nonstationarity to the canonical correlation analysis. Thus, in the comovement and the co-integration analysis, the canonical correlations as descriptive tools play an important role.
 
 
 One interesting result in the work of Box and Tiao (1977)~\cite{box77} is the development of the correspondence between nonstationarity in the VAR(1) process, as reflected by the roots of $\mbox{det}\{ I - \Phi(z) \} = 0$ (equivalently, the eigenvalues of $\Phi$) and the (squared) canonical correlations between $Y_t$ and $Y_{t-1}$ in the canonical analysis, as reflected in the eigenvalues of the matrix $R_* = \Gamma (0)^{-1/2}\, \Gamma (1)^{\prime}\, \Gamma (0)^{-1}\, \Gamma (1)\, \Gamma (0)^{-1/2}$. To develop the correspondence more easily, note that we can write the matrix $R_*$ as $R_* = \Gamma (0)^{-1/2}\, \Phi \Gamma (0)\, \Phi^{\prime}\, \Gamma (0)^{-1/2}$, since $\Phi = \Gamma (1)^{\prime} \Gamma (0)^{-1}$. The specific result to be established is that the number of eigenvalues of $\Phi$ approaching the unit circle (the nonstationary boundary) is the same as the number of canonical correlations between $Y_t$ and $Y_{t-1}$ that approach unity.  This correspondence was observed by Box and Tiao (1977)~\cite{box77}. Velu, Wichern, and Reinsel (1987)~\cite{velucanon} gave an alternative more direct proof of the result.
@@ -367,10 +367,10 @@ where $\Sigma_{ww} = \mbox{Cov}(W_t) = 2 \Gamma (0) - \Phi \Gamma (0) - \Gamma (
 
 
 Thus for a vector process, $Y_t$, the possibility exists for each component series $y_{it}$ to be nonstationary with its first difference $(1 - B) y_{it}$ stationary (in which case $y_{it}$ is said to be integrated of order one), but such that certain linear combinations $z_{it} = b_i^{\prime} Y_t $ of $Y_t$
-will be stationary.  In such circumstances, the process $Y_t$ is said to be \textit{cointegrated} with cointegrating vectors $b_i$ (e.g., Engle and Granger (1987)~\cite{engle1987co}).  An interpretation of cointegrated vector series $Y_t$, particularly related to economics, is that the individual components $y_{it}$ share some common nonstationary components or ``common trends'' and, hence, they tend to have certain similar movements in their long-term behavior.  A related interpretation is that the component series $y_{it}$, although they may exhibit nonstationary behavior, satisfy (approximately) a long-run equilibrium relation $b_i^{\prime} Y_t \approx 0$ such that the process $z_{it} = b_i^{\prime} Y_t$, which represents the deviations from the equilibrium, exhibits stable behavior and so is a stationary process. This fact is exploited in `pairs trading' or more broadly in trading multiple stocks and can be very useful in the context of portfolio rebalancing. 
+will be stationary.  In such circumstances, the process $Y_t$ is said to be \textit{co-integrated} with co-integrating vectors $b_i$ (e.g., Engle and Granger (1987)~\cite{engle1987co}).  An interpretation of co-integrated vector series $Y_t$, particularly related to economics, is that the individual components $y_{it}$ share some common nonstationary components or ``common trends'' and, hence, they tend to have certain similar movements in their long-term behavior.  A related interpretation is that the component series $y_{it}$, although they may exhibit nonstationary behavior, satisfy (approximately) a long-run equilibrium relation $b_i^{\prime} Y_t \approx 0$ such that the process $z_{it} = b_i^{\prime} Y_t$, which represents the deviations from the equilibrium, exhibits stable behavior and so is a stationary process. This fact is exploited in `pairs trading' or more broadly in trading multiple stocks and can be very useful in the context of portfolio rebalancing. 
 
 
-A specific nonstationary AR structure for which cointegration occurs is the model where $\mbox{det} \{ \Phi (z) \} = 0$ has $d < m$ roots equal to one and all other roots are greater than one in absolute value, and also the matrix $\Phi (1) = I - \Phi_1 - \cdots - \Phi_p$ has rank equal to $r = m - d$.  Then, for such a process, it can be established that $r$ linearly independent vectors $b_i$ exist such that $b_i^{\prime} Y_t$ is stationary, and $Y_t$ is said to have cointegrating rank $r$.  Properties of nonstationary cointegrated systems have been investigated by Engle and Granger (1987)~\cite{engle1987co}. We will illustrate the usefulness of reduced rank estimation methods in the analysis of such models.
+A specific nonstationary AR structure for which co-integration occurs is the model where $\mbox{det} \{ \Phi (z) \} = 0$ has $d < m$ roots equal to one and all other roots are greater than one in absolute value, and also the matrix $\Phi (1) = I - \Phi_1 - \cdots - \Phi_p$ has rank equal to $r = m - d$.  Then, for such a process, it can be established that $r$ linearly independent vectors $b_i$ exist such that $b_i^{\prime} Y_t$ is stationary, and $Y_t$ is said to have co-integrating rank $r$.  Properties of nonstationary co-integrated systems have been investigated by Engle and Granger (1987)~\cite{engle1987co}. We will illustrate the usefulness of reduced rank estimation methods in the analysis of such models.
 
 
 The VAR$(p)$ model, $\Phi(B) Y_t = Y_t - \sum_{j=1}^p \Phi_j Y_{t-j} = \epsilon_t$, can be represented in the  \textit{error-correction form} (Engle and Granger (1987)~\cite{engle1987co}) as $\Phi^* (B) (1\!-\!B) Y_t = - \Phi (1) Y_{t-1} + \epsilon_t$; that is,
@@ -411,10 +411,10 @@ The \textit{reduced-rank Gaussian estimator} of $C= A B$ can then be obtained ex
 satisfying the normalization $\hat{A}^{\prime} S_{\tilde{w} \tilde{w}}^{-1} \hat{A} = I_r$.  The Gaussian estimator for the other parameters $\Phi_1^* ,\ldots, \Phi_{p-1}^*$ can be obtained by ordinary least squares regression of $W_t - \hat{C} Y_{t-1} $ on the lagged variables $W_{t-1} ,\ldots, W_{t-p+1} $.
 
 
-The dual implications, (\ref{eqn:cstars}) and (\ref{eqn:2lstar}) of reduced--rank structure come into play in modeling VAR as well. Note from the earlier discussion that the expression $\hat{B} = \hat{V}_*^{\prime} S_{\tilde{w} \tilde{w}}^{-1/2} \tilde{C}$ shows that the estimated cointegrating vectors (rows of $\hat{B}$) are obtained from the vectors that determine the first $r$ canonical variates of $Y_{t-1}$ in the partial canonical correlation analysis. In addition, it is seen from the form of the reduced-rank estimator $\hat{C} = S_{\tilde{w} \tilde{w}}^{1/2} \,\hat{V}_* \,\hat{V}_*^{\prime} \,S_{\tilde{w} \,\tilde{w}}^{-1/2} \,\tilde{C}$ given above that the Gaussian estimates of the ``common trends'' components $Z_{1t} = Q_1^{\prime} Y_t$ can be obtained with $\hat{Q}_1 = S_{\tilde{w} \tilde{w}}^{-1/2} [\hat{V}_m^* ,\ldots, \hat{V}_{r+1}^* ]$, so that the rows of $\hat{Q}_1^{\prime}$ are the vectors $\hat{V}_i^{* \prime} S_{\tilde{w} \tilde{w}}^{-1/2}$, $i = r\!+\!1 ,\ldots,m$, corresponding to the $d$ smallest partial canonical correlations, with the property that $\hat{Q}_1^{\prime} \hat{C} = 0$ since $\hat{Q}_1^{\prime} \hat{A} = [\hat{V}_m^* ,\ldots, \hat{V}_{r+1}^* ]^{\prime} \hat{V}_* = 0$. This method of estimation of the common ``trend'' or ``long-memory'' components was explored by Gonzalo and Granger (1995)~\cite{gongra}.
+The dual implications, (\ref{eqn:lprimeY}) and (\ref{eqn:Ceqab}) of reduced--rank structure come into play in modeling VAR as well. Note from the earlier discussion that the expression $\hat{B} = \hat{V}_*^{\prime} S_{\tilde{w} \tilde{w}}^{-1/2} \tilde{C}$ shows that the estimated co-integrating vectors (rows of $\hat{B}$) are obtained from the vectors that determine the first $r$ canonical variates of $Y_{t-1}$ in the partial canonical correlation analysis. In addition, it is seen from the form of the reduced-rank estimator $\hat{C} = S_{\tilde{w} \tilde{w}}^{1/2} \,\hat{V}_* \,\hat{V}_*^{\prime} \,S_{\tilde{w} \,\tilde{w}}^{-1/2} \,\tilde{C}$ given above that the Gaussian estimates of the ``common trends'' components $Z_{1t} = Q_1^{\prime} Y_t$ can be obtained with $\hat{Q}_1 = S_{\tilde{w} \tilde{w}}^{-1/2} [\hat{V}_m^* ,\ldots, \hat{V}_{r+1}^* ]$, so that the rows of $\hat{Q}_1^{\prime}$ are the vectors $\hat{V}_i^{* \prime} S_{\tilde{w} \tilde{w}}^{-1/2}$, $i = r\!+\!1 ,\ldots,m$, corresponding to the $d$ smallest partial canonical correlations, with the property that $\hat{Q}_1^{\prime} \hat{C} = 0$ since $\hat{Q}_1^{\prime} \hat{A} = [\hat{V}_m^* ,\ldots, \hat{V}_{r+1}^* ]^{\prime} \hat{V}_* = 0$. This method of estimation of the common ``trend'' or ``long-memory'' components was explored by Gonzalo and Granger (1995)~\cite{gongra}.
 
 
-Within the context of model (\ref{eqn:2WtCt}), it is necessary to specify or determine the rank $r$ of cointegration or the number $d$ of unit roots in the model. Thus, it is also of interest to test the hypothesis $H_0\!:\!\mbox{rank} (C) \leq r$, which is equivalent to the hypothesis that the number of unit roots in the AR model is greater than or equal to $d$ ($d = m\!-\!r$), against the general alternative that $\mbox{rank} (C) = m$.  The {\it likelihood ratio test} for this hypothesis is considered by Johansen (1988)~\cite{johansen1988statistical} and the test statistic is given as $- T \log (U) = - T \log ( \left|S \right| / \left| S_0 \right| )$, where $S = \sum_{t=1}^T \hat{\epsilon}_t \hat{\epsilon}_t^{\: \prime} $ denotes the residual sum of squares matrix in the full or unconstrained model, while $S_0 $ is the residual sum of squares matrix obtained under the reduced-rank restriction on $C$ that $\mbox{rank} (C) = r $.  It follows from the work of Anderson (1951)~\cite{andersontw} in the multivariate linear model with reduced-rank structure that the LR statistic can be expressed equivalently as
+Within the context of model (\ref{eqn:2WtCt}), it is necessary to specify or determine the rank $r$ of co-integration or the number $d$ of unit roots in the model. Thus, it is also of interest to test the hypothesis $H_0\!:\!\mbox{rank} (C) \leq r$, which is equivalent to the hypothesis that the number of unit roots in the AR model is greater than or equal to $d$ ($d = m\!-\!r$), against the general alternative that $\mbox{rank} (C) = m$.  The {\it likelihood ratio test} for this hypothesis is considered by Johansen (1988)~\cite{johansen1988statistical} and the test statistic is given as $- T \log (U) = - T \log ( \left|S \right| / \left| S_0 \right| )$, where $S = \sum_{t=1}^T \hat{\epsilon}_t \hat{\epsilon}_t^{\: \prime} $ denotes the residual sum of squares matrix in the full or unconstrained model, while $S_0 $ is the residual sum of squares matrix obtained under the reduced-rank restriction on $C$ that $\mbox{rank} (C) = r $.  It follows from the work of Anderson (1951)~\cite{andersontw} in the multivariate linear model with reduced-rank structure that the LR statistic can be expressed equivalently as
 	\begin{equation}\label{eqn:2negT}
 	- T \log (U) = - T \sum_{i=r+1}^m \log ( 1 - \hat{\rho}_i^2 )
 	\end{equation}
@@ -463,7 +463,7 @@ where $\Omega$ is a positive definite matrix, $w_k$'s are vectors of factor weig
 where $a_k,\alpha_k,\gamma_k$ are scalars and $\beta_k$ is a vector. Note this is somewhat a simplified version of (\ref{eqn:kroner}) and is easy to model. See Engle, Ng and Rothschild (1990)~\cite{engleng} for details. 
 
 
-Empirical applications of the models face the curve of dimensionality. As the number of variables ($m$) increases, the number of conditional variances and covariances, $\frac{m(m+1)}{2}$ increases exponentially. Also any applications should guarantee that the estimated volatility matrices are positive definite. Recall that a descriptive approach in the case of independent (with no temporal dependence) observations the principal component analysis (PCA) plays an important role. It is based on the eigenvalue decomposition of the variance-covariance matrix, as discussed in Section~3.2. Hu and Tsay (2014)~\cite{hutsay14} extend this idea by defining a generated kurtosis matrix for multivariate volatility and by carrying out the spectral decomposition of this matrix. Note that this matrix is based on the fourth moment, both serial and cross-sectional of a vector time series.
+Empirical applications of the models face the curse of dimensionality. As the number of variables ($m$) increases, the number of conditional variances and covariances, $\frac{m(m+1)}{2}$ increases exponentially. Also any application should guarantee that the estimated volatility matrices are positive definite. Recall that a descriptive approach in the case of independent (with no temporal dependence) observations, the principal component analysis (PCA) plays an important role. It is based on the eigenvalue decomposition of the variance-covariance matrix, as discussed in Section~3.2. Hu and Tsay (2014)~\cite{hutsay14} extend this idea by defining a generalized kurtosis matrix for multivariate volatility and by carrying out the spectral decomposition of this matrix. Note that this matrix is based on the fourth moment, of both serial and cross-sectional aspects of a vector time series.
 
 
 To start with assume that the conditional volatility matrix, $\Sigma_t=E(y_ty_t' \;|\; F_{t-1})$, where $F_{t-1}$ denotes the information available at time `$t-1$', can be modeled as
@@ -476,44 +476,239 @@ which is in the form of ARCH model. The $m^2$-dimensional `$c_0$' vector and $m^
 	\end{equation}
 where $x_{ij \cdot t - l}$ is a function of $y_{i \cdot t-l} y_{j \cdot t-l}$ for $1 \leq i,j \leq m$. The cumulative kurtosis matrix is then defined as,
 	\begin{equation}\label{eqn:cumkurt}
-	\Gamma_k=\sum_{l=1}^k \gamma_l
+	\Gamma_k=\sum_{l=1}^K \gamma_l
 	\end{equation}
 For the linearly transformed series, $z_t=My_t$ where $M$ is a $m \times m$ full-rank matrix; note $\Cov(z_tz_t', x_{t-1})=M' \Cov(y_ty_t', x_{t-1})M$ and if there is no ARCH effect, $\gamma_l$'s and hence $\Gamma_k$ must be singular. The principal volatility components (PVC) matrix, $M$ is obtained from the eigenvalue decomposition of $M$:
 	\begin{equation}\label{eqn:obtainM}
-	\Gamma_kM= M \Lambda
+	\Gamma_\infty M= M \Lambda
 	\end{equation}
-with $m_v$ is the $v$th PVC, note $m_v'\gamma_{l \cdot ij} m_v$ is a measure of dependence in volatility. Thus the smaller values of $\Lambda$ would indicate that certain combinations will be independent of volatility dependence which implies that there is common volatility component. The larger values of $\Lambda$ would provide the most volatile combinations via the eigenvectors, $m_v$. 
+with $m_v$ is the $v$th PVC, note $m_v'\gamma_{l \cdot ij} m_v$ is a measure of dependence in volatility. Thus the smaller values of $\Lambda$ would indicate that certain combinations will be independent of volatility dependence which implies that there is common volatility component. The larger elements of $\Lambda$ would provide the most volatile combinations via the corresponding eigenvectors, $m_v$. 
 
 
 \section{Illustrative Examples}
 
 
-As mentioned in the introduction to this chapter, the application of multivariate time serise models is in the area of linking multiple markets or multiple assets. There is some commonality among certain equities due to common fundamentals or industry factors that have impact on that performance. Whenever there is a deviation from expected commonality or co-movement, it provides trading opportunities. This is the basis of the so called `pairs trading' that is discussed in detail in Chapter 5. Also the methodologies discussed in this chapter are useful for portfolio analysis (Chapter 7) as well. The example that we present in this section is mainly for illustrating the methodologies discussed in this chapter as other applications will be taken up elsewhere.
+As mentioned in the introduction to this chapter, the application of multivariate time series models is in the area of linking multiple markets or multiple assets. There is some commonality among certain equities due to common fundamentals or industry factors that have similar impact on their performance. Whenever there is a deviation from expected commonality or co-movement, it provides trading opportunities. This is the basis of the so called `pairs trading' that is discussed in detail in Chapter 5. Also the methodologies discussed in this chapter are useful for portfolio analysis (Chapter 7) as well. The example that we present in this section is mainly for illustrating the methodologies discussed in this chapter as other applications will be taken up elsewhere.
+
+
+We consider the daily exchange rates of five currencies British Pound (GBP), Euro (EUR), Japanese Yen (JPY), Canadian Dollar (CAD), Singapore Dollar, and Australian Dollar (AUD) all stated against US Dollar. The data is from January 1, 1999 to May 2, 2016. Thus $Y_t$ is a five dimensional vector of time series. The return series $r_t$ is calculated as $r_t=\ln(y_t) - \ln(y_{t-1})$. The plot of $Y_t$ is given in Figure~\ref{fig:exchrt} and to make the comparison easier, the first observation in all series are set to unity. Clearly the series are non-stationary and exhibit common upward and downward movements in certain dimensions. 
+
+
+Broadly defining the regimes as dollar strengthening - strong versus weak, the following regimes are identified: 1999--2002, 2002--2008, 2008--2009, 2009--2013 and 2013--present. The typical autocorrelation functions (ACFs) for the rate, return and volatility are given in Figures~\ref{fig:pexchrate}, \ref{fig:preturns}, and \ref{fig:pvolat} respectively.
+
+
+Some general observations can be confirmed as follows:
+	\begin{itemize}
+	\item Rates are non-stationary.
+	\item Returns are generally white-noise.
+	\item Volatilities exhibit time-dependence.
+	\end{itemize}
+
+
+In this report we want to study the co-integrating relationships, if any in the rates and explore if there are any commonality in the volatilities.
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/exchangerates.png}
-	\caption{Plot of Exchange Rates. \label{fig:exchrt}}
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pexchrate.png}
+	\caption{Plot of Exchange Rates. \label{fig:pexchrate}}
+	\end{figure}
+	
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/preturns.png}
+	\caption{Plot of Returns. \label{fig:preturns}}
+	\end{figure}
+	
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pvolat.png}
+	\caption{Plot of Volatilities. \label{fig:pvolat}}
+	\end{figure}
+
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pvolat.png}
+	\caption{Plot of Volatilities. \label{fig:pvolat}}
+	\end{figure}
+
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pautofun.png}
+	\caption{Autocorrelation Function for EUR (with 5\% significance limits for the autocorrelations). \label{fig:pautofun}}
+	\end{figure}
+
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pautofun2.png}
+	\caption{Autocorrelation Function for EurR (with 5\% significance limits for the autocorrelations). \label{fig:pautofun2}}
+	\end{figure}
+
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pautofun3.png}
+	\caption{Autocorrelation Function for EurRSQ (with 5\% significance limits for the autocorrelations). \label{fig:pautofun3}}
 	\end{figure}
 
 
-We consider the exchange rates of British Pound, Norwegian Kroner, Swedish Kroner, Swiss Franc, Canadian Dollar, Singapore Dollar, and Australian Dollar all stated against US Dollar. The weekly data is from March 22, 2000 to October 26, 2011 and it is the same data that was used in Hu and Tsay (2014)~\cite{hutsay14}. Thus $Y_t$ is a seven dimensional vector of time series. The return series $r_t$ is calculated as $r_t=\ln(y_t) - \ln(y_{t-1})$. The plot of $y_t$ is given in Figure~\ref{fig:exchrt} and to make the comparison easier, the first observation in all series are set to unity. Clearly the series are non-stationary and exhibit common upward and downward movements. The plot of returns and volatilities are given in Figures~\ref{fig:returnsfig} and \ref{fig:volfig}, respectively. They clearly indicate the periods of high volatilities in 2008--2009. 
+We want to briefly summarize the main ideas of this chapter. Each component series $y_{it}$ of the vector process $Y_t$ is to be nonstationary with its first difference $(1\!-\!B) y_{it}$ stationary (in which case $y_{it}$ is said to be integrated of order one), but such that certain linear combinations $z_{it} = b_i^{\prime} Y_t $ of $Y_t$ will be stationary. Then, the process $Y_t$ is said to be \emph{co-integrated} with co-integrating vectors $b_i$ (e.g., Engle and Granger, 1987~\cite{engle1987co}). An elegant interpretation of co-integrated vector series $Y_t$, in Economics, is that the individual components $y_{it}$ share some common nonstationary components or ``common trends'' and, hence, they tend to have certain similar movements in their long-term behavior. A related interpretation is that the component series $y_{it}$, although they may exhibit nonstationary behavior, satisfy (approximately) a long-run equilibrium relation $b_i^{\prime} Y_t \approx 0$ such that the process $z_{it} = b_i^{\prime} Y_t$, which represents the deviations from the equilibrium, exhibits stable behavior and so is a stationary process. This is the basis of `pairs trading' discussed in Chapter 5. For a VAR($p$) model, see the discussion in Section 3.4.
+
+
+The main steps involved in VAR($p$) modeling are:
+	\begin{enumerate}[--]
+	\item Identification of the order `$p$' of the process either by examining the significance of the elements of the cross-correlation matrix, $\rho(l)$ for various values of `$l$' or by using one of the criteria, AIC or BIC in (\ref{eqn:2aicbic}).
+	\item For the non-stationary VAR, run Dickey--Fuller test (\ref{eqn:hattaunew}) to check if individual series are non-stationary. Then build the model in \ref{eqn:2WtABY}, by first testing the co-integrating rank. 
+	\end{enumerate}
+[All these calculations can be done by using the `$R$' programs, Urca, MTS, fUnitRoots]
+
+
+The results for the testing co-integration for the full duration and the regime (2008--2009) are presented in Table~\ref{tab:fulldur} and Table~\ref{tab:fulldur2}, respectively. All the other regimes have the same pattern as the full durations and therefore the details are omitted. Except for the regime (2008--2009) we did not see any co-integrating relationships. This probably indicates that the exchange rate series may be moving on their own with no co-dependence. For the regime that is isolated here, the co-integrating relationships are plotted in Figure~\ref{fig:cointser}; there is only \underline{one} stationary transformed series.
+
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/returns.png}
-	\caption{Plot of Returns. \label{fig:returnsfig}}
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pcointser.png}
+	\caption{Plot of Co-integrated Series. \label{fig:cointser}}
 	\end{figure}
+	
+	\begin{table}[!ht]
+	\caption{Full Duration \label{tab:fulldur}}
+	\centering
+	Eigenvalues ($\lambda$): 0.0054, 0.0030, 0.0018, 0.0008, 0.0003
+
+	Values of test statistic and critical values of test for various ranks: \\[0.1cm]
+	
+	\begin{tabular}{| l | c | c | c | c |} \hline
+	$r$  & test & 10pct & 5pct  & 1pct \\ \hline
+	$r \leq 4$ &  1.26 & 6.50 & 8.18 & 11.65 \\ \hline
+	$r \leq 3$ &  3.71 & 12.91 & 14.90 & 19.19\\ \hline
+	$r \leq 2$ &  7.87 & 18.90 & 21.07 & 25.75\\ \hline
+	$r \leq 1$ & 13.47 & 24.78 & 27.14 & 32.14\\ \hline
+	$r=0$  & 24.19 & 30.84 & 33.32 & 38.78
+	\end{tabular}
+	
+	Eigenvectors, normalised to first column: (These are the co-integration relations) \\[0.1cm]
+	
+	\begin{tabular}{| l | c | c | c | c | c |} \hline
+	          & EUR &   GBP  &   CAD  &   AUD   &  JPY \\ \hline
+	EUR & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\ \hline
+	GBP & $-0.172$ & $-1.105$ & $-1.721$ &  2.163 & $-0.487$ \\ \hline
+	CAD & $-0.890$ &  4.537 & $-0.810$ &  0.707 &  1.666 \\ \hline
+	AUD & $-0.343$ & $-3.838$ &  0.829 & $-0.431$ &  0.214 \\ \hline
+	JPY &  0.305 & $-0.318$ & $-1.300$ & $-2.242$ & 0.889
+	\end{tabular}
+	\end{table}
+	
+	\begin{table}[!ht]
+	\caption{Regime 2007--2009 \label{tab:fulldur2}}
+	\centering
+	Eigenvalues ($\lambda$): 0.0592, 0.0367, 0.0298, 0.0039, 0.0038
+
+	Values of test statistic and critical values of test of co-integrating rank: \\[0.1cm]
+	
+	\begin{tabular}{| l | c | c | c | c |} \hline
+	r               &  test & 10pct & 5pct & 1pct\\ \hline
+	r $\leq$ 4 &  1.97  & 6.50 &  8.18 & 11.65\\ \hline
+	r $\leq$ 3 &  2.01 & 12.91 & 14.90 & 19.19\\ \hline
+	r $\leq$ 2 & 15.77 & 18.90 & 21.07 & 25.75\\ \hline
+	r $\leq$ 1 & 19.50 & 24.78 & 27.14 & 32.14\\ \hline
+	r = 0  & 31.84 & 30.84 & 33.32 & 38.78
+	\end{tabular}
+
+	Eigenvectors, normalised to first column: (These are the co-integration relations) \\[0.1cm]
+	
+	\begin{tabular}{| l | c | c | c | c | c |} \hline
+	         &  EUR  &   GBP  &   CAD   &  AUD  &   JPY \\ \hline
+	EUR & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\ \hline
+	GBP & $-0.628$ & 0.392 & $-0.606$ & 0.379 & $-0.241$ \\ \hline
+	CAD & 1.733 & $-0.615$ & $-1.009$ & $-1.189$ & $-0.456$ \\ \hline
+	AUD & $-0.919$ & $-0.452$  & 0.519  & 0.103 & $-0.588$ \\ \hline
+	JPY & $-0.289$  & 0.522 & $-0.500$ & $-0.567$ & $-0.856$
+	\end{tabular}
+	\end{table}
+	
+The co-integration results clearly indicate that the relationships among the exchange rate series could be regime-dependent. This is an important consideration when developing trading strategies. Now we want to examine if there is a linear combination of the returns that exhibit low volatility using the principal volatility component method (PVCM). We compute $\gamma_t=\ln Y_t - \ln Y_{t-1}$ be the five-dimensional returns process. The goal of PVCM, it may be recalled, is to find a matrix, $M$, such that
+	\begin{equation}\label{eqn:covmatrixM}
+	\Cov(Mr_t)= M \Sigma_t M= 
+	\begin{bmatrix}
+	\Delta_t & c_2 \\
+	c_2' & c_1
+	\end{bmatrix}
+	\end{equation}	
+with $\Delta_t$ being time variant but $c_1$ is time-independent. For a forerunner of this idea in the case of $m=2$, see Engle and Kozicki (1993)~\cite{engle1993testing} and Engle and Susmel (1993)~\cite{engle1993common}. To find $M$, write the generalized kurtosis matrix (\ref{eqn:cumkurt}) as
+	\begin{equation}\label{eqn:gammakurt}
+	\Gamma_k= \sum_{h=1}^k \sum_{i=1}^m \sum_{j=1}^m \Cov^2(r_tr_t', r_{i,t-h}^* r_{j \cdot t-h})
+	\end{equation}	
+
+\noindent\underline{Result:} If $r_t$ is a $m$-dimensional stationary series; the ARCH dimension of $r_t$ is $'r'$ if and only if rank$(\Gamma_{\infty})=r$ and the no-ARCH transformation, satisfies, $M$, $\Gamma_{\infty}=0$. Essentially, $M$ is the matrix composed of the eigenvectors of $\Gamma_{\infty}$.
+
+
+For the five exchange rate series, the computational details are presented in Table~\ref{tab:pvctable}. It can be seen that the last two eigenvalues are fairly small. The linear combinations, $Mr_t$ are plotted in Figure~\ref{fig:transpvc}. The plot of squared values of the two extremes are plotted in Figure~\ref{fig:volextreme}. The autocorrelation functions of the transformed series are plotted in Figure~\ref{fig:autooverall} a \& b; the combination, $0.6835\text{ EUYR} + 0.2054\text{ GBPR} - 0.3271\text{ CADR} + 0.1496\text{ AVDR} + 0.6010\text{ JPYR}$ exhibits the lowest volatility. It will be iterating to test this out over different regimes.
+
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/volatilities.png}
-	\caption{Plot of Volatilities. \label{fig:volfig}}
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/transpvc.png}
+	\caption{Transformed PVC Series. \label{fig:transpvc}}
 	\end{figure}
+
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/volextreme.png}
+	\caption{Volatilities of extreme series. \label{fig:volextreme}}
+	\end{figure}
+
+
+\begin{figure}[!hbp] %htbp
+                %\centering
+                \subfigure[Figure 1a]
+                        [Function for PVC1sq.]
+                        {
+                        \includegraphics[scale=0.4]{chapters/chapter_mvts/figures/autoa.png}
+                        }
+                        \hfill
+                \subfigure[Figure 1b]
+                        [Function for PVC5sq.]
+                        {
+                        \includegraphics[scale=0.4]{chapters/chapter_mvts/figures/volextreme.png}
+
+                        }
+                        \hfill
+                %\subfloat[Figure 1ab][Time Series Plot \& ACF Plot]
+                %{\includegraphics[width=\textwidth, height=0.5\textheight]{ch1fig1y1ab.eps}}
+                %\qquad
+               \caption{Autocorrelation Function for PVCs (with 5\% significance limits for the autocorrelations). \label{fig:autooverall}}
+            \end{figure}
+
+
+	\begin{table}[!ht]
+	\centering
+	\caption{Principal Volatility Components \label{tab:pvctable}}
+	Eigenvalues ($\lambda$): 21.096, 4.453, 1.623, 0.728, 0.435
+	
+	Eigenvectors
+	
+	\begin{tabular}{| l | c | c | c | c | c |} \hline
+        &    [,1]   &    [,2]    &   [,3]    &   [,4]   &     [,5] \\ \hline
+	[1,] & 0.015 & 0.208 & $-0.225$ & $-0.694$ &  0.651 \\ \hline
+	[2,] & 0.173 & 0.495 & 0.753 & 0.219 & 0.331 \\ \hline
+	[3,] & 0.195 & 0.717 & $-0.577$ & 0.331 & $-0.080$ \\ \hline
+	[4,] & 0.859 & $-0.383$ & $-0.114$ & 0.185 & 0.260 \\ \hline
+	[5,] & $-0.440$ & $-0.228$ & $-0.191$ & 0.571 & 0.626 \\
+	\end{tabular}
+	
+	$M$--Matrix \\[0.1cm]
+	
+	\begin{tabular}{| l | c | c | c | c | c |} \hline
+	         &   [,1]   &     [,2]    &     [,3]   &    [,4]   &    [,5] \\ \hline
+	[1,] & $-0.196$ & 0.077 & $-0.283$ & $-0.755$ & 0.684 \\ \hline
+	[2,] & 0.128 & 0.437 & 0.793 d & 0.319 & 0.205 \\ \hline
+	[3,]& $-0.070$ & 0.713 & $-0.520$ & 0.321 & $-0.327$ \\ \hline
+	[4,] & 0.849 & $-0.512$ & $-0.002$ & 0.129 & 0.150 \\ \hline
+	[5,] & $-0.468$ & $-0.180$ & $-0.142$ & 0.455 & 0.601 \\
+	\end{tabular}
+	\end{table}
+
 
 
 \section{Exercises}
-
-
-
 
 
 
