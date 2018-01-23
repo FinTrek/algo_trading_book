@@ -491,10 +491,10 @@ with $m_v$ is the $v$th PVC, note $m_v'\gamma_{l \cdot ij} m_v$ is a measure of 
 As mentioned in the introduction to this chapter, the application of multivariate time series models is in the area of linking multiple markets or multiple assets. There is some commonality among certain equities due to common fundamentals or industry factors that have similar impact on their performance. Whenever there is a deviation from expected commonality or co-movement, it provides trading opportunities. This is the basis of the so called `pairs trading' that is discussed in detail in Chapter 5. Also the methodologies discussed in this chapter are useful for portfolio analysis (Chapter 7) as well. The example that we present in this section is mainly for illustrating the methodologies discussed in this chapter as other applications will be taken up elsewhere.
 
 
-We consider the daily exchange rates of five currencies British Pound (GBP), Euro (EUR), Japanese Yen (JPY), Canadian Dollar (CAD), Singapore Dollar, and Australian Dollar (AUD) all stated against US Dollar. The data is from January 1, 1999 to May 2, 2016. Thus $Y_t$ is a five dimensional vector of time series. The return series $r_t$ is calculated as $r_t=\ln(y_t) - \ln(y_{t-1})$. The plot of $Y_t$ is given in Figure~\ref{fig:exchrt} and to make the comparison easier, the first observation in all series are set to unity. Clearly the series are non-stationary and exhibit common upward and downward movements in certain dimensions. 
+We consider the daily exchange rates of five currencies British Pound (GBP), Euro (EUR), Japanese Yen (JPY), Canadian Dollar (CAD), Singapore Dollar (SGD), and Australian Dollar (AUD) all stated against US Dollar. The data is from January 1, 1999 to May 2, 2016. Thus $Y_t$ is a five dimensional vector of time series. The return series $r_t$ is calculated as $r_t=\ln(y_t) - \ln(y_{t-1})$. The plot of $Y_t$ is given in Figure~\ref{fig:pexchrate} and to make the comparison easier, the first observation in all series are set to unity. Clearly the series are non-stationary and exhibit common upward and downward movements in certain durations. The plot of returns and volatilities are given in Figures~\ref{fig:preturns} and \ref{fig:pvolat}, respectively. 
 
 
-Broadly defining the regimes as dollar strengthening - strong versus weak, the following regimes are identified: 1999--2002, 2002--2008, 2008--2009, 2009--2013 and 2013--present. The typical autocorrelation functions (ACFs) for the rate, return and volatility are given in Figures~\ref{fig:pexchrate}, \ref{fig:preturns}, and \ref{fig:pvolat} respectively.
+Broadly defining the regimes as dollar strengthening - strong versus weak, the following regimes are identified: 1999--2002, 2002--2008, 2008--2009, 2009--2013 and 2013--present. The typical autocorrelation functions (ACFs) for the rate, return and volatility are given in Figures~\ref{fig:pautofun}, \ref{fig:pautofun2}, and \ref{fig:pautofun3} respectively.
 
 
 Some general observations can be confirmed as follows:
@@ -519,12 +519,6 @@ In this report we want to study the co-integrating relationships, if any in the 
 	\caption{Plot of Returns. \label{fig:preturns}}
 	\end{figure}
 	
-	\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pvolat.png}
-	\caption{Plot of Volatilities. \label{fig:pvolat}}
-	\end{figure}
-
 	\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pvolat.png}
@@ -558,10 +552,10 @@ The main steps involved in VAR($p$) modeling are:
 	\item Identification of the order `$p$' of the process either by examining the significance of the elements of the cross-correlation matrix, $\rho(l)$ for various values of `$l$' or by using one of the criteria, AIC or BIC in (\ref{eqn:2aicbic}).
 	\item For the non-stationary VAR, run Dickey--Fuller test (\ref{eqn:hattaunew}) to check if individual series are non-stationary. Then build the model in \ref{eqn:2WtABY}, by first testing the co-integrating rank. 
 	\end{enumerate}
-[All these calculations can be done by using the `$R$' programs, Urca, MTS, fUnitRoots]
+[All these calculations can be done by using the `$R$' programs, urca, MTS, fUnitRoots]
 
 
-The results for the testing co-integration for the full duration and the regime (2008--2009) are presented in Table~\ref{tab:fulldur} and Table~\ref{tab:fulldur2}, respectively. All the other regimes have the same pattern as the full durations and therefore the details are omitted. Except for the regime (2008--2009) we did not see any co-integrating relationships. This probably indicates that the exchange rate series may be moving on their own with no co-dependence. For the regime that is isolated here, the co-integrating relationships are plotted in Figure~\ref{fig:cointser}; there is only \underline{one} stationary transformed series.
+The results for the testing co-integration for the full duration and the regime (2008--2009) are presented in Table~\ref{tab:fulldur} and Table~\ref{tab:fulldur2}, respectively. All the other regimes have the same pattern as the full duration and therefore the details are omitted. Except for the regime (2008--2009) we did not find any co-integrating relationships. This probably indicates that the exchange rate series may be moving on their own with no co-dependence. For the regime that is isolated here, the co-integrating relationships are plotted in Figure~\ref{fig:cointser}; there is only \underline{one} stationary transformed series.
 
 	\begin{figure}[!ht]
 	\centering
@@ -625,7 +619,7 @@ The results for the testing co-integration for the full duration and the regime 
 	\end{tabular}
 	\end{table}
 	
-The co-integration results clearly indicate that the relationships among the exchange rate series could be regime-dependent. This is an important consideration when developing trading strategies. Now we want to examine if there is a linear combination of the returns that exhibit low volatility using the principal volatility component method (PVCM). We compute $\gamma_t=\ln Y_t - \ln Y_{t-1}$ be the five-dimensional returns process. The goal of PVCM, it may be recalled, is to find a matrix, $M$, such that
+The co-integration results clearly indicate that the relationships among the exchange rate series could be regime-dependent. This is an important consideration when developing trading strategies. Now we want to examine if there is a linear combination of the returns that exhibit low volatility using the principal volatility component method (PVCM). We compute $r_T=\ln Y_t - \ln Y_{t-1}$ be the five-dimensional returns process. The goal of PVCM, it may be recalled, is to find a matrix, $M$, such that
 	\begin{equation}\label{eqn:covmatrixM}
 	\Cov(Mr_t)= M \Sigma_t M= 
 	\begin{bmatrix}
@@ -633,15 +627,15 @@ The co-integration results clearly indicate that the relationships among the exc
 	c_2' & c_1
 	\end{bmatrix}
 	\end{equation}	
-with $\Delta_t$ being time variant but $c_1$ is time-independent. For a forerunner of this idea in the case of $m=2$, see Engle and Kozicki (1993)~\cite{engle1993testing} and Engle and Susmel (1993)~\cite{engle1993common}. To find $M$, write the generalized kurtosis matrix (\ref{eqn:cumkurt}) as
+with $\Delta_t$ being time-variant but $c_1$ is time-independent. For a forerunner of this idea in the case of $m=2$, see Engle and Kozicki (1993)~\cite{engle1993testing} and Engle and Susmel (1993)~\cite{engle1993common}. To find $M$, write the generalized kurtosis matrix (\ref{eqn:cumkurt}) as
 	\begin{equation}\label{eqn:gammakurt}
-	\Gamma_k= \sum_{h=1}^k \sum_{i=1}^m \sum_{j=1}^m \Cov^2(r_tr_t', r_{i,t-h}^* r_{j \cdot t-h})
+	\Gamma_k= \sum_{h=1}^k \sum_{i=1}^m \sum_{j=1}^m \Cov^2(r_tr_t', r_{i,t-h} \cdot r_{j \cdot t-h})
 	\end{equation}	
 
-\noindent\underline{Result:} If $r_t$ is a $m$-dimensional stationary series; the ARCH dimension of $r_t$ is $'r'$ if and only if rank$(\Gamma_{\infty})=r$ and the no-ARCH transformation, satisfies, $M$, $\Gamma_{\infty}=0$. Essentially, $M$ is the matrix composed of the eigenvectors of $\Gamma_{\infty}$.
+\noindent\underline{Result:} If $r_t$ is a $m$-dimensional stationary series; the ARCH dimension of $r_t$ is $'r'$ if and only if rank$(\Gamma_{\infty})=r$ and the no-ARCH transformation, satisfies, $M\Gamma_{\infty}=0$. Essentially, $M$ is the matrix composed of the eigenvectors of $\Gamma_{\infty}$.
 
 
-For the five exchange rate series, the computational details are presented in Table~\ref{tab:pvctable}. It can be seen that the last two eigenvalues are fairly small. The linear combinations, $Mr_t$ are plotted in Figure~\ref{fig:transpvc}. The plot of squared values of the two extremes are plotted in Figure~\ref{fig:volextreme}. The autocorrelation functions of the transformed series are plotted in Figure~\ref{fig:autooverall} a \& b; the combination, $0.6835\text{ EUYR} + 0.2054\text{ GBPR} - 0.3271\text{ CADR} + 0.1496\text{ AVDR} + 0.6010\text{ JPYR}$ exhibits the lowest volatility. It will be iterating to test this out over different regimes.
+For the five exchange rate series, the computational details are presented in Table~\ref{tab:pvctable}. It can be seen that the last two eigenvalues are fairly small. The linear combinations, $Mr_t$ are plotted in Figure~\ref{fig:transpvc}. The plot of squared values of the two extremes are plotted in Figure~\ref{fig:volextreme}. The autocorrelation functions of the transformed series are plotted in Figure~\ref{fig:autooverall} a \& b; the combination, $0.6835\text{ EURR} + 0.2054\text{ GBPR} - 0.3271\text{ CADR} + 0.1496\text{ AUDR} + 0.6010\text{ JPYR}$ exhibits the lowest volatility. It will be interesting to test this out over different regimes.
 
 	\begin{figure}[!ht]
 	\centering
