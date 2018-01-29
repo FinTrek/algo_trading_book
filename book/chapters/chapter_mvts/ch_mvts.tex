@@ -421,7 +421,85 @@ Within the context of model (\ref{eqn:2WtCt}), it is necessary to specify or det
 where the $\hat{\rho}_i$ are the $d = m\!-\!r$ smallest sample partial canonical correlations between $W_t = Y_t - Y_{t-1} $ and $Y_{t-1}$, given $W_{t-1} ,\ldots, W_{t-p+1}$. The limiting distribution for the likelihood ratio statistic does not take standard form and has been derived by Johansen (1988)~\cite{johansen1988statistical}, and by Reinsel and Ahn (1992)~\cite{reinsel1992vector}. The asymptotic distribution of the likelihood ratio test statistic under $H_0$ depends only on the number of unit roots, $d$, and not on any other parameters or on the order $p$ of the VAR model.
 
 
-Critical values of the asymptotic distribution of (\ref{eqn:2negT}) have been obtained by simulation by Johansen (1988)~\cite{johansen1988statistical} and Reinsel and Ahn (1992)~\cite{reinsel1992vector} and can be used in the test of $H_0$. It is known that inclusion of a constant term in the estimation of the nonstationary AR model affects the limiting distribution of the estimators and test statistics. Testing for this and other model variations can be found elsewhere in the literature (see Johansen (1991)~\cite{johansen1991estimation}, Engle and Granger (1987)~\cite{engle1987co}, etc.). 
+Critical values of the asymptotic distribution of (\ref{eqn:2negT}) have been obtained by simulation by Johansen (1988)~\cite{johansen1988statistical} and Reinsel and Ahn (1992)~\cite{reinsel1992vector} and can be used in the test of $H_0$. It is known that inclusion of a constant term in the estimation of the nonstationary AR model affects the limiting distribution of the estimators and test statistics. Testing for this and other model variations can be found elsewhere in the literature (see Johansen (1991)~\cite{johansen1991estimation}, Engle and Granger (1987)~\cite{engle1987co}, etc.). \\
+
+
+\noindent \textbf{Co-movement and Commanlity; Further Discussion:} \\
+
+
+Economic time series share some common characteristics such as a trends, seasonality and serial correlations. The existence common elements is identified through the indicators of comovement. Series that have common stochastic trends are identified through reduced-rank regression as discussed in this section. Centoni and Cubadda (2011)~\cite{centoni} provide a survey of models used in this area. From a modeling point of view, the parsimonious structure that results from the comovement can be stated as,
+	\begin{equation}\label{eqn:discyt}
+	Y_T= cf_t + u_t
+	\end{equation}  
+where $f_f$ is a lower dimensional common feature vector so that a linear combination of $Y_t$, $l' Y_t$ can be independent of this feature. Observe that this implies $l'c=0$ (\ref{eqn:lprimeC}) which is the result of `$C$' being a lower rank matrix. The $f_t$-vector can either be constructed from the past values of $Y_t$-which is the focal view of comovement or can be constructed from exogenous commonality in finance literature. We briefly summarize the two aspects here. 
+
+
+The comovement relationship that result from cointegration one known as long-run equilibrium relationships. Relationships that result from stationary series are known as short-run equilibrium relationships. The cointegrating relationships resulting (\ref{eqn:2WtCt}) or (\ref{eqn:2WtABY}) are given by $\hat{Q}_1$ that leads to $\hat{Q}_1 \hat{A}=0$. A generalization of this concept relates to serial correlation common featuer; to define this, write (\ref{eqn:2WtABY}) as
+	\begin{equation}\label{eqn:wtrewrite}
+	W_t=  \begin{bmatrix} A & D \end{bmatrix} \; \begin{bmatrix} BY_{t-1} \\ W_{t-1}^* \end{bmatrix} + \epsilon_t
+	\end{equation}
+The combination that is free of serial correlation is $\hat{Q}_1W_t= Q_1' \epsilon_t$ which implies that $Q_1' [A \;\; D] \sim 0$; from the results given in Section 3.2, it easily follows that the linear combination can be constructed from canonical vectors associated with the smallest canonical correlation between $Y_t$ and its past lags.
+
+
+There is a vast literature on commonality in finance and the summary presented here is based on a few studies. In addition to price and return variables of stocks, the commonality is studied on liquidity and turnover measure as well which we define below
+	\begin{equation}\label{eqn:turnover}
+	\begin{split}
+	\text{Liq}_\alpha&= - \log \left( 1 + \dfrac{|r_\alpha|}{P_\alpha v_\alpha} \right) \\
+	\text{TO}_\alpha&= \log \left( 1 + \dfrac{v_\alpha}{\text{NSH}}\right)
+	\end{split}
+	\end{equation}
+Here $r_\alpha$ is the return on day `d', $P_\alpha$ is the preice, $v_\alpha$ is the volume traded and NSH is the number of outstanding shares at the beginning of the year. The turnover measure is adjusted by a moving average based on `$k$' days past `$d$'. As outlined in Chordia, Roll and Subrahmanyah (2000)~\cite{chordia} the commonality in liquidity can come from several sources: 
+	\begin{enumerate}[--]
+	\item Traders manage their inventory in response to market-wide price swings, thus variation in volume traded can lead to changes in liquidity, which are measured by bid-ask spread, effective spread, quoted depth, etc, besides (\ref{eqn:turnover}).
+	\item Volutility of the stock and pressure of informed traders who may have better knowledge about the market-movements. 
+	\item Traders cost that includes price impact as a major component. The commonality is simply infered from the coefficient of the regression model
+		\begin{equation}\label{eqn:coefficreg}
+		\text{DL}_{j,t}= \alpha_j + \beta_j' X_t + \epsilon_{j,t}
+		\end{equation}
+	where $\text{DL}$ is the percentage difference in a liquidity measure and where $X_t$ can include the corresponding market, industry variables. Generally the $\beta_j$'s tend to be positive and a fair number of them are significant. Some general observations from related studies are worth noting. 
+	\item Commonality in liquidity is high during periods of high market volatility and during high market-wide trading activity; volatility effect is asymmetric; the commonality is more pronounced when market performance is in decline. 
+	\end{enumerate}
+
+
+The factors in the model (\ref{eqn:discyt}) or $X_t$ in (\ref{eqn:coefficreg}) are sources of commonality that are broadly grouped into supply or demand side influences. The supply side hypotheses generally evaluate the role of funding constraints of financial intermediates who act as liquidity providers. When markets decline, the reasoning goes, that the intermediaries endure losses and thus reduce providing liquidity commonality arises mainly due to correlated trading behavior of industrial investors. It can be concluded that the demand side explanation is empirically shown to be more plausible than the supply side theory. 
+
+
+A general comment on the type of models used in finance to infer commonality is in order. The liquidity measures at the equity levels are related to market level measures and the commonality is inferred from the strength of their relationships to the market measures. But no explicit modeling attempt is made to see if there is any commonality (similarity) among the coefficients over different equities. This is simply equivalent to building a multivariate regression model (\ref{eqn:5lmyk}) which is essentially a set of multiple regressions---each regression representing a single equity. What binds the regression equations are constraints over coefficients across equities. Hasbrook and Seppi (2001)~\cite{seppi2001} provide a framework that examines the commonality in a comprehensive way. The model relates the order flows to returns via factor models that can be shown to have the reduced-rank regression structure. Let $X_t$ be $n$-vector of the order flows which are influenced by a common vector of order flows:
+	\begin{equation}\label{eqn:orderflows}
+	X_t= \theta F_t + \epsilon_t
+	\end{equation}
+Here $F_t$ is lower (than `$n$') dimensional that is assumed to have orthogonal structure. A similar factor model can be written for the returns:
+	\begin{equation}\label{eqn:returnflows}
+	r_t= \phi G_t + \eta_t
+	\end{equation}
+The common factors `$F$' can be due to dynamic hedging strategies, na\"{i}ve momentum trading etc and the factors, $G$, can be due to expectation of future cash flows. To connect the two models (\ref{eqn:orderflows}) and (\ref{eqn:returnflows}), it is argued that the factors $F_t$ is linearly related to $G_t$, but its relationship to `$r_t$' is subject to further restriction. 
+
+
+But in the high-frequency context, we expect `$G_t$' and `$F_t$' also share common features. These factors are estimated through the principal components of $r_t$ and $X_t$, respectively. If we assume that the factors `$G_t$' are determined by $X_t$, then
+	\begin{equation}\label{eqn:determinedfactors}
+	G_t= \delta X_t + \eta_t^*
+	\end{equation}
+Relating $X_t$ to $r_t$ via multivariate regression model, yields 
+	\begin{equation}\label{eqn:mrmr}
+	r_t= \Lambda X_t + u_t = \phi \delta X_t + u_t
+	\end{equation}
+where the coefficient matrix, $\Lambda$ is of lower rank. Thus the relationships between the returns and order flows can be studied through canonical correlations. The specification in (\ref{eqn:mrmr}) can be expanded to include other variables related to equity trading such as volume of trade, etc.. Using the data for 30-Dow stocks for 1994, it is shown that the rank of the matrix `$\Lambda$' is (\ref{eqn:mrmr}) can be taken to be unity. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \section{Multivariate GARCH Models}
@@ -637,20 +715,20 @@ with $\Delta_t$ being time-variant but $c_1$ is time-independent. For a forerunn
 
 For the five exchange rate series, the computational details are presented in Table~\ref{tab:pvctable}. It can be seen that the last two eigenvalues are fairly small. The linear combinations, $Mr_t$ are plotted in Figure~\ref{fig:transpvc}. The plot of squared values of the two extremes are plotted in Figure~\ref{fig:volextreme}. The autocorrelation functions of the transformed series are plotted in Figure~\ref{fig:autooverall} a \& b; the combination, $0.6835\text{ EURR} + 0.2054\text{ GBPR} - 0.3271\text{ CADR} + 0.1496\text{ AUDR} + 0.6010\text{ JPYR}$ exhibits the lowest volatility. It will be interesting to test this out over different regimes.
 
-	\begin{figure}[!ht]
+	\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/transpvc.png}
 	\caption{Transformed PVC Series. \label{fig:transpvc}}
 	\end{figure}
 
-	\begin{figure}[!ht]
+	\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/volextreme.png}
 	\caption{Volatilities of extreme series. \label{fig:volextreme}}
 	\end{figure}
 
 
-\begin{figure}[!hbp] %htbp
+\begin{figure}[H] %htbp
                 %\centering
                 \subfigure[Figure 1a]
                         [Function for PVC1sq.]
@@ -672,7 +750,7 @@ For the five exchange rate series, the computational details are presented in Ta
             \end{figure}
 
 
-	\begin{table}[!ht]
+	\begin{table}[H]
 	\centering
 	\caption{Principal Volatility Components \label{tab:pvctable}}
 	Eigenvalues ($\lambda$): 21.096, 4.453, 1.623, 0.728, 0.435
@@ -702,13 +780,64 @@ For the five exchange rate series, the computational details are presented in Ta
 
 
 
+
 \section{Exercises}
 
+\begin{enumerate}[1.]
+
+\item
+
+\begin{itemize}
+\item The file {\tt d\_15stocks.csv} and {\tt m\_15stocks.csv} contain daily and monthly stock returns data for 15 stocks from Jan 11, 2000 to Mar 31, 2013.
+
+\item The file {\tt d\_indexes.csv} and {\tt m\_indexes.csv} contain daily and monthly returns data for the volume-weighted and equal-weighted S\&P500 market indices (VWRETD and EWRETD, respectively) from Jan 11, 2000 to Mar 31, 2013.
+\end{itemize}
+
+
+ Using daily and monthly returns data for 15 individual stocks from {\tt d\_15stocks.csv} and {\tt m\_15stocks.csv}, and the equal-weighted and value-weighted CRSP market indexes (EWRETD and VWRETD, respectively) from {\tt d\_indexes.csv} and {\tt m\_indexes.csv}, perform the following statistical analyses using R. For the subsample analyses, split the available observations into equal-sized subsamples.
+
+	\begin{enumerate}[(a)]
+	\item Compute the sample mean $\hat\mu$, standard deviation $\hat{\sigma}$, and first-order autocorrelation coefficient $\hat{\rho}(1)$ for daily simple returns over the entire sample period for the 15 stocks and two indexes. Split the sample into 4 equal subperiods and compute the same statistics in each subperiod -- are they stable over time?
+
+	\item Plot histograms of daily simple returns for VWRETD and EWRETD over the entire sample period. Plot another histogram of the normal distribution with mean and variance equal to the sample mean and variance of the returns plotted in the first histograms. Do daily simple returns look approximately normal? Which looks closer to normal: VWRETD or EWRETD?
+
+	\item Using daily simple returns for the sample period, construct 99\% confidence intervals for $\hat{\mu}$ for VWRETD and EWRETD, and the 15 individual stock return series. Divide the sample into 4 equal subperiods and construct 99\% confidence intervals in each of the four subperiods for the 17 series -- do they shift a great deal?
+
+	\item Compute the skewness, kurtosis, and studentized range of daily simple returns of VWRETD, EWRETD, and the 15 individual stocks over the entire sample period, and in each of the 4 equal subperiods. Which of the skewness, kurtosis, and studentized range estimates are statistically different from the skewness, kurtosis, and studentized range of a normal random variable at the 5\% level? For these 17 series, perform the same calculations using monthly data. What do you conclude about the normality of these return series, and why?
+	\end{enumerate}
+
+
+
+\item For the data in Exercise 1, carry out the following:
+	\begin{enumerate}[(a)]
+	\item Perform a PCA on the 15-stock returns. Using the eigenvalues of the $\hat{\Sigma}$ matrix, identify the number of factors.
+	\item Compute the covariance between the returns and the factors and comment. 
+	\end{enumerate}
+
+
+
+\item Consider the weakly exchange rate data used in Hu and Tsay (2014)~\cite{hutsay14}: British Bound ($y_{1t}$), Norwegian Kroner ($y_{2t}$), Swedish Kroner ($y_{3t}$), Swiss Franc ($y_{4t}$), Canadian Dollar ($y_{5t}$), Singapore Dollar ($y_{6t}$) and Australian Dollar ($y_{7t}$) against US Dollar from March 22, 2000 to October 26, 2011.
+	\begin{enumerate}[(a)]
+	\item Test if the exchange rates are stationary individually via Dickey-Fuller test.
+	\item Test for co-integration using the likelihood-ratio test given in (\ref{eqn:2negT}). Assume that the order, $p=2$.
+	\item Compute the log returns: $r_t=\ln(Y_t) - \ln(Y_{t-1})$; Fit Var(5) model for the returns and extract the residuals. 
+	\item Using the residuals from (c), compute the $\Gamma_k$ matrix in (\ref{eqn:cumkurt}) for $k=5, 10, 20$ and obtain the $M$-matrix in (\ref{eqn:obtainM}).
+	\item Plot $MY_t$ and comment on the linear combination that has low volatility. 
+	\item Check (a)--(e) for various regimes; note 2008--2009 is noted for its volatility. 
+	\end{enumerate}
 
 
 
 
 
+
+
+
+
+
+
+
+\end{enumerate}
 
 
 
