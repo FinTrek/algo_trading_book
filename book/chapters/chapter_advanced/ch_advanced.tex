@@ -114,7 +114,7 @@ as the observational equation and the state equation is
 	\begin{equation}
 	\mu_t= \mu_{t-1} + \xi_t
 	\end{equation}
-The above can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) with appropriate choice of `$\Phi$' and `$H$' matrices. The main advantage of state-space models is that they accommodate the possibility of varying slowly parameters over time, which is more realistic in modeling the real world data. 
+The above can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) with appropriate choice of `$\Phi$' and `$H$' matrices. The main advantage of state-space models is that they accommodate the possibility of slowly varying parameters over time, which is more realistic in modeling the real world data. 
 
 
 \section{Regime Switching and Change-Point Models}
@@ -207,7 +207,7 @@ where $w(\hat{\delta}_t)$ is a weight function; a simple weight function $w(\hat
 The adaptive CUSUM chart is effective at detecting a range of mean shift sizes. Similar results for the variance need to be worked out.
 
 
-In practical applications of these regime-shifting models, it is not easy to discern between a single outlier and persistent level shift. Valid measures that can distinguish these two situations on a timely basis could be very valuable to a trader. We also want to remind the reader that the Markov switching models of changing regimes are indeed latent variable time series models. These models are known as hidden Markov models (HMMs) and represent a special class of dependent mixtures of several processes, these are closely related to state-space models in Section 4.1. An unobservable $m$-state Markov chain determines the state or regime and a state-dependent process of observations. The major difference is that HMMs have discrete states while the Kalman filter band approach refers to unobserved continuous states. 
+In practical applications of these regime-shifting models, it is not easy to discern between a single outlier and persistent level shift. Valid measures that can distinguish these two situations on a timely basis could be very valuable to a trader. We also want to remind the reader that the Markov switching models of changing regimes are indeed latent variable time series models. These models are known as hidden Markov models (HMMs) and represent a special class of dependent mixtures of several processes, these are closely related to state-space models in Section 4.1. An unobservable $m$-state Markov chain determines the state or regime and a state-dependent process of observations. The major difference is that HMMs have discrete states while the Kalman filter based approach refers to unobserved continuous states. 
 
 
 \section{A Model for Volume-Volatility Relationship}
@@ -274,7 +274,7 @@ These and other studies generally confirm the information content of the volume 
 In algorithmic trading a key ingredient of many strategies is forecast of intra-day volume. Typically a parent order is split into several child orders and the timing of the submission of child orders could depend on the volume forecast for an interval of time that is considered for trading. Brownless, Cipollini and Gallo (2011)~\cite{brownless} provide prediction model for intra-day volume. This will be described in detail in the next chapter.
 
 
-The model in (\ref{eqn:2rtVt}) is extended to cover multiple stocks in He and Velu (2014)~\cite{}. The role of common cross-equity variation in trade related variables is of interest in financial economics. The factors that influence the prices, order flows and liquidity are most likely to be common among equities that are exposed to some risk factors. Exploring commonality is useful for institutional trading such as portfolio rebalancing. The mixture distribution in (\ref{eqn:2rtVt}) is developed by assuming that factor structures for returns are trading volume stem from the same valuation fundamentals and depend on a latent information flow. 
+The model in (\ref{eqn:2rtVt}) is extended to cover multiple stocks in He and Velu (2014)~\cite{hevelu}. The role of common cross-equity variation in trade related variables is of interest in financial economics. The factors that influence the prices, order flows and liquidity are most likely to be common among equities that are exposed to some risk factors. Exploring commonality is useful for institutional trading such as portfolio rebalancing. The mixture distribution in (\ref{eqn:2rtVt}) is developed by assuming that factor structures for returns and trading volume stem from the same valuation fundamentals and depend on a common latent information flow.  
 
 
 \section{Models for Point Processes}
