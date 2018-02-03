@@ -343,10 +343,10 @@ Under aggregation with low frequency data generally the dependence tends to decr
 \end{itemize}
 
 
-\noindent\textbf{Stylized fact 6: Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{????} and Lo and Mackinlay (1990)~\cite{lo1990}.
+\noindent\textbf{Stylized fact 6: Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.
 
 
-We want to briefly discuss the Roll model; on a typical day of trading stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to true information about the stock. Assume that the true price (unobservable) follows a random walk model (\ref{eqn:?????}) as, 
+We want to briefly discuss the Roll model; on a typical day of trading stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to true information about the stock. Assume that the true price (unobservable) follows a random walk model, Chapter 3 Example~\ref{ex:driftwalk}, as
 	\begin{equation}\label{eqn:2plowstar}
 	p_t^*=p_{t-1}^* + \epsilon_t 
 	\end{equation}
@@ -383,14 +383,14 @@ where $\varepsilon_i$ are i.i.d. with $E(\varepsilon_i) = 1$; If $\varepsilon_t'
 	\text{Generalized Gamma: } y &= \lambda\frac{x}{\beta}
 	\end{split}
 	\]
-where $\lambda = \frac{\sqrt{K}}{\sqrt{K+\frac{1}{\alpha}}}$. The hazard function of Generalized Gamma is quite flexible and may fit better various patterns. The stationary conditions would require that the roots of $\alpha(B) = 1 - \sum_{j=1}^q(\alpha_j+\beta_j)B^j$ are outside the unit circle when $g= \max(p,q)$ and $B$ is the back-shift operator. It is clear that the model (\ref{eqn:2dipsi}) is similar to GARCH$(p, q)$ model given in (\ref{eqn:}). The estimation is typically done through conditional maximum likelihood and all inferences are asymptotic.
+where $\lambda = \frac{\sqrt{K}}{\sqrt{K+\frac{1}{\alpha}}}$. The hazard function of Generalized Gamma is quite flexible and may fit better various patterns. The stationary conditions would require that the roots of $\alpha(B) = 1 - \sum_{j=1}^q(\alpha_j+\beta_j)B^j$ are outside the unit circle when $g= \max(p,q)$ and $B$ is the back-shift operator. It is clear that the model (\ref{eqn:2dipsi}) is similar to GARCH model given in (\ref{eqn:2secondht}). The estimation is typically done through conditional maximum likelihood and all inferences are asymptotic.
 
 
 An alternative more direct ARMA type model for log durations is suggested by Ghysels, Gourieroux and Jasiak (2004)~\cite{jasiak}:
 \begin{equation}\label{eqn:21lnd}
 	\ln{(d_i)} = \omega + \sum_{j=1}^p\alpha_j\ln{(d_{t-j})} + \sum_{j=1}^v\beta_j\varepsilon_{i-j} + \varepsilon_i
 	\end{equation}
-and $\varepsilon_i = \sqrt{h_i^v}u_i, h_i^v = \omega^v + \sum_{j=1}^{p^v}\alpha_j^v\varepsilon_{i-j}^2 + \sum_{j=1}^{q^v}\beta_j^vh_{i-j}^v$ where $u_i \sim N(0,1)$ i.i.d.; here the conditional mean and variance of durations are assumed to be separable. The duration volatility that is modeled using the second equation in (\ref{eqn:}) is interpreted as `liquidity' risk. \\
+and $\varepsilon_i = \sqrt{h_i^v}u_i, h_i^v = \omega^v + \sum_{j=1}^{p^v}\alpha_j^v\varepsilon_{i-j}^2 + \sum_{j=1}^{q^v}\beta_j^vh_{i-j}^v$ where $u_i \sim N(0,1)$ i.i.d.; here the conditional mean and variance of durations are assumed to be separable. The duration volatility that is modeled using the second equation in (\ref{eqn:2dipsi}) is interpreted as `liquidity' risk. \\
 
 
 \noindent \textbf{Other Duration Related Models:} So far the discussion has been around modeling the durations, but the information set, $F_t$ has information on `marks', the information associated with the past ticks, such as the number of units transacted, price etc. McCulloch and Tsay (2009)~\cite{} suggest the following model:
@@ -424,27 +424,25 @@ The first term is the trade density and the second term is the quote density. Th
 The estimation of the parameters are done through quasi maximum likelihood. Using data for eight stocks, Engle and Lund (2003)~\cite{englelunde} observe that high trade arrival rates, large volume per trade, wide bid-ask spreads, all predict more rapid price revisions. The model given in Engle and Lund (2003)~\cite{englelunde} can be conceptually applied to any two point processes. Extending this concept to more than two processes could be of interest to the traders who may want to monitor the trading exchanges simultaneously. 
 
 
-\section{Time Aggregation and Loss of Information}
-
 
 \section{Realized Volatility and Econometric Models}
 
 
 Estimating the volatility using the high-frequency data has received a great deal of attention lately. In the low frequency (daily) level some estimators based on select prices were presented. Intra-day dynamics of volatility is of interest to traders and that is not fully captured by the stock price indicators sampled during the day. If higher frequency data are used to estimate volatility of lower frequency data, it is important to know the model for the return at the lower frequency. To illustrate this, we consider data observed at two time scales; although they are at low frequency level, the concept can be easily extended to high-frequency context. If $r_{t,i}$ is the $i$th day return in $t$th month, the $t$th month return assuming there `n' trading days, $r_t^m = \sum_{i=1}^nr_{t,i}$. Note that $\sigma_m^2 = \Var(r_t^m|F_{t-1}) = \sum_{i=1}^n \Var(r_{t,i} | F_{t-1}) + 2 \sum_{i<j} \Cov(r_{t-i},r_{t-j} | F_{t-1})$. If $r_{t,i}$ is white noise sequence, then
-	\begin{equation}\label{Eqn:2hatsigmasq}
+	\begin{equation}\label{eqn:2hatsigmasq}
 	\hat{\sigma}_m^2 = \frac{n}{n-1} \sum_{i=1}^n(r_{t,i} - \overline{r}_t)^2
 	\end{equation}
-But we had observed that in the high frequency data returns do exhibit some serial correlation and so adjusting (\ref{eqn:}) for serial correlation is important to get a more accurate estimate of volatility. A simpler estimate of $\sigma_m^2$ is the so called realized volatility ($RV_t$)
+But we had observed that in the high frequency data returns do exhibit some serial correlation and so adjusting (\ref{eqn:2hatsigmasq}) for serial correlation is important to get a more accurate estimate of volatility. A simpler estimate of $\sigma_m^2$ is the so called realized volatility ($RV_t$)
 	\begin{equation}\label{eqn:2RV}
 	\text{RV}_t = \sum_{i=1}^n r_{t,i}^2
 	\end{equation}
 But in the estimation of intra-day volatility, the number of sampling intervals, `$n$' and hence, `$\Delta$', the interval size can affect the estimate. If $\Delta \rightarrow 0$, the value $RV_t$ in the $\Delta$-interval goes to infinity. Thus the optimal choice of `$\Delta$' is crucial and is reviewed below, for a judicious choice.
 
 
-Bandi and Russell (2006)~\cite{bandi} argue that the observed price is the sum of efficient price and a friction price (see (\ref{eqn:})) that is induced by bid-ask bounce, price discreteness etc. Thus the observed variance such as (\ref{eqn:}) is the sum of variance of the efficient returns and the variance of micro-structure noise. As they indicate, both are useful: ``The variance of the efficient return process is a crucial ingredient in the practice and theory of asset valuation and risk management. The variance of microstructure noise components reflects the market structure and the price setting behavior of market participants and thereby contains information about the market fine-grain dynamics.'' Both components can be estimated using high frequency data but sampled at different frequencies. Data sampled at low frequency are used to estimate the efficient return variable and the data of high frequency are used to estimate the microstructure noise variance.
+Bandi and Russell (2006)~\cite{bandi} argue that the observed price is the sum of efficient price and a friction price (see (\ref{eqn:2lowpstar})) that is induced by bid-ask bounce, price discreteness etc. Thus the observed variance such as (\ref{eqn:2hatsigmasq}) is the sum of variance of the efficient returns and the variance of micro-structure noise. As they indicate, both are useful: ``The variance of the efficient return process is a crucial ingredient in the practice and theory of asset valuation and risk management. The variance of microstructure noise components reflects the market structure and the price setting behavior of market participants and thereby contains information about the market fine-grain dynamics.'' Both components can be estimated using high frequency data but sampled at different frequencies. Data sampled at low frequency are used to estimate the efficient return variable and the data of high frequency are used to estimate the microstructure noise variance. Additional references on this topic include, A{\"\i}t-Sahalia, Mykland and Zhang (2005)~\cite{ait2005often} and Barndoff-Nielsen and Shepard (2002)~\cite{barndorff2002econometric}.
 
 
-On any given day, assume that the observed price, at time `$i$' is as in (\ref{eqn:})
+On any given day, assume that the observed price, at time `$i$' is as in (\ref{eqn:2lowpstar})
 	\begin{equation}\label{eqn:2pi2}
 	p_i = p_i^* + u_i, \quad i= 1,2,\ldots,n
 	\end{equation}
@@ -452,7 +450,20 @@ where $p_i^*$ is the efficient price and $u_i$ is the of microstructure noise. D
 	\begin{equation}\label{eqn:2rji2}
 	r_{j,i} = r_{j,i}^* + \varepsilon_{j,i}, \quad j= 1,2,\ldots,M
 	\end{equation}
-Assume that the frictions, $u$'s are i.i.d. mean zero and variance $\sigma_{u}^2$. Because $\varepsilon_{j,i}= u_{(i-1)+j\delta} - u{(i-1) + (j-1)\delta}$, $\Var(\varepsilon_{j,i})= 2\sigma_{\eta}^2$. It has been noted already that the return series exhibit negative first order autocovariance and $\varepsilon$'s can be taken as MA(1) structure for the $\eta$'s. Thus, the returns are computed at higher frequency at which the new information arrives. Thus $\sum_{j=1}^M r_{j,i}^2/M$ can be used to estimate noise variance. For the estimation of efficient price variance, we need to consider an  optimal division of a day into `M' number of subperiods. The optimal sampling frequency over `$n$' day is chosen as $\delta^* = 1/M^*$ with $M^*= \left[\dfrac{\hat{Q}}{\hat{\alpha}}\right]^{\frac{1}{3}}$, where $\hat{\alpha} = \sum_{i=1}^n\sum_{j=1}^M\overline{r}_{j,i}^2/(nM)$ and $\hat{Q}_i = \frac{M}{3}\sum_{j=1}^M\hat{r}_{j,i}^4$. Based on the analysis of a sample of S\&P 100 stocks mid quotes for the months of February 2002, Bandi and Russell (2006)~\cite{bandi} conclude that 5-min frequency is optimal and the 15-min interval may provide the variance estimates `excessively volatile'. The economic benefit of optimal sampling is that high frequency traders can employ a realistic variance forecasts in formulating the entry and exit strategies. Additional references on this topic include, A{\"\i}t-Sahalia, Mykland and Zhang (2005)~\cite{ait2005often} and Barndoff-Nielsen and Shepard (2002)~\cite{barndorff2002econometric}.
+Assume that the frictions, $u$'s are i.i.d. mean zero and variance $\sigma_{u}^2$. Because $\varepsilon_{j,i}= u_{(i-1)+j\delta} - u_{(i-1) + (j-1)\delta}$, $\Var(\varepsilon_{j,i})= 2\sigma_{\eta}^2$. It has been noted already that the return series exhibit negative first order autocovariance and $\varepsilon$'s can be taken as MA(1) structure for the $\eta$'s. Thus, the returns are computed at higher frequency at which the new information arrives. Thus $\sum_{j=1}^M r_{j,i}^2/M$ can be used to estimate noise variance. 
+
+
+To motivate the optimal choice, we consider two possible situations. If there is no micro-structure noise, the usual estimate of variance, $\hat{\sigma}^2= \frac{1}{T} \sum_{i=1}^n r_i^2$ has the asymptotic variance `$2\sigma^4\delta$' which suggests selecting `$\delta$' as small as possible. The implication of the presence of micro-structure noise is that returns are likely to follow a MA(1) process with a negative autocorrelation and the proportion of total variance due to market micro-structure error is, $\Pi= \frac{2\sigma_\eta^2}{\sigma^2\delta+2\sigma_\eta^2}$ and as `$\delta$' gets smaller, this proportion gets closer to unity. This indicates that the optimal sampling frequency should be finite when noise is present.
+
+
+For the estimation of efficient price variance, we need to consider an  optimal division of a day into `M' number of subperiods. The optimal sampling frequency over `$n$' day is chosen as $\delta^* = 1/M^*$ with $M^*= \left[\dfrac{\hat{Q}}{\hat{\alpha}}\right]^{\frac{1}{3}}$, where $\hat{\alpha} = \sum_{i=1}^n\sum_{j=1}^M\overline{r}_{j,i}^2/(nM)$ and $\hat{Q}_i = \frac{M}{3}\sum_{j=1}^M\hat{r}_{j,i}^4$. Based on the analysis of a sample of S\&P 100 stocks mid quotes for the months of February 2002, Bandi and Russell (2006)~\cite{bandi} conclude that 5-min frequency is optimal and the 15-min interval may provide the variance estimates `excessively volatile'. The economic benefit of optimal sampling is that high frequency traders can employ a realistic variance forecasts in formulating the entry and exit strategies. 
+
+
+
+
+\section{Time Aggregated Data and Analysis}
+
+
 
 
 \section{Analytics from Machine Learning Literature}

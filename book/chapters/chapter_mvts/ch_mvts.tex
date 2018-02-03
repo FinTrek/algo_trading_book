@@ -434,7 +434,7 @@ Economic time series share some common characteristics such as a trends, seasona
 where $f_t$ is a lower dimensional common feature vector so that a linear combination of $Y_t$, $l' Y_t$ can be independent of this feature. Observe that this implies $l'C=0$ (\ref{eqn:lprimeC}) which is the result of `$C$' being a lower rank matrix. The $f_t$-vector can either be constructed from the past values of $Y_t$-which is the focal view of comovement or can be constructed from exogenous variables, sat $X_t$, which is the basis of many studies on commonality in finance literature. We briefly summarize the two aspects here. 
 
 
-The comovement relationship that result from cointegration are known as long-run equilibrium relationships. Relationships that result from stationary series are known as short-run equilibrium relationships. The cointegrating relationships resulting (\ref{eqn:2WtCt}) or (\ref{eqn:2WtABY}) are given by $\hat{Q}_1$ that leads to $\hat{Q}_1' \hat{A}=0$. A generalization of this concept relates to serial correlation common feature; to define this, write (\ref{eqn:2WtABY}) as
+The comovement relationships that result from cointegration are known as long-run equilibrium relationships. Relationships that result from stationary series are known as short-run equilibrium relationships. The cointegrating relationships resulting (\ref{eqn:2WtCt}) or (\ref{eqn:2WtABY}) are given by $\hat{Q}_1$ that leads to $\hat{Q}_1' \hat{A}=0$. A generalization of this concept relates to serial correlation common feature; to define this, write (\ref{eqn:2WtABY}) as
 	\begin{equation}\label{eqn:wtrewrite}
 	W_t=  \begin{bmatrix} A & D \end{bmatrix} \; \begin{bmatrix} BY_{t-1} \\ W_{t-1}^* \end{bmatrix} + \epsilon_t
 	\end{equation}
@@ -444,11 +444,11 @@ The combination that is free of serial correlation is $\hat{Q}_1W_t= Q_1' \epsil
 There is a vast literature on commonality in finance and the summary presented here is based on a few select studies. In addition to price and return variables of stocks, the commonality is studied on liquidity and turnover measures as well, which we define below
 	\begin{equation}\label{eqn:turnovermeasure}
 	\begin{split}
-	\text{Liq}&= - \log \left( 1 + \dfrac{|r|}{P v} \right) \\
-	\text{TO}&= \log \left( 1 + \dfrac{v}{\text{NSH}}\right)
+	\text{Liq}_d&= - \log \left( 1 + \dfrac{|r_d|}{P_d} \right) \\
+	\text{TO}_d&= \log \left( 1 + \dfrac{v_d}{\text{NSH}}\right)
 	\end{split}
 	\end{equation}
-Here $r$ is the return on day `$d$', $P$ is the price, $v$ is the volume traded and NSH is the number of outstanding shares at the beginning of the year. The turnover measure is adjusted by a moving average based on `$K$' days past `$d$'. As outlined in Chordia, Roll and Subrahmanyam (2000)~\cite{chordia} the commonality in liquidity can come from several sources: 
+Here $r_d$ is the return on day `$d$', $P_d$ is the price, $v_d$ is the volume traded and NSH is the number of outstanding shares at the beginning of the year. The turnover measure is adjusted by a moving average based on `$K$' days past `$d$'. As outlined in Chordia, Roll and Subrahmanyam (2000)~\cite{chordia} the commonality in liquidity can come from several sources: 
 	\begin{enumerate}[--]
 	\item Traders manage their inventory in response to market-wide price swings, thus variation in volume traded can lead to changes in liquidity, which are measured by bid-ask spread, effective spread, quoted depth, etc, besides (\ref{eqn:turnovermeasure}).
 	\item Volatility of the stock and presence of informed traders who may have better knowledge about the market-movements. 
@@ -463,10 +463,10 @@ Here $r$ is the return on day `$d$', $P$ is the price, $v$ is the volume traded 
 	\end{enumerate}
 
 
-The factors in the model (\ref{eqn:discyt}) or $X_t$ in (\ref{eqn:coefficreg}) are sources of commonality that are broadly grouped into supply or demand side influences. The supply side hypotheses generally evaluate the role of funding constraints of financial intermediates who act as liquidity providers. When markets decline, the reasoning goes, that the intermediaries endure losses and thus reduce providing liquidity. The demand side theory postulates that liquidity commonality arises mainly due to correlated trading behavior of institutional investors. It can be concluded that the demand side explanation is empirically shown to be more plausible than the supply side theory. 
+The factors in the model (\ref{eqn:discyt}) or $X_t$ in (\ref{eqn:coefficreg}) are sources of commonality that are broadly grouped into supply or demand side influences. The supply side hypotheses generally evaluate the role of funding constraints of financial intermediates who act as liquidity providers. When markets decline, the reasoning goes, that the intermediaries endure losses and thus reduce providing liquidity. The demand side theory postulates that liquidity commonality arises mainly due to correlated trading behavior of institutional investors. It has been concluded that the demand side explanation is empirically shown to be more plausible than the supply side theory. 
 
 
-A general comment on the type of models used in finance to infer commonality is in order. The liquidity measures at the equity levels are related to market level measures and the commonality is inferred from the strength of their relationships to the market measures. But no explicit modeling attempt is made to see if there is any commonality (similarity) among the coefficients over different equities. This is simply equivalent to building a multivariate regression model (\ref{eqn:5lmyk}) which is essentially a set of multiple regressions---each regression representing a single equity. What binds the regression equations are constraints over coefficients across equities. Hasbrook and Seppi (2001)~\cite{seppi2001} provide a framework that examines the commonality in a comprehensive way. The model relates the order flows to returns via factor models that can be shown to have the reduced-rank regression structure. Let $X_t$ be $n$-vector of the order flows which are influenced by a common vector of order flows:
+A general comment on the type of models used in finance to infer commonality is in order. The liquidity measures at the equity levels are related to market level measures and the commonality is inferred from the strength of their relationships to the market measures. But no explicit modeling attempt is made to see if there is any commonality (similarity) among the coefficients over different equities. This is simply equivalent to building a multivariate regression model (\ref{eqn:5lmyk}) which is essentially a set of multiple regressions---each regression representing a single equity. What binds the regression equations are constraints over coefficients across equities. Hasbrouck and Seppi (2001)~\cite{seppi2001} provide a framework that examines the commonality in a comprehensive way. The model relates the order flows to returns via factor models that can be shown to have the reduced-rank regression structure. Let $X_t$ be $n$-vector of the order flows which are influenced by a common vector of order flows:
 	\begin{equation}\label{eqn:orderflows}
 	X_t= \theta F_t + \epsilon_t
 	\end{equation}
