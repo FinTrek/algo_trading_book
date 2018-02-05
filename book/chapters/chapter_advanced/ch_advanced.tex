@@ -346,7 +346,7 @@ Under aggregation with low frequency data generally the dependence tends to decr
 \noindent\textbf{Stylized fact 6: Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.
 
 
-We want to briefly discuss the Roll model; on a typical day of trading stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to true information about the stock. Assume that the true price (unobservable) follows a random walk model, Chapter 3 Example~\ref{ex:driftwalk}, as
+We want to briefly discuss the Roll model; on a typical day of trading stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to true information about the stock. Assume that the true price (unobservable) follows a random walk model, Example~\ref{ex:driftwalk} Chapter 2, as
 	\begin{equation}\label{eqn:2plowstar}
 	p_t^*=p_{t-1}^* + \epsilon_t 
 	\end{equation}
@@ -376,7 +376,7 @@ where $N(t)$ denotes the number of ticks until `t' and $F_t$ is the information 
 	\psi_i&= \alpha + \sum_{j=1}^p\alpha_j d_{t-j} + \sum_{v=1}^q\beta_v\psi_{i-v}
 	\end{split}
 	\end{equation}
-where $\varepsilon_i$ are i.i.d. with $E(\varepsilon_i) = 1$; If $\varepsilon_t's$ are assumed to follow exponential the models (\ref{eqn:}) is called E(xpotential)ACD. Two alternative models WACD and GGACD are based on the following specification for the errors:
+where $\varepsilon_i$ are i.i.d. with $E(\varepsilon_i) = 1$; If $\varepsilon_t's$ are assumed to follow exponential the models (\ref{eqn:2dipsi}) is called E(xpotential)ACD. Two alternative models WACD and GGACD are based on the following specification for the errors:
 	\[
 	\begin{split}
 	\text{Weibull: }h(x) &= \frac{\alpha}{\beta^{\alpha}}x^{\alpha-1}\exp\left\{-(\frac{x}{\beta})^{\alpha}\right\} \\
@@ -463,6 +463,44 @@ For the estimation of efficient price variance, we need to consider an  optimal 
 
 \section{Time Aggregated Data and Analysis}
 
+
+
+The commonly available data from public sources such as Yahoo Finance that are easily accessible to investors provide select price information, High, Low, open and close prices along with the total transaction volume in a trading day. The usual estimate of volatility is based on closing prices, but having this additional price (bias) data can help to get a better estimate of volatility. As shown in the last section, using high-frequency data leads to estimators that need to be correct for market frictions. But using the daily price bars data may not be helpful to make entry/exit decisions; so as a compromise, many trading outfits contract price bars data from the high-frequency point process data for a shorter time intervals such as 30~minutes. This has the effect of smoothing the noise due to market friction but also results in data in discrete time units and so the traditional discrete time series methods discussed in Chapter 2 to Chapter 4 can be effectively employed. 
+
+
+The price is assumed to follow a random walk model. It follows price changes (thus returns) over a time interval are normally distributed with mean zero and variance that is proportional to the length of the interval. Assuming that the prices follow continuous sample paths although the trading is closed for a certain duration and when trading is open, the actual transactions occur at discrete points in time. Treating the trading day as represented in a unit interval $[0,1]$ with $[0,f]$ representing the `market close' time and $[f,1]$ as `open' time, it is shown that the estimator of volatility
+	\begin{equation}\label{eqn:estvol}
+	\hat{\sigma}_1^2= \dfrac{(o_1 - c_0)^2}{2f} + \dfrac{(c_1 - o_1)^2}{2(1-f)},
+	\end{equation}
+has efficiency two compared to the usual estimator, $\hat{\sigma}^2=(c_1-c_0)^2$ based on the closing prices of two successive trading days. This suggests clearly the inclusion of additional data point, opening price is quite informative. Garman and Klass~\cite{klass1980} suggest these and other estimators which are superior to the classical estimator of volatility. It is argued that the high and low prices contain information regarding the volatility during the trading period and a composite estimator
+	\begin{equation}\label{eqn:compositeest}
+	\hat{\sigma}_2^2= a\,\dfrac{(o_1- c_0)^2}{f} + (1-a)\, \dfrac{(H_1 - L_1)^2}{(1-f) \ln 2}
+	\end{equation}
+with optimal choice of `$a$'$=0.17$ that yields even higher efficiency.
+
+
+The estimators like the above assume that either the price process has no drift or no price jumps between the former assumption leads to overestimating the volatility and the later to underestimating volatility. Yang and Zhang~\cite{yangzhang2000} provide an estimator based on several periods of low, high, open and close prices that is independent of the drifts and the jumps. Although several estimators are discussed in this paper, we mention only two of them that have high efficiency. Denoting
+	\[
+	\begin{split}
+	o&= \ln O_1 - \ln C_0, \text{ the normalized open}; \\
+	u&= \ln H_1 - \ln O_1, \text{ the normalized high}; \\
+	d&= \ln L_1 - \ln O_1, \text{ the normalized low}; \\
+	c&= \ln C_1 - \ln O_1,  \text{ the normalized close},
+	\end{split}
+	\]
+the classical estimator based on $n$-period historical data is
+	\begin{equation}\label{eqn:nperioddata}
+	V_{cc}= \dfrac{1}{n-1} \cdot \sum_{i=1}^n [(o_i + c_i) - (\overline{o} + \overline{i})]^2
+	\end{equation}
+and the estimator given in Rogers and Satchell~\cite{rogerssatchell1991}
+	\begin{equation}\label{eqn:rogerssatchell}
+	V_{\text{RS}}= \dfrac{1}{n} \cdot \sum_{i=1}^n [u_i(u_i - c_i) + d_i(d_i-c_i)]
+	\end{equation}
+The estimator suggested in Yang and Zhang~\cite{yangzhang2000} takes the form,
+	\begin{equation}\label{eqn:yang2000}
+	V_{\text{YZ}}= V_0 + k V_c + (1-k)V_{\text{RS}}
+	\end{equation}
+where $V_0= \frac{1}{n-1} \sum_{i=1}^n (o_i-\overline{o})^2$ and $V_c=\frac{1}{n-1} \sum_{i=1}^n (c_i - \overline{v})^2$, with the optimal choise of $k=\frac{0.34}{1.34 + (n+1)(n-1)}$. 
 
 
 
