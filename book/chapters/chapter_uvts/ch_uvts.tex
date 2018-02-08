@@ -1189,7 +1189,7 @@ Among the conditional heteroscedasticity models ARCH/GARCH that were discussed i
 \begin{enumerate}[(a)]
 \item Compute the sample average, standard deviation and the first order autocorrelation of daily returns over the entire sample period.  Test if the mean and the first order autocorrelation are significantly different from zero using the tests proposed in Section 2.3.2. 
 
-\item Plot histograms of the returns over the entire sample period; Does the distribution look normal?  Test it through Jarque-Bera test in (\ref{eqn:?????}).
+\item Plot histograms of the returns over the entire sample period; Does the distribution look normal?  Test it through Jarque-Bera test in (\ref{eqn:2JB}).
 
 \item Aggregate the data at the weekly level; do (a) and (b) on the aggregated data. Compare the result with the result for the daily level.
 \end{enumerate}
@@ -1222,17 +1222,17 @@ Among the conditional heteroscedasticity models ARCH/GARCH that were discussed i
 
 \item Identify how many clusters are there and if the membership changes under different regimes.
 
-\item Are the series co-integrated? Use Johansen's rank test (\ref{eqn:}) to identify the number of co-integrating relationships. Interpret the coefficients of the co-integrating vectors.
+\item Do the series move together? Provide some intuitive tests (more formal tests will be covered in Chapter 3). 
 
-\item Compare the results in (c)  with (b). What is the connection between clustering and co-integration? Briefly discuss.
+\item Compare the results in (c)  with (b). What is the connection between clustering and co-movement? Briefly discuss.
 \end{enumerate}
 
 
-\item Consider daily price of Apple stock from Apple.cav. The data can be obtained from Yahoo Finance and have 7 columns (namely, Date, Open, High, Low, Close, Volume, Adj Close). We focus on the adjusted closing price in the last column. Note the data needs to be reversed from the past to the recent. 
+\item Consider daily price of Apple stock from January 2, 2015 to January 2, 2018. The data can be obtained from Yahoo Finance and have 7 columns (namely, Date, Open, High, Low, Close, Volume, Adj Close). We focus on the adjusted closing price in the last column.
 \begin{enumerate}[(a)]
 \item Compute the daily log returns. Is there any serial correlation in the daily log returns? Use the test for white noise as outlined in the text. 
 
-\item Consider the pivot quantities on the average of high and low price and the average of high, low and close prices. Compute the returns based on the pivot log prices and test for serial correlation. Compare this result with the finding in (a). 
+\item Consider the pivot based on the pivot based on the average of high and low price and the pivot based on the average of high, low and close prices. Compute the returns based on the pivot log prices and test for serial correlation. Compare this result with the finding in (a). 
 
 \item Consider the log price series of AAPL stock. Is the log price series unit-root nonstationary? Perform a unit-root (Dickey-Fuller) test to answer the question and present your conclusion.
 \end{enumerate}
@@ -1259,6 +1259,26 @@ Here $p_t^*$ is the ``true'' value of a security and $p_t$ is the observed trade
 \item For the invertible model, construct the associated AR model. 
 
 \item Use the model to show how to estimate the bid-ask spread and apply the results on the Apple data used in Problem (5) and (6). \\
+\end{enumerate}
+
+
+
+\item Consider the level III data for the ticker, ``BIOF'' for a single day. The data description follows the similar details as given in Table~\ref{tab:CISCO}. This exercises consists of two parts; in the first part, we want to construct the limit order book and the second part we want to study the effect of time aggregation. 
+
+\begin{enumerate}[(a)]
+\item At any point in time, a limit-order book contains a number of buy and sell orders.
+	\begin{enumerate}[(i)]
+	\item Develop a program that can visually present a limit order book. Present the order book diagram as of 11:00~A.M. for the first tern positions on both sides.
+	\item Aggregate demand and supply are represented as step functions of shares accumulated at each price level. The height of step `$i$' on the demand side is the price side is the price difference between $(i-1)$th and $i$th best price. The height of the first step is the mid price; the length of a step, `$i$', on the demand side is the total number of shares across all orders until $i$th price. Similarly, the supply side can be constructed. Normalize a step height by the cumulative length from the first step to tenth step. Present the aggregate curve as of 11:00~A.M.. 
+	\item Using the aggregate graph give in (ii), suggest measures for the order book imbalance---which is a key determinant in some entry/exit algorithms in the high-frequency setting.
+	\end{enumerate}
+
+\item Aggregate the data to a 2-minute interval, summarizing the number of transactions, volume weighted average price and average duration between transactions. Also, produce the price bars (open, close, low and high and volume) for each interval.
+	\begin{enumerate}[(i)]
+	\item Briefly discuss how you would quantify the loss of information due to aggregation.
+	\item Calculate the variance of the returns based on the aggregated VWAP and compare it with the variance based on all observations.
+	\item From Exercise~7, it follows that the true price is measured with error, which is due to market friction. The aggregation done above may cancel out the friction and may reflect the true price. Alternatively, one can sample the price every two minutes and compute the variance in the returns. How does this compare to VWAP based descriptives?
+	\end{enumerate}
 \end{enumerate}
 
 

@@ -3,7 +3,7 @@
 \chapter{Advanced Topics}
 
 
-In this chapter we want to discuss some advanced methods that are applicable in the context of trading. This chapter is broadly divided into two main areas; the first covers topics which are extensions of models discussed in Chapter 2 in the low frequency context. Although the state-space modeling is discussed in the context of ARIMA, its scope is much wider. We also outline the established methodology for studying regime switching, but indicate the areas of further research where predicting ahead using signals form the past when the regime shift is likely to occur. This is followed by a discussion on using volume information to study the price volatility. With the increased exploitation of price behavior data, it has become necessary to look for additional signals. The second area of this chapter focuses on the models from point processes to study the higher frequency data. Here our approach has been to provide an intuitive discussion of main tools; as readers will realize, the trade data is quite noisy and there is a great deal of scope to do research especially in non-parametric modeling of arrivals and cancellations in the limit order market. 
+In this chapter we want to discuss some advanced methods that are applicable in the context of trading. This chapter is broadly divided into two main areas; the first covers topics which are extensions of models discussed in Chapter 2 in the low frequency context. Although the state-space modeling is discussed in the context of ARIMA, its scope is much wider. We also outline the established methodology for studying regime switching, but indicate the areas of further research where predicting ahead when the regime shift is likely to occur using signals form the past is of great interest. This is followed by a discussion on using volume information to study the price volatility. With the increased exploitation of price behavior data, it has become necessary to look for additional signals. We present a theoretical model that shows that there is correlation between volume traded and volatility when there is information flow. The second area of this chapter focuses on the models from point processes to study the higher frequency data. Here our approach has been to provide an intuitive discussion of main tools; as readers will realize, the trade data is quite noisy and there is a great deal of scope to do research especially in non-parametric modeling of arrivals and cancellations in the limit order market. 
 
 
 \section{State-Space Modeling} 
@@ -114,7 +114,7 @@ as the observational equation and the state equation is
 	\begin{equation}
 	\mu_t= \mu_{t-1} + \xi_t
 	\end{equation}
-The above can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) with appropriate choice of `$\Phi$' and `$H$' matrices. 
+The above can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) with appropriate choice of `$\Phi$' and `$H$' matrices. The main advantage of state-space models is that they accommodate the possibility of slowly varying parameters over time, which is more realistic in modeling the real world data. 
 
 
 \section{Regime Switching and Change-Point Models}
@@ -207,7 +207,7 @@ where $w(\hat{\delta}_t)$ is a weight function; a simple weight function $w(\hat
 The adaptive CUSUM chart is effective at detecting a range of mean shift sizes. Similar results for the variance need to be worked out.
 
 
-In practical applications of these regime-shifting models, it is not easy to discern between a single outlier and persistent level shift. Valid measures that can distinguish these two situations on a timely basis could be very valuable to a trader. 
+In practical applications of these regime-shifting models, it is not easy to discern between a single outlier and persistent level shift. Valid measures that can distinguish these two situations on a timely basis could be very valuable to a trader. We also want to remind the reader that the Markov switching models of changing regimes are indeed latent variable time series models. These models are known as hidden Markov models (HMMs) and represent a special class of dependent mixtures of several processes, these are closely related to state-space models in Section 4.1. An unobservable $m$-state Markov chain determines the state or regime and a state-dependent process of observations. The major difference is that HMMs have discrete states while the Kalman filter based approach refers to unobserved continuous states. 
 
 
 \section{A Model for Volume-Volatility Relationship}
@@ -245,6 +245,8 @@ Poisson distribution and based on empirical evidence, the lognormal distribution
 \item After conditioning on lagged value, there is a positive risk-return relation.
 \end{itemize}
 
+These findings can be easily confirmed using the S\&P 500 data presented in Figure~\ref{fig:sp500}. During the period of regime changes (for example, October 1999--November 2000) , we should expect higher volatility and therefore higher correlation with volume. 
+
 
 Andersen (1996)~\cite{andersen} modifies the model (\ref{eqn:2rtVt}) by integrating the microstructure
 setting of Glosten and Milgrom (1985)~\cite{glostenmilgrom} with the stochastic volatility, that is built on weaker conditions on the information arrival process. While the first equation in (\ref{eqn:2rtVt}) remains the same, the volume $V_t$ has informed and noise components, $V_t = IV_t + NV_t$. Noise trading component, $NV_t$ is taken as a time homogeneous Poisson process, $P_0(m_0)$. Therefore, the systematic variation in trading is mainly due to informed volume. Then $IV_t|I_t \sim \text{Poisson}(I_t\mu)$ and thus
@@ -272,13 +274,16 @@ These and other studies generally confirm the information content of the volume 
 In algorithmic trading a key ingredient of many strategies is forecast of intra-day volume. Typically a parent order is split into several child orders and the timing of the submission of child orders could depend on the volume forecast for an interval of time that is considered for trading. Brownless, Cipollini and Gallo (2011)~\cite{brownless} provide prediction model for intra-day volume. This will be described in detail in the next chapter.
 
 
+The model in (\ref{eqn:2rtVt}) is extended to cover multiple stocks in He and Velu (2014)~\cite{hevelu}. The role of common cross-equity variation in trade related variables is of interest in financial economics. The factors that influence the prices, order flows and liquidity are most likely to be common among equities that are exposed to some risk factors. Exploring commonality is useful for institutional trading such as portfolio rebalancing. The mixture distribution in (\ref{eqn:2rtVt}) is developed by assuming that factor structures for returns and trading volume stem from the same valuation fundamentals and depend on a common latent information flow.  
+
+
 \section{Models for Point Processes}
 
 
 In many fields of study, observations occur in a continuum, space or time in the form of point events. The continuum can be multi-dimensional, but our focus is on the one-dimensional time scale with points distributed irregularly along the time scale. The main interest lies in estimating the mean rate of occurrence of events or more broadly on the patterns of occurrence. There are excellent monographs on this topic: Cox and Lewis (1966) \cite{cox1966}, Daley and Vere-Jones (2003)~\cite{daley2003}, etc. But the interest in financial applications was revived by the seminal paper by Engle and Russell (1998)~\cite{engle1998}. Financial market microstructure theories as discussed in Kyle (1985) \cite{kyle1985}, Admati and Pfleiderer (1988)~\cite{admati1988theory} and Easley and O' Hara (1992)~\cite{easley1992} suggest that the frequency and the timing of transactions, that include posting, canceling and executing an order, carry information about the state of the market. The transactions generally tend to cluster during certain times of the day and the change in the mean rate of occurrences may suggest a new information flow about a stock.
 
 
-To illustrate, recall Figure~\ref{fig:}, on trading activities in Section 2.1. If we denote the observed intervals between successive activities as durations by $d_1, d_2,\ldots,d_r$, the time of occurrences are obtained by forming the cumulative sums of the $d$'s, $t_1=d_1, t_2=t_1+d_2, \ldots, t_r=t_{r-1}+d_r$. Cox and Lewis (1966)~\cite{cox1966} suggest two ways to present this type of data graphically. One method is based on cumulative numbers of events that have occurred at or before `$t$' against `$t$'. The slope of the line between any two points is the average number of events per unit for that period. One way to standardize the plot would be to approximate the graph by a line, `$at$' when `$a$' is the slope of the graph indicating the average rate of occurrence for the entire duration. The second method calls for dividing the time scale into equally spaced time intervals and count the number of events in each interval; this also can be modified by fixing a certain number of events and spacing on the time it takes for this number to occur. In the context of stock price data, this could mean simply recording not when the trade occurs but when the price changes. The advantage of the second plot is that the local fluctuations are readily observed and the advantage of the first plot is that it enables us to see systematic changes in the rate of occurrence.
+To illustrate, recall Figure~\ref{fig:tradeactline}, on trading activities in Section 2.1. If we denote the observed intervals between successive activities as durations by $d_1, d_2,\ldots,d_r$, the time of occurrences are obtained by forming the cumulative sums of the $d$'s, $t_1=d_1, t_2=t_1+d_2, \ldots, t_r=t_{r-1}+d_r$. Cox and Lewis (1966)~\cite{cox1966} suggest two ways to present this type of data graphically. One method is based on cumulative numbers of events that have occurred at or before `$t$' against `$t$'. The slope of the line between any two points is the average number of events per unit for that period. One way to standardize the plot would be to approximate the graph by a line, `$at$' when `$a$' is the slope of the graph indicating the average rate of occurrence for the entire duration. The second method calls for dividing the time scale into equally spaced time intervals and count the number of events in each interval; this also can be modified by fixing a certain number of events and spacing on the time it takes for this number to occur. In the context of stock price data, this could mean simply recording not when the trade occurs but when the price changes. The advantage of the second plot is that the local fluctuations are readily observed and the advantage of the first plot is that it enables us to see systematic changes in the rate of occurrence.
  
  	\begin{figure}[!ht]
 	\centering	
@@ -338,10 +343,10 @@ Under aggregation with low frequency data generally the dependence tends to decr
 \end{itemize}
 
 
-\noindent\textbf{Stylized fact 6: Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{????} and Lo and Mackinlay (1990)~\cite{lo1990}.
+\noindent\textbf{Stylized fact 6: Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.
 
 
-We want to briefly discuss the Roll model; on a typical day of trading stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to true information about the stock. Assume that the true price (unobservable) follows a random walk model (\ref{eqn:?????}) as, 
+We want to briefly discuss the Roll model; on a typical day of trading stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to true information about the stock. Assume that the true price (unobservable) follows a random walk model, Example~\ref{ex:driftwalk} Chapter 2, as
 	\begin{equation}\label{eqn:2plowstar}
 	p_t^*=p_{t-1}^* + \epsilon_t 
 	\end{equation}
@@ -371,21 +376,21 @@ where $N(t)$ denotes the number of ticks until `t' and $F_t$ is the information 
 	\psi_i&= \alpha + \sum_{j=1}^p\alpha_j d_{t-j} + \sum_{v=1}^q\beta_v\psi_{i-v}
 	\end{split}
 	\end{equation}
-where $\varepsilon_i$ are i.i.d. with $E(\varepsilon_i) = 1$; If $\varepsilon_t's$ are assumed to follow exponential the models (\ref{eqn:}) is called E(xpotential)ACD. Two alternative models WACD and GGACD are based on the following specification for the errors:
+where $\varepsilon_i$ are i.i.d. with $E(\varepsilon_i) = 1$; If $\varepsilon_t's$ are assumed to follow exponential the models (\ref{eqn:2dipsi}) is called E(xpotential)ACD. Two alternative models WACD and GGACD are based on the following specification for the errors:
 	\[
 	\begin{split}
 	\text{Weibull: }h(x) &= \frac{\alpha}{\beta^{\alpha}}x^{\alpha-1}\exp\left\{-(\frac{x}{\beta})^{\alpha}\right\} \\
 	\text{Generalized Gamma: } y &= \lambda\frac{x}{\beta}
 	\end{split}
 	\]
-where $\lambda = \frac{\sqrt{K}}{\sqrt{K+\frac{1}{\alpha}}}$. The hazard function of Generalized Gamma is quite flexible and may fit better various patterns. The stationary conditions would require that the roots of $\alpha(B) = 1 - \sum_{j=1}^q(\alpha_j+\beta_j)B^j$ are outside the unit circle when $g= \max(p,q)$ and $B$ is the back-shift operator. It is clear that the model (\ref{eqn:2dipsi}) is similar to GARCH$(p, q)$ model given in (\ref{eqn:}). The estimation is typically done through conditional maximum likelihood and all inferences are asymptotic.
+where $\lambda = \frac{\sqrt{K}}{\sqrt{K+\frac{1}{\alpha}}}$. The hazard function of Generalized Gamma is quite flexible and may fit better various patterns. The stationary conditions would require that the roots of $\alpha(B) = 1 - \sum_{j=1}^q(\alpha_j+\beta_j)B^j$ are outside the unit circle when $g= \max(p,q)$ and $B$ is the back-shift operator. It is clear that the model (\ref{eqn:2dipsi}) is similar to GARCH model given in (\ref{eqn:2secondht}). The estimation is typically done through conditional maximum likelihood and all inferences are asymptotic.
 
 
 An alternative more direct ARMA type model for log durations is suggested by Ghysels, Gourieroux and Jasiak (2004)~\cite{jasiak}:
 \begin{equation}\label{eqn:21lnd}
 	\ln{(d_i)} = \omega + \sum_{j=1}^p\alpha_j\ln{(d_{t-j})} + \sum_{j=1}^v\beta_j\varepsilon_{i-j} + \varepsilon_i
 	\end{equation}
-and $\varepsilon_i = \sqrt{h_i^v}u_i, h_i^v = \omega^v + \sum_{j=1}^{p^v}\alpha_j^v\varepsilon_{i-j}^2 + \sum_{j=1}^{q^v}\beta_j^vh_{i-j}^v$ where $u_i \sim N(0,1)$ i.i.d.; here the conditional mean and variance of durations are assumed to be separable. The duration volatility that is modeled using the second equation in (\ref{eqn:}) is interpreted as `liquidity' risk. \\
+and $\varepsilon_i = \sqrt{h_i^v}u_i, h_i^v = \omega^v + \sum_{j=1}^{p^v}\alpha_j^v\varepsilon_{i-j}^2 + \sum_{j=1}^{q^v}\beta_j^vh_{i-j}^v$ where $u_i \sim N(0,1)$ i.i.d.; here the conditional mean and variance of durations are assumed to be separable. The duration volatility that is modeled using the second equation in (\ref{eqn:2dipsi}) is interpreted as `liquidity' risk. \\
 
 
 \noindent \textbf{Other Duration Related Models:} So far the discussion has been around modeling the durations, but the information set, $F_t$ has information on `marks', the information associated with the past ticks, such as the number of units transacted, price etc. McCulloch and Tsay (2009)~\cite{} suggest the following model:
@@ -419,27 +424,25 @@ The first term is the trade density and the second term is the quote density. Th
 The estimation of the parameters are done through quasi maximum likelihood. Using data for eight stocks, Engle and Lund (2003)~\cite{englelunde} observe that high trade arrival rates, large volume per trade, wide bid-ask spreads, all predict more rapid price revisions. The model given in Engle and Lund (2003)~\cite{englelunde} can be conceptually applied to any two point processes. Extending this concept to more than two processes could be of interest to the traders who may want to monitor the trading exchanges simultaneously. 
 
 
-\section{Time Aggregation and Loss of Information}
-
 
 \section{Realized Volatility and Econometric Models}
 
 
 Estimating the volatility using the high-frequency data has received a great deal of attention lately. In the low frequency (daily) level some estimators based on select prices were presented. Intra-day dynamics of volatility is of interest to traders and that is not fully captured by the stock price indicators sampled during the day. If higher frequency data are used to estimate volatility of lower frequency data, it is important to know the model for the return at the lower frequency. To illustrate this, we consider data observed at two time scales; although they are at low frequency level, the concept can be easily extended to high-frequency context. If $r_{t,i}$ is the $i$th day return in $t$th month, the $t$th month return assuming there `n' trading days, $r_t^m = \sum_{i=1}^nr_{t,i}$. Note that $\sigma_m^2 = \Var(r_t^m|F_{t-1}) = \sum_{i=1}^n \Var(r_{t,i} | F_{t-1}) + 2 \sum_{i<j} \Cov(r_{t-i},r_{t-j} | F_{t-1})$. If $r_{t,i}$ is white noise sequence, then
-	\begin{equation}\label{Eqn:2hatsigmasq}
+	\begin{equation}\label{eqn:2hatsigmasq}
 	\hat{\sigma}_m^2 = \frac{n}{n-1} \sum_{i=1}^n(r_{t,i} - \overline{r}_t)^2
 	\end{equation}
-But we had observed that in the high frequency data returns do exhibit some serial correlation and so adjusting (\ref{eqn:}) for serial correlation is important to get a more accurate estimate of volatility. A simpler estimate of $\sigma_m^2$ is the so called realized volatility ($RV_t$)
+But we had observed that in the high frequency data returns do exhibit some serial correlation and so adjusting (\ref{eqn:2hatsigmasq}) for serial correlation is important to get a more accurate estimate of volatility. A simpler estimate of $\sigma_m^2$ is the so called realized volatility ($RV_t$)
 	\begin{equation}\label{eqn:2RV}
 	\text{RV}_t = \sum_{i=1}^n r_{t,i}^2
 	\end{equation}
 But in the estimation of intra-day volatility, the number of sampling intervals, `$n$' and hence, `$\Delta$', the interval size can affect the estimate. If $\Delta \rightarrow 0$, the value $RV_t$ in the $\Delta$-interval goes to infinity. Thus the optimal choice of `$\Delta$' is crucial and is reviewed below, for a judicious choice.
 
 
-Bandi and Russell (2006)~\cite{bandi} argue that the observed price is the sum of efficient price and a friction price (see (\ref{eqn:})) that is induced by bid-ask bounce, price discreteness etc. Thus the observed variance such as (\ref{eqn:}) is the sum of variance of the efficient returns and the variance of micro-structure noise. As they indicate, both are useful: ``The variance of the efficient return process is a crucial ingredient in the practice and theory of asset valuation and risk management. The variance of microstructure noise components reflects the market structure and the price setting behavior of market participants and thereby contains information about the market fine-grain dynamics.'' Both components can be estimated using high frequency data but sampled at different frequencies. Data sampled at low frequency are used to estimate the efficient return variable and the data of high frequency are used to estimate the microstructure noise variance.
+Bandi and Russell (2006)~\cite{bandi} argue that the observed price is the sum of efficient price and a friction price (see (\ref{eqn:2lowpstar})) that is induced by bid-ask bounce, price discreteness etc. Thus the observed variance such as (\ref{eqn:2hatsigmasq}) is the sum of variance of the efficient returns and the variance of micro-structure noise. As they indicate, both are useful: ``The variance of the efficient return process is a crucial ingredient in the practice and theory of asset valuation and risk management. The variance of microstructure noise components reflects the market structure and the price setting behavior of market participants and thereby contains information about the market fine-grain dynamics.'' Both components can be estimated using high frequency data but sampled at different frequencies. Data sampled at low frequency are used to estimate the efficient return variable and the data of high frequency are used to estimate the microstructure noise variance. Additional references on this topic include, A{\"\i}t-Sahalia, Mykland and Zhang (2005)~\cite{ait2005often} and Barndoff-Nielsen and Shepard (2002)~\cite{barndorff2002econometric}.
 
 
-On any given day, assume that the observed price, at time `$i$' is as in (\ref{eqn:})
+On any given day, assume that the observed price, at time `$i$' is as in (\ref{eqn:2lowpstar})
 	\begin{equation}\label{eqn:2pi2}
 	p_i = p_i^* + u_i, \quad i= 1,2,\ldots,n
 	\end{equation}
@@ -447,7 +450,68 @@ where $p_i^*$ is the efficient price and $u_i$ is the of microstructure noise. D
 	\begin{equation}\label{eqn:2rji2}
 	r_{j,i} = r_{j,i}^* + \varepsilon_{j,i}, \quad j= 1,2,\ldots,M
 	\end{equation}
-Assume that the frictions, $u$'s are i.i.d. mean zero and variance $\sigma_{u}^2$. Because $\varepsilon_{j,i}= u_{(i-1)+j\delta} - u{(i-1) + (j-1)\delta}$, $\Var(\varepsilon_{j,i})= 2\sigma_{\eta}^2$. It has been noted already that the return series exhibit negative first order autocovariance and $\varepsilon$'s can be taken as MA(1) structure for the $\eta$'s. Thus, the returns are computed at higher frequency at which the new information arrives. Thus $\sum_{j=1}^M r_{j,i}^2/M$ can be used to estimate noise variance. For the estimation of efficient price variance, we need to consider an  optimal division of a day into `M' number of subperiods. The optimal sampling frequency over `$n$' day is chosen as $\delta^* = 1/M^*$ with $M^*= \left[\dfrac{\hat{Q}}{\hat{\alpha}}\right]^{\frac{1}{3}}$, where $\hat{\alpha} = \sum_{i=1}^n\sum_{j=1}^M\overline{r}_{j,i}^2/(nM)$ and $\hat{Q}_i = \frac{M}{3}\sum_{j=1}^M\hat{r}_{j,i}^4$. Based on the analysis of a sample of S\&P 100 stocks mid quotes for the months of February 2002, Bandi and Russell (2006)~\cite{bandi} conclude that 5-min frequency is optimal and the 15-min interval may provide the variance estimates `excessively volatile'. The economic benefit of optimal sampling is that high frequency traders can employ a realistic variance forecasts in formulating the entry and exit strategies. Additional references on this topic include, A{\"\i}t-Sahalia, Mykland and Zhang (2005)~\cite{ait2005often} and Barndoff-Nielsen and Shepard (2002)~\cite{barndorff2002econometric}.
+Assume that the frictions, $u$'s are i.i.d. mean zero and variance $\sigma_{u}^2$. Because $\varepsilon_{j,i}= u_{(i-1)+j\delta} - u_{(i-1) + (j-1)\delta}$, $\Var(\varepsilon_{j,i})= 2\sigma_{\eta}^2$. It has been noted already that the return series exhibit negative first order autocovariance and $\varepsilon$'s can be taken as MA(1) structure for the $\eta$'s. Thus, the returns are computed at higher frequency at which the new information arrives. Thus $\sum_{j=1}^M r_{j,i}^2/M$ can be used to estimate noise variance. 
+
+
+To motivate the optimal choice, we consider two possible situations. If there is no micro-structure noise, the usual estimate of variance, $\hat{\sigma}^2= \frac{1}{T} \sum_{i=1}^n r_i^2$ has the asymptotic variance `$2\sigma^4\delta$' which suggests selecting `$\delta$' as small as possible. The implication of the presence of micro-structure noise is that returns are likely to follow a MA(1) process with a negative autocorrelation and the proportion of total variance due to market micro-structure error is, $\Pi= \frac{2\sigma_\eta^2}{\sigma^2\delta+2\sigma_\eta^2}$ and as `$\delta$' gets smaller, this proportion gets closer to unity. This indicates that the optimal sampling frequency should be finite when noise is present.
+
+
+For the estimation of efficient price variance, we need to consider an  optimal division of a day into `M' number of subperiods. The optimal sampling frequency over `$n$' day is chosen as $\delta^* = 1/M^*$ with $M^*= \left[\dfrac{\hat{Q}}{\hat{\alpha}}\right]^{\frac{1}{3}}$, where $\hat{\alpha} = \sum_{i=1}^n\sum_{j=1}^M\overline{r}_{j,i}^2/(nM)$ and $\hat{Q}_i = \frac{M}{3}\sum_{j=1}^M\hat{r}_{j,i}^4$. Based on the analysis of a sample of S\&P 100 stocks mid quotes for the months of February 2002, Bandi and Russell (2006)~\cite{bandi} conclude that 5-min frequency is optimal and the 15-min interval may provide the variance estimates `excessively volatile'. The economic benefit of optimal sampling is that high frequency traders can employ a realistic variance forecasts in formulating the entry and exit strategies. 
+
+
+
+
+\section{Time Aggregated Data and Analysis}
+
+
+
+The commonly available data from public sources such as Yahoo Finance that are easily accessible to investors provide select price information, High, Low, Open and Close prices along with the total transaction volume in a trading day. The usual estimate of volatility is based on closing prices, but having this additional price (bars) data can help to get a better estimate of volatility. As shown in the last section, using high-frequency data leads to estimators that need to be corrected for market frictions. But using the daily price bars data may not be helpful to make entry/exit decisions; so as a compromise, many trading outfits construct price bars data from the high-frequency point process data for a shorter time intervals such as 30~minutes. This has the effect of smoothing the noise due to market friction but also results in data in discrete time units and so the traditional discrete time series methods discussed in Chapter 2 to Chapter 4 can be effectively employed. 
+
+
+The price is assumed to follow a random walk model. It follows price changes (thus returns) over a time interval are normally distributed with mean zero and variance that is proportional to the length of the interval. Assuming that the prices follow continuous sample paths although the trading is closed for a certain duration and when trading is open, the actual transactions occur at discrete points in time. Treating the trading day as represented in a unit interval $[0,1]$ with $[0,f]$ representing the `market close' time and $[f,1]$ as `open' time, it is shown that the estimator of volatility
+	\begin{equation}\label{eqn:estvol}
+	\hat{\sigma}_1^2= \dfrac{(O_1 - C_0)^2}{2f} + \dfrac{(C_1 - O_1)^2}{2(1-f)},
+	\end{equation}
+has efficiency two compared to the usual estimator, $\hat{\sigma}^2_0=(C_1 - C_0)^2$ based on the closing prices of two successive trading days. This suggests clearly the inclusion of additional data point, opening price is quite informative. Garman and Klass~\cite{klass1980} suggest these and other estimators which are superior to the classical estimator of volatility. It is argued that the high and low prices contain information regarding the volatility during the trading period and a composite estimator
+	\begin{equation}\label{eqn:compositeest}
+	\hat{\sigma}_2^2= a\,\dfrac{(O_1 - C_0)^2}{f} + (1-a)\, \dfrac{(H_1 - L_1)^2}{(1-f) \ln 2}
+	\end{equation}
+with optimal choice of `$a$'$=0.17$ that yields even higher efficiency.
+
+
+The estimators like the above assume that either the price process has no drift or no price jumps between the previous day's closing price and current day's opening price. The former assumption leads to overestimating the volatility and the later to underestimating volatility. Yang and Zhang~\cite{yangzhang2000} provide an estimator based on several periods of low, high, open and close prices that is independent of the drifts and the jumps. Although several estimators are discussed in this paper, we mention only two of them that have high efficiency. Denoting
+	\[
+	\begin{split}
+	o&= \ln O_1 - \ln C_0, \text{ the normalized open}; \\
+	u&= \ln H_1 - \ln O_1, \text{ the normalized high}; \\
+	d&= \ln L_1 - \ln O_1, \text{ the normalized low}; \\
+	c&= \ln C_1 - \ln O_1,  \text{ the normalized close},
+	\end{split}
+	\]
+the classical estimator based on $n$-period historical data is
+	\begin{equation}\label{eqn:nperioddata}
+	V_{cc}= \dfrac{1}{n-1} \cdot \sum_{i=1}^n [(o_i + c_i) - (\overline{o} + \overline{i})]^2
+	\end{equation}
+and the estimator given in Rogers and Satchell~\cite{rogerssatchell1991}
+	\begin{equation}\label{eqn:rogerssatchell}
+	V_{\text{RS}}= \dfrac{1}{n} \cdot \sum_{i=1}^n [u_i(u_i - c_i) + d_i(d_i-c_i)]
+	\end{equation}
+The estimator suggested in Yang and Zhang~\cite{yangzhang2000} takes the form,
+	\begin{equation}\label{eqn:yang2000}
+	V_{\text{YZ}}= V_0 + k V_c + (1-k)V_{\text{RS}}
+	\end{equation}
+where $V_0= \frac{1}{n-1} \sum_{i=1}^n (o_i-\overline{o})^2$ and $V_c=\frac{1}{n-1} \sum_{i=1}^n (c_i - \overline{c})^2$, with the optimal choise of $k=\frac{0.34}{1.34 + (n+1)(n-1)}$. \\
+
+
+\noindent\textbf{Applications:} Is is well-known the standard stochastic volatility models used in finance are different to estimate due to their non-Gaussian nature. The prodics, the absolute or squared returns, because of the measurement errors tend to be somewhat inefficient. Alizadeh, Brandt and Diebold (2002)~\cite{diebold} argue that range as a proxy for volatility is superior as it is relatively free of the two problems associated with other measures. In the estimator (\ref{eqn:compositeest}), the second term which is essentially range-based is bound to be always positive. It can also be shown that the standard deviation of the log range is nearly one-fourth the standard deviation of the log absolute return. The range is also more robust to microstructure effects mostly due to bid-ask bounce compared to popular realized volatility measure (\ref{eqn:2RV}). Martens and Dijk (2007)~\cite{dijk} define realized range as,
+	\begin{equation}\label{eqn:rrtdelta}
+	\text{RR}_t^\Delta= \dfrac{4\ln 2} \cdot \sum_{i=1}^I (\ln H_{t,i} - \ln L_{t,i})^2
+	\end{equation}
+where `$\Delta$' is intra-day interval. This estimator is biased and the bias is corrected by scaling $\text{RR}_t^\Delta$ with the ratio of average levels of the daily range and the realized range over the previous `$q$' days. The scaled realized range,
+	\begin{equation}\label{eqn:rrstdelta}
+	\text{RR}_{s,t}^\Delta= \left(\dfrac{\sum_{l=1}^q \text{RR}_{t-l}}{\sum_{l=1}^q \text{RR}_{t-l}^\Delta} \right) \text{RR}_t^\Delta
+	\end{equation}
+is known to estimate the volatility more accurately. 
 
 
 \section{Analytics from Machine Learning Literature}

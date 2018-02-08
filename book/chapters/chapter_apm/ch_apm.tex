@@ -775,39 +775,6 @@ Specifically, suppose that the efficient portfolio has (random) rate of return $
 	\end{enumerate}
 
 
-\item[3.] 
-
-\begin{itemize}
-\item The file {\tt d\_15stocks.csv} and {\tt m\_15stocks.csv} contain daily and monthly stock returns data for 15 stocks from Jan 11, 2000 to Mar 31, 2013.
-
-\item The file {\tt d\_indexes.csv} and {\tt m\_indexes.csv} contain daily and monthly returns data for the volume-weighted and equal-weighted S\&P500 market indices (VWRETD and EWRETD, respectively) from Jan 11, 2000 to Mar 31, 2013.
-\end{itemize}
-
-
- Using daily and monthly returns data for 15 individual stocks from {\tt d\_15stocks.csv} and {\tt m\_15stocks.csv}, and the equal-weighted and value-weighted CRSP market indexes (EWRETD and VWRETD, respectively) from {\tt d\_indexes.csv} and {\tt m\_indexes.csv}, perform the following statistical analyses using R. For the subsample analyses, split the available observations into equal-sized subsamples.
-
-	\begin{enumerate}[(a)]
-	\item Compute the sample mean $\hat\mu$, standard deviation $\hat{\sigma}$, and first-order autocorrelation coefficient $\hat{\rho}(1)$ for daily simple returns over the entire sample period for the 15 stocks and two indexes. Split the sample into 4 equal subperiods and compute the same statistics in each subperiod -- are they stable over time?
-
-	\item Plot histograms of daily simple returns for VWRETD and EWRETD over the entire sample period. Plot another histogram of the normal distribution with mean and variance equal to the sample mean and variance of the returns plotted in the first histograms. Do daily simple returns look approximately normal? Which looks closer to normal: VWRETD or EWRETD?
-
-	\item Using daily simple returns for the sample period, construct 99\% confidence intervals for $\hat{\mu}$ for VWRETD and EWRETD, and the 15 individual stock return series. Divide the sample into 4 equal subperiods and construct 99\% confidence intervals in each of the four subperiods for the 17 series -- do they shift a great deal?
-
-	\item Compute the skewness, kurtosis, and studentized range of daily simple returns of VWRETD, EWRETD, and the 15 individual stocks over the entire sample period, and in each of the 4 equal subperiods. Which of the skewness, kurtosis, and studentized range estimates are statistically different from the skewness, kurtosis, and studentized range of a normal random variable at the 5\% level? For these 17 series, perform the same calculations using monthly data. What do you conclude about the normality of these return series, and why?
-	\end{enumerate}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 \item[4.] The file {\tt FF\_Data\_ForGRStest.csv} contains historical monthly returns for one set of 6 portfolios and another set of 25 portfolios, formed based on the size and book-to-market ratio (BM). The data is obtained from French's data library. The portfolios are formed as the intersection of size (or market equity, ME) based portfolios and book equity to market equity ratio (BE/ME) based portfolios ($2\times 3$ forming the first set of 6 portfolios and $5\times 5$ forming the second set of 25 portfolios). These portfolios are discussed in their 1993 paper by Fama and French.
 
