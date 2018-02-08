@@ -465,21 +465,21 @@ For the estimation of efficient price variance, we need to consider an  optimal 
 
 
 
-The commonly available data from public sources such as Yahoo Finance that are easily accessible to investors provide select price information, High, Low, open and close prices along with the total transaction volume in a trading day. The usual estimate of volatility is based on closing prices, but having this additional price (bias) data can help to get a better estimate of volatility. As shown in the last section, using high-frequency data leads to estimators that need to be correct for market frictions. But using the daily price bars data may not be helpful to make entry/exit decisions; so as a compromise, many trading outfits contract price bars data from the high-frequency point process data for a shorter time intervals such as 30~minutes. This has the effect of smoothing the noise due to market friction but also results in data in discrete time units and so the traditional discrete time series methods discussed in Chapter 2 to Chapter 4 can be effectively employed. 
+The commonly available data from public sources such as Yahoo Finance that are easily accessible to investors provide select price information, High, Low, Open and Close prices along with the total transaction volume in a trading day. The usual estimate of volatility is based on closing prices, but having this additional price (bars) data can help to get a better estimate of volatility. As shown in the last section, using high-frequency data leads to estimators that need to be corrected for market frictions. But using the daily price bars data may not be helpful to make entry/exit decisions; so as a compromise, many trading outfits construct price bars data from the high-frequency point process data for a shorter time intervals such as 30~minutes. This has the effect of smoothing the noise due to market friction but also results in data in discrete time units and so the traditional discrete time series methods discussed in Chapter 2 to Chapter 4 can be effectively employed. 
 
 
 The price is assumed to follow a random walk model. It follows price changes (thus returns) over a time interval are normally distributed with mean zero and variance that is proportional to the length of the interval. Assuming that the prices follow continuous sample paths although the trading is closed for a certain duration and when trading is open, the actual transactions occur at discrete points in time. Treating the trading day as represented in a unit interval $[0,1]$ with $[0,f]$ representing the `market close' time and $[f,1]$ as `open' time, it is shown that the estimator of volatility
 	\begin{equation}\label{eqn:estvol}
-	\hat{\sigma}_1^2= \dfrac{(o_1 - c_0)^2}{2f} + \dfrac{(c_1 - o_1)^2}{2(1-f)},
+	\hat{\sigma}_1^2= \dfrac{(O_1 - C_0)^2}{2f} + \dfrac{(C_1 - O_1)^2}{2(1-f)},
 	\end{equation}
-has efficiency two compared to the usual estimator, $\hat{\sigma}^2=(c_1-c_0)^2$ based on the closing prices of two successive trading days. This suggests clearly the inclusion of additional data point, opening price is quite informative. Garman and Klass~\cite{klass1980} suggest these and other estimators which are superior to the classical estimator of volatility. It is argued that the high and low prices contain information regarding the volatility during the trading period and a composite estimator
+has efficiency two compared to the usual estimator, $\hat{\sigma}^2_0=(C_1 - C_0)^2$ based on the closing prices of two successive trading days. This suggests clearly the inclusion of additional data point, opening price is quite informative. Garman and Klass~\cite{klass1980} suggest these and other estimators which are superior to the classical estimator of volatility. It is argued that the high and low prices contain information regarding the volatility during the trading period and a composite estimator
 	\begin{equation}\label{eqn:compositeest}
-	\hat{\sigma}_2^2= a\,\dfrac{(o_1- c_0)^2}{f} + (1-a)\, \dfrac{(H_1 - L_1)^2}{(1-f) \ln 2}
+	\hat{\sigma}_2^2= a\,\dfrac{(O_1 - C_0)^2}{f} + (1-a)\, \dfrac{(H_1 - L_1)^2}{(1-f) \ln 2}
 	\end{equation}
 with optimal choice of `$a$'$=0.17$ that yields even higher efficiency.
 
 
-The estimators like the above assume that either the price process has no drift or no price jumps between the former assumption leads to overestimating the volatility and the later to underestimating volatility. Yang and Zhang~\cite{yangzhang2000} provide an estimator based on several periods of low, high, open and close prices that is independent of the drifts and the jumps. Although several estimators are discussed in this paper, we mention only two of them that have high efficiency. Denoting
+The estimators like the above assume that either the price process has no drift or no price jumps between the previous day's closing price and current day's opening price. The former assumption leads to overestimating the volatility and the later to underestimating volatility. Yang and Zhang~\cite{yangzhang2000} provide an estimator based on several periods of low, high, open and close prices that is independent of the drifts and the jumps. Although several estimators are discussed in this paper, we mention only two of them that have high efficiency. Denoting
 	\[
 	\begin{split}
 	o&= \ln O_1 - \ln C_0, \text{ the normalized open}; \\
@@ -500,8 +500,18 @@ The estimator suggested in Yang and Zhang~\cite{yangzhang2000} takes the form,
 	\begin{equation}\label{eqn:yang2000}
 	V_{\text{YZ}}= V_0 + k V_c + (1-k)V_{\text{RS}}
 	\end{equation}
-where $V_0= \frac{1}{n-1} \sum_{i=1}^n (o_i-\overline{o})^2$ and $V_c=\frac{1}{n-1} \sum_{i=1}^n (c_i - \overline{v})^2$, with the optimal choise of $k=\frac{0.34}{1.34 + (n+1)(n-1)}$. 
+where $V_0= \frac{1}{n-1} \sum_{i=1}^n (o_i-\overline{o})^2$ and $V_c=\frac{1}{n-1} \sum_{i=1}^n (c_i - \overline{c})^2$, with the optimal choise of $k=\frac{0.34}{1.34 + (n+1)(n-1)}$. \\
 
+
+\noindent\textbf{Applications:} Is is well-known the standard stochastic volatility models used in finance are different to estimate due to their non-Gaussian nature. The prodics, the absolute or squared returns, because of the measurement errors tend to be somewhat inefficient. Alizadeh, Brandt and Diebold (2002)~\cite{diebold} argue that range as a proxy for volatility is superior as it is relatively free of the two problems associated with other measures. In the estimator (\ref{eqn:compositeest}), the second term which is essentially range-based is bound to be always positive. It can also be shown that the standard deviation of the log range is nearly one-fourth the standard deviation of the log absolute return. The range is also more robust to microstructure effects mostly due to bid-ask bounce compared to popular realized volatility measure (\ref{eqn:2RV}). Martens and Dijk (2007)~\cite{dijk} define realized range as,
+	\begin{equation}\label{eqn:rrtdelta}
+	\text{RR}_t^\Delta= \dfrac{4\ln 2} \cdot \sum_{i=1}^I (\ln H_{t,i} - \ln L_{t,i})^2
+	\end{equation}
+where `$\Delta$' is intra-day interval. This estimator is biased and the bias is corrected by scaling $\text{RR}_t^\Delta$ with the ratio of average levels of the daily range and the realized range over the previous `$q$' days. The scaled realized range,
+	\begin{equation}\label{eqn:rrstdelta}
+	\text{RR}_{s,t}^\Delta= \left(\dfrac{\sum_{l=1}^q \text{RR}_{t-l}}{\sum_{l=1}^q \text{RR}_{t-l}^\Delta} \right) \text{RR}_t^\Delta
+	\end{equation}
+is known to estimate the volatility more accurately. 
 
 
 \section{Analytics from Machine Learning Literature}
