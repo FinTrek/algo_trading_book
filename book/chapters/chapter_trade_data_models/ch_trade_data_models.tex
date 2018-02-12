@@ -3,6 +3,7 @@
 %\par\vspace{\baselineskip}
 
 \chapter{Modeling Trade Data}
+
 \section{Normalizing Analytics}
 One of the challenging aspects of execution unlike other algorithmic trading subject is the large number of different types of stocks such strategies have to apply to. The same strategy will need to work for super liquid instruments that trade like water at the minimum tick size, and illiquid stocks that trade only very infrequently at wide spreads; Stock that have very stable and large sizes at the inside market, and stocks whose nbbo changes many times every second. To complicate matters further the market micro-structure of each stock is not constant throughout the day and certain days (sometime called "Special Days" ) stock behavior is often very different. These changes are to a large extent predictable and execution strategies are expected to adapt to them. 
 \newline
@@ -36,7 +37,10 @@ As a baseline metric that 64 days Mean or Median daily volume are probably the m
 		\caption{ADV. Notice how the measure differ. Median is more stable and smooth but Average is more reactive. Which on to use depend on the application\label{fig:adv}}
 	\end{figure}
 
-Intuitively one would think that one would be well served by an improved forecast of the daily volume. Very little academic research exists on daily volume prediction
+Note that in this section we are only talking about volume as a normalization variable and not a prediction of the day's volume. The two use cases are different although they are often confused. We'll deal with volume prediction in section ?
+
+One of the common uses of relative order size is, as we will see in chapter 10, in the calibration of a market impact model. One would intuitively think that since in the calibration is done after the fact one should normalize using the realized daily volume instead of the ADV. Research has shown that this approach leads to a poorer prediction (any reference?). While the reason for this is not clear it's possible that the large-noise-to-signal ratio is better served by a more stable normalizer vs. a more noisy while more precise one. For consistency reasons using ADV as normalizer in the calibration would imply that we should use of the same normalizer for estimation rather than using our best prediction of daily volume. Practitioners are still debating around this important issue and no research has been done to settle this debate. We'll leave this question to the reader to think about and explore.
+
 
 \subsubsection{Time-scale Normalization:Characteristic Time }
 Trading dynamics have an intrinsic timescale that varies significantly across the stock universe and it is often important to take this into consideration. For instance in a trading algorithm, when evaluating a decision on posting vs. taking (more on that later) , one should estimate what is the likelihood that by posting at the best price the order would get executed before we fall behind our trading commitments. You would not post passively if in average the queue in front for the order takes 3 minutes to clear and you only have 10s before needing to trade. 
@@ -102,28 +106,85 @@ A practical and common approach is too use a statistical clustering approach usi
 There are many modeling approaches that are used in practice but there is limited systematic research in this space. 
 TODO Add pointers to existing research
 
-First important item is the fitting universe. The common practice is to limit the usniverse to stocks that would have at least 100 trades per bin in every bin. This avoids averaging issues with empty bins.
+First important item is the fitting universe. The common practice is to limit the universe to stocks that would have at least 50-100 trades per bin in every bin. This avoids averaging issues with empty bins.
 
-On the fitting approach, while this would clearly fit within the supervised learning family of methods, this is not necessarily trivial as each bin will have to be treated as an individual variable to allow for the inter-bin variability. There is also auto-correlation among contiguous bins  some additional structure would be warranted. Gaussian Processes look like a promising approach but no research in that direction has appeared as of yet. More often than not no actual fitting takes place but some form of per-bin averaging over a certain length of history after which some form of smoothing is applied. 
+On the fitting approach, while this would clearly fit within the supervised learning family of methods, this is not necessarily trivial as each bin will have to be treated as an individual variable to allow for the inter-bin variability. There is also auto-correlation among contiguous bins  some additional structure would be warranted. Gaussian Processes look like a promising approach but no research in that direction has appeared as of yet. More often than not no actual fitting takes place but some form of per-bin averaging over a certain length of history after which some form of smoothing is applied.  
+
+TODO What is a good mathematical formulation for the Volume profile Discretized function?
+
+TODO Show an example of Volume profile
 
 Care must be take to remove from the data-set days with predictable differences in profile shape. These "special days" should be modeled separately and we'll provide some pointers in a later paragraph. If one uses some form of regression model the special day could be incorporated as a dummy variable. Other stock specific days like earnings days should also be removed. While in principle  simple process this is in practice not trivial as it's quite hard to have a well organized and maintained special day calendar. This item alone can be the source of a lot of manual labor and cause of frustration and errors. As you'll often see it's not the quantitative aspects that end up being the hardest problems to solve.
 
 \subparagraph{Length of History}
-Another common open question is the length of history that should be used. The more data is used the more stable to profiles are however unless great care is given to various seasonal effects and continues changes in market microstructure there is the risk for the profile no to incorporate more recent shifts. This is a particular concern in recent times as the explosion of ETF trading has been consistently shifting more and more volume towards the close. The length of history can be used as a hyperparameter to be trained on a per cluster basis.
+Another common open question is the length of history that should be used. The more data is used the more stable to profiles are however unless great care is given to various seasonal effects and continues changes in market microstructure there is the risk for the profile no to incorporate more recent shifts. This is a particular concern in recent times as the explosion of ETF trading has been consistently shifting more and more volume towards the close. The length of history can be used as a hyper-parameter to be trained on a per cluster basis.
 
 \subparagraph{Volume Profile Smoothing}
-intrady volume profiles tend to be extremely noisy and require smoothing to be effective. It was estimated (reference?) that without smoothing the volume profile perform worse than considering completely flat profiles. However care mus be taken to avoid smoothing over real behavioral discontinuities (e.g there is a predictable spike in volume in European profiles coincident with the US opening). These spikes usually are preceded by a period of reduce trading activity due to traders waiting for the predictable event. So care has to be take not to smooth these spikes to avoid spread this over previous bins that could cause the algorithm to overtrade during the period of reduced trading. On common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and the re-applying the spike afterward. It has been shown that this approach improves the overall predictability of the profile
+intraday volume profiles tend to be extremely noisy and require smoothing to be effective. Some internal research of one of the authors estimated that without smoothing the volume profile performed worse than a completely flat profiles. Care must be taken to avoid smoothing over real discontinuities (e.g. there is a predictable spike in volume in European profiles coincident with the US opening). These spikes usually are preceded by a period of reduced trading activity due to traders waiting for the event. Smoothing these spikes will have the effect of spreading this over previous bins reducing the precision of the profile. One common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and the re-applying the spike afterward. It has been shown that this approach improves the overall predictability of the profile. 
+
+As far as smoothing algorithms there are a lot of choices available. Kernel smoothing methods have been proven effective. However  care must be given at the boundaries (beginning and end) of the profile. There is a large body of work on how to solve boundary problems in smoothing.
+
+TODO Show an example of smoothed Volume profile vs non smoothed with the jumps removed
 
 \subparagraph{Special Days}
-Special days, as previously discussed, present additional challenges due to the limited number of datapoints available (e.g triple witching occurs only 4 time a year). So using larger clusters (one cluster as a limit) is often the only option. In order to maintain some of the  cluster characteristics a common approach is to use a "difference" profile created by a normalized per-bin ratio between the regular day profile and the special day profile. This gives a profile that capture the special day systematic shift. This difference profile can then been applied to the cluster profile.
+Special days, as previously discussed, present further challenges due to the limited number of data points available (e.g triple witching occurs only 4 time a year). So using larger clusters (one cluster as a limit) is often the only option. One option would be to use these separately calibrated profiles across all special-day clusters. However this would lose the granularity of the regular day clustering. In order to maintain some of the  regular cluster level characteristics a common approach is to use a "difference" profile created by a normalized per-bin ratio between and average regular day profile and the special day profile. This gives a profile that capture the special day systematic shift that can then be multiplied back to the cluster profile essential mixing the two components. While in most cases this has proven effective we would recommend out of sample testing at the cluster level to see i in which profile this is accretive.
+
+
+TODO Show an example of the Fed-Announcement vol profile
+
+As part of the special day tre
 
 \subparagraph{Dynamic Profiles}
-Volume distributions are relatively stable for reasons we have discussed above but they are subject to large distortion due to some 'surprise' event such as unexpected news. In such cases the volume can spike dramatically and the overall realized distribution will end up being highly skewed.  This distortion is likely the single most common reason why the execution coverage desks get angry calls from client because their realize VWAP slippage was so poor. This is because usually this distortion is accompanied by a price dislocation and a standard VWAP strategy trading against a static profile would most often under trade that even leading too poor VWAP slippage. To address that one can build more sophisticated dynamic profiles models that take into account the autocorrelation of volume during surprise events skewing the rest of the day's profile more towards the event. Essentially no academic literature exist for for such models.
+Volume distributions are relatively stable for reasons we have discussed above but they are subject to large distortion due to some 'surprise' event such as unexpected news. In such cases the volume can spike dramatically and the overall realized distribution will end up being highly skewed.  To address this issues sophisticated operator create  dynamic profiles models that take into account the clustering of volume during surprise events skewing the rest of the day's profile more towards the event. There in no academic literature available that studies this problem and most model are proprietary and often heuristic. They also require a sophisticated real-time analytics infrastructure measure and apply these adjustment while the algorithm trades.
+
+As a side note volume spikes and the related distortion of the volume profile is likely still the most common reason why the execution coverage desks get angry calls from clients complaining of their poor. This is because the volume spikes usually happen in conjunction with a a price dislocation and a strategy trading against a static profile would under trade around the event thus leading to a significant deviation from the VWAP benchmark. Of course the coverage desks only hears from the clients on the wrong side of the deviation but never from clients on the positive side! Such is life on the low-touch trading desk.
 
 \section{Remainder of the Day Volume}
-%TODO
-\section{Auction Volumes}
-%TODO
+A related measure that is of real importance in execution is the Remainder of the day's volume, how much volume are we still expected to see before the market closes. This is of course important for sizing the orders to be sent by investor to avoid excessive impact. It's also important for algorithms that will trade into the closing auction how many shares should be reserved for the auction. We'll discuss more of this in the next section.
+
+So what we are looking for is  $rdv$ then expected cumulative volume from the time $t$ to the end time $T$ :
+\begin{equation}\label{eq:rdv_1}
+		rdv_t = \mathbb{E} \sum_t^T V_t
+	\end{equation}
+
+The most naive approach  is to take the T-1 estimate of today's volume $\tilde{V}_{T-1}$  as discussed in ? and simply remove the cumulative volume up to time $t$
+
+\begin{equation}\label{eq:rdv_2}
+		rdv_t ~   \tilde{V}_{T-1} - \sum_0^t V_t
+\end{equation}
+
+This approach however almost completely ignores the same day events and, considering how noisy our T-1 estimates tend to be, it leads to relatively poor prediction.
+
+A second approach is at the opposite end of the spectrum and only uses the historical volume profile and the current volume to extrapolate the full day volume and subtract that to the current volume. let \tilde{X}_t the portion of the daily volume expected in bin $t$. Then:
+
+\begin{equation}\label{eq:rdv_3}
+		rdv_t ~   \frac{\sum V_0^t}{\sum \tilde{X}_0^t} - \sum_0^t V_t = sum V_0^t ( ( \sum \tilde{X}_0^t)^{-1} -1)
+\end{equation}
+
+This approach is quite commonly used and works reasonably well after 12PM when the activity level is somewhat established. However in the first 2 hours of the day the estimates are quite poor.
+
+The natural  model is to combine the 2 methods essentially using the \ref{eq:rdv_2} as a shrinkage factor with per bin shrinkage factor $\lambda_t$. Thus our model for $rdv$ becomes:
+
+\begin{equation}\label{eq:rdv_4}
+		rdv_t ~  \lambda_t}( \sum V_0^t ( ( \sum \tilde{X}_0^t)^{-1} -1)) + (1-\lambda)t)(\tilde{V}_{T-1} - \sum_0^t V_t)
+\end{equation}
+
+The shrinkage factor $\labda_t$ is then be calibrated at the bin level to give the best mix of static and dynamic weight. We won't go into the full calibration of this model but only point out some interesting results. As we would expect $lambda_t$ is small at the beginning of the day raising quickly to 70-80% by noon continuing to increase toward 1 that is reached by construction at the close. What is maybe a bit surprising is that the slope after the initial jump around mid-day is relatively mild meaning that the statis estimate of the daily volume continues to provide stability and a more accurate prediction up untill the close. This implies that there is some for of "reversion to the mean" in later parts of the day after some intraday volume surprise.
+
+
+\section{Auctions Volume}
+It is somewhat surprising that so little academic research has been dedicated to such an important aspect of the trading day. I will be even be more surprising the admission that even for practitioners in execution handling the opening and closing auctions is probably a bit more than an afterthought. 
+
+TODO  Max should cover the opening and closing auction mechanics and I'll just reference that
+Main concern of this section is the estimation of the auctions volume. This is usually handled as part of the volume profiles estimation in which the opening and closing auctions are respectively the first and last bin of the profile. As per our discussion of volume profiles this ends up being nothing more than an average of the proportion of daily volume. 
+thus if $\tilde{X}_0$ and $\tilde{X}_T$ the T-1 opening and closing volume are measured by 
+
+Section ? already covered the mechanics of the opening and closing auctions so we will not cover them again here.
+
+
+
+As mentioned multiple times the current growing trend towards passive investments and ETF has driven the liquidity more and more towards the close. This means that the closing auction is becoming more and more the center of liquidity management.  It's quite likely that no other area of research is more relevant and impact-full that focusing on better understanding the closing period in price and volume dynamics in particular in relation to the create-redeem activities and the  cross-asset classes dynamics.
+
 
 \section{Microstructure Signals and other Advanced Analytics}
 This is not a book revealing secret alpha signals. But no coverage of the subject would be close to complete if at least we don't cover more advanced topics in microstructure signals. Again the subject is quite extensive and academic literature is almost non existent since any successful research in the space can be utilize in practice and thus unlikely published. Here we just gave a brief overview of common signals utilized in practice as a starting point for the interested researcher/practitioner.
@@ -187,17 +248,10 @@ The simplest version of this algorithms goes approximately like this:
 
 The algorithms has proven only moderately predictive to  ~75\% accuracy. This is due to various causes. One such cause due to the asynchronous nature of the trade and quote streams and where a quote change could be time stamped slightly before the trade that affected it leading to mis-classification.
 
+\section{Advanced Models}
+TODO We might want to re-organize this so we have the more practitioner treatment in part 1 of the chapter and then more advanced features like the below and we can add more as needed.
 
-\subsection{Fill Probability}
-%TODO ?
-
-
-\subsection{Hidden Markov Models (HMM) for dynamic market microstructure:  Estimation of Parameter and States}
-%TODO
-\subsection{Adaptive Particle Filters}
-%TODO
-
-\section{Models for LOB dynamics}
+\subsection{Models for LOB dynamics}
 
 Before we formally present the models, we want to provide a review of how the analysis of LOB data has been approached. Biais, Hillion and Spatt (1995)~\cite{spalt} study the trading activity in Paris Bourse (a fully automated limit order market), the dynamics of order flow and how the order flow varies with the state of the order book and marketplace events relevant to the asset. It is found that the conditional probability of a limit order placement is larger when the bid-ask spread is larger and when the order book is not deep. If a market order has been placed the chance that the next order posted provides liquidity is generally higher. The placement of orders also follows a pattern with new orders coming in the morning when the price discovery occurs and cancellations and large orders occur in the evenings. The durations between trades do indicate that the intensity of trade varies during the course of a day. The main tool used in these calculations is contingency table which provides both marginal and conditional probabilities. \\
 
@@ -409,7 +463,7 @@ More generally in the `$M$' dimensional multivariate case,
 will follow exponential distribution. The $\Lambda^m(t_{i-1}^m,t_i^m)$ are known as compensators and can be verified empirically if it follows exponential distribution. 
 
 
-\subsection{Application of a Hawkes process}
+\subsubsection{Application of a Hawkes process}
 
 
 We want to illustrate the model with an application. We will first look at the statistical properties of the data and then look at the results of fitting one and two dimensional Hawkes processes to it. Our findings show that a two dimensional model based on Hawkes processes performs considerably better than a model based on two independent Poisson Processes. This provides strong evidence of the fact that the two key features of Hawkes processes (path dependency of the order flow and the possibility of modeling the interaction between the dimensions) are capable of capturing and replicating some of the key features of the empirical data. Moreover, there is evidence of significant and asymmetric interplay between the buy and the sell sides for the Limit Orders and evidence of limited interplay between the two sides when it comes to Market Orders. Finally, a study of the statistical properties of the orders showed a complex of alternating symmetric and asymmetric behavior of the LOB. 
@@ -520,7 +574,7 @@ A second interesting difference was in the amount of volume on the two sides of 
 	\end{figure}
 
 
-\subsection{One-Dimensional Models}
+\subsubsection{One-Dimensional Models}
 
 
 We started by building a one dimensional model for the Limit Orders submitted on the buy side and one for those submitted on the sell side. Similarly, we build a one dimensional model for the Market Orders submitted on each side of the book. In the one dimensional case, the intensity function driving the Hawkes process is of the form
@@ -580,7 +634,7 @@ We then build, in a similar fashion, the two one-dimensional models for the flow
 The first thing that is obvious is the asymmetry between the buy and the sell sides. Nevertheless, for the Market Orders they asymmetry appears to be much more significant that it was for the Limit Orders, given the much bigger differences in the values of the estimated parameters. Also, for Market Orders we see that the occurrence of each event seems to have a much stronger impact on the likelihood of occurrence of future events than it was the case for Limit Orders. In fact, the values of $\alpha$ in Table~\ref{tab:marketorderbuy} and Table~\ref{fig:marketordersell} are considerably higher than those we saw in Table~\ref{tab:limmodbuy} and Table~\ref{tab:limmodsell}. Similarly, the values of $\beta$ are also much larger in the Market Order models than they were in the Limit Order models which means that the half-life of the excitation effect is much shorter for Market Orders (0.03 seconds vs. 0.7 seconds) than for Limit Orders. These differences in the results of the estimations are not that surprising if we consider what we saw in Table~\ref{tab:xom} for order submissions. Market Orders are submitted in much fewer numbers than Limit Orders which explains why even though the occurrence, such self-excitation has a very short lifetime. The significant increase in the chances of another Market Order occurring given that one has just occurred (even through for a very short time), might seem contradicting the fact that very few Market Orders actually occur. However, what can be inferred is that Market Orders depend strongly from the occurrence of other Market Orders and that they tend to cluster around submissions. 
 
 
-\subsection{An extension}
+\subsubsection{An extension}
 
 
 An important limitation of this basic Hawkes Process model is that each event has the same impact on the intensity function. This implies that each event carries the same amount of information in the process. However, it is easy to imagine that a large LO would carry much more information about future price changes than a small one and this should be accounted for in the model. We include order size in the intensity function by scaling the size of the jump $\alpha$ in the value of the intensity by the ratio $\frac{w_i}{\overline{w}_l}$, where $w_i$ is the size of the LO and $\overline{w}_l$ is the average LO size up to that point. The intensity function for this ``extended'' one-dimensional model becomes
@@ -600,7 +654,7 @@ We then compared the performance of this ``size-adjusted'' model with the ``basi
 	\end{figure}
 
 
-\subsection{Two-Dimensional models}
+\subsubsection{Two-Dimensional models}
 
 
 Our next step was to build two-dimensional models that would simultaneously model the buy and sell sides of the book and with two separate (yet interacting) intensity functions. The intensity functions for this kind of model become
@@ -657,7 +711,7 @@ Finally, we compared the performance of our model to that of the bi-dimensional 
 	\end{figure}
 
 
-\subsection{Limitations and findings}
+\subsubsection{Limitations and findings}
 
 
 There are some important considerations to be made based on our analysis. The first issue is related to the cleaning of the data that was necessary in order to adapt it to our needs. In fact, Hawkes processes are ``simple'' processes which means that they don't allow for more events to occur simultaneously. Unfortunately, in the INET data it is quite common to encounter clusters of 10/20 events reported with the same timestamp. This is typical of high frequency data due to the approximation with which events are often reported and to the obvious limitation of the chosen time scale (e.g., milliseconds). In our case we decided to keep only the first event of each cluster, dropping all the others. A possible alternative used in the literature is to simply uniformly distribute the events from the clusters across the time interval given by the occurrence of the cluster and that of the next event. However, this approach could introduce bias in the parameter estimation phase. In fact, the clustering of events by itself is of interest.
@@ -665,7 +719,7 @@ There are some important considerations to be made based on our analysis. The fi
 
 Also, an important limitation of the bi-dimensional Hawkes Process model is that it is very computationally intense. Evaluating the 5 parameters for one of the two intensity function using data from only one trading day took almost 48 hours. It becomes clear that in order to evaluate the parameters of a model using data for a longer time period of if evaluating the parameters for a model with higher dimension (hence with more parameters) will require considerably more computational power. 
 
-\section{Models for Hidden Liquidity}
-
+\subsection{Models for Hidden Liquidity}
+TODO
 \section{Supplements and Problems} 
-
+TODO
