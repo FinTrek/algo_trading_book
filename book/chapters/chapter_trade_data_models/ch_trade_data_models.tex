@@ -155,10 +155,10 @@ The most naive approach  is to take the T-1 estimate of today's volume $\tilde{V
 
 This approach however almost completely ignores the same day events and, considering how noisy our T-1 estimates tend to be, it leads to relatively poor prediction.
 
-A second approach is at the opposite end of the spectrum and only uses the historical volume profile and the current volume to extrapolate the full day volume and subtract that to the current volume. let \tilde{X}_t the portion of the daily volume expected in bin $t$. Then:
+A second approach is at the opposite end of the spectrum and only uses the historical volume profile and the current volume to extrapolate the full day volume and subtract that to the current volume. let $\tilde{X}_t$ the portion of the daily volume expected in bin $t$. Then:
 
 \begin{equation}\label{eq:rdv_3}
-		rdv_t ~   \frac{\sum V_0^t}{\sum \tilde{X}_0^t} - \sum_0^t V_t = sum V_0^t ( ( \sum \tilde{X}_0^t)^{-1} -1)
+		rdv_t ~   \frac{\sum V_0^t}{\sum \tilde{X}_0^t} - \sum_0^t V_t = \sum V_0^t ( ( \sum \tilde{X}_0^t)^{-1} -1)
 \end{equation}
 
 This approach is quite commonly used and works reasonably well after 12PM when the activity level is somewhat established. However in the first 2 hours of the day the estimates are quite poor.
@@ -166,10 +166,10 @@ This approach is quite commonly used and works reasonably well after 12PM when t
 The natural  model is to combine the 2 methods essentially using the \ref{eq:rdv_2} as a shrinkage factor with per bin shrinkage factor $\lambda_t$. Thus our model for $rdv$ becomes:
 
 \begin{equation}\label{eq:rdv_4}
-		rdv_t ~  \lambda_t}( \sum V_0^t ( ( \sum \tilde{X}_0^t)^{-1} -1)) + (1-\lambda)t)(\tilde{V}_{T-1} - \sum_0^t V_t)
+	rdv_t ~  \lambda_t( \sum V_0^t ( ( \sum \tilde{X}_0^t)^{-1} -1)) + (1-\lambda)t)(\tilde{V}_{T-1} - \sum_0^t V_t)
 \end{equation}
 
-The shrinkage factor $\labda_t$ is then be calibrated at the bin level to give the best mix of static and dynamic weight. We won't go into the full calibration of this model but only point out some interesting results. As we would expect $lambda_t$ is small at the beginning of the day raising quickly to 70-80% by noon continuing to increase toward 1 that is reached by construction at the close. What is maybe a bit surprising is that the slope after the initial jump around mid-day is relatively mild meaning that the statis estimate of the daily volume continues to provide stability and a more accurate prediction up untill the close. This implies that there is some for of "reversion to the mean" in later parts of the day after some intraday volume surprise.
+The shrinkage factor $\lambda_t$ is then be calibrated at the bin level to give the best mix of static and dynamic weight. We won't go into the full calibration of this model but only point out some interesting results. As we would expect $lambda_t$ is small at the beginning of the day raising quickly to 70-80\% by noon continuing to increase toward 1 that is reached by construction at the close. What is maybe a bit surprising is that the slope after the initial jump around mid-day is relatively mild meaning that the statis estimate of the daily volume continues to provide stability and a more accurate prediction up until the close. This implies that there is some for of "reversion to the mean" in later parts of the day after some intraday volume surprise.
 
 
 \section{Auctions Volume}
@@ -177,7 +177,7 @@ It is somewhat surprising that so little academic research has been dedicated to
 
 TODO  Max should cover the opening and closing auction mechanics and I'll just reference that
 Main concern of this section is the estimation of the auctions volume. This is usually handled as part of the volume profiles estimation in which the opening and closing auctions are respectively the first and last bin of the profile. As per our discussion of volume profiles this ends up being nothing more than an average of the proportion of daily volume. 
-thus if $\tilde{X}_0$ and $\tilde{X}_T$ the T-1 opening and closing volume are measured by 
+thus if $\tilde{X}_0$ and $\tilde{X}_T$ the T--1 opening and closing volume are measured by 
 
 Section ? already covered the mechanics of the opening and closing auctions so we will not cover them again here.
 
