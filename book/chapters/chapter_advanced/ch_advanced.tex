@@ -514,7 +514,59 @@ where `$\Delta$' is intra-day interval. This estimator is biased and the bias is
 is known to estimate the volatility more accurately. 
 
 
+The range based statistics can also be used to estimate bid-ask spreads. Recall from (\ref{eqn:2lowpstar}), the Roll model assumes that the observed price is the sum of the true price and the error, that reflects the market friction. The friction can be measured by bid-ask spread which is a measure of market liquidity. Trading decisions are made by closely monitoring this measure that varies during a trading day. Corwin and Schultz (2012)~\cite{schultz12} show how this can be estimated using the low-frequency range-based statistics. The reasoning goes as follows: As noted in (\ref{eqn:2firstrtlow}), the return is the sum of information and the friction---sources of volatility and the bid-ask spread. The volatility increases with the length of the trading period but not the bid-ask spread. Thus the price range over a two-day period reflects two days' volatility and are spread but the sum of two consecutive days price ranges reflect two days' volatility and twice the spread. This reasoning is useful to separate the two effects.
+
+
+Assume that the true or actual price follows a diffusion process. Actual price differs from the true price by $s/2$, where $s$ is the spread that remains constant over two consecutive days. Further, it is assumed that daily high price is a buyer-initiated trade while the daily low price is a seller initiated trade. Write,
+	\begin{equation}\label{eqn:sellertrade}
+	\begin{split}
+	\left[ \ln \left(\dfrac{H_t^0}{L_t^0}\right)\right]^2&= \left[\ln \left(\dfrac{H_t^A(1+s/2)}{L_t^A(1-s/2)}\right)\right]^2 \\
+	&=\left[\ln\left(\dfrac{H_t^A}{L_t^A}\right)\right]^2 + 2\alpha \ln\left(\dfrac{H_t^A}{L_t^A}\right) + \alpha^2
+	\end{split}
+	\end{equation}
+where $\alpha=\ln\left(\frac{1+s/2}{1-s/2}\right)$ is taken to be fixed. Taking expectations on both sides, we have
+	\begin{equation}\label{eqn:expsides}
+	E\left[\ln^2\left(\dfrac{H_t^0}{L_t^0}\right)\right]= K_1\sigma^2 + 2\alpha K_2 \sigma + \alpha^2
+	\end{equation}
+where $K_1= 4\ln 2= E\left(\ln^2\left(\dfrac{H_t^a}{L_t^A}\right)\right)$ and $K_2=\sqrt{\frac{8}{\pi}}= E\left(\ln\left(\frac{H_t^A}{L_t^A}\right)\right)$. Taking expectations over two days, if we let $\beta=E\left[\sum_{j=0}^1 \ln^2\left(\frac{H_{t+j}^0}{L_{t+j}^0}\right)\right]$ results in 
+	\begin{equation}\label{eqn:betaresult}
+	\beta= 2K_1 \sigma^2 + 4K_2 \alpha \sigma + \alpha^2
+	\end{equation}
+which has two unknowns `$\alpha$' and `$\sigma$' to solve. If we let $\gamma=\ln^2\left(\frac{H_{t,t+1}^0}{L_{t,t+1}^0}\right)$, where the subscripts $(t,t+1)$ indicates that the values are computed over a two day period `$t$' and `$t+1$'. This leads to
+	\begin{equation}\label{eqn:resultsin}
+	\gamma= 2K_1\sigma^2 + 2\sqrt{2} K_2\alpha \sigma + \alpha^2.
+	\end{equation}
+Both (\ref{eqn:betaresult}) and (\ref{eqn:resultsin}) are two quadratic equations in `$\alpha$' and `$\sigma$' that can be iteratively solved. The explicit solutions are given in Corwin and Schultz (2012)~\cite{schultz12} and are as follows:
+	\begin{equation}\label{eqn:quadsolve}
+	\begin{split}
+	\sigma&= \dfrac{\sqrt{\dfrac{\beta}{2}} - \sqrt{\beta}}{K_2(3-2\sqrt{2})} + \sqrt{\dfrac{\gamma}{K_2^2(3-2\sqrt{2})}}, \\
+	\alpha&= \dfrac{\sqrt{2\beta} - \sqrt{\beta}}{3-2\sqrt{2}} - \sqrt{\dfrac{\gamma}{3-2\sqrt{2}}} \\
+	s&= \dfrac{2(e^\alpha-1)}{1+e^\alpha}.
+	\end{split}
+	\end{equation}
+In empirical applications, it has been shown that cross-sectional correlations between the spread estimate in (\ref{eqn:quadsolve}) and TAQ effective spreads (benchmark measure) are higher than any correlations with other estimators. But it has been observed that the above estimator underestimates effective costs when for less liquid stocks.
+
+
+Abdi and Ranaldo (2017)~\cite{abdi} provide an estimator that includes the closing price that is easier to calculate and performs well in terms of the criteria considered earlier. Define the mid-range estimate as, $\eta_t=\frac{\ln H_t + \ln L_t}{2}$ and $c_t=\ln C_t$. Then the effective spread can be obtained from,
+	\begin{equation}\label{eqn:obtainedfrom}
+	\begin{split}
+	s^2&= 4 E\left[\left(c_t - \frac{\eta_t+\eta_{t+1}}{2}\right)^2\right] - E\left[(\eta_{t+1}-\eta_t)^2\right] \\
+	&= 4 E\left[(c_t-\eta_t)(c_t-\eta_{t+1})\right]
+	\end{split}
+	\end{equation}
+The sample versions are assuming `$N$' trading days in a month:	
+	\begin{flalign}\label{eqn:monthlycorrected}
+	&& \hat{s}_{\text{monthly corrected}}&= \sqrt{\max\{4 \frac{1}{N} \sum_{t=1}^N (c_t-\eta_t)(c_t-\eta_{t+1}),0\}} && \notag \\
+	&& \hat{s}_t&= \sqrt{\max\{4(c_t-\eta_t)(c_t-\eta_{t+1}),0\}} && \notag \\
+	\text{and} && \phantom{x} & \phantom{x} && \\
+	&& \hat{s}_{\text{two-day corrected}}&= \dfrac{1}{N}\sum_{t=1}^N \hat{s}_t && \notag
+	\end{flalign}
+where $\hat{s}_t$ refers to two day estimates. These estimates tend to perform well in terms of both cross-sectional correlates and time series correlations. They also seem to have some predictive power. 
+
+
+
 \section{Analytics from Machine Learning Literature}
+
 
 
 The technical trading rules that are discussed in Chapter 3 involve a relatively small information set to carry out prediction. It treats each of the $n$ time series of asset returns as autonomous. As pointed out by Malkiel (2012)~\cite{malkiel}, these rules can be easily implemented by most market participants if such opportunities should emerge, and market efficiency would rule them out as winning strategies. More powerful prediction methods using a very large set of potential predictors and yet capable of avoiding overfitting are needed to take advantage of transient opportunities. We give a overview here of recent advances in high-dimensional regression and classification and in machine learning and computer science to handle different types of data (including text mining).
