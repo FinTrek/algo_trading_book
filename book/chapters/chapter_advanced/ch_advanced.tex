@@ -514,7 +514,7 @@ where `$\Delta$' is intra-day interval. This estimator is biased and the bias is
 is known to estimate the volatility more accurately. 
 
 
-The range based statistics can also be used to estimate bid-ask spreads. Recall from (\ref{eqn:2lowpstar}), the Roll model assumes that the observed price is the sum of the true price and the error, that reflects the market friction. The friction can be measured by bid-ask spread which is a measure of market liquidity. Trading decisions are made by closely monitoring this measure that varies during a trading day. Corwin and Schultz (2012)~\cite{schultz12} show how this can be estimated using the low-frequency range-based statistics. The reasoning goes as follows: As noted in (\ref{eqn:2firstrtlow}), the return is the sum of information and the friction---sources of volatility and the bid-ask spread. The volatility increases with the length of the trading period but not the bid-ask spread. Thus the price range over a two-day period reflects two days' volatility and are spread but the sum of two consecutive days price ranges reflect two days' volatility and twice the spread. This reasoning is useful to separate the two effects.
+The range based statistics can also be used to estimate bid-ask spreads. Recall from (\ref{eqn:2lowpstar}), the Roll model assumes that the observed price is the sum of the true price and the error, that reflects the market friction. The friction can be measured by bid-ask spread which is a measure of market liquidity. Trading decisions are made by closely monitoring this measure that varies during a trading day. Corwin and Schultz (2012)~\cite{schultz12} show how this can be estimated using the low-frequency range-based statistics. The reasoning goes as follows: As noted in (\ref{eqn:2firstrtlow}), the return is the sum of information and the friction---sources of volatility and the bid-ask spread. The volatility increases with the length of the trading period but not the bid-ask spread. Thus the price range over a two-day period reflects two days' volatility and one spread but the sum of two consecutive days price ranges reflect two days' volatility and twice the spread. This reasoning is used to separate the two effects.
 
 
 Assume that the true or actual price follows a diffusion process. Actual price differs from the true price by $s/2$, where $s$ is the spread that remains constant over two consecutive days. Further, it is assumed that daily high price is a buyer-initiated trade while the daily low price is a seller initiated trade. Write,
@@ -538,9 +538,9 @@ which has two unknowns `$\alpha$' and `$\sigma$' to solve. If we let $\gamma=\ln
 	\end{equation}
 Both (\ref{eqn:betaresult}) and (\ref{eqn:resultsin}) are two quadratic equations in `$\alpha$' and `$\sigma$' that can be iteratively solved. The explicit solutions are given in Corwin and Schultz (2012)~\cite{schultz12} and are as follows:
 	\begin{flalign}\label{eqn:quadsolve}
-	&& \sigma&= \dfrac{\sqrt{\dfrac{\beta}{2}} - \sqrt{\beta}}{K_2(3-2\sqrt{2})} + \sqrt{\dfrac{\gamma}{K_2^2(3-2\sqrt{2})}}, \\ && \notag \\
-	&& \alpha&= \dfrac{\sqrt{2\beta} - \sqrt{\beta}}{3-2\sqrt{2}} - \sqrt{\dfrac{\gamma}{3-2\sqrt{2}}}, && \notag \\
-	\text{and} && \phantom{x} & \phantom{x} && \\
+	&& \sigma&= \dfrac{\sqrt{\dfrac{\beta}{2}} - \sqrt{\beta}}{K_2(3-2\sqrt{2})} + \sqrt{\dfrac{\gamma}{K_2^2(3-2\sqrt{2})}}, && \notag \\ 
+	&& \alpha&= \dfrac{\sqrt{2\beta} - \sqrt{\beta}}{3-2\sqrt{2}} - \sqrt{\dfrac{\gamma}{3-2\sqrt{2}}}, && \\
+	\text{and} && \phantom{x} & \phantom{x} && \notag \\
 	&& s&= \dfrac{2(e^\alpha-1)}{1+e^\alpha}. && \notag
 	\end{flalign}
 In empirical applications, it has been shown that cross-sectional correlations between the spread estimate in (\ref{eqn:quadsolve}) and TAQ effective spreads (benchmark measure) are higher than any correlations with other estimators. But it has been observed that the above estimator underestimates effective costs for less liquid stocks.
@@ -568,7 +568,60 @@ where $\hat{s}_t$ refers to two day estimates. These estimates tend to perform w
 
 
 
-The technical trading rules that are discussed in Chapter 3 involve a relatively small information set to carry out prediction. It treats each of the $n$ time series of asset returns as autonomous. As pointed out by Malkiel (2012)~\cite{malkiel}, these rules can be easily implemented by most market participants if such opportunities should emerge, and market efficiency would rule them out as winning strategies. More powerful prediction methods using a very large set of potential predictors and yet capable of avoiding overfitting are needed to take advantage of transient opportunities. We give a overview here of recent advances in high-dimensional regression and classification and in machine learning and computer science to handle different types of data (including text mining).
+The technical trading rules that are to be discussed in Chapter 5 involve a relatively small information set to carry out prediction. It treats each of the $n$ time series of asset returns as autonomous. As pointed out by Malkiel (2012)~\cite{malkiel}, these rules can be easily implemented by most market participants if such opportunities should emerge, and market efficiency would rule them out as winning strategies. More powerful prediction methods using a very large set of potential predictors and yet capable of avoiding overfitting are needed to take advantage of transient opportunities. We give a overview here of recent advances in high-dimensional regression and classification and in machine learning and computer science to handle different types of data (including text mining). The literature in this field is vast but we focus only on tools that are deemed to be relevant to trading. 
+
+
+Machine learning is a growing area of Computer Science that encompasses other well-established areas such as Statistics, computational algorithms, artificial intelligence, Control Theory, etc.. The focus in machine learning is on developing efficient algorithms for prediction using large data sets. The efficiency is gauged by validation accuracy. The inferential aspects of statistical theory, such as standard error of the estimates, confidence intervals, etc., are generally not of much concern. Some areas where machine learning methods have led to significant contribution are classification, clustering and multi-dimensional regression. The attractiveness of these methods lie in the fact that they do not need any a priori theory to suggest relevant variables to consider. Therefore with no prescription of variables, the variable or feature selection becomes an important process in machine learning. The statistical foundations of machine learning methods are generally referred to as statistical learning methods. We provide a brief description of a select few methods in this section. \\
+
+\noindent \textbf{Neural Networks:} The neural network is typically represented as follows:
+	\begin{equation}\label{eqn:neural}
+	\begin{tikzpicture}[baseline=(current  bounding  box.center)]
+	\node(char)[draw,fill=white,shape=rectangle, drop shadow={opacity=.5, xshift=0pt},minimum width=0.7cm, minimum height=0.7cm] at (-4,0) (X) {$\mathbf{X}$};
+	\node(char)[draw,fill=white,shape=rounded rectangle, drop shadow={opacity=.5, xshift=0pt},minimum width=0.7cm, minimum height=0.7cm] at (0,0) (Z) {$\mathbf{Z}$};
+	\node(char)[draw,fill=white,shape=rectangle, drop shadow={opacity=.5, xshift=0pt},minimum width=0.7cm, minimum height=0.7cm] at (4,0) (Y){$\mathbf{Y}$};
+	\draw[->,line width=0.4mm] (X) edge (Z);
+	\draw[->,line width=0.4mm] (Z) edge (Y);
+	\end{tikzpicture}
+	\end{equation}
+Here the square boxes contain `$n$' dimensional input or feature vectors, $X$ and `$m$' dimensional input vectors, $Y$ and the circular box indicates hidden or unknown layers in-between that connects the input to the output. From its structure, neural networks are a two-stage regression or classification model with intermediary layesr, $Z$ are generally linear functions of $X$. In the ordinary least squares regression model, the goal is to get `$m$' linear combinations of `$X$' that best predicts `$Y$'. Here `$Y$' dimensional intermediaries can vary based on the assumption of `hidden' layers, but the `key' is that the output vector, `$Y$', can be a non-linear function of `$X$' via the hidden layers. In its simplest form the neural network model can be written as follows:
+	\begin{equation}\label{eqn:neurallabel}
+	\begin{split}
+	z_i&= \sigma(\beta_i'X), \quad i=,12,\ldots,r \\
+	Y_j&= g_j Z, \quad j=1,2,\ldots,m
+	\end{split}
+	\end{equation}
+where the function $\sigma(u)=\frac{1}{1+e^{-u}}$ is the sigmoid function. Note that this function is used in logistic regression. In the regression set-up, $g_j(Z)=\alpha_j' Z$, but in the $m$-class classification,
+	\begin{equation}\label{eqn:gjzclass}
+	g_j(Z)= \dfrac{e^{\alpha_j' Z}}{\displaystyle\sum_{l=1}^m e^{\alpha_j' Z}},
+	\end{equation}
+called the softmax function, is used. In the set-up given in (\ref{eqn:quadsolve}), we assume only one hidden layer, but in practical applications many layers are assumed which leads to non-uniqueness problems. As shown in Hastic, Tibshirani and Friedman (2009)~\cite{hastibf} the neural network problem is closely related to a non-parametric projection pursuit regression.
+
+
+To estimate the `$r \times n$' parameters $\beta$' and `$m \times r$' parameters of $\alpha$'s, the criterion in the regression setting is the usual sum of squares,
+	\begin{equation}\label{eqn:bigwtheta}
+	W(\theta)= \sum_{l=1}^n \sum_{k=1}^m \big(y_{ik} - f_k(x_i)\big)^2 = \sum_{i=1}^m W_i(\theta)
+	\end{equation}
+and in the classification setting,
+	\begin{equation}\label{eqn:bigwtheta2}
+	W(\theta)= - \sum_{i=1}^n \sum_{k=1}^m y_{ik} \ln f_k(x_i),
+	\end{equation}
+which is a measure of deviance. The method to estimate the unknown parameters, `$\theta$ is a gradient descent also called a back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
+	\begin{equation}\label{eqn:rby1it}
+	\hat{\theta}^{(r+1)}= \hat{\theta}^{(r)} - \gamma_r \sum_{i=1}^n \dfrac{\delta W_i(\theta)}{\delta \theta},
+	\end{equation}
+where $\gamma_r$ is called the learning rate. Details on the choice of the learning rate are discussed in Hastic et al. (2009)~\cite{hastibf}. Some practical issues in fitting these models are given below. Because these models are over-parametrized, the optimization in (\ref{eqn:rby1it}) can be a nonconvex function.
+
+\begin{enumerate}[--]
+\item All inputs need to be standardized as the scaling of these inputs determines the scaling of the weights in the bottom layers.
+\item Starting value of `$\theta$' are chosen to be random values near zero as large values tend to result in inferior solutions.
+\item Neural Network models tend to overfit the data and so early stopping rates in the iterative process of (\ref{eqn:rby1it}) are suggested. To avoid overfitting, consider minimizing 
+	\begin{equation}\label{eqn:overfit}
+	W^*(\theta)= W(\theta) + \lambda \theta' \theta,
+	\end{equation}
+where `$\lambda$' is a positive tuning parameter.
+\item Many hidden units ($Z$'s) are preferred as they can capture the non-linearities. 
+\item Multiple minima in (\ref{eqn:rby1it}) are possible. A suggested approach to avoid this is `bagging' which are the averages of predictions obtained from random perturbation of training data. 
+\end{enumerate}
 
 
 
