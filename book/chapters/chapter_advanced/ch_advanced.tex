@@ -583,21 +583,21 @@ Machine learning is a growing area of Computer Science that encompasses other we
 	\draw[->,line width=0.4mm] (Z) edge (Y);
 	\end{tikzpicture}
 	\end{equation}
-Here the square boxes contain `$n$' dimensional input or feature vectors, $X$ and `$m$' dimensional input vectors, $Y$ and the circular box indicates hidden or unknown layers in-between that connects the input to the output. From its structure, neural networks are a two-stage regression or classification model with intermediary layesr, $Z$ are generally linear functions of $X$. In the ordinary least squares regression model, the goal is to get `$m$' linear combinations of `$X$' that best predicts `$Y$'. Here `$Y$' dimensional intermediaries can vary based on the assumption of `hidden' layers, but the `key' is that the output vector, `$Y$', can be a non-linear function of `$X$' via the hidden layers. In its simplest form the neural network model can be written as follows:
+Here the square boxes contain `$n$' dimensional input or feature vectors, $X$ and `$m$' dimensional output vectors, $Y$ and the circular box indicates hidden or unknown layers in-between that connects the input to the output. From its structure, neural networks are a two-stage regression or classification model with intermediary layers, $Z$ are generally non-linear functions of $X$. In the ordinary least squares regression model, the goal is to get `$m$' linear combinations of `$X$' that best predicts `$Y$'. Here `$r$' dimensional intermediaries can vary based on the assumption of `hidden' layers, but the `key' is that the output vector, `$Y$', can be a non-linear function of `$X$' via the hidden layers. In its simplest form the neural network model can be written as follows:
 	\begin{equation}\label{eqn:neurallabel}
 	\begin{split}
-	z_i&= \sigma(\beta_i'X), \quad i=,12,\ldots,r \\
-	Y_j&= g_j Z, \quad j=1,2,\ldots,m
+	z_i&= \sigma(\beta_i'X), \quad i=1,2,\ldots,r \\
+	Y_j&= g_j(Z), \quad j=1,2,\ldots,m
 	\end{split}
 	\end{equation}
 where the function $\sigma(u)=\frac{1}{1+e^{-u}}$ is the sigmoid function. Note that this function is used in logistic regression. In the regression set-up, $g_j(Z)=\alpha_j' Z$, but in the $m$-class classification,
 	\begin{equation}\label{eqn:gjzclass}
 	g_j(Z)= \dfrac{e^{\alpha_j' Z}}{\displaystyle\sum_{l=1}^m e^{\alpha_j' Z}},
 	\end{equation}
-called the softmax function, is used. In the set-up given in (\ref{eqn:quadsolve}), we assume only one hidden layer, but in practical applications many layers are assumed which leads to non-uniqueness problems. As shown in Hastic, Tibshirani and Friedman (2009)~\cite{hastibf} the neural network problem is closely related to a non-parametric projection pursuit regression.
+called the softmax function, is used. In the set-up given in (\ref{eqn:quadsolve}), we assume only one hidden layer, but in practical applications many layers are assumed which leads to non-uniqueness problems. As shown in Hastie, Tibshirani and Friedman (2009)~\cite{hastibf} the neural network problem is closely related to a non-parametric method projection pursuit regression.
 
 
-To estimate the `$r \times n$' parameters $\beta$' and `$m \times r$' parameters of $\alpha$'s, the criterion in the regression setting is the usual sum of squares,
+To estimate the `$r \times n$' parameters $\beta$'s and `$m \times r$' parameters of $\alpha$'s, the criterion in the regression setting is the usual sum of squares,
 	\begin{equation}\label{eqn:bigwtheta}
 	W(\theta)= \sum_{l=1}^n \sum_{k=1}^m \big(y_{ik} - f_k(x_i)\big)^2 = \sum_{i=1}^m W_i(\theta)
 	\end{equation}
@@ -605,11 +605,11 @@ and in the classification setting,
 	\begin{equation}\label{eqn:bigwtheta2}
 	W(\theta)= - \sum_{i=1}^n \sum_{k=1}^m y_{ik} \ln f_k(x_i),
 	\end{equation}
-which is a measure of deviance. The method to estimate the unknown parameters, `$\theta$ is a gradient descent also called a back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
+which is a measure of deviance is used. The method to estimate the unknown parameters, `$\theta$' is a gradient descent also called a back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
 	\begin{equation}\label{eqn:rby1it}
 	\hat{\theta}^{(r+1)}= \hat{\theta}^{(r)} - \gamma_r \sum_{i=1}^n \dfrac{\delta W_i(\theta)}{\delta \theta},
 	\end{equation}
-where $\gamma_r$ is called the learning rate. Details on the choice of the learning rate are discussed in Hastic et al. (2009)~\cite{hastibf}. Some practical issues in fitting these models are given below. Because these models are over-parametrized, the optimization in (\ref{eqn:rby1it}) can be a nonconvex function.
+where $\gamma_r$ is called the learning rate. Details on the choice of the learning rate are discussed in Hastie et al. (2009)~\cite{hastibf}. Some practical issues in fitting these models are given below. Because these models are over-parametrized, the optimization in (\ref{eqn:rby1it}) can be a nonconvex function.
 
 \begin{enumerate}[--]
 \item All inputs need to be standardized as the scaling of these inputs determines the scaling of the weights in the bottom layers.
