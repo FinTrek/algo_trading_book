@@ -5,175 +5,203 @@
 \chapter{Modeling Trade Data}
 
 \section{Normalizing Analytics}
-One of the challenging aspects of execution unlike other algorithmic trading subject is the large number of different types of stocks such strategies have to apply to. The same strategy will need to work for super liquid instruments that trade like water at the minimum tick size, and illiquid stocks that trade only very infrequently at wide spreads; Stock that have very stable and large sizes at the inside market, and stocks whose nbbo changes many times every second. To complicate matters further the market micro-structure of each stock is not constant throughout the day and certain days (sometime called "Special Days" ) stock behavior is often very different. These changes are to a large extent predictable and execution strategies are expected to adapt to them. 
-\newline
-\par
-Intraday variations are well documented and are rooted in institutional investor behavior. Immediately after the open there is a lot of trading activity as investor incorporate the effect of overnight news. The increased uncertainty on the stock valuation is reflected by a much higher volatility and spread. Once the period of so called Price Discovery is over (usually within 15-30m in US markets), the trading behavior settles in and activity is reduced and so do spreads and volatility. Activity resumes towards the end of the day in particular due to the  fact that many funds are marked to the day's closing price. European markets have further predictable "bumps" in and around the US market open as the markets absorbs the reaction of US investors.
-\newline
-\par
-One important source of inter-day variabilty is the impact of "Special Days" such as futures, and options expiration, earning announcements, Fed announcements, etc. On such occasions the activity patterns are systematically different. For  example the trading activity during futures/options expiration is heavily tilted towards the close since the settlement prices are related to the closing price on that day. On Fed announcement days trading activity slows to a trick ahead of the announcement as investor await any surprise decision. Activity jumps immediately after to incorporate any relevant information.
+One of the challenging aspects of execution unlike other areas in algorithmic trading is developing strategies that apply to the large number of different types of stocks. The strategy will need to work for super liquid instruments that trade easily at the minimum tick size, and illiquid stocks that trade only very infrequently at wide spreads. These include stocks that have very stable and large sizes at the inside market, and stocks whose National Best Bid-Best Offer (NBBO) changes many times every second. To complicate matters further the market micro-structure of each stock varies throughout the day and on certain days (sometime called ``Special Days'' ) stock behavior is often very different. These latter changes are to a large extent predictable and execution strategies can be expected to adapt to them. \\
 
-The complexity of dealing in a systematic way all the above variability is  daunting. One could (and in some cases arguably should) apply different approaches to achieve the same benchmark for different types of stocks and different days or time of day but that is never done in practice as it would be completely unwieldy and prohibitively expensive to build and maintain. What is one to do?
+
+Intraday in trading variations are now well documented and are firmly rooted in institutional investor behavior. Immediately after the open there is a lot of trading activity as investor incorporate the information from overnight news. The increased uncertainty on the stock valuation is reflected by a much higher volatility and spread in the early trading hours. Once the so called price discovery period is over (usually within 15--30~m in US markets), the trading behavior settles in and activity is reduced and so do spreads and volatility. Activity then resumes towards the end of the day in particular due to the  fact that many active funds are marked to the day's closing price. European markets have further predictable ``bumps'' in and around the US market open as the markets absorbs the reaction of US investors. \\
+
+
+An important source of inter-day variability is the impact of ``Special Days'' such as days of futures, and options expiration, earning announcements, Fed announcements, etc. On such occasions the activity patterns are known to be systematically different. For  example the trading activity during futures/options expiration is heavily tilted towards the close since the settlement prices are related to the closing price on that day. On Fed announcement days trading activity slows to a tick ahead of the announcement as investor await any surprise decision. Activity jumps immediately after that incorporating any relevant information.
+
+
+The complexity of dealing in a systematic way all the above variability is  daunting. One could (and in some cases arguably should) apply different approaches to achieve the same benchmark for different types of stocks and different days or time of day but that is never done in practice as it would be completely unwieldy and the system would be prohibitively expensive to build and maintain. How is this addressed?
+
 
 The common practitioner's approach is to parametrize many of the trading decisions using normalizing features, variables that help adapt the decision to a particular situation. 
 
-This section provides a high level review of the most common analytics and gives pointers to modeling approaches commonly used to tackle them.  This subject is quite broad an, while extremely important in practice, has gotten very limited treatment in academic research something we feel should be rectified. In this section, while likely not scientifically satisfying, we  will thus only provide a relatively coarse treatment of the subject from a practitioner perspective. It should however be sufficient as a starting point for anybody attempting to build basic Execution Algorithms and will provide a foundation for deepening the subject.
+
+This section provides a high level review of the most commonly used analytics and gives pointers to modeling approaches to tackle them. This subject is quite broad and, while extremely important in practice, has gotten little attention in academic research. We hope the presentation here will stimulate rigorous research. In this section, while likely not scientifically satisfying, we  will thus only provide a relatively coarse treatment of the subject from a practitioner's perspective. It would be sufficient as a starting point for anyone to build basic Execution Algorithms and will provide a foundation for expanding on it.
+
 
 \subsection{Basic Analytics}
 \subsubsection{Order Size Normalization: ADV}
-A trader needs to execute an order for 1M shares of XYZ. Is this a big order she will have to carefully manage or a tiny order she can simply "fire and forget".  Intuitively, from the trading perspective, due to  the large difference in stock characteristics and liquidity, order size should be viewed as a relative measure. The most commonly used order size normalizer used by practitioners is the ADV (Average Daily Volume). While the term Average Daily Volume has a specific mathematical meaning it is more often than not used as a generic term for a volume location measure.  Even for something seemingly so mundane a topic (ADV is actually very important for order sizing, position limits, etc) there are important considerations and decisions to make: What location measure to use? Average, Median, some other measure robust to outliers? Over what horizon? How to treat special days? The answer is likely application specific and there is very little consensus or rigorous study of the impact of using different measures.
+Assume a trader needs to execute an order for one million shares of XYZ. If this is a big order it has to be carefully managed or a tiny order trader can simply ``fire and forget''.  Intuitively, from trading perspective, due to  the large difference in stock characteristics and liquidity, order size should be viewed as a relative measure. The most commonly used order size normalizer used is the Average Daily Volume (ADV). While the term ADV has a specific simple connotation.
+
+
+It is actually a very important measure for order sizing, position limits, etc., but there are important considerations and decisions to make: what location measure to use --- average, median, some other measure robust to outliers? Over what horizon? How to treat special days? The answer is likely to be application specific and there is very little consensus or systematic study on the use of different measures.
  	
 	\begin{figure}[!ht]
 		\centering
 			\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/daily_volume.png} 
-		\caption{Daily Volume.Notice how volatile the data is. Strongly autocorrelated with periodic predictable spikes for special days and unpredictable 'surprises' \label{fig:daily_volume}}
+		\caption{Amazon Daily Volume. \label{fig:daily_volume}}
 	\end{figure}
 	
-As a baseline metric that 64 days Mean or Median daily volume are probably the most commonly used metric in the investment community. The reason behind it is that 64 days horizon reflects length of a quarterly earning cycle and thus it's viewed as incorporating  all the seasonal effects of the daily volume. See 
+Notice how volatile the data is in Figure~\ref{fig:daily_volume}. The volume is strongly autocorrelated with periodic predictable spikes for special days and unpredictable `surprises'. As a baseline metric, the 64 days' Mean or Median daily volume are probably the most commonly used metric in the industry as the time horizon covers a quarterly earning cycle and thus it's viewed as incorporating all the seasonal effects of the daily volume. See the graphs below.
 	
 	\begin{figure}[!ht]
 		\centering
 			\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/adv.png} 
-		\caption{ADV. Notice how the measure differ. Median is more stable and smooth but Average is more reactive. Which on to use depend on the application\label{fig:adv}}
+		\caption{Average Daily Volume.\label{fig:adv}}
 	\end{figure}
-
-Note that in this section we are only talking about volume as a normalization variable and not a prediction of the day's volume. The two use cases are different although they are often confused. We'll deal with volume prediction in section ?
-
-One of the common uses of relative order size is, as we will see in chapter 10, in the calibration of a market impact model. One would intuitively think that since in the calibration is done after the fact one should normalize using the realized daily volume instead of the ADV. Research has shown that this approach leads to a poorer prediction (any reference?). While the reason for this is not clear it's possible that the large-noise-to-signal ratio is better served by a more stable normalizer vs. a more noisy while more precise one. For consistency reasons using ADV as normalizer in the calibration would imply that we should use of the same normalizer for estimation rather than using our best prediction of daily volume. Practitioners are still debating around this important issue and no research has been done to settle this debate. We'll leave this question to the reader to think about and explore.
+Notice how the two measures differ in Figure~\ref{fig:adv}. The median is more stable and smooth but the average is more reactive. Which one to use depends on the application. Note in this section we discussed only about normalizing of and not the prediction aspects of the day's volume. These two quantities are used differently. Common use of relative order size is, as we will see in Chapter~10, in the calibration of a market impact model. One would intuitively think that because the calibration is done ex-post it should be normalized using the realized daily volume instead of the ADV. Research has shown that this approach leads to somewhat poorer predictions (any reference?). While the reason for this is not clear it's possible that the large-noise-to-signal ratio is better adjusted by a more stable normalizer in place for a more noisy but more precise one. For consistency reasons because we use ADV as normalizer in the calibration would suggest that we should use of the same normalizer for estimation rather than using our best prediction of daily volume. Practitioners are interested in this important issue and some research in this area would be of practical interest. 
 
 
-\subsubsection{Time-scale Normalization:Characteristic Time }
-Trading dynamics have an intrinsic timescale that varies significantly across the stock universe and it is often important to take this into consideration. For instance in a trading algorithm, when evaluating a decision on posting vs. taking (more on that later) , one should estimate what is the likelihood that by posting at the best price the order would get executed before we fall behind our trading commitments. You would not post passively if in average the queue in front for the order takes 3 minutes to clear and you only have 10s before needing to trade. 
+\subsubsection{Time-scale Normalization:Characteristic Time}
 
-A measure commonly used in practice is to look at the median time it takes for the quote to move. This metric is often called Characteristic Time or Turnover Time. 
+Trading dynamics have an intrinsic time scale that varies significantly across the stock universe and it is often important to take this into consideration. For instance in a trading algorithm, when evaluating a decision on posting vs. taking (more on that later), we need to estimate by posting at the best price what is the likelihood the order would get executed before we fall behind on our trading commitments. We would not post passively if on average the queue in front for the order takes three minutes to clear and we only have ten seconds before needing to trade. A measure commonly used in practice is to look at the median time it takes for the quote to move. This metric is often called Characteristic Time or Turnover Time. 
 
-TODO: formulate this in mathematical terms and implement examples for different liquidity
 
-While more sophisticated approaches are used, which fit more in the HFT alpha signal research we will touch in the next section,having a stable measure that is used in a consistent fashion across the various concerns is highly recommended and leads to a much more stable behavior and improved decision making.
+[TODO: formulate this in mathematical terms and implement examples for different liquidity]
+
+
+While more sophisticated approaches are used, which fit more in the HFT alpha signal research we discuss in the next section, having a stable measure that can be used in a consistent fashion is highly recommended and leads to improved decision making.
+
 
 \subsubsection{Intraday Return Normalization: Mid Quote Volatility}
-While Characteristic Time answers the question of 'How Long' another common concern is 'How much' meaning how much can the stock in move, in average, over a certain amount of time. As an example if one decides to layer the order book as a way to control adverse selection one should space the order in such a way as to have a consistent behavior across different stocks. Placing the orders the same distance for all stock would cause volatile stock to always execute at multiple level and other more stable stocks the layering would be useless as the deeper orders would rarely execute.  \par 
-A common used normalizing variable for and other issues i the Mid Quote Volatility in ticks, estimated as the average number of ticks the mid quote moves in a certain time period or a certain number of characteristic times.
 
-TODO: formulate this in mathematical terms and implement examples for different liquidity
+While Characteristic Time is a metric on 'how long' it takes for a quote to move. Another common concern is how much can the stock moves, on average, over a certain amount of time. As an example if we decide to layer the order book as a way to control adverse selection, the order should be spaced in such a way as to have a consistent behavior across different stocks. Placing the orders the same distance for all stocks would cause volatile stock to always execute at multiple levels and for other more stable stocks the layering would be useless as the deeper orders would rarely execute.  \\
+
+ 
+A commonly used normalizing variable is the Mid Quote Volatility in ticks, estimated as the average number of ticks the mid quote moves in a certain time period stated in terms characteristic times.
+
+
+[TODO: formulate this in mathematical terms and implement examples for different liquidity]
 
 
 \subsubsection{Microstructure Normalization}
-One common mistake of naive trading strategies is trading in a conspicuous and predictable way. Some HFT strategies are trained to spot the presence of large institutional orders so that they can trade ahead of them to build out their inventory they can then sell(buy) back at higher(lower) prices. Since an execution strategy has to trade it's impossible to always be completely invisible to the watchful eye of predatory strategies however with some modest care one can minimize such impact. A common approach use to be less conspicuous is to normalize your actions in so as to avoid changing the average behavior of the stock as measured by various microstructure metrics that are usually closely monitored.  
-\begin{itemize}
-\item Average Spread: One of the most common microstructure normalizer. TODO Examples. 
-\item Average Number Of Trades per second/period: Used as a normalizing variable to control how often one crosses the spread. An noticeable increase in number of trades per second in a certain direction would be read by a predatory strategies as a sign of urgency.
-\item Average Trade Size: An unusually large print on exchange or a larger than average block in a dark venue would be spotted  giving our strategy away. One can use the average trade size as a normalizer to decide what size to send to take liquidity.  Note that this measure should in principle be different for different venue types (lit venues, gray venues, dark venues,etc.)
-\item Average Quote Size: When the decision to trade passively is made one needs to size the order appropriately. Placing an order that would noticeably change the average size displayed in the inside quote would be interpreted as an directional signal in particular if the size creates a strong imbalance vs the other side (see later on imbalance)
-\end{itemize}
+
+A common mistake of na\"ive trading strategies is trading in an obvious and predictable way. Some HFT strategies are trained to spot the presence of large institutional orders so that they can trade ahead of them to build out their inventory they can then sell (buy) back at higher (lower) prices. Since an execution strategy has to trade it is impossible to remain completely invisible to the watchful eye of predatory strategies, but with some modest care one can minimize such impact. A common approach use to be less conspicuous and normalize steps so as to avoid reacting to changing behavior of the stock as measured by various microstructure metrics that are usually closely monitored.  
+	\begin{itemize}
+	\item Average Spread: One of the most common microstructure normalizer. [TODO Examples.] 
+	\item Average Number Of Trades per second/period: Used as a normalizing variable to control how often one crosses the spread. Noticeable increase in number of trades per second in a certain direction would be read by a predatory strategy as a sign of urgency.
+	\item Average Trade Size: An unusually large print on an exchange or a larger than average block in a dark venue would be easily spotted giving the strategy away. The average trade size can be used as a normalizer to decide on the size to send to take liquidity.  Note that this measure should in principle be different for different types of venue (lit venues, gray venues, dark venues, etc.)
+	\item Average Quote Size: When the decision to trade passively is made one needs to size the order appropriately. Placing an order that would noticeably change the average size displayed in the inside quote would be interpreted as an directional signal in particular if the size creates a strong imbalance vs the other side (see later on imbalance)
+	\end{itemize}
 
 
 \subsection{Intraday Normalization: Profiles}
-Incorporating intraday seasonality it's a critical component of competent decision making in execution strategies. Intraday seasonality arise from primarily behavioral and practical reasons around trading discontinutities such as the open and the close (and the lunch break period in certain asian markets) and other scheduled events ( e.g. the US open for European markets). Information dissemination tends to cluster around such times and so then does trading activity. This is compounded by various conventions on how to value certain instruments and other benchmarks. 
+
+Incorporating intraday seasonality is a critical component of any execution strategy. Intraday seasonality arises from primarily due to behavioral and practical reasons around trading discontinuities such as the open and the close (and the lunch break period in certain Asian markets) and other scheduled events (e.g. the US open for European markets). Information dissemination tends to cluster around such times and so does the trading activity. This is compounded by various conventions (What are they? Explain) on how to value certain instruments and other benchmarks. 
   
-The standard practice to incorporate this type of seasonality is to normalize decisions via intrarday profiles, essentially functions (usually discrete) that provides the expected value either absolute but more often relative term of some daily measure. While most microstructure variables discussed above showcase some of this seasonality the most used profiles are:
-\begin{itemize}
-\item Volume Distribution: The percentage of the expected daily volume that will trade in a particular bin.
-\item Volatility Distribution: The percentage of the expected daily volatility that will trade in a particular bin.
-\item Spread Multiplier: The percentage deviation from the average spread in a particular bin
-\end{itemize}
+  
+The standard practice to incorporate intra-day seasonality is to normalize profiles, so that the deviations from the expected value are stated in relative terms. While most microstructure variables discussed above showcase some of this seasonality the most used profiles are: (some of these are covered in Chapter~4)
+	\begin{itemize}
+	\item Volume Distribution: The percentage of the expected daily volume that will trade in a particular time bin.
+	\item Volatility Distribution: The percentage of the expected daily volatility that will trade in a particular time bin.
+	\item Spread Multiplier: The percentage deviation from the average spread in a particular time bin
+	\end{itemize}
+Of particular importance is the Volume Distribution (or daily profile) as it is used to create a VWAP strategy. For such a strategy, the volume profile is directly used in the execution schedule. This will ensure that the strategy trades proportionally a larger slice of the order at times when more  volume is expected to trade and thus reduce the risk of trading at prices away from the period VWAP.
 
-Of particular importance is the Volume Distribution (or profile) as this is the single most important variable used to create a VWAP strategy. For such a strategy, well see, that the volume profile is directly used as the execution schedule for the strategy. This will ensure that the strategy trades a proportionally larger slice of the order at times when more  volume is expected to trade and thus reduce the risk of trading at prices away from the period VWAP.
 
-Volume is most invariably shaped like a flattened U. Volatility and spread both are shaped vaguely exponentially. Volume is clustered around the opening auction(s) and the first several minutes after the open. This makes intuitive sense as the market is re-opening after a trading halt and all new information accrued during the break needs to be incorporated. Spread and Volatility are also large over this period signifying the increased uncertainty around the stock valuation. After this period of heightened activity trading settles in and volume flattens out only to pick up again in the period before the closing auction as investment firms that benchmark to the close price overweight their trading activity to ensure they are receiving price as close to possible to the benchmark without excessive impact. 
-\footnote{In this section with ignore the fact that certain markets have lunch breaks. This clearly complicates but does not change the overall picture or approach and it's a relatively trivial extension to the treatment of profiles}. With the recent strong push away from active investing into passive instrument, in particular ETF, the shape of the volume profiles has become increasingly back-loaded to such an extent that almost X%  (TODO Confirm) of the total volume of many stocks happen in the last hour of the trading day 
+Volume distribution during the course of a day is most invariably shaped like a flattened U. Volatility and spread distributing are both shaped vaguely exponential. Volume is clustered around the opening auction(s) and the first several minutes after the market opens. This makes intuitive sense as the market is re-opening after a trading halt and all new information accrued overnight needs to be incorporated. Spread and Volatility are also large during this period signifying the increased uncertainty around the stock valuation. After this period of heightened activity,  trading normally settles in and volume flattens out only to pick up again in the period before closing as investment firms that benchmark the execution to the close price overweigh their trading activity to ensure they are receiving price as close as possible to the benchmark without excessive price impact. 
+\footnote{In this section with ignore the fact that certain markets have lunch breaks. This clearly complicates but does not change the overall picture or approach and it's a relatively trivial extension to the treatment of profiles}. With the recent strong push away from active investing into passive instrument, in particular ETF, the shape of the volume profiles has become increasingly back-loaded to such an extent that almost results in a shape, `$X$'\%  [TODO Confirm] of the total volume of many stocks happen in the last hour of the trading day.
 
-TODO Show example of smoothed profile both in regular and cumulative terms
+
+[TODO Show example of smoothed profile both in regular and cumulative terms]
 
 \par
-Volatilty and spread also have a maximum at the open to account for the uncertainty around the market reaction to  overnight news. As soon as price discovery is finish their value quickly settles and gradually decays to it's minimum at the end of the day.
+Volatility and spread also have a maximum at the open to account for the uncertainty around the market reaction to  overnight news. As soon as price discovery takes place their values quickly settle and gradually decay to minimum at the end of the day.
 
-TODO Show example of smoothed profile both in regular and cumulative terms
+TODO Show example of smoothed profile both in regular and cumulative terms \\
 
-\paragraph{Building Intraday Profiles}
-Building stable profiles presents non trivial challenges at multiple levels both quantitative, logistical and data related. It will often boil down to matter of trade-offs, data availability, and cost to build and maintain. We provide some, hopefully, valuable pointers that should allow the reader to navigate the hurdles and avoid common pitfalls
+\noindent\textbf{Building Intraday Profiles} \\
 
-\subparagraph{Number of Profile Bins}
-As previously mentioned the most common approach for profiles is to use a discrete, piece-wise linear profile. The decision of the numbers of profile bins is a trade-off between required precision and granularity during the most active periods of the day and the lack of stability due to lack of data/change in each bin. One minute bin is the most common choice in the industry.
+Building stable profiles presents non-trivial quantitative challenges at multiple level. There are are both logistical and data related. It is a trade off between data availability and cost to build and maintain. We provide some valuable pointers in building the profiles. \\
 
-\subparagraph{Per Stock Profiles vs. Clustered Profiles}
-One of the first decisions to be made is whether to create individual profiles for each stock in the universe or use some sort of clustering/grouping. With a universe of several thousand different trading instrument it might be impractical to build and maintain stable individual profiles. Additionally the stability of the profiles is important in order for their use to be effective. Overly illiquid and slowly moving stock will usually make for poor single stock profiles.
+\noindent\textbf{Number of Profile Bins} \\
 
-A practical and common approach is too use a statistical clustering approach using the L2 norm as distance measure and using a grid search to identify the number of clusters that provides good separation using for example the elbow method (TBD add reference). Given enough clusters 800/900 is not uncommon the outcome of this approach is to have several hundred single element(stock)  clusters for the most liquid and active instruments and a smaller group of clusters that are somewhat related to lower liquidity groups.
+As previously mentioned the most common approach for developing profiles is to use a discrete, piece-wise linear profile. The decision on the number bins is a trade-off between required precision and granularity during the most active periods of the day and lack of stability due to sparsity of data/change in each bin. One minute bin is the most common choice in the industry. \\
+
+\noindent\textbf{Per Stock Profiles vs. Clustered Profiles} \\
+
+One of the key decisions to be made is whether to create profiles for each individual stock in the universe or use some sort of group profiles. With a universe of several thousand different trading instrument it might be impractical to build and maintain stable individual profiles. Additionally the stability of the profiles is important in order for their use to be effective. Overly illiquid and slowly moving stock are usually not good candidates for single stock profiles. 
+
+A common approach is to use a statistical clustering approach using a distance measure and a grid search to identify the number of clusters that provides good separation using the so-called elbow method (TBD add reference). Given enough clusters, eight to nine hundred of them is not uncommon the outcome of this approach is to have several hundred single element (stock) clusters for the most liquid and active instruments and a smaller group of clusters that are generally related to lower liquidity groups.
 
 
 \subparagraph{Fitting Approaches}
-There are many modeling approaches that are used in practice but there is limited systematic research in this space. 
-TODO Add pointers to existing research
 
-First important item is the fitting universe. The common practice is to limit the universe to stocks that would have at least 50-100 trades per bin in every bin. This avoids averaging issues with empty bins.
+There are many approaches in modeling the volume climb that are used in practice but there is limited systematic research in this space. 
 
-On the fitting approach, while this would clearly fit within the supervised learning family of methods, this is not necessarily trivial as each bin will have to be treated as an individual variable to allow for the inter-bin variability. There is also auto-correlation among contiguous bins  some additional structure would be warranted. Gaussian Processes look like a promising approach but no research in that direction has appeared as of yet. More often than not no actual fitting takes place but some form of per-bin averaging over a certain length of history after which some form of smoothing is applied.  
+[TODO Add pointers to existing research]
 
-TODO What is a good mathematical formulation for the Volume profile Discretized function?
+First item is the fitting universe. The common practice is to limit the universe to stocks that would have at least 50--100 trades in every bin. This avoids averaging issues with empty bins where the data is sparse.
 
-TODO Show an example of Volume profile
 
-Care must be take to remove from the data-set days with predictable differences in profile shape. These "special days" should be modeled separately and we'll provide some pointers in a later paragraph. If one uses some form of regression model the special day could be incorporated as a dummy variable. Other stock specific days like earnings days should also be removed. While in principle  simple process this is in practice not trivial as it's quite hard to have a well organized and maintained special day calendar. This item alone can be the source of a lot of manual labor and cause of frustration and errors. As you'll often see it's not the quantitative aspects that end up being the hardest problems to solve.
+Second on developing models, although they fall within the supervised learning family of methods, it is not necessarily trivial as each bin will have to be treated as an individual variable to allow for the inter-bin variability. There is also some auto-correlation among contiguous bins and hence some additional structure would be warranted. More often than not, no actual model fitting takes place but some form of per-bin averaging over a certain length of history after which some form of data smoothing is applied.  
+
+[TODO What is a good mathematical formulation for the Volume profile Discretized function?]
+
+[TODO Show an example of Volume profile]
+
+Finally, care must be take to remove from the data-set days with predictable differences in profile shapes. These ``special days'' should be modeled separately and we'll provide some pointers later. If a regression model is used the special day could be incorporated as a dummy variable. Other stock specific days like earnings days should also be removed. While this appears to be a simple process this is in practice maintaining special day calendar can be the source of a lot of manual labor and cause of frustration and errors. It is observed that it is not the quantitative aspects that end up being the hardest problems to solve.
+
 
 \subparagraph{Length of History}
-Another common open question is the length of history that should be used. The more data is used the more stable to profiles are however unless great care is given to various seasonal effects and continues changes in market microstructure there is the risk for the profile no to incorporate more recent shifts. This is a particular concern in recent times as the explosion of ETF trading has been consistently shifting more and more volume towards the close. The length of history can be used as a hyper-parameter to be trained on a per cluster basis.
+
+Another open question is the length of history that should be used. The more data is used, the more stable the profiles are however unless great care is given to various seasonal effects and continued changes in market microstructure, there is the risk for the profile not to incorporate more recent shifts. This is a particular concern now as the explosion of ETF trading has been consistently shifting more and more volume towards the close. The length of history can be used as a hyper-parameter to be trained on a per-cluster basis.
+
 
 \subparagraph{Volume Profile Smoothing}
-intraday volume profiles tend to be extremely noisy and require smoothing to be effective. Some internal research of one of the authors estimated that without smoothing the volume profile performed worse than a completely flat profiles. Care must be taken to avoid smoothing over real discontinuities (e.g. there is a predictable spike in volume in European profiles coincident with the US opening). These spikes usually are preceded by a period of reduced trading activity due to traders waiting for the event. Smoothing these spikes will have the effect of spreading this over previous bins reducing the precision of the profile. One common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and the re-applying the spike afterward. It has been shown that this approach improves the overall predictability of the profile. 
+
+Intraday volume profiles tend to be extremely noisy and require smoothing to be effective. Without smoothing the volume profile performs worse than a completely flat profiles. Care must be taken to avoid smoothing over real discontinuities (e.g. there is a predictable spike in volume in European profiles when the US market opens). These spikes usually are preceded by a period of reduced trading activity on the traders wait for the event. Smoothing these spikes will have the effect of spreading the spikes over previous bins and thus reducing the precision of the profile. One common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and then bring the spike back. It has been observed that this approach improves the overall predictability of the profile. 
+
 
 As far as smoothing algorithms there are a lot of choices available. Kernel smoothing methods have been proven effective. However  care must be given at the boundaries (beginning and end) of the profile. There is a large body of work on how to solve boundary problems in smoothing.
 
-TODO Show an example of smoothed Volume profile vs non smoothed with the jumps removed
+
+[TODO Show an example of smoothed Volume profile vs non smoothed with the jumps removed]
+
 
 \subparagraph{Special Days}
-Special days, as previously discussed, present further challenges due to the limited number of data points available (e.g triple witching occurs only 4 time a year). So using larger clusters (one cluster as a limit) is often the only option. One option would be to use these separately calibrated profiles across all special-day clusters. However this would lose the granularity of the regular day clustering. In order to maintain some of the  regular cluster level characteristics a common approach is to use a "difference" profile created by a normalized per-bin ratio between and average regular day profile and the special day profile. This gives a profile that capture the special day systematic shift that can then be multiplied back to the cluster profile essential mixing the two components. While in most cases this has proven effective we would recommend out of sample testing at the cluster level to see i in which profile this is accretive.
+
+Special days present additional challenges due to limited data (e.g triple witching occurs only 4 times a year). So using larger clusters (one cluster as a limit) is often the only option. One way to handle this would be to use these separately calibrated profiles across all special-day clusters. However this would lose the granularity of the regular day clustering. In order to maintain some of the  regular cluster level characteristics a common approach is to use a ``difference'' profile created by a normalized per-bin ratio between and average regular day profile and the special day profile. This captures the special day systematic shift that can then be multiplied back to the cluster profile essential mixing the two components. While in most cases this has proven effective we would recommend out of sample testing at the cluster level to see in which profile this is effective.
 
 
-TODO Show an example of the Fed-Announcement vol profile
-
-As part of the special day tre
+[TODO Show an example of the Fed-Announcement vol profile As part of the special day treatment.]
 
 \subparagraph{Dynamic Profiles}
-Volume distributions are relatively stable for reasons we have discussed above but they are subject to large distortion due to some 'surprise' event such as unexpected news. In such cases the volume can spike dramatically and the overall realized distribution will end up being highly skewed.  To address this issues sophisticated operator create  dynamic profiles models that take into account the clustering of volume during surprise events skewing the rest of the day's profile more towards the event. There in no academic literature available that studies this problem and most model are proprietary and often heuristic. They also require a sophisticated real-time analytics infrastructure measure and apply these adjustment while the algorithm trades.
 
-As a side note volume spikes and the related distortion of the volume profile is likely still the most common reason why the execution coverage desks get angry calls from clients complaining of their poor. This is because the volume spikes usually happen in conjunction with a a price dislocation and a strategy trading against a static profile would under trade around the event thus leading to a significant deviation from the VWAP benchmark. Of course the coverage desks only hears from the clients on the wrong side of the deviation but never from clients on the positive side! Such is life on the low-touch trading desk.
+Volume distributions are relatively stable but for reasons we have discussed above they are subject to large distortions due to some `surprise' events such as unexpected news. In such cases the volume can spike dramatically and the overall realized distribution will end up being highly skewed.  To address this issue, dynamic models that take into account the clustering of volume during surprise events skewing the rest of the day's profile more towards the event must be developed. Most model are proprietary and often heuristic and some academic research is called for. They also require a sophisticated real-time analytics infrastructure measure and apply these adjustments while the algorithm trades.
+
+
+As a side note, unexpected volume spikes and the related distortion of the volume profile is likely still the most common reason why the execution coverage desks get angry calls from clients complaining of their poor performance. This is because the volume spikes usually happen in conjunction with a price dislocation and a strategy trading against a static profile would under-trade around the event thus leading to a significant deviation from the VWAP benchmark. Of course the coverage desks only hear from the clients on the wrong side of the deviation but never from clients on the positive side! Such is life on the low-touch trading desk.
+
 
 \section{Remainder of the Day Volume}
-A related measure that is of real importance in execution is the Remainder of the day's volume, how much volume are we still expected to see before the market closes. This is of course important for sizing the orders to be sent by investor to avoid excessive impact. It's also important for algorithms that will trade into the closing auction how many shares should be reserved for the auction. We'll discuss more of this in the next section.
 
-So what we are looking for is  $rdv$ then expected cumulative volume from the time $t$ to the end time $T$ :
-\begin{equation}\label{eq:rdv_1}
+A related measure that is of real importance in execution is the remainder of the day's volume, how much volume are still expected before the market closes. This is important for sizing the orders to be sent so as to avoid excessive impact. As this will trade into the closing auction, it is important to plan how many shares should be reserved for the auction. We will discuss more of this in the next section.
+
+
+Denote the expected cumulative volume from time $t$ to $T$ as,
+	\begin{equation}\label{eq:rdv_1}
 		rdv_t = \mathbb{E} \sum_t^T V_t
 	\end{equation}
-
-The most naive approach  is to take the T-1 estimate of today's volume $\tilde{V}_{T-1}$  as discussed in ? and simply remove the cumulative volume up to time $t$
-
-\begin{equation}\label{eq:rdv_2}
+The na\"ive approach is to take the estimate of today's volume $\tilde{V}_{T-1}$  based on the data from the previous day and simply remove the cumulative volume up to time $t$
+	\begin{equation}\label{eq:rdv_2}
 		rdv_t ~   \tilde{V}_{T-1} - \sum_0^t V_t
-\end{equation}
+	\end{equation}
+Note this approach ignores the effect of same day events and, considering how noisy $T$-1 estimates tend to be, it leads to relatively poor prediction.
 
-This approach however almost completely ignores the same day events and, considering how noisy our T-1 estimates tend to be, it leads to relatively poor prediction.
 
-A second approach is at the opposite end of the spectrum and only uses the historical volume profile and the current volume to extrapolate the full day volume and subtract that to the current volume. let $\tilde{X}_t$ the portion of the daily volume expected in bin $t$. Then:
+A second approach is uses the historical volume profile and the current volume to extrapolate the full day volume and subtract that to the current volume. let $\tilde{X}_t$ the portion of the daily volume expected in time bin $t$. Then:
 
-\begin{equation}\label{eq:rdv_3}
-		rdv_t ~   \frac{\sum V_0^t}{\sum \tilde{X}_0^t} - \sum_0^t V_t = \sum V_0^t ( ( \sum \tilde{X}_0^t)^{-1} -1)
-\end{equation}
+	\begin{equation}\label{eq:rdv_3}
+		\tilde{r} \; dv_t= \dfrac{\sum_{t=0}^T \hat{v}_t }{\sum_{t=0}^t \tilde{x}_t} - \sum_{t=0}^t v_T
+	\end{equation}
+This is commonly used and works reasonably well after 12PM when the activity level is somewhat established. However in the first 2 hours of the day the estimates are quite poor.
 
-This approach is quite commonly used and works reasonably well after 12PM when the activity level is somewhat established. However in the first 2 hours of the day the estimates are quite poor.
 
-The natural  model is to combine the 2 methods essentially using the \ref{eq:rdv_2} as a shrinkage factor with per bin shrinkage factor $\lambda_t$. Thus our model for $rdv$ becomes:
-
-\begin{equation}\label{eq:rdv_4}
-	rdv_t ~  \lambda_t( \sum V_0^t ( ( \sum \tilde{X}_0^t)^{-1} -1)) + (1-\lambda)t)(\tilde{V}_{T-1} - \sum_0^t V_t)
-\end{equation}
-
-The shrinkage factor $\lambda_t$ is then be calibrated at the bin level to give the best mix of static and dynamic weight. We won't go into the full calibration of this model but only point out some interesting results. As we would expect $lambda_t$ is small at the beginning of the day raising quickly to 70-80\% by noon continuing to increase toward 1 that is reached by construction at the close. What is maybe a bit surprising is that the slope after the initial jump around mid-day is relatively mild meaning that the statis estimate of the daily volume continues to provide stability and a more accurate prediction up until the close. This implies that there is some for of "reversion to the mean" in later parts of the day after some intraday volume surprise.
+The natural  model is to combine the two methods (\ref{eq:rdv_2}) and (\ref{eq:rdv_3}) with per bin shrinkage factor $\lambda_t$. Thus:
+	\begin{equation}\label{eq:rdv_4}
+	\widehat{rdv_t}^* = \lambda_t \widehat{rdv_t} + (1-\lambda_t) \tilde{r} dv_t
+	\end{equation}
+The shrinkage factor $\lambda_t$ is then calibrated at the bin level to give the best mix of static and dynamic weights. We will not discuss the calibration of this model but only point out some interesting results. As we would expect $\lambda_t$ to be small at the beginning of the day raising quickly to seventy-eighty percent by noon continuing to increase toward one that is reached by construction near the close. What is maybe a bit surprising is that the slope after the initial jump around mid-day is relatively small implying that the estimate of the daily volume continues to provide stability and a more accurate prediction up until the close. This implies that there is some for of ``reversion to the mean'' in later parts of the day after some intraday volume surprise. [There is some literature to support the view that the trading in the first two hours after market opens sets a time for the rest of the day.]
 
 
 \section{Auctions Volume}
-It is somewhat surprising that so little academic research has been dedicated to such an important aspect of the trading day. I will be even be more surprising the admission that even for practitioners in execution handling the opening and closing auctions is probably a bit more than an afterthought. 
+
+It is somewhat surprising that not much academic research is available on such an important aspect of trading. Even for practitioners in execution handling the opening and closing auctions is probably a bit more than an afterthought. 
 
 TODO  Max should cover the opening and closing auction mechanics and I'll just reference that
 Main concern of this section is the estimation of the auctions volume. This is usually handled as part of the volume profiles estimation in which the opening and closing auctions are respectively the first and last bin of the profile. As per our discussion of volume profiles this ends up being nothing more than an average of the proportion of daily volume. 
@@ -183,39 +211,45 @@ Section ? already covered the mechanics of the opening and closing auctions so w
 
 
 
-As mentioned multiple times the current growing trend towards passive investments and ETF has driven the liquidity more and more towards the close. This means that the closing auction is becoming more and more the center of liquidity management.  It's quite likely that no other area of research is more relevant and impact-full that focusing on better understanding the closing period in price and volume dynamics in particular in relation to the create-redeem activities and the  cross-asset classes dynamics.
+As mentioned the current trend towards passive investments and ETF has driven the liquidity more and more towards the close. This means that the closing auction is becoming increasingly the center of liquidity management.  It's quite likely that no other area of research is more relevant and impactful than focusing on better understanding price and volume dynamics during the closing period, in particular in relation to create-redeem activities and cross-asset classes dynamics.
 
 
 \section{Microstructure Signals and other Advanced Analytics}
-This is not a book revealing secret alpha signals. But no coverage of the subject would be close to complete if at least we don't cover more advanced topics in microstructure signals. Again the subject is quite extensive and academic literature is almost non existent since any successful research in the space can be utilize in practice and thus unlikely published. Here we just gave a brief overview of common signals utilized in practice as a starting point for the interested researcher/practitioner.
+
+Although the focus here is not on alpha signals, but no coverage of the subject would be close to complete if at least topics in microstructure signals are not mentioned. The subject is quite extensive and academic literature is almost non existent since any successful research in the space can be utilized in practice and thus is not publicly available. Here we just give a brief overview of common signals utilized in practice as a starting point for the interested researcher/practitioner.
+
 
 \subsection{Quote Imbalance}
-Arguably the most used microstructure signal used by practitioner and still one of the most predictive ones is the quote imbalance.  The simplest measure of quote imbalance can be defined as: 
+
+Arguably the most used predictive microstructure signal used by practitioner and still one of the most predictive ones is the quote imbalance.  The simplest measure of quote imbalance can be defined as: 
 	\begin{equation}\label{eq:q_imb}
 		qimb = \frac{bs - os}{os + bs}
 	\end{equation}
+where `$bs$' is the bid side quotes and `$os$ is the ask side quoted. 
+	
+The intuition behind why quote imbalance is predictive of the next quote movement is simple: if more and more buyers enter the market before crossing the spread they are likely to post at the best bid. The more quotes pile up the more unlikely that they will find a seller and eventually a buyer might will run out of patience and cross the spread. If the opposite size is small (i.e. the quote imbalance is heavily slanted toward the buy side) it is likely the trade will clear the price level leading to a price move.
 
-The intuition behind why quote imbalance is predictable of the next quote movement is simple: if more and more buyers enter the market before crossing the spread they will likely try their luck by posting a the best bid. The more people pile up the more unlikely that they will find a seller and eventually one of the buyers will run out of patience and cross the spread. If the opposite size is small (i.e. the quote imbalance is heavily slanted toward the buy side it's likely the trade will clear the price level leading to a price move.
 
 \subsection{Book Imbalance}
-More sophisticated measures of the imbalance considers not only the inside quote but the whole book. A simple version would be some form of weighted average across multiple levels and would look something like: 
+
+More sophisticated measures of the imbalance consider not only the inside quote but the entire book. A simple version can be stated as a weighted average across multiple levels: 
 	\begin{equation}\label{eq:microprc}
 		obimb = \frac{1}{N}\sum_{i=0}^Nw_i (bs_i-os_i)
 	\end{equation}
+where $w_i$ would be a function of the distance of the $i$ price point (possibly normalized by the quote volatility) and $N$ is some appropriate depth of the book.
 
-where $w_i$ would be a function of the distance of the $i$ price point (possibly normalized by the quote volatility) and $N$ is some appropriate normalization.
 
 \subsection{Microprice}
-a common simple approach to incorporate quote imbalance in a 'fair' price is to consider the quote adjusted mid point often called Microprice. This is defined as:
-	\begin{equation}
+
+A common simple approach to incorporate quote imbalance in a 'fair' price is to consider the quote adjusted mid point often called `microprice'. This is defined as:
+	\begin{equation}\label{eqn:microprice}
 		\frac{os bp + bs op}{(os+bs)}
 	\end{equation}
-
-The microprice as the following intuitive characteristics: 
-\begin{itemize}
-\item For 0 imbalance the microprice is equal to the mid price
-\item For positive imbalance the microprice tends to ask price implying the fair price is higher thatn the midprice
-\item For negative imbalance the microprice tends to bid price implying the fair price is lower than the midprice
+The microprice has the following intuitive characteristics: 
+	\begin{itemize}
+	\item For zero imbalance the microprice is equal to the mid price
+	\item For positive imbalance the microprice tends toward ask price implying that the fair price is higher thatn the midprice
+	\item For negative imbalance the microprice tends to move toward bid price implying the fair price is lower than the midprice
 \end{itemize}
 
 	\begin{figure}[!ht]
@@ -224,32 +258,36 @@ The microprice as the following intuitive characteristics:
 		\caption{Microprice. for different levels of imbalance. \label{fig:microprice}}
 	\end{figure}
 
-One can easily envision other microprices that incorporate Order book imbalance as well as the impact of the last traded price.
+One can easily devise other microprices that incorporate order book imbalance as well as the impact of the last traded price.
 
 \subsection{Trade Imbalances}
-For every trading transaction there is always on side that is the initiator of the trade, in general the counterpart that ran out of patient and decided to pay the spread. This implies either some informed trader or a trader that has some urgency because it has a lot more to do. In either case an imbalance between the amount of buyer initiated volume vs. seller initiated volume would likely be instructive. One way to define trade imbalance is: 
 
-	\begin{equation}
+For every trading transaction there is always one side that is the initiator of the trade, in general the counterpart that runs out of patience and decides to pay the spread. This may be due to trading by informed trader or by trader who has some urgency to trade. In either case an imbalance between the amount of buyer initiated volume vs. seller initiated volume would likely be instructive. One way to define trade imbalance is: 
+	\begin{equation}\label{eq:vbs}
 		\frac{V_b}{V_b+V_o}	
 	\end{equation} 
+A zero-one trade imbalance would mean that all the volume was buyer (seller) initiated. 
 
-A 1(0) trade imbalance would mean that all the volume was buy(sell) initiated. 
 
-While this is very simple metric the challenge is: How do I categorize a trade as buyer/seller initiated? For most practitioner who do not have access to Level III data and only has quotes and trades this is a lot trickier than one would think and there is a discrete amount of research around the efficacy of various algorithms. If one has Level III this information is trivial to identify for lit venues. However this is not the case for dark venues were the trade classification of large blocks could be quite valuable.
+While this metric is simple to use, the challenge is: to categorize a trade as buyer/seller initiated. For most practitioners who do not have access to Level III data and only has quotes and trades this is not trivial as there is a limited amount of research around the efficacy of various algorithms. If one has Level III data this information is available for lit venues. However this is not the case for dark venues where the trade classification of large blocks could be quite valuable.
 
-Me most popular approach for trade classification was proposed by Lee and Ready 2010)~\cite{leeready} with subsequent revisit by ~Chakrabarty, B. and Moulton, P. C. and Shkilko, A. (2012)~\cite{chakrabarty2012short}
+
+Most popular approach for trade classification was proposed by Lee and Ready 2010)~\cite{leeready} with subsequent revisit by Chakraborty, B. and Moulton, P. C. and Shkilko, A. (2012)~\cite{chakrabarty2012short}.
+
 
 The simplest version of this algorithms goes approximately like this:
 \begin{itemize}
-\item If the execution price is $gt$ the prevailing mid price the trade is buyer initiated
-\item If the execution price is $lt$ the prevailing mid price the trade is seller initiated
+\item If the execution price is greater than the prevailing mid price the trade is buyer initiated
+\item If the execution price is less than the prevailing mid price the trade is seller initiated
 \item If the execution price is equal to the prevailing mid price the trade market as the previous trade
 \end{itemize}
 
-The algorithms has proven only moderately predictive to  ~75\% accuracy. This is due to various causes. One such cause due to the asynchronous nature of the trade and quote streams and where a quote change could be time stamped slightly before the trade that affected it leading to mis-classification.
+The algorithms has proven only moderately predictive to  75\% accuracy. This is due to various causes. One such cause due to the asynchronous nature of the trade and quote streams and where a quote change could be time stamped slightly before the trade that affected it, leading to mis-classification.
+
 
 \section{Advanced Models}
-TODO We might want to re-organize this so we have the more practitioner treatment in part 1 of the chapter and then more advanced features like the below and we can add more as needed.
+
+TODO We might want to re-organize this so we have the more practitioner treatment in Part 1 of the chapter and then more advanced features like the below and we can add more as needed.
 
 \subsection{Models for LOB dynamics}
 
@@ -298,11 +336,11 @@ The above First Passage Time (FPT) model was used for filled orders without taki
 	\begin{equation}\label{eqn:cumexpmodel}
 	F(t)=p_r(T_k \leq t \;|\; X_k,P_{lk}, S_k, I_k)
 	\end{equation}
-where $T_k$ is the execution of time of $k$ orders, $P_{lk}$ is the limit order price, $S_k$ is the size and $I_k$ is the side indicator. An alternative function, the hazard rate (briefly discussed in Chapter 2)
+where $T_k$ is the execution of time of $k$ orders, $P_{lk}$ is the limit order price, $S_k$ is the size and $I_k$ is the side indicator. An alternative function, the hazard rate (briefly discussed in Chapter~2)
 	\begin{equation}\label{eqn:hazard}
 	h(t)=\dfrac{f(t)}{1-f(t)}= \dfrac{f(t)}{S(t)}
 	\end{equation}
-is found to be useful to operationalize and explain the modeling of survival rate of time-based events; Note $S(t)$ is called the survivor function. The censoring information ($\delta_i=1$ if observation `$i$' is censored) can be incorporated with $t_i$, $i$th realization of the random variable, $T$. It is assumed that the censoring mechanism is independent of the likelihood the limit order is executed. Using the generalized Gamma (defined in Chapter 2) as $f(t)$, the models are estimated.
+is found to be useful to operationalize and explain the modeling of survival rate of time-based events; Note $S(t)$ is called the survivor function. The censoring information ($\delta_i=1$ if observation `$i$' is censored) can be incorporated with $t_i$, $i$th realization of the random variable, $T$. It is assumed that the censoring mechanism is independent of the likelihood the limit order is executed. Using the generalized Gamma (defined in Chapter~2) as $f(t)$, the models are estimated.
 
 
 The following variables are used as explaining variables:
