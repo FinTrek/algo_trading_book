@@ -37,6 +37,14 @@
 %\usepackage{makeidx}
 
 
+%For making comments, remove later
+\usepackage{color}
+\usepackage{todonotes}
+\newcommand{\textnote}[1]{\textcolor{blue}{#1}}
+\newcommand{\btodo}[1]{\todo[color=white]{\textcolor{blue}{#1}}}
+\newcommand{\fancytodo}[1]{\todo[color=white,fancyline]{\textcolor{blue}{#1}}}
+
+
 \newcommand\Tau{\mathcal{T}}
 
 %For left aligned equations, use \usepackage{nccmath} and use a flush-left environment ala 
@@ -167,6 +175,12 @@
 \setcounter{page}{7} %previous pages will be reserved for frontmatter to be added in later.
 \tableofcontents
 \raggedbottom
+
+%To be removed
+\listoftodos
+
+
+
 \mainmatter
 \include{chapters/chapter_intro/ch_intro}
 
