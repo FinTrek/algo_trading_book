@@ -172,7 +172,32 @@ Pure static data is also relevant for the development of quantitative trading st
 
 Maintaining a table of the quotation currency per instrument is also necessary in order to be able to aggregate positions at a portfolio level. Some exchanges allow the quotation of prices in currencies different from the one of the country in which the exchange is located \footnote{For example, Jardine Matheson Holdings quotes in USD on the Singapore exchange while most of the other securities quote in Singapore Dollars.}. Additionally, the Quote Factor associated with the quotation currency time series needs to be stored. To account for the wide range of currency values and preserve pricing precision, market data providers might be publishing FX rates with a factor of 100 or 1000. Hence, to convert prices to USD one needs to multiply by the quote factor: $usd price = local price * fx * quote factor$. Similarly, some exchanges quote prices in cents, and the associated quotation currency is reflected with a small cap letter: GBP/GBp, ZAR/ZAr, ILS/ILs, ...).
 
-\item \textbf{Exchange Specific Data:} Exchange sessions hours, lunch break, holidays, tick tables, trade and quote lots, DST adjustments to gmt (eg significant impact on intraday liquidity patterns in Brazil), limit up or down constraints and short sell constraints, disrupted days (exchange outage or disruption, market data issues, ...)
+\item \textbf{Exchange Specific Data:}  
+
+Despite the electronification of markets, individual exchanges present a variety of differences that need to be accounted for when trading strategies. The first group of information concerns the hours and dates of operation:
+
+\begin{itemize}
+\item Holiday calendar: as not all exchanges are closed on the same day, and trading days off do not always fully follow the country public holidays, it is valuable to record them in particular in an international context. Strategies trading simultaneously in several markets might not perform as expected if one of the markets is closed while the others are open. Similarly, execution strategies in one market might be impacted by the absence of trading in another market (for instance, European equities markets volume tends to be 30\% to 40\% lower during U.S. market holidays).
+\item Exchange sessions hours: 
+
+Exchange session hours, auction times as well as their respective cut-offs for order submission, lunch break hours, 
+F\&O Sessions and end of trading vs. settlement time
+
+In Indonesia, for instance, markets have different trading hours on Fridays. Monday through Thursday the Indonesia Stock Exchange (IDX) is open from 9:00 AM to 12:00 PM, and then, from 1:30 PM to 4:00 PM. On Fridays, however, the lunch break is one hour longer and stretches from 11:30 AM to 2:00 PM. This weekly seasonality effect is particularly important to consider when building volume profiles as described in the next chapter.
+Along with local times of operation, it is necessary to consider eventual Daylight Saving Time (DST) adjustments that might effect the relative trading hours of different markets (some countries do not have DST adjustment at all, while for countries that do have one, the dates at which it applies are not always coordinated). Usually, DST starts about two weeks prior to its start in Europe, bringing the time difference between New York and London to 4 hours instead of 5 hours. This results in the volume spike in European equities associated to the U.S. market open being one hour earlier, requiring adjustment of volume profiles used for trading execution.
+Some exchanges might also adjust the length of trading hours during the course of the year. In Brazil for instance, the Bovespa trading hours are 10:00 AM to 6:00 PM from October to March, but an hour shorter (10:00 AM to 5:00 PM) from April to September to be more consistent with U.S. market hours.
+Finally, within one country there might also exist different trading hours by venues as it is the case in Japan where the Nagoya Stock Exchange closes 30 minutes after the major Tokyo Stock Exchange.
+\item Disrupted days: exchanges outages or trading disruptions, as well as market data issues, need to be recorded so they can be filtered out when building or testing strategies as the difference in liquidity patterns or the lack of data quality might impact the overall outcome.
+
+\end{itemize}
+
+Additionally, exchanges also have specific rules governing the mechanics of trading, such as:
+\begin{itemize}
+\item Tick Size: 
+\item Trade and Quote lots:
+\item Limit-up and Limit-down constraints:
+\item Short Sell restrictions
+\end{itemize}
 
 \item \textbf{Market Data Condition Codes:} 
 
