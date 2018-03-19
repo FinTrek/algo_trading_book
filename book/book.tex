@@ -10,6 +10,7 @@
 %\usepackage[font=small]{caption}
 \usepackage{placeins}
 \usepackage{multicol}
+\usepackage{totcount}
 \usepackage{indentfirst}
 \usepackage{enumerate}
 \usepackage{listings}
@@ -117,6 +118,13 @@
 \numberwithin{equation}{chapter}
 
 
+\newcounter{problem}
+\newcommand{\prob}{
+\stepcounter{problem} %
+\noindent \theproblem. }
+\counterwithin*{problem}{chapter}
+
+\newtotcounter{total}
 
 
 
