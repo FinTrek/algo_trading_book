@@ -404,7 +404,7 @@ There is some evidence that prices are co-integrated for the U.S. Stock market (
 A model based co-integration approach to pairs trading is elegantly presented in Tsay (2010, Section 8-8)~\cite{tsay}. It is based on the assumption that prices follow a random walk and on the additional expectation that if two stocks have similar risk factors, they should have similar returns; writing $p_{it} = \ln{(p_{it})}$ and with $p_{it}$ following a random walk, $p_{it} = p_{it-1} + r_{it}$ where $r_{it}$ is the return. Thus price series are said to be cointegrated, if there exists a linear combination, $w_t = p_{1t} - \gamma p_{2t}$ which is stationary and therefore mean reverting.
 
 
-With the error correlation form of the bivariate series (follows from Equation~\ref{eqn:2WtCt}) in Ch 3),
+With the error correlation form of the bivariate series (follows from Equation~\ref{eqn:2WtCt} in Ch 3),
 	\begin{equation}\label{eqn:errorbivar}
 	\begin{bmatrix}
 	p_{1t} - p_{1t-1} \\
@@ -461,7 +461,7 @@ To illustrate the pairs trading strategy, we consider the Royal Dutch/Shell data
 \begin{enumerate}[--]
 \item $\hat{p}_{1t}= -0.061^* + 1.025^*p_{2t}$, $R^2=0.988$, Durbin-Watson is $0.024$ which indicates that the errors are not independent.
 \item Partial autocorrelation function of the estimated residual $\hat{u}_t=p_{1t}-\hat{p}_{1t}$ is given in Figure~\ref{fig:pafresi}, indicate that the residuals are stationary, probably with an AR(2) or AR(3) structure. Recall the augmented Dickey-Fuller test using the error correction form, where $v_t=u_t-u_{t-1}$ is regressed on $u_{t-1}$ and $v_{t-1}$ and $v_{t-2}$ and the coefficient of $u_{t-1}$, if it is significant, would confirm stationarity. The estimated model is, $\hat{v}_t= -0.008^*u_{t-1} - 0.273^*v_{t-1} - 0.1154^* v_{t-2}$ and the $t$-ratio that corresponds to the coefficient of $u_{t-1}$ is $-3.21$ which is significant. 
-\item The error correlation model (\ref{eqn:errorbivar}), which is $p_t-p_{t-1}= \Phi^* p_{t-1} + a_t$, where $p_t=(p_{1t},p_{2t})'$ and $\Phi^*=\Phi-I$, can be shown to have rank$(\Phi^*)=1$ using the test statistic in (\ref{eqn:2negT}); the two linear combinations are $\text{CV1}=p_{1t} - 1.04 p_{2t}$ and $\text{CV2}= p_{1t} - 0.18 p_{2t}$ which are plotted in Figure~\ref{fig:can}. The first series appears to be stationary which is $w_t=\text{CV1}$ in (\ref{eqn:errorbivar}). This can be used for trading purposes. 
+\item The error correction model (\ref{eqn:errorbivar}), which is $p_t-p_{t-1}= \Phi^* p_{t-1} + a_t$, where $p_t=(p_{1t},p_{2t})'$ and $\Phi^*=\Phi-I$, can be shown to have rank$(\Phi^*)=1$ using the test statistic in (\ref{eqn:2negT}); the two linear combinations are $\text{CV1}=p_{1t} - 1.04 p_{2t}$ and $\text{CV2}= p_{1t} - 0.18 p_{2t}$ which are plotted in Figure~\ref{fig:can}. The first series appears to be stationary which is $w_t=\text{CV1}$ in (\ref{eqn:errorbivar}). This can be used for trading purposes using the rules discussed in the earlier part of this chapter. 
 \end{enumerate}
 
 
