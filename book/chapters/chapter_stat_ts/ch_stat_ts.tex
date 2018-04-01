@@ -540,17 +540,17 @@ The trading strategies discussed thus far depend exclusively on the existence of
 
 
 To better understand the sources of profit from a momentum strategy Lo and MacKinlay (1990)~\cite{lo1990} decompose the profit function into three components. We will follow the set-up as presented in Lewellen (2002)~\cite{lew2002}. Let $r_{i,t-1}^k$ be the asset $i$'s, `$k$' month return ending in `$t-1$' and let $r_{m,t-1}^k$ be the return from the equal-weighted index's `$k$' month return ending in `$t-1$'. The allocation scheme over `$N$' assets under the momentum strategy is,
-	\begin{equation}
+	\begin{equation}\label{eqn:witkrdiff}
 	w_{i,t}^k= \frac{1}{N} (r_{i,t-1}^k - r_{m,t-1}^k)
 	\end{equation}
 For ease of interpretation, $w_{i,t}^k = w_{i,t}$ and focus on only one previous month's return for allocation; let $r_t$ be a $N \times 1$ vector of returns, with the mean return $\mu = E(r_t)$ and $\Omega = E[(r_{t-1} - \mu)(r_t - \mu)']$ the autocovariance matrix of returns. Let $w_t$ be $N \times 1$ vector of weights, $w_{it}$; the portfolio return for month `t' is $\pi_t = w_t'r_t$. It is easy to show
-	\begin{equation}
+	\begin{equation}\label{eqn:epitomega}
 	\begin{split}
 	E(\pi_t)&= \frac{1}{N}\, E\left[\sum_i r_{i,t-1} \cdot r_{it} \right] - \frac{1}{N} E\left[r_{m,t-1} \cdot \sum_i r_{it} \right] \\
 	&= \frac{1}{N}\sum_i (\rho_i + \mu_i^2) - (\rho_m + \mu_m^2)
 	\end{split}
 	\end{equation}
-where $\rho_i$ and $\rho_m$ are lag 1 autocovariance of asset `$i$' and the equal weighted index. Note that the average autocovariance is $\text{tr}(\Omega)/N$ and the autocovariance for the market as a whole is $(1' \Omega 1)/N^2$. The $\text{tr}(\Omega)$ denotes the sum of the diagonal elements of $N \times N$ matrix $\Omega$; recall that the diagonal elements are the autocovariance, $\rho_i$, of individual stocks. Hence (\ref{eqn:}) can be written as,
+where $\rho_i$ and $\rho_m$ are lag 1 autocovariance of asset `$i$' and the equal weighted index. Note that the average autocovariance is $\text{tr}(\Omega)/N$ and the autocovariance for the market as a whole is $(1' \Omega 1)/N^2$. The $\text{tr}(\Omega)$ denotes the sum of the diagonal elements of $N \times N$ matrix $\Omega$; recall that the diagonal elements are the autocovariance, $\rho_i$, of individual stocks. Hence (\ref{eqn:epitomega}) can be written as,
 	\begin{equation}\label{eqn:3epi}
 	E(\pi_t) = \left(\frac{N-1}{N^2}\right)\cdot \text{tr}(\Omega) + \frac{1}{N^2} [\text{tr}(\Omega) - 1' \Omega 1] + \sigma_{\mu}^2
 	\end{equation}
@@ -564,10 +564,10 @@ The three terms in (\ref{eqn:3epi}) precisely identify three sources why positiv
 \end{itemize}
 
 
-The finance literature is replete with empirical verifications of the momentum strategy. However, the analytical decomposition in (\ref{eqn:}) is not informative about the economic sources of momentum. Why the momentum strategy works has been attributed to various theories. The literature argues that firm-specific returns drive momentum. Firm-specific returns can be persistent because investors under-react to firm-specific news or stock returns covary strongly due to a common influence of a macro factor. Lewellan (2002)~\cite{lew2002} shows that the Size and B/M portfolios also exhibit strong momentum; as these portfolios are well-diversified, their returns reflect systematic risk and therefore macroeconomic factors must be responsible for the momentum. Hvidkjaer (2006)~\cite{hvid2006} suggests that momentum could be partly driven by the behavior of small traders who under-react initially, followed by delayed reaction to buying and selling pressures. The trading pressure tend to translate into price pressures that affect the trading behavior of the small traders.
+The finance literature is replete with empirical verifications of the momentum strategy. However, the analytical decomposition in (\ref{eqn:3epi}) is not informative about the economic sources of momentum. Why the momentum strategy works has been attributed to various theories. The literature argues that firm-specific returns drive momentum. Firm-specific returns can be persistent because investors under-react to firm-specific news or stock returns covary strongly due to a common influence of a macro factor. Lewellan (2002)~\cite{lew2002} shows that the Size and B/M portfolios also exhibit strong momentum; as these portfolios are well-diversified, their returns reflect systematic risk and therefore macroeconomic factors must be responsible for the momentum. Hvidkjaer (2006)~\cite{hvid2006} suggests that momentum could be partly driven by the behavior of small traders who under-react initially, followed by delayed reaction to buying and selling pressures. The trading pressure tend to translate into price pressures that affect the trading behavior of the small traders.
 
 
-Although cross-sectional momentum is widely documented, among the three components in (\ref{eqn:3epi}), time series momentum as represented by the first term tends to dominate for every liquid instrument in a sample of 58 instruments spread over a variety of asset classes, equity index, currency, commodity and bond futures. Moskowitz, Ooi and Pedersen (2012)~\cite{mos2012} show that the autocovariance term, $\text{tr}(\Omega)/N$ is the dominant factor, particularly in foreign exchange and equity markets. To make meaningful comparison across asset classes, the excess returns are scaled by their ex-ante volatilities and the following models are estimated for predicting price continuation and reversal:
+Although cross-sectional momentum is widely documented, among the three components in (\ref{eqn:3epi}), time series momentum as represented by the first term tends to dominate for every liquid instrument in a sample of fifty-eight instruments spread over a variety of asset classes, equity index, currency, commodity and bond futures. Moskowitz, Ooi and Pedersen (2012)~\cite{mos2012} show that the autocovariance term, $\text{tr}(\Omega)/N$ is the dominant factor, particularly in foreign exchange and equity markets. To make meaningful comparison across asset classes, the excess returns are scaled by their ex-ante volatilities and the following models are estimated for predicting price continuation and reversal:
 	\begin{equation}\label{eqn:pricecontrev1}
 	\frac{r_t^s}{\sigma_{t-1}^s} = \alpha + \beta_h \dfrac{r_{t-h}^s}{\sigma_{t-h-1}^s} + \varepsilon_t^s
 	\end{equation}
@@ -583,7 +583,7 @@ Here the weights $\delta^i (1 - \delta)$ add up to one, $\overline{r}_t$ is the 
 
 
 We can also investigate the profitability of strategies based on time series momentum with varying look-back period ($k$) and holding period ($h$). If the excess return over the past k months is positive, go long or otherwise go short. The position size is taken to be, $1/\sigma_{t-1}^s$, inversely proportional to the ex-ante volatility of the instruments, `$s$'. With this choice it is argued that it will be easier to aggregate the outcome of the strategies across instruments with different volatilities and it will also lead to somewhat stable time series. For each trading strategy $(k,h)$, a single time series of returns, $r_t^{\text{TSMOM}(k,h)}$, which is the average return across all portfolios active at time, `$t$' is computed. To evaluate the overall value of the time series momentum strategies, the returns are adjusted for possible risk factors:
-	\begin{equation}
+	\begin{equation}\label{eqn:tsmom}
 	\begin{split}
 	r_t^{\text{TSMOM}(k,h)}&= \alpha + \beta_1 \text{MKT}_t + \beta_2 \text{BOND}_t + \beta_3 \text{GSCI}_t + \beta_4 \text{SMB}_t \\
 	&=  + \beta_5 \text{HML}_t + \beta_6 \text{UMD}_t + a_t 
@@ -592,10 +592,10 @@ We can also investigate the profitability of strategies based on time series mom
 where $\text{MKT}_t$ is the excess return on the MSCI World index, $\text{BOND}_t$ is Barclay's Aggregate Bond Index, $\text{GSCI}_t$ is S\&P GSCI commodity index and the others are Fama-French factors for the size, value and cross-sectional momentum premiums.
 
 
-Using monthly data spanning January 1985 to December 2009, Moskowitz et al. (2012)~\cite{mos2012} find that the time series momentum strategies provide additional returns over and above a passive buy and hold strategy. They also show that the model (\ref{eqn:}) results in a large and significant alpha. The analysis also illustrates that speculators are likely to benefit from following trends at the expense of hedgers. The time series momentum appears to last about a year and then begins to reverse.
+Using monthly data spanning January 1985 to December 2009, Moskowitz et al. (2012)~\cite{mos2012} find that the time series momentum strategies provide additional returns over and above a passive buy and hold strategy. They also show that the model (\ref{eqn:tsmom}) results in a large and significant alpha. The analysis also illustrates that speculators are likely to benefit from following trends at the expense of hedgers. The time series momentum appears to last about a year and then begins to reverse.
 
 
-The momentum strategies remain profitable even after adjusting for price impact induced by trading. Although the trading decisions are done at a macro level, the actual trading takes place at a micro level. The price impact (see Chapter 8) is the impact of the current trade on the subsequent trades. Korajczyk and Sadka (2004)~\cite{kora2004} demonstrate that certain $(k,h)$ strategies are profitable if the proportional costs equal the effective and quoted spreads.
+The momentum strategies remain profitable even after adjusting for price impact induced by trading. Although the trading decisions are done at a macro level, the actual trading takes place at a micro level. The price impact (see Chapter 10) is the impact of the current trade on the subsequent trades. Korajczyk and Sadka (2004)~\cite{kora2004} demonstrate that certain $(k,h)$ strategies are profitable if the proportional costs equal the effective and quoted spreads.
 
 
 The role of trading volume in explaining the results of momentum strategies is studied in Lee and Swaminathan (2000)~\cite{lee2000}. They find that, in equilibrium, both price and volume are simultaneously determined. In addition to the decile classification based on the past returns, the universe of stocks was further divided into three volume size categories, yielding thirty groups. The study provides evidence that low volume stocks tend to be under-valued by the market. Thus investor expectations affect not only a stock return but also its trading volume. High volume firms generally earn lower future returns. The general notion that volume fuels momentum is not supported but is true for losers and ``it helps information ``diffusion'' only for winners.''
@@ -612,19 +612,31 @@ It is worth mentioning that while most documented applications of the momentum s
 which is the sum of pure currency appreciations and the return due to interest rate appreciation. Here $r_f$ is the foreign interest rate and $r_d$ is the domestic interest rate; See Okunev and White (2003)~\cite{okunev2003} for the details of this decomposition. It is found that the profitability is clearly originating from spot rate changes themselves and not necessarily driven by the interest rate differential.
 
 
-In the equity markets, it is argued that momentum strategies are successful because of slow information processing and investor overreaction. However FX markets are dominated by professionals and thus any information should be impounded in the FX rate almost instantaneously. But if the portfolios are mostly made up with minor currencies, they are likely to exhibit higher volatility, higher country risk and higher interest-rate changes, thus imposing effective limits to arbitrage. It is further observed that the cross-section based currency momentum is not related to benchmark technical trading strategies and even after adjusting for them, the cross-sectional momentum profits are found to be higher.
+In the equity markets, it is argued that momentum strategies are successful because of slow information processing and investor overreaction. However FX markets are dominated by professionals and thus any information should be impounded in the FX rate almost instantaneously. But if the portfolios are mostly made up with minor currencies, they are likely to exhibit higher volatility, higher country risk and higher interest-rate changes, thus imposing effective limits to arbitrage. It is further observed that the cross-section based currency momentum is not related to benchmark technical trading strategies and even after adjusting for them, the cross-sectional momentum profits are found to be higher. \\
+
+
+\noindent \textbf{Other Sorting Criteria:} \\
+
+The classical momentum studies described above tend to focus on stratifying the stocks in ten deciles based on the past average returns. Han, Yang and Zhon (2013)~\cite{hanyangzhou} suggest sorting based on volatility which reflects the information uncertainty. Other sorting criteria may include credit rating, distance to default, etc.. After sorting by volatilities, the decile portfolios are formed using the stocks that fall in them. The strategy then is to use the moving average based rule (see Section 5.2.2) as follows: if the price is above the moving average, buy or continue to hold or else invest in a risk-free asset. The performance of this strategy is then compared with buy and hold method. It is shown that this strategy results in positive returns and generally these returns increase with the volatility. If the returns are further adjusted for market risk (CAPM) and Farma-Frecnh factors, the average returns are greater and increase with the volatility levels. Two items of note here: as the returns are adjusted for the risk factors, they are likely to result in fewer trading opportunities as these models become more restrictive; results are not adjusted for transaction costs and buying and selling a portfolio of stocks can be expensive. 
+
+
+
+
+
+
+
 
 
 \section{Multiple Indicators and Boosting Methods}
 
-x
+
 In developing models that capture the main features of the data, it must be noted that there are no unique models. Thus they yield different forecasts. It is well-known in the forecasting literature that a combined forecast generally does perform better than the individual forecasts. If there are `$T$' models and thus `$T$' forecasts, $\hat{f}_1,\ldots, \hat{f}_T$, how do we combine them to get a single forecast? Because these are all based on the same data, the estimates are likely to be correlated, resulting in a covariance matrix, $\hat{\Sigma}_f$. Three estimates that are proposed in the literature are:
 	\begin{table}[!ht]
 	\caption{Three proposed estimates}
 	   \begin{tabular}{l l r}
-             \textbf{Weighted Estimator 1: \hskip 1mm}& $\hat{f}_{w_1}=\hat{f}' \hat{\Sigma}_f^{-1} \hat{f}$ & \pushright{\text{(??)}} \\
-             \textbf{Weighted Estimator 2: \hskip 1mm}& $\hat{f}_{w_2} = \hat{f}' (\text{diag}\hat{\Sigma}_f)^{-1} \hat{f}$ & \pushright{\text{(??)}}\\
-             \textbf{Simple Average Estimator: \hskip 1mm}& $\sum_{i=1}^T \frac{\hat{f}_i}{T}$ & \pushright{\text{(??)}} \\
+             \textbf{Weighted Estimator 1: \hskip 1mm}& $\hat{f}_{w_1}=\hat{f}' \hat{\Sigma}_f^{-1} \hat{f}$ \\
+             \textbf{Weighted Estimator 2: \hskip 1mm}& $\hat{f}_{w_2} = \hat{f}' (\text{diag}\hat{\Sigma}_f)^{-1} \hat{f}$ \\
+             \textbf{Simple Average Estimator: \hskip 1mm}& $\sum_{i=1}^T \frac{\hat{f}_i}{T}$ 
 	 \end{tabular}
 	 \end{table}
 Due to the uncertainty in the estimation of $\Sigma_f$ in regime changes that results in large estimation error, the simple average estimator is advocated. In the context of modeling the asset prices the elements of $\Sigma_f$ represent how well the methods do in forecasting. In order to use the above weighted estimators we need to keep track of the performance of the individual forecasting methods and in principle, the methods that yield inferior forecasts would get less attention. But a question about the span of their performance, recent versus past, remains open. \\
@@ -649,9 +661,9 @@ The rule $h_t$ is supposed to have error $\text{err}_{D_t}(h_t)$ with respect to
    \begin{tabular}{l l r}
              \textbf{Initialize: \hskip 1mm}& $D_t(i)=\frac{1}{n} \text{ for all } `i' $  \\
              \textbf{Iterate: \hskip 1mm}& $D_{t+1}(i)=\frac{D_t(i)}{z_t} \cdot \text{exp}[-\alpha_t y_i h_t(x_i)]$ \\
-             & \text{ when } $\alpha_t=\frac{1}{2}\text{ln}\left(\frac{1-\text{err}_{D_t}(h_t)}{\text{err}_{D_t}(h_t)}\right), z_t=\text{normalizing constant}$ & \pushright{\text{(??)}}\\
+             & \text{ when } $\alpha_t=\frac{1}{2}\text{ln}\left(\frac{1-\text{err}_{D_t}(h_t)}{\text{err}_{D_t}(h_t)}\right), z_t=\text{normalizing constant}$ \\
              \textbf{Stopping Time: \hskip 1mm}& $ \text{Stop when the error in (1) on a validation data set does not improve}$ \\
-              \textbf{Final Rule: \hskip 1mm}&$ \text{Sign}(\sum_{t=1}^T \alpha_t h_t(x)) $\\
+              \textbf{Final Rule: \hskip 1mm}&$ \text{Sign}(\sum_{t=1}^T \alpha_t h_t(x))$  \\
  \end{tabular}
  \end{table*}
  
@@ -679,7 +691,7 @@ It is important to develop measures to evaluate the trading strategies. The stan
 where $r_t$ is the return on the asset and $r_f$ is the return from a risk-free asset; the slope coefficient, $\beta$ measures the riskiness of the asset and $'\alpha'$ denotes the excess return. Thus a strategy can be simply evaluated by: \\
 
 
-\noindent\textbf{Excess return: }$\alpha$ with positive values of `$\alpha$' indicating better performance. \\
+\noindent\textbf{Excess return: }$\alpha$ with positive values indicating better performance. \\
 
 \noindent More popular measures are:\\
 
@@ -703,16 +715,16 @@ While the above ratios take a long-term view of the investments, two others that
 The attention to drawdown is important because there is no guarantee that a strategy chosen through simple back-testing will work in the future. The last two ratios combine both the idea of maximizing the return and the idea of minimizing the loss. The drawdown numbers are essentially determined by the traders based on their own experience and their risk tolerance. There are some studies that focus on the statistical properties of their criteria (see Bertrand and Protopopescu (2010)~\cite{bertrand} on the information ratio and A. Lo (2002)~\cite{awlo} on the Sharpe ratio). Another measure is to simply compare the strategy's returns to the returns from buy and hold.
 
 
-The standard reporting of backtesting results include, number of winning and losing trades, largest winning and losing trades, net slippage, total commissions along with annualized versions of the above ratios. 
+The standard reporting of backtesting results include, number of winning and losing trades, largest winning and losing trades, net slippage, total commissions along with annualized versions of the above ratios. The so called equity curve which is the cumulative return graph along with the buy and hold graph can clearly indicate the effectiveness of the strategies. 
 
 
 \section{Extraneous Signals: Trading Volume, Volatility, etc.}
 
 
-The trading algorithms that are presented in this chapter thus far focus on the price and return behavior of an equity. In pairs trading, we considered the behavior of price-return of a related equity to decide when to buy one and sell the other. But there is information as noted in Section 2.7 from the volume of trading. The model discussed there relates the volume to volatility. If there is no variation in the information flow about an equity, there should not be any correlation between volume traded and the return volatility. If the correlation exists we could indirectly infer that there is information and we may want to exploit that for trading. There is a vast literature in finance studying the relationship between trading volume and serial correlation in returns. We briefly review some select studies and provide an illustrative example with some possible algorithms. 
+The trading algorithms that are presented in this chapter thus far focus on the price and return behavior of an equity. In pairs trading, we considered the behavior of price-return of a related equity to decide when to buy one and sell the other. But there is information as noted in Section~4.3 from the volume of trading. The model discussed there relates the volume to volatility. If there is no variation in the information flow about an equity, there should not be any correlation between volume traded and the return volatility. If the correlation exists we could indirectly infer that there is information and we may want to exploit that for trading. There is a vast literature in finance studying the relationship between trading volume and serial correlation in returns. We briefly review some select studies and provide an illustrative example with some possible algorithms. 
 
 
-Blume, Easley and O'Hara (1994)~\cite{blumeohar} investigate the informational role of volume. If the impounding of information into stock price is not immediate, volume may provide information about the evolving process of security returns. The model discussed in Section 2.7 by Tauchen and Pitts (1983)~\cite{tauchenpitts} and the associated empirical tests clearly document strong relationship between volume and the absolute return. `But why such a pattern exists or even how volume evolves in markets is not clear.' Recall that the model assumes that the information content affects both the return and the volume specifications; yet the correlation between the return and volume can be shown to zero. If the information content can be studied through the sequence of security prices and the associated volume, if may provide insights into the inefficiency in the market and how statistical arbitrage rules can exploit it especially if there is a lead-lag relationship. The quality of trader's information can be captured best by combining price change with volume change. It is shown that the relationship between volume and price is in the form of V-shape thus indicating a non-linear relationship. Both `bad' and `good' information about the stock will result in higher volume of trade. 
+Blume, Easley and O'Hara (1994)~\cite{blumeohar} investigate the informational role of volume. If the impounding of information into stock price is not immediate, volume may provide information about the evolving process of security returns. The model discussed in Section~4.3 by Tauchen and Pitts (1983)~\cite{tauchenpitts} and the associated empirical tests clearly document strong relationship between volume and the absolute return. `But why such a pattern exists or even how volume evolves in markets is not clear.' Recall that the model assumes that the information content affects both the return and the volume specifications; yet the correlation between the return and volume can be shown to zero. If the information content can be studied through the sequence of security prices and the associated volume, if may provide insights into the inefficiency in the market and how statistical arbitrage rules can exploit it especially if there is a lead-lag relationship. The quality of trader's information can be captured best by combining price change with volume change. It is shown that the relationship between volume and price is in the form of V-shape thus indicating a non-linear relationship. Both `bad' and `good' information about the stock will result in higher volume of trade. 
 
 
 Campbell, Grossman and Wang (1993)~\cite{campbellgross} also explore the relationship between volume and returns; volume information is used to distinguish between price movements that occur due to publicly available information and those that reflect changes in expected returns. It is predicted that price changes with high volume tend to be reversed and this may not happen on days with low volume. Llorente, Michaely, Saar and Wang (2002)~\cite{llmsw} extend this work by postulating that the market consists of liquidity and speculative traders. In periods of high volume but speculative trade, return autocorrelation tends to be positive and if it is liquidity trading return autocorrelation tends to be negative. In the former case, returns are less likely to become reverse. Defining the turnover ($V$) as the ratio of number of shares traded to the total number of outstanding shares, the following regression model is fit for each stock:
@@ -970,7 +982,9 @@ The following algorithm that combines the price, volume and volatility is sugges
 
 \section{Other Topics: Bet Size etc.}
 
+\noindent \textbf{Bet Size:} \\
 
+In the trading strategies described above, one entry-exist decisions are made, the size --- the number of units to buy and sell --- is usually taken to be the total value of the investment. Many traders do staggered entry or exit, so that all the funds are not invested or taken on at once. The question there is how to determine the size of the bet and each transaction. We want to explore some practical ideas in this section. 
 
 
 
