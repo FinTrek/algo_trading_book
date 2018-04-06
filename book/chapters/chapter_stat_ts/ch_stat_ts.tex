@@ -617,7 +617,7 @@ In the equity markets, it is argued that momentum strategies are successful beca
 
 \noindent \textbf{Other Sorting Criteria:} \\
 
-The classical momentum studies described above tend to focus on stratifying the stocks in ten deciles based on the past average returns. Han, Yang and Zhon (2013)~\cite{hanyangzhou} suggest sorting based on volatility which reflects the information uncertainty. Other sorting criteria may include credit rating, distance to default, etc.. After sorting by volatilities, the decile portfolios are formed using the stocks that fall in them. The strategy then is to use the moving average based rule (see Section 5.2.2) as follows: if the price is above the moving average, buy or continue to hold or else invest in a risk-free asset. The performance of this strategy is then compared with buy and hold method. It is shown that this strategy results in positive returns and generally these returns increase with the volatility. If the returns are further adjusted for market risk (CAPM) and Farma-Frecnh factors, the average returns are greater and increase with the volatility levels. Two items of note here: as the returns are adjusted for the risk factors, they are likely to result in fewer trading opportunities as these models become more restrictive; results are not adjusted for transaction costs and buying and selling a portfolio of stocks can be expensive. 
+The classical momentum studies described above tend to focus on stratifying the stocks in ten deciles based on the past average returns. Han, Yang and Zhou (2013)~\cite{hanyangzhou} suggest sorting based on volatility which reflects the information uncertainty. Other sorting criteria may include credit rating, distance to default, etc.. After sorting by volatilities, the decile portfolios are formed using the stocks that fall in them. The strategy then is to use the moving average based rule (see Section 5.2.2) as follows: if the price is above the moving average, buy or continue to hold or else invest in a risk-free asset. The performance of this strategy is then compared with buy and hold method. It is shown that this strategy results in positive returns and generally these returns increase with the volatility. If the returns are further adjusted for market risk (CAPM) and Farma-Frecnh factors, the average returns are greater and increase with the volatility levels. Two items of note here: as the returns are adjusted for the risk factors, they are likely to result in fewer trading opportunities as these models become more restrictive; if results are not adjusted for transaction costs and buying and selling a portfolio of stocks can be expensive and so the results may be too optimistic.  
 
 
 
@@ -659,7 +659,7 @@ The rule $h_t$ is supposed to have error $\text{err}_{D_t}(h_t)$ with respect to
 
 \begin{table*}[!ht]
    \begin{tabular}{l l r}
-             \textbf{Initialize: \hskip 1mm}& $D_t(i)=\frac{1}{n} \text{ for all } `i' $  \\
+             \textbf{Initialize: \hskip 1mm}& $D_t(i)=\frac{1}{n} \text{ for all } i$  \\
              \textbf{Iterate: \hskip 1mm}& $D_{t+1}(i)=\frac{D_t(i)}{z_t} \cdot \text{exp}[-\alpha_t y_i h_t(x_i)]$ \\
              & \text{ when } $\alpha_t=\frac{1}{2}\text{ln}\left(\frac{1-\text{err}_{D_t}(h_t)}{\text{err}_{D_t}(h_t)}\right), z_t=\text{normalizing constant}$ \\
              \textbf{Stopping Time: \hskip 1mm}& $ \text{Stop when the error in (1) on a validation data set does not improve}$ \\
@@ -987,7 +987,52 @@ The following algorithm that combines the price, volume and volatility is sugges
 In the trading strategies described above, one entry-exist decisions are made, the size --- the number of units to buy and sell --- is usually taken to be the total value of the investment. Many traders do staggered entry or exit, so that all the funds are not invested or taken on at once. The question there is how to determine the size of the bet and each transaction. We want to explore some practical ideas in this section. 
 
 
+A criterion that is attributed to Kelly (1956)~\cite{kelly56} that was introduced in the context of gambling determines the fraction of investment capital to bet, `$f$', with the initial investment, $X_0$ and `$M$' trials of investment opportunities is based on the wealth accumulation as
+	\begin{equation}\label{eqn:xmx01f}
+	X_M= X_0(1+fW)^{pn} (1-fL)^{qn}
+	\end{equation}
+where `$W$' and `$L$' are the number of successes and failures and `$p$' and `$q$' are the respective probabilities. Thus the growth rate per bet is given as
+	\begin{equation}\label{eqn:1nln}
+	\dfrac{1}{n} \ln \left(\dfrac{X_n}{X_0}\right)= p \ln(1+fW) + q \ln(1-fL)
+	\end{equation}
+and when maximized results in the optimal bet size as,
+	\begin{equation}\label{eqn:fstarp}
+	f^*= p - \dfrac{q}{W/L}
+	\end{equation}
+In order to implement this in practice, good estimates of `$p$' and `$q$' are needed; the bet size can be revised based on the empirical observation of `$W$' and `$L$' in the process of investment. A general version of the problem could be to determine the optimal betting vector, $f^*=(f_1^*,\ldots,f_n^*)$, with some dependency structure on the sequential games, but that appears to be complex. 
 
+
+The usefulness of statistical arbitrage rules can be extended beyond the entry-exit decisions, but the seize of entry-exit decisions must be made with alternatives such as investing in risk-free assets. It is shown in Zhu and Zhou (2009)~\cite{zhuzhou09} that when there is uncertainty about the future returns, fixed allocation rules can be enhanced by technical analysis. The fixed allocation rule follows from the portfolio theory presented in Section 7.1.1. With a single risky asset, whose behavior is monitored through the technical analysis and a risk free asset, the optimal allocation rule follows from (\ref{eqn:5weff2}) as the Sharpe ratio, $w=(\mu-r_f)/\sigma^2$, where $\mu$ and $\sigma^2$ are estimated from the past data and are expected to remain stable in the near future. Assuming that the investor with the initial wealth, $X_0$, wants to maximize the expected value,
+	\begin{equation}\label{eqn:euxn}
+	E(U(X_n))= E \left[ \dfrac{X_n^{1-\gamma}}{1-\gamma}\right]
+	\end{equation}
+where `$\gamma$' is the risk aversion parameter, with the budget constraint,
+	\begin{equation}\label{eqn:dxtxt}
+	\dfrac{dX_t}{r_t}= r_f \; dt + w_t (\mu_0 + \mu_1 r_t - r_f) \; dt + w_t \sigma \; dB_t.
+	\end{equation}
+Here it must be observed that $B_t$ is a Brownian motion, $\mu_0$ and $\sigma$ are the mean and standard deviation of the returns and $S_t$ is the state variable that can provide information on the future stock returns. The fixed allocation rate under the assumption that returns are random is
+	\begin{equation}\label{eqn:wgamma}
+	w(\gamma)= \dfrac{\mu - r_f}{\gamma \cdot \sigma^2}
+	\end{equation}
+which is the Sharpe ratio adjusted for the risk-aversion. If the information from the state variable, although uncertain, is considered then the optimal investment size is given as
+	\begin{equation}\label{eqn:wgamma2}
+	w(\gamma)= \dfrac{\mu - r_f}{\gamma \cdot \sigma^2 - (1-\gamma)(f)}
+	\end{equation}
+where `$f$' depends `$\mu_1$' in (\ref{eqn:dxtxt}) that indicates its influence of state variable on the return process and volatility in the state variable; for details see Zhu and Zhou (2009)~\cite{zhuzhou09}. As this quantity `$f$' can take a range of values, the adjustment factor $(1-\gamma)f$ can take positive or negative values. Note when $\gamma=1$, $w(\gamma)=w$, the standard measure of Sharpe ratio. 
+
+
+To evaluate the additional value of tracking the price overtime to decide on the entry strategy, we follow the simple rule based on the moving average of fixed length. If the current price, $p_t$ is greater than the moving average, enter the market:
+	\begin{equation}\label{eqn:etatetapt}
+	\eta_t= \eta(p_t,A_t)= \begin{cases}
+	1, & \text{ if } p_t>A_t \\
+	0, & \text{otherwise}
+	\end{cases}
+	\end{equation}
+Under this set-up the optimal bet-size is shown to be
+	\begin{equation}\label{eqn:wstarmurf}
+	w^*= \dfrac{\mu - r_f}{\sigma^2} + \dfrac{\mu_1}{\sigma^2} \cdot \dfrac{b_1}{b_2}
+	\end{equation}
+where $b_2=E(\eta_t)$ and $b_1=E((s_t - \overline{S}) \eta_t)$. Observe `$\mu_1$' is the effect of information-based state variable, $s_t$, on the price formation, `$b_2$' is the average number of entries and `$b_1$' provides the average excess of the state variable. While other quantities in (\ref{eqn:wstarmurf}) have been historically well-studied, the key ratio that is new here is over $(\mu_1 \cdot b_1)/b_2$ which can be taken as the total size $(\mu_1b_1)$ can be distributed over `$b_2$' entries. If $\mu_1=0$, the moving average rule may not add any flexibility to the fixed size entry. 
 
 
 \section{Supplements and Problems}
