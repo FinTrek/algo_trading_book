@@ -711,7 +711,111 @@ There are some important considerations to be made based on our analysis. The fi
 
 Also, an important limitation of the bi-dimensional Hawkes Process model is that it is very computationally intense. Evaluating the 5 parameters for one of the two intensity function using data from only one trading day took almost 48 hours. It becomes clear that in order to evaluate the parameters of a model using data for a longer time period of if evaluating the parameters for a model with higher dimension (hence with more parameters) will require considerably more computational power. 
 
+
+
 \subsection{Models for Hidden Liquidity}
-TODO
+
+Investors have the option to place limit orders that are not visible to other traders but they are observable to exchange officials. These are called `hidden' or `iceberg' orders. The invisible order retains price but not time priority. It is possible to place a fraction of order visible but the rest hidden. When a visible portion gets executed, another fraction of the hidden order becomes visible. In NYSE, an order improving the quotes can be fully hidden. The posting of hidden orders is a second stage decision by the traders after choosing between market and limit orders. The risk of placing limit orders has been discussed earlier and an important element of that is the transparency or exposure risk that can signal to market participants the motive of the trader. This may result in other traders engaging in front-running strategies in anticipation of certain market movements. It is also speculated that orders are hidden when there is increased participation of informed traders and to minimize price impact when the execution probability is fairly high. 
+
+
+De~Winne and D'Hondt (2007)~\cite{winne} study the choice between hidden and visible limit order placement via a logit model. The predictors include characteristics related to exposure and picking-off risks, such as order size relative to order book depth, the competitiveness of the price and the imbalance of the order book. Traders who monitor the order book closely can infer the presence of hidden orders and their depth by repeated posting on the opposite side. Using the detailed (more than level III) data from Euronext, orders are classified for their aggressiveness based on how much liquidity is taken out from the best opposite quote. It is observed that generally hidden orders are less aggressive than other limit orders. In modeling the data, because the exposure risk is larger toward the market close, the likelihood of more hidden orders out the near end of trading section is also taken into account and so is the trading intensity that varies during the day. 
+
+
+The predictors of the models and the sign of estimated coefficients are listed below:
+\begin{enumerate}[--]
+\item Spread ($+$)
+\item order size as the ratio of depth on the same side and on the opposite side ($+$).
+\item Market imbalance based on best five visible quotes.
+\item Time left before the market close ($+$)
+\item Order aggressiveness measured by the five orders submitted prior to incoming order ($-$).
+\item Price aggressiveness, measured by the ratio of distance between the order price away from the best price on the same side and the price away from the opposite side's best price. ($-$)
+\end{enumerate}
+
+It is concluded that the decision to hide and the order aggressiveness on the opposite side --- their relationship is ambiguous. All others generally agree with what was postulated. When order aggressiveness is used as the response variable, it is shown that the traders adjust their order submissions when they see a signal of hidden order on the opposite side. Overall conclusion is that hidden orders are posted by not informed traders. 
+
+
+Using the data from Spanish Stock Exchange, Pardo and Pascual (2012)~\cite{pardopas} study the market reaction to the presence of hidden orders discovered during the traders process. The high-frequency data reveals that traders in the opposite side become aggressive once they detect the hidden volume, but the price impact of hidden volume is purely temporary. It is not clear what the relevant information context is in the hidden orders.
+
+
+To illustrate the presence of hidden orders, we consider the level III data whose description is given in Section~8.3.2.7 (Table~\ref{tab:level3data}). Any any point in time, we can construct the order book (Figure~\ref{fig:limbk1}). For modeling some key elements considered are:
+\begin{enumerate}[--]
+\item The depth (in number of shares) at that price level after the order is submitted.
+\item The depth (in number of shares) at that price level before the order was submitted.
+\item The relative price (equation is 1 `at the market' and 2 at `1 price level away from markey, etc.). 
+\end{enumerate}
+If the event is execution or cancellation,
+\begin{enumerate}[--]
+\item The distance in cents from opposite best price in the book.
+\item How long as the LO been in the book.
+\end{enumerate}
+Some that are common to all events (excluding Hidden Executions) are:
+\begin{enumerate}[--]
+\item If the Super Book (the market) is Locked, Crossed or OK.
+\item The relative spread.
+\item Number of shares at the Top of the book on that side.
+\item Number of shares at the Top of the book on the opposite side of the book.
+\item Number of shares at the Top 5 price levels of the book on that side.
+\item Number of shares at the Top 5 price levels of the book on the opposite side of the book.
+\item Weighted average price of the shares on the Top 5 levels of the book on that side.
+\item Weighted average price of the shares on the Top 5 levels of the book on the opposite side of the book.
+\item Relative spread of the weighted prices.
+\end{enumerate}
+If the even is a hidden order execution:
+\begin{enumerate}[--]
+\item The price at which the Hidden Order is executed.
+\item The size of the executed Hidden Order.
+\item An indicator of what side is the trade; in fact, there is NO BUY or SELL indicator for hidden trades so I apply the Lee-Ready Rule. If it is a Buy, then `B'; if it is a Sell, then `S'; if it is at the midpoint, then `Na'.
+\item The distance in cents from opposite best price in the book.
+\end{enumerate}
+
+
+For ease of presentation, we use CISCO data for a single day; CISCO stock is heavily traded and thus capture the typical intense market activity. To avoid the bias in results due to excessive trading activities around the opening and closing of the market, we consider only the duration between 9:35~AM to 3:55~PM, thus discarding data outside the time limits. Table~\ref{tab:distributionoforder} below provides how the orders submitted on both sides (Buy and Sell) are dealt with:
+	\begin{figure}[!ht]
+	\centering
+	\caption{Distribution of orders \label{tab:distributionoforder}}
+	\begin{tabular}{l | ccc | r}
+	& Buy & Midpoint & Sell & Total \\ \hline
+	Cancelled & 166975 & --- & 175693 & 342648 (86.9\%) \\
+	Executed (Visible) & 21041 & --- & 23595 & 44636 (11.3\%) \\
+	Executed (Hidden) & 1702 & 3864 & 1394 & 6190 (1.8\%) \\ \hline
+	Total & 189718 & 3814 & 200662 & 394194
+	\end{tabular}
+	\end{figure}
+It is clear a majority of orders gets cancelled with only 13\% of orders get executed. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Supplements and Problems} 
 TODO
