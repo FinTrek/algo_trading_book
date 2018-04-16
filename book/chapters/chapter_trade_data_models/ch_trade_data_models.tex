@@ -326,14 +326,14 @@ To illustrate we consider the same data used in Cao et al. (2009)~\cite{caohansc
 	\end{tabular}
 	\end{table}
 
-	\begin{figure}[!ht]
+	\begin{figure}[H]
 	\centering
 	\includegraphics[width=1.0\textwidth]{chapters/chapter_trade_data_models/figures/lobshape.png} 
-	\caption{Presents the shape of the limit order book. \label{fig:presentshape}}
+	\caption{The limit order book. \label{fig:presentshape}}
 	\end{figure}
 
 
-\noindent \textbf{Slope of LOB:} To begin with we can consider the slope of the order book both on the demand side and on the supply side using the quotes on both sides various depths (see Figure~\ref{fig:limitstocks}). This provides information on order book imbalance that can be helpful for the trader to decide on the optimal time to enter or to exist the market (see Figure~\ref{fig:limitstocks}). It is observed from Figure~\ref{fig:limitstocks} that the bid-ask spread is at least twice the difference between quotes at successive depths. Thus the slope of the book is steeper closer to the best quotes. \\
+\noindent \textbf{Slope of LOB:} To begin with we can consider the slope of the order book both on the demand side and on the supply side using the quotes on both sides various depths (see Figure~\ref{fig:limitstocks}). This provides information on order book imbalance that can be helpful for the trader to decide on the optimal time to enter or to exist the market (see Figure~\ref{fig:presentshape}). It is observed from Figure~\ref{fig:presentshape} that the bid-ask spread is at least twice the difference between quotes at successive depths. Thus the slope of the book is steeper closer to the best quotes. \\
 
 
 \noindent\textbf{Order Flow:} The orders can be characterized as buyer or seller initiated and how aggressive they are. The aggressiveness is quantified by the size of the order. Most of the orders are small indicating that they could be part of a large parent orders. Both placement and cancellation of orders seem to decrease away from the best quotes. As the intra-day trading pattern follows typical diurnal pattern, both the depth and order flow must be adjusted for the time of the day. Some observations (stylized facts) worth noting are:
@@ -866,15 +866,46 @@ For ease of presentation, we use CISCO data for a single day; CISCO stock is hea
 It is clear a majority of orders gets cancelled with only 13\% of orders get executed. 
 
 
+It is interesting to note that although only 13\% of the trades are hidden, they seem to occur and inter-dispersed throughout a trading day. The Figure~\ref{fig:4fig6} indicates that the hidden orders are clearly embedded with the visible orders. Two useful observations follow from Table~\ref{tab:typeexecuted} below;
+	\begin{table}[!ht]
+	\centering
+	\caption{Types of executed orders vs Side B (entries are median price and depth 1) \label{tab:typeexecuted}}
+	\begin{tabular}{l|ccc|r}
+	& \multicolumn{3}{c|}{Side} & \\
+	Type of order & Buy & Na & Sell & Overall \\ \hline 
+	\multirow{2}{*}{Visible} & 20.50 & --- & 20.51 & 20.50 \\
+	 & 39863 & --- & 39862 & 39800 \\
+	\multirow{2}{*}{Hidden} & 20.50 & 20.52 & 20.54 & 20.51 \\
+	 & $-150$ & 50 & $-50$ & 50 \\ \hline
+	\multirow{2}{*}{All} & 20.50 & 20.52 & 20.51 & 20.50 \\
+	 & 36047 & 50 & 36606 & 32765
+	\end{tabular}
+	\end{table}
+The hidden orders are generally executed closer to the top of the book and seem to result in better prices. 
 
 
+Recent work by Bessembinder, Panayides and Venkataraman (2009)~\cite{bessenbinder} evaluates the strategies for order exposure using Euronext-Paris Bouse data; the hypotheses are stated below:
+\begin{enumerate}[--]
+\item Order exposure decreases execution probability and decreases time-to-completion.
+\item Order exposure decreases execution probability and increases time-to-completion (suppressed).
+\item Hidden orders are used primarily by (uninformed traders to mitigate the option value of a standing limit order).
+\item Hidden orders are used primarily by (informed) traders to protect themselves against defensive strategies (not true).
+\item Hidden orders usage is more for larger orders; aggressively priced orders and when adverse selection risk is high. 
+\end{enumerate}
 
 
-
-
-
-
-
+The discovery and estimation of hidden depth is of interest to traders; while this has been discussed a great deal in the context of dark pools, we want to comment on the existence and executed of hidden orders in the presence of a bast majority of visible orders. We study this via transition matrix; probability that the next trade is a hidden trade given the status of the current trade, whether it is visible or hidden: 
+	\begin{table}[!ht]
+	\centering
+	\caption{Transition matrix \label{tab:transition matrix}}
+	\begin{tabular}{cc|cc}
+	 &  & \multicolumn{2}{c}{Current trade} \\
+	 &  & Visible & Hidden \\ \hline
+	\multirow{2}{*}{Next trade} & Visible & 0.95 & 0.35 \\
+	 & Hidden & 0.05 & 0.65
+	\end{tabular}
+	\end{table}
+This information along with depth information in Table~\ref{tab:typeexecuted} indicate that hidden orders are executed somewhat together at the top of the book. 
 
 
 
