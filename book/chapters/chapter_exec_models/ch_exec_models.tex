@@ -2,11 +2,11 @@
 
 \chapter{Modeling Execution Strategies}
 
-While algorithmic trading techniques are useful in both low and high frequency settings, their importance has become more pronounced in the age of electronic trading because of the speed in execution and the necessity for efficient matching of demand and supply sides in the limit order books. Added to this is that modern equity markets where order submission and cancellations are automated are also highly fragmented with dozens of exchanges and about forty alternative trading systems where investors can choose to trade. The trading algorithms differ over various types of market participants, but all of them try to optimize dynamically where, how often and at what price to trade. Typically, the execution layers can be broadly described as follows (see Gatheral (2012)\cite{}):
+While algorithmic trading techniques are useful in both low and high frequency settings, their importance has become more pronounced in the age of electronic trading because of the speed in execution and the necessity for efficient matching of demand and supply sides in the limit order books. Added to this is that modern equity markets where order submission and cancellations are automated are also highly fragmented with dozens of exchanges and about forty alternative trading systems where investors can choose to trade. The trading algorithms differ over various types of market participants, but all of them try to optimize dynamically where, how often and at what price to trade. Typically, the execution can be broadly classified into the following layers.
 	\begin{itemize}
-	\item \textbf{The Macrotrader:} Given a meta-order (parent trade) translate the objective function of a strategy into a trading schedule; when the algorithm should trade, in what size (child order) and for how long.
-	\item \textbf{The Microtrader:} Given a slice (child order) of the meta-order to trade, this layer of algorithm decides whether to place it as a market or as a  limit order and at what price level.
-	\item \textbf{The Smart Order Router:} For a given order (quantity and price level) to which venue should the order be sent.
+	\item \textbf{Macro Level:} Given a meta-order (parent trade) translate the objective function of a strategy into a trading schedule; when the algorithm should trade, in what size (child order) and for how long.
+	\item \textbf{Micro Level:} Given a slice (child order) of the meta-order to trade, this layer of algorithm decides whether to place it as a market or as a  limit order and at what price level.
+	\item \textbf{Smart Order Router:} For a given order (quantity and price level) to which venue should the order be sent.
 	\end{itemize}
 
 
@@ -21,36 +21,36 @@ The primary goal of most of the execution algorithms is to minimize the transact
 
 The execution algorithms are generally evaluated through some benchmark prices. Some examples are:
 	\begin{enumerate}[--]
-	\item $p_0$: Arrival price, that is the market mid-quote at the start of parent order execution at $t=0$.
+	\item Arrival price, that is the market mid-quote at the start of parent order execution at $t=0$, $p_0$.
 	
-	\item $p_{\text{VWAP}}$: Volume weighted average market price over the period of execution, $t \in (0,T)$. \\
+	\item xolume weighted average market price over the period of execution, $t \in (0,T)$, $p_{\text{VWAP}}= \sum_{i=1}^n v_ip_i/V$.\\
 	
 	If the parent order of size, $X$ is split into `$n$' child orders with size, $x_k$, $k=1,\ldots,n$, then
 	
-	\item $p_{\text{exec}}$: Volume weighted average price of the parent order's execution. \\
+	\item Volume weighted average price of the parent order's execution, $p_{\text{exec}}=\sum_{i=1}^n x_ip_i/X$. \\
 	
 	Two related quantities that the traders examine in their evaluation strategies are
 	
-	\item $p_{\text{bench}}-p_{\text{exec}}$: Slippage$=x$;
+	\item Slippage: $x=p_{\text{bench}}-p_{\text{exec}}$
 	
-	\item $p_0-p_{\text{VWAP}}$: Market Impact 
+	\item Market Impact: $p_0-p_{\text{VWAP}}$
 	\end{enumerate}
 	
 The execution cost is taken to be the slippage and the execution risk is its standard deviation. 
 
 
-The influential paper by Kyle (1985)~\cite{kyle1985} argues that traders split the parent order to hide private information. The splitting of the order and how they are sent to the market--the strategies--depend on the evolution of the stock price. These are broadly classified into static, one determined in advance of trading and into dynamic, one that depends on the state of the market. The static strategy under some conditions can also be dynamically optimal. Few commonly used strategies are: \\
+The influential paper by Kyle (1985)~\cite{kyle1985} argues that traders split the parent order to hide private information. The splitting of the order and how they are sent to the market--the strategies--depend on the evolution of the stock price. These are broadly classified into static, one determined in advance of trading and into dynamic, one that depends on the state of the market. The static strategy under some conditions can also be dynamically optimal. Few commonly used criteria for allocation strategies are: \\
 
-VWAP-Strategy: $x_k=x \cdot \dfrac{V_k}{V}$ \\
+VWAP: $x_k=x \cdot \dfrac{V_k}{V}$ \\
 
-Implementation Shortfall Strategy: Minimize $E(x)+\lambda \Var(x)$ \\
+Implementation Shortfall: Minimize $E(x)+\lambda \Var(x)$ \\
 
-Percentage of Volume Strategy: Minimize $\left(\dfrac{\text{Volume}_{\text{exec}}}{\text{Volume}_{\text{market}}} - v_{\text{target}}\right).$ \\
+Percentage of Volume: Minimize $\left(\dfrac{\text{Volume}_{\text{exec}}(x_k)}{\text{Volume}_{\text{market}}(v_k)} - v_{\text{target}}\right).$ \\
 
-\noindent These strategies are static and they are based on a priori models for the evolution price and volume traded over different times of the day. 
+\noindent These strategies as stated are static and they are based on a priori models for the evolution price and volume traded over different times of the day. 
 
 
-We present below select results in this area. The quantities that the trader can determine are the number of child orders $(n)$ and their sizes $(x_k)$ and the duration for the trading $(T)$. The relevance of this problem to the practitioners is discussed in Chan and Lakonishok (1997)~\cite{lakon} and Keim and Madhavan (1997)~\cite{madhavan}. Bestimas and Lo (1998)~\cite{berlo} develop a model that suggests splitting the parent order to reduce the average trading costs. Almgren and Chriss (2000)~\cite{alm2000} split the parent order to minimize the mean-variance of trading costs similar to Markowitz's portfolio theorem. We describe in the following sections, these strategies which are mainly static. 
+We present below select results in this area. The quantities that the trader can determine are the number of child orders $(n)$ and their sizes $(x_k)$ and the duration for the parent order trading $(T)$. The relevance of this problem to the practitioners is discussed in Chan and Lakonishok (1997)~\cite{lakon} and Keim and Madhavan (1997)~\cite{madhavan}. Bestimas and Lo (1998)~\cite{berlo} develop a model that suggests splitting the parent order to reduce the average trading costs. Almgren and Chriss (2000)~\cite{alm2000} split the parent order to minimize the mean-variance of trading costs similar to Markowitz's portfolio theorem. Some recent works on this topic are also briefly mentioned but, describe in some detail in the following sections, the strategies which are mainly static. 
 
 
 \subsection{Bertsimas and Lo Model}
@@ -75,20 +75,20 @@ where $\theta > 0$ representing the price impact and when $\theta = 0$, the mode
 the equal split. What the trader needs to decide a priori is the number of splits, $n$. The allocation strategy in (\ref{eqn:equals}) is termed as the time weighted average prices (TWAP) strategy in industry. 
 
 
-The dynamic programming solution to (\ref{eqn:xk7}) via the so called Bellmann equation is elegant and simple because the price impact $(\theta x_k)$ does not depend upon the prevailing price $(p_{k-1})$ nor on the size of the unexecuted order $(X - \sum_{j=1}^{k-1} x_j)$. The indirect assumptions here are that the volume curve is even over different times of the day and the volatility profile are flat. Bestimas and Lo (1998)~\cite{berlo} also consider extensions of the model (\ref{eqn:pk7}), where a serially correlated state variable such as market condition (S\&P 500) is added. In this case it is shown that the best execution strategy at any point is a function of the state variable and the remaining unexecuted size. 
+The dynamic programming solution to (\ref{eqn:xk7}) via the so called Bellmann equations is elegant and simple because the price impact $(\theta x_k)$ does not depend upon the prevailing price $(p_{k-1})$ nor on the size of the unexecuted order $(X - \sum_{j=1}^{k-1} x_j)$. The indirect assumptions here are that the volume curve is even over different times of the day and the volatility profile is flat. Bestimas and Lo (1998)~\cite{berlo} also consider extensions of the model (\ref{eqn:pk7}), where a serially correlated state variable such as market condition (S\&P 500) is added. In this case it is shown that the best execution strategy at any point is a function of the state variable and the remaining unexecuted size. 
 
 
-As a point of comparison to the equal allocation strategy observe that VWAP-strategy is similar in the sense that is does not also depend on any price movement. Simply the allocation is made as $\frac{x_k}{X}=\frac{V_k}{V}$, which leads to
+As a point of comparison to the equal allocation strategy observe that VWAP-strategy is similar in the sense that is does not also depend explicitly on any price movement. Simply the allocation is made as $\frac{x_k}{X}=\frac{V_k}{V}$, which leads to
 	\begin{equation}\label{eqn:xk}
 	x_k = X \dfrac{V_k}{V}
 	\end{equation}
-where $V_k$ is the market volume during the $k$th time interval. If the traders are restricted to only `$n$' time intervals, it is important to have a good forecast for the quantities, $V_k$ and thus, $V$. 
+where $V_k$ is the market volume during the $k$th time interval. If the traders are restricted to only `$n$' time intervals, it is important to have a good forecast for the quantities, $V_k$ and thus, $V$, the total volume for the day. 
 
 
 \subsection{Almgren and Chriss Model}
 
 
-The seminal paper by Almgren and Chriss (2000)~\cite{alm2000} and Almgren (2003)~\cite{} consider the same problem taking into account the stock characteristics such as volatility via the mean-variance formulation of minimizing execution costs. The formulation treats the execution as a tradeoff between risk and cost; the faster the execution, higher the cost but lower the risk. The objective again is to liquidate, $X$ units before time `$T$' at minimum cost, in time steps, $t_k = k\tau$ for $k = 0,1,\ldots, n$ where $\tau = T/n$ is the average length of interval between successive child order submission times. If $X_k$ is the number of units held at $t_k$, the goal is to decide on the trading trajectory, $X_0,X_1,\ldots,X_n$ with $X_0=X$ and $X_n=0$. The number of units liquidated $x_k$ between $t_{k-1}$ and $t_k$ is called the trading schedule, with $x_k = X_{k-1} - X_k$. The trading strategy requires determining `$x_k$' in terms of information available at $t_{k-1}$. The static strategies determine the trading schedule in advance of starting trade time, $t_0$ and the dynamic strategies depend on information available up to $t_{k-1}$. Almgren and Chriss (2000)~\cite{alm2000} find trading trajectories that minimize $E(x)+\lambda \Var(x)$ for various values of $\lambda$.
+The seminal paper by Almgren and Chriss (2000)~\cite{alm2000} and Almgren (2003)~\cite{almgren2003} consider the same problem taking into account the stock characteristics such as volatility via the mean-variance formulation of minimizing execution costs. The formulation treats the execution as a tradeoff between risk and cost; the faster the execution, higher the cost but lower the risk. The objective again is to liquidate, $X$ units before time `$T$' at minimum cost, in time steps, $t_k = k\tau$ for $k = 0,1,\ldots, n$ where $\tau = T/n$ is the average length of interval between successive child order submission times. If $X_k$ is the number of units held at $t_k$, the goal is to decide on the trading trajectory, $X_0,X_1,\ldots,X_n$ with $X_0=X$ and $X_n=0$. The number of units liquidated $x_k$ between $t_{k-1}$ and $t_k$ is called the trading schedule, with $x_k = X_{k-1} - X_k$. The trading strategy requires determining `$x_k$' in terms of information available at $t_{k-1}$. The static strategies determine the trading schedule in advance of starting trade time, $t_0$ and the dynamic strategies depend on information available up to $t_{k-1}$. Almgren and Chriss (2000)~\cite{alm2000} find trading trajectories that minimize $E(x)+\lambda \Var(x)$ for various values of $\lambda$.
 
 
 The model for price impact is same as in (\ref{eqn:pk7}) but stated as
@@ -102,7 +102,7 @@ where $v_k = x_k/\tau$ is the average rate of trading in $[t_{k-1}, t_k]$ and $\
 			&= p_{k-1} - c \sgn(x_k) + \frac{\eta}{\tau}\cdot x_k
 	\end{split}
 	\end{equation}
-where $c$ can be taken to be fixed cost of selling which is the sum of mid-spread and fees. The temporary impact component is not present in the next period. Note (\ref{eqn:xk}) can be written as,
+where $c$ can be taken to be fixed cost of selling which is the sum of mid-spread and fees. The temporary impact component is not present in the next period. Note (\ref{eqn:bigpk}) can be written as,
 	\begin{equation}\label{eqn:morepk}
 	p_k = p_0 + \sigma\tau^{\frac{1}{2}}\sum_{j=1}^k\varepsilon_j - \theta(X - X_k)
 	\end{equation}
@@ -113,7 +113,7 @@ and thus the shortfall,
 is a function of the market volatility and the trade schedule, `$x_k$'. It captures the difference between the initial book value and the weighted average of realized prices. From (\ref{eqn:longxeq}) it follows that
 	\begin{equation}\label{eqn:evardouble}
 	\begin{split}
-	E(x) &=  \theta\sum_{k=1}^N x_k X_k + \eta\sum_{k=1}^N (\frac{x_k}{\tau}) \\
+	E(x) &=  \theta\sum_{k=1}^N x_k X_k + \eta\sum_{k=1}^N \frac{x_k}{\tau} \\
 	\Var(x) &= \sigma^2\sum_{k=1}^N \tau X_{k}^2\cdot
 	\end{split}
 	\end{equation}
@@ -145,7 +145,7 @@ and if $\lambda>0$, $E(x)+\lambda V(x)$ is strictly convex and thus has a unique
 	x_j &= \dfrac{2 \sinh (\frac{1}{2}\kappa\tau)}{\sinh (\kappa(T))}\cdot \cosh(\kappa(T-t_{j-\frac{1}{2}}))X, \enskip j=1,\ldots,n
 	\end{split}
 	\end{equation}
-Here $t_{j-\frac{1}{2}} = (j - \frac{1}{2})\tau$ and $\kappa = \sqrt{\lambda\sigma^2/\eta}$, that depends on the volatility and the risk aversion coefficient, `$\lambda$' is termed as urgency parameter. The inverse of `$\kappa$' is termed as the trade's, ``half-life''; the larger its value the more rapid the depletion rate of the trade list. The solution given in (\ref{eqn:doublex}) is shown to be adaptive at any point in time, `$j$'. Thus the initial optimal solution over the entire interval is also optimal over each subinterval. A fixed trajectory as in (\ref{eqn:doublex}) was previously constructed by Grinold and Kahn (2000)~\cite{grin2000}.
+Here $t_{j-\frac{1}{2}} = (j - \frac{1}{2})\tau$ and $\kappa = \sqrt{\lambda\sigma^2/\eta}$, that depends on the volatility and the risk aversion coefficient, `$\lambda$' is termed as urgency parameter. The inverse of `$\kappa$' is termed as the trade's, ``half-life''; the larger its value the more rapid the depletion rate of the trade list. The solution given in (\ref{eqn:doublex}) is shown to be adaptive at any point in time, `$j$'. Thus the initial optimal solution over the entire interval is also optimal over each subinterval. A fixed trajectory as in (\ref{eqn:doublex}) was previously constructed by Grinold and Kahn (2000)~\cite{grin2000}. The closed form solution in (\ref{eqn:doublex}) is possible due to linear structure of impact functions. 
 
 
 The value of `$\lambda$', the price of risk depends on the traders utility function. The suggested optimal strategy is just volume weighted average pricing (VWAP), that is trading at a constant rate, when $\lambda \to 0$, that is if the trader is risk-neutral. The trade schedule for various value of `$\lambda$' is given in Figure~\ref{fig:7first} and the projected execution schedule is given in Figure~\ref{fig:7second}. Various extensions of the basic model (\ref{eqn:bigpk}) are considered by Almgren (2008)~\cite{alm2008}.
@@ -159,10 +159,10 @@ The value of `$\lambda$', the price of risk depends on the traders utility funct
 	    \includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/temp2.png}
 	   \caption{Projected Execution Schedules \label{fig:7second}}
 	\end{figure}
-The effect of a short term drift in prices and the serial correlation in the errors which is observed in high frequency etc can be incorporated easily in the model (\ref{eqn:morepk}). Lorenz and Almgren (2011) \cite{lovenz2011} provide a Bayesian approach to the optimization problem. While the methodology yields elegant solutions, empirical use of these results require a close monitoring of order book dynamics as the changes in demand and supply sides are quite rapid.
+Some questions remain: what is the link between market impact and the dynamics of limit order book, is the impact function linear empirically, etc.. The effect of a short term drift in prices and the serial correlation in the errors which is observed in high frequency etc can be incorporated easily in the model (\ref{eqn:morepk}). Lorenz and Almgren (2011) \cite{lovenz2011} provide a Bayesian approach to the optimization problem. While the methodology yields elegant solutions, empirical use of these results require a close monitoring of order book dynamics as the changes in demand and supply sides are quite rapid. The general behavior of this adaptive strategy is aggressive; it depends on the prediction of short term price change; if price goes up sell faster. 
 
 
-The above mean-variance formulation of execution cost is combined with the traditional mean-variance portfolio optimization is Engle and Ferstenberg (2007)~\cite{engle2007} and Engle, Ferstenberg and Russell (2012)~\cite{engle2012}. We will discuss this in the context of portfolio rebalancing and the need for minimizing the transaction costs associated with all trades. 
+The above mean-variance formulation of execution cost is combined with the traditional mean-variance portfolio optimization is Engle and Ferstenberg (2007)~\cite{engle2007} and Engle, Ferstenberg and Russell (2012)~\cite{engle2012}. We will discuss this in the context of portfolio rebalancing and the need for minimizing the transaction costs associated with all trades. While the above methods can be taken as first generation methods purely based on slippage, more recent work focus on adding other constraints such as trading market VWAP and mining the limit and market orders to achieve optimal results. 
 
 
 \subsection{Obizhaeva and Wang Model}
