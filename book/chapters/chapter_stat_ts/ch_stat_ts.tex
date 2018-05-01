@@ -606,7 +606,7 @@ It is worth mentioning that while most documented applications of the momentum s
 	\begin{split}
 	r_t^* &= \ln(S_t) - \ln(F_{t-1}) \\
 	&= \ln(S_t) - \ln(S_{t-1}) + \ln(S_{t-1}) - \ln(F_{t-1}) \\
-	&\sim r_t + \dfrac{(r_f - r_d}{12}
+	&\sim r_t + \dfrac{r_f - r_d}{12}
 	\end{split}
 	\end{equation}
 which is the sum of pure currency appreciations and the return due to interest rate appreciation. Here $r_f$ is the foreign interest rate and $r_d$ is the domestic interest rate; See Okunev and White (2003)~\cite{okunev2003} for the details of this decomposition. It is found that the profitability is clearly originating from spot rate changes themselves and not necessarily driven by the interest rate differential.
@@ -857,7 +857,7 @@ The methodology discussed in the last section on price-based and volume-based fi
 
 Let $P_{t. m}$ be the price on ay `$t$' in $m$th time unit interval. Here we take $m=30$~min. The returns, $r_{t. m}= p_{t. m} - p_{t . m-1}$, where $p_{t. m}=\log(P_{t.m})$. Similarly, let $V_{t.m}$ be the volume in the interval and let $v_{tm}=\log(V_{t. m})$. We define volatility within the $m$th tie unit based on the price bars data as,
 	\begin{equation}\label{eqn:hatsigmasq}
-	\hat{\sigma}_{t. m}^2= 0.5 [ \ln(H_{t. m}) - \ln(L_{t.m})]^2 - 0.386[\ln(C_{t.m} - \ln(\text{O}_{t . m})]^2
+	\hat{\sigma}_{t. m}^2= 0.5 [ \ln(H_{t. m}) - \ln(L_{t.m})]^2 - 0.386[\ln(C_{t.m}) - \ln(\text{O}_{t . m})]^2
 	\end{equation}
 similar to a measure defined for the daily data. 
 
@@ -978,7 +978,138 @@ The following algorithm that combines the price, volume and volatility is sugges
 
 
 
-\section{Market Segmentation and Inconsistent Pricing across Markets}
+\section{Trading in Mult-Markets}
+
+There has been a great deal of interest in studying the performance of cross-listed stocks in several markets, that operate in overlapping or in non-overlapping hours during a day. Both in NYSE and in NASDAQ the listing of non-US firms has increased over time. The general motivation behind cross-listings is to manage the capital raising cost. Some unique features of trading these stock include the trading hours and restrictions on moving capital from one market to other. For Indian stocks listed in NYSE, note that the trading hours in Indian stock exchange is between 11:55~P.M. and 6~A.M. EST, which does not overlap with NYSE trading hours. The restrictions may include time needed to set up money transfer arrangements that are usually handled through an issuing investment bank. But our focus here is to study the imperfect pricing that may arise from cross-listed markets and see how trading opportunities can be exploited. More broadly it is of interest to study the information flow from one market to other.
+
+
+The foreign companies list shares for trading in exchanges in US in the form of ADR (American Deposit Receipts) that ensures the convertibility of home-market shares in US shares and back again. There is generally no conversion fee and there may be restrictions on cross-country ownership. Gagnon and Karolyi (2010)~\cite{gagkar} investigate arbitrage opportunities by comparing intraday prices and quotes and observe that price pairing deviation is quite small (4.9 basis pavets) but can reach large extremes when the markets are volatile. 
+
+
+To model the price (co)movement in a calendar day when exchanges operate, the hours can be stated in terms of GMT:
+\begin{figure}[!ht]
+   \centering
+   \includegraphics[width=3cm]{example-image-a}
+    %\includegraphics[width=0.8\textwidth]{chapters/chapter_stat_ts/figures/cpver.png}
+   \caption{Opening hours of some stock exchanges. \label{fig:openingmarket}}
+\end{figure}
+Denoting the ADR returns as $r_{At} = \ln(P_{A,t}) - \ln(P_{A,t-1})$ and the home market returns as $r_{Ht}= \ln(P_{H,t}) - \ln(P_{H,t-1})$, where $P$'s denote the closing prices, the returns are modeled as: 
+	\begin{equation}\label{eqn:closeprice}
+	r_{A-H.t}= \alpha + \sum_{i= -1}^1 \beta_i^{\text{US}} r_{M,t+i}^\text{US} + \sum_{i= -1}^1 \beta_i^\text{H} r_{M,t+i}^\text{US} + \sum_{i= -1}^1 \beta_i^{Fx} r_{fx.t+i} + a_t
+	\end{equation}
+How $r_{A-H.t}=r_{A.t} - r_{H.t}$, $r_M$'s are market indices and $r_{fx}$ is the currency return. Using the standard deviation of the residuals, `$a_t$', as a idiosyncratic risk proxy in the model (\ref{eqn:closeprice}) results from Gagnon and Karolyi (2010)~\cite{gagkar} indicate `the presence of important sources of excess comovement of arbitrage returns with market index and currency returns.' \\
+
+
+
+\noindent \textbf{Dynamic Linkages Across Vector Time Series:} \\
+
+
+As observed, some markets operate at times that may or may not overlap with others. On any given calendar day, for example, Asian markets open and close before the US markets. Efficient market theory would suggest that all available information about a stock would be impounded in the stock price and there should be no systematic lagged inter-market adjustments that can be exploited. But empirical studies reveal that there could be significant correlations across markets, during the same calendar day and possibly in lagged relationships as well. This phenomenon is also known as \emph{data synchronization problem}. Some studies focus on the overlapping durations between two markets if they exist (for example between London and NYSE), but the information flow may not be processed similarly. 
+
+
+To motivate, consider two markets that do not overlap and let us denote the closing log prices as, $p_t = (p_{1t},p_{2t})'$; if the markets are efficient and operate independently, each component of $p_t$ will follow a random walk model; but if there is any dependency, it is usually captured by the cointegrating relationship among the components. We will assume that $p_{2t}$ occurs after $p_{1t}$ in a calendar day, `$t$'. Koch and Koch (1991)~\cite{kochsq} discuss a dynamic simultaneous equations model that takes into account both the contemporaneous and the lead-lag relationships. In its simplest form, the model can be stated as,
+	\begin{flalign}\label{eqn:matrixeq}
+	&&\begin{pmatrix} 1 & 0 \\ -\phi_{21} & 1 \end{pmatrix}  \begin{pmatrix} p_{1t} \\ p_{2t} \end{pmatrix} &= \begin{pmatrix} \phi_{11} & \phi_{12} \\ 0 & \phi_{22} \end{pmatrix} \begin{pmatrix} p_{1t-1} \\ p_{2t-1} \end{pmatrix} + \begin{pmatrix} a_{1t} \\ a_{2t} \end{pmatrix} && \notag \\
+	\text{or} && \phantom{x} & \phantom{x} && \\
+	&& \Phi_{01} p_t &= \Phi_{11} p_{t-1} + a_t&& \notag
+	\end{flalign}
+%where $a_t$ is a white noise sequence. Because $\Phi_{01}$ is a triangular matrix, the inverse $\Phi_{01}^{-1}$ is also triangular and (\ref{eqn:matrixeq}) can be rewritten as,
+%	\begin{equation}\label{eqn:whitenoise}
+%	p_t= \Phi_{01}^{-1} \Phi_{11} p_{t-1} + \Phi_{01}^{-1} a_t = \Phi_1^* p_{t-1} + \epsilon_t
+%	\end{equation}
+%where $\Phi_1^*=\begin{pmatrix} \phi_{11} & \phi_{12} \\ \phi_{21} \phi_{11} & \phi_{21} \phi_{12} + \phi_{22} \end{pmatrix}$. To estimate the reduced-form model in (\ref{eqn:whitenoise}), $a_{2t}$ must be independent of $a_{1t}$. 
+
+
+With four elements in $\Phi_1^*$, one in $\Phi_{01}$ and three in $\Phi_{11}$ are exactly identified. Note  if we denote $\Phi^{-1}_{01} = (\phi_{01},\phi_{02})$ and $\Phi_{11} = \begin{pmatrix} \phi_{11}' \\ \phi'_{21} \end{pmatrix}$ when $\phi$'s are $2 \times 1$ column vectors, $\Phi_1^*=\phi_{01}\phi_{11}' + \phi_{02} \phi_{21}'$  is the sum of two rank one matrices. One could use rank factorization to identify the element $\phi_{21}$ and the elements in $\Phi_{11}$ as well. 
+
+
+Extending the model in (\ref{eqn:matrixeq}) to say `$m$' markets, we can observe that the same-day cross-market linkages are reflected in the matrix, $\Phi_{01}$ and lagged linkages are reflected in the elements of the matrix, $\Phi_{11}$. Let $Y_t = (y_{1t} ,\ldots, y_{mt})'$ denote the time series data at `$t$' and the VAR(1) model takes the form,
+	\begin{equation}\label{eqn:formtake}
+	\Phi_{01} Y_t= \Phi_{11} Y_{t-1} + a_t
+	\end{equation}
+where $a_t$ is a white noise sequence; we will assume that
+	\[
+	\begin{split}
+	\Phi_{01}&= \begin{pmatrix} 
+	1 & 0 & \cdots & 0 & 0 \\
+	-\phi_{21} &  1 & \cdots & 0 & 0 \\
+	\vdots & \vdots &  \ddots & \vdots & \vdots \\
+	\vdots & \vdots & & 1  & 0 \\
+	-\phi_{m1} & -\phi_{m2} & \cdots & -\phi_{m(m-1)} &  1 
+	\end{pmatrix} \text{ and } \\
+	\Phi_{11}&= \begin{pmatrix}
+	\phi_{11} &  \phi_{12} &  \cdots & \phi_{1m} \\
+	0 & \phi_{22} & \cdots & \phi_{2m} \\
+	\vdots & \vdots & \ddots & \vdots \\
+	0 & 0 & \cdots & \phi_{mm} 
+	\end{pmatrix}
+	\end{split}
+	\]
+are triangular matrices with $\frac{(m-1)m}{2}+ \frac{(m+1)m}{2}$ elements that add up to $m^2$ elements that result from a regular VAR(1) model, given below and thus the elements of $\Phi_{01}$
+and $\Phi_{11}$ are clearly identified. 
+
+
+Note (\ref{eqn:formtake}) can be written as,
+	\begin{equation}\label{eqn:rewrittenas}
+	Y_t= \Phi_{01}^{-1} \Phi_{11} Y_{t-1} + \Phi_{01}^{-1} a_t = \Phi_1 Y_{t-1} + \epsilon_t,
+	\end{equation}
+which is the VAR(1) model with no simultaneous dependence in $Y_t$. But observe that $\epsilon= \Phi_{01}^{-1} a_t$ contains information about $\Phi$ and in model (\ref{eqn:formtake}) we do assume that  $a_{jt}$ is independent of $(a_{1t},\ldots, a_{(j-1)t})$ for $j = 2,\ldots,m$.
+
+
+It can be shown that $\Phi_1= \Phi_{01}^{-1} \Phi_{11}$ is the sum of `$m$' rank one matrices. Again, the identification of the elements of $\Phi_{01}$ and $\Phi_{11}$ from $\Phi_1$ is fairly straightforward. The number of elements in $\Phi_{01}$ and the number in $\Phi_{11}$ add up to $m^2$, the number of elements in $\Phi_1$. Also observe that the model (\ref{eqn:formtake}) can be still written as VAR(1) model, in $\Phi_{01} Y_t$,
+	\begin{equation}\label{eqn:var1phimod}
+	\Phi_{01} Y_t = \Phi_{11} \Phi_{01}^{-1} ( \Phi_{01} Y_{t-1}) + a_t
+	\end{equation}
+for a known $\Phi_{01}$.
+
+%As indicated in Chapter~3, for the stationarity of the VAR(1) model, it is required that the eigenvalues of $\Phi_1$, i.e., $\det(\Phi_1 - \lambda I)= \prod_{j=1}^m (1-\lambda_j)$, where $|\lambda_j| \leq 1$ for all `$j$'. Recall that the properties of the non-stationary series, that is, when some of the eigenvalues, $|\lambda_j|$ are unity. Relate to the canonical correlations between $Y_t$ and $Y_{t?1}$. The canonical correlations are obtained as the eigenvalues of the matrix, $(\Gamma_0^{- \frac{1}{2}} y \Phi_1 \Gamma_0^{\frac{1}{2}}(y)) ( \Gamma_0^{\frac{1}{2}}(y) \Phi_1^' \Gamma_0^{-\frac{1}{2}}(y))$, when $\Gamma_0(y0$ is the variance-covariance matrix of $Y_t$. Reinsel and Velu (1998)~\cite{velurein} have shown that this is equivalent  to connecting the eigenvalues of $\Phi_1$, $\lambda(\Phi_1)= \lambda( \Gamma_0^{-\frac{1}{2}} (y) \Phi_1 \Gamma_0^{\frac{1}{2}}(y))= \lambda(\Phi_1^*)$ with the singular values of $\Phi_1^*$, $\sigma(\Phi_1^*)$. Some issues that need to be researched are:
+
+\begin{enumerate}[--]
+\item How do we identify the triangular coefficient matrices, both contemporaneous and the lagged, from the general VAR(p) coefficient matrices?
+\item What is the effect of ignoring the contemporaneous dependence on the estimation of co-integrating relationships?
+\item For select Indian stocks does it make any difference in forecasting the price direction by accounting for the data synchronization?
+\end{enumerate}
+The last aspect is studied here. 
+
+
+\begin{figure}[!ht]
+   \centering
+    \includegraphics[width=0.8\textwidth]{chapters/chapter_stat_ts/figures/cpver.png}
+   \caption{Plot of closing prices, volumes and exchange rates. \label{fig:cpver}}
+\end{figure}
+
+
+To illustrate we consider the data on WIPRO --- an Indian stock that is traded in both US and Bombay markets. The plot of the closing prices in both markets (CU --- closing price in US market, VU --- volume in US market, etc.) is given in Figure~\ref{fig:cpver}. The exchange rate has been generally in favor of a dollar during this period (2005--2014), but generally the volatility is higher in the US market. To illustrate the flow of information in one market to another we fit the following models; let $p_{1t}$ be the log closing price in India and $p_{2t}$ be the log closing price in US; Table~\ref{tab:regresul} below summaries the results.
+	\begin{table}[!ht] 
+	\centering
+	\caption{Regression results \label{tab:regresul}}
+	\begin{tabular}{l | rr} 
+	& \multicolumn{2}{c}{Response Variable} \\ 
+	Predictors & $p_{1t}$ & $p_{2t}$ \\ \hline 
+	Constant & $-0.056^*$ & $-0.019^*$ \\
+	$p_{1t}$ & ---  & $0.6328^*$ \\
+	$p_{1t-1}$ & $0.91^*$ & --- \\
+	$p_{2t-1}$ & $-0.026$ & $0.3626^*$ \\ \hline
+	$R^2$ & 0.79 & 0.91 
+	\end{tabular}
+	\end{table}
+These results could indicate that the markets are not fully efficient and there is some information transfer from one market to others. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \section{Other Topics: Bet Size etc.}
 
