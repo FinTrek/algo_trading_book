@@ -980,17 +980,45 @@ The following algorithm that combines the price, volume and volatility is sugges
 
 \section{Trading in Mult-Markets}
 
-There has been a great deal of interest in studying the performance of cross-listed stocks in several markets, that operate in overlapping or in non-overlapping hours during a day. Both in NYSE and in NASDAQ the listing of non-US firms has increased over time. The general motivation behind cross-listings is to manage the capital raising cost. Some unique features of trading these stock include the trading hours and restrictions on moving capital from one market to other. For Indian stocks listed in NYSE, note that the trading hours in Indian stock exchange is between 11:55~P.M. and 6~A.M. EST, which does not overlap with NYSE trading hours. The restrictions may include time needed to set up money transfer arrangements that are usually handled through an issuing investment bank. But our focus here is to study the imperfect pricing that may arise from cross-listed markets and see how trading opportunities can be exploited. More broadly it is of interest to study the information flow from one market to other.
+There has been a great deal of interest in studying the performance of cross-listed stocks in several markets, that operate in overlapping or in non-overlapping hours during a day. Both in NYSE and in NASDAQ the listing of non-US firms has increased over time. The general motivation behind cross-listings is to manage the capital raising cost. Some unique features of trading these stock include the trading hours and restrictions on moving capital from one market to other, and time needed to set up money transfer arrangements that are usually handled through an issuing investment bank. But our focus here is to study the imperfect pricing that may arise from cross-listed markets and see how trading opportunities can be exploited. More broadly it is of interest to study the information flow from one market to other.
 
 
-The foreign companies list shares for trading in exchanges in US in the form of ADR (American Deposit Receipts) that ensures the convertibility of home-market shares in US shares and back again. There is generally no conversion fee and there may be restrictions on cross-country ownership. Gagnon and Karolyi (2010)~\cite{gagkar} investigate arbitrage opportunities by comparing intraday prices and quotes and observe that price pairing deviation is quite small (4.9 basis pavets) but can reach large extremes when the markets are volatile. 
+The foreign companies list shares for trading in exchanges in US in the form of ADR (American Deposit Receipts) that ensures the convertibility of home-market shares in US shares and back again. There is generally no conversion fee and there may be restrictions on cross-country ownership. Gagnon and Karolyi (2010)~\cite{gagkar} investigate arbitrage opportunities by comparing intraday prices and quotes and observe that price parity deviation is quite small (4.9 basis pavets) but can reach large extremes when the markets are volatile. 
 
 
-To model the price (co)movement in a calendar day when exchanges operate, the hours can be stated in terms of GMT:
+To model the price (co)movements in a calendar day when exchanges operate, the hours can be stated in terms of GMT:
 \begin{figure}[!ht]
    \centering
-   \includegraphics[width=3cm]{example-image-a}
-    %\includegraphics[width=0.8\textwidth]{chapters/chapter_stat_ts/figures/cpver.png}
+	\begin{tikzpicture}[thick,scale=0.8, every node/.style={transform shape}]
+	\draw[thick] (-10,0) -- (2,0);
+	
+	\draw[thick] (-9.5,-0.3) -- (-9.5,0.3);
+	\draw[thick] (-8.5,-0.3) -- (-8.5,0.3);
+	\draw[thick] (-7.5,-0.3) -- (-7.5,0.3);
+	\draw[thick] (-5.5,-0.3) -- (-5.5,0.3);
+	\draw[thick] (-4,-0.3) -- (-4,0.3);
+	\draw[thick] (-2,-0.3) -- (-2,0.3);
+	\draw[thick] (1,-0.3) -- (1,0.3);
+	
+	\node at (-9.5,-0.5) {\large{4:00}};
+	\node at (-8.5,-0.5) {\large{6:00}};
+	\node at (-7.5,-0.5) {\large{8:00}};
+	\node at (-5.5,-0.5) {\large{10:00}};
+	\node at (-4,-0.5) {\large{14:30}};
+	\node at (-2,-0.5) {\large{16:30}};
+	\node at (1,-0.5) {\large{21:00}};
+	
+	\node at (-10.7,0.05) {\large{GMT:}};
+	\node at (2.7,0) {\large{24:00}};
+	
+	\draw [decorate,decoration={brace,amplitude=8pt,mirror},xshift=0pt,yshift=0pt]
+(-7.5,-0.9) -- (-2,-0.9) node [below=20pt,black,midway,xshift=0cm,yshift=0.35cm] {\large{London}};
+	\draw [decorate,decoration={brace,amplitude=8pt,mirror},xshift=0pt,yshift=0pt]
+(-4,-1.7) -- (1,-1.7) node [below=20pt,black,midway,xshift=0cm,yshift=0.35cm] {\large{NSYE}};
+	\draw [decorate,decoration={brace,amplitude=8pt,mirror},xshift=0pt,yshift=0pt]
+(-9.5,-1.7) -- (-5.5,-1.7) node [below=20pt,black,midway,xshift=0cm,yshift=0.35cm] {\large{Bombay Exchange}};
+	
+	\end{tikzpicture} 
    \caption{Opening hours of some stock exchanges. \label{fig:openingmarket}}
 \end{figure}
 Denoting the ADR returns as $r_{At} = \ln(P_{A,t}) - \ln(P_{A,t-1})$ and the home market returns as $r_{Ht}= \ln(P_{H,t}) - \ln(P_{H,t-1})$, where $P$'s denote the closing prices, the returns are modeled as: 
@@ -1001,10 +1029,7 @@ How $r_{A-H.t}=r_{A.t} - r_{H.t}$, $r_M$'s are market indices and $r_{fx}$ is th
 
 
 
-\noindent \textbf{Dynamic Linkages Across Vector Time Series:} \\
-
-
-As observed, some markets operate at times that may or may not overlap with others. On any given calendar day, for example, Asian markets open and close before the US markets. Efficient market theory would suggest that all available information about a stock would be impounded in the stock price and there should be no systematic lagged inter-market adjustments that can be exploited. But empirical studies reveal that there could be significant correlations across markets, during the same calendar day and possibly in lagged relationships as well. This phenomenon is also known as \emph{data synchronization problem}. Some studies focus on the overlapping durations between two markets if they exist (for example between London and NYSE), but the information flow may not be processed similarly. 
+\noindent \textbf{Dynamic Linkages Across Vector Time Series:} As observed, some markets operate at times that may or may not overlap with others. On any given calendar day, for example, Asian markets open and close before the US markets. Efficient market theory would suggest that all available information about a stock would be impounded in the stock price and there should be no systematic lagged inter-market adjustments that can be exploited. But empirical studies reveal that there could be significant correlations across markets, during the same calendar day and possibly in lagged relationships as well. This phenomenon is also known as \emph{data synchronization problem}. Some studies focus on the overlapping durations between two markets if they exist (for example between London and NYSE), but the information flow may not be processed similarly. 
 
 
 To motivate, consider two markets that do not overlap and let us denote the closing log prices as, $p_t = (p_{1t},p_{2t})'$; if the markets are efficient and operate independently, each component of $p_t$ will follow a random walk model; but if there is any dependency, it is usually captured by the cointegrating relationship among the components. We will assume that $p_{2t}$ occurs after $p_{1t}$ in a calendar day, `$t$'. Koch and Koch (1991)~\cite{kochsq} discuss a dynamic simultaneous equations model that takes into account both the contemporaneous and the lead-lag relationships. In its simplest form, the model can be stated as,
@@ -1062,7 +1087,8 @@ It can be shown that $\Phi_1= \Phi_{01}^{-1} \Phi_{11}$ is the sum of `$m$' rank
 	\end{equation}
 for a known $\Phi_{01}$.
 
-%As indicated in Chapter~3, for the stationarity of the VAR(1) model, it is required that the eigenvalues of $\Phi_1$, i.e., $\det(\Phi_1 - \lambda I)= \prod_{j=1}^m (1-\lambda_j)$, where $|\lambda_j| \leq 1$ for all `$j$'. Recall that the properties of the non-stationary series, that is, when some of the eigenvalues, $|\lambda_j|$ are unity. Relate to the canonical correlations between $Y_t$ and $Y_{t?1}$. The canonical correlations are obtained as the eigenvalues of the matrix, $(\Gamma_0^{- \frac{1}{2}} y \Phi_1 \Gamma_0^{\frac{1}{2}}(y)) ( \Gamma_0^{\frac{1}{2}}(y) \Phi_1^' \Gamma_0^{-\frac{1}{2}}(y))$, when $\Gamma_0(y0$ is the variance-covariance matrix of $Y_t$. Reinsel and Velu (1998)~\cite{velurein} have shown that this is equivalent  to connecting the eigenvalues of $\Phi_1$, $\lambda(\Phi_1)= \lambda( \Gamma_0^{-\frac{1}{2}} (y) \Phi_1 \Gamma_0^{\frac{1}{2}}(y))= \lambda(\Phi_1^*)$ with the singular values of $\Phi_1^*$, $\sigma(\Phi_1^*)$. Some issues that need to be researched are:
+
+As indicated in Chapter~3, for the stationarity of the VAR(1) model, it is required that the eigenvalues of $\Phi_1$, i.e., $\det(\Phi_1 - \lambda I)= \prod_{j=1}^m (1-\lambda_j)$, where $|\lambda_j| \leq 1$ for all `$j$'. Recall that the properties of the non-stationary series, that is, when some of the eigenvalues, $|\lambda_j|$ are unity. Relate to the canonical correlations between $Y_t$ and $Y_{t?1}$. The canonical correlations are obtained as the eigenvalues of the matrix, $(\Gamma_0^{- \frac{1}{2}} (y)\, \Phi_1 \,\Gamma_0^{\frac{1}{2}}(y)) ( \Gamma_0^{\frac{1}{2}}(y) \,\Phi_1'\,  \Gamma_0^{-\frac{1}{2}}(y))$, when $\Gamma_0(y)$ is the variance-covariance matrix of $Y_t$. Reinsel and Velu (1998)~\cite{velurein} have shown that this is equivalent  to connecting the eigenvalues of $\Phi_1$, $\lambda(\Phi_1)= \lambda( \Gamma_0^{-\frac{1}{2}} (y) \,\Phi_1\, \Gamma_0^{\frac{1}{2}}(y))= \lambda(\Phi_1^*)$ with the singular values of $\Phi_1^*$, $\sigma(\Phi_1^*)$. Some research issues are: 
 
 \begin{enumerate}[--]
 \item How do we identify the triangular coefficient matrices, both contemporaneous and the lagged, from the general VAR(p) coefficient matrices?
@@ -1093,7 +1119,7 @@ To illustrate we consider the data on WIPRO --- an Indian stock that is traded i
 	$R^2$ & 0.79 & 0.91 
 	\end{tabular}
 	\end{table}
-These results could indicate that the markets are not fully efficient and there is some information transfer from one market to others. 
+These results would indicate that the markets are not fully efficient and there is some information transfer from one market to other. 
 
 
 
