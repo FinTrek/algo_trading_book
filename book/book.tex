@@ -165,8 +165,6 @@
 \counterwithin{figure}{chapter}
 
 
-
-
 %%%%%%%%%%%%%
 %Document
 %%%%%%%%%%%%%
@@ -188,12 +186,13 @@
 
 %To be removed
 \listoftodos
-
+\setcounter{part}{-1}
 
 
 \mainmatter
+\part{Context: Introduction and Overview}
 \include{chapters/chapter_intro/ch_intro}
-
+\include{chapters/chapter_trading_fund/ch_trading_fund}
 
 \part{Foundations: Basic Models and Empirics}
 \include{chapters/parts/part_one/part_one}
@@ -203,11 +202,10 @@
 
 \part{Trading Algorithms}
 \include{chapters/chapter_stat_ts/ch_stat_ts}
-\include{chapters/chapter_news_an/ch_news_an}
 \include{chapters/chapter_apm/ch_apm}
+\include{chapters/chapter_news_an/ch_news_an}
 
 \part{Execution Algorithms}
-\include{chapters/chapter_trading_fund/ch_trading_fund}
 \include{chapters/chapter_trade_data_models/ch_trade_data_models}
 \include{chapters/chapter_mi_models/ch_mi_models}
 \include{chapters/chapter_exec_models/ch_exec_models}
