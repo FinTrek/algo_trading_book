@@ -81,12 +81,11 @@ Other usage of microstructure normalizer is to support decision making by compar
 \subsection{Intraday Normalization: Profiles}
 
 Incorporating intraday seasonality is a critical component of any execution strategy. Intraday seasonality arises from primarily behavioral and practical reasons around trading discontinuities such as the open and the close (and the lunch break period in certain Asian markets) and other scheduled events (e.g. the US open for European markets). Information dissemination tends to cluster around such times and so does the trading activity. The intraday variability of the variables affected by this seasonality is so strong that considering them as constant throughout the day would lead to severely sub-optimal decision. Thus standard practice is to incorporate intra-day seasonality using normalized profiles, so that the deviations from the expected value are stated in relative terms. While most microstructure variables discussed above showcase some of this seasonality the most used profiles are: (some of these are covered in Chapter~4)
-	\begin{itemize}
+\begin{itemize}
 	\item Volume Distribution: The percentage of the expected daily volume that will trade in a particular time period.
 	\item Volatility Distribution: The percentage of the expected daily return volatility that will  be perceived in a particular time period.
 	\item Spread Multiplier: The percentage deviation from the average spread in a particular time period
-	\end{itemize}\\
-	
+\end{itemize}
 	
 Of particular importance is the Volume Distribution (or daily profile) as it is used to create a VWAP strategy. For such a strategy, the volume profile is directly used in the execution schedule, it actually very much IS the tradin schedule. This will ensure that the strategy trades proportionally a larger slice of the order at times when more  volume is expected to trade thus reducing the risk of trading at prices away from the period VWAP.\\
 
