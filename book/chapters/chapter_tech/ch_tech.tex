@@ -2,14 +2,36 @@
 %\hfill
 %\par\vspace{\baselineskip}
 
-\chapter{Informatics and Computation for Algorithmic Trading}
+\chapter{The Technology Stack}
+There are a broad spectrum of trading infrastructures and operations but none, we think, is as broad and complex as the one in a large electronic trading execution operation in a large Broker-Dealer. So we use that as a template for our exploration of the technology stack that is necessary to support such an operation. We start by reviewing the end to end flow of information and then go into some detail on the various components. As previously discussed all large ET businesses also operate their own ATS so we'll briefly look at the technology setup needed to support that use case as well.
+\section{From client Instruction to Trade Reconciliation}
+TODO Build an end-to-end diagram
 
-\section{Model for electronic Trading Platforms}
-\subsection{Trading Rules}
-\subsection{Access to Order Book; Information Flow and the Infrastructure}
-\subsection{High Frequency vs. Low Frequency Set Up}
-\section{Current Practices and Alternative Trading Systems}
-\subsection{Computer Networks and Broadcasting}
-\subsection{Data Center and Co-location Service}
-\subsection{Dark Pools}
-\section{Developing Modern Trading Platforms}
+Figure~\ref{fig:pexchrate} shows the end to end diagram of a hypothetical trading infrastructure. We can use this diagram to follow the full lifecycle of a client order and the main components of the infrastructure involved.
+\subsection{Client Side}
+The trader enters an algorithmic order into her Execution Management System (EMS) a specialized trading infrastructure that integrates with internal systems and provides all the tools an institutional traders needed to manage her day to day trading needs. EMS are most often vendor products with Ez Castle \footnote{\url{https://www.ezesoft.com/}}, Portware \footnote{\url{http://www.portware.com/}}and FlexTrade \footnote{\url{https://flextrade.com/}} some of the most popular options. Many larger buy-side trade organizations have more complex needs and often have an homegrown solution.\\
+
+The trader chooses from a drop-down menu the particular provider and Algo strategy and  chooses the desired parameters. Every broker that wants to expose their execution into an EMS needs to certify with the EMS by providing a FIX Specification Document that highlights what strategy are available and what parameters are available for each and the validation information about the parameter. The EMS integrates this into their system and exposes them in the front end for the trader to chose. FIX stands for \emph{Financial Information eXchange) and it's a standard communication protocol specifically designed for financial applications \footnote{\url{https://www.fixtrading.org/}\\
+
+Once the order is submitted the EMS uses a preconfigured network connection to transfer the order to the broker. This session is created as part of the \emph{ Client Onboarding} step a quite laborious process to setup a new client relationship, configure the client financial limits and controls.
+
+\subsection{Inbound Gateway}
+We are now broker-side where the order is received by and Inbound gateway. The first think to happen is some form of validation to ensure that the message is a valid order and has all the necessary fields. Next step is to perform a set of risk and credit checks to ensure that the order is within the specified risk limits and the client overall exposure, the maximum notional the client is allowed to trade and have in the market at any point in time. Any mismatch in these validation steps and the order is rejected back to the client.
+
+\subsection{Order Management System and Order Enrichment}
+Once the order is validated it is created within the broker dealer infrastructure. Order life-cycle is quite complicated and nuanced and it is critical that the state of the order is always up to date and state transitions carefully managed. The role of creating and managing the state of the order is fulfilled by an Order Management System (OMS). These infrastructures are at the heart of any trading operation and are one of the most important components. They are often built around a Bus based architecture a software paradigm where loosely couple components communicated with each other over a messaging middleware. The advantage of this approach is that other ancillary components within the infrastructure can ``Listen in" on the messages and use the information to affect other systems or collect the data for trade reporting, and analysis.\\
+
+One step often performed in this layer is Order Enrichment. This is a step that adds additional, lower level parameters that adjust and customize the execution behavior for the specific client/algorithm/parameters triplet. This step also translates nuances between the instruction the client sends and what the execution system understands. This is often accomplished by a specialized \emph{Rules Engine} a software library that allows a set of rules to be applied to an order and then re-evaluate the rules after any modification until no rules are triggered.
+
+\subsection{Execution Strategy Stack}
+
+
+
+\subsection{Market Data Plant}
+\subsection{Algo Container}
+\subsection{Smart Order Router}
+\section{Outbound Connectivity}
+\section{Networking and Co-location Solutions}
+\section{Back Office}
+\subsection{Trade Reporting and Reconciliation}
+\subsection{OATS}
