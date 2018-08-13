@@ -52,6 +52,14 @@ On top of the significant costs of operations  exchanges have ratcheted up the c
 Back to our core services. The last core set of abstractions has to do with managing outbound child orders. This facility provides the strategy with the state of all outstanding child orders and ability to create, cancel and amend them in an asynchronous way and managing any exceptions like for example trying to cancel an order that has just executed on exchange but the fill event has not yet reached the OMS. 
 
 \subsection{Main Strategy Loop}
+We come to the \emph{core of the Core} of the whole infrastructure. While there is many ways to write a trading strategy a pattern has emerged that has become somewhat of a standard approach. It's sometimes referred as the Main Strategy Loop. \footnote{Some practitioners for example believe that the right conceptual framework for a strategy is that of a State Machine: Based on what event just happen there is a ``state transition" in the next state and writing a strategy is essentially to model and implement these state transitions. Conceptually elegant, in practice this approach is extremely hard to pull off as there are a lot of side effects and co-dependencies that makes it hard to cleanly decompose}
+The strategy container other working threads ensure the state is always kept up to date. The strategy flow is encoded in essentially one stateless function that is called on either a timer, any major event such as quote change/trade/execution, etc., or just a tight loop. This function perform three phases:
+\begin{enumerate}
+\item Understand where the strategy is at any point in time by recovering the state from the state cache with all the information it needs. How many shares I have done and how many, based on my target strategy should I be at this point and where should I try to be in the near future. 
+\item Based on the full information set and the current state of the outstanding child orders in the market determine what orders to cancel and what orders to submit.
+\item Send these instructions to the Outbound Order Interface. In some cases step #2 just calculate the correct exposure it wants in the market and it's the role of this step to optimally decide if and how this should be implemented by either submitting additional orders or amending the existing ones, etc.
+\end{enumerate}
+After performing these three steps the main loop exists and the loop repeats some time later. Since the approach in mathematical terms Markovian, meaning that ti only depends on the existing state, if the strategy is called again immediately after it will most likely make the same decisions it just made and determine in step 2 that no action is necessary and the main loop simply exits without doing anything.
 
 
 \subsection{Additional Infrastructures}
