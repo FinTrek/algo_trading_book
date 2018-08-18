@@ -3,7 +3,8 @@
 %\par\vspace{\baselineskip}
 
 \chapter{The Technology Stack}
-There are a broad spectrum of trading infrastructures and operations but none, we think, is as broad and complex as the one in a large electronic trading execution operation in a large Broker-Dealer. So we use that as a template for our exploration of the technology stack that is necessary to support such an operation. We start by reviewing the end to end flow of information and then go into some detail on the various components. As previously discussed all large ET businesses also operate their own ATS so we'll briefly look at the technology setup needed to support that use case as well.
+There are a broad spectrum of trading infrastructures and operations but none, we think, is as broad and complex as the one in a large electronic trading execution operation in a large Broker-Dealer. So we use that as a template for our exploration of the technology stack that is necessary to support such an operation. We start by reviewing the end to end flow of information and then go into some detail on the various components. As previously discussed all large ET businesses also operate their own ATS so we'll briefly look at the technology setup needed to support that use case as well.\\
+
 \section{From client Instruction to Trade Reconciliation}
 TODO Build an end-to-end diagram
 
@@ -83,7 +84,11 @@ The strategy container other working threads ensure the state is always kept up 
 After performing these three steps the main loop exist and repeats some time later. Since the approach is, in mathematical jargon, Markovian, meaning that i only depends on the existing state, if the strategy is called again immediately after it will most likely make the same decisions it just made and determine in step 2 that no action is necessary and the main loop simply exits.
 
 \subsection{Additional Infrastructures}
+depending on the complexity and sophistication of the operation the technology stack is often supplemented by additional components that serve a specific role. Let's look at a few of the most common.
 \subsubsection{Realtime Analytics Engine}
+More and more, algorithmic trading product have become highly sophisticated and dynamic, adapting behavior as market conditions change. Many of the normalization variables and signals are adjusted every single tick or a few trades to provide the most uptodate picture of the immediate and future market state. These analytics could be built within the current Algo engine but that is not only more cumbersome but also inefficient. In almost every single case one process cannot handle the compute load to run thousands of algorithms on all symbols and the infrastructure is striped in multiple processes handling a subset of symbols. Per symbol analytics could be still be built within each process but many analytics, like for example computing the real-time price of an index midpoint, it requires that hundreds of symbols need to be computed in the same process for each symbols creating large duplication and reducing the effectiveness of striping. Additionally the more analytics one creates the more the load on the process that should be used to handle the algorithmic decisions\\
+
+For these and other reason of convenience calculating real-time analtyics if often delegated to a purpose-built infrastructure that provides ease of building additional analytics and combining existing ones in more and more complex signals. 
 \subsubsection{Algorithm Switching Engine}
 \subsubsection{Portfolio Algorithm Engine}
 
