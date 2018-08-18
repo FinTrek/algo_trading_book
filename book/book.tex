@@ -180,13 +180,13 @@
 \maketitle
 
 \cleardoublepage
+\setcounter{part}{-1}
 \setcounter{page}{7} %previous pages will be reserved for frontmatter to be added in later.
 \tableofcontents
 \raggedbottom
 
 %To be removed
 \listoftodos
-\setcounter{part}{-1}
 
 
 \mainmatter
@@ -212,9 +212,10 @@
 \include{chapters/chapter_exec_models/ch_exec_models}
 \include{chapters/chapter_exec_ts_res/ch_exec_ts_res}
 
-\part{Informatics and Regulatory Issues}
+\part{Technology and Regulatory Considerations}
 \include{chapters/parts/part_four/part_four}
 \include{chapters/chapter_tech/ch_tech}
+\include{chapters/chapter_tech_res/ch_tech_res}
 \include{chapters/chapter_rm_reg/ch_rm_reg}
 %\include{chapters/appendix/appendix}
 \bibliographystyle{plain}
