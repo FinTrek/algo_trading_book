@@ -2,7 +2,7 @@
 %\hfill
 %\par\vspace{\baselineskip}
 
-\chapter{Modeling Trade Data}
+\chapter{Modeling Trade Data}\label{chap:ch_trade_data_models}
 
 Many articles and books have been written on the topic of modeling trade data. There is a wealth of information out there and this chapter will not introduce any new modeling approach or algorithm. As in the rest of this book our effort is to provide context on the the role these models play in practice, the challenges and considerations that are involved in dealing with trade data day in and day out and then provide the quantitative foundation the reader needs to progress further. This chapter follows the same pattern as used in other parts of this book. We start with a practitioner's view of the subject, what approach are used  and why and some practical ideas on how to tackle these problem. We look at the need and importance of normalization analytics and their role in execution algorithms. We'll go into some details on the most important analytics and ideas on common modeling approaches. We then turn to a review of common microstructure signal that are commonly used in HFT and execution as foundation for more advance alpha signals We then turn the chapter over to Pr. Velu for a more in depth quantitative treatment on some of the mores sophisticated models that can be applied and academic research pointers to further the readers' search. 
 
@@ -93,8 +93,8 @@ Volume distribution during the course of a day is most invariably shaped like a 
 \footnote{In this section with ignore the fact that certain markets have lunch breaks. This clearly complicates but does not change the overall picture or approach and it's a relatively trivial extension to the treatment of profiles}. With the recent strong push away from active investing into passive instrument, in particular ETFs, the shape of the volume profiles has become increasingly back-loaded to such an extent that almost results in a shape, `$X$'\%. The Volume Smile is turning into a Volume Smirk! \\
 Volatility and spread also have a maximum at the open to account for the uncertainty around the market reaction to  overnight news. As soon as price discovery takes place their values quickly settle and gradually decay to minimum at the end of the day.\\
 
-[TODO (DN) Confirm of the total volume of many stocks happen in the last hour of the trading day]
-[TODO (DN) Show example of smoothed profile both in regular and cumulative terms] \\
+\textnote{[TODO:  DN. Confirm of the total volume of many stocks happen in the last hour of the trading day]} 
+\missingfigure{Show example of smoothed profile both in regular and cumulative terms}
 
 Profiles are of critically practical importance in Execution and in the next section we'll delve into some of the decisions and considerations on how would create these.
 
@@ -116,7 +116,7 @@ As previously mentioned the most common approach for developing profiles is to u
 
 One of the key decisions to be made is whether to create profiles for each individual stock in the universe or use some sort of group profiles. With a universe of several thousand different trading instruments it might be impractical to build and maintain stable individual profiles. Additionally the stability of the profiles is important in order for their use to be effective. Overly illiquid and slowly moving stock are usually not good candidates for single stock profiles. 
 
-A common approach is to use a statistical clustering approach using a distance measure and a grid search to identify the number of clusters that provides good separation using the so-called elbow method (TODO add reference). Given enough clusters, eight to nine hundred of them is not uncommon, the result of this approach is that he most liquid and active instruments will likely end up in their own cluster while lower liquidity stocks will end up into related clusters.\\
+A common approach is to use a statistical clustering approach using a distance measure and a grid search to identify the number of clusters that provides good separation using the so-called elbow method \textnote{[TODO add reference]}. Given enough clusters, eight to nine hundred of them is not uncommon, the result of this approach is that he most liquid and active instruments will likely end up in their own cluster while lower liquidity stocks will end up into related clusters.\\
 
 \noindent\textbf{Length of History}\\
 
@@ -128,16 +128,16 @@ Another open question is the length of history that should be used. The more dat
 Intraday volume profiles tend to be extremely noisy and require smoothing to be effective. Without smoothing the volume profile performs worse than a completely flat profiles. Care must be taken to avoid smoothing over real discontinuities (e.g. there is a predictable spike in volume in European profiles when the US market opens). These spikes usually are preceded by a period of reduced trading activity on the traders wait for the event. Smoothing these spikes will have the effect of spreading the spikes over previous bins and thus reducing the precision of the profile. One common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and then bring the spike back. It has been observed that this approach improves the overall predictability of the profile. 
 
 
-As far as smoothing algorithms there are a lot of choices available. Kernel smoothing methods have been proven effective. However  care must be given at the boundaries (beginning and end) of the profile. There is a large body of work on how to solve boundary problems in smoothing. We will not delve on it here. [
+As far as smoothing algorithms there are a lot of choices available. Kernel smoothing methods have been proven effective. However  care must be given at the boundaries (beginning and end) of the profile. There is a large body of work on how to solve boundary problems in smoothing. We will not delve on it here.
 
-TODO Show an example of smoothed Volume profile vs non smoothed with the jumps removed]\\
+\missingfigure{Show an example of smoothed Volume profile vs non smoothed with the jumps removed}
 
 
 \noindent\textbf{Special Days}\\
 
 Special days present additional challenges due to limited data (e.g triple witching occurs only four times a year). So using larger clusters (one cluster as a limit) is often the only option. One way to handle this would be to use these separately calibrated profiles across all special-day clusters. However this would lose the granularity of the regular day clustering. In order to maintain some of the  regular cluster level characteristics a common approach is to use a ``difference'' profile created by a normalized per-bin ratio between and average regular day profile and the special day profile. This captures the special day systematic shift that can then be multiplied back to the cluster profile essential mixing the two components. While in most cases this has proven effective we would recommend out of sample testing at the cluster level to see in which profile this is effective. 
 
-[TODO Show an example of the Fed-Announcement vol profile As part of the special day treatment.]\\
+\missingfigure{Show an example of the Fed-Announcement vol profile As part of the special day treatment}\\
 
 
 \noindent\textbf{Dynamic Profiles}\\
@@ -253,7 +253,6 @@ The algorithms has proven only moderately predictive to  75\% accuracy. This is 
 
 \section{Advanced Models}
 
-TODO We might want to re-organize this so we have the more practitioner treatment in Part 1 of the chapter and then more advanced features like the below and we can add more as needed.
 
 \subsection{Models for LOB dynamics}
 
