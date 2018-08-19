@@ -106,7 +106,7 @@ Many sophisticated clients have more demanding intraday use-cases and build thei
 
 There are also in-between usecase where clients who want to deal with the order placement but don't want to manage their own routing. In these cases the client can leverage directly SOR micro tactics.
 
-\\subsubsection{HFTs & Market Making}
+\subsubsection{HFTs and Market Making}
 When the latency demands are paramount like for HFT strategies clients used an even lower level access in a setup  called called ``Sponsored Access". In this configuration the broker provides access to an ultra-low-latency FPGA based appliance that does that supports Native-to-Native in and out conversion. The client code against the native low latency exchange protocol but pass through this infrastructure in order to execute all the necessary risk controls to ensure the user  does not go beyond the set exposures and does not accidentally disrupt the market. After the control layer the sponsored access appliance converts the message back into the native protocol and connects it to the appropriate exchange. These solution also often leverage co-location agreements with the various exchanges meaning that the actual hosts that execute the strategy are not only in the same data center but also physically situated near the exchanges matching engine host thus going through the least number of network hops to reach the engine.\\
 
 Market Makers, from the infrastructure perspective are not dissimilar. The only main difference is that market makers are usually brokers themselves and so do not require sponsored access to trade.
