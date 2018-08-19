@@ -130,6 +130,7 @@ Orders on the buy side are called ``bids'' while those on the sell side are call
 	   \includegraphics[width=0.9\textwidth]{chapters/chapter_trading_fund/figures/limitbk2.png} 
 	   \caption{Limit Order Book---Marketable Bid. \label{fig:limbk2}}
 	\end{figure}
+	
 When a market (or marketable) order is submitted, it decreases the number of outstanding orders at the opposite best price. For example, if a market bid order arrives, it will decrease the number of outstanding asks at the best price.
 	\begin{figure}[!ht]
 	   \centering
@@ -151,16 +152,236 @@ Finally, it worth mentioning that some exchanges as well as alternative venues o
 
 \subsection{How Double Auction Markets Work}
 
-The term double auction refers to the nature of the markets where, unlike a common auction with one auctioneer and many potential buyers, there are many buyers and many sellers.
+The term double auction refers to the nature of the markets where, unlike a common auction with one auctioneer and many potential buyers, there are multiple buyers and multiple sellers.
 
 
 
 \subsubsection{Order Types}
+
+The diversity of order types is a key component of continuous double auction electronic markets. Order types allow participants to precisely express their intentions with regards to interaction with the limit order book. Over time, in an effort to cater to sophisticated electronic traders, exchanges around the world have raced to offer ever more complex order types. Here, we will just provide a brief description of the vanilla ones:
+
+\begin{itemize}
+\item  Market: request to buy or sell immediately at the best available price. While it does not guarantee the trader a price, it guarantees execution. For small order sizes in actively traded names, a buy market order would execute close to the ask price, and a sell order close to the bid price.
+\item  Limit: specify a maximum (resp. minimum) price at which the trader is willing to buy (resp. sell). If liquidity is available at a better price, the order will execute at that price.
+\item  Peg: specify a price level at which the order should be continuously automatically repriced. For instance, an order pegged to the bid price will be automatically repriced as a higher price limit order each time the market bid price ticks up. This order type is particularly used for midpoint executions in non-displayed markets.
+\item  Iceberg: limit order with a specified display quantity. In order to prevent information leakage to other market participants, a trader desiring to buy or sell a large quantity at a given price might elect to use an iceberg order with a small display size. For instance, for an order to buy 100,000 shares at \$20.00 with a display size of 2,000 shares, only 2,000 shares would be displayed in the order book. Once that quantity is executed, the order would automatically reload another 2,000 shares at \$20.00, and so on until the full quantity is executed.
+\item  Hidden: while they are available to trade, these orders are not directly visible to other market participants in the central limit order book. 
+\item  Stop: these orders are also not visible, but additionally are not immediately entered in the limit order book. They only become active once a certain price (known as the Stop Price) is reached or passed, then enter the order book as either limit or market order depending on the user setup.
+\item  Trailing stop: these orders function like stop orders, but the stop price is dynamic rather than static (for instance: -3\% from previous close).
+
+\item  AON (All-or-None): specifically request a full execution of the order. If the order is for 1500 shares but only 1000 are being offered, it won't be executed until the full quantity is available.
+
+\item  OO (On-Open): specifically request an execution at the open price. It can be limit-on-open (LOO) or market-on-open (MOO).
+\item  OC (On-Close): specifically request an execution at the close price. It can be limit-on-close (LOC) or market-on-close (MOC).
+\item  IO (Imbalance only): provide liquidity intended to offset on-open/on-close orders imbalances during the Opening/Closing Cross. These generally must be limit orders.
+\item  d-Quote: special order type on the NYSE mainly used during the close auction period.
+\item  Funari: special order type on the Tokyo Stock Exchange which allows limit orders placed in the book during the continuous session to automatically enter the closing auction as market orders.
+\end{itemize} 
+
+
+
+
 \subsubsection{The Open Auction}
 
 The Open Auction is only one of the types of call auctions that are commonly held on exchanges. The term "call auction" explains the liquidity aggregation nature of this event. Market participants are 'called' to submit their quotes to the market place, at a consistent time, in order to determine a matching price that will maximize the amount of shares that can be transacted. \\
 
-INSERT ACTUAL MECHANICS \\
+To facilitate timely and orderly cross, auctions have strict order submission rules, including prescribed timing for entries (see Table~\ref{tab:NASDAQopen}) and information dissemination to prevent wild price fluctuations and ensure efficient price discovery. \\
+
+% Requires the booktabs if the memoir class is not being used
+\begin{table}[!ht]
+   \centering
+   \caption{Nasdaq Opening Cross\label{tab:NASDAQopen}}
+   \hspace*{-0.8cm}
+   \begin{tabular}{cc} 
+	4:00 a.m. EST & Extended hours trading and order entry begins  \\ \hline
+	9:25 a.m. EST & Nasdaq enters quotes for participants with no open interest \\ \hline
+	9:28 a.m. EST & Dissemination of order imbalance information every 5 sec  \\ 
+	 & Market-on-open orders must be received prior to 9:28 a.m.   \\ \hline	
+	9:30 a.m. EST & The opening cross occurs		
+   \end{tabular}
+\end{table}	
+
+
+Most exchanges publish order imbalance that exists among orders on the opening or closing books, along with the indicative opening or closing price and volume. For instance Nasdaq publishes the following information\footnote{Source: Nasdaq Trader website} between 9:28 a.m. EST and 9:30 a.m. EST,  every 5 seconds, on its market data feeds:
+\begin{itemize}
+\item  Current Reference Price: price within the Nasdaq Inside at which paired shares are maximized, the imbalance is minimized and the distance from the bid-ask midpoint is minimized, in that order.
+\item  Near Indicative Clearing Price: The crossing price at which orders in the Nasdaq opening / closing book and continuous book would clear against each other. 
+\item  Far Indicative Clearing Price: The crossing price at which orders in the Nasdaq opening / closing book would clear against each other. 
+\item  Number of Paired Shares: The number of on-open or on-close shares that Nasdaq is able to pair off at the current reference price. 
+\item  Imbalance Shares: The number of opening or closing shares that would remain unexecuted at the current reference price. 
+\item  Imbalance Side: The side of the imbalance: B = buy-side imbalance; S = sell-side imbalance; N = no imbalance; O = no marketable on-open or on-close orders.
+\end{itemize}
+
+
+
+In a double auction setup, the existence of multiple buyers and sellers requires employing a matching algorithm to determine the actual opening price which we will illustrate with a practical example. Table~\ref{tab:openAuct} gives an example of order book submissions for a theoretical stock, where orders are ranked based on their arrival time.\\
+
+Different exchanges around the world apply slightly different mechanisms to their auctions, but generally the following rules apply to match supply and demand:
+
+\begin{itemize}
+\item  The crossing price must maximize the volume transacted.
+\item  If several prices result in similar volume transacted, the crossing price is the one the closest from the last price. 
+\item  The crossing price is identical for all orders executed.
+\item  If two orders are submitted at the same price, the order submitted first has priority over the other one.
+\item  It is possible for an order to be partially executed if the other side quantity is not sufficient.
+\item  "At Market" orders are executed against each others at the determined crossing price, up to the matching available quantity on both sides, but generally do not participate in the price formation process.
+\item  For the Open Auction, unmatched "At Market" orders are entered into the continuous session Limit Order Book as limit orders at the crossing price.
+\end{itemize} 
+
+
+
+% Requires the booktabs if the memoir class is not being used
+\begin{table}[!ht]
+   \centering
+   \caption{Pre-Open Order Book Submissions\label{tab:openAuct}}
+   \hspace*{-2.0cm}
+   \begin{tabular}{ccccc} 
+	Timestamp & Seq. Number & Side & Quantity & Price \\ \hline
+	9:01:21 & 1  &  B & 1500 &  12.10 \\
+	9:02:36 & 2  &  S & 1750 & 12.12 \\	
+	9:05:17 & 3  &  B & 4500  & 12.17 \\	
+	9:06:22 & 4  &  S & 1750 & 12.22 \\
+	9:06:59 & 5  &  S & 2500 & 12.11 \\	
+	9:07:33 & 6 &  B & 1200 & 12.23 \\	
+	9:07:42 & 7  &  B & 500 & 12.33 \\	
+	9:08:18 & 8 &  B & 500 & 12.25 \\	
+	9:09:54 & 9 &  S & 1930 & 12.30 \\	
+	9:09:55 & 10 & B & 1000 & 12.21 \\	
+	9:10:04 & 11 & S & 3500 & 12.05 \\	
+	9:10:39 & 12 & B & 2000 & 12.34 \\	
+	9:11:13 & 13 &  S & 4750 & 12.25 \\	
+	9:11:46 &  14 & B  & 2750 & 12.19 \\	
+	9:12:21 &  15 & S  & 10000 & 12.33 \\	
+	9:12:48 &  16 & B  & 3000 & 12.28 \\	
+	9:13:12 &  17 & B  & 5500 & 12.35 \\
+	9:14:51 &  18 & S & 1800 & 12.18 \\
+	9:15:02 &  19 & B & 800 & 12.17 \\
+	9:15:37 &  20 & S & 1200 & 12.19 \\
+	9:16:42 &  21 & S & 5000 & 12.16 \\
+	9:17:11 &  22 & B & 12500 & 12.15 \\
+	9:18:27 &  23 & S & 450 & 12.23 \\
+	9:19:13 &  24 & S & 3500 & 12.20 \\	
+	9:19:54 &  25 & B & 1120 & 12.16
+   \end{tabular}
+\end{table}
+
+The first step is to organize orders by limit price, segregating buys and sells as shown in Table \ref{tab:openAuct2}. A buy order submitted with a limit price of 12.25 represents an intent to execute at any price lower or equal to 12.25. Similarly, a sell order submitted at 12.25 represents an intent to sell at any price higher or equal to 12.25. For each price level, we can then determine the cumulative buy interest and sell interest. The theoretical cross quantity at each price point is then simply the minimum of the cumulative buy interest and the cumulative sell interest as shown in Table \ref{tab:openAuct3}. The crossing price is determined as the price that would maximize the crossed quantity. In our example, the opening price will be 12.19, and the opening quantity will be 15,750 shares. \\
+
+% Requires the booktabs if the memoir class is not being used
+\begin{table}[!ht]
+   \centering
+   \caption{Ranked Order Book Submissions\label{tab:openAuct2}}
+   \hspace*{-0.3cm}
+   \begin{tabular}{cccccc} 
+	Timestamp & Seq. Number & Buy Price & Buy Quantity & Sell Quantity & Sell Price\\ \hline
+	9:13:12 &  17 & 12.35  & 5500 &  &\\
+	9:10:39 & 12 & 12.34 & 2000 & & \\	
+	9:07:42 & 7  &  12.33 & 500 &  &\\	
+	9:12:21 &  15 & &  & 10000 & 12.33 \\	
+	9:09:54 & 9 &  & & 1930 & 12.30 \\					
+	9:12:48 &  16 & 12.28  & 3000 &  &\\	
+	9:08:18 & 8 &  12.25 & 500 & & \\	
+	9:11:13 & 13 &  & & 4750 & 12.25 \\	
+	9:07:33 & 6 &  12.23 & 1200 & & \\		
+	9:18:27 &  23 & & & 450 & 12.23 \\
+	9:06:22 & 4  &  & & 1750 & 12.22 \\	
+	9:09:55 & 10 & 12.21  & 1000 & &\\		
+	9:19:13 &  24 & & & 3500 & 12.20 \\	
+	9:11:46 &  14 & 12.19  & 2750 &  &\\		
+	9:15:37 &  20 & & & 1200 & 12.19 \\
+	9:14:51 &  18 & & & 1800 & 12.18 \\
+	9:05:17 & 3  &  12.17 & 4500  & & \\		
+	9:15:02 &  19 & 12.17 & 800 & & \\			
+	9:16:42 &  21 & & & 5000 & 12.16 \\
+	9:19:54 &  25 & 12.16 & 1120 & & \\		
+	9:17:11 &  22 & 12.15 & 12500 & & \\
+	9:02:36 & 2  &  & & 1750 & 12.12 \\		
+	9:06:59 & 5  &  & & 2500 & 12.11 \\				
+	9:01:21 & 1  &  12.10 & 1500 & &  \\
+	9:10:04 & 11 & & & 3500 & 12.05 					
+   \end{tabular}
+\end{table}
+
+
+
+% Requires the booktabs if the memoir class is not being used
+\begin{table}[!ht]
+   \centering
+   \caption{Cumulative Order Book Quantities\label{tab:openAuct3}}
+   \hspace*{-1.5cm}
+   \begin{tabular}{ccccccc} 
+	Price & Seq. Number & Cum. Buy Qty & Buy Qty & Sell Qty & Cum. Sell Qty & Qty Crossed at Price \\ \hline
+	12.35 &  17 & 5500  & 5500 &  & 38130 & 5500\\
+	12.34 & 12 & 7500 & 2000 & & 38130 & 7500\\	
+	12.33 & 7  &  8000 & 500 &  & 38130 & 8000\\	
+	12.33 &  15 & 8000 &  & 10000 & 38130 & 8000 \\	
+	12.30 & 9 & 8000 & & 1930 & 28130 & 8000 \\					
+	12.28 &  16 & 11000  & 3000 &  & 26200 & 11000\\	
+	12.25 & 8 &  11500 & 500 & & 26200 & 11500\\	
+	12.25 & 13 & 11500 & & 4750 & 26200 & 11500 \\	
+	12.23 & 6 &  12700 & 1200 & & 21450 & 12700\\		
+	12.23 &  23 & 12700 & & 450 & 21450 & 12700 \\
+	12.22 & 4  & 12700 & & 1750 & 21000 & 12700 \\	
+	12.21  & 10 & 13700  & 1000 & & 19250 & 13700\\		
+	12.20 &  24 & 13700 & & 3500 & 19250 & 13700 \\	
+	12.19 &  14 & 16450  & 2750 &  & 15750 & 15750\\		
+	12.19 &  20 & 16450 & & 1200 & 15750 & 15750\\
+	12.18 &  18 & 16450 & & 1800 & 14550 & 14550 \\
+	12.17 & 3  &  20950 & 4500  & & 12750 & 12750\\		
+	12.17 &  19 & 21750 & 800 & & 12750 & 12750\\			
+	12.16 &  21 & 21750 & & 5000 & 12750 & 12750 \\
+	12.16 &  25 & 22870 & 1120 & & 7750 & 7750\\		
+	12.15  &  22 & 35370 & 12500 & & 7750 & 7750\\
+	12.12  & 2  & 35370 & & 1750 & 7750 & 7750 \\		
+	12.11  & 5  & 35370 & & 2500 & 6000 & 6000 \\				
+	12.10 & 1  &  36870 & 1500 & & 3500 & 3500 \\
+	12.05  & 11 & 36870 & & 3500 & 3500 & 3500 	
+
+   \end{tabular}
+\end{table}
+
+The list of buy orders executed during the auction is shown in Table \ref{tab:openAuct4} and the sell orders in Table \ref{tab:openAuct5}. \\
+
+% Requires the booktabs if the memoir class is not being used
+\begin{table}[!ht]
+   \centering
+   \caption{Crossed Buy Orders\label{tab:openAuct4}}
+   \hspace*{-3.3cm}
+   \begin{tabular}{ccc} 
+	Price & Seq. Number & Buy Qty  \\ \hline
+	12.35 &  17 & 5500 \\
+	12.34 & 12 & 2000\\	
+	12.33 & 7  & 500\\			
+	12.28 &  16 & 3000\\	
+	12.25 & 8 & 500\\	
+	12.23 & 6 & 1200\\		
+	12.21  & 10& 1000\\		
+	12.19 &  14  & 2050 		
+   \end{tabular}
+\begin{minipage}[t]{1\textwidth}
+\small{*Order number 14 was for 2750 shares but did not get fully executed as the bid quantity up to 12.19 exceeded the offered quantity at that price. The balance of order 14 will then be posted as a limit order in the continuous trading session}
+\end{minipage}   
+\end{table}
+
+	
+% Requires the booktabs if the memoir class is not being used
+\begin{table}[!ht]
+   \centering
+   \caption{Crossed Sell Orders\label{tab:openAuct5}}
+   \hspace*{-3.3cm}
+   \begin{tabular}{ccc} 
+	Price & Seq. Number & Sell Qty  \\ \hline
+	12.19 &  20 & 1200\\
+	12.18 &  18 & 1800\\
+	12.16 &  21 & 5000\\
+	12.12  & 2  & 1750 \\		
+	12.11  & 5  & 2500\\				
+	12.05  & 11 & 3500 		
+   \end{tabular}
+\end{table}	
+
+
+
 
 It is worth mentioning that the open auction tends to be considered as a major price discovery mechanism given the fact it occurs after a period of market inactivity when market participants were unable to transact. All new information accumulated overnight will be reflected in the first print of the day, matching buying and selling interests.  
 
