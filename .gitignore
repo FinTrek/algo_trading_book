@@ -1,6 +1,7 @@
 # Latex generated files #
 ########################
 *.toc
+*.tdo
 *.log
 *.pdf
 *.aux
