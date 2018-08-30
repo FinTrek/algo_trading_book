@@ -38,6 +38,22 @@ With regards to data warehousing infrastructures we can make similar considerati
 As we have seen in chatper~\ref{chap:ch_tech} HFT and market making setups are mostly built in as a single monolithic co-located process. It is also a relatively simplified setup as trading initiation is completely endogenous to the trading strategy and thus does not have to be tied back to initiating order instructions coming down from the OMS. Typical solutions are  lot more ``low-tech" that come from processing the raw log files and storing the instructions in compressed csv files.
 
 \section{Calibration infrastructure}
+As we have seen in previous chapters a respectable trading execution operation requires a whole slew of models and analytics that have to be created, calibrated, and delivered into the production environment. Creating a solid, nimble and flexible calibration environment that provides a high degree of automation, strong validation and one click productionization is not  simple exercise but one that the authors strongly encourage investing time and resources in. This unless one is OK with countless hours spent each month keeping all these models up-to-date, fixing production breaks, and answer embarrassing question on why one could not trade the recent IPO. 
+
+The specific details of a solution for this is very much dependent on the current SDLC and productionization practices within the specific firm so it would be hard to give more specific advice apart from a few pointers:
+\begin{itemize}
+\item One frequent complication is that many of these processes are usually being built within the research environment leveraging the research data setup that is often different from the production installation. Ideally the two setup match and once the processes have been created the code, not the data/analytics are pushed into production and the data is generated there for consumption of production applications.
+\item Avoid a  process for all calibration but opt for a pipeline of independent hierarchical components with intermediary data vailable for various steps in the pipeline. This makes the process much easier to extend and parallelize. 
+\item think carefully about segmentation of calibration meaning when one should have per symbols analytics vs per group. Different analytics might rely on different groupings. Does this complexity be supported by the production system or should one keep this as part of the calibration process but in the end``explode" it to each individual symbol? There are pros and cons.
+\item If possible one should try to be robust around new issues/IPOs meaning one should have a process that has a forward looking list of upcoming IPOs so that the reference data and at least sensible default analytics can be created. This is usually a very hard thing to do and IPOs are a frequent pain-point of this process.
+\item Think very carefully around default values. What happens if a symbol is not present? Because of the high reliance on normalization variables a mismatch between defaults and realized stock behavior could lead to strong under-performance of the algorithms.
+\item Keep a history of the calibration data so that data can be used for historical simulation
+\item There is an over-reliance on using flat files (e.g. csv) to deliver this content. A possible better approach is for the data to be stored into a database with a production tag primary key and the production process (possibly and intermediary process that actually creates flat files for the production environment) generates these files based on the primary key which is controlled by production support. 
+\end{itemize}
+
 \section{Simulation Environment}
+This is a topic that could easily have at least its own chapter if it wasn't for the already hefty size of this manuscript. So we'll be forced to do a cursory overview of the topic.
+
+
 \section{TCA Environment}
 
