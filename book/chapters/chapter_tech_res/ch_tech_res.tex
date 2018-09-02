@@ -43,7 +43,7 @@ As we have seen in previous chapters a respectable trading execution operation r
 The specific details of a solution for this is very much dependent on the current SDLC and productionization practices within the specific firm so it would be hard to give more specific advice apart from a few pointers:
 \begin{itemize}
 \item One frequent complication is that many of these processes are usually being built within the research environment leveraging the research data setup that is often different from the production installation. Ideally the two setup match and once the processes have been created the code, not the data/analytics are pushed into production and the data is generated there for consumption of production applications.
-\item Avoid a  process for all calibration but opt for a pipeline of independent hierarchical components with intermediary data vailable for various steps in the pipeline. This makes the process much easier to extend and parallelize. 
+\item Avoid a  process for all calibration but opt for a pipeline of independent hierarchical components with intermediary data available for various subsequent steps in the pipeline. This makes the process much easier to extend and parallelize. 
 \item think carefully about segmentation of calibration meaning when one should have per symbols analytics vs per group. Different analytics might rely on different groupings. Does this complexity be supported by the production system or should one keep this as part of the calibration process but in the end``explode" it to each individual symbol? There are pros and cons.
 \item If possible one should try to be robust around new issues/IPOs meaning one should have a process that has a forward looking list of upcoming IPOs so that the reference data and at least sensible default analytics can be created. This is usually a very hard thing to do and IPOs are a frequent pain-point of this process.
 \item Think very carefully around default values. What happens if a symbol is not present? Because of the high reliance on normalization variables a mismatch between defaults and realized stock behavior could lead to strong under-performance of the algorithms.
@@ -52,8 +52,21 @@ The specific details of a solution for this is very much dependent on the curren
 \end{itemize}
 
 \section{Simulation Environment}
-This is a topic that could easily have at least its own chapter if it wasn't for the already hefty size of this manuscript. So we'll be forced to do a cursory overview of the topic.
+This is a topic that could easily have at least its own chapter if it wasn't for the already hefty size of this manuscript. So we'll be forced to do a cursory overview of the topic. \\
 
+In chapter~\ref{chap:ch_tech} we discussed how a strategy container is usually developed and how the main strategy loop contains most of the decision points on how the trading is done while other parts of the infrastructure keeps the state of the executing order in synch. But even for very simple strategies how does one test that the logic is correct? The most intuitive approach is to build some form of simulation environment that allows the developer to ensure that all the pieces are working together and the strategy makes the ``right'' decisions based on the current state. 
+
+The most effective way to build a simulation environment is to start with the existing strategy container and to stub out  it's inputs and outputs of so that it can run independently.  The most important layers tor replace :
+\begin{itemize}
+\item Inbound Order Layer: Replace the injection of parent one or more parent orders reading from a flat file or command line
+\item Reference and Static Data Layers: Replaces the access to this data with a csv files
+\item Market Data Layer: Replacing the market data real-time subscription with a component that injects historical market data from a flat file.
+\item Outbound Layer: Replacing the component with a sub that contains some form of fill model.
+\end{itemize}
+
+The most complex layers of the above list are of course the Market Data and the Outbound layers which we'll discuss later but there is a very important element that needs  be considered as part of the overall architecture of a strategy container in order to be able to support effectively a simulation environment. This element is time.
+
+When one wants to run a simulation of a whole day VWAP execution it is obvious that one does not want to have to wait many hours to find out the result. One would want to run the simulation as quickly as possible so she can see the results, make the necessary changes and repeat. The problem is that there are several components part of the strategy container that leverage actual time (e.g. trading sessions such as opening and closing auctions, order start and end time, etc) and there is a healthy use of timers to perform specific tasks such as timeouts (e.g. waiting for acks from the exchange after submitting an order) and delays (e.g. have the strategy wake up every n seconds or decide to sleep for a few seconds after a large block fill). Running the strategy simulation in accelerated time while maintaining realistic behavior requires that the time and the timers 
 
 \section{TCA Environment}
 
