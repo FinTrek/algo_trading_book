@@ -106,7 +106,19 @@ While Algo Switching Engine are a very powerful tool it has several meaningful d
 As one can glean from the above treatment of algo switching engine, the authors are not big fans of this approach and consider that this evolution has likely decreased the quality of execution algorithms. The popularity of these approaches is still quite high and we believe the approach is overused. However there are signs that this popularity is slowly waning as clients are starting to trust more the broker to be able to fine tune the behavior of the strategies.
 
 \subsubsection{Portfolio Algorithm Engine}
-We discussed in chapter \ref{chap:ch_exec_models} that some algorithmic strategies involved the coordinated trading of a whole portfolio of instruments. In this section we briefly looks at the technology infrastructure needed for this type of strategy and some of the common issues facing these problems.
+We discussed in chapter \ref{chap:ch_exec_models} that some algorithmic strategies involved the coordinated trading of a whole portfolio of instruments. In this section we briefly looks at the technology infrastructure needed for this type of strategies and some of the common issues facing these problems.\\
+
+The problems starts immediately at the interaction through the FIX infrastructure with the client's EMS. Until recently the support for Basket trading was  never well nor consistently supported by the various EMS making the certification of a portfolio strategy a potentially very fiddly proposition as multiple approaches might need to be supported. Where basket trading is not supported firms have resorted to simple tricks like considering a portfolio every order sent to that algo within a certain timeframe, or linked to a portfolio ID parameters. \textnote{Need to confirm that this is still the case} \\
+
+The portfolio algorithms infrastructure is in not dissimilar to the one used in Algo Switching but with the added complication that it now needs to manage the schedule for multiple orders. This algorithms will create a set of linked trajectories, often through some form of portfolio optimization process that implements the specific objective function. \\
+
+Once the trajectories have been generated the algorithm will, in most cases, use one or more existing  algos possibly modified to better work with the portfolio infrastructure.  Certain algo implementations might send short time slices to a TWAP algo ( essentially transforming the trajectory into a piecewise linear curve ) whiel other implementation might used a modified VWAP that supports a list parameter where the whole trajectory is specified and that overrides the static one. \\
+
+Once the portfolio starts trading market condition changes or realized deviations of the portfolio shape (usually as an impact security measure the single slice will have a max POV constraints applied which if triggered will distort the original intent) usually require the algorithm to re-optimize and the individual slices are amended to account for the new schedule.\\
+
+
+
+
 
 \section{Other Algorithmic Trading Usecases}
 
