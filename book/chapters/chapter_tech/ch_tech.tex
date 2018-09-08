@@ -112,16 +112,21 @@ The problems starts immediately at the interaction through the FIX infrastructur
 
 The portfolio algorithms infrastructure is in not dissimilar to the one used in Algo Switching but with the added complication that it now needs to manage the schedule for multiple orders. This algorithms will create a set of linked trajectories, often through some form of portfolio optimization process that implements the specific objective function. \\
 
-Once the trajectories have been generated the algorithm will, in most cases, use one or more existing  algos possibly modified to better work with the portfolio infrastructure.  Certain algo implementations might send short time slices to a TWAP algo ( essentially transforming the trajectory into a piecewise linear curve ) whiel other implementation might used a modified VWAP that supports a list parameter where the whole trajectory is specified and that overrides the static one. \\
+Once the trajectories have been generated the algorithm will, in most cases, use one or more existing  algos possibly modified to better work with the portfolio infrastructure.  Certain algo implementations might send short time slices to a TWAP algo ( essentially transforming the trajectory into a piece-wise linear curve ) while other implementation might use a modified VWAP style algo that supports a parameter that specifies the trajectory to be used. \\
 
 Once the portfolio starts trading market condition changes or realized deviations of the portfolio shape (usually as an impact security measure the single slice will have a max POV constraints applied which if triggered will distort the original intent) usually require the algorithm to re-optimize and the individual slices are amended to account for the new schedule.\\
 
-
-
+This workflow is already quite complex but there are several further mechanical and numerical issues that further complicates matter making portfolio algorithms really hard to pull off successfully. Here are several pitfalls that happen in practice:
+\begin{itemize}
+\item Portfolio IS style algorithms, the most common approach for portfolio algo is usually implemented by a QP (Quadratic Programming) \footnote{\url{https://en.wikipedia.org/wiki/Quadratic_programming}} optimization problem where the schedule is dicretized into bins representing the shares to be traded in a certain period. For large portfolios common in fund rebalancing and for relatively fine grained time bins  the number of variables that need to be used explodes pretty quickly (in particular formulating these problems require use of several auxiliary variables to manage cost constraints etc). For example a 1000 stock portfolio with 5m bins  sent to a whole day Portfolio IS algorithm would have to solve a problem with > 100k variables. This often results in a very slow  optimization cycle that can take 100s of seconds making it too slow  for effective utilization ( no client would want to wait several minutes to see the first trades) and too compute intensive for a scalable operation (e.g. one receives a dozen such portfolios at the beginning of the day). To solve this problem effectively requires non trivial numerical tricks and simplifications that makes the actual optimization problem very tricky to solve.
+\item Essentially all such algorithms are discretized time bins and synchronizing the re-optimization to correctly line up is very tricky and often leads to purely mechanical distortion of the realized schedule even in very simple settings (e.g. the tendency of the orders to be behind schedule leads to the unexecuted quantity to be reallocated to the renaming bins causing a significantly stretched execution schedule).
+\item The portfolio level optimization problem requires a variance-covariance matrix for all instruments in the portfolio. As discussed the universe of security that are traded with algos is usually very large and to have stable Var/Cov matrix for such universe requires the creation or purchase of a Factor Risk Model (either a fundamental factor model or maybe a simpler PCA style model). New issues and ticker changes creates an additional operational headache for these algorithms.
+\item Optimization linked schedules are very rigid and to avoid significant breaches of the provided constraints the algorithm has to follow the schedule quite closely. This means that the algo usually cannot leverage additional opportunistic liquidity. In a market structure like the US where 30-40\% of the liquidity is in dark pools this makes these algorithm not very effective in sourcing liquidity. Some effort in incorporating dark pools int he optimization problems were attempted in (Kratz, Sch{\"o}neborn) (2012) \ref{krasch} but no production algorithm the authors know of have actually solved this problem effectively. \textnote{Max, did you guys ever finalized Portfolio Aqua to deal with this? If so want to adjust this?}
+\end{itemize}
 
 
 \section{Other Algorithmic Trading Usecases}
-
+We completed this incredible whirlwind tour of the technology stack present in 
 
 \section{ATS Infrastructure}
 \subsection{Matching Engine}
