@@ -345,13 +345,13 @@ The following variables are used as explaining variables:
 It is shown that this model does fare better than FPT model to capture the execution times. But an important limitation is ``\dots censoring as a result of prices moving away from the limit price would be a violation of the underlying assumption since prices at the time of censoring are not included in $X_i$.'' We show in our analysis of Level III data, a key determinant for cancellation of an order is that price moving away from the limit price that the trader has desired. \\
 
 
-\noindent \textbf{Other Early Models:} There are a number of studies that have looked into order book dynamics using models that arise from Theory of Point Processes. Bouchard, Mezard and Polters (2002)~\cite{bouchardmezard} investigate the interaction between order flow and liquidity; it is observed that the distribution of incoming limit order prices follow a power law around the current price and the overall shape of the book in terms of volume on both sides is rather systematic. Smith, Farmer, Gillemot and Krishnamunthy (2003)~\cite{smithfarm} and Farmer et al. (2004)~\cite{farmermikesen} study how the order flow influences price formation; the price impact of market orders is a function of touch price depth and spread size. Hewlett (2006)~\cite{}\btodo{Missing Reference} focuses on using LOB dynamics to find optimal liquidation strategies in foreign currency markets. 
+\noindent \textbf{Other Early Models:} There are a number of studies that have looked into order book dynamics using models that arise from Theory of Point Processes. Bouchard, Mezard and Polters (2002)~\cite{bouchardmezard} investigate the interaction between order flow and liquidity; it is observed that the distribution of incoming limit order prices follow a power law around the current price and the overall shape of the book in terms of volume on both sides is rather systematic. Smith, Farmer, Gillemot and Krishnamunthy (2003)~\cite{smithfarm} and Farmer, Gillemot, Liko, Mike and Sen (2004)~\cite{farmermikesen} study how the order flow influences price formation; the price impact of market orders is a function of touch price depth and spread size. 
 
 
 To have a more complete and realistic picture of how the LOB evolves, we must consider `hidden liquidity.' Almost all exchanges allow traders to hide all or portions of their orders. The so called, ``iceberg order'' is split into several smaller parts and is queued along with the other orders, but only the displayed quantity is visible and is part of the market depth. When the order reaches the front of the queue only the displayed is executed. Several reports could be as high as 26\%. In the models discussed below, we will not address the hidden liquidity issue, which will be taken up in a later section.
 
 
-Modeling of LOB dynamics has drawn on ideas from economics, physics, statistics and psychology. The approach taken in economics literature is to focus on the behavior of the traders and the dynamics is modeled as sequential games Rosu (2009)~\cite{irosu09}. Others, such as researchers from physics, have treated order flows as random and statistical mechanics techniques are used to study the dynamics. Other studies, such as Parlour and Seppi (2008)~\cite{parseppi} and Bouchaud et al. (2009)~\cite{bouchaud2009} are useful references for studies that come from economics point of view. We will review some models that are of recent origin. \\
+Modeling of LOB dynamics has drawn on ideas from economics, physics, statistics and psychology. The approach taken in economics literature is to focus on the behavior of the traders and the dynamics is modeled as sequential games (Rosu (2009)~\cite{irosu09}). Others, such as researchers from physics, have treated order flows as random and statistical mechanics techniques are used to study the dynamics. Other studies, such as Parlour and Seppi (2008)~\cite{parseppi} and Bouchaud et al. (2009)~\cite{bouchaud2009} are useful references for studies that come from economics point of view. We will review some models that are of recent origin. \\
 
 
 \noindent\textbf{Cont, Stoikov and Talreja (2010)~\cite{contstoi}}: In this model of the limit order book, the number of limit orders at each price level in the book is taken to be a continuous-time Markov chain. The evolution of the order book through market orders, limit orders and cancellations is represented as a counting process. The model replicates the evolution of the events using independent Poisson processes. The study views LOB as a system of queues subject to order book events whose occurrences are modeled as a multidimensional point process. Before we state the specific questions and the models implications, we define certain useful quantities. 
@@ -367,7 +367,7 @@ It is taken that the price grid as $P(n)=\{1,2,\ldots,n\}$ multiples of a price 
 	\end{split}
 	\end{equation}
 The depth of the order book is stated relative to best bid and best ask on either side of the book. This way the model can be applied to order book for any equity subject to ever changing, best bid and best ask. Define
-	\begin{flalign}\label{eqn:qaqb}
+	\begin{flalign} \label{eqn:qaqb}
 	&& Q_i^B(t)&= \begin{cases} X_{p_A(t)-i}(t), & 0<i<p_A(t) \\ 0, & p_A(t) \leq i <n \end{cases} && \notag \\
 	\text{and} && \phantom{x} & \phantom{x} && \\
 	&& Q_i^A(t)&= \begin{cases} X_{p_B(t)-i}(t), & 0<i<n-p_B(t) \\ 0, & n-p_B(t) \leq i <n \end{cases} && \notag
@@ -437,12 +437,62 @@ The model was evaluated using data sets from Tokyo Stock Exchange. The model is 
    	\caption{Distribution of inter-arrival times of market orders for stock BNPP.PA (Chakraborti et al. 2011)~\cite{chaktokpat}. \label{fig:intertimefig}}
 	\end{figure}
 
-The use of Poisson processes to model the flows of limit orders, market orders and cancellations makes this method analytically tractable. The model captures the steady-state shape of the order book (although there may be other distributions that may be fit better besides Poisson, see Figure~\ref{fig:intertimefig}) but it may not be useful for predicting short-term behavior that may be more relevant for the traders. The assumption of Poisson process results in that the intensity of arrivals and cancellations that does not depend on the state of the order book which is somewhat unrealistic given the feedback loop relationship between the behavior of the market participants and the history of the order book. Recent works, by Zhao (2010)~\cite{} and Abergel (2010)~\cite{}\btodo{Missing references} show that the memory-less property is not empirically valid. Orders tend to be clustered due to dependencies between liquidity taking and liquidity providing and also due to algorithmic execution of parent order that is split into numerous child orders. Also, the assumption that all orders are of the same size is too simplistic. 
+The use of Poisson processes to model the flows of limit orders, market orders and cancellations makes this method analytically tractable. The model captures the steady-state shape of the order book (although there may be other distributions that may be fit better besides Poisson, see Figure~\ref{fig:intertimefig}) but it may not be useful for predicting short-term behavior that may be more relevant for the traders. The assumption of Poisson process results in that the intensity of arrivals and cancellations that does not depend on the state of the order book which is somewhat unrealistic given the feedback loop relationship between the behavior of the market participants and the history of the order book. Recent works show that the memory-less property is not empirically valid. Orders tend to be clustered due to dependencies between liquidity taking and liquidity providing and also due to algorithmic execution of parent order that is split into numerous child orders. Also, the assumption that all orders are of the same size is too simplistic. 
 
 
-Zhao (2010)~\cite{}\btodo{Missing references} proposes a model based on marked point process when the mark represents order types, price, size etc.. The joint modeling also assumes that the order flow is self-exciting, i.e. new orders or cancellations occur in an orderly point processes with an intensity function that depends on the history of the limit order book. The model is somewhat difficult to estimate and does not fully capture the empirical results such as volatility clustering etc.. \\
+Models based on marked point process are proposed when the mark represents order types, price, size etc.. The joint modeling assumes that the order flow is self-exciting, i.e. new orders or cancellations occur in an orderly point processes with an intensity function that depends on the history of the limit order book. These models are somewhat difficult to estimate and do not fully capture the empirical results such as volatility clustering etc.. \\
 
-\noindent\textbf{Hawkes Process:} The features of volatility clustering and the significant autocorrelations in durations between order arrivals and significant cross-correlation of arrival rates across various event types are better captured by multi-dimensional Hawkes process. For a given $M$-dimensional point process, let $N_t=(N_t^1,\ldots,N_t^M)$ denote the associated counting process and the Hawkes process is characterized by intensities, $\lambda^m(t), m=1,\ldots,M$ as
+
+\noindent\textbf{Queue-Reactive Model:} Most of the market participants consider their target price with reference to market price, which depends on the order flows and the resulting changes in the state of the LOB. Huan, Lehalle and Rosenbaum (2015)~\cite{hlehros} study the LOB dynamics via a Markov queuing model when the market price remains constant and how the market price changes. The change in market price can occur when the execution occur when the execution occur at the best price or a new order appears within the spread. This dual split of the model is termed as `queue-reactive model.' In the framework considered, three specific scenarios, where bid and ask sides are independent, independent except for the first two positions, on either side and where cross dependence between bid queue and ask queue is possible.
+
+
+We will not delve into extensive details here, but briefly indicate the main gist of the model. Going for `$k$' positions on both sides of the order book, $X(t)= (q_{-k}(t),\ldots,q_{-1}(t),q_1(t),\ldots,q_k(t))$ is modeled as continuous time Markov jump processes. The key quantities in the calculations are the intensity rates of arrivals of limit orders, cancellations and market orders. Under the independence assumption, the following behaviors are observed:
+
+\begin{enumerate}[--]
+\item Limit order arrival in the first position is approximately a constant function of queue size. At other positions away from the best positions, the intensity is a decreasing function of queue size. 
+
+\item Intensity of order cancellation is an increasing concave function of $q_{\pm1}$, not linear as in Cont et al. (2010)~\cite{contstoi}; but after the first position, intensity is much lower as they are likely to move to the top of the book.
+
+\item The rate of market order decreases exponentially with the available volume in the best positions. For the second position the shape of the intensity function is similar to the first position but the intensity decreases after that.
+\end{enumerate}
+
+
+In the case of dependency where bid side and ask side are correlated to each other, the above observations include the consideration of queue sites on the other side as well. In a paper with similar ideas, Abergel and Jedidi (2013)~\cite{aberjed} present a model that captures a stylized description of order book with the assumption of independent Poissonian arrival times. They also show that the price process converges to a Brownian motion. 
+
+
+\noindent\textbf{Hawkes Process:} Hawkes (1971)~\cite{hawkes71} introduced a model for self-exciting and mutually exciting point processes which capture the property that occurrence of an event increases the chance of further events occurring. Before we describe its applications in LOB modeling, we want to briefly discuss the main features of the model. If we let $\lambda(t)$ be the conditional intensity measured through the chance in the number of events that occur in the time interval $(0,t)$ given the information available, then the self-exciting process has the intensity
+	\begin{equation} \label{eq:seintensity}
+	\lambda(t)= \mu t+ \int_0^t \gamma(t-u) \;dN(u)= \mu + \sum_{T_i<t} \gamma(t-T_i),
+	\end{equation}
+where $0<T_1<T_2<\cdots<T_n$ are the times when events occur. When $\mu>0$ and $\gamma(u)=0$ provides a Poisson base level for the process. The function $\gamma(u) \geq 0$ is called the exciting kernel. Each event will increase the intensity and then will decrease until the next event occurs again when the intensity will go up. Some of the kernels suggested in the literature are:
+	\begin{equation} \label{eq:suggex}
+	\begin{split}
+	\text{Exponential kernel: }& \gamma(u)= \alpha \cdot \beta \cdot e^{-\beta u} \quad\quad \mu>0 \\
+	\text{Powerlaw kernel: }& \gamma(u)= \dfrac{\alpha \beta}{(1+\beta u)^{1+p}}
+	\end{split}
+	\end{equation}
+Here `$\alpha$' represents the overall strength of excitation and `$\beta$' controls the relaxation time. 
+
+
+Hawkes (2018)~\cite{hawkes18} provides a review of Hawkes processes in financial applications. Two extensions that are found to be useful are: one related to market point processes, where associated marks with the event can trigger the excitement and the second relates to the processes when there are different types of events and how they can influence each other:
+	\begin{equation} \label{eq:markedhawk}
+	\begin{split}
+	\text{Marked Hawkes Process: }& \eta(\lambda_t)= \mu(t) + \sum_{T_i<t} \gamma(t-T_i, \xi_i) \quad \quad T_i<t \\
+	\text{Mutually Exciting Process: }& \lambda_{i,t}= \mu_i + \sum_{j=1}^D \sum_{T_{j:r}<t} \gamma_{ij} (t- T_{j:r}).
+	\end{split}
+	\end{equation}
+Here `$\xi_i$' are marks such as `volume' and `$D$' is the different types of events with their run point processes. 
+
+
+
+
+
+
+
+
+
+
+The features of volatility clustering and the significant autocorrelations in durations between order arrivals and significant cross-correlation of arrival rates across various event types are better captured by multi-dimensional Hawkes process. For a given $M$-dimensional point process, let $N_t=(N_t^1,\ldots,N_t^M)$ denote the associated counting process and the Hawkes process is characterized by intensities, $\lambda^m(t), m=1,\ldots,M$ as
 	\begin{equation}\label{eqn:lambdamdoub}
 	\begin{split}
 	\lambda^m(t)&= \lambda_0^m(t) + \sum_{n=1}^M \int_0^t \sum_{j=1}^P \alpha_j^{mn} e^{-\beta_j^{mn}(t-s)} dN_s^n \\
