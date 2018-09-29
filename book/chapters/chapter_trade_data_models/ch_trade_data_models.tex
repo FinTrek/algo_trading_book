@@ -304,6 +304,7 @@ Thus the study by Biasis et al. (1995)~\cite{spalt} provides a set of concrete m
 
 
 \subsection{Modeling LOB Dynamics}
+\subsubsection{Review of Early Models}
 
 We begin with one of the earlier models to appear in the econometric literature (Lo, MacKinlay and Zhang (2002)~\cite{maczhang}); they used the data from Investment Technology Group (ITG) that contained time stamped information on each limit order from submission to cancellation or execution. With three possible paths for each submitted order, the associated (a) time-to-cancellation/modification, (b) time-to-first fill and (c) time-to-completion are tracked and models are developed for each path on both sides of the order. Because ITG largely deals with the institutional investors, the results apply only to a limited segment of the traders. The modeling approach is to get the execution times as the first-passage time to the limit price assuming that price follows a geometric Brownian model with a drift:
 	\begin{equation}\label{eqn:dp(t)}
@@ -345,7 +346,7 @@ The following variables are used as explaining variables:
 It is shown that this model does fare better than FPT model to capture the execution times. But an important limitation is ``\dots censoring as a result of prices moving away from the limit price would be a violation of the underlying assumption since prices at the time of censoring are not included in $X_i$.'' We show in our analysis of Level III data, a key determinant for cancellation of an order is that price moving away from the limit price that the trader has desired. \\
 
 
-\noindent \textbf{Other Early Models:} There are a number of studies that have looked into order book dynamics using models that arise from Theory of Point Processes. Bouchard, Mezard and Polters (2002)~\cite{bouchardmezard} investigate the interaction between order flow and liquidity; it is observed that the distribution of incoming limit order prices follow a power law around the current price and the overall shape of the book in terms of volume on both sides is rather systematic. Smith, Farmer, Gillemot and Krishnamunthy (2003)~\cite{smithfarm} and Farmer, Gillemot, Liko, Mike and Sen (2004)~\cite{farmermikesen} study how the order flow influences price formation; the price impact of market orders is a function of touch price depth and spread size. 
+\noindent \textbf{Other Early Models:} There are a number of studies that have looked into order book dynamics using models that arise from Theory of Point Processes. Bouchard, Mezard and Polters (2002)~\cite{bouchardmezard} investigate the interaction between order flow and liquidity; it is observed that the distribution of incoming limit order prices follow a power law around the current price and the overall shape of the book in terms of volume on both sides is rather systematic. Smith, Farmer, Gillemot and Krishnamunthy (2003)~\cite{smithfarm} and Farmer, Gillemot, Lillo, Mike and Sen (2004)~\cite{farmermikesen} study how the order flow influences price formation; the price impact of market orders is a function of touch price depth and spread size. 
 
 
 To have a more complete and realistic picture of how the LOB evolves, we must consider `hidden liquidity.' Almost all exchanges allow traders to hide all or portions of their orders. The so called, ``iceberg order'' is split into several smaller parts and is queued along with the other orders, but only the displayed quantity is visible and is part of the market depth. When the order reaches the front of the queue only the displayed is executed. Several reports could be as high as 26\%. In the models discussed below, we will not address the hidden liquidity issue, which will be taken up in a later section.
@@ -353,6 +354,8 @@ To have a more complete and realistic picture of how the LOB evolves, we must co
 
 Modeling of LOB dynamics has drawn on ideas from economics, physics, statistics and psychology. The approach taken in economics literature is to focus on the behavior of the traders and the dynamics is modeled as sequential games (Rosu (2009)~\cite{irosu09}). Others, such as researchers from physics, have treated order flows as random and statistical mechanics techniques are used to study the dynamics. Other studies, such as Parlour and Seppi (2008)~\cite{parseppi} and Bouchaud et al. (2009)~\cite{bouchaud2009} are useful references for studies that come from economics point of view. We will review some models that are of recent origin. \\
 
+
+\subsubsection{Recent Models}
 
 \noindent\textbf{Cont, Stoikov and Talreja (2010)~\cite{contstoi}}: In this model of the limit order book, the number of limit orders at each price level in the book is taken to be a continuous-time Markov chain. The evolution of the order book through market orders, limit orders and cancellations is represented as a counting process. The model replicates the evolution of the events using independent Poisson processes. The study views LOB as a system of queues subject to order book events whose occurrences are modeled as a multidimensional point process. Before we state the specific questions and the models implications, we define certain useful quantities. 
 
@@ -443,10 +446,10 @@ The use of Poisson processes to model the flows of limit orders, market orders a
 Models based on marked point process are proposed when the mark represents order types, price, size etc.. The joint modeling assumes that the order flow is self-exciting, i.e. new orders or cancellations occur in an orderly point processes with an intensity function that depends on the history of the limit order book. These models are somewhat difficult to estimate and do not fully capture the empirical results such as volatility clustering etc.. \\
 
 
-\noindent\textbf{Queue-Reactive Model:} Most of the market participants consider their target price with reference to market price, which depends on the order flows and the resulting changes in the state of the LOB. Huan, Lehalle and Rosenbaum (2015)~\cite{hlehros} study the LOB dynamics via a Markov queuing model when the market price remains constant and how the market price changes. The change in market price can occur when the execution occur when the execution occur at the best price or a new order appears within the spread. This dual split of the model is termed as `queue-reactive model.' In the framework considered, three specific scenarios, where bid and ask sides are independent, independent except for the first two positions, on either side and where cross dependence between bid queue and ask queue is possible.
+\noindent\textbf{Queue-Reactive Model:} Most of the market participants consider their target price with reference to market price, which depends on the order flows and the resulting changes in the state of the LOB. Huang, Lehalle and Rosenbaum (2015)~\cite{hlehros} study the LOB dynamics via a Markov queuing model when the market price remains constant and how the market price changes. The change in market price can occur when the execution occurs at the best price or a new order appears within the spread. This dual split of the model is termed as `queue-reactive model.' In the framework considered, three specific scenarios, where bid and ask sides are independent, independent except for the first two positions, on either side and where cross dependence between bid queue and ask queue is possible.
 
 
-We will not delve into extensive details here, but briefly indicate the main gist of the model. Going for `$k$' positions on both sides of the order book, $X(t)= (q_{-k}(t),\ldots,q_{-1}(t),q_1(t),\ldots,q_k(t))$ is modeled as continuous time Markov jump processes. The key quantities in the calculations are the intensity rates of arrivals of limit orders, cancellations and market orders. Under the independence assumption, the following behaviors are observed:
+We will not delve into extensive details here, but briefly indicate the main gist of the model. Going for `$k$' positions on both sides of the order book, $X(t)= (q_{-k}(t),\ldots,q_{-1}(t),q_1(t),\ldots,q_k(t))$ is modeled as continuous time Markov jump process. The key quantities in the calculations are the intensity rates of arrivals of limit orders, cancellations and market orders. Under the independence assumption, the following behaviors are observed:
 
 \begin{enumerate}[--]
 \item Limit order arrival in the first position is approximately a constant function of queue size. At other positions away from the best positions, the intensity is a decreasing function of queue size. 
@@ -457,14 +460,16 @@ We will not delve into extensive details here, but briefly indicate the main gis
 \end{enumerate}
 
 
-In the case of dependency where bid side and ask side are correlated to each other, the above observations include the consideration of queue sites on the other side as well. In a paper with similar ideas, Abergel and Jedidi (2013)~\cite{aberjed} present a model that captures a stylized description of order book with the assumption of independent Poissonian arrival times. They also show that the price process converges to a Brownian motion. 
+In the case of dependency where bid side and ask side are correlated to each other, the above observations include the consideration of queue sites on the other side as well. In a paper with similar ideas, Abergel and Jedidi (2013)~\cite{aberjed} present a model that captures a stylized description of order book with the assumption of independent Poissonian arrival times. They also show that the price process converges to a Brownian motion. \\
 
 
-\noindent\textbf{Hawkes Process:} Hawkes (1971)~\cite{hawkes71} introduced a model for self-exciting and mutually exciting point processes which capture the property that occurrence of an event increases the chance of further events occurring. Before we describe its applications in LOB modeling, we want to briefly discuss the main features of the model. If we let $\lambda(t)$ be the conditional intensity measured through the chance in the number of events that occur in the time interval $(0,t)$ given the information available, then the self-exciting process has the intensity
+\subsubsection{An Introduction: Hawkes Process}
+
+Hawkes (1971)~\cite{hawkes71} introduced a model for self-exciting and mutually exciting point processes which capture the property that occurrence of an event increases the chance of further events occurring. Before we describe its applications in LOB modeling, we want to briefly discuss the main features of the model. If we let $\lambda(t)$ be the conditional intensity measured through the change in the number of events that occur in the time interval $(0,t)$ given the information available, then the self-exciting process has the intensity
 	\begin{equation} \label{eq:seintensity}
-	\lambda(t)= \mu t+ \int_0^t \gamma(t-u) \;dN(u)= \mu + \sum_{T_i<t} \gamma(t-T_i),
+	\lambda(t)= \mu + \int_0^t \gamma(t-u) \;dN(u)= \mu + \sum_{T_i<t} \gamma(t-T_i),
 	\end{equation}
-where $0<T_1<T_2<\cdots<T_n$ are the times when events occur. When $\mu>0$ and $\gamma(u)=0$ provides a Poisson base level for the process. The function $\gamma(u) \geq 0$ is called the exciting kernel. Each event will increase the intensity and then will decrease until the next event occurs again when the intensity will go up. Some of the kernels suggested in the literature are:
+where $0<T_1<T_2<\cdots<T_n<\cdots$ are the times when events occur. When $\mu>0$ and $\gamma(u)=0$ provides a Poisson base level for the process. The function $\gamma(u) \geq 0$ is called the exciting kernel. Each event will increase the intensity and then will decrease until the next event occurs again when the intensity will go up. Some of the kernels suggested in the literature are:
 	\begin{equation} \label{eq:suggex}
 	\begin{split}
 	\text{Exponential kernel: }& \gamma(u)= \alpha \cdot \beta \cdot e^{-\beta u} \quad\quad \mu>0 \\
@@ -474,44 +479,37 @@ where $0<T_1<T_2<\cdots<T_n$ are the times when events occur. When $\mu>0$ and $
 Here `$\alpha$' represents the overall strength of excitation and `$\beta$' controls the relaxation time. 
 
 
-Hawkes (2018)~\cite{hawkes18} provides a review of Hawkes processes in financial applications. Two extensions that are found to be useful are: one related to market point processes, where associated marks with the event can trigger the excitement and the second relates to the processes when there are different types of events and how they can influence each other:
+Hawkes (2018)~\cite{hawkes18} provides a review of Hawkes processes in financial applications. Two extensions that are found to be useful are: one related to marked point processes, where associated marks with the event can trigger the excitement and the second relates to the processes when there are different types of events and how they can influence each other:
 	\begin{equation} \label{eq:markedhawk}
 	\begin{split}
 	\text{Marked Hawkes Process: }& \eta(\lambda_t)= \mu(t) + \sum_{T_i<t} \gamma(t-T_i, \xi_i) \quad \quad T_i<t \\
 	\text{Mutually Exciting Process: }& \lambda_{i,t}= \mu_i + \sum_{j=1}^D \sum_{T_{j:r}<t} \gamma_{ij} (t- T_{j:r}).
 	\end{split}
 	\end{equation}
-Here `$\xi_i$' are marks such as `volume' and `$D$' is the different types of events with their run point processes. 
+Here `$\xi_i$' are marks such as `volume' and `$D$' is the different types of events with their own point processes. 
 
 
-
-
-
-
-
-
-
-
-The features of volatility clustering and the significant autocorrelations in durations between order arrivals and significant cross-correlation of arrival rates across various event types are better captured by multi-dimensional Hawkes process. For a given $M$-dimensional point process, let $N_t=(N_t^1,\ldots,N_t^M)$ denote the associated counting process and the Hawkes process is characterized by intensities, $\lambda^m(t), m=1,\ldots,M$ as
+\noindent\textbf{Models for Volatility Clustering:} The features of volatility clustering and the significant autocorrelations in durations between order arrivals and significant cross-correlation of arrival rates across various event types are better captured by multi-dimensional Hawkes process. For a given $M$-dimensional point process, let $N_t=(N_t^1,\ldots,N_t^M)$ denote the associated counting process and the Hawkes process is characterized by intensities, $\lambda^m(t), m=1,\ldots,M$ as
 	\begin{equation}\label{eqn:lambdamdoub}
 	\begin{split}
 	\lambda^m(t)&= \lambda_0^m(t) + \sum_{n=1}^M \int_0^t \sum_{j=1}^P \alpha_j^{mn} e^{-\beta_j^{mn}(t-s)} dN_s^n \\
 	&=\lambda_0(t) + \sum_{n=1}^M \sum_{t_j<t} \sum_{j=1}^P \alpha_j^{mn} e^{-\beta_j^{mn}(t_j -t_i^n)}
 	\end{split}
 	\end{equation}
-where the number of exponent kernels, $P$, is fixed and $t_i^n$ is the $i$th jumping time of the $m$th variate. The scale and decay parameters, $\alpha^{mn}$ and $\beta^{mn}$ express the influence of the past events $t_i^n$ of type `$n$'. The baseline model in (\ref{eqn:lambdamdoub}) does not incorporate the effect of bid-ask spread on order flow. It is shown in Anderson, Cont and Vinkovskaya (2010)~\cite{} that $\alpha$ and $\beta$ parameters do depend on the bid-ask spread. A simulated Hawkes process is given in Figure~\ref{fig:hawkes}. The main characteristic of the Hawkes process is that intensity goes up at each event and decays exponentially between events. 
+where the number of exponential kernels, $P$, is fixed and $t_i^n$ is the $i$th jumping time of the $m$th variate. The scale and decay parameters, $\alpha^{mn}$ and $\beta^{mn}$ express the influence of the past events $t_i^n$ of type `$n$'. The baseline model in (\ref{eqn:lambdamdoub}) does not incorporate the effect of bid-ask spread on order flow. It is shown in the literature that $\alpha$ and $\beta$ parameters do depend on the bid-ask spread. A simulated Hawkes process (Toke 2011~\cite{toke}) is given in Figure~\ref{fig:hawkes}. As noted earlier, the main characteristic of the Hawkes process is that intensity goes up at each event and decays exponentially between events. 
 	\begin{figure}[!ht]
    	\centering
    	\includegraphics[width=0.9\textwidth]{chapters/chapter_trade_data_models/figures/hawkes.png} 
-   	\caption{Simulated two-dimensional Hawkes process (Toke 2011). \label{fig:hawkes}}
+   	\caption{Simulated two-dimensional Hawkes process. \label{fig:hawkes}}
 	\end{figure}
+
 
 The evolution of the order book is driven by six different intensity functions, but the model changes with the value of the spread. The base intensity and the decay rates are all assumed to be functions of the spread. The model is quite complex and requires the estimation of a large number of parameters, which in turn requires vast amount of data for calibration. 
 
 
-The mathematical framework was developed in Hawkes (1971)~\cite{} and was expanded in Hawkes and Oakes (1974)~\cite{}. The application of Hawkes process in finance is of recent origin: see Toke (2011)~\cite{} or Bacry et al. (2011)~\cite{}. We will briefly discuss the likelihood estimates of the model in (\ref{eqn:lambdamdoub}). First, we want to observe for a Poisson process, the intensity function $\lambda(t)=\lambda_0$, a constant. The log-likelihood of the model,
+We will briefly discuss the likelihood estimates of the model in (\ref{eqn:lambdamdoub}). First, we want to observe for a Poisson process, the intensity function $\lambda(t)=\lambda_0$, a constant. The log-likelihood of the model,
 	\begin{equation}\label{eqn:loglikemod}
-	\ln \mathcal{L}(\{t_i\}_{i=1,2,\ldots,N}) = \sum_{m=1}^M \ln \mathcal{L}^m(\{t_i\})
+	\ln \mathcal{L}(\{t_i\}_{i=1,2,\ldots,N}) = \sum_{m=1}^M \ln \mathcal{L}^m(\{t_i\}),
 	\end{equation}
 where
 	\[
@@ -521,7 +519,7 @@ and
 	\[
 	R^{mn}(l)= \sum_{t_\kappa^n t_l^m} e^{-\beta^{mn}(t_l^m-t_\kappa^n)}
 	\]
-is the cumulative decay function. Using the Multiplicative Random Time Change Theorem (see Meyer (1971)~\cite{}) that states that with a certain transformation of the variables, the Hawkes process can be changed to a unit rate homogeneous Poisson process. Transforming the time variable `$t$' into `$\mathcal{T}$', where
+is the cumulative decay function. Using the Multiplicative Random Time Change Theorem that states that with a certain transformation of the variables, the Hawkes process can be changed to a unit rate homogeneous Poisson process. Transforming the time variable `$t$' into `$\mathcal{T}$', where
 	\begin{equation}\label{eqn:calt}
 	\mathcal{T}= \int_0^t \lambda(s) \; ds
 	\end{equation}
@@ -539,16 +537,13 @@ More generally in the `$M$' dimensional multivariate case,
 	&+ \int_{t_{i-1}^m}^{t_i^m} \sum_{n=1}^M \sum_{t_{i-1}^m<t^n<s} \alpha^{mn} e^{-\beta^{mn}(s-t^n)} \; ds
 	\end{split}
 	\]
-will follow exponential distribution. The $\Lambda^m(t_{i-1}^m,t_i^m)$ are known as compensators and can be verified empirically if it follows exponential distribution. 
+will follow exponential distribution. The $\Lambda^m(t_{i-1}^m,t_i^m)$ are known as compensators and can be verified empirically if they follow exponential distribution. \\
 
 
-\subsubsection{Application of a Hawkes process}
+\noindent\textbf{Application of a Hawkes process:} We want to illustrate the model with an application. We first look at the statistical properties of the data and then look at the results of fitting one and two dimensional Hawkes processes to it. Our findings show that a two dimensional model based on Hawkes processes performs considerably better than a model based on two independent Poisson Processes. This provides strong evidence of the fact that the two key features of Hawkes processes (path dependency of the order flow and the possibility of modeling the interaction between the dimensions) are capable of capturing and replicating some of the key features of the empirical data. Moreover, there is evidence of significant and asymmetric interplay between the buy and the sell sides for the Limit Orders and evidence of limited interplay between the two sides when it comes to Market Orders. Finally, a study of the statistical properties of the orders showed a complex of alternating symmetric and asymmetric behavior of the LOB. 
 
 
-We want to illustrate the model with an application. We will first look at the statistical properties of the data and then look at the results of fitting one and two dimensional Hawkes processes to it. Our findings show that a two dimensional model based on Hawkes processes performs considerably better than a model based on two independent Poisson Processes. This provides strong evidence of the fact that the two key features of Hawkes processes (path dependency of the order flow and the possibility of modeling the interaction between the dimensions) are capable of capturing and replicating some of the key features of the empirical data. Moreover, there is evidence of significant and asymmetric interplay between the buy and the sell sides for the Limit Orders and evidence of limited interplay between the two sides when it comes to Market Orders. Finally, a study of the statistical properties of the orders showed a complex of alternating symmetric and asymmetric behavior of the LOB. 
-
-
-The data at hand is INET data for XOM (Exxon Mobil) for the 1st of September 2010. The first step was to look at the submission frequency of the Limit Orders during the trading day. Figure~\ref{fig:freqsubmitarrivals} shows such frequency plot and we can see how in the first hour a half and in the last half an hour of the trading day there is a much higher submission frequency (with peaks of 25/30 orders submitted per second) than during the rest of the day (around 5--10 orders per second).
+The INET data for XOM (Exxon Mobil) for the 1st of September 2010 is used here. Figure~\ref{fig:freqsubmitarrivals} shows the submission frequency plot and we can see how in the first hour a half and in the last half an hour of the trading day there is a much higher submission frequency (with peaks of 25/30 orders submitted per second) than during the rest of the day (around 5--10 orders per second).
 	\begin{figure}[!ht]
    	\centering
    	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/freqsubmit.png} 
@@ -559,8 +554,8 @@ The data at hand is INET data for XOM (Exxon Mobil) for the 1st of September 201
 This means that if we choose to look at the Limit Order flow with a model that doesn't allow for a varying baseline intensity, we will have to drop these two periods of increased trading activity and keep the data for only the middle portion of 6 hours of the trading day.
 
 
-We then looked at the data for the central portion of 6 hours of the trading day and found that market orders are just a function of Limit Orders. There were almost 90,000 Limit Orders submitted during that period of the day, compared to the only about 4,000 Market Orders. Similarly, there is an imbalance in the side of the order submission, with around 42,000 Limit Orders submitted on the Sell side compared to the 48,000 submitted on the Buy side (about 18\% more). This side-imbalance is also present in the Market Order submission although not that strongly: 1,882 Market Orders submitted on the Sell side compared to the 2,107 orders submitted on the Buy side (only about 12\% more). 
-	\begin{table}
+We then look at the data for the central portion of 6 hours of the trading day and find that market orders are just a fraction (4\%) of Limit Orders. Similarly, there is an imbalance in the side of the order submission (see Table~\ref{tab:xom}). 
+	\begin{table}[htbp]
 	\centering
 	\caption{XOM data for 09/01/2010 \label{tab:xom}}
 	\begin{tabular}{llll} 
@@ -573,8 +568,8 @@ We then looked at the data for the central portion of 6 hours of the trading day
 This shows how, on this trading day, most of the ``action'' was occurring on the Buy Side of the book which could mean that the markets were confident in an increase of the price of XOM (in line with the historical performance of the stock for that day).
 
 
-Our next step was to re-construct the Limit Order book from the order flow so to look at the life of the Limit Orders after their submission. We first looked into how many of the submitted Limit Orders get executed and, when they do, in how many fills. We found Table~\ref{tab:LOexec} that only about 6.5\% of all submitted LOs get at least partially filled with the percentage dropping to only about 6\% for those LO that actually get completely executed. Also, out of the LO that are completely filled nearly 90\% of them is filled in just one execution. This allows us to say that the magnitude of the LOs is comparable to that of the Market Orders, given that nearly all of them require only one Market Order to fill it completely. It is also interesting to note how few of the LOs that are submitted actually get executed. 
-	\begin{table}
+The next step was to re-construct the Limit Order book from the order flow so to look at the life of the Limit Orders after their submission. From Table~\ref{tab:LOexec}, only about 6.5\% of all submitted LOs get at least partially filled with the percentage dropping to only about 6\% for those LO that actually get completely executed. Also, out of the LO that are completely filled nearly 90\% of them is filled in just one execution. This allows us to say that the magnitude of the LOs is comparable to that of the Market Orders, given that nearly all of them require only one Market Order to fill it completely. 
+	\begin{table}[htbp]
 	\centering
 	\caption{LO executions and percentage breakdown by number of fills required \label{tab:LOexec}}
 	\begin{tabular}{cccc}
@@ -588,8 +583,8 @@ Our next step was to re-construct the Limit Order book from the order flow so to
 	\end{table}
 
 
-This means that either very few LO are actually submitted close to the market (hence have a chance to get executed) or that many of them don't stay in the book long enough to get executed. This led us to look into the life-time of the LOs and, more specifically, at their cancellation and execution times. We focused on how long, on average, for an order to be either not filled or partially filled LO stayed in the book before getting cancelled and at how long did it take for a LO to be either filled for the first time or completely filled. Results are given in Table~\ref{tab:meanlo}.
-	\begin{table}
+It can be observed that very few LO are actually submitted close to the market (hence have a chance to get executed) or that many of them don't stay in the book long enough to get executed. This led us to look into the life-time of the LOs and results are given in Table~\ref{tab:meanlo}.
+	\begin{table}[htbp]
 	\centering
 	\caption{Mean LO cancellation and execution times (in seconds) \label{tab:meanlo}}
 	\begin{tabular}{cccc}
@@ -600,8 +595,7 @@ This means that either very few LO are actually submitted close to the market (h
 	 25.3 & 56.2 & 25.6 & 57.6
 	\end{tabular}
 	\end{table}
-
-In this particular case, LOs stay in the book for much longer if they are on the sell side than if they are on the buy side. Orders that have never been filled are cancelled after 250 seconds if they are on the sell side compared to 177 seconds if they are on the buy side. Similarly, a partially filled LO on the sell side is cancelled after 63 seconds compared to 46 seconds if it's on the other side of the book. Also, if we look at the time it takes for a LO to be filled for the first time we see that that happens after about 56 seconds on the sell side compared to only 25 seconds on the buy side. Finally, for the LO that do get completely filled, it takes on average 1 minute for that to happen if the order is on the sell side compared to only 25 seconds if the order is on the buy side. This life-time difference for LOs on the two opposite sides of the book is consistent with what we saw earlier in the imbalance of the LO and MO submission. In fact, in this case as well we see how the buy side appears to be the more active side of the book. The shorter execution times for the orders on the buy side could be caused by either more aggressive pricing or by the price movements of the markets while the shorter lifespans and the higher number of orders on that side seem to indicate the use of more active trading strategies. However, there is another interesting observation that can be made. We see that on average a sell LO that is filled for the first time (but that doesn't get completely filled), is cancelled after about 7 seconds, compared to the 20 seconds that it would take had the order been on the buy side. This means that on average it takes three times longer for a partially (and never completely) filled order to be cancelled if it is on the buy side (which is the more active side) that if it is on the sell side (which is the less reactive side). The asymmetry between buy and sell side at the aggregated level has been noted in the literature.
+In this particular case, LOs stay in the book for much longer if they are on the sell side than if they are on the buy side. This life-time difference for LOs on the two opposite sides of the book is consistent with what we saw earlier in the imbalance of the LO and MO submission. In fact, in this case as well we see how the buy side appears to be the more active side of the book. The shorter execution times for the orders on the buy side could be caused by either more aggressive pricing or by the price movements of the markets while the shorter lifespans and the higher number of orders on that side seem to indicate the use of more active trading strategies. However, there is another interesting observation that can be made. We see that on average a sell LO that is filled for the first time (but that doesn't get completely filled), is cancelled after about 7 seconds, compared to the 20 seconds that it would take had the order been on the buy side. This means that on average it takes three times longer for a partially (and never completely) filled order to be cancelled if it is on the buy side (which is the more active side) that if it is on the sell side (which is the less reactive side). The asymmetry between buy and sell side at the aggregated level has been noted in the literature.
 
 
 The next step was to observe changes in the behavior of the book when moving further away from the market. We looked into the order submission and cancellation frequencies as a function of distance from the market price. Figure~\ref{fig:canfreq} and Figure~\ref{fig:freqsubmit1} show that most LO are submitted and cancelled at the market (respectively, 40\% and almost 30\%) and that the rates drop sharply with each price level further away from it. This supports the conclusion that the very small percentage of executed LO is not caused by the fact that most LO are submitted far away from the market and hence don't get the chance to get executed. We can also see how approximately 70\% (96\%) of all Limit Orders is placed in the top 5 (20) levels of the book and that 69\% (96\%) of all cancellations also occurs in the top 5 (20) levels. This a first indication of the fact that Level III data offers more information than Level II since with the top 5 levels of the book we were only able to capture around 70\% of all the occurring events. However, this also indicates that there is no need to use all the information provided in Level III data since by looking at only the top 20 levels of the book we are still able to capture nearly all of the occurring events. Both plots show a very similar behavior for the buy and sell side which led us to assume an almost symmetric behavior of the book. This assumption was later tested and confirmed at a 99\% confidence level with a two-sided Kolmogorov-Smirnov Test. 
@@ -633,7 +627,7 @@ With two more trading days (3rd and 9th of September 2013) data available, we ar
 	\end{figure}
 
 
-A second interesting difference was in the amount of volume on the two sides of the book (Figure~\ref{fig:losubcanfreq}). Across the 3 days there was a significant volume imbalance with considerably more volume on the sell side than on the buy side but the amount of imbalance between the two sides changes significantly across the three days. Overall there is no explanation as to why there would be such a strong volume imbalance in favor of the sell side other than some kind of temporary anomaly. These findings seem to point out the fact that the shape and behavior of the LOB change dramatically across different days and that, in order to capture some kind of more general/average behavior of the book, many more days of data are required. 
+A second interesting difference was in the amount of volume on the two sides of the book (Figure~\ref{fig:losubcanfreq}). Across the three days there was a significant volume imbalance with considerably more volume on the sell side than on the buy side but the amount of imbalance between the two sides changes significantly across the three days. Overall there is no explanation as to why there would be such a strong volume imbalance in favor of the sell side other than some kind of temporary anomaly. These findings seem to point out the fact that the shape and behavior of the LOB change dramatically across different days and that, in order to capture a more general/average behavior of the book, many more days of data are required. 
 	\begin{figure}[!ht]
    	\centering
    	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/freqsubmit.png} 
@@ -656,7 +650,7 @@ A second interesting difference was in the amount of volume on the two sides of 
 \subsubsection{One-Dimensional Models}
 
 
-We started by building a one dimensional model for the Limit Orders submitted on the buy side and one for those submitted on the sell side. Similarly, we build a one dimensional model for the Market Orders submitted on each side of the book. In the one dimensional case, the intensity function driving the Hawkes process is of the form
+We begin with a one dimensional model for the Limit Orders submitted on the buy side and one for those submitted on the sell side. Similarly, we build a one dimensional model for the Market Orders submitted on each side of the book. In the one dimensional case, the intensity function driving the Hawkes process is of the form
 	\begin{equation}\label{eqn:lambda6}
 	\lambda(t)= \lambda_0 + \alpha \sum_{t_i<t} e^{-\beta(t-t_i)}
 	\end{equation}
@@ -763,7 +757,7 @@ There appears to be some asymmetry in the cross-excitation effects with the occu
 The self-excitation components of the model are rather similar for both dimensions and it is interesting to point out the very short persistence of the self-excitation effect in both cases (about 0.02 seconds).
 
 
-In order to evaluate whether the two key features of a model based on Hawkes processes (path dependency of the order flow and the possibility of modeling the relation between the various dimensions) are really helpful in improving the performance of the model, we decided to compare the performance of our model to that of a bi-dimensional model based on two independent Poisson Processes (which by definition of Poisson process cannot account for any dependency in the order flow and by construction assume independence between the two dimensions). The results proved to be very encouraging with a remarkably better fit to the empirical data for the Hawkes Process based model (Figure~\ref{fig:4hawkes6}).
+In order to evaluate whether the two key features of a model based on Hawkes processes (path dependency of the order flow and the possibility of modeling the relation between the various dimensions) are really helpful in improving the performance of the model, we decided to compare the performance of our model to that of a bi-dimensional model based on two independent Poisson Processes (which by definition of Poisson process does not account for any dependency in the order flow and by construction assume independence between the two dimensions). The results proved to be very encouraging with a remarkably better fit to the empirical data for the Hawkes Process based model (Figure~\ref{fig:4hawkes6}).
 	\begin{figure}[!ht]
    	\centering
    	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/4hawkes6.png} 
@@ -790,17 +784,14 @@ Finally, we compared the performance of our model to that of the bi-dimensional 
 	\end{figure}
 
 
-\subsubsection{Limitations and findings}
+\noindent\textbf{Limitations and findings:} There are some important considerations to be made from this analysis. The first issue is related to the cleaning of the data that was necessary in order to adapt it to our needs. In fact, Hawkes processes are ``simple'' processes which means that they don't allow for more events to occur simultaneously. Unfortunately, in the INET data it is quite common to encounter clusters of 10/20 events reported with the same timestamp. This is typical of high frequency data due to the approximation with which events are often reported and to the obvious limitation of the chosen time scale (e.g., milliseconds). In our case we decided to keep only the first event of each cluster, dropping all the others. A possible alternative used in the literature is to simply uniformly distribute the events from the clusters across the time interval given by the occurrence of the cluster and that of the next event. However, this approach could introduce bias in the parameter estimation phase. In fact, the clustering of events by itself is of interest.
 
 
-There are some important considerations to be made based on our analysis. The first issue is related to the cleaning of the data that was necessary in order to adapt it to our needs. In fact, Hawkes processes are ``simple'' processes which means that they don't allow for more events to occur simultaneously. Unfortunately, in the INET data it is quite common to encounter clusters of 10/20 events reported with the same timestamp. This is typical of high frequency data due to the approximation with which events are often reported and to the obvious limitation of the chosen time scale (e.g., milliseconds). In our case we decided to keep only the first event of each cluster, dropping all the others. A possible alternative used in the literature is to simply uniformly distribute the events from the clusters across the time interval given by the occurrence of the cluster and that of the next event. However, this approach could introduce bias in the parameter estimation phase. In fact, the clustering of events by itself is of interest.
-
-
-Also, an important limitation of the bi-dimensional Hawkes Process model is that it is very computationally intense. Evaluating the 5 parameters for one of the two intensity function using data from only one trading day took almost 48 hours. It becomes clear that in order to evaluate the parameters of a model using data for a longer time period of if evaluating the parameters for a model with higher dimension (hence with more parameters) will require considerably more computational power. 
+Also, an important limitation of the bi-dimensional Hawkes Process model is that it is very computationally intense. Evaluating the five parameters for one of the two intensity function using data from only one trading day took almost two days. It becomes clear that in order to evaluate the parameters of a model using data for a longer time period of if evaluating the parameters for a model with higher dimension (hence with more parameters) will require considerably more computational power. 
 
 
 
-\subsection{Models for Hidden Liquidity}
+\section{Models for Hidden Liquidity}
 
 Investors have the option to place limit orders that are not visible to other traders but they are observable to exchange officials. These are called `hidden' or `iceberg' orders. The invisible order retains price but not time priority. It is possible to place a fraction of order visible but the rest hidden. When a visible portion gets executed, another fraction of the hidden order becomes visible. In NYSE, an order improving the quotes can be fully hidden. The posting of hidden orders is a second stage decision by the traders after choosing between market and limit orders. The risk of placing limit orders has been discussed earlier and an important element of that is the transparency or exposure risk that can signal to market participants the motive of the trader. This may result in other traders engaging in front-running strategies in anticipation of certain market movements. It is also speculated that orders are hidden when there is increased participation of informed traders and to minimize price impact when the execution probability is fairly high. 
 
@@ -809,14 +800,14 @@ De~Winne and D'Hondt (2007)~\cite{winne} study the choice between hidden and vis
 
 
 The predictors of the models and the sign of estimated coefficients are listed below:
-\begin{enumerate}[--]
-\item Spread ($+$)
-\item order size as the ratio of depth on the same side and on the opposite side ($+$).
-\item Market imbalance based on best five visible quotes ($-$).
-\item Time left before the market close ($+$)
-\item Order aggressiveness measured by the five orders submitted prior to incoming order ($-$).
-\item Price aggressiveness, measured by the ratio of distance between the order price away from the best price on the same side and the price away from the opposite side's best price. ($-$)
-\end{enumerate}
+        \begin{enumerate}[--]
+        \item Spread ($+$)
+        \item order size as the ratio of depth on the same side and on the opposite side ($+$).
+        \item Market imbalance based on best five visible quotes ($-$).
+        \item Time left before the market close ($+$)
+        \item Order aggressiveness measured by the five orders submitted prior to incoming order ($-$).
+        \item Price aggressiveness, measured by the ratio of distance between the order price away from the best price on the same side and the price away from the opposite side's best price. ($-$)
+        \end{enumerate}
 
 It is concluded that the decision to hide and the order aggressiveness on the opposite side --- their relationship is ambiguous. All other estimates generally agree with what was postulated. When order aggressiveness is used as the response variable, it is shown that the traders adjust their order submissions when they see a signal of hidden order on the opposite side. Overall conclusion is that hidden orders are posted by not informed traders. 
 
@@ -825,35 +816,35 @@ Using the data from Spanish Stock Exchange, Pardo and Pascual (2012)~\cite{pardo
 
 
 To illustrate the presence of hidden orders, we consider the level III data whose description is given in Section~8.3.2.7 (Table~\ref{tab:level3data}). With this, we can construct the order book in real time (Figure~\ref{fig:limbk1}). For modeling some key elements considered are:
-\begin{enumerate}[--]
-\item The depth (in number of shares) at that price level after the order is submitted.
-\item The depth (in number of shares) at that price level before the order was submitted.
-\item The relative price (equal to 1 `at the market' and 2 at `1 price level away from market, etc.). 
-\end{enumerate}
-If the event is execution or cancellation,
-\begin{enumerate}[--]
-\item The distance in cents from opposite best price in the book.
-\item How long has the LO been in the book.
-\end{enumerate}
-Some that are common to all events (excluding Hidden Executions) are:
-\begin{enumerate}[--]
-\item If the Super Book (the market) is Locked, Crossed or OK.
-\item The relative spread.
-\item Number of shares at the Top of the book on that side.
-\item Number of shares at the Top of the book on the opposite side of the book.
-\item Number of shares at the Top 5 price levels of the book on that side.
-\item Number of shares at the Top 5 price levels of the book on the opposite side of the book.
-\item Weighted average price of the shares on the Top 5 levels of the book on that side.
-\item Weighted average price of the shares on the Top 5 levels of the book on the opposite side of the book.
-\item Relative spread of the weighted prices.
-\end{enumerate}
+        \begin{enumerate}[--]
+        \item The depth (in number of shares) at that price level after the order is submitted.
+        \item The depth (in number of shares) at that price level before the order was submitted.
+        \item The relative price (equal to 1 `at the market' and 2 at `1 price level away from market, etc.). 
+        \end{enumerate}
+        If the event is execution or cancellation,
+        \begin{enumerate}[--]
+        \item The distance in cents from opposite best price in the book.
+        \item How long has the LO been in the book.
+        \end{enumerate}
+        Some that are common to all events (excluding Hidden Executions) are:
+        \begin{enumerate}[--]
+        \item If the Super Book (the market) is Locked, Crossed or OK.
+        \item The relative spread.
+        \item Number of shares at the Top of the book on that side.
+        \item Number of shares at the Top of the book on the opposite side of the book.
+        \item Number of shares at the Top 5 price levels of the book on that side.
+        \item Number of shares at the Top 5 price levels of the book on the opposite side of the book.
+        \item Weighted average price of the shares on the Top 5 levels of the book on that side.
+        \item Weighted average price of the shares on the Top 5 levels of the book on the opposite side of the book.
+        \item Relative spread of the weighted prices.
+        \end{enumerate}
 If the even is a hidden order execution:
-\begin{enumerate}[--]
-\item The price at which the Hidden Order is executed.
-\item The size of the executed Hidden Order.
-\item An indicator of what side is the trade; in fact, there is NO BUY or SELL indicator for hidden trades so I apply the Lee-Ready Rule. If it is a Buy, then `B'; if it is a Sell, then `S'; if it is at the midpoint, then `Na'.
-\item The distance in cents from opposite best price in the book.
-\end{enumerate}
+        \begin{enumerate}[--]
+        \item The price at which the Hidden Order is executed.
+        \item The size of the executed Hidden Order.
+        \item An indicator of what side is the trade; in fact, there is NO BUY or SELL indicator for hidden trades so I apply the Lee-Ready Rule. If it is a Buy, then `B'; if it is a Sell, then `S'; if it is at the midpoint, then `Na'.
+        \item The distance in cents from opposite best price in the book.
+        \end{enumerate}
 
 
 For ease of presentation, we use CISCO data for a single day; CISCO stock is heavily traded and thus capture the typical intense market activity. To avoid the bias in results due to excessive trading activities around the opening and closing of the market, we consider only the duration between 9:35~AM to 3:55~PM, thus discarding data outside these time limits. Table~\ref{tab:distributionoforder} below provides how the orders submitted on both sides (Buy and Sell) are dealt with:
@@ -913,6 +904,64 @@ The discovery and estimation of hidden depth is of interest to traders; while di
 	\end{tabular}
 	\end{table}
 This information along with depth information in Table~\ref{tab:transmatrix} indicate that hidden orders are executed somewhat together at the top of the book. 
+
+
+
+\section{Modeling LOB: Some Concluding Thoughts}
+
+
+With the availability of voluminous high-frequency data, there is as we saw in this chapter a considerable literature to understand the market micro-structure issues. The time-stamped data on each and every activity provides both opportunities and challenges. The challenge is in sorting out the signal from the noise. It gets even more complicated when we want to account for the activities over the time scale. The so-called Epps effect (Epps (1979)~\cite{epps79}) clearly shows how the aggregation of data over time can change the inference. The predictive value of a price change does not last much more than an hour. For efficient entry into the market, the trader may want to avail the short term correlations. In a thorough study on order book dynamics, Hall and Hautsch (2006)~\cite{hallhautsch06} formula the key questions as the following hypotheses:
+	\begin{enumerate}[(1)]
+	\item An increase of the depth on the ask (bid) side
+		\begin{enumerate}[--]
+		\item increases the aggressiveness of market trading on the bid (ask) side,
+		\item decreases the aggressiveness of limit order trading on the ask (bid) side,
+		\item increases the probability of cancellations on the ask (bid) side.
+		\end{enumerate}
+	\item Past price movements are
+		\begin{enumerate}[--]
+		\item negatively (positively) correlated with the aggressiveness of market trading on the bid (ask) trade,
+		\item positively (negatively) correlated with the aggressiveness of limit order trading on the ask (bid) side,
+		\item negatively (positively) correlated with the probability of cancellations on the ask (bid) side.
+		\end{enumerate}
+	\item A higher volatility decreases the aggressiveness in market order trading and increases the aggressiveness in limit order trading.
+	\item The higher the bid-ask spread, the lower the aggressiveness in market trading and the higher the aggressiveness in limit order trading. 
+	\end{enumerate}
+It is empirically demonstrated that it is important to take into account the state of the order book to better understand the submission and cancellation behaviors. It is also clear based on the INET data analysis provided earlier, Hawkes process does better, but there is a lot of room to improve on the models. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
