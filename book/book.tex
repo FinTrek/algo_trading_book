@@ -1,46 +1,57 @@
-\documentclass[krantz1,ChapterTOCs]{krantz} %See documentation for other class options
+\documentclass[krantz1,ChapterTOCs]{krantz} % See documentation for other class options
+\usepackage{
+	amsmath,
+	amssymb,
+	amsthm,
+	chngcntr,
+	comment,
+	enumerate,
+	etoolbox,
+	float,
+	graphicx,
+	indentfirst,
+	listings,
+	mleftright,
+	multicol,
+	multirow,
+	placeins,
+	stix,
+	subfig,
+	threeparttable,
+	totcount
+}
 \usepackage{fix-cm}
-%\usepackage{fixltx2e}
-\usepackage[T1]{fontenc}
-\usepackage[english]{babel}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{amsmath} %bracket command aligns left, the bracket was [fleqn] .  Use \nonumber for no number.
-\usepackage{graphicx}
-%\usepackage[font=small]{caption}
-\usepackage{placeins}
-\usepackage{multicol}
-\usepackage{totcount}
-\usepackage{indentfirst}
-\usepackage{enumerate}
-\usepackage{listings}
-\usepackage{subfigure}
-\usepackage{subfig}
-\usepackage{multirow}
 \usepackage[figuresright]{rotating}
 \usepackage[toc,page]{appendix}
-\usepackage{chngcntr}
-\usepackage{stix}
 \usepackage[autostyle]{csquotes}
-\usepackage{etoolbox}
-\usepackage{threeparttable}
-\usepackage{comment}
-\usepackage{mleftright}
 \usepackage[obeyspaces,spaces]{url}
 \hyphenation{con-sti-tu-tion-al}
 \frenchspacing
 \tolerance=5000
+\setlength{\footnotesep}{0.7cm}
+%\usepackage{fixltx2e}
+%\usepackage{makeidx}
 
+
+% ------------------------
+%  Font
+% ------------------------
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+
+% ------------------------
+% PGF
+% ------------------------
 \usepackage{pgfplots}
 \usepgfplotslibrary{fillbetween}
 \usepackage{tikz}
 \usetikzlibrary{shapes.misc,shadows,arrows,decorations.pathmorphing,patterns}
 
-\usepackage{float}
-%\usepackage{makeidx}
 
-
-%For making comments, remove later
+% ------------------------
+% Comments (Remove Later)
+% ------------------------
 \usepackage{color}
 \usepackage{todonotes}
 \newcommand{\textnote}[1]{\textcolor{blue}{#1}}
@@ -48,18 +59,10 @@
 \newcommand{\fancytodo}[1]{\todo[color=white,fancyline]{\textcolor{blue}{#1}}}
 
 
-\newcommand\Tau{\mathcal{T}}
-
-%For left aligned equations, use \usepackage{nccmath} and use a flush-left environment ala 
-%\begin{fleqn}
-%    \begin{align*}
-%    a&=b\\
-%    &=c
-%    \end{align*}
-%\end{fleqn}
-
-\setlength{\footnotesep}{0.7cm}
-
+% ------------------------
+% Commands
+% ------------------------
+\newcommand{\Tau}{\mathcal{T}}
 \newcommand{\bm}[1]{\mbox{\boldmath{$#1$}}}
 \newcommand{\bX}{\bm{X}}
 \newcommand{\bY}{\bm{Y}}
@@ -87,18 +90,34 @@
   \flalign}
   {\endflalign}
 
-%%%%%%%%%%%%%%%%%%%
-% Definitions, Theorems, etc
-%%%%%%%%%%%%%%%%%%%
+\newcounter{problem}
+\newcommand{\prob}{
+\stepcounter{problem} %
+\noindent \theproblem. }
+\counterwithin*{problem}{chapter}
 
-\newtheoremstyle{custom}%                % Name
-  {}%                                     % Space above
-  {}%                                     % Space below
-  {}%                                     % Body font
-  {}%                                     % Indent amount
-  {\bfseries}%                            % Theorem head font
-  {.}%                                    % Punctuation after theorem head
-  { }%                                    % Space after theorem head, ' ', or \newline
+\newtotcounter{total}
+
+%For left aligned equations, use \usepackage{nccmath} and use a flush-left environment ala 
+%\begin{fleqn}
+%    \begin{align*}
+%    a&=b\\
+%    &=c
+%    \end{align*}
+%\end{fleqn}
+
+
+% ------------------------
+% Definitions, Theorems, Etc.
+% ------------------------
+\newtheoremstyle{custom}%   	% Name
+  {}%                                     	% Space above
+  {}%                                     	% Space below
+  {}%                                     	% Body font
+  {}%                                     	% Indent amount
+  {\bfseries}%                            	% Theorem head font
+  {.}%                                    	% Punctuation after theorem head
+  { }%                                    	% Space after theorem head, ' ', or \newline
   {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}% 
   
 \theoremstyle{plain}  
@@ -111,7 +130,7 @@
 \newtheorem{ex}{Example}
 \newtheorem{thm}{Theorem}[chapter]
 \newtheorem{result}{Result}[chapter]
-	\counterwithout{result}{chapter}
+\counterwithout{result}{chapter}
 
 \newtheorem{dfn}{Definition}
 
@@ -120,13 +139,7 @@
 \numberwithin{equation}{chapter}
 
 
-\newcounter{problem}
-\newcommand{\prob}{
-\stepcounter{problem} %
-\noindent \theproblem. }
-\counterwithin*{problem}{chapter}
 
-\newtotcounter{total}
 
 
 
@@ -158,21 +171,20 @@
 
 
 
-%%%%%%%%%%%%%
-%Table Counter
-%%%%%%%%%%%%%
+% ------------------------
+% Table Counter
+% ------------------------
 \counterwithin{table}{chapter}
 \counterwithin{figure}{chapter}
 
 
-%%%%%%%%%%%%%
-%Document
-%%%%%%%%%%%%%
+% ------------------------
+% Document
+% ------------------------
 
 \include{frontmatter/preamble} %place custom commands and macros here
 \begin{document}
 \frontmatter
-%Title: Algorithmic Trading and Quantitative Strategies
 \title{Algorithmic Trading and Quantitative Strategies \\ \vspace{3cm}  (Version: \today)} %This is a placeholder titlepage, it will not be final.
 
 \author{\scalebox{1.5}{ Raja Velu\footnote{Department of Finance \hfill \newline \indent \indent Whitman School of Management \hfill \newline \indent \indent Syracuse University}, Maxence Hardy\footnote{Linear Quantitative Research \hfill \newline \indent \indent J.P. Morgan} and Daniel Nehren\footnote{Statistical Modeling \& Development \hfill \newline \indent \indent Barclays}}}

@@ -1,7 +1,5 @@
 % !TEX root = ../../book.tex
-%\hfill
-%\par\vspace{\baselineskip}
-\chapter{Modeling Trade Data}\label{chap:ch_trade_data_models}
+\chapter{Modeling Trade Data \label{chap:ch_trade_data_models}}
 
 Many articles and books have appeared on the topic of modeling trade data. There is a wealth of information out there and our goal in this chapter is to review modeling approach commonly practiced in the industry. As in the rest of this book our effort is to provide context on the the role these models play in practice, the challenges and considerations that are involved in dealing with trade data day in and day out and then provide the quantitative foundation the reader needs to progress further. This chapter follows the same pattern as used in other parts of this book. We start with a practitioner's view of the subject, what approaches are used  and why and discuss some intuitive ideas on how to tackle these problem. We look at the need and importance of normalization analytics and their role in execution algorithms. We'll go into some details on the most important analytics and ideas on common modeling approaches. We then turn to a review of common microstructure signal that are commonly used in HFT and execution as foundation for more advance alpha signals. We then provide for a more in-depth quantitative treatment on some of the sophisticated models discussed in applied and academic research areas. \\
 
@@ -84,7 +82,7 @@ A common aspect of na\"ive trading strategies is trading in an obvious and predi
 Other usage of microstructure normalizer is to support decision making by comparing current conditions with historical averages. A couple of examples:
         \begin{itemize}
         \item Spread: When the decision is to close, in that if the spread has to be crossed to take liquidity, if the current spread is a lot larger than historical averages, it may be an incentive to wait a little longer in the hope that the spread closes in; while if the spread is smaller than usual, all else being equal, the spread can be crossed immediately before the spread returns to its historical normal.
-        \item Quote Size: Certain popular liquidity seeking strategies look at the far side visible quantity and compare it to the historical distribution. If the size is "rare enough" (usually that depends on the urgency) the strategy would  cross the spread to capture that before it disappears.\footnote{We discussed before the predictive power of book imbalance. One would think that if a larger than usual size appears at the far side it would create a strong imbalance that would push the price in more favorable situation. That is true and the soundness of the approach could be questioned. On the other side if the display size is rare enough it could imply a error or a naive trading decision and the quantity available could be large enough to put the algo ahead of schedule which would allow it to back off and take advantage of better prices without being forced to catch up to the schedule. }
+        \item Quote Size: Certain popular liquidity seeking strategies look at the far side visible quantity and compare it to the historical distribution. If the size is ``rare enough'' (usually that depends on the urgency) the strategy would  cross the spread to capture that before it disappears.\footnote{We discussed before the predictive power of book imbalance. One would think that if a larger than usual size appears at the far side it would create a strong imbalance that would push the price in more favorable situation. That is true and the soundness of the approach could be questioned. On the other side if the display size is rare enough it could imply a error or a naive trading decision and the quantity available could be large enough to put the algo ahead of schedule which would allow it to back off and take advantage of better prices without being forced to catch up to the schedule.}
         \end{itemize}
 
 
@@ -635,14 +633,8 @@ A second interesting difference was in the amount of volume on the two sides of 
 	\end{figure}
 	\begin{figure}
 	\centering
-	\begin{subfigure}
-	  \centering
-	  \includegraphics[width=.4\linewidth]{chapters/chapter_trade_data_models/figures/timevol1.png}
-	\end{subfigure}%
-	\begin{subfigure}
-	  \centering
-	  \includegraphics[width=.4\linewidth]{chapters/chapter_trade_data_models/figures/timevol1.png}
-	\end{subfigure}
+	\subfloat[]{\includegraphics[width=0.4\linewidth]{chapters/chapter_trade_data_models/figures/timevol1.png}}
+	\subfloat[]{\includegraphics[width=.4\linewidth]{chapters/chapter_trade_data_models/figures/timevol1.png}}
 	\caption{Frequency of Limit Order submission for 09/01/2010 (time in minutes after market opening). \label{fig:freqsubmit2}}
 	\end{figure}
 
@@ -909,7 +901,6 @@ This information along with depth information in Table~\ref{tab:transmatrix} ind
 
 \section{Modeling LOB: Some Concluding Thoughts}
 
-
 With the availability of voluminous high-frequency data, there is as we saw in this chapter a considerable literature to understand the market micro-structure issues. The time-stamped data on each and every activity provides both opportunities and challenges. The challenge is in sorting out the signal from the noise. It gets even more complicated when we want to account for the activities over the time scale. The so-called Epps effect (Epps (1979)~\cite{epps79}) clearly shows how the aggregation of data over time can change the inference. The predictive value of a price change does not last much more than an hour. For efficient entry into the market, the trader may want to avail the short term correlations. In a thorough study on order book dynamics, Hall and Hautsch (2006)~\cite{hallhautsch06} formula the key questions as the following hypotheses:
 	\begin{enumerate}[(1)]
 	\item An increase of the depth on the ask (bid) side
@@ -927,46 +918,7 @@ With the availability of voluminous high-frequency data, there is as we saw in t
 	\item A higher volatility decreases the aggressiveness in market order trading and increases the aggressiveness in limit order trading.
 	\item The higher the bid-ask spread, the lower the aggressiveness in market trading and the higher the aggressiveness in limit order trading. 
 	\end{enumerate}
-It is empirically demonstrated that it is important to take into account the state of the order book to better understand the submission and cancellation behaviors. It is also clear based on the INET data analysis provided earlier, Hawkes process does better, but there is a lot of room to improve on the models. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+It is empirically demonstrated that it is important to take into account the state of the order book to better understand the submission and cancellation behaviors. It is also clear based on the INET data analysis provided earlier, Hawkes process does better, but there is a lot of room to improve on the models.
 
 
 \section{Supplements and Problems} 
