@@ -5,7 +5,7 @@
 Market Impact (MI in short) is the single most important concern in trading. It is also the least understood. It is something every trader experiences but it cannot be easily measured a priori (only the execution costs are directly observed) but can be only estimated ex-post and even then accurately. We can broadly identify sources where it comes from  and we intuitively feel that we can, at least partially, control it through our trading approach but we really don't fully understand its dynamics and how to affect it.
 
 
-To complicate matters further, large scale trading decisions most often arise from an expectation of price momentum. This means that trading will often occur in the presence of market drift (alpha) and the realized execution cost will be a combination of alpha and the price impact. In ex-post analysis how to decompose  the alpha from the expected impact is extremely arduous, if at all possible, and it is a particular constant concern of any quantitatively driven (and not) investment as it is critically important to achieve optimal execution. For instance, if we find that most of the cost is due to price drift the best option would be to accelerate the trading and paying more in impact to capture the more attractive prices. Conversely if the cost is mostly driven by impact then it would behoove us to slow down our trading to minimize impact.
+To complicate matters further, large scale trading decisions most often arise from an expectation of price momentum. This means that trading will often occur in the presence of market drift (alpha) and the realized execution cost will be a combination of alpha and the price impact. In ex-post analysis how to decompose  the alpha from the expected impact is extremely arduous, if at all possible, and it is a particular constant concern of any quantitatively trading driven (and not) investment as it is critically important to achieve optimal execution. For instance, if we find that most of the cost is due to price drift the best option would be to accelerate the trading and paying more in impact to capture the more attractive prices. Conversely if the cost is mostly driven by impact then it would behoove us to slow down our trading to minimize impact.
 
 
 Additional complications are due to the complexity of the market structure with it's different trading modes (continuous trading, auctions, etc) and types of venues (lit venues, gray pools, dark pools). This requires an ability to measure the impact differential of trading in a particular way in a particular avenue if one hopes to optimally access that liquidity.
@@ -28,16 +28,20 @@ There are several definitions of market impact, some are more insightful than ot
         \begin{displayquote}
         \textbf{Market Impact is the cumulative market-wise response of the arrival  of new order flow.}
         \end{displayquote}
+
+
 This definition incorporates the effect of both trades and order submission (or cancellation). It also includes the effects that, while changing the overall system, ``hidden state'' does not immediately lead to a price change.
 
 
 There are several likely components to this response:
         \begin{itemize}
         \item The first is a purely ``mechanical'' one. The removal of liquidity, either via a trade or via a cancellation, can lead to change in the prevailing mid-price.
-        \item The next one is economic related. Any change in the shape of the order book alters the supply/demand sides leading to a re-establishment of local equilibrium price. 
+        \item The next one is ``economic related.'' Any change in the shape of the order book alters the supply/demand sides leading to a re-establishment of local equilibrium price. 
         \item Another component can be called ``speculative.'' A price move may lead participants to expect the initiation (or continuation) of a momentum trend triggering some ``me-too'' trading in the same direction.
         \item Then there is an ``arbitrage'' component where participants try to step in to provide liquidity in prevision of the price move and immediately get out of it at a better price.
         \end{itemize} 
+
+
 These effects (and others) are then propagated through the system with various levels of feedback loops leading to very complicated ``chaos-like'' macro dynamics. There is also evidence that these effects are amplified by the ``novelty'' of the price move meaning that the behavior can be highly path dependent. 
 
 
@@ -46,7 +50,7 @@ These effects (and others) are then propagated through the system with various l
 
 As discussed, MI is quantity that cannot be directly observed. What is observed are the prices that one pays to execute an order of a certain size, for a particular instrument, over a specified time period. These prices incorporate several different components that can be roughly grouped into several specific categories:
 \begin{enumerate}
-\item Explicit Costs: These are costs, in theory at least are known in advance. These include exchange fees, clearing cost, taxes, etc.. They also include all the fixed cost for connectivity, market data, etc.. Part of these costs are independent of how the order is traded and depend only on the number of shares traded and total notional value (e.g. clearing fees, taxes). Other costs are implementation dependent since they depend on the choice of venue (different venues have different fee schedules) and on the decision of what order aggressiveness (in most venues one is charged to take liquidity while receiving a rebate for providing liquidity).
+\item Explicit Costs: These are costs, in theory at least are known in advance. These include exchange fees, clearing cost, taxes, etc.. They also include all the fixed costs for connectivity, market data, etc.. Part of these costs are independent of how the order is traded and depend only on the number of shares traded and total notional value (e.g. clearing fees, taxes). Other costs are implementation dependent since they depend on the choice of venue (different venues have different fee schedules) and on the decision of what order aggressiveness (in most venues one is charged to take liquidity while receiving a rebate for providing liquidity).
 \item Spread Costs: It is often necessary to cross the spread to take liquidity and the price we achieve is thus higher by the prevailing price (usually defined as the mid-point). If we manage to execute passively the spread cost could be negative.
 %\item Opportunity Cost: the loss (or gain) incurred due to the order not completing. For example if on trades with limit orders in a trending market the uncertainty in getting executed could lead to an opportunity loss of taking liquidity immediately at better prices before the price moves. On large order scale opportunity cost comes from trader's decision not to trade the full order in one day or fixing a maximum trading price that leads to the order not completing. Assuming the trader will have to eventually complete the order she might find the market conditions to be much worse.
 %\item Delay/Slippage costs. It might take time for the trading decision to hit the exchange and by then the sought after liquidity might already have evaporated.
@@ -65,6 +69,8 @@ We begin a more in depth treatment of the subject by looking at the most commonl
          \item Prices behave, to a large extent as random walks.
          \item We assume that the arrival of orders is uncorrelated to the specific price trajectory on the day of trading. 
          \end{itemize} 
+
+
 Under these assumptions the price evolution accounts only to uncorrelated noise in the cost estimate and can be ignored. Thus in our simplified framework for transaction cost we have two remaining components: market impact and spread costs. 
         \begin{equation}\label{eq:tc_1}
         \text{tc}= f(\text{mi},\text{sc})
@@ -75,13 +81,15 @@ In most cases, an additional simplification is added in that the two components 
         \begin{equation}\label{eq:tc_2}
         \text{tc}= \text{mi} + \text{sc}
         \end{equation}
- Let's start with the simpler component: Spread Costs. As the name implies, this cost is due to crossing the spread on a portion of the order. If we were crossing the spread every time we trade this component could be modeled as half the average bid ask spread $\text{ba}_\text{sp}$. In general, during the execution of an order, we will sometime trade aggressively where we pay the half spread and sometime trade passively where we are paid the half spread. Since execution strategies are by definition liquidity demanders, the ratio will be tilted towards the aggressive trading. Thus, the most basic spread cost can be modeled as a portion $\beta$ of $\text{bs}_\text{sp}$. That is usually where the practitioner stops. If we wanted to look deeper, we could note that the spread cost depends on other features. For example, it seems intuitive that if there is more urgency, the more often the trader will be willing to cross the spread. Thus, the spread cost could also be a function of an urgency parameter, often proxied by the average trading rate. Once we incorporate bid ask spread and the trading rate, we can, on the first approximation, assume that the spread cost is not dependent on other stock and order characteristics.
+
+
+Let's start with the simpler component: Spread Costs. As the name implies, this cost is due to crossing the spread on a portion of the order. If we were crossing the spread every time we trade this component could be modeled as half the average bid ask spread $\text{ba}_\text{sp}$. In general, during the execution of an order, we will sometime trade aggressively where we pay the half spread and sometime trade passively where we are paid the half spread. Since execution strategies are by definition liquidity demanders, the ratio will be tilted towards the aggressive trading. Thus, the most basic spread cost can be modeled as a portion $\beta$ of $\text{bs}_\text{sp}$. That is usually where the practitioner stops. If we wanted to look deeper, we could note that the spread cost depends on other features. For example, it seems intuitive that if there is more urgency, the more often the trader will be willing to cross the spread. Thus, the spread cost could also be a function of an urgency parameter, often proxied by the average trading rate. Once we incorporate bid ask spread and the trading rate, we can, on the first approximation, assume that the spread cost is not dependent on other stock and order characteristics.
         \begin{equation}\label{eq:tc_3}
         \text{tc}= \text{mi} + \beta \text{ba}_{\text{sp}}
         \end{equation}
 
 
-Let us finally turn our attention to average market impact. Clearly, the size of the order $Q$ is the primary driver of market impact. As we discussed in Chapter~\ref{chap:ch_news_an} size alone it is less explanatory as 100,000 shares of a ultra liquid stock will certainly have less impact than an illiquid stock that trades only 200,000 shares per day. So a normalized order size $\frac{Q}{\text{ADV}}$ is usually used. Additionally it is well known that, all else being equal, the more volatile the stock is the more the expected cost. What is the intuition here? One way to think about it is that volatility (and spread to some extent) is a measure of  uncertainty around the ``True'' value of the stock. One would then expect that the effects of ``sensing'' a large order in the market would be magnified. Note that volatility is correlated to spread so higher volatility stocks will have a higher spread cost.
+Let us finally turn our attention to average market impact. Clearly, the size of the order $Q$ is the primary driver of market impact. As we discussed in Chapter~\ref{chap:ch_news_an} size alone it is less explanatory as 100,000 shares of a ultra liquid stock will certainly have less impact than an illiquid stock that trades only 200,000 shares per day. So a normalized order size $\frac{Q}{\text{ADV}}$ is usually used. Additionally it is well known that, all else being equal, the more volatile the stock is the more the expected cost. What is the intuition here? One way to think about it is that volatility (and spread to some extent) is a measure of  uncertainty around the ``true'' value of the stock. One would then expect that the effects of ``sensing'' a large order in the market would be magnified. Note that volatility is correlated to spread, so higher volatility stocks will have a higher spread cost.
 
 
 A more general average TC model is
@@ -92,7 +100,7 @@ What does the function $f$ look like? Most models assume a multiplicative relati
         \begin{equation}\label{eq:tc_3}
         		f =\alpha  \sigma^{\delta} \left( \frac{Q}{\text{ADV}} \right)^{\gamma}.
         \end{equation}
-It is a well studied fact in MI research that the exponent $\gamma$ for relative size is less than one (relatively) well approximated by a square root law. There are several theories for why this is the case. \btodo{(NEEDS QUOTE)}. For the exponent $\delta$ of volatility there is some debate and the data seem to point that the model is somewhat misspecified. On one hand there is some evidence that a stock twice as volatile is twice as expensive to trade so many models have $\delta = 1$. On the other hand when one looks at it over time, and compare average costs in different volatility regimes it has been shown that if the whole market where to double in volatility like in the height of the 2008 financial crisis, the average costs did not double. They jumped by about \btodo{(NEED NUMBER)} indicating that $\delta <1$. Although it is not noted elsewhere, one way to account for that would be to use two measures of volatility: overall market  $\sigma_M$ with an exponent less than 1 and relative volatility $\frac{\sigma}{\sigma_M}$ that has exponent of 1. The most common approach is to re-calibrate the model over time fixing $\delta=1$ and allowing varying $\alpha_t$ to absorb the effect of the change in regime. We thus come to the ``standard'' functional form for a TC model:
+It is a well studied fact in MI research that the exponent $\gamma$ for relative size is less than one (relatively) well approximated by a square root law. There are several theories for why this is the case. \btodo{(NEEDS QUOTE)}. For the exponent $\delta$ of volatility there is some debate and the data seem to point that the model is somewhat misspecified. On one hand there is some evidence that a stock twice as volatile is twice as expensive to trade so many models have $\delta = 1$. On the other hand when one looks at it over time, and compare average costs in different volatility regimes it has been shown that if the whole market where to double in volatility like in the height of the 2008 financial crisis, the average costs did not double. They jumped by about \btodo{(NEED NUMBER)} indicating that $\delta <1$. Although it is not noted elsewhere, one way to account for that would be to use two measures of volatility: overall market  $\sigma_M$ with an exponent less than 1 and relative volatility $\frac{\sigma}{\sigma_M}$ that has exponent of 1. The most common approach is to re-calibrate the model over time fixing $\delta=1$ and allowing varying $\alpha_t$ to absorb the effect of any regime change. We thus come to the ``standard'' functional form for a TC model:
         \begin{equation}\label{eq:tc_3}
         		f =\alpha  \sigma \sqrt{\frac{Q}{\text{ADV}}} +  \beta\, \text{ba}_{\text{sp}}.
         \end{equation}
@@ -108,7 +116,7 @@ The shrewd reader will notice immediately that something is amiss. We have discu
 \section{Historical Review of Market Impact Research}
 
 \btodo{TO BE CLEANED UP}
-One of the main focuses of Algorithmic Trading is minimize costs of execution. When a large order is executed in the market, it causes market impact (MI), which is commonly defined as the deviation of the post-trade market price from the market price that could have prevailed had the trade not occurred (Fabozzi, Focardi and Kolm (2006)~\cite{ffk}). To alleviate MI and the implied transaction cost (TC), a trader may use an algorithmic trading system to slice a large ``parent'' order into a sequence of ``child'' orders. While a slicing strategy is typically motivated by the liquidity constraint associated with executing a large order in one print, it is usually balanced against the risk and opportunity costs associated with the execution of a sequence of child orders over a longer duration as discussed earlier.
+One of the main focuses of Algorithmic Trading is to minimize costs of execution. When a large order is executed in the market, it causes market impact (MI), which is commonly defined as the deviation of the post-trade market price from the market price that could have prevailed had the trade not occurred (Fabozzi, Focardi and Kolm (2006)~\cite{ffk}). To alleviate MI and the implied transaction cost (TC), a trader may use an algorithmic trading system to slice a large ``parent'' order into a sequence of ``child'' orders. While a slicing strategy is typically motivated by the liquidity constraint associated with executing a large order in one print, it is usually balanced against the risk and opportunity costs associated with the execution of a sequence of child orders over a longer duration as discussed earlier.
 
 
 In asset management, with the competitive focus of the industry on cost management and with the diminishing returns of crowded strategies, understanding and managing MI has become a crucial component of a systematic investment process. For an estimate of its size among the transaction costs that include explicit costs such as brokerage commissions and fees, see Table~\ref{tab:empttrans} from Berkovec and Heidle (2010)~\cite{borkoheidle}. Managing MI has important implications on three aspects of algorithmic trading: pre-trade TC estimation, post-trade TC analysis and the design of optimal trading strategies (Almgren (2008)~\cite{alm2008}).
@@ -133,7 +141,7 @@ In asset management, with the competitive focus of the industry on cost manageme
 The study of price impact dates back to Bagehot (1971)~\cite{bagehot} who postulated that the market consists of heterogeneously informed traders. The specialist cannot distinguish between informed and uninformed (liquidity) traders and fixes a spread that can balance the trading cost. The asymmetric information models based on this notion have been extensively studied in finance literature. The traders do convey information and Hasbrouck (1991)~\cite{hasbrouk} provides empirical evidence that the market maker can infer information from the characteristics of the sequence of trades. The seminal work by Kyle (1985)~\cite{kyle1985} and Huberman and Stanzl (2004)~\cite{huberstan} indicate that an order of large size (parent order) must be sliced into a number of small order (child orders) so that the volume per se will not signal informed trading. The hypothesis that time between the trades could convey the information flow (Easley and O'Hara (1992)~\cite{easleyo}) and its impact on price is studied in Dufour and Engle (2000)~\cite{dufour}. Long durations are usually associated with no new news and the variations in trading intensity are taken to be positively correlated with the behavior of the informed traders. \\
 
 
-\noindent \textbf{Origins of Market Impact:} Most conventional definitions of the MI of a trade equate it with the deviation of the post-trade market price from the market price that would have prevailed had the trade not occurred. Figure~\ref{fig:marketimpt} shows an idealized MI picture of $n$-share sell order from Fabozzi, Focardi and Kolm (2006)~\cite{ffk} but Figure~\ref{fig:detmarketimpt} is augmented to include other information: \btodo{Make into list?} (1) The state of the order book establishes a pre-trade equilibrium, (2) How this equilibrium is disturbed by a market order to sell n shares, (3) as the sell order depletes the bid order book, it obtains an increasingly lower trade price and results in the trade print, and, (4) How over time the price gradually moves up back to recover some of the price drop. Accordingly, the difference between (4) and (3) is called temporary impact, whereas the difference between (4) and (1) is called permanent impact. If we are looking to model the MI effect of sequential trades, as shown in Figure~\ref{fig:marketimpt}, the temporary and permanent impact will be superpositions of those of individual trades. The permanent impact is often assumed to be immediate and linear in the parent trade size, and the post-trade equilibrium to be the same for the order of n shares or a sequence of m orders of n/m shares each (Almgren, Thum, Hauptmann and Li (2005)~\cite{athl}, Fabozzi et al., (2006)~\cite{ffk}). By contrast, the temporary impact is a function of how the ``parent'' trade is split into smaller ``child'' trades.
+\noindent \textbf{Origins of Market Impact:} Most conventional definitions of the MI of a trade equate it with the deviation of the post-trade market price from the market price that would have prevailed had the trade not occurred. Figure~\ref{fig:marketimpt} shows an idealized MI picture of $n$-share sell order from Fabozzi, Focardi and Kolm (2006)~\cite{ffk} but Figure~\ref{fig:detmarketimpt} is augmented to include other information: \btodo{Make into list?} (1) The state of the order book that establishes a pre-trade equilibrium, (2) How this equilibrium is disturbed by a market order to sell n shares, (3) as the sell order depletes the bid order book, it obtains an increasingly lower trade price and results in the trade print, and, (4) How over time the price gradually moves up back to recover some of the price drop. Accordingly, the difference between (4) and (3) is called temporary impact, whereas the difference between (4) and (1) is called permanent impact. If we are looking to model the MI effect of sequential trades, as shown in Figure~\ref{fig:marketimpt}, the temporary and permanent impact will be superpositions of those of individual trades. The permanent impact is often assumed to be immediate and linear in the parent trade size, and the post-trade equilibrium to be the same for the order of n shares or a sequence of m orders of n/m shares each (Almgren, Thum, Hauptmann and Li (2005)~\cite{athl}, Fabozzi et al., (2006)~\cite{ffk}). By contrast, the temporary impact is a function of how the ``parent'' trade is split into smaller ``child'' trades.
 	\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/fig1ab.jpg}
@@ -144,7 +152,7 @@ The study of price impact dates back to Bagehot (1971)~\cite{bagehot} who postul
 The mechanisms responsible for the permanent and temporary impacts have been a subject of significant interest. One common view links price changes accompanying large trades to the information cost and liquidity cost (Chan and Lakonishok (1995)~\cite{chan1995}; Holthausen, Leftwich and Mayers (1990)~\cite{holthausen1990}) potentially attributed to any transaction. In terms of information cost, the market response to the fact that a market participant has decided to sell (buy) shares of a particular stock could be perceived as conveying new (private) information about the fundamentals of a security, e.g., firm's management, debt conditions, and thus its future prices. Consequently, it results in a permanent price change with no price reversals. In terms of liquidity cost, the market response to the fact that liquidity was removed out of the order book can be perceived as the effect of distorting the liquidity demand/supply equilibrium. The consequence is a temporary price impact that dissipates soon after the trading occurs, at a speed that depends on the market ability to absorb liquidity demand.
 
 
-Independent of the market microstructure responsible for MI, two central concerns to much theoretical and empirical work are the functional form (shape) of the MI and the key determinants of this form. As seen in Figure~\ref{fig:detmarketimpt}, MI is influenced by trade-related factors (e.g., relative trade size, time and spread of trade), asset-specific factors (e.g., market capitalization, shares outstanding, bid-ask spread) and exchange- and market-related factors (e.g., liquidity, trading volume, institutional features). Models that incorporate these factors tend to be more complex but seem to result in better predictive power.
+Independent of the market microstructure responsible for MI, two central concerns to much theoretical and empirical work are the functional form (shape) of the MI and the key determinants of this form. As seen in Figure~\ref{fig:detmarketimpt}, MI is influenced by trade-related factors (e.g., relative trade size, time and speed of trade), asset-specific factors (e.g., market capitalization, shares outstanding, bid-ask spread) and exchange- and market-related factors (e.g., liquidity, trading volume, institutional features). Models that incorporate these factors tend to be more complex but seem to result in better predictive power.
 	\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/fig2.jpg}
@@ -191,7 +199,7 @@ Bouchaud et al. (2004)~\cite{bouchaud2004} have developed an earlier price evolu
 	\begin{equation}\label{eqn:anotherplittlen}
 	p_n = \sum_{n'<n} G_0(n-n')\,\epsilon_{n'} \ln{V_{n'}} + \sum_{n'<n} \eta_{n'},
 	\end{equation}
-where $V_n$ denotes the volume of a trade at time n and $G_0()$ is assumed to be a fixed non-random function that only depends on time differences. The $\eta_n's$ are also random variables, assumed to be independent from $\epsilon_n$, and are used to model all sources of price changes not described by the direct impact of the trades. The authors then consider constraints imposed on the shape of response function, $G_0$, by three empirical results they discuss: (a) the midprice price process is close to being purely diffusive, even at the trade-by-trade level; (b) the temporal structure of the impact function first increases and reaches a maximum after some number (100 to 1000) of trades, before decreasing back with a rather limited overall variation; and the sign of the trades shows surprisingly long-range, power-law correlations. These empirical results are reconciled with (\ref{eqn:anotherplittlen}) by assuming that the response function $G_0()$ must instead also decay as a power-law in time, with an exponent precisely tuned to ensure simultaneously that prices are nearly diffusive and that the response function is nearly constant. Gatheral (2010)~\cite{gatheral}, assuming that the trading costs should be non-negative, demonstrates that the exponential decay of market impact is compatible only when the market impact is taken to be linear. Thus the debate on the functional form of MI is ongoing. 
+where $V_n$ denotes the volume of a trade at time n and $G_0()$ is assumed to be a fixed non-random function that only depends on time differences. The $\eta_n's$ are also random variables, assumed to be independent from $\epsilon_n$, and are used to model all sources of price changes not described by the direct impact of the trades. The authors then consider constraints imposed on the shape of response function, $G_0$, by three empirical results they discuss: (a) the midprice price process is close to being purely diffusive, even at the trade-by-trade level; (b) the temporal structure of the impact function first increases and reaches a maximum after some number (100 to 1000) of trades, before decreasing back with a rather limited overall variation. The sign of the trades shows surprisingly long-range, power-law correlations. These empirical results are reconciled with (\ref{eqn:anotherplittlen}) by assuming that the response function $G_0()$ must instead also decay as a power-law in time, with an exponent precisely tuned to ensure simultaneously that prices are nearly diffusive and that the response function is nearly constant. Gatheral (2010)~\cite{gatheral}, assuming that the trading costs should be non-negative, demonstrates that the exponential decay of market impact is compatible only when the market impact is taken to be linear. Thus the debate on the functional form of MI is ongoing. 
 
 
 It has been noted that the models developed to study market impact generally do not consider situations that may arise from strategies where price impact may depend upon the state of the order book. The second generation models consider the behavior of the limit order book. Hautsch and Huang (2012)~\cite{hauthuang} consider a time-aggregated model. The core activities in the limit order book are captured in Table~\ref{tab:vardef} and the market depth is kept to the three best quotes on both sides of the market.
@@ -280,7 +288,7 @@ Some interesting conclusions that could be useful for trading are drawn. The imp
 \end{itemize}
 
 
-In the beginning of this chapter, we have reviewed the models that are used in the industry. For many years, traders have used the simple sigma-root-liquidity model described for example by Grinold and Kahn (1994)~\cite{grin2000}. The model takes the simplified form,
+In the beginning of this chapter, we have reviewed the models that are used in the industry. For many years, traders have used the simple sigma-root-liquidity model described for example by Grinold and Kahn (1994)~\cite{grin2000}. The model (\ref{eq:tc_3}) takes the simplified form,
 	\begin{equation}\label{eqn:spreadcost}
 	\Delta P - \text{Spread Cost} = \alpha \cdot \sigma \sqrt{\dfrac{Q}{\text{ADV}}},
 	\end{equation}
@@ -316,7 +324,7 @@ Normalised temporary & $K/\sigma$ & 0.142 \hspace{0.2cm} 0.094 \hspace{0.2cm}0.0
 Temp. Impact cost (bp) & $K$ & 22 \hspace{0.2cm} 15 \hspace{0.2cm} 8 & 32  \hspace{0.2cm}21\hspace{0.2cm} 12 \\ \hline
 Realized cost (bp) & $J$ & 32 \hspace{0.2cm} 25 \hspace{0.2cm} 18 & 43 \hspace{0.2cm}32 \hspace{0.2cm} 23
 \end{tabular}
-{\small Note: examples of permanent and temporary impact costs are shown, for a purchase of 10\% of the day's average volume, in two different large-cap stocks. The permanent cost is independent of time of execution. The temporary cost depends on the time, but across different assets it is the same fraction of daily volatility (from Almgren et al. (2005)~\cite{athl}); $k= J-I/2$.}
+{\small Note: examples of permanent and temporary impact costs are shown, for a purchase of 10\% of the day's average volume, in two different large-cap stocks. The permanent cost is independent of time of execution. The temporary cost depends on the time, but across different assets it is the same fraction of daily volatility (from Almgren et al. (2005)~\cite{athl}); $K= J-I/2$.}
 \end{table}
 
 
@@ -354,18 +362,14 @@ It is important to mention two caveats . One relates to the role of permanent ve
 where the arrival price is the price when the first child order is executed and completion price is the price when the last child order is executed. Every trade in this data is explicitly identified as buy or sell. This contrasts with studies that use TAQ data that do not have the same explicit identification. Using Lee and Ready (1991)~\cite{leeready} heuristic rule to determine the trade direction can be sometimes inaccurate (Asquith, Oman and Safaya (2011)~\cite{asquith2010} and Chakrabarty, Moulton and Shkilko (2012)~\cite{chakrabarty2012short}). To make the analysis robust, we binned the explanatory variables and obtained smoothed averages; the analysis is based on binned data.
 
 
-Results start with a visual inspection of the relationships. The graphs clearly indicate that the relationship between MI and RS is non-linear, and it remains non-linear with binning of other factors as well. The relationship between MI and relative size is monotonic till the relative size reaches 20\% or so (Figure~\ref{fig:oneoffive}).Trades with longer durations clearly have a lower MI (Figure~\ref{fig:twooffive}). Trades for higher volatility stocks, too, can be read to have a higher MI (Figure~\ref{fig:threeoffive}). Trades on larger market cap stocks have a smaller MI (Figure~\ref{fig:fouroffive}). Lastly, MI becomes higher as the number of child trades increases (Figure~\ref{fig:fiveoffive}). This last relationship is important and deserves special attention particularly when designing execution strategies. There is a clear trade-of between low ``immediate'' liquidity impact of small child orders and long term information leverage of the parent order level when hitting the market too frequently. But the power law model is more general and can accommodate interaction effects as well. These graphs for various factors besides RS can be collapsed into a master curve, with appropriate normalization, as given in Lillo et al. (2003)~\cite{farmermantegna}.
+Results start with a visual inspection of the relationships. The graphs clearly indicate that the relationship between MI and RS is non-linear, and it remains non-linear with binning of other factors as well. The relationship between MI and relative size is monotonic till the relative size reaches 20\% or so (Figure~\ref{fig:miandrsplot}).Trades with longer durations clearly have a lower MI (Figure~\ref{fig:mivsrs}). Trades for higher volatility stocks, too, can be read to have a higher MI (Figure~\ref{fig:mivsrs}). Trades on larger market cap stocks have a smaller MI (Figure~\ref{fig:mivsrs}). Lastly, MI becomes higher as the number of child trades increases (Figure~\ref{fig:mivsrs}). This last relationship is important and deserves special attention particularly when designing execution strategies. There is a clear trade-of between low ``immediate'' liquidity impact of small child orders and long term information leverage of the parent order level when hitting the market too frequently. But the power law model is more general and can accommodate interaction effects as well. These graphs for various factors besides RS can be collapsed into a master curve, with appropriate normalization, as given in Lillo et al. (2003)~\cite{farmermantegna}.
 	
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/fig3.jpg}
-	\caption{MI vs. RS. \label{fig:oneoffive}}
+	\includegraphics[width=0.9\textwidth]{chapters/chapter_exec_models/figures/fig3.jpg}
+	\caption{MI vs. RS. \label{fig:miandrsplot}}
 	\end{figure}
-
-
-
-
 
 
     \begin{figure}[!ht]
@@ -384,32 +388,7 @@ Results start with a visual inspection of the relationships. The graphs clearly 
     \end{figure}
 
 
-%	\begin{figure}[!ht]
-%	\centering
-%	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/fig4.jpg}
-%	\caption{MI vs. RS and Duration. \label{fig:twooffive}}
-%	\end{figure}
-%
-%	\begin{figure}[!ht]
-%	\centering
-%	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/fig5.jpg}
-%	\caption{MI vs. RS and Volatility. \label{fig:threeoffive}}
-%	\end{figure}
-%
-%	\begin{figure}[!ht]
-%	\centering
-%	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/fig6.jpg}
-%	\caption{MI vs. RS and Market Cap. \label{fig:fouroffive}}
-%	\end{figure}
-%
-%	\begin{figure}[!ht]
-%	\centering
-%	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/fig7.jpg}
-%	\caption{MI vs. RS and No. of Children. \label{fig:fiveoffive}}
-%	\end{figure}
-
-
-Table~\ref{fig:responsevarmi} shows the results of power-law models ; the standard errors are shown in parentheses below the estimated regression coefficients. All coefficients in the models presented in Table~\ref{fig:responsevarmi} are statistically significant. This is consistent with Almgren et al. (2005)~\cite{athl}, except that in their model the market-cap-to-volume ratio is not significant. It should be noted that the values of $R$-square are significantly higher than other published studies, mainly due to binning and smoothing. The response variable is not an individual parent trade cost, but rather the average cost for trades in a bin representing a combination of various levels of predictors. Thus, the models developed here are intended to predict the average MI for a combination of predictors.
+Table~\ref{fig:mivsrs} shows the results of power-law models ; the standard errors are shown in parentheses below the estimated regression coefficients. All coefficients in the models presented in Table~\ref{fig:mivsrs} are statistically significant. This is consistent with Almgren et al. (2005)~\cite{athl}, except that in their model the market-cap-to-volume ratio is not significant. It should be noted that the values of $R$-square are significantly higher than other published studies, mainly due to binning and smoothing. The response variable is not an individual parent trade cost, but rather the average cost for trades in a bin representing a combination of various levels of predictors. Thus, the models developed here are intended to predict the average MI for a combination of predictors.
         \begin{table}[!ht]
         \caption{Response Variable is MI (bps) ($\hat{\sigma}^2=225, n=2,$ 211 bins) \label{tab:responsevarmi}}
         \begin{tabular}{|c|c|c|c|c|c|c|}
@@ -431,7 +410,7 @@ Table~\ref{fig:responsevarmi} shows the results of power-law models ; the standa
         \end{tabular}
         {\small*Response Variable $= \frac{\text{MI}(\text{bps})}{(\text{Vol})(\text{RS})^{0.6}}$}
         \end{table}
-Building empirical models for noisy data almost always requires some smoothing of raw data. While there are excellent methods such as kernel smoothing, smoothing in a higher dimension is not easy due to `curse of [cut off the page]' problem. Thus, we chose this simple approach [cut off page]. 
+Building empirical models for noisy data almost always requires some smoothing of raw data. While there are excellent methods such as kernel smoothing, smoothing in a higher dimension is not easy due to `curse of dimensionality' problem. Thus, we chose this simple approach of binning. 
 
 
 Several relevant observations can be made about the coefficients in the estimated models. For example, Model 3, which is traditionally well cited in the literature, can be written as:
