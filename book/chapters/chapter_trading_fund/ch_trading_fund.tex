@@ -59,7 +59,7 @@ Europe and Asia had somewhat slower and somewhat compressed evolution. The main 
 
 
 
-\noindent\textbf{ Broker-Dealers (aka Sell Side):} They sit in between the ``Buy Side" (generic term for asset management firms and hedge funds) and various exchanges \footnote{Note that only member firms are allowed to trade on exchange and most asset management firms are non-members}. They can act either as Agent for the client (i.e. Broker) or provide liquidity as Principal (i.e. Dealer) from their own accounts. They historically had  also large proprietary trading desks investing the firm's capital using strategies not dissimilar to the ones Hedge Funds use. Since the introduction of the Dodd-Frank Act\footnote{\url{https://en.wikipedia.org/wiki/Dodd\%E2\%80\%93Frank_Wall_Street_Reform_and_Consumer_Protection_Act}} the amount of proprietary risk that a firm can carry has dramatically decreased and most banks shed large part of their proprietary trading activities either shutting down the desks or spinning them off in independent hedge funds. \\
+\noindent\textbf{Broker-Dealers (aka Sell Side):} They sit in between the ``Buy Side" (generic term for asset management firms and hedge funds) and various exchanges \footnote{Note that only member firms are allowed to trade on exchange and most asset management firms are non-members}. They can act either as Agent for the client (i.e. Broker) or provide liquidity as Principal (i.e. Dealer) from their own accounts. They historically had  also large proprietary trading desks investing the firm's capital using strategies not dissimilar to the ones Hedge Funds use. Since the introduction of the Dodd-Frank Act\footnote{\url{https://en.wikipedia.org/wiki/Dodd\%E2\%80\%93Frank_Wall_Street_Reform_and_Consumer_Protection_Act}} the amount of proprietary risk that a firm can carry has dramatically decreased and most banks shed large part of their proprietary trading activities either shutting down the desks or spinning them off in independent hedge funds. \\
 
 
 \noindent\textbf{HFTs and ELPs (Electronic Liquidity Providers), DMMs (Designated Market Makers):} These participants generate returns by acting as facilitators between the above participants, providing liquidity and then trying to unwind it at a profit. They can also be aggregators of retail liquidity, e.g. individual investors trading using online providers like ETrade. Likely the most technology savvy operators in the market place, they leverage ultra-low-latency infrastructure to be extremely nimble in getting in and out of positions and taking advantage of tiny mis-pricing. 
@@ -569,12 +569,18 @@ While impossible to make a comprehensive list of all the ones available, they ca
 
 \subsubsection{Daily Statistics}
 
+On top of fundamental data, quantitative trading strategies (in particular shorter term and intraday ones) often make use of market statistics. While strategies of higher frequency leverage more and more granular data, day level aggregated statistics are a good place to start when building a strategy.
+Here we give a list of the most common ones used by practitioners and researchers alike.
+
+trading activity: 
+
 \begin{itemize}
 \item Open, High, Low, Close (OHLC) / Prev Close Price and Date (for computation efficiency such as overnight gap: but needs careful 'adjust=True...), last before close Time/Price
 \item Volume + lit/dark breakdown
+\item Auctions volume (up to 4 of them, + liquidity / intraday ones)
+
 \item VWAP
 \item Short Interest / utilization / days-to-cover
-\item Auctions volume (up to 4 of them, + liquidity / intraday ones)
 \item Spread (avg, med, twavg) --> or better: parametrized distribution which can then be used in a Bayesian update setup
 \item Number of trades
 \item Trade size (avg, med) --> or better: parametrized distribution which can then be used in a Bayesian update setup
