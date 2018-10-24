@@ -177,7 +177,7 @@ The term double auction refers to the nature of the markets where, unlike a comm
 \end{table}	
 
 
-Most exchanges publish order imbalance that exists among orders on the opening or closing books, along with the indicative opening or closing price and volume. For instance Nasdaq publishes the following information\footnote{Source: Nasdaq Trader website} between 9:28 a.m. EST and 9:30 a.m. EST,  every 5 seconds, on its market data feeds:
+Most exchanges publish order imbalance that exists among orders on the opening or closing books, along with the indicative opening or closing price and volume. For instance Nasdaq publishes the following information\footnote{Source: Nasdaq Trader website} between 9:28 a.m. EST and 9:30 a.m. EST,  every 5 seconds \todo{It's changing on Monday to 1s, check the new starting time too}, on its market data feeds:
 \begin{itemize}
 \item  Current Reference Price: price within the Nasdaq Inside at which paired shares are maximized, the imbalance is minimized and the distance from the bid-ask midpoint is minimized, in that order.
 \item  Near Indicative Clearing Price: The crossing price at which orders in the Nasdaq opening / closing book and continuous book would clear against each other. 
@@ -357,7 +357,7 @@ From a pure execution standpoint, though, the usage of the open auction has to b
 There are six types of events, three on either side, that can alter the state of the order book:
 	\begin{itemize}
 	\item Limit order submission: A limit order is added to the queue at the specified price level.
-	\item Limit order cancellation: An outstanding limit order is expired or cancelled and therefore is removed from the LOB.
+	\item Limit order cancellation: An outstanding limit order is expired or canceled and therefore is removed from the LOB.
 	\item Marketable order submission: outstanding limit orders at the best price and up to the demanded liquidity price level (in case of pure market order) or up to the limit price (for marketable limit order) are executed against the incoming order and thus removed from the book.
 	\end{itemize}
 
@@ -401,11 +401,41 @@ Finally, it is worth mentioning that some exchanges as well as alternative venue
 
 \noindent\textbf{The Closing Auction:} The Closing Auction tends to be the most popular of call auctions for a variety of interesting reasons. First, it is the last opportunity (exception made of off-hours trading) for market participants to transact in a relatively liquid environment before being exposed to the overnight period (when new information accumulates, but trades cannot easily take place). Second, with the increase in passive investment strategies providing investors with replication of a predetermined benchmark index, the closing auction has become a particularly relevant price setting event (most passive funds net asset valued (NAV) is based on close prices of the underlying assets). For such reasons, the closing auction is extremely important to many investors. From an execution standpoint, it is a major liquidity event that needs to be considered carefully. \\
 
-The mechanics of the closing auction are in most part similar to the ones described above for the open auction. The major differences across countries (and sometimes across exchanges within a country) have to do with order submission times. Some countries, such as the U.S., have order submissions start and end before the continuous session is over; while some other markets have two non-overlapping continuous and close order submission sessions. \\
+The mechanics of the closing auction are in most part similar to the ones described above for the open auction. The major differences across countries (and sometimes across exchanges within a country) have to do with order submission times. Some countries, such as the U.S., have order submissions start and end before the continuous session is over (see Table~\ref{tab:NASDAQclose} and Table~\ref{tab:NYSEclose}); while some other markets have two non-overlapping continuous and close order submission sessions. \\
 
-TODO: insert examples for NYSE, NAsdaq, HKSE
+\begin{table}[!ht]
+   \centering
+   \caption{Nasdaq Closing Cross\label{tab:NASDAQclose}}
+   \begin{tabular}{ll} 
+	3:50 p.m. EST & Dissemination of imbalance information begins  \\ \hline
+	3:55 p.m. EST &  \\ \hline
+	3:58 p.m. EST & Freeze period - MOC and LOC orders cannot be canceled  \\ 
+	 & LOC and OI orders offsetting the imbalance are still accepted   \\ \hline	
+	4:00 p.m. EST & The Closing Cross occurs		
+   \end{tabular}
+\end{table}	
 
-TODO: add the d-quote mechanism\\
+\todo{amend times/cutoffs with new ones as of Oct 26th}
+
+\begin{table}[!ht]
+   \centering
+   \caption{NYSE Closing Cross\label{tab:NYSEclose}}
+   \begin{tabular}{ll} 
+	3:45 p.m. EST & Cutoff for MOC/LOC order entry and modifications  \\ 
+	 & Dissemination of imbalance information begins  \\ \hline
+	3:55 p.m. EST &  Dissemination of d-quote imbalance information\\ \hline
+	3:58 p.m. EST & Cutoff for MOC/LOC cancellation for legitimate error \\ \hline
+	3:59:50 p.m. EST & Cutoff for d-Quote order entry and modification \\ \hline
+	4:00 p.m. EST & The Closing Auction starts \\ \hline
+	4:02 p.m. EST & DMM can automatically process auctions not yet complete
+   \end{tabular}
+\end{table}	
+
+\todo{Check if NYSE allows certain imbalance canceling orders after 3:45}
+
+\todo{Add timing table for HKSE or Euronext as a non-US example}
+
+One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary e-Quote orders (known as "d-Quote" orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since their is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. \\
 
 \textbf{Why is the Close such an important time of the day?:}
 A large number of Quant and CTA funds are building their investment strategies using daily returns, essentially using the closing price as a reference price for their investment decisions. Once their backtesting is built on closing price data, they aim at obtaining an execution price equal to---or better than---that closing price when implementing their strategies. 
@@ -482,13 +512,13 @@ Pure static data is also relevant for the development of quantitative trading st
 Maintaining a table of the quotation currency per instrument is also necessary in order to be able to aggregate positions at a portfolio level. Some exchanges allow the quotation of prices in currencies different from the one of the country in which the exchange is located.\footnote{For example, Jardine Matheson Holdings quotes in USD on the Singapore exchange while most of the other securities quote in Singapore Dollars.} Additionally, the Quote Factor associated with the quotation currency data needs to be stored. To account for the wide range of currency values and preserve pricing precision, market data providers might be publishing FX rates with a factor of 100 or 1000. Hence, to convert prices to USD one needs to multiply by the quote factor: usd price $=$ local price $\cdot$ fx $\cdot$ quote factor. Similarly, some exchanges quote prices in cents, and the associated quotation currency is reflected with a small cap letter: GBP/GBp, ZAR/ZAr, ILS/ILs, \dots).
 
 
-\item \textbf{Exchange Specific Data:}  Despite the electronification of markets, individual exchanges present a variety of differences that need to be accounted for when trading strategies. The first group of information concerns the hours and dates of operation:
+\item \textbf{Exchange Specific Data:}  Despite the electronification of markets, individual exchanges present a variety of differences that need to be accounted for when designing trading strategies. The first group of information concerns the hours and dates of operation:
 \begin{itemize}
-\item Holiday calendar: As not all exchanges are closed on the same day, and trading days off do not always fully follow the country public holidays, it is valuable to record them in particular in the international context. Strategies trading simultaneously in several markets might not perform as expected if one of the markets is closed while the others are open. Similarly, execution strategies in one market might be impacted by the absence of trading in another market (for instance, European equity markets volume tends to be 30\% to 40\% lower during U.S. market holidays).
+\item Holiday calendar: As not all exchanges are closed on the same day, and trading days off do not always fully follow the country public holidays, it is valuable to record them in particular in the international context. Strategies trading simultaneously in several markets and leveraging their correlation might not perform as expected if one of the markets is closed while the others are open. Similarly, execution strategies in one market might be impacted by the absence of trading in another market (for instance, European equity markets volume tends to be 30\% to 40\% lower during U.S. market holidays).
 
-\item Exchange sessions hours: Exchange session hours, auction times as well as their respective cut-offs for order submission, lunch break hours, Futures markets sessions as well as official settlement times.
+\item Exchange sessions hours: these seemingly trivial data points can get quite complex on a global scale. What are the different available sessions (Pre-Market session, Continuous core session, After-Hour session, etc.)? What are the auction times as well as their respective cutoff times for order submission?Is there a lunch break restricting intraday trading? And if so, are there auctions before and after the lunch break? \dots Futures markets sessions can also be quite complex with multiple phases, breaks, as well as official settlement times that might differ from the closing time and have an effect on liquidity.
 
-In Indonesia, for instance, markets have different trading hours on Fridays. Monday through Thursday the Indonesia Stock Exchange (IDX) is open from 9:00~AM to 12:00~PM, and then, from 1:30~PM to 4:00~PM. On Fridays, however, the lunch break is one hour longer and stretches from 11:30~AM to 2:00~PM. This weekly (day) seasonality effect is particularly important to consider when building volume profiles as described in the next chapter.
+In Indonesia, for instance, markets have different trading hours on Fridays. Monday through Thursday the Indonesia Stock Exchange (IDX) is open from 9:00~AM to 12:00~PM, and then, from 1:30~PM to 4:00~PM. On Fridays, however, the lunch break is one hour longer and stretches from 11:30~AM to 2:00~PM. This weekly (day) seasonality effect is particularly important to consider when building volume profiles as described in the next chapter\todo{add dynamic pointer to the right chapter}.
 
 Along with local times of operation, it is necessary to consider eventual Daylight Saving Time (DST) adjustments that might effect the relative trading hours of different markets (some countries do not have DST adjustment at all, while for countries that do have one, the dates at which it applies are not always coordinated). Usually, DST starts about two weeks prior to its start in Europe, bringing the time difference between New York and London to 4 hours instead of 5 hours. This results in the volume spike in European equities associated to the U.S. market open being one hour earlier, requiring adjustment of volume profiles used for trading execution.
 
@@ -515,7 +545,7 @@ Since these values and their potential activation threshold can vary over time, 
 For instance, in order to assess accessible liquidity for a trading algorithm, trades that are published for reporting purposes (e.g. negotiated transactions that happened off-exchange) need to be excluded. These trades should also not been used to update some of the aggregated daily data used in the construction of trading strategies (daily volume, high, low, \dots). Execution algorithms also leverage extensively distribution of intraday liquidity metrics to gauge their own participation in auctions and continuous sessions, or in lit versus dark venues, therefore requiring a precise classification of intraday market data. 
 
 
-\item \textbf{Special Day Calendars:} Over the course of a year, certain days present liquidity characteristics that need to be accounted for in both execution strategies and in alpha generation. Here too, the diversity of events across markets and asset classes can be quite challenging to handle. Among the irregular events that affect liquidity in equity markets and need to be accounted for, we can mention the following non-exhaustive list for illustration purposes: half trading days following Christmas and Thanksgiving in the U.S. or on the Ramadan eve in Turkey, Taiwanese market opening on the weekend to make up for lost trading days during holiday periods, Korean market changing its trading hours on the day of the nationwide university entrance exam, Brazilian market opening late on the day following the Carnival, etc..
+\item \textbf{Special Day Calendars:} Over the course of a year, certain days present liquidity characteristics that need to be accounted for in both execution strategies and in the alpha generation process. Here too, the diversity of events across markets and asset classes can be quite challenging to handle. Among the irregular events that affect liquidity in equity markets and need to be accounted for, we can mention the following non-exhaustive list for illustration purposes: half trading days preceding Christmas and following Thanksgiving in the U.S. or on the Ramadan eve in Turkey, Taiwanese market opening on the weekend to make up for lost trading days during holiday periods, Korean market changing its trading hours on the day of the nationwide university entrance exam, Brazilian market opening late on the day following the Carnival, etc.
 
 There are also special days that are more regular and easier to handle. The last trading days of the months and quarters, for instance, tend to see additional trading activity as investors rebalance their portfolios. Similarly, options and futures expiry days (quarterly/monthly expiry, `Triple Witching'\footnote{Triple witching days happen four times a year on the third Friday of March, June, September and December. On these days, the contracts for stock index futures, stock index options and stock options expire concurrently.} in the U.S., Special Quotations in Japan, etc.) tend to also have relative excess trading volume and different intraday patterns resulting from hedging activity and portfolios adjustments. Consequently, they need to be handled separately, in particular when modeling trading volume. As most execution strategies make use of relatively short interval volume metrics (e.g. 30-day or 60-day ADV), one single data point can be enough to impact the overall level inferred. Similarly autoregressive models of low order might underperform both on special days and on the days following them. As a result, modelers often opt for removing special days from datasets and model normal days first. Then, special days are modeled separately, either independently or using the normal days as a baseline. 
 
@@ -528,7 +558,7 @@ It is worth noting that a special day calendar usage needs not be limited to the
 
 The task of implementing a futures expiry calendar is further complicated by the fact there is no real standardized frequency that applies across markets. For instance, European equity index futures tend to expire monthly, while U.S. index futures expire quarterly. Some contracts even follow an irregular cycle through the course of the year as it is the case for grain futures (e.g. wheat) that were originally created for hedging purposes and as a result have expiry months that follow the crop cycle (\todo{GIVE AN EXAMPLE OF WHEAT FULL YEAR CYCLE}).
 
-The fact futures contracts expire on a regular basis has further implications in terms of liquidity. As investors holding these contracts, they want to maintain their exposure for longer than the lifespan of the contract, they need to roll over their positions onto the next contract. There is often a noticeable difference in the liquidity of consecutive contracts (for instance, the front contract of the S\&P500 (e.g. ESM8) trades roughly 2 million contracts per day -- \todo{NEED TO CHECK ACTUAL ADV} -- while the next month contract (ESH8) only trades 100,000 contracts per day --- \todo{NEED TO CHECK THE ACTUAL ADV} --. However, this liquidity relationship will invert in the few days leading to the expiry of the front contract as most investors roll their positions, and the most liquid contract will become the back month contract (\todo{INSERT GRAPH for contracts Rolling}). As a result, when computing rolling-window metrics (such as average daily volume for instance), it is necessary to account for potential roll dates that might have happen during the span of the time series. In the example above, a simple 60-day average daily volume on ESH8 taken in early April 2018 would capture a large number of days with very low volume (January-March) owing to the fact the most liquid contract at the time was the ESM8 contract, and not accurately represent the volume activity of the S\&P500 futures contract. A more appropriate average volume metric to be used as a forward looking value for execution purposes would blend the volume time series of ESH8 prior to the roll date, and ESM8 after the roll date\footnote{It is worth noting that different contracts 'roll' at different speed. While for monthly expiry contracts it is possible to see most of the open interest switch from the front month contract to the back month on the day prior to the expiry, for quarterly contracts it is not uncommon to see the roll happen over the course of a week or more, and the front month liquidity vanish several days ahead of the actual expiry. Careful modeling is recommended on a case by case basis.}. Additionally, in order to efficiently merge futures positions with other assets in an investment strategy, one needs to store reference data relative to the quotation of these contracts: contract size (translation between the quotation points and the actual monetary value), currency, etc. 
+The fact futures contracts expire on a regular basis has further implications in terms of liquidity. As investors holding these contracts, they want to maintain their exposure for longer than the lifespan of the contract, they need to roll over their positions onto the next contract. There is often a noticeable difference in the liquidity of consecutive contracts (for instance, the front contract of the S\&P500 (e.g. ESM8) trades roughly 2 million contracts per day -- \todo{NEED TO CHECK ACTUAL ADV} -- while the next month contract (ESH8) only trades 100,000 contracts per day --- \todo{NEED TO CHECK THE ACTUAL ADV} --). However, this liquidity relationship will invert in the few days leading to the expiry of the front contract as most investors roll their positions, and the most liquid contract will become the back month contract (\todo{INSERT GRAPH for contracts Rolling}). As a result, when computing rolling-window metrics (such as average daily volume for instance), it is necessary to account for potential roll dates that might have happen during the span of the time series. In the example above, a simple 60-day average daily volume on ESH8 taken in early April 2018 would capture a large number of days with very low volume (January-March) owing to the fact the most liquid contract at the time was the ESM8 contract, and not accurately represent the volume activity of the S\&P500 futures contract. A more appropriate average volume metric to be used as a forward looking value for execution purposes would blend the volume time series of ESH8 prior to the roll date, and ESM8 after the roll date\footnote{It is worth noting that different contracts 'roll' at different speed. While for monthly expiry contracts it is possible to see most of the open interest switch from the front month contract to the back month on the day prior to the expiry, for quarterly contracts it is not uncommon to see the roll happen over the course of a week or more, and the front month liquidity vanish several days ahead of the actual expiry. Careful modeling is recommended on a case by case basis.}. Additionally, in order to efficiently merge futures positions with other assets in an investment strategy, one needs to store reference data relative to the quotation of these contracts: contract size (translation between the quotation points and the actual monetary value), currency, etc. 
 
 Finally, futures markets are characterized by the existence of different market phases during the day, with significantly different liquidity characteristics. For instance, equity index futures are much more liquid during the hours when the corresponding equities markets are open. However, one can trade during the overnight session if they need to. The overnight session being much less liquid, the expected execution cost tends to be higher, and as such, the various market data metrics (volume profile, average spread, average bid-ask sizes, ...) should be computed separately for each market phase, which requires maintaining a table of the start and end times of each session for each contracts. 
 
@@ -536,17 +566,17 @@ Finally, futures markets are characterized by the existence of different market 
 \item \textbf{Options-specific Reference Data (Options Chain):} Similar to futures contracts, options contracts present a certain number of specificities for which reference data need to be collected. On top of the similar feature of having a particular expiry date, options contracts are also defined by their strike price. The combination of expiries and strikes is known as the the option chain for a given underlier. The ability to map equity tickers to options tickers and their respective strike and expiry dates allows for the design of more complex investment and hedging strategies. For instance, distance to strike, change in open interest of puts and calls, etc. can all be used as signals for the underlying security price.
 
 
-\item \textbf{Market-Moving News Releases:} Macro-economic announcements are known for their ability to move markets substantially. Consequently, it is necessary to maintain a calendar of dates and times of their occurrences in order to assess their impact on strategies and decide how to best react to them. The most common ones are central banks announcements or meeting minutes releases of the major economies (FED/FOMC, ECB, BOE, BOJ, SNB), Non-Farm Payrolls, PMI, Crude Oil Inventories, etc. While these news releases impact the broad market or some wide sectors, there are also stock specific releases that need to be tracked:earning calendars, specialized sector events such as FDA results for the healthcare and biotech sectors  \dots 
+\item \textbf{Market-Moving News Releases:} Macro-economic announcements are known for their ability to move markets substantially. Consequently, it is necessary to maintain a calendar of dates and times of their occurrences in order to assess their impact on strategies and decide how to best react to them. The most common ones are central banks announcements or meeting minutes releases of the major economies (FED/FOMC, ECB, BOE, BOJ, SNB), Non-Farm Payrolls, PMI, Crude Oil Inventories, etc. While these news releases impact the broad market or some wide sectors, there are also stock specific releases that need to be tracked: earning calendars, specialized sector events such as FDA results for the healthcare and biotech sectors  \dots 
 
 
-\item \textbf{Related tickers:} there is a wide range of tickers that are related which each other, often because they fundamentally represent the same underlying asset. Maintaining proper reference allows to efficiently exploit opportunities in the market. Some non-exhaustive examples include: primary tickers to composite tickers mapping (for markets with fragmented liquidity), dual listed/fungible securities in US and Canada, local and foreign boards in Thailand,\dots 
+\item \textbf{Related tickers:} there is a wide range of tickers that are related which each other, often because they fundamentally represent the same underlying asset. Maintaining proper reference allows to efficiently exploit opportunities in the market. Some non-exhaustive examples include: primary tickers to composite tickers mapping (for markets with fragmented liquidity), dual listed/fungible securities in US and Canada, American Depository Receipt (ADR) or Global Depository Receipt (GDR), local and foreign boards in Thailand,\dots 
 
 
-\item \textbf{Composite Assets:} some instruments represent several underlying assets (ETFs, Indexes, Mutual Funds, \dots). Their rise in popularity over time makes them popular for quantitative strategies as they can be used as efficient vehicles to achieve desired exposures (sector and country ETFs, thematic factor ETFs, \dots), can be used as cheap hedging instruments, can provide arbitrage opportunity when they deviate from their Net Asset Value (NAV), and so on. 
-In order to be leveraged in quantitative strategies, one needs to maintain a variety of information such as a time series of their constituents and any cash component, a time series of the divisor used to translate the NAV into the quoted price, a time series of constituent weights. 
+\item \textbf{Composite Assets:} some instruments represent several underlying assets (ETFs, Indexes, Mutual Funds, \dots). Their rise in popularity as investments over time makes them relevant for quantitative strategies as they can be used as efficient vehicles to achieve desired exposures (sector and country ETFs, thematic factor ETFs, \dots), can be used as cheap hedging instruments, can provide arbitrage opportunities when they deviate from their Net Asset Value (NAV), and so on. 
+In order to be leveraged in quantitative strategies, one needs to maintain a variety of information such as a time series of their constituents and the value of any cash component, a time series of the divisor used to translate the NAV into the quoted price, a time series of constituent weights. 
 
 
-\item \textbf{Latency tables:} This latest type of data would only be of interest for strategies and research in the higher frequency trading space. For these, it might be relevant to know the distribution of latency between different data centers as they can be used for more efficient order routing as well as reordering time series that may have been recorded in different locations.
+\item \textbf{Latency tables:} This last type of data would only be of interest for strategies and research in the higher frequency trading space. For these, it might be relevant to know the distribution of latency between different data centers as they can be used for more efficient order routing as well as reordering time series that may have been recorded in different locations.
 
 \end{itemize}
 
@@ -558,11 +588,11 @@ A very large number of quantitative investment strategies are still based on fun
 
 \begin{itemize}
 \item \textbf{Key ratios:} EPS (Earnings Per Share), P/E (Price-to-Earning), P/B (Price-to-Book Value), \dots These metrics represent a normalized view of the financials of companies allowing for easier cross-sectional comparisons and ranking over time.
-\item \textbf{Analyst recommendations:} Research analysts at Sell Side institutions spend a great deal of resources analyzing companies they cover in order to provide investment recommendations (usually in the form of a Buy/Hold/Sell rating accompanied by a price target). While individual recommendations might prove noisy, the aggregate values across a large number of institutions can be interpreted as a market consensus for the valuation of a given stock, and material  changes in consensus can have an impact on price.
+\item \textbf{Analyst recommendations:} research analysts at Sell Side institutions spend a great deal of resources analyzing companies they cover in order to provide investment recommendations (usually in the form of a Buy/Hold/Sell rating accompanied by a price target). While individual recommendations might prove noisy, the aggregate values across a large number of institutions can be interpreted as a market consensus for the valuation of a given stock, and material changes in consensus can have a direct impact on price.
 \item \textbf{Earnings data:} similarly research analysts also provide quarterly earning estimates that can be used as an indication of the performance of a stock before the actual value gets published by the company. Here too consensus values tend to play a larger role, in particular when the difference between the forecast consensus and the realized value is large (known as earning surprise), as the stock might then experience outsized returns in the following days. Thus, collecting analysts forecasts as well as realized values can be a valuable source of information in the design of strategies.
-\item \textbf{Holders:} \todo{check FINRA/SEC filing 13F forms} In some markets, shareholders are required to disclose their holdings once they pass certain ownership thresholds. Sudden changes in such ownership might indicate changes in sentiment by sophisticated investor and can have a significant impact on stock performance.
-\item \textbf{Insiders Purchase/Sale:} \todo{check FINRA/SEC filing forms} In some markets, companies directors are required by law to disclose their holdings of the company stock as well as any increase or decrease of such holdings. This is thought to be an indicator of future stock price moves from the group of people who has access to the best information about the company and the current environment in which it evolves.
-\item \textbf{Credit Ratings:} most companies issue both stocks and bonds to finance their operations. Bonds credit ratings and their changes over time provide additional insight into the health of a company and are worth leveraging. In particular, credit downgrades resulting in higher funding costs in the future generally have an impact on equity prices.
+\item \textbf{Holders:} \todo{check FINRA/SEC filing 13F forms} in some markets, shareholders are required to disclose their holdings once they pass certain ownership thresholds. Sudden changes in such ownership might indicate changes in sentiment by sophisticated investor and can have a significant impact on stock performance.
+\item \textbf{Insiders Purchase/Sale:} \todo{check FINRA/SEC filing forms} in some markets, companies directors are required by law to disclose their holdings of the company stock as well as any increase or decrease of such holdings. This is thought to be an indicator of future stock price moves from the group of people who has access to the best possible information about the company and the current environment in which it evolves.
+\item \textbf{Credit Ratings:} most companies issue both stocks and bonds to finance their operations. Bonds credit ratings and their changes over time provide additional insight into the health of a company and are worth leveraging. In particular, credit downgrades resulting in higher funding costs in the future generally have a negative impact on equity prices.
 \item \textbf{And much, much more:} recent years have seen the emergence of a wide variety of alternative datasets that are available to researchers and practitioners alike.  \todo{Give a few examples of unstructured and novel data types for illustration}
 While impossible to make a comprehensive list of all the ones available, they can generally be classified based on their characteristics: frequency of publication, structured or unstructured, and velocity of dissemination. The value of such data depends on the objectives and resources of the user (natural language processing or image recognition for unstructured data require significant time and efforts), but also -- and maybe more importantly -- on the uniqueness of the dataset. The more investors get access to it, the harder it becomes to extract meaningful alpha from it.
 \end{itemize}
@@ -570,54 +600,53 @@ While impossible to make a comprehensive list of all the ones available, they ca
 \subsubsection{Daily Statistics}
 
 On top of fundamental data, quantitative trading strategies (in particular shorter term and intraday ones) often make use of market statistics. While strategies of higher frequency leverage more and more granular data, day level aggregated statistics are a good place to start when building a strategy.
-Here we give a list of the most common ones used by practitioners and researchers alike.
+Here we give a list of the most common ones used by practitioners and researchers alike.\\
 
-trading activity: 
+The first group represents the overall trading activity in the instrument: 
 
 \begin{itemize}
-\item Open, High, Low, Close (OHLC) / Prev Close Price and Date (for computation efficiency such as overnight gap: but needs careful 'adjust=True...), last before close Time/Price
-\item Volume + lit/dark breakdown
-\item Auctions volume (up to 4 of them, + liquidity / intraday ones)
-
-\item VWAP
-\item Short Interest / utilization / days-to-cover
-\item Spread (avg, med, twavg) --> or better: parametrized distribution which can then be used in a Bayesian update setup
-\item Number of trades
-\item Trade size (avg, med) --> or better: parametrized distribution which can then be used in a Bayesian update setup
-\item Number and frequency of quote updates 
-\item Top of book size
-\item Depth of book (price and size)
-\item Ticking time (avg, med) --> or better: parametrized distribution which can then be used in a Bayesian update setup
-\item Futures and Options:
+\item \textbf{Open, High, Low, Close (OHLC) and Previous Close Price:} the OHLC provides a good indication of the trading activity as well as the intraday volatility experienced by the instrument. The distance traveled between the lowest and highest point of the day usually gives a better indication of market sentiment than the simple close-to-close return. Keeping the previous close value as part of the same time series is also a good way to improve computation efficiency by not having make an additional database query to compute intraday return and overnight gap. The previous close needs, however, to be properly adjusted for corporate actions and dividends. 
+\item \textbf{Last trade before close (Price/Size/Time):} it is useful in determining how much the close price might have jumped in the final moments of trading, and consequently, how stable a reference value it might be for the next day.
+\item \textbf{Volume:} it is another valuable source of trading activity indication, in particular when the level jumps from longer term average. It is also worth collecting the breakdown between lit and dark volume, in particular for execution strategies.
+\item \textbf{Auctions volume:} depending on the exchange, there can be multiple auctions in a day (Open, Close, Morning Close and Afternoon Open - for markets with a lunch break -, as well as adhoc liquidity or intraday auctions). Owing to their liquidity aggregation nature, they often time can be considered as a valuable price discovery event when significant volume prints.
+\item \textbf{VWAP:} similar to the OHLC, the intraday VWAP price gives a good indication of the trading activity on the day. It is not uncommon to build trading strategies using VWAP time series instead of just close-to-close prices. The main advantage being that VWAP prices represent a value over the course of the whole day and, as such, for larger orders are easier to achieve through algorithmic execution than a single print.
+\item \textbf{Short Interest / days-to-cover / utilization:} this dataset is a good proxy for investors positioning. The short pressure might be an indication of upcoming short term moves: a large short interest usually indicates a bearish view from institutional investors. Similarly, the utilization level of available securities to borrow (in order to short) gives an indication of how much room is left for further shorting (when securities become "Hard to Borrow", the cost of shorting becomes significantly higher requiring short seller to have strong enough beliefs in the price direction in the short term. Finally, the days-to-cover data is also valuable to assess the magnitude of a potential short squeeze. If short sellers need to unwind their positions, how much volume does this represent as a fraction of available daily liquidity. The larger the value, the larger the potential sudden upswing on heavily shorted securities.
+\item \textbf{Futures data:} futures markets provide additional insight into the activity of large investors through open interest data that can be useful to develop alpha strategies. Additionally, financial futures offer arbitrage opportunities if their basis exhibits mispricing compared to one's dividend estimates. As such, recording the basis of futures contracts is worthwhile even for strategies that don't particularly target futures.
+\item \textbf{Index-level data:} this is also a valuable dataset to collect as a source of relative measures for instrument specific features (Index OHLC, Volatility, \dots). In particular for dispersion strategies, normalized features help identify individual instruments from their benchmark. 
+\item \textbf{Options data:} the derivatives market is a good source of information about the positioning of traders (through open interest and Greeks such as Gamma and Vega) as well as how the broader market is pricing an instrument (through implied volatility for instance).
+\item \textbf{Asset Class Specific:} there is a wealth of cross-asset information available when building strategies, in particular in Fixed Income, FX, and Credit. Among the basic ones, we would note:
 \begin{itemize}
-\item Open Interest
-\item Greeks 
-\item Implied Vol
-\item Basis / dividends estimates
-\item Fair Value
+\item Yield / benchmark rates (repo, 2y, 10y, 30y)
+\item CDS Spreads
+\item US Dollar Index
+\end{itemize}
 \end{itemize}
 
-\item Index-level data for relative measures: OHLC, Overnight gap, ..., benchmark rates (repo, 2y, 10y, 30y?)
-\item Asset Class Specific: FI, FX, Credit
+The second group of daily data represents granular intraday microstructure activity and is mostly of interest to intraday or execution trading strategies:
+
 \begin{itemize}
-\item Yield
-\item CDS Spread
-\item Closed End Fund: premium / discount
-\item USDollar Index
+\item \textbf{Number of trades:} a proxy for the activity level of an instrument, and how continuous it is (instruments with a low number of trades are harder to execute and can be more volatile). 
+\item \textbf{Number and frequency of quote updates:} similar proxy for the activity level.
+\item \textbf{Top of book size:} a proxy for liquidity of the instrument (larger top of book size make it possible to trade larger order size quasi immediately if needed).
+\item \textbf{Depth of book (price and size):} similar proxy for liquidity.
+\item \textbf{Spread size (average, median, time weighted average):} this provides a proxy for cost of trading. A parametrized distribution of spread size can be used to identify cheap or expensive intraday trading opportunities.
+\item \textbf{Trade size (average, median):} similar to spread size, trade sizes and their distribution are useful to identify intraday liquidity opportunities when looking at the volume available in the order book.
+\item \textbf{Ticking time (average, median):} the ticking time and its distribution is a representation of how often one should expect changes in the order book first level. This is particularly helpful for execution algos for which the frequency of updates (adding/canceling child orders, reevaluating decisions, etc.) should be commensurate with the characteristics of the traded instrument.
+
+These daily level distribution of microstructure variable can be used as start of day estimates in trading algorithms and be updated intraday as additional data flows in through bayesian update.
 \end{itemize}
 
-\end{itemize}
+Finally, the last group of daily data can be derived from the previous two groups through aggregation but is usually stored pre-computed in order to save time during the research phase (e.g. X-day trailing data), or to be used as normalizing values (e.g. size as a percentage of ADV, spread in relation to long-term average, \dots). Some common examples would be:
 
-Can also include pre-computed aggregated X-day trailing data (essentially for computation efficiency in backtest), in particular for normalisation purposes (eg size as a percentage of ADV, spread in relation to long-term average, ...)
 \begin{itemize}
 
-\item X-day volatility
 \item X-day ADV / Avg auction Volume
-\item Beta (full, up-days/down-days) wrt index or sector
-\item Correlation to reference index
+\item X-day volatility
+\item Beta w.r.t. index or sector (plain beta, or up-days/down-days beta)
+\item Correlation matrix
 \end{itemize}
 
---> Aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation)
+As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.)
 
 \subsubsection{Bin Data}
 
