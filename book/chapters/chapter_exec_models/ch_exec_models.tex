@@ -150,13 +150,13 @@ Various extensions of the basic model (\ref{eqn:bigpk}) are considered by Almgre
 	\begin{figure}[!ht]
    	\centering
 	    \includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/opt_traj.png}
-	   \caption{Optimal Trajectories. \label{fig:7first}}
+	   \caption{Optimal Trajectories for two securities; ($A: \lambda= 2 \times 10^{-6}$; $B: \lambda=0$; $C= -5 \times 10^{-8}$; $B$ is the na\"ive strategy). \label{fig:7first}}
 	\end{figure}
 	\begin{figure}[!ht] 
 	   \centering
 	    \includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/temp2.png}
 	   \caption{Projected Execution Schedules \label{fig:7second}}
-	\end{figure} \btodo{Figure 11.2 is also burry as it was scanned. Will not print well.}
+	\end{figure}
 Some questions remain: what is the link between market impact and the dynamics of limit order book, is the impact function linear empirically, etc.. The effect of a short term drift in prices and the serial correlation in the errors which is observed in high frequency etc can be incorporated easily in the model (\ref{eqn:morepk}). Lorenz and Almgren (2011) \cite{lovenz2011} provide a Bayesian approach to the optimization problem. While the methodology yields elegant solutions, empirical use of these results require a close monitoring of order book dynamics as the changes in demand and supply sides can be quite rapid. The general behavior of this adaptive strategy is aggressive; it depends on the prediction of short term price change; generally, if price goes up sell faster. 
 
 
@@ -206,7 +206,7 @@ Some comments are worth noting. Note the solution given in (\ref{eqn:orders}) do
 and it is shown to be smaller than the cost incurred if the strategy of constant rate trading is followed. 
 
 
-Obizhaeva and Wang (2013)~\cite{obizhaeva} consider the extension of the optimization criterion in (\ref{eqn:min}) to include the risk aversion as well, as in Almgren and Chriss (2000)~\cite{alm2000}. Interested readers should refer to their paper. For a practical implementation of these methods, it is necessary to consider the trading that happens in multiple exchanges and how the replenishment patterns can differ over different exchanges where `liquidity' and the fee structure have become major considerations for the order flow. 
+Obizhaeva and Wang (2013)~\cite{obizhaeva} consider the extension of the optimization criterion in (\ref{eqn:min}) to include the risk aversion as well, as in Almgren and Chriss (2000)~\cite{alm2000}. Interested readers should refer to Section~8 their paper. For a practical implementation of these methods, it is necessary to consider the trading that happens in multiple exchanges and how the replenishment patterns can differ over different exchanges where `liquidity' and the fee structure have become major considerations for the order flow. 
 
 
 \subsection{Easley, De Prado and O'Hara Model}
@@ -255,7 +255,7 @@ The key quantities in determining the OEH are the order imbalance and the trade 
    \centering
     \includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/fig3temp.png}
      \caption{Optimal execution horizons for various order imbalances and trade sizes/sides. Combining alternative trade sizes and sides with our three scenarios ($v^B=0.4$, $v^B=\frac{1}{2}$, $v^B=0.6$) results in the optimal execution horizons displayed in the figure above, $\hat{\sigma}=1,000$, $V_\sigma=10,000$, $m=1,000$, $[\overline{S}-\underline{S}]=10,000$, $\lambda=0.05$ and $\varphi[|m|]$ linear. \label{fig:3temp}}
-\end{figure} \btodo{Figure 11.3 is also slightly blurry and rotated, coming from a scan, and will not print well.}
+\end{figure}
 
 
 
@@ -282,7 +282,7 @@ Foucault and Menkveld (2008)~\cite{foumen}consider the effect of fragmentation o
 The smart order router (SOR), generally works as follows. A user can customize the use of the strategy by establishing a set of rules in splitting the parent order into child orders and the smart order routers are designed to ensure that the orders are routed to the venue with the best price and the orders are filled according to the trading strategies that may be pre-determined or may be adaptive. To be successful, SORs must be able to handle a variety of trading strategies and multiple venues. In addition they must deal with vast amount of incoming and historical market data. The publicly available information on the SORs used by major traders indicate that the order placement objective in general is to minimize client all-in shortfall with or without venue fees. The all-in shortfall consists of the shortfall on the filled shares and the cost of the clean-up trade for the unfilled shares. The latter is taken to be an important component of order placement optimization as it enables to quantify the effect of venue differences in fill rates, (see Street Smart, Issue 42, Jan 14, 2011). Other programs used in industry chose to optimize the expected time to execute the client's overall order. Expected queue speeds at various venues are predicted from recent trading data. Small orders tend to be placed in a single venue to minimize the queueing time whereas large orders will be placed in multiple venues to access maximum liquidity. In this model forecasting trading rates at different venues is crucial for successful implementation of the program. The rates are modeled as a function of lagged rates, thus capturing the momentum, and imbalances between supply and demand sides of the order book. Thus order placement in a fragmented market is not a trivial task.
 
 
-A recent empirical study by Battalio, Corwin and Jennings (2016)~\cite{} \btodo{missing reference} confirms that brokers use both limit and marketable orders to execute trades. Past studies provide evidence that market orders are sent to venues with lower trading costs and the trading fees and rebates generally affect consolidated market depth. Maglaras, Moallemi and Zheng (2012)~\cite{magmoazhe} show that limit orders are submitted to exchanges with high rebates and lower waiting time for execution while market orders are sent to venues that have lower fees and larger posted quote sizes. Cont and Kukanov (2017)~\cite{contk} develop a model that is somewhat more realistic to the current practice by decoupling the `order placement' decision from the scheduling decision and more importantly consider the option of placing limit orders on several exchanges, simultaneously. The model also accounts for the execution risk, the risk of not filling an order. Filling the unfilled portion may be costly and the allocation may shift toward market orders or toward overbooking, that is placing more orders than needed to refill.
+A recent empirical study by Battalio, Corwin and Jennings (2016)~\cite{battcorjen} confirms that brokers use both limit and marketable orders to execute trades. Past studies provide evidence that market orders are sent to venues with lower trading costs and the trading fees and rebates generally affect consolidated market depth. Maglaras, Moallemi and Zheng (2012)~\cite{magmoazhe} show that limit orders are submitted to exchanges with high rebates and lower waiting time for execution while market orders are sent to venues that have lower fees and larger posted quote sizes. Cont and Kukanov (2017)~\cite{contk} develop a model that is somewhat more realistic to the current practice by decoupling the `order placement' decision from the scheduling decision and more importantly consider the option of placing limit orders on several exchanges, simultaneously. The model also accounts for the execution risk, the risk of not filling an order. Filling the unfilled portion may be costly and the allocation may shift toward market orders or toward overbooking, that is placing more orders than needed to refill.
 
 
 To formalize the order placement problem, we assume a size of order $X$ is to be filled in the duration $(0,T)$. The decision is to split this order into a market order $M$ and `$K$' limit orders $L_1,\ldots,L_K$ with the same size to be placed in `$K$' exchanges with queue sizes $Q_1,\ldots,Q_K$ ; thus the order allocation is summarized by the elements of the vector $X=(M,L_1,\ldots,L_K)$ that need to be optimally determined. If order cancellations in the duration $(0,T)$ in exchange `$K$' is represented by $\xi_K$, then the number of shares transacted can be written as 
