@@ -17,7 +17,7 @@ In its simplest form, the trading activities of equity through an exchange that 
 	\end{figure}
 
 
-The typical level III data for CISCO on a single day in 2011 is given below in Table~\ref{tab:CISCO}. This outlay in Table~\ref{tab:CISCO} points to various issues that need to be addressed in processing this type of data. The order numbers are only unique during the lifetime of the order but can be reassigned at a later time. Several activities such as submissions, cancellation or modification of an order, all can take place at the same time stamps. Hidden orders are revealed only when they are executed and as such do not have visible order numbers. Full cancellation quantity and price information should be traced back to the submission time. To summarize, at any given point in time using the data described in Table~\ref{tab:CISCO}, the full limit order book that essentially records where each order is in the queue, can be constructed and thus providing the activity time and the associated marks. These and other characteristics of the limit order book (superbook---if we collate this information from all exchanges) will be taken up in a later chapter, but the focus here is on constructing discrete time series data from this point process data. 
+The typical level III data for CISCO on a single day in 2011 is given below in Table~\ref{tab:CISCO}. This outlay in Table~\ref{tab:CISCO} points to various issues that need to be addressed in processing this type of data. The order numbers are only unique during the lifetime of the order but can be reassigned at a later time. Several activities such as submissions, cancellation or modification of an order, all can take place at the same time stamp. Hidden orders are revealed only when they are executed and as such do not have visible order numbers. Full cancellation quantity and price information should be traced back to the submission time. To summarize, at any given point in time using the data described in Table~\ref{tab:CISCO}, the full limit order book that essentially records where each order is in the queue, can be constructed and thus providing the activity time and the associated marks. These and other characteristics of the limit order book (superbook---if we collate this information from all exchanges) will be taken up in a later chapter, but the focus here is on constructing discrete time series data from this point process data. 
 \begin{table}[!ht]
    \centering
    \caption{CISCO--Trade Data\label{tab:CISCO}}
@@ -111,7 +111,7 @@ Formally, a discrete time series or stochastic process $Y_1, Y_2, \ldots, Y_T$ i
 In general, determining the properties and identifying the probability structure which generated the observed time series are of interest. We do not attempt to study the joint distribution of $Y_1, Y_2, \ldots, \, Y_T$ directly, as it is too complicated for large $T$, but we study the probabilistic mechanism which generates the process sequentially through time, and from this we derive the conditional distribution of future observations for purposes of prediction.
 
 
-Because the means, variances, and covariances are useful summary descriptions of the joint probability distribution of the stochastic process $\{ Y_t, t=1, \ldots,  \, T\}$, we will first consider these quantities that are functions of $t$:
+Because the means, variances, and covariances are useful summary descriptions of the joint probability distribution of the stochastic process $\{ Y_t, t=1, \ldots,  \, T\}$, we will consider these quantities that are functions of $t$:
 	\begin{equation}\label{eqn:texteqn}
 	\begin{split}
 	\text{mean, }\mu(t)&=E(Y_t) \\
@@ -134,7 +134,7 @@ Note that by this notation, $\gamma(0) = E[(Y_t-\mu)^2] = \text{Var}(Y_t)$. Also
         	\begin{equation}\label{eqn:2rhos}
 	\rho(s)=\Corr(Y_t,Y_{t-s})= \dfrac{\Cov(Y_t,Y_{t-s})}{\big(\Var(Y_t)\Var(Y_{t-s})\big)^{1/2}} = \dfrac{\gamma(s)}{\gamma(0)},  s=0,\pm 1,\ldots
 	\end{equation}
-$\rho(s)$ will be referred to as the autocorrelation of the process at lag $s$. The autocorrelation function (ACF), $\rho(s) = \gamma(s)/\gamma(0)$ of a stationary process $\{Y_t\}$ is a very important tool in describing the characteristics of the process, because it is a convenient summary of the correlation structure of the process over time lags.  \\
+$\rho(s)$ will be referred to as the autocorrelation of the process at lag $s$. The autocorrelation function (ACF), $\rho(s)$ of a stationary process $\{Y_t\}$ is a very important tool in describing the characteristics of the process, because it is a convenient summary of the correlation structure of the process over time lags.  \\
 
 
 \noindent \textbf{Examples of Stationary Stochastic Processes} 
@@ -375,7 +375,7 @@ In particular, $\gamma(0) = \Var(Y_t) = \sigma^2_{\epsilon}/(1-\phi^2)$. Hence t
 
 Note that the process $\{Y_t\}$ defined above actually satisfies the relation 
 	\[
-	Y_t= \phi \, Y_{t-1} + \delta+\epsilon_t),
+	Y_t= \phi \, Y_{t-1} + \delta+\epsilon_t,
 	\]
 $t=\ldots,-1,0,1,\ldots$, with $\delta = \mu(1-\phi)$. This process is called a first-order autoregressive process, and is a special case of the general class of autoregressive processes which is discussed below. Also note that if the value of $\phi$ in the above is taken as  $\phi = 1$, then the arguments for stationarity of $\{Y_t\}$ no longer hold, since $\sum_{j=0}^{\infty} |\psi_j| = 1+1+\cdots$ does not converge. We see that in this case the process is actually a (nonstationary) random walk satisfying the relation  $Y_t = Y_{t-1}+\epsilon_t$, a common representation of the behavior of the stock prices under the efficient market hypothesis. 
 \end{ex}
@@ -462,10 +462,14 @@ Based on a sample $Y_1,\cdots,Y_T$ from a process $\{Y_t\}$, the sample PACF val
 Often, in practice, series $\{Y_t\}$ will be encountered which are nonstationary. One type of nonstationary series that occurs commonly, are series that exhibit some homogeneous behavior over time in the sense that, except for local level or perhaps local level and local trend, one segment of the series behaves much like any other part of the series. In cases where the series $\{Y_t\}$ exhibits such homogeneous nonstationarity, it may be found that the first difference of the series, $(1 - B)Y_t = Y_t - Y_{t-1}$, is a stationary series. For seasonal nonstationary time series that exhibit homogeneous behavior apart from a seasonal mean level or trend, with seasonal period $S$, the seasonal difference of the series, $(1 - B^s)Y_t = Y_t - Y_{t-s}$, may be stationary. More generally, a useful class of models for this type of homogeneous nonstationary time series $\{Y_t\}$ is obtained by assuming that the $d$th difference, $W_t = (1 - B)^d\,Y_t$, is a stationary series, and $W_t$ can be represented by an ARMA($p,q$) model. The most common case is $d=1$, for financial time series. \\
 
 
-\noindent\textbf{Autoregressive Integrated Moving Average Processes} \\
+\noindent\textbf{Autoregressive Integrated Moving Average Processes (ARIMA)} \\
 
 
-We consider models for $\{Y_t\}$ such that $W_t = (1 - B)^d Y_t$ is a stationary ARMA$(p,q)$ process. The process $\{Y_t\}$ is then said to be an \textit{autoregressive integrated moving average process} of order $(p,d,q)$, denoted as ARIMA$(p,d,q)$. Since the $d$th differences $W_t$ form an ARMA$(p,q)$ process, they satisfy $\phi(B)W_t = \delta + \theta(B)\varepsilon_t$. So the ARIMA process $Y_t$ is generated by ($\phi(B)(1 - B)^dY_t = \delta + \theta(B)\varepsilon_t$), where $\phi(B) = 1 - \phi_1B - \cdots - \phi_pB^p$ and $\theta(B) = 1 - \theta_1B - \cdots - \theta_qB^q$.
+We consider models for $\{Y_t\}$ such that $W_t = (1 - B)^d Y_t$ is a stationary ARMA$(p,q)$ process. The process $\{Y_t\}$ is then said to be an \textit{autoregressive integrated moving average process} of order $(p,d,q)$, denoted as ARIMA$(p,d,q)$. Since the $d$th differences $W_t$ form an ARMA$(p,q)$ process, they satisfy $\phi(B)W_t = \delta + \theta(B)\varepsilon_t$. So the ARIMA process $Y_t$ is generated by 
+	\begin{equation} \label{eqn:phiBdy}
+	\phi(B)(1 - B)^dY_t = \delta + \theta(B)\varepsilon_t,
+	\end{equation}
+where $\phi(B) = 1 - \phi_1B - \cdots - \phi_pB^p$ and $\theta(B) = 1 - \theta_1B - \cdots - \theta_qB^q$.
 
 
 The use of the term ``integrated'' to describe such a process came as follows. Consider the case $d=1$ so that the process $W_t = Y_t - Y_{t-1}$ is a stationary ARMA$(p,q)$ process. Then the stationary series $W_t$ must be summed or ``integrated'' to obtain the process $\{Y_t\}$; that is,
@@ -562,7 +566,7 @@ is evaluated, where $\hat{\sigma}_\varepsilon^2$ is the estimated model error va
 \noindent \textbf{Method of Moments} \\
 
 
-Once the orders $p,d,q$, of an ARIMA model (\ref{eqn:b}), rewritten as 
+Once the orders $p,d,q$, of an ARIMA model (\ref{eqn:phiBdy}), rewritten as 
 	\begin{equation}\label{eqn:phiB}
 	\phi(B)(1 - B)^dY_t = \theta_0 + \theta(B)\varepsilon_t
 	\end{equation}
@@ -612,7 +616,7 @@ The method of moments can be used for preliminary parameter estimation and also 
 
 We consider parameter estimation for the AR($p$) process with mean $\mu$, or constant term $\delta$.
 	\begin{equation}\label{eqn:ytseqagain}
-	Y_t = \delta + \sum_{i=1}^p\phi_iY_{t-i} + \varepsilon_t= \mu + Y_t - \mu = \sum_{i=1}^p\phi_i(Y_{t-i} - \mu) + \varepsilon_t,
+	Y_t = \delta + \sum_{i=1}^p\phi_iY_{t-i} + \varepsilon_t= \mu + \sum_{i=1}^p\phi_i(Y_{t-i} - \mu) + \varepsilon_t,
 	\end{equation}
 where $\delta = \mu(1 - \phi_1 - \cdots - \phi_p)$, and we assume the $\varepsilon_t$ are i.i.d. normal N$(0,\sigma^2)$. Given a sample realization of $T$ observations $Y_1,Y_2,\cdots,Y_T$, the conditional likelihood function (i.e., the conditional p.d.f of $Y_{p+1},\cdots,Y_T$, given the first $p$ observations $Y_1,\cdots,Y_p$, or say given $Y_p = (Y_1,\cdots,Y_p)'$) is given by
 	\[
@@ -734,16 +738,16 @@ For higher order AR($p+1$) model $Y_t = \sum_{j=1}^{p+1}\varphi_jY_{t-j} + \vare
 	\begin{equation}\label{eqn:wtnew}
 	W_t  = (\rho - 1)Y_{t-1} + \sum_{j=1}^p\phi_jW_{t-j} + \varepsilon_t 
 	\end{equation}
-Then, under the unit root model where $\rho = 1$ and $\phi(B)$ is stationary, it has been shown by Fuller (1996, Chapter 10, Th. 10.1.1 and Cor. 10.1.1.1)~\cite{fuller1996} that $(\hat{\rho} - 1)/[s_\varepsilon(\sum_{t=p+2}^TY_{t-1}^2)^{-1/2}]$ has the same limiting distribution as the statistic $\hat{\tau}$ in (\ref{eqn:hattaunew}) for the AR(1) case, while $(T- p - 1)(\hat{\rho} - 1)c$, where $c = \sum_{j=0}^\infty\psi_j$, with $\psi(B) = \phi^{-1}(B)$, has approximately the same distribution as the statistic $T(\hat{\phi} - 1)$ for the AR(1) case. Also, it follows that the statistic, denoted as $\hat{\tau}$, formed by dividing $(\hat{\rho} - 1)$ by its ``usual estimated standard error'' from the least squares regression will be asymptotically equivalent to the statistic $(\hat{\rho} - 1)/[s_{\varepsilon}(\sum_{t=p+2}^T Y_{t-1}^2)^{-1/2}]$, and hence will have the same limiting distribution as the statistic $\hat{\tau}$ for the AR(1) case.
+Then, under the unit root model where $\rho = 1$ and $\phi(B)$ is stationary, it has been shown by Fuller (1996, Chapter 10)~\cite{fuller1996} that $(\hat{\rho} - 1)/[s_\varepsilon(\sum_{t=p+2}^TY_{t-1}^2)^{-1/2}]$ has the same limiting distribution as the statistic $\hat{\tau}$ in (\ref{eqn:hattaunew}) for the AR(1) case, while $(T- p - 1)(\hat{\rho} - 1)c$, where $c = \sum_{j=0}^\infty\psi_j$, with $\psi(B) = \phi^{-1}(B)$, has approximately the same distribution as the statistic $T(\hat{\phi} - 1)$ for the AR(1) case. Also, it follows that the statistic, denoted as $\hat{\tau}$, formed by dividing $(\hat{\rho} - 1)$ by its ``usual estimated standard error'' from the least squares regression will be asymptotically equivalent to the statistic $(\hat{\rho} - 1)/[s_{\varepsilon}(\sum_{t=p+2}^T Y_{t-1}^2)^{-1/2}]$, and hence will have the same limiting distribution as the statistic $\hat{\tau}$ for the AR(1) case.
 
 
 The test statistic $\hat{\tau}$ formed in the above manner can be used to test the hypothesis that $\rho = 1$ in the AR($p+1$) model. The above methods extend to the case where a constant term is included in the least squares regression estimation, with the statistic analogous to $\hat{\tau}$ denoted as $\hat{\tau}_\mu$. Thus, for example, in the AR(1) model $Y_t = \phi Y_{t-1} + \theta_0 + \varepsilon_t$, one obtains the LSE,
 	\begin{equation}\label{eqn:hatphinewest}
-	\hat{\phi}_{\mu} = \dfrac{\sum_{t=2}^T(Y_{t-1} - \overline{Y}_{(1)})(Y_t - \overline{Y}_{(0)})}{\sum_{t=2}^T(Y_{t-1} - \overline{Y}_{(1)})^2}
+	\widehat{\phi}_{\mu} = \dfrac{\sum_{t=2}^T(Y_{t-1} - \overline{Y}_{(1)})(Y_t - \overline{Y}_{(0)})}{\sum_{t=2}^T(Y_{t-1} - \overline{Y}_{(1)})^2}
 	\end{equation}
 where $\overline{Y}_{(i)} = (T - 1)^{-1}\sum_{t=2}^TY_{t-i}$, $i = 0,1$. The corresponding test statistic for $\phi = 1$ in the AR(1) case is
 	\begin{equation}\label{eqn:anotherhattau}
-	\hat{\tau}_\mu = (\hat{\phi}_\mu - 1)/[s_{\varepsilon}(\sum_{t=2}^T(Y_{t-1} - \overline{Y}_{(1)})^2)^{-1/2}]
+	\hat{\tau}_\mu = \dfrac{\widehat{\phi}_\mu - 1}{s_{\varepsilon} \left( \sum_{t=2}^T(Y_{t-1} - \overline{Y}_{(1)})^2 \right)^{-1/2}}
 	\end{equation}
 and percentiles of the distribution of $\hat{\tau}_\mu$ and when $\phi = 1$ are given in Table~\ref{tab:percentiles}.
 
@@ -761,7 +765,7 @@ and percentiles of the distribution of $\hat{\tau}_\mu$ and when $\phi = 1$ are 
 
 
 \begin{ex}[To difference or not] 
-To illustrate here, we consider briefly the quarterly series of U.S. Commercial Paper interest rates for 1953--1970 in Figure 2.3. The series is identified as ARIMA(1,1,0), and unconditional least squares estimation gave 
+To illustrate here, we consider briefly the quarterly series of U.S. Commercial Paper interest rates for 1953--1970 in Figure~\ref{fig:exchrate}. The series is identified as ARIMA(1,1,0), and unconditional least squares estimation gave 
 	\[
 	W_t = (1 - B)\, Y_t = 0.4326 W_{t-1}.
 	\]
@@ -771,14 +775,14 @@ When conditional LS estimation of an AR(2) model for $Y_t$, as represented in (\
 	\includegraphics[width=\textwidth]{chapters/chapter_uvts/figures/uscompaper.png}
 	\caption{U.S. Commercial Paper Interest Rate.\label{fig:exchrate}}
 	\end{figure}
-The use of the unit root test statistics will become apparent when we discuss pairs trading based on co-integration (see Chapter 6). A precondition for forming co-integrated pairs is that each series must be non-stationary on its own. 
+The use of the unit root test statistics will become apparent when we discuss pairs trading based on co-integration (see Chapter~6). A precondition for forming co-integrated pairs is that each series must be non-stationary on its own. 
 \end{ex}
 
 
 \subsection{Forecasting for ARIMA Processes} \hfill
 
 
-Given a realization of ARIMA($p,d,q$) process through time t, $\{Y_s, s\leq t\}$, we consider the problem of forecasting of future values $Y_{t+l}, l = 1,2,\cdots$. For this purpose, it is assumed that the model for $\{Y_t\}$ is known exactly including the values of the model parameters. Although, in practice, the model parameters estimated from available sample data, errors due to estimation of parameters will not have too much effect on forecast properties for sufficiently large sample sizes. Also, the practical problem of future values based on the finite past sample data $Y_1,\ldots,Y_T$ will be considered briefly, but results based on the infinite past data assumption usually provide an adequate approximation to the finite past data prediction problem. \\
+Given a realization of ARIMA($p,d,q$) process through time t, $\{Y_s, s\leq t\}$, we consider the problem of forecasting of future values $Y_{t+l}, l = 1,2,\cdots$. For this purpose, it is assumed that the model for $\{Y_t\}$ is known exactly including the values of the model parameters. Although, in practice, the model parameters are estimated from available sample data, errors due to estimation of parameters will not have too much effect on forecast properties for sufficiently large sample sizes. Also, the practical problem of future values based on the finite past sample data $Y_1,\ldots,Y_T$ will be considered briefly, but results based on the infinite past data assumption usually provide an adequate approximation to the finite past data prediction problem. \\
 
 
 \noindent \textbf{Minimum Mean Squared Error Prediction} \\
@@ -851,10 +855,10 @@ The random walk (RW) model (Example~\ref{ex:driftwalk}) without the drift term c
 	\begin{equation}\label{eqn:2pteq}
 	p_t = p_{t-1} + \varepsilon_t
 	\end{equation}
-where $\varepsilon_t \sim N(0,\sigma^2)$ i.i.d and $p_t = \ln{(P_t)}$. Note as observed earlier this model is a particular case of AR(1) model if the constant term is assumed to be zero and the slope, $\phi$, is assumed to be one. Thus, the RW model is a non-stationary model and considering $\varepsilon_t = p_t - p_{t-1}=r_t$ is the differencing of the series, $p_t$, makes the series $\varepsilon_t$ stationary. Note $r_t \approx \frac{P_t - P_{t-1}}{P_{t-1}}$,  the returns are purely random and are unpredictable. For any chronological data the decision concerning the need for differencing is based, informally, on the features of time series plot of $p_t$, its sample autocorrelation function; that is, its failure to dampen out sufficiently quickly. \\
+where $\varepsilon_t \sim N(0,\sigma^2)$ i.i.d and $p_t = \ln{(P_t)}$. Note as observed earlier, this model is a particular case of AR(1) model if the constant term is assumed to be zero and the slope, $\phi$, is assumed to be one. Thus, the RW model is a non-stationary model and considering $\varepsilon_t = p_t - p_{t-1}=r_t$ is the differencing of the series, $p_t$, makes the series $\varepsilon_t$ stationary. Note $r_t \approx \frac{P_t - P_{t-1}}{P_{t-1}}$,  the returns are purely random and are unpredictable. For any chronological data the decision concerning the need for differencing is based, informally, on the features of time series plot of $p_t$, its sample autocorrelation function; that is, its failure to dampen out sufficiently quickly. \\
 
 
-\noindent\textbf{Testing for a RW model:} Consider the AR(1) model $p_t = \phi p_{t-1} + \varepsilon_t$, $t = 1,\ldots,T$ and $p_0$ is fixed; we want to test $\phi = 1$. The details of this test are given in Section 2.3.4, along with the table of the percentiles of the distribution of the test statistics. While the results for testing for non-stationarity for higher order autoregressive models were discussed earlier, the price series once differenced does not generally exhibit autocorrelation structure that requires modeling beyond AR(1).
+\noindent\textbf{Testing for a RW model:} Consider the AR(1) model $p_t = \phi p_{t-1} + \varepsilon_t$, $t = 1,\ldots,T$ and $p_0$ is fixed; we want to test $\phi = 1$. The details of this test are given in Section 3.3.4, along with the table of the percentiles of the distribution of the test statistics. While the results for testing for non-stationarity for higher order autoregressive models were discussed earlier, the price series once differenced does not generally exhibit autocorrelation structure that requires modeling beyond AR(1).
 
 
 It will become obvious in subsequent discussions, that in order to exploit any pattern in the returns, one has to look beyond linear time dependencies. We observe a series of established stylized facts regarding price (return). \\
@@ -863,7 +867,7 @@ It will become obvious in subsequent discussions, that in order to exploit any p
 \noindent\textbf{Stylized fact 1: Absence of Autocorrelation in returns:} Linear autocorrelations are often insignificant for a lower frequency data. 
 
 
-To illustrate the main ideas, we consider the exchange rate between USD and GBP; these are daily closing rates from Jan 4, 1999 to Sept 16, 2013. The time series plot of the data in (Figure~\ref{fig:exchrate}) clearly indicates that the price is non-stationary and it is confirmed by the never dying autocorrelation function in (Figure~\ref{fig:exchrate}). The LS estimates of $\hat{\phi}= 0.9996$, $s_e= 0.00958$ and $\sum_{t=2}^Tp_{t-1}^2= 10431$, provides a value of $\hat{\tau} = -0.001$ from (\ref{eqn:hattaunew}) which confirms that the series is a random walk. The differenced series, $r_t = \ln{(p_t)} - \ln{(p_{t-1})}$ is plotted in (Figure~\ref{fig:exchrate}) and its autocorrelation function is given in (Figure~\ref{fig:exchrate}). Thus it would appear that return series is a white noise process.
+To illustrate the main ideas, we consider the exchange rate between USD and GBP; these are daily closing rates from Jan 4, 1999 to Sept 16, 2013. The time series plot of the data in (Figure~\ref{fig:exchrate}) clearly indicates that the price is non-stationary and it is confirmed by the never dying autocorrelation function in (Figure~\ref{fig:exchrate}). The LS estimates $\hat{\phi}= 0.9996$, $s_e= 0.00958$ and $\sum_{t=2}^Tp_{t-1}^2= 10431$, provides a value of $\hat{\tau} = -0.001$ from (\ref{eqn:hattaunew}) which confirms that the series is a random walk. The differenced series, $r_t = \ln{(p_t)} - \ln{(p_{t-1})}$ is plotted in (Figure~\ref{fig:exchrate}) and its autocorrelation function is given in (Figure~\ref{fig:exchrate}). Thus it would appear that return series is a white noise process.
 
 
 Many industry analysts tend to look at not just the closing price but also the so called price bars that consist of open, high, low and close prices in discrete time intervals. Select averages over these four quantities are monitored to study the stock momentum. Two such quantities discussed in the literature are pivot, the average of high, low and close prices; and mid-range, the average of high and low prices. The plot of the pivot for the exchange rate is overlaid on the closing price in Figure~\ref{fig:timegbp}. It is not easy to distinguish between the two series from this plot, but an important property of the (aggregated) pivot series is worth-noting here. The autocorrelation of the returns dated on pivot series at lag 1 is quite significant (Figure~\ref{fig:timegbp}). This happens mainly due to `aggregation' of data as observed by Working (1960)~\cite{working1960note} and by Daniels (1966)~\cite{daniels1966autocorrelation}. Working (1960) \cite{working1960note} shows that if the average is computed over `$m$' terms in each time segment (in this illustration, a day) the first order correlation is $\frac{(m^2-1)}{2(2m^2+1)}$. When $m= 3$, we can expect the lag 1 autocorrelation to be about 0.21. Daniels (1966)~\cite{daniels1966autocorrelation} observes that we could expect lag 1 autocorrelation in the order of 0.4 for the mid-range series. Thus, the main point of this discussion is that the aggregation of prices (which is the basis of several low-frequency analysis) induces the autocorrelation by construction, but it does not mean that there is market inefficiency.
@@ -891,7 +895,7 @@ follow a normal distribution. But in practice, the errors (or returns) tend to h
 	\begin{equation}\label{eqn:2JB}
 	\text{JB }= n\left(\frac{\widehat{\text{SK}}^2}{6} + \frac{(\hat{K} - 3)^2}{24}\right) \sim \chi_2^2
 	\end{equation}
-where $\text{SK}\text{(ewness)}= E(\frac{X-\mu}{\sigma})^3, \text{K}\text{(urtosis)} = E(\frac{X-\mu}{\sigma})^4$. The corresponding sample numbers are substituted in JB (see Jarque and Bera (1980)\cite{jarque80}). Alternatively, the probability (Q--Q) plot of $r_t = \ln{(p_t)} - \ln{(p_{t-1})}$ as given in Figure 3 clearly indicates that the distribution has somewhat heavy tails. [For this data $\widehat{SK} = -0.31$ and $\hat{K} = 3.67$ resulting in $\text{JB}= 129.7$ with $n= 3236$, thus rejecting the normal distribution.] \\
+where $\text{SK}\text{(ewness)}= E(\frac{X-\mu}{\sigma})^3, \text{K}\text{(urtosis)} = E(\frac{X-\mu}{\sigma})^4$. The corresponding sample numbers are substituted in JB (see Jarque and Bera (1980)\cite{jarque80}). Alternatively, the probability (Q--Q) plot of $r_t = \ln{(p_t)} - \ln{(p_{t-1})}$ as given in Figure~3.4 clearly indicates that the distribution has somewhat heavy tails. (For this data $\widehat{SK} = -0.31$ and $\hat{K} = 3.67$ resulting in $\text{JB}= 129.7$ with $n= 3236$, thus rejecting the normal distribution.) \\
 
 
 \noindent\textbf{Stylized fact 2:} Heavy Tails: The returns are likely to display a heavy
@@ -925,7 +929,7 @@ with $\omega_0 > 0$ and $\omega_i \geq 0$ for $i= 1,\ldots,q$. In the generalize
 where $\beta_i \geq 0$ for all $i = 1,\ldots,k$. Much subsequent research on and applications of the ARCH and GARCH models have occurred since the publication of their research papers.
 
 
-Let us briefly discuss some basic results and implications of the ARCH and GARCH models. The errors $\varepsilon_t$ in the model have zero mean, since $E(\varepsilon_t) = E[E(\varepsilon_t\,|\,\varepsilon_{t-1}\cdots)] = 0$, and they are serially uncorrelated; that is, $E(\varepsilon_t\varepsilon_{t-j}) = 0$ for $j \not= 0$ (since for $j > 0$, for example, $E(\varepsilon_t\varepsilon_{t-j}) = E[E(\varepsilon_t\varepsilon_{t-j}\,|\,\varepsilon_{t-1}\cdots)] = E[\varepsilon_{t-j}E(\varepsilon_t\,|\,\varepsilon_{t-1}\cdots)] = 0$). But the $\varepsilon_t$ are not mutually independent r.v.'s since they are inter-related through their conditional variances (i.e., their second moment). We will also assume that the $\varepsilon_t$ have equal unconditional variances, $\Var(\varepsilon_t) = \sigma^2$, for all $t$, so they are weakly stationary. Consider, then, the simple case of the first-order ARCH or ARCH(1) model,
+Let us briefly discuss some basic results and implications of the ARCH and GARCH models. The errors $\varepsilon_t$ in the model have zero mean, since $E(\varepsilon_t) = E[E(\varepsilon_t\,|\,\varepsilon_{t-1}\cdots)] = 0$, and they are serially uncorrelated; that is, $E(\varepsilon_t\varepsilon_{t-j}) = 0$ for $j \not= 0$ (since for $j > 0$, for example, $E(\varepsilon_t\varepsilon_{t-j}) = E[E(\varepsilon_t\varepsilon_{t-j}\,|\,\varepsilon_{t-1}\cdots)] = E[\varepsilon_{t-j}E(\varepsilon_t\,|\,\varepsilon_{t-1}\cdots)] = 0$). But the $\varepsilon_t$ are not mutually independent r.v.'s since they are inter-related through their conditional variances (i.e., their second moment). We will also assume that the $\varepsilon_t$ have equal unconditional variances, $\Var(\varepsilon_t) = \sigma^2$, for all $t$, so they are weakly stationary. Consider then, the simple case of the first-order ARCH or ARCH(1) model,
 	\begin{equation}\label{eqn:2htE}
 	h_t = \omega_0 + \omega_1\varepsilon_{t-1}^2,
 	\end{equation}
@@ -1025,11 +1029,11 @@ and use $k_{t_0,N}(s_{k-1},N) = \hat{\mu}_{t_0,N} + s_{k-1\cdot N}$ as the weigh
 The methodology presented here is useful because of the changing nature of financial volatility. Real data applications will be discussed in Chapter 5. Here the volatility at the low frequency level is estimated by $r_t^2$, where $r_t$, the returns is based on closing prices of successive days. Alternative approaches to estimating volatility using aggregate prices bars or high frequency data will be discussed in Chapter 4. 
 
 
+
 \section{Stylized Models for Variance of Asset Returns}
 
 
-Volatility has many important implications in finance. It is one of the most commonly
-used risk measure and plays a vital role in asset allocation. The estimate of volatility of an asset is obtained using the prices of stock or options or both. Three different measures that are normally studied are stated below:
+Volatility has many important implications in finance. It is one of the most commonly used risk measure and plays a vital role in asset allocation. The estimate of volatility of an asset is obtained using the prices of stock or options or both. Three different measures that are normally studied are stated below:
 \begin{itemize}
 \item Volatility is the conditional standard deviation of daily or low frequency returns.
 
@@ -1042,7 +1046,7 @@ intraday returns.
 In this section we will mainly focus on the first item and the others will be discussed in a later section on high frequency data.
 
 
-Consider $r_t = \ln{(p_t) - \ln{(p_{t-1})}}$, return of an asset. We observed that `$r_t$' exhibits no serial correlation. This does not imply that the series `$r_t$' consists of independent observations. The plot of $r_t^2$ given in Figure~\ref{fig:exchrate} clearly indicates that volatility tends to cluster over certain time spans. The autocorrelations in Figure~\ref{fig:exchrate} confirms that there is some time dependence for the volatility. In fact ins some cases, there is some long range dependence that spans up to sixty days. \\
+Consider $r_t = \ln{(p_t) - \ln{(p_{t-1})}}$, return of an asset. We observed that `$r_t$' exhibits no serial correlation. This does not imply that the series `$r_t$' consists of independent observations. The plot of $r_t^2$ given in Figure~\ref{fig:exchrate} clearly indicates that volatility tends to cluster over certain time spans. The autocorrelations in Figure~\ref{fig:exchrate} confirms that there is some time dependence for the volatility. In fact in some cases, there is some long range dependence that spans up to sixty days. \\
 
 
 \noindent\textbf{Stylized fact 4:} Volatility clustering: High volatility events tend to cluster in time and this can be measured through positive correlations that exist over several lags.
@@ -1054,7 +1058,7 @@ To formally model the volatility, recall the conditional mean and the conditiona
 	\begin{equation}\label{eqn:2Qk}
 	Q_k = T(T+2) \cdot \sum_{j=1}^k\frac{(\hat{e}^{j})^2}{T - j} \sim \chi_{k-m}^2
 	\end{equation}
-where $\hat{e}^{(j)}$ is the $j$th lag autocorrelation of $r_t^2$; $m$ is the number of independent parameters. We test the null hypothesis, here $H_0: \rho_1 = \rho_2 = \cdots \rho_k = 0$.
+where $\hat{e}^{(j)}$ is the $j$th lag autocorrelation of $r_t^2$; $m$ is the number of independent parameters. Here we test the null hypothesis, $H_0: \rho_1 = \rho_2 = \cdots \rho_k = 0$.
 
 \item \textbf{Lagrange Multiplier Test:} Regress $r_t^2$ on $r_{t-1}^2,\ldots,r_{t-q}^2$ and obtain $R^2$ the coefficient of determination; Test the $H_0$: Slope coefficients are all zero, by
 	\begin{equation}\label{eqn:2TstarR}
@@ -1134,7 +1138,7 @@ Among the conditional heteroscedasticity models ARCH/GARCH that were discussed i
 \end{enumerate}
 
 
-\item Consider daily price of Apple stock from January 2, 2015 to January 2, 2018. The data can be obtained from Yahoo Finance and have 7 columns (namely, Date, Open, High, Low, Close, Volume, Adj Close). We focus on the adjusted closing price in the last column.
+\item Consider daily price of Apple stock from January 2, 2015 to January 2, 2018. The data can be obtained from Yahoo Finance and have 7 columns (namely, Date, Open, High, Low, Close, Adj Close Volume). We focus on the adjusted closing price in the last column.
 \begin{enumerate}[(a)]
 \item Compute the daily log returns. Is there any serial correlation in the daily log returns? Use the test for white noise as outlined in the text. 
 
