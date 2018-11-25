@@ -287,13 +287,13 @@ To illustrate, recall Figure~\ref{fig:tradeactline}, on trading activities in Se
  
  	\begin{figure}[!ht]
 	\centering	
-	\includegraphics[width=\textwidth]{chapters/chapter_uvts/figures/Sec2-10Fig6.png}
+	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/Sec2-10Fig6.png}
 	\caption{Empirical Survivor Function and Serial Correlation plots. \label{fig:survivor}}
 	\end{figure}
 	
 	\begin{figure}[!ht]
 	\centering
-	 \includegraphics[width=\textwidth]{chapters/chapter_uvts/figures/Sec2-10Fig7.png}
+	 \includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/Sec2-10Fig7.png}
 	\caption{Autocorrelation Function for duration. \label{fig:duration}}
 	\end{figure}
  
@@ -309,7 +309,7 @@ Cox and Lewis (1966)~\cite{cox1966} also observe a few issues that can arise wit
 There has been a great deal of interest in studying market micro-structure to better understand the trading mechanisms and the process of price formation. With the availability of Trades and Quotes (TAQ) data that contains all equity transactions on major exchanges, it has now became possible to better understand the market micro-structure. The extensive details from the order books over multiple exchanges have provided massive amount of data. Analyzing these data will be taken up in later chapters as well. Here we want to present some unique characteristics of the high frequency data and present most commonly used models in practice. To reiterate, the transactions (trades, quotes, bids, etc) may occur at any point in time (Figure~\ref{fig:exchhours}) during the exchange hours as given below.
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_uvts/figures/33d1.jpg}
+	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/33d1.jpg}
 	\caption{Exchange hours. \label{fig:exchhours}}
 	\end{figure}
 High-frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price or quote etc. The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange are open. Standard econometric techniques are for data in discrete time intervals. Aggregating the high-frequency data to some fixed time interval will not capture the advantages of having access to detailed transaction data. Even for some heavily traded stocks, if the intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
@@ -333,7 +333,7 @@ Under aggregation with low frequency data generally the dependence tends to decr
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_uvts/figures/Sec2-10Fig8.png}	
+	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/Sec2-10Fig8.png}	
 	\caption{Typical Diurnal patterns. \label{fig:diurnal}}
 	\end{figure}
 
@@ -406,7 +406,7 @@ where $s_i$ is the size of the $i$th price change measured in ticks; other relev
 There is a considerable interest in extending the univariate duration models to multiple stocks or to multiple types of arrival processes. Because investment managers generally consider a portfolio of stocks rather than a single one, it is important for them to follow the transaction processes of several stocks simultaneously. Because of non-synchronous trading relating two stocks with different trading intensities on a common time scale is somewhat difficult. Engle and Lunde (2003)~\cite{englelunde} establish the following model for a bivariate point process for trades and quotes:
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_uvts/figures/33d3.jpg}
+	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/33d3.jpg}
 	\caption{Trades and Quotes. \label{fig:tradeactdoubline}}
 	\end{figure}
 Define $x_i = t_i - t_{i-1}$ as trade duration and $y_i = t_i^{f_w} - t_{i-1}^{f_w}$ as the forward quote duration; our goal is to model $(x_i,y_i)$ as a bivariate duration process but the underlying timings are not synchronized. Thus define, if $y_i > x_i$, then
