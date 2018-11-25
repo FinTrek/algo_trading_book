@@ -2,14 +2,14 @@
 
 \chapter{Multivariate Time Series Models \label{ch:ch_mvts}}
 
-The methods developed in this chapter are natural extensions of the methods presented in Chapter 3 \todo{add dynamic ref to the chapter} in the multivariate setting. But the underlying data is of large dimension and hence they present some unique challenges. These include unwieldy estimation problems as well as making meaningful interpretation of the estimates. But these methods are essential to address portfolio construction and issues related to trading multiple stocks. We want to present some basic tools in multivariate regression and tools for dimension-reduction, which provide a foundation for modeling multiple time series. Although multivariate ARMA models are well-studied in the literature, the focus has been on the multivariate (vector) autoregressive (VAR) models which falls neatly in the framework of multivariate regression with necessary constraints on the regression coefficient matrices that can account for stationarity. Thus a good understanding of multivariate regression will lay a solid foundation for studying VAR models.
+The methods developed in this chapter are natural extensions of the methods presented in Chapter \ref{ch:ch_uvts} in the multivariate setting. But the underlying data is of large dimension and hence they present some unique challenges. These include unwieldy estimation problems as well as making meaningful interpretation of the estimates. But these methods are essential to address portfolio construction and issues related to trading multiple stocks. We want to present some basic tools in multivariate regression and tools for dimension-reduction, which provide a foundation for modeling multiple time series. Although multivariate ARMA models are well-studied in the literature, the focus has been on the multivariate (vector) autoregressive (VAR) models which falls neatly in the framework of multivariate regression with necessary constraints on the regression coefficient matrices that can account for stationarity. Thus a good understanding of multivariate regression will lay a solid foundation for studying VAR models.
 
 
-In the area of multivariate analysis, there are two broad themes that have emerged over time. One that typically involves exploring the variations in a set of interrelated variables and two, involves investigating the simultaneous relationships between two or more sets of variables. In either case, the themes involve explicit modeling of the relationships or dimension-reduction of the sets of variables. The multivariate regression introduced in Section 4.1 \todo{add dynamic ref to the section} and its variants are the preferred tools for the parametric modeling and descriptive tools such as principal components or canonical correlations are the tools used for addressing dimension-reduction issues (Section 4.2 \todo{add dynamic ref to the section}). Both act as complementary tools and data analyst may want to make use of these tools for a thorough analysis of multivariate data. The methods developed in this chapter will be useful to study cross-sectional momentum, pairs trading, commonality and co-movement, topics that will be followed in subsequence chapters.
+In the area of multivariate analysis, there are two broad themes that have emerged over time. One that typically involves exploring the variations in a set of interrelated variables and two, involves investigating the simultaneous relationships between two or more sets of variables. In either case, the themes involve explicit modeling of the relationships or dimension-reduction of the sets of variables. The multivariate regression introduced in Section \ref{s:s_mr} and its variants are the preferred tools for the parametric modeling and descriptive tools such as principal components or canonical correlations are the tools used for addressing dimension-reduction issues (Section \ref{s:s_dr}). Both act as complementary tools and data analyst may want to make use of these tools for a thorough analysis of multivariate data. The methods developed in this chapter will be useful to study cross-sectional momentum, pairs trading, commonality and co-movement, topics that will be followed in subsequent chapters.
 
 
 
-\section{Multivariate Regression} 
+\section{Multivariate Regression \label{s:s_mr}} 
 
 
 We begin with the general multivariate linear regression model,
@@ -119,7 +119,7 @@ The application of Hotelling's $T^2$ in the context of testing related to CAPM m
 
 
 
-\section{Dimension-Reduction via Reduced-Rank Regression}
+\section{Dimension-Reduction via Reduced-Rank Regression \label{s:s_dr}}
 
 
 In many practical situations, there is a need to reduce the dimensions of the variables and hence for succinct interpretation. A common approach with only one set of variables say, $Y$ or $X$, is to use Principal Components Analysis, which focuses on finding the linear combinations that captures the most variance. Here doing PCA's on $Y$ and on $X$ and then relating them via regression is not optimal. Hence, the number of parameters in model (\ref{eqn:5lmyk}) and we approach the problem through the assumption of lower rank of the matrix $C$ in model (\ref{eqn:5lmyk}). More formally, in the model $Y_k=CX_k+\epsilon_k$ we assume that with $m<n$,
@@ -523,7 +523,7 @@ with $m_v$ is the $v$th PVC, note $m_v'\gamma_{l \cdot ij} m_v$ is a measure of 
 \section{Illustrative Examples}
 
 
-As mentioned in the introduction to this chapter, the application of multivariate time series models is in the area of linking multiple markets or multiple assets. There is some commonality among certain equities due to common fundamentals or industry factors that have similar impact on their performance. Whenever there is a deviation from expected commonality or co-movement, it provides trading opportunities. This is the basis of the so called `pairs trading' that is discussed in detail in Chapter 5 \todo{dynamic link for chapter number}. Also the methodologies discussed in this chapter are useful for portfolio analysis (Chapter 7 \todo{dynamic link for chapter number}) as well. The example that we present in this section is mainly for illustrating the methodologies discussed in this chapter as other applications will be taken up elsewhere.
+As mentioned in the introduction to this chapter, the application of multivariate time series models is in the area of linking multiple markets or multiple assets. There is some commonality among certain equities due to common fundamentals or industry factors that have similar impact on their performance. Whenever there is a deviation from expected commonality or co-movement, it provides trading opportunities. This is the basis of the so called `pairs trading' that is discussed in detail in Chapter \ref{ch:ch_advanced}. Also the methodologies discussed in this chapter are useful for portfolio analysis (Chapter \ref{ch:amp}) as well. The example that we present in this section is mainly for illustrating the methodologies discussed in this chapter as other applications will be taken up elsewhere.
 
 
 We consider the daily exchange rates of five currencies British Pound (GBP), Euro (EUR), Japanese Yen (JPY), Canadian Dollar (CAD), Singapore Dollar (SGD), and Australian Dollar (AUD) all stated against US Dollar. The data is from January 1, 1999 to May 2, 2016. Thus $Y_t$ is a five dimensional vector of time series. The return series $r_t$ is calculated as $r_t=\ln(y_t) - \ln(y_{t-1})$. The plot of $Y_t$ is given in Figure~\ref{fig:pexchrate} and to make the comparison easier, the first observation in all series are set to unity. Clearly the series are non-stationary and exhibit common upward and downward movements in certain durations. The plot of returns and volatilities are given in Figures~\ref{fig:preturns} and \ref{fig:pvolat}, respectively. 
@@ -544,37 +544,37 @@ In this report we want to study the co-integrating relationships, if any in the 
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pexchrate.png}
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pexchrate.eps}
 	\caption{Plot of Exchange Rates. \label{fig:pexchrate}}
 	\end{figure}
 	
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/preturns.png}
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/preturns.eps}
 	\caption{Plot of Returns. \label{fig:preturns}}
 	\end{figure}
 	
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pvolat.png}
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pvolat.eps}
 	\caption{Plot of Volatilities. \label{fig:pvolat}}
 	\end{figure}
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pautofun.png}
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pautofun.eps}
 	\caption{Autocorrelation Function for EUR (with 5\% significance limits for the autocorrelations). \label{fig:pautofun}}
 	\end{figure}
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pautofun2.png}
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pautofun2.eps}
 	\caption{Autocorrelation Function for EurR (with 5\% significance limits for the autocorrelations). \label{fig:pautofun2}}
 	\end{figure}
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pautofun3.png}
+	\includegraphics[width=\textwidth]{chapters/chapter_mvts/figures/pautofun3.eps}
 	\caption{Autocorrelation Function for EurRSQ (with 5\% significance limits for the autocorrelations). \label{fig:pautofun3}}
 	\end{figure}
 
@@ -737,68 +737,4 @@ For the five exchange rate series, the computational details are presented in Ta
 
 
 
-
-\section{Exercises}
-
-\begin{enumerate}[1.]
-
-\item
-
-\begin{itemize}
-\item The file {\tt d\_15stocks.csv} and {\tt m\_15stocks.csv} contain daily and monthly stock returns data for 15 stocks from Jan 11, 2000 to Mar 31, 2013.
-
-\item The file {\tt d\_indexes.csv} and {\tt m\_indexes.csv} contain daily and monthly returns data for the volume-weighted and equal-weighted S\&P500 market indices (VWRETD and EWRETD, respectively) from Jan 11, 2000 to Mar 31, 2013.
-\end{itemize}
-
-
- Using daily and monthly returns data for 15 individual stocks from {\tt d\_15stocks.csv} and {\tt m\_15stocks.csv}, and the equal-weighted and value-weighted CRSP market indexes (EWRETD and VWRETD, respectively) from {\tt d\_indexes.csv} and {\tt m\_indexes.csv}, perform the following statistical analyses using R. For the subsample analyses, split the available observations into equal-sized subsamples.
-
-	\begin{enumerate}[(a)]
-	\item Compute the sample mean $\hat\mu$, standard deviation $\hat{\sigma}$, and first-order autocorrelation coefficient $\hat{\rho}(1)$ for daily simple returns over the entire sample period for the 15 stocks and two indexes. Split the sample into 4 equal subperiods and compute the same statistics in each subperiod -- are they stable over time?
-
-	\item Plot histograms of daily simple returns for VWRETD and EWRETD over the entire sample period. Plot another histogram of the normal distribution with mean and variance equal to the sample mean and variance of the returns plotted in the first histograms. Do daily simple returns look approximately normal? Which looks closer to normal: VWRETD or EWRETD?
-
-	\item Using daily simple returns for the sample period, construct 99\% confidence intervals for $\hat{\mu}$ for VWRETD and EWRETD, and the 15 individual stock return series. Divide the sample into 4 equal subperiods and construct 99\% confidence intervals in each of the four subperiods for the 17 series -- do they shift a great deal?
-
-	\item Compute the skewness, kurtosis, and studentized range of daily simple returns of VWRETD, EWRETD, and the 15 individual stocks over the entire sample period, and in each of the 4 equal subperiods. Which of the skewness, kurtosis, and studentized range estimates are statistically different from the skewness, kurtosis, and studentized range of a normal random variable at the 5\% level? For these 17 series, perform the same calculations using monthly data. What do you conclude about the normality of these return series, and why?
-	\end{enumerate}
-
-
-
-\item For the data in Exercise 1, carry out the following:
-	\begin{enumerate}[(a)]
-	\item Perform a PCA on the 15-stock returns. Using the eigenvalues of the $\hat{\Sigma}$ matrix, identify the number of factors.
-	\item Compute the covariance between the returns and the factors and comment. 
-	\end{enumerate}
-
-
-
-\item Consider the weekly exchange rate data used in Hu and Tsay (2014)~\cite{hutsay14}: British Bound ($y_{1t}$), Norwegian Kroner ($y_{2t}$), Swedish Kroner ($y_{3t}$), Swiss Franc ($y_{4t}$), Canadian Dollar ($y_{5t}$), Singapore Dollar ($y_{6t}$) and Australian Dollar ($y_{7t}$) against US Dollar from March 22, 2000 to October 26, 2011.
-	\begin{enumerate}[(a)]
-	\item Test if the exchange rates are stationary individually via Dickey-Fuller test.
-	\item Test for co-integration using the likelihood-ratio test given in (\ref{eqn:2negT}). Assume that the order of the VAR model as, $p=2$.
-	\item Compute the log returns: $r_t=\ln(Y_t) - \ln(Y_{t-1})$; Fit Var(5) model for the returns and extract the residuals. 
-	\item Using the residuals from (c), compute the $\Gamma_k$ matrix in (\ref{eqn:cumkurt}) for $k=5, 10, 20$ and obtain the $M$-matrix in (\ref{eqn:obtainM}).
-	\item Plot $MY_t$ and comment on the linear combination that has low volatility. 
-	\item Check (a)--(e) for various regimes; note 2008--2009 is noted for its volatility. 
-	\end{enumerate}
-
-
-
-
-
-
-
-
-
-
-
-
-\end{enumerate}
-
-
-
-
-	
-	
 
