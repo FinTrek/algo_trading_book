@@ -28,8 +28,7 @@ We will consider the state-space form of an ARIMA$(p,d,q)$ process $\phi(B)Y_t =
 
 From the updating equations $\hat{Y}_{t+1}(l) = \hat{Y}_t(l+1) + \psi_l\varepsilon_{t+1}= \hat{Y}_t(l + 1) + \psi_l\, [Y_{t+1} - \hat{Y}_t(1)]$ for the general ARIMA model, we have that $\hat{Y}_t(j - 1)= \hat{Y}_{t-1}(j) + \psi_{j-1}\varepsilon_t$, $j = 1,2,\ldots,r-1$. Also for $j= r>q$, observe that $\hat{Y}_t(j-1)= \hat{Y}_{t-1}(j) + \psi_{j-1}\varepsilon_t = \sum_{i=1}^{p+d}\phi_i\hat{Y}_{t-1}(j - i) + \psi_{j-1}\varepsilon_t$. So we define the ``state'' vector at time $t$, $Z_t$, with $r$ components as $Z_t = (Y_t, \hat{Y}_t(1),\cdots,\hat{Y}_t(r-1))'$. Then from the above relations we find that $Z_t$ satisfies the equations with
 	\begin{equation} \label{eqn:2secondzt}
-	\begin{split}
-	\Phi&= \begin{bmatrix}
+	\Phi= \begin{bmatrix}
                         0 & 1 & 0 & \cdots & 0 \\
                         0 & 0 & 1 & \cdots &  0 \\
                         \vdots & \vdots &\ddots  &  &  \vdots \\
@@ -39,9 +38,8 @@ From the updating equations $\hat{Y}_{t+1}(l) = \hat{Y}_t(l+1) + \psi_l\varepsil
                    \Psi= 
                     \begin{bmatrix}
                     1\\ \vdots \\ \vdots \\ \psi_{r-1}
-                    \end{bmatrix}, \\
-	Z_t&= \Phi Z_{t-1} + \Psi\varepsilon_t
-	\end{split}
+                    \end{bmatrix}, \quad
+	Z_t= \Phi Z_{t-1} + \Psi\varepsilon_t
 	\end{equation}
 and the observation equation is
 	\begin{equation}\label{eqn:2thirdzt}
@@ -50,10 +48,10 @@ and the observation equation is
 The term $N_t$ would be present only if the ARIMA process $\{Y_t\}$ is observed subject to additional noise; otherwise we simply have $Y_t = HZ_t$. The above two equations constitute what is known as a state-space representation of the ARIMA model. Other forms of the state vector $Z_t$ that will give rise to state-space equations of the general form of (\ref{eqn:2zt})--(\ref{eqn:2yt}) is possible; that is, the state-space form of an ARIMA model is not unique.
 
 
-Observe if $\Phi \equiv \Phi_t$ and $H \equiv H_t$ for all $t$ then the system (\ref{eqn:2secondzt})--(\ref{eqn:2thirdzt}) is said to be time-invariant. A nice feature of expressing a model in state-space form is that an updating procedure can be readily used when a new observation becomes available to revise the current state vector and to produce forecasts. These forecasts in general tend to fare better. 
+Observe if $\Phi_t \equiv \Phi$ and $H_t \equiv H$ for all $t$ then the system (\ref{eqn:2secondzt})--(\ref{eqn:2thirdzt}) is said to be time-invariant. A nice feature of expressing a model in state-space form is that an updating procedure can be readily used when a new observation becomes available to revise the current state vector and to produce forecasts. These forecasts in general tend to fare better. 
 
 
-For the state-space model, define the finite sample estimates of the state vector $Z_{t+1}$ based on observations $Y_t,\cdots,Y_l$ over the finite past time period, as $\hat{Z}_{t+l|t} = E[Z_{t+l}|Y_t,\cdots,Y_l],\text{ with } V_{t+l|t} = E[(Z_{t+l} - \hat{Z}_{t+l|t})(Z_{t+l} - \hat{Z}_{t+l|t})']$. A convenient computational procedure, known as the \textit{Kalman filter equations}, is then available to obtain the current estimate $\hat{Z}_{t|t}$, in particular. It is known that, starting from some reasonable initial values $Z_0 \equiv \hat{Z}_{0|0}$ and $V_0 \equiv V_{0|0}$, the estimate, $\hat{Z}_{t|t}$, can be obtained through the following recursive relations:
+For the state-space model, define the finite sample estimates of the state vector $Z_{t+1}$ based on observations $Y_t,\cdots,Y_l$ over the finite past time period, as $\hat{Z}_{t+l|t} = E[Z_{t+l}|Y_t,\cdots,Y_l],\text{ with } V_{t+l|t} = E[(Z_{t+l} - \hat{Z}_{t+l|t})(Z_{t+l} - \hat{Z}_{t+l|t})']$. A convenient computational procedure, known as the \textit{Kalman filter equations}, is used to obtain the current estimate $\hat{Z}_{t|t}$, in particular. It is known that, starting from some reasonable initial values $Z_0 \equiv \hat{Z}_{0|0}$ and $V_0 \equiv V_{0|0}$, the estimate, $\hat{Z}_{t|t}$, can be obtained through the following recursive relations:
 	\begin{equation}\label{eqn:2hatz}
 	\hat{Z}_{t|t} = \hat{Z}_{t|t-1} + K_t(Y_t - H_t\hat{Z}_{t|t-1})
 	\end{equation}
@@ -73,7 +71,11 @@ An alternative set-up, alternative to (\ref{eqn:2thirdzt}) and (\ref{eqn:2hatz})
 This model studied in Ord, Koehler, and Snyder (1997)~\cite{ord1997estimation} with a single source of error $(N_t)$ is shown to be closely related to various exponential smoothing procedures. There are other formulations of state-space models, such as structural models by Harvey (1989)~\cite{harvey1989kalman} and dynamic linear models of West and Harrison (1997)~\cite{west1997} that are found to be useful for model building.
 
 
-We provide two examples to illustrate the application of the models (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) in the broader context of this book. The slope in a local linear trend is a random walk. Specifically,
+We provide two examples to illustrate the application of the models (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) in the broader context of this book. 
+
+
+\begin{ex}[Generalized Local Trend]
+The slope in a local linear trend is a random walk. Specifically,
 	\begin{equation}\label{eqn:randomwalk}
 	\begin{split}
 	p_t&= \mu_t+ e_t \\
@@ -86,8 +88,10 @@ Here the trend is composed of level `$\mu_t$' and slope `$\delta_t$'. The slope 
 	\delta_t= D+ e(\delta_{t-1} - D)+ \eta_{1t}
 	\end{equation}
 in AR(1) form is sometimes known as generalized local linear trend. These models can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}); the updating process given in (\ref{eqn:2hatz}) can be used to accommodate a wide range of models.
+\end{ex}
 
 
+\begin{ex}[Price Discovery in Multiple Markets]
 Menkveld, Koopman and Lucas (2007)~\cite{menkkoop} study the price discovery process for stocks that are cross-listed in two different markets via state-space models. The question if the trading location matters more than business location is of intent to finance researchers. Consider a stock traded in Amsterdam and in NY exchanges. Because of the time difference, there is only an hour of overlap in trading. Ignoring this aspect, write the two-dimensional price vector as
 	\begin{equation}
 	\begin{split}
@@ -100,6 +104,10 @@ as the observational equation and the state equation is
 	\mu_t= \mu_{t-1} + \xi_t
 	\end{equation}
 The above can be written in the form of (\ref{eqn:2secondzt}) and (\ref{eqn:2thirdzt}) with appropriate choice of `$\Phi$' and `$H$' matrices. The main advantage of state-space models is that they accommodate the possibility of slowly varying parameters over time, which is more realistic in modeling the real world data. 
+\end{ex}
+
+The estimation of model parameters can be done via likelihood function. For this and how VAR models discussed in Chapter~4 can be written in the state-space form, see Reinsel (2002)~\cite{2002reinsel}.
+
 
 
 \section{Regime Switching and Change-Point Models}
@@ -120,7 +128,7 @@ thus leading to an AR(1) model for $\mu_{s_t}$ as
 	\begin{equation}\label{eqn:must}
 	\mu_{s_t} = \phi_0 + \phi_1 \mu_{s_{t-1}} + a_t
 	\end{equation}
-where $a_t$ by definition can take four possible values depending upon $s_t$ and $s_{t-1}$. Here $\phi_0=p_{21}\mu_1 + p_{12} \mu_2$ and $\phi_1=p_{11}-p_{21}$. Note the model for $y_t$ in (\ref{eqn:modelham}) is the sum of an AR(1) process and white noise, then from Theorem~\ref{thm:agg}, $y_t \sim$ ARMA(1,1); but because of discrete nature of `$a_t$', (\ref{eqn:modelham}) is a non-linear process. Note that the unknown parameters are $(\mu_1,\mu_2,\sigma,p_{11},p_{22})'=\lambda$ and they can be estimated via maximum likelihood as follows: note $y_t|(s_t=j,F_{t-1})\sim N(\mu_j,\sigma^2)$. The predictive density of $y_t$ is given as,
+where $a_t$ by definition can take four possible values depending upon $s_t$ and $s_{t-1}$. Here $\phi_0=p_{21}\mu_1 + p_{12} \mu_2$ and $\phi_1=p_{11}-p_{21}$. Note the model for $y_t$ in (\ref{eqn:modelham}) is the sum of an AR(1) process and white noise, then from Result~2 in Chapter~3, $y_t \sim$ ARMA(1,1); but because of discrete nature of `$a_t$', (\ref{eqn:modelham}) is a non-linear process. Note that the unknown parameters are $(\mu_1,\mu_2,\sigma,p_{11},p_{22})'=\lambda$ and they can be estimated via maximum likelihood as follows: note $y_t|(s_t=j,F_{t-1})\sim N(\mu_j,\sigma^2)$. The predictive density of $y_t$ is given as a finite mixture model,
 	\begin{equation}\label{eqn:predden}
 	f(y_t \;|\; F_{t-1})= \sum_{i=1}^2 \text{Prob}(s_t=i \;|\; F_{t-1}) \, f(y_t \;|\; s_t=i, F_{t-1})
 	\end{equation}
@@ -142,11 +150,11 @@ The forecast for `$k$' period ahead can be stated as:
 where $\mu=\phi_0/(1-\phi_1)$.
 
 
-The basic model has been extended to cover multiple regimes and to vector processes. Interested readers should refer to Hamilton (2016)~\cite{jdham} and references therein. Ang and Timmermann (2012)~\cite{timmerman} discuss a model that accounts for changes not only in the mean but also in variances and autocorrelations:
+The basic model has been extended in the literature to cover multiple regimes and to vector processes. Interested readers should refer to Hamilton (2016)~\cite{jdham} and references therein. Ang and Timmermann (2012)~\cite{timmerman} discuss a model that accounts for changes not only in the mean but also in variances and autocorrelations:
 	\begin{equation}\label{eqn:varautoy}
 	y_t= \mu_{s_t} + \phi_{s_t} y_{t-1} + \epsilon_t
 	\end{equation}
-where $\epsilon_t$'s are independent $\sim N(0,\sigma_{s_t}^2)$. Using the data on excess S\&P500 returns, FX returns, etc., it is identified that there are volatility regimes, but no level shifts.
+where $\epsilon_t$'s are independent $\sim N(0,\sigma_{s_t}^2)$. Using the data on excess S\&P 500 returns, FX returns, etc., it is identified that there are volatility regimes, but no level shifts.
 
 
 Hamilton (1990)~\cite{90ham} proposes using EM (Expectation-Maximization) algorithm (Dempster, Laird and Rubin (1977)~\cite{dempster}) to obtain the maximum likelihood estimate, instead of recursive filter approach (see Hamilton (1989)~\cite{89ham} to optimize the loglihood of (\ref{eqn:predden}), updated with $y_t$. Note by Bayes' Theorem
@@ -164,7 +172,7 @@ There is a vast literature on Bayesian approach to this problem, see for example
 	\begin{equation}\label{eqn:arxgarch}
 	\text{ARX-GARCH:} \quad y_t= \beta_t' x_t + v_t \sqrt{h_t} \, \epsilon_t
 	\end{equation}
-where $h_t\sim$ GARCH$(p,q)$ and $\beta_t$ and $v_t$ are piecewise linear. Using the weakly returns of S\&P500 index, AR(1)-GARCH(1,1) model is attempted and it is identified that 1998--2003 had higher volatility. Figure~\ref{fig:sp500} provides the plot of closing price, returns, volatility and volume data. 
+where $h_t\sim$ GARCH$(p,q)$ and $\beta_t$ and $v_t$ are piecewise linear. Using the weakly returns of S\&P 500 index, AR(1)-GARCH(1,1) (AR for the mean and GARCH for the variance) model is attempted and it is identified that 1998--2003 had higher volatility. Figure~\ref{fig:sp500} provides the plot of closing price, returns, volatility and volume data. 
 
 
 	\begin{figure}[!ht]
@@ -174,7 +182,7 @@ where $h_t\sim$ GARCH$(p,q)$ and $\beta_t$ and $v_t$ are piecewise linear. Using
 	\end{figure}
 
 
-In most of the applications of the above regime-switching models, particularly in finance, the plots of relevant quantities clearly reveal the pattern and these models provide a way to confirm the level and size shifts. We want to conclude this section with some simple ideas borrowed from the area of statistical process control. Recall that if the market is efficient, the return $r_t=\ln P_t - \ln P_{t-1}\sim $ IID $(\mu_t, \sigma^2)$, but $\mu_t=\delta$ when $t\geq t_0$ and zero elsewhere. The cumulative sum chart (CUSUM) to detect the positive and negative mean shift are based on recursive calculations:
+In most of the applications of the above regime-switching models, particularly in finance, the plots of relevant quantities clearly reveal the pattern and these models provide a way to confirm the level and size shifts. From the plots, it is easy to see how the volatility in returns increases during the regime change. We want to conclude this section with some simple ideas borrowed from the area of statistical process control. Recall that if the market is efficient, the return $r_t=\ln P_t - \ln P_{t-1}\sim $ IID $(\mu_t, \sigma^2)$, but $\mu_t=\delta$ when $t\geq t_0$ and zero elsewhere. The cumulative sum chart (CUSUM) to detect the positive and negative mean shift are based on recursive calculations:
 	\begin{equation}\label{eqn:cdouble}
 	\begin{split}
 	c_t^+&=\max(0,c_{t-1}^+ + (r_t-k)) \\
@@ -192,7 +200,7 @@ where $w(\hat{\delta}_t)$ is a weight function; a simple weight function $w(\hat
 The adaptive CUSUM chart is effective at detecting a range of mean shift sizes. Similar results for the variance need to be worked out.
 
 
-In practical applications of these regime-shifting models, it is not easy to discern between a single outlier and persistent level shift. Valid measures that can distinguish these two situations on a timely basis could be very valuable to a trader. We also want to remind the reader that the Markov switching models of changing regimes are indeed latent variable time series models. These models are known as hidden Markov models (HMMs) and represent a special class of dependent mixtures of several processes, these are closely related to state-space models in Section 4.1. An unobservable $m$-state Markov chain determines the state or regime and a state-dependent process of observations. The major difference is that HMMs have discrete states while the Kalman filter based approach refers to unobserved continuous states. 
+In practical applications of these regime-shifting models, it is not easy to discern between a single outlier and persistent level shift. Valid measures that can distinguish these two situations on a timely basis could be very valuable to a trader. We also want to remind the reader that the Markov switching models of changing regimes are indeed latent variable time series models. These models are known as hidden Markov models (HMMs) and represent a special class of dependent mixtures of several processes, these are closely related to state-space models in Section~5.1. An unobservable $m$-state Markov chain determines the state or regime and a state-dependent process of observations. The major difference is that HMMs have discrete states while the Kalman filter based approach refers to unobserved continuous states. 
 
 
 \section{A Model for Volume-Volatility Relationship}
@@ -200,7 +208,7 @@ In practical applications of these regime-shifting models, it is not easy to dis
 
 While the price information via returns and the volatility can be modeled through methods described earlier, it has become important to incorporate other relevant trading data to augment the trading strategies. To that effect, we want to seek some guidance from economic theory how that information is linked to price movements.
 
-In the market microstructure theory, it is assumed that price movements occur primarily due to the arrival of new information and this information is incorporated efficiently into market price. Other variables such as trading volume, bid-ask spread and market liquidity are observed to be related to the volatility of the returns. Early empirical studies have documented a positive relationship between daily trading volume and volatility (See Clark (1973)~\cite{clark}). Epps and Epps (1976)~\cite{epps} and Tauchen and Pitts (1983)~\cite{tauchenpitts} assume that the volume and price are driven by the underlying `latent' information ($I$) and provide a theoretical framework to incorporate this information. Assuming that there are fixed number of traders who trade in a day and the number of daily equilibria, $I$ is random because the number of new pieces of information is random, the return and the volume are written as a bivariate normal mixture model with the same mixing variable $I$. Conditional on $I$:
+In the market microstructure theory, it is assumed that price movements occur primarily due to the arrival of new information and this information is incorporated efficiently into market price. Other variables such as trading volume, bid-ask spread and market liquidity are observed to be related to the volatility of the returns. Early empirical studies have documented a positive relationship between daily trading volume and volatility (See Clark (1973)~\cite{clark}). Epps and Epps (1976)~\cite{epps} and Tauchen and Pitts (1983)~\cite{tauchenpitts} assume that the volume and price are driven by the underlying `latent' information ($I$) and provide a theoretical framework to incorporate this information. Assuming that there are fixed number of traders who trade in a day and the number of daily equilibria, $I$ is random because the number of new pieces of information is random, the return and the volume are written as a bivariate normal (continuous) mixture model with the same mixing variable $I$. Conditional on $I$:
 	\begin{equation}\label{eqn:2rtVt}
 	\begin{split}
 	 r_t&= \sigma_1\sqrt{I_t}Z_{1t} \\
@@ -221,7 +229,7 @@ Poisson distribution and based on empirical evidence, the lognormal distribution
 \noindent\textbf{Stylized Facts 5 (Volume--Volatility Relationship):} 
 
 \begin{itemize}
-\item  Positive correlation between conditional volatility and volume.
+\item  There is a positive correlation between conditional volatility and volume.
 
 \item Large price movements are followed by high volume.
 
@@ -238,13 +246,13 @@ setting of Glosten and Milgrom (1985)~\cite{glostenmilgrom} with the stochastic 
 	\begin{equation}\label{eqn:2VtIt}
 	V_t|I_t \sim \text{Poisson}(m_0 + I_t m_1)
 	\end{equation}
-It is easy to see $\Cov(r_t^2,V_t) = \sigma^2m_1 \Var(I_t) > 0$ under this setting as well. These models clearly indicate that the intraday return volatility and volume processes jointly contain predictable elements.
+It is easy to see $\Cov(r_t^2,V_t) = \sigma^2m_1 \Var(I_t) > 0$ under this setting as well. These models clearly indicate that the intraday return volatility and volume processes jointly contain some predictable elements.
 
 
 There are other studies that focus on the trading volume and returns relationship and we mention only a select few here. Campbell, Grossman, and Wang (1993)~\cite{campbellgross} demonstrate for individual large stocks and stock indices the first-order daily auto-correlation in the returns tend to decline with volume. The authors develop a theoretical model where the economy has two assets, risk-free asset and a stock and there are two types of investors, one with constant risk aversion and the other with risk aversion changing over time. Under this set-up, it is implied that a decline in a stock price on a high-volume day is more likely than a decline on a low-volume day to be associated with an increase in the expected stock return.
 
 
-Gervais, Kaniel, and Mingelgrin (2001)~\cite{gervais2001high} investigate the role of trading activity in providing information about future prices. It is shown that periods of extremely high (low) volume tend to be followed by positive (negative) excess returns. The formation period for identifying extreme trading volume is a day or a week, but the effect lasts at least twenty days and holds across all stock sizes. To test if this information can be used profitably, the authors construct a trading strategy, by sending buy (sell) limit orders at the existing bid (ask) price, at the end of the formation period. If the orders are not taken, they are converted into market orders at the closing. The strategy is shown to result in profits, in particular with the small-medium firm stocks, after adjusting for the transaction costs. The model used for the empirical framework is the vector autoregressive model discussed later, with an addition of a set of exogenous control variables:
+Gervais, Kaniel, and Mingelgrin (2001)~\cite{gervais2001high} investigate the role of trading activity in providing information about future prices. It is shown that periods of extremely high (low) volume tend to be followed by positive (negative) excess returns. The formation period for identifying extreme trading volume is a day or a week, but the effect lasts at least twenty days and holds across all stock sizes. To test if this information can be used profitably, the authors construct a trading strategy, by sending buy (sell) limit orders at the existing bid (ask) price, at the end of the formation period. If the orders are not taken, they are converted into market orders at the closing. The strategy is shown to result in profits, in particular with the small-medium firm stocks, after adjusting for the transaction costs. The model used for the empirical framework is the vector autoregressive model discussed in Chapter~4, with an addition of a set of exogenous control variables:
 	\begin{equation}\label{eqn:2Ytphi}
 Y_t = \Phi_0+\sum_{j=1}^p\Phi_jY_{t-j}+\sum_{l=1}^LB_lX_{t-l}+\epsilon_t
 	\end{equation}
@@ -253,13 +261,13 @@ Y_t = \Phi_0+\sum_{j=1}^p\Phi_jY_{t-j}+\sum_{l=1}^LB_lX_{t-l}+\epsilon_t
 The components of $Y_t$ include stock or market related variables such as detrended log of stock turnover, the stock return and the value weighted market return. The control variables are market volatility based on the daily return standard deviation and the dispersion which is the cross-sectional standard deviation of the security returns. The impulse response functions are used to aggregate the overall relationship among the endogenous variables. Statman, Thorley, and Vorkink (2006)~\cite{statman2006investor} show that the trading volume is dependent on past returns over many months and it is argued that this may be due to the overconfidence of the investors.
 
 
-These and other studies generally confirm the information content of the volume and turnover of stocks traded; strategies to exploit these, especially in a high frequency context, will be examined in Chapter 3. We will discuss how intra-day flow of volume can be related to price changes. 
+These and other studies generally confirm the information content of the volume and turnover of stocks traded; strategies to exploit these, especially in a high frequency context, will be mentioned in Chapter~6. We will discuss how intra-day flow of volume can be related to price changes. 
 
 
-In algorithmic trading a key ingredient of many strategies is forecast of intra-day volume. Typically a parent order is split into several child orders and the timing of the submission of child orders could depend on the volume forecast for an interval of time that is considered for trading. Brownless, Cipollini and Gallo (2011)~\cite{brownless} provide prediction model for intra-day volume. This will be described in detail in the next chapter.
+In algorithmic trading a key ingredient of many strategies is forecast of intra-day volume. Typically a parent order is split into several child orders and the timing of the submission of child orders could depend on the volume forecast for an interval of time that is considered for trading. Brownlees, Cipollini and Gallo (2011)~\cite{brownless} provide prediction model for intra-day volume. This will be described in detail in the next chapter.
 
 
-The model in (\ref{eqn:2rtVt}) is extended to cover multiple stocks in He and Velu (2014)~\cite{hevelu}. The role of common cross-equity variation in trade related variables is of interest in financial economics. The factors that influence the prices, order flows and liquidity are most likely to be common among equities that are exposed to some risk factors. Exploring commonality is useful for institutional trading such as portfolio rebalancing. The mixture distribution in (\ref{eqn:2rtVt}) is developed by assuming that factor structures for returns and trading volume stem from the same valuation fundamentals and depend on a common latent information flow.  
+The model in (\ref{eqn:2rtVt}) is extended to cover multiple stocks in He and Velu (2014)~\cite{hevelu}. The role of common cross-equity variation in trade related variables is of interest in financial economics. The factors that influence the prices, order flows and liquidity are most likely to be common among equities that are exposed to the same risk factors. Exploring commonality is useful for institutional trading such as portfolio rebalancing. The mixture distribution in (\ref{eqn:2rtVt}) is developed by assuming that factor structures for returns and trading volume stem from the same valuation fundamentals and depend on a common latent information flow.  
 
 
 \section{Models for Point Processes}
