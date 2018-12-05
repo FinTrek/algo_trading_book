@@ -182,7 +182,7 @@ where $h_t\sim$ GARCH$(p,q)$ and $\beta_t$ and $v_t$ are piecewise linear. Using
 	\end{figure}
 
 
-In most of the applications of the above regime-switching models, particularly in finance, the plots of relevant quantities clearly reveal the pattern and these models provide a way to confirm the level and size shifts. From the plots, it is easy to see how the volatility in returns increases during the regime change. We want to conclude this section with some simple ideas borrowed from the area of statistical process control. Recall that if the market is efficient, the return $r_t=\ln P_t - \ln P_{t-1}\sim $ IID $(\mu_t, \sigma^2)$, but $\mu_t=\delta$ when $t\geq t_0$ and zero elsewhere. The cumulative sum chart (CUSUM) to detect the positive and negative mean shift are based on recursive calculations:
+In most of the applications of the above regime-switching models, particularly in finance, the plots of relevant quantities clearly reveal the pattern and these models provide a way to confirm the level and size shifts. From the plots, it is easy to see how the volatility in returns increases during the regime changes. We want to conclude this section with some simple ideas borrowed from the area of statistical process control. Recall that if the market is efficient, the return $r_t=\ln P_t - \ln P_{t-1}\sim $ IID $(\mu_t, \sigma^2)$, but $\mu_t=\delta$ when $t\geq t_0$ and zero elsewhere. The cumulative sum chart (CUSUM) to detect the positive and negative mean shift are based on recursive calculations:
 	\begin{equation}\label{eqn:cdouble}
 	\begin{split}
 	c_t^+&=\max(0,c_{t-1}^+ + (r_t-k)) \\
@@ -223,7 +223,7 @@ where $Z_{1t}$ and $Z_{2t}$ are standard normal variables and $Z_{1t}, Z_{2t}$, 
 	\end{split}
 	\end{equation}
 is positive due to the variance in $I_t$. If there is no new information or if there is no variation in the mixing variable, $\Var(I_t)= 0$ and thus the relationship vanishes. The theory of arrival rates suggest a
-Poisson distribution and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in (\ref{eqn:2rtVt}) are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their findings: \\
+Poisson distribution and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in (\ref{eqn:2rtVt}) are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their main findings: \\
 
 
 \noindent\textbf{Stylized Facts 5 (Volume--Volatility Relationship):} 
