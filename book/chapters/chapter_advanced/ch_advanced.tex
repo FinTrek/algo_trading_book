@@ -305,7 +305,7 @@ There has been a great deal of interest in studying market micro-structure to be
 	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/33d1.jpg}
 	\caption{Exchange hours. \label{fig:exchhours}}
 	\end{figure}
-High-frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price or quote etc. that may be associated with $t_i$. The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange are open. Standard econometric techniques are for data in discrete time intervals. Aggregating the high-frequency data to some fixed time interval will not capture the advantages of having access to detailed time-stamped transaction data. Even for some heavily traded stocks, if the intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
+High-frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price or quote etc. that may be associated with `$t_i$.' The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange are open. Standard econometric techniques are for data in discrete time intervals. Aggregating the high-frequency data to some fixed time interval will not capture the advantages of having access to detailed time-stamped transaction data. Even for some heavily traded stocks, if the intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
 
 \begin{itemize}
 \item \textbf{Nonsynchronicity:} Different stocks have different trade intensities and even for a single stock, the intensity can vary during the course of a day. For the aggregated low frequency (daily) data, thus, we cannot assume that daily returns occur in equally-spaced time series.
@@ -339,7 +339,7 @@ Under aggregation with low frequency data generally the dependence tends to decr
 \noindent\textbf{Stylized fact 6: Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.
 
 
-We want to briefly discuss the Roll model; on a typical day of trading stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to arrival of new information about the stock. Assume that the true price (unobservable) follows a random walk model, Example~\ref{ex:driftwalk} Chapter 3, as
+We want to briefly discuss the Roll model; on a typical day of trading, stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to arrival of new information about the stock. Assume that the true price (unobservable) follows a random walk model, Example~\ref{ex:driftwalk} Chapter 3, as
 	\begin{equation}\label{eqn:2plowstar}
 	p_t^*=p_{t-1}^* + \epsilon_t 
 	\end{equation}
@@ -385,7 +385,7 @@ An alternative more direct ARMA type model for log durations is suggested by Ghy
 and $\varepsilon_i = \sqrt{h_i^v}u_i, h_i^v = \omega^v + \sum_{j=1}^{p^v}\alpha_j^v\varepsilon_{i-j}^2 + \sum_{j=1}^{q^v}\beta_j^vh_{i-j}^v$ where $u_i \sim N(0,1)$ i.i.d.; here the conditional mean and variance of durations are assumed to be separable. The duration volatility that is modeled using the second equation in (\ref{eqn:2dipsi}) is interpreted as `liquidity' risk. \\
 
 
-\noindent \textbf{Other Duration Related Models:} So far the discussion has been around modeling the durations, but the information set, $F_t$ has information on `marks', the information associated with the past ticks, such as the number of units transacted, price etc. McCulloch and Tsay (2007)~\cite{mccullochtsay07} suggest the following model:
+\noindent \textbf{Other Duration Related Models:} So far the discussion has been around modeling the durations, but the information set, $F_t$ has information on `marks', the information associated with the past ticks, such as the number of units transacted, price etc. McCulloch and Tsay (2001)~\cite{mccullochtsay07} suggest the following model:
 	\begin{equation}\label{eqn:2lndi}
 	\ln{d_i} = \beta_0 + \beta_1\ln{(d_{t-1})} + \beta_2s_{i-1} + \sigma\varepsilon_i
 	\end{equation}
@@ -409,7 +409,7 @@ where $d_i$ is indicator variable, $d_i = I_{\{y_i>x_i\}}$. Model ($x_i,\widetil
 	\begin{equation}\label{eqn:2pxiyi}
 	p(x_i,\widetilde{y}_i | F_{i-1},\omega) = g(x_i|F_{i-1},\omega_1) f(\widetilde{y}_i | x_i,F_{i-1},\omega_2)
 	\end{equation}
-The first term is the trade density and the second term is the quote density. The $\psi_i$ terms as in (\ref{eqn:quadsolve}) are modeled as EACD, $\psi_i= f(\psi_{i-1},x_{i-1},z_{i-1})$ and quote density is also modeled as EACD after adjusting for censoring:
+The first term is the trade density and the second term is the quote density. The $\psi_i$ terms as in (\ref{eqn:2dipsi}) are modeled as EACD, $\psi_i= f(\psi_{i-1},x_{i-1},z_{i-1})$ and quote density is also modeled as EACD after adjusting for censoring:
 	\begin{equation}\label{eqn:2fdot}
 	f(y_i|\cdot) = [h(y_i|\cdot)]^{1-d_i} \times S(x_i|\cdot)^{d_i}
 	\end{equation}
@@ -448,7 +448,7 @@ Assume that the frictions, $u$'s are i.i.d. mean zero and variance $\sigma_{u}^2
 To motivate the optimal choice, we consider two possible situations. If there is no micro-structure noise, the usual estimate of variance, $\hat{\sigma}^2= \frac{1}{T} \sum_{i=1}^n r_i^2$ has the asymptotic variance `$2\sigma^4\delta$' which suggests selecting `$\delta$' as small as possible. The implication of the presence of micro-structure noise is that returns are likely to follow a MA(1) process with a negative autocorrelation and the proportion of total variance due to market micro-structure noise is, $\Pi= \frac{2\sigma_\eta^2}{\sigma^2\delta+2\sigma_\eta^2}$ and as `$\delta$' gets smaller, this proportion gets closer to unity. This indicates that the optimal sampling frequency should be finite when noise is present.
 
 
-For the estimation of efficient price variance, we need to consider an  optimal division of a day into `$M$' number of subperiods. The optimal sampling frequency over `$n$' days is chosen as $\delta^* = 1/M^*$ with $M^*= \left[\dfrac{\hat{Q}_i}{\hat{\alpha}}\right]^{\frac{1}{3}}$, where $\hat{\alpha} = \sum_{i=1}^n\sum_{j=1}^M\overline{r}_{j,i}^2/(nM)$ and $\hat{Q}_i = \frac{M}{3}\sum_{j=1}^M\hat{r}_{j,i}^4$. Based on the analysis of a sample of S\&P 100 stocks' mid quotes for the month of February 2002, Bandi and Russell (2006)~\cite{bandi} conclude that 5-min frequency is optimal and the 15-min interval may provide the variance estimates `excessively volatile'. The economic benefit of optimal sampling is that high frequency traders can employ a realistic variance forecasts in formulating the entry and exit strategies by separating the variance due to market frictions. 
+For the estimation of efficient price variance, we need to consider an  optimal division of a day into `$M$' number of subperiods. The optimal sampling frequency over `$n$' days is chosen as $\delta^* = 1/M^*$ with $M^*= \left[\dfrac{\hat{Q}_i}{\hat{\alpha}}\right]^{\frac{1}{3}}$, where $\hat{\alpha} = \sum_{i=1}^n\sum_{j=1}^M\overline{r}_{j,i}^2/(nM)$ and $\hat{Q}_i = \frac{M}{3}\sum_{j=1}^M\hat{r}_{j,i}^4$. Based on the analysis of a sample of S\&P 100 stocks' mid quotes for the month of February 2002, Bandi and Russell (2006)~\cite{bandi} conclude that 5-min frequency is optimal and the 15-min interval may provide the variance estimates `excessively volatile'. The economic benefit of optimal sampling is that high frequency traders can employ a realistic variance forecasts in formulating the entry and exit strategies, by separating the variance due to market frictions. 
 
 
 
@@ -464,7 +464,7 @@ The price as assumed earlier is to follow a random walk model. Therefore, price 
 	\begin{equation}\label{eqn:estvol}
 	\hat{\sigma}_1^2= \dfrac{(O_1 - C_0)^2}{2f} + \dfrac{(C_1 - O_1)^2}{2(1-f)},
 	\end{equation}
-has efficiency two compared to the usual estimator, $\hat{\sigma}^2_0=(C_1 - C_0)^2$ based on the closing prices of two successive trading days. This suggests clearly the inclusion of additional data point, such as opening price is quite informative. Garman and Klass~\cite{klass1980} suggest these and other estimators which are superior to the classical estimator of volatility $\hat{\sigma}^2$. It is argued that the high and low prices contain information regarding the volatility during the trading period and a composite estimator that is proposed,
+has efficiency two compared to the usual estimator, $\hat{\sigma}^2_0=(C_1 - C_0)^2$ based on the closing prices of two successive trading days. This suggests clearly the inclusion of additional data point, such as opening price is quite informative. Garman and Klass~\cite{klass1980} suggest these and other estimators which are superior to the classical estimator of volatility $\hat{\sigma}^2_0$. It is argued that the high and low prices contain information regarding the volatility during the trading period and a composite estimator that is proposed,
 	\begin{equation}\label{eqn:compositeest}
 	\hat{\sigma}_2^2= a\,\dfrac{(O_1 - C_0)^2}{f} + (1-a)\, \dfrac{(H_1 - L_1)^2}{(1-f) \ln 2}
 	\end{equation}
@@ -555,7 +555,7 @@ The sample versions are assuming `$N$' trading days in a month:
 where $\hat{s}_t$ refers to two day estimates. These estimates tend to perform well in terms of both cross-sectional correlates and time series correlations. They also seem to have some predictive power. 
 
 
-There are two mean reasons for the exposition of price bar data to capture the essential aspects of market movement. The price bar data in discrete time intervals is easier to analyze; it can also smooth out the market frictions. By the choice of time intervals, it can closely approximate the high-frequency data. But how the entry/exit decisions are made and their accuracy based on price bar data needs decisions are made and their accuracy based on price bar data needs further investigation. 
+There are two main reasons for the exposition of price bar data to capture the essential aspects of market movement. The price bar data in discrete time intervals is easier to analyze; it can also smooth out the market frictions. By the choice of time intervals, it can closely approximate the high-frequency data. But how the entry/exit decisions are made and their accuracy based on price bar data needs further investigation. 
 
 
 
