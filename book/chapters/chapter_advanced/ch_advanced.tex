@@ -578,45 +578,84 @@ Machine learning is a growing area of computer science that encompasses other we
 	\draw[->,line width=0.4mm] (Z) edge (Y);
 	\end{tikzpicture}
 	\end{equation}
-Here the square boxes contain `$n$' dimensional input or feature vectors, $X$ and `$m$' dimensional output vectors, $Y$ and the circular box indicates hidden or unknown layers in-between that connects the input to the output. From its structure, neural networks are a two-stage regression or classification model with intermediary layers, $Z$ are generally non-linear functions of $X$. In the ordinary least squares regression model, the goal is to get `$m$' linear combinations of `$X$' that best predicts `$Y$'. Here `$r$' dimensional intermediaries can vary based on the assumption of `hidden' layers, but the `key' is that the output vector, `$Y$', can be a non-linear function of `$X$' via the hidden layers. In its simplest form the neural network model can be written as follows:
+Here the square boxes contain `$n$' dimensional input or feature vector, $X$ and `$m$' dimensional output vector, $Y$ and the circular box indicates hidden or unknown layer in-between that connects the input to the output. From its structure, neural networks are a two-stage regression or classification model with intermediary layers; $Z$ is generally a non-linear function of $X$. In the ordinary least squares regression model, the goal is to get `$m$' linear combinations of `$X$' that best predicts `$Y$'. Here `$r$' dimensional intermediaries can vary based on the assumption of `hidden' layers, but the `key' is that the output vector, `$Y$', can be a non-linear function of `$X$' via the hidden layers. In its simplest form the neural network model can be written as follows:
 	\begin{equation}\label{eqn:neurallabel}
 	\begin{split}
 	z_i&= \sigma(\beta_i'X), \quad i=1,2,\ldots,r \\
 	Y_j&= g_j(Z), \quad j=1,2,\ldots,m
 	\end{split}
 	\end{equation}
-where the function $\sigma(u)=\frac{1}{1+e^{-u}}$ is the sigmoid function. Note that this function is used in logistic regression. In the regression set-up, $g_j(Z)=\alpha_j' Z$, but in the $m$-class classification,
+where the function $\sigma(u)=\frac{1}{1+e^{-u}}$ is the sigmoid function. Note that this is the  function used in logistic regression. In the regression set-up, $g_j(Z)=\alpha_j' Z$, but in the $m$-class classification,
 	\begin{equation}\label{eqn:gjzclass}
 	g_j(Z)= \dfrac{e^{\alpha_j' Z}}{\displaystyle\sum_{l=1}^m e^{\alpha_j' Z}},
 	\end{equation}
-called the softmax function, is used. In the set-up given in (\ref{eqn:quadsolve}), we assume only one hidden layer, but in practical applications many layers are assumed which leads to non-uniqueness problems. As shown in Hastie, Tibshirani and Friedman (2009)~\cite{hastibf} the neural network problem is closely related to a non-parametric method projection pursuit regression.
+called the softmax function, is used. In the set-up given in (\ref{eqn:neural}), we assume only one hidden layer, but in practical applications many layers are assumed which leads to non-uniqueness problems. As shown in Hastie, Tibshirani and Friedman (2009)~\cite{hastibf} the neural network problem is closely related to a non-parametric method called projection pursuit regression.
 
 
 To estimate the `$r \times n$' parameters $\beta$'s and `$m \times r$' parameters of $\alpha$'s, the criterion in the regression setting is the usual sum of squares,
 	\begin{equation}\label{eqn:bigwtheta}
 	W(\theta)= \sum_{l=1}^n \sum_{k=1}^m \big(y_{ik} - f_k(x_i)\big)^2 = \sum_{i=1}^m W_i(\theta)
 	\end{equation}
-and in the classification setting,
+and in the classification setting the criterion is, 
 	\begin{equation}\label{eqn:bigwtheta2}
 	W(\theta)= - \sum_{i=1}^n \sum_{k=1}^m y_{ik} \ln f_k(x_i),
 	\end{equation}
-which is a measure of deviance is used. The method to estimate the unknown parameters, `$\theta$' is a gradient descent also called a back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
+which is also termed as a measure of deviance is used. The method to estimate the unknown parameters, `$\theta$' is a gradient descent, also called as back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
 	\begin{equation}\label{eqn:rby1it}
 	\hat{\theta}^{(r+1)}= \hat{\theta}^{(r)} - \gamma_r \sum_{i=1}^n \dfrac{\delta W_i(\theta)}{\delta \theta},
 	\end{equation}
-where $\gamma_r$ is called the learning rate. Details on the choice of the learning rate are discussed in Hastie et al. (2009)~\cite{hastibf}. Some practical issues in fitting these models are given below. Because these models are over-parametrized, the optimization in (\ref{eqn:rby1it}) can be a nonconvex function.
+where $\gamma_r$ is called the learning rate. Details on the choice of the learning rate are discussed in Hastie et al. (2009)~\cite{hastibf}. Some practical issues with observing in fitting these models are given below. Because these models are over-parametrized, the optimization in (\ref{eqn:rby1it}) can be a nonconvex function.
 
 \begin{enumerate}[--]
-\item All inputs need to be standardized as the scaling of these inputs determines the scaling of the weights in the bottom layers.
-\item Starting value of `$\theta$' are chosen to be random values near zero as large values tend to result in inferior solutions.
+\item All inputs are to be standardized as the scaling of these inputs determines the scaling of the weights in the bottom layers.
+\item Starting values of `$\theta$' are chosen to be random values near zero as large values tend to result in inferior solutions.
 \item Neural Network models tend to overfit the data and so early stopping rates in the iterative process of (\ref{eqn:rby1it}) are suggested. To avoid overfitting, consider minimizing 
 	\begin{equation}\label{eqn:overfit}
 	W^*(\theta)= W(\theta) + \lambda \theta' \theta,
 	\end{equation}
 where `$\lambda$' is a positive tuning parameter.
-\item Many hidden units ($Z$'s) are preferred as they can capture the non-linearities. 
-\item Multiple minima in (\ref{eqn:rby1it}) are possible. A suggested approach to avoid this is `bagging' which are the averages of predictions obtained from random perturbation of training data. 
+\item Many hidden units ($Z$'s) are preferred as they can capture various non-linearities. 
+\item Multiple minima in (\ref{eqn:rby1it}) are possible. A suggested approach to avoid this is `bagging' which calls for computing averages of predictions obtained from random perturbation of training data. \\
 \end{enumerate}
+
+
+\noindent \textbf{Reinforcement Learning:} The set of techniques covered in this area is quite broad and generally refers to learning from interaction to achieve a goal. The learner is called an `agent' who learns from interacting with `environment' through trial and error. The learning is assumed to progress through `rewards.' More formally, the environment is in a state, $s_t \in S$, the set of all possible states; the agent's decision or action, $a_t \in A(s_t)$, the set of actions available in state `$s_t$.' As a consequence, the agent gets a reward $r_{t+1} \in R$ and a new state of the environment, `$s_{t+1}$' emerges. Reinforcement learning methods study how the agent changes the policy, $\Pi_t (s_t,a_t)$ with a goal towards maximizing the reward, a result of the interaction in the long run. For an excellent survey on this topic, refer to Kaelbling, Littman and Moore (1996)~\cite{littmanmoor}. The common assumption is that the state-space is stationary which means that the transition probabilities from one state to another remains constant and so are reward signals. The long-run reward function discounted by interest rate that is optimized by the agent is denoted as, $E(\sum_{t=0}^\infty \gamma^t r_t)$. Other reward functions such as regret, a measure of the expected decrease in reward gained due to executing an algorithm have been considered in the literature. For a comprehensive treatment of the subject, see Sulton and Barto (2018)~\cite{sultonbarto}. Much of the notes in this section follow from the references cited here. \\
+
+
+\noindent \textbf{Markov Assumption:} We assume the sets $S$, $A$ and $R$ are all finite. We assume that any response at `$t+1$' depends on the state one action at `$t$.' More specifically, 
+	\begin{equation} \label{eqn:pstpone}
+	P(s_{t+1}=S', r_{t+1}=r' \;|\; F_t)= P(s_{t+1}=S', r_{t+1}=r' \;|\; s_t,a_t),
+	\end{equation}
+where $F_t$ is the set of values of all the prior events until `$t$.' It is useful to note that the key quantities that define the dynamics of the decision process under the assumptions are the transition probabilities, $P_{ss'}= P(s_{t+1}=s' \;|\; s_t=s, a_t=a)$ and the anticipated value of the next reward, $R_{ss'}= E(r_{t+1} \;|\; s_t=s, a_t=a, s_{t+1}=s')$. The reinforcement algorithms are based on estimating future value functions of state-action pairs which depends on the agent's policy, $\Pi\, (s,a)$. Formally, the state-value function is,
+	\begin{equation} \label{eqn:statevalue}
+	V^\Pi(s)= E_\Pi \left[ \sum_{k=0}^\infty \gamma^k r_{t+k+1} \;|\; s_t=s \right],
+	\end{equation}
+and the action-value function is,
+	\begin{equation} \label{eqn:actionvalue}
+	q^\Pi(s,a)= E_\Pi \left[ \sum_{k=0}^\infty \gamma^k r_{t+k+1} \;|\; s_t=s, a_t=a \right].
+	\end{equation}
+While the above formulation appears to be quite general, consistency conditions imposed to satisfy some recursive relationships lead to a form for $V^\Pi(s)$ called the Bellman equation:
+	\begin{equation} \label{eqn:vprods}
+	V^\Pi(s)= \sum_a \Pi (s,a) \; \sum_{s'} P_{ss'} [ R_{ss'} + \gamma V^\Pi(s')].
+	\end{equation}
+The second part of the above equation indicates how the value that the result from future states are discounted and weighed by their probabilities. The optimal state-value function is denoted as
+	\begin{equation} \label{eqn:statevstar}
+	V^*(s)= \max_\Pi V^\Pi(s)= \max_a \sum_{s'} P_{ss'}^a(R_{ss'}^a + \gamma V^*(s')).
+	\end{equation}
+Similarly, the optimal action-value function can be written as
+	\begin{equation} \label{eqn:actionvalueqstar}
+	Q^*(s,a)= \max_\Pi Q^\Pi(s,a)= \sum_{s'} P_{ss'}^a( R_{ss'}^a + \gamma \max_{a'} Q^*(s',a') ).
+	\end{equation}
+
+
+The methods to solve the above can be heuristic and computational. Exact solutions are possible only under idealized conditions. A common approach to solve the above is to use dynamic programming. The uniqueness and existence of $V^\Pi$ are possible when $\gamma<1$; it is guaranteed that eventual termination will result from all states under the policy, $\Pi$. 
+
+
+
+
+
+
+
 
 
 
@@ -673,7 +712,7 @@ patterns?
 
 
 
-\item Use the transaction data in Problem 8. There are seventy-eight five-minute intervals in a trading day. Let $d_i$ be the average of all log durations for the $i$th 5-minute interval across all trading days. Let $t_j$ be tick time of a trade during the $i$th 5-minute interval, define an adjusted duration as $\Delta t_j^* = \Delta t_j/\exp(d_i)$ where $\Delta t_j = t_j - t_{j-1}$.
+\item Use the transaction data in Problem~1. There are seventy-eight five-minute intervals in a trading day. Let $d_i$ be the average of all log durations for the $i$th 5-minute interval across all trading days. Let $t_j$ be tick time of a trade during the $i$th 5-minute interval, define an adjusted duration as $\Delta t_j^* = \Delta t_j/\exp(d_i)$ where $\Delta t_j = t_j - t_{j-1}$.
 \begin{enumerate}[(a)]
 \item Is there a diurnal pattern in the adjusted duration series?
 
