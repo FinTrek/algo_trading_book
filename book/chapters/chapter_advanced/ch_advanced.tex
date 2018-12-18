@@ -600,7 +600,7 @@ and in the classification setting the criterion is,
 	\begin{equation}\label{eqn:bigwtheta2}
 	W(\theta)= - \sum_{i=1}^n \sum_{k=1}^m y_{ik} \ln f_k(x_i),
 	\end{equation}
-which is also termed as a measure of deviance is used. The method to estimate the unknown parameters, `$\theta$' is a gradient descent, also called as back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
+which is also termed as a measure of deviance. The method to estimate the unknown parameters, `$\theta$' is a gradient descent, also called as back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
 	\begin{equation}\label{eqn:rby1it}
 	\hat{\theta}^{(r+1)}= \hat{\theta}^{(r)} - \gamma_r \sum_{i=1}^n \dfrac{\delta W_i(\theta)}{\delta \theta},
 	\end{equation}
@@ -638,7 +638,7 @@ While the above formulation appears to be quite general, consistency conditions 
 	\begin{equation} \label{eqn:vprods}
 	V^\Pi(s)= \sum_a \Pi (s,a) \; \sum_{s'} P_{ss'} [ R_{ss'} + \gamma V^\Pi(s')].
 	\end{equation}
-The second part of the above equation indicates how the value that the result from future states are discounted and weighed by their probabilities. The optimal state-value function is denoted as
+The second part of the above equation indicates how the value that the result from future states are discounted and weighted by their probabilities. The optimal state-value function is denoted as
 	\begin{equation} \label{eqn:statevstar}
 	V^*(s)= \max_\Pi V^\Pi(s)= \max_a \sum_{s'} P_{ss'}^a(R_{ss'}^a + \gamma V^*(s')).
 	\end{equation}
