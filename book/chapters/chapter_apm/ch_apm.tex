@@ -190,36 +190,36 @@ The number of adequate factors can also be verified through the significant `$\l
 We consider monthly data from July 1926 to October 2012 on returns from six portfolios that are formed based on the size and book-to-market (BM) ratio. This data is taken from French's data library. The titles follow the naming convention, for example, SML contains small size plus low BM to BGH contains big size with high BM ratio. The data also contains $r_f$, $r_{mt}-r_f$ and the two factors SMB (small-minus-big size factors) and HML (high-minus-low BM factor).
 
 
-\begin{figure}[!ht]
-   \centering
-   \includegraphics[width=\textwidth]{chapters/chapter_apm/figures/monreturns.png} 
-   \caption{Histogram of Monthly Returns. \label{fig:monreturns}}
-\end{figure}
+        \begin{figure}[!ht]
+           \centering
+           \includegraphics[width=\textwidth]{chapters/chapter_apm/figures/monreturns.png} 
+           \caption{Histogram of Monthly Returns. \label{fig:monreturns}}
+        \end{figure}
+        
+        
+        \begin{figure}[!ht]
+           \centering
+           \includegraphics[width=\textwidth]{chapters/chapter_apm/figures/frontieremp.png} 
+           \caption{Efficient Frontier-Empircal.\label{fig:frontemp}}
+        \end{figure}
+        
+        
+        \begin{table}[!ht]
+        \centering
+        \caption{Descriptive statistics ($T=1036$)\label{tab:descstat}}
+        \begin{tabular}{lrrrrr}
+        Variable & Mean & StDev & Median & Skewness & Kurtosis \\
+        SML & 0.983 & 7.771 & 1.100 & 0.98 & 10.23 \\
+        SM2 & 1.271 & 7.092 & 1.530 & 1.27 & 14.51 \\
+        SMH & 1.472 & 8.303 & 1.660 & 2.13 & 21.64 \\
+        BIGL & 0.892 & 5.365 & 1.195 & $-0.13$ & 5.16 \\
+        BIG2 & 0.960 & 5.799 & 1.225 & 1.25 & 16.82 \\
+        BIGH & 1.173 & 7.243 & 1.395 & 1.53 & 18.05
+        \end{tabular}
+        \end{table}
 
 
-\begin{figure}[!ht]
-   \centering
-   \includegraphics[width=\textwidth]{chapters/chapter_apm/figures/frontieremp.png} 
-   \caption{Efficient Frontier-Empircal.\label{fig:frontemp}}
-\end{figure}
-
-
-\begin{table}
-\centering
-\caption{Descriptive statistics ($T=1036$)\label{tab:descstat}}
-\begin{tabular}{lrrrrr}
-Variable & Mean & StDev & Median & Skewness & Kurtosis \\
-SML & 0.983 & 7.771 & 1.100 & 0.98 & 10.23 \\
-SM2 & 1.271 & 7.092 & 1.530 & 1.27 & 14.51 \\
-SMH & 1.472 & 8.303 & 1.660 & 2.13 & 21.64 \\
-BIGL & 0.892 & 5.365 & 1.195 & $-0.13$ & 5.16 \\
-BIG2 & 0.960 & 5.799 & 1.225 & 1.25 & 16.82 \\
-BIGH & 1.173 & 7.243 & 1.395 & 1.53 & 18.05
-\end{tabular}
-\end{table}
-
-
-The histogram of the portfolio returns is given in Figure~\ref{fig:frontemp}. The descriptive are stated in Table~\ref{tab:descstat}. The returns are generally positively skewed with more sharply peaked than the normal distribution. The Jarque-Bera test (Equation~\ref{eqn:2JB}) rejects the null hypothesis that returns are normally distributed. The efficient frontier with the risk-free rate using the weights in (\ref{eqn:5weff2}) along with the portfolios is plotted in Figure~\ref{fig:frontemp}, by setting $\mu^*=\hat{\mu}_m$, the average of the market portfolio. The weights for the assets are $(-1.06,1.08,0.40,0.58,-0.36,-0.32)$ and the share of the risk-free is 0.68. The scatter plot of the actual mean value versus standard deviation of the six portfolios (Figure~\ref{fig:capmarket}) yields the slope of 0.1471 which is larger empirical Sharpe ratio $\left(\frac{\overline{r}_m - r_f}{\hat{\sigma}_m}\right)$, 0.1147. This clearly indicates that the market portfolio is not mean-variance efficient. Note that while three portfolios (BigL, Big2, BigH) lie on the line, two others (SM2 and SMH) lie above the line. This generally implies that it is possible to outperform the empirical Markowitz portfolio. 
+The histogram of the portfolio returns is given in Figure~\ref{fig:monreturns}. The descriptive are stated in Table~\ref{tab:descstat}. The returns are generally positively skewed with more sharply peaked than the normal distribution. The Jarque-Bera test (Equation~\ref{eqn:2JB}) rejects the null hypothesis that returns are normally distributed. The efficient frontier with the risk-free rate using the weights in (\ref{eqn:5weff2}) along with the portfolios is plotted in Figure~\ref{fig:frontemp}, by setting $\mu^*=\hat{\mu}_m$, the average of the market portfolio. The weights for the assets are $(-1.06,1.08,0.40,0.58,-0.36,-0.32)$ and the share of the risk-free is 0.68. The scatter plot of the actual mean value versus standard deviation of the six portfolios (Figure~\ref{fig:capmarket}) yields the slope of 0.1471 which is larger empirical Sharpe ratio $\left(\frac{\overline{r}_m - r_f}{\hat{\sigma}_m}\right)$, 0.1147. This clearly indicates that the market portfolio is not mean-variance efficient. Note that while three portfolios (BigL, Big2, BigH) lie on the line, two others (SM2 and SMH) lie above the line. This generally implies that it is possible to outperform the empirical Markowitz portfolio. 
 
 
 \begin{table}
@@ -302,13 +302,13 @@ with a typical element, $w_j= \frac{\sigma_{\text{MV}}^2}{\sigma_j^2} \left(1 - 
 Thus when $\sigma_j^2$ is small and low $\beta_j$, $w_j$ will be large. \\
 
 
-\noindent\textbf{Diversifying the Diversifiers:} In practice, finding proxies for the true tangency portfolio or a completely risk-free asset has been difficult. Practitioners traditionally have used cap-weighted equity indices as proxies for tangency portfolios but that is shown to result in inefficient risk-return trade-off. Recent studies (see Amenc, Goltz, Lodh and Martellini (2012)~\cite{amencgoltzlodhmart}) focus on diversifying across various forms of efficient portfolios, notably those formed using the maximum Sharpe ratio and the minimum variance criteria. It is empirically shown that the minimum variance portfolios provide conservative exposure to studies that perform well in adverse conditions and Sharpe ratio portfolios provide access to higher performance stocks. Combining the two with controls on tracking error results in a smoother performance. 
+\noindent\textbf{Diversifying the Diversifiers:} In practice, finding proxies for the true tangency portfolio or a completely risk-free asset has been difficult. Practitioners traditionally have used cap-weighted equity indices as proxies for tangency portfolios but that is shown to result in inefficient risk-return trade-off. Recent studies (see Amenc, Goltz, Lodh and Martellini (2012)~\cite{amencgoltzlodhmart}) focus on diversifying across various forms of efficient portfolios, notably those formed using the maximum Sharpe ratio and the minimum variance criteria. It is empirically shown that the minimum variance portfolios provide conservative exposure to stocks that perform well in adverse conditions and Sharpe ratio portfolios provide access to higher performance stocks. Combining the two with controls on tracking error results in a smoother performance. 
 
 
 \section{Statistical Underpinnings \label{s:stat_under}}
 
 
-The implementation of the portfolio theory in practice when the means and covariances of returns are unknown has raised some challenging issues. It is a theory that applies to a single period and the choice of portfolio weights that would determine the portfolio returns for a future period. Because of uncertainty involved in the future returns the use of the estimates of the means and covariances of the returns based on the past data must be carefully evaluated. The sample average and the sample covariance matrix which are also maximum likelihood estimates under the assumptions that returns are normally distributed when plugged in, the main thesis that the combination of the assets would yield efficient portfolio does not seem to hold empirically. 
+The implementation of the portfolio theory in practice when the means and covariances of returns are unknown has raised some challenging issues. It is a theory that applies to a single period and the choice of portfolio weights that would determine the portfolio returns for a future period. Because of uncertainty involved in the future returns the use of the estimates of the means and covariances of the returns based on the past data must be carefully evaluated. The sample average and the sample covariance matrix (which are also maximum likelihood estimates under the assumptions that returns are normally distributed) when plugged in, the main thesis that the combination of the assets would yield efficient portfolio does not seem to hold empirically. 
 
 
 The following numerical illustration taken from Bruder, Gaussel, Richard and Roncalli (2013)~\cite{bruder} is quite telling. Consider the universe of four assets with the average return vector and the covariance matrix as given below.
@@ -416,7 +416,8 @@ where $A$ is a general specified matrix. If `$\lambda$' and `$\gamma$' are the L
 	\end{equation}
 which results from shrinking both the mean vector and the covariance matrix. \\
 
-\noindent \textbf{The $\mathbf{L_1}$ Constraint:} The method popularly called as LASSO (least absolute shrinkage and selection operator) is a shrinkage method like the ridge but there are some important differences. The problem can be stated as follows:
+
+\noindent \textbf{The $\mathbf{L_1}$ Constraint:} The shrinkage method LASSO (least absolute shrinkage and selection operator) is like the ridge method (see \eqref{eqn:addconstraint} above) but there are some important differences. The problem can be stated as follows:
 	\begin{equation}\label{eqn:minwsum2}
 	\min_w w'\Sigma w \ni w'\mu=\mu^*, w'\mu=1 \text{ and } \sum_{i=1}^m |w_i| \leq w_0
 	\end{equation}
@@ -431,10 +432,10 @@ Here $R$ is the $m\times T$ matrix of the row returns and $\hat{\mu}=\frac{1}{T}
 	\begin{equation}\label{eqn:anotherhatwargmin}
 	\hat{w}^{(\tau)}= \text{arg } \min_w [ \|\mu^* 1_T - R'w\|_2 + \tau\|w\|_1] \ni w' \hat{\mu} = \mu^*, w'1_m=1
 	\end{equation}
-As stated in Brodie, Daubechies, De Mol, Giannone and Loris (2009)~\cite{brodic} adding the $l_1$-constraint results in several useful advantages. In addition to introducing sparsity that is helpful for managing large portfolios, the procedure provides a framework for regulating the amount of shorting which can be a proxy for the transaction costs. More importantly it provides a solution that is more stable which was a main concern as small perturbations in the estimates of $\mu$ and $\Sigma$ can lead to very different solutions.
+As stated in Brodie, Daubechies, De Mol, Giannone and Loris (2009)~\cite{brodic} adding the $L_1$-constraint results in several useful advantages. In addition to introducing sparsity that is helpful for managing large portfolios, the procedure provides a framework for regulating the amount of shorting which can be a proxy for the transaction costs. More importantly it provides a solution that is more stable which was a main concern in the original optimization set-up as small perturbations in the estimates of $\mu$ and $\Sigma$ can lead to very different solutions.
 
 
-The algorithm that is most convenient to solve (\ref{eqn:anotherhatwargmin}) is Least Angle Regression (LAR) developed in Efron, Hastie, Johnstone and Tibshirani (2004)~\cite{efron}. It starts with a large value of `$\tau$' and as `$\tau$' decreases the optimal solution, $\hat{w}^{(\tau)}$, changes in a piecewise linear fashion and thus it is only essential to find critical points where the slope changes. More relevant details can be found in Brodic et al. (2009)~\cite{brodic}. The LASSO procedure was evaluated using Fama-French 100 portfolios sorted by size and book-to-market as the universe. The efficient portfolio was constructed on a rolling basis using the monthly data for five years and its performance is evaluated in the following year. It is concluded, see Brodie et al. (2009; Figure 2)~\cite{brodic}, that optimal sparse portfolios that allow short portfolios tend to outperform both optimal no-short-positions portfolio and the na\"ive evenly weighted portfolio. 
+The algorithm that is most convenient to solve (\ref{eqn:anotherhatwargmin}) is Least Angle Regression (LAR) developed in Efron, Hastie, Johnstone and Tibshirani (2004)~\cite{efron}. It starts with a large value of `$\tau$' in \eqref{eqn:anotherhatwargmin} and as `$\tau$' decreases the optimal solution, $\hat{w}^{(\tau)}$, changes in a piecewise linear fashion and thus it is only essential to find critical points where the slope changes. More relevant details can be found in Brodic et al. (2009)~\cite{brodic}. The LASSO procedure was evaluated using Fama-French 100 portfolios sorted by size and book-to-market as the universe. The efficient portfolio was constructed on a rolling basis using the monthly data for five years and its performance is evaluated in the following year. It is concluded, see Brodie et al. (2009; Figure 2)~\cite{brodic}, that optimal sparse portfolios that allow short portfolios tend to outperform both optimal no-short-positions portfolio and the na\"ive evenly weighted portfolio. 
 
 
 
@@ -470,7 +471,7 @@ the utility function in (\ref{eqn:utility}) is modified to take into account the
 where $\sigma_{\hat{\mu}}^2= (\sigma_s^2+\sigma_u^2)/T$. Two key quantities that play important roles are the level of ambiguity `$\alpha_i$' and the inverse coefficient of variation, $\hat{\mu}/\sigma_{\hat{\mu}}$. Some conclusions from this study are, when ambiguity is present, the investor tends to hold disproportionate (to Markowitz allocation) amount in the familiar assets and the number of assets tends to be smaller.
 
 
-Huberman (2001)~\cite{Hub} provides several instances of investment in the familiar options rather than choices that lead to efficient outcome. Workers generally tend to choose their employers stock as they probably think that they know about their behavior and may believe they have information that the market does not have. Thus various examples are provided that indicate that although investment in the familiar stocks contradicts the advice to diversify. This adds a dimension to the traditional risk-return formulation that one has to recognize. \\
+Huberman (2001)~\cite{Hub} provides several instances of investment in the familiar options rather than choices that lead to efficient outcome. Workers generally tend to choose their employer's stock as they probably think that they know about their behavior and may believe they have information that the market does not have. Thus various examples are provided that indicate that although investment in the familiar stocks contradicts the advice to diversify. This adds a dimension to the traditional risk-return formulation that one has to recognize. \\
 
 
 \noindent\textbf{Large Portfolio Selection with Exposure Constraints:} Several techniques have been discussed in this section to reduce the sensitivity of the optimal portfolio weights to uncertainty in the inputs, such as the mean returns and the covariance matrix of returns. Generally these techniques are not adequate to address the effect of estimation errors that accumulate due to large portfolio size. Jagannathan and Ma (2003)~\cite{jagma} impose no short-sales constraints as well as upper bounds on portfolio weights as commonly imposed by practitioners. The empirical evidence indicates that simply imposing upper bounds does not lead to significant improvement in the out-of-sample performance. For an estimated covariance matrix, $S$, the formulation of the model is as follows:
@@ -637,7 +638,7 @@ Note the first term is the result of asset choice, the second term is the result
 \noindent \textbf{Choice of Assets:} The screening of candidate assets relies upon assessing the underlying factor for return behavior of a portfolio. Factors are grouped into generally as fundamental factors and macroeconomic factors, although there are other considerations such as if investing in certain assets are considered to be socially responsible, or environmentally safe, etc.. Fundamental factors are related to the asset characteristics and other information such as analysts forecasts and the macroeconomic factors relate to activities in the economy that are likely to be closely associated with the asset behavior. These may be industry factors or sentiment factors. These factors can be standardized and an aggregate score can be used to sort out the assets. Several sorting methodologies are available in the literature. Using the factor scores, sort the stocks and go long on stocks with high scores and go short on stocks with low values. This method is easy to implement and it diversifies away risk of individual stocks. Some disadvantages are that it may be difficult to infer which variables provide unique information and portfolios may pick up different undesirable risks. 
 
 
-Patton and Timmermann (2010)~\cite{pattim} test for positive relation between ex-ante estimates of CAPM beta and the resulting returns using daily data. Stock are sorted at the start of each month into deciles on the basis of their betas using prior one year daily data and value-weighted portfolios are formed. Returns for these portfolios are recorded for the following month. If the CAPM holds, one should expect the average returns should increase with the betas, which is empirically confirmed. The authors also examine if the post-ranked betas of portfolios ranked by ex-ante beta estimates are monotonic confirming the predictability of the betas. Sorting the stocks based on their betas and forming decile portfolios, the performance is evaluated in the subsequent month. Specifically from the CAPM model, $r_{it}= \alpha + \beta_i r_{mt} + \epsilon_{it}$ for $i=1,2,\ldots,10$, the following hypothesis, $H_0: \beta_1 \geq \beta_2 \geq \cdots \geq \beta_{10}$ is tested. The estimates range from 1.54 to 0.6 and the hypothesis is confirmed. This approach is extended to two-way sorts; firm size and book-to-market ratio or firm size and momentum. It is concluded that the size effect in average returns is absent among loser stocks. Also momentum effects are stronger for small and medium size forms. \\
+Patton and Timmermann (2010)~\cite{pattim} test for positive relation between ex-ante estimates of CAPM beta and the resulting returns using daily data. Stocks are sorted at the start of each month into deciles on the basis of their betas using prior one year daily data and value-weighted portfolios are formed. Returns for these portfolios are recorded for the following month. If the CAPM holds, one should expect the average returns should increase with the betas, which is empirically confirmed. The authors also examine if the post-ranked betas of portfolios ranked by ex-ante beta estimates are monotonic confirming the predictability of the betas. Sorting the stocks based on their betas and forming decile portfolios, the performance is evaluated in the subsequent month. Specifically from the CAPM model, $r_{it}= \alpha + \beta_i r_{mt} + \epsilon_{it}$ for $i=1,2,\ldots,10$, the following hypothesis, $H_0: \beta_1 \geq \beta_2 \geq \cdots \geq \beta_{10}$ is tested. The estimates range from 1.54 to 0.6 and the hypothesis is confirmed. This approach is extended to two-way sorts; firm size and book-to-market ratio or firm size and momentum. It is concluded that the size effect in average returns is absent among loser stocks. Also momentum effects are stronger for small and medium size forms. \\
 
 
 \noindent\textbf{Alpha and Beta Strategies:} Portfolio managers have traditionally developed strategies to maximize `$\alpha$' in the factor model. One of the measures, information ratio defined in Chapter~\ref{ch:stat_ts} is taken as an index for the portfolios performance. But after the 2007--2008 financial crisis, there is a great deal of interest in smart-beta (referring to the coefficients of the factor model) strategies. This is a broad term that refers to from ad-hoc strategies to a mix of optimized simpler portfolios and investments in non-traditional asset classes. The construction is generally rule-based and is transparent. The commonality among them is in their exposure to factors that investors are comfortable to choose from. Kahn and Lemmon (2015)~\cite{lemmon} provide a framework to understand the beta strategies along the decomposition of return in (\ref{eqn:portreturnrandom}) into three returns. To summarize:
@@ -653,7 +654,7 @@ Patton and Timmermann (2010)~\cite{pattim} test for positive relation between ex
 The authors advocate an optimal blend of active smart-beta and index products. The optimality depends on the understanding of expected returns and risks. Other considerations include how the impact of the underlying factors will change and how the volatility and correlations among the factors are likely to change. 
 
 
-Frazzini and Pedersen (2014)~\cite{frazped} present a model with leverage and margin constraints that can vary over time and can be different for different investor and formally study the implications. These implications are indeed verified by the empirical analysis as well. The CAPM model assumes that an investor is interested in maximizing the expected return for a given leverage on the investor's risk tolerance. But some investors may be constrained in their leverage (such as insurance companies have to maintain certain amount of reserves, etc.) and may over-invest in risky securities. The growth of ETF's indicates that some investors cannot use leverage directly. The inclination to invest in high-beta assets require lower risk-adjusted returns than low-beta assets that require leverage. The authors set out to study how an investor with no leverage constraint can exploit this and other related issues. 
+Frazzini and Pedersen (2014)~\cite{frazped} present a model with leverage and margin constraints that can vary over time and can be different for different investor and formally study the implications. These implications are indeed verified by the empirical analysis as well. The CAPM model assumes that an investor is interested in maximizing the expected return for a given leverage on the investor's risk tolerance. But some investors may be constrained in their leverage (such as insurance companies have to maintain certain amount of reserves, etc.) and may over-invest in risky securities. The growth of ETFs indicates that some investors cannot use leverage directly. The inclination to invest in high-beta assets require lower risk-adjusted returns than low-beta assets that require leverage. The authors set out to study how an investor with no leverage constraint can exploit this and other related issues. 
 
 
 Consider the two period model where agents trade `$m$' securities that each pays `$\delta_t$' as dividend and `$W$' shares are outstanding. An investor chooses a portfolio of shares, $w=(w_1,\ldots,w_m)'$ and the rest is invested at the risk-free rate, $r_f$. Denoting `$P_t$' as the $m \times 1$ price vector, the following utility function criterion is optimized. 
@@ -683,7 +684,7 @@ These findings are useful for studying how investment decisions can be made. Inv
 \section{Portfolio Trading Strategies}
 
 
-The discussion in this chapter mostly centered around optimal ways to construct portfolios. The trading strategies generally center around rebalancing the portfolios if the tracking error exceeds certain thresholds. Strategies related to execution depend on the price impact of rebalancing transactions and will be commented in Chapter~\ref{chap:ch_mi_models}. The transaction costs that consist of brokerage commissions and the spread; the spreads vary between assets and are generally higher for less liquid assets with lower market capitalizations. With electronic trading, the spreads have been generally declining. With the portfolio trading the optimal strategy will depend on the current returns and the future expected returns of all assets in the portfolio as well as on the risk and return correlations along with their transaction costs. As mentioned in G\^{a}rleanu and Pedersen (2011)~\cite{garlepede}: ``Due to transaction costs, it is obviously not optimal to trade all the way to the target all the time.'' They argue that the best portfolio is the combination of efficient portfolio, current portfolio to avoid turnover and the transaction cost and the future optimal portfolio. The best portfolio is thus forward-looking. The critical factor appears to be alpha decay (mean-reversion) of returns. Assets with slower decay will get more weight. Results are empirically tested out using commodity futures using the data on returns for various durations. The suggested approach requires continuous trading and rebalancing as opposed to periodic rebalancing followed in practice. 
+The discussion in this chapter mostly centered around optimal ways to construct portfolios. The trading strategies generally center around rebalancing the portfolios if the tracking error exceeds certain thresholds. Strategies related to execution depend on the price impact of rebalancing transactions and will be commented in Chapter~\ref{chap:ch_mi_models}. The transaction costs that consist of brokerage commissions and the spread; the spreads vary between assets and are generally higher for less liquid assets with lower market capitalizations. With electronic trading, the spreads have been generally declining. With the portfolio trading the optimal strategy will depend on the current returns and the future expected returns of all assets in the portfolio as well as on the risk and return correlations along with their transaction costs. As mentioned in G\^{a}rleanu and Pedersen (2013)~\cite{garlepede}: ``Due to transaction costs, it is obviously not optimal to trade all the way to the target all the time.'' They argue that the best portfolio is the combination of efficient portfolio, current portfolio to avoid turnover and the transaction cost and the future optimal portfolio. The best portfolio is thus forward-looking. The critical factor appears to be alpha decay (mean-reversion) of returns. Assets with slower decay will get more weight. Results are empirically tested out using commodity futures using the data on returns for various durations. The suggested approach requires continuous trading and rebalancing as opposed to periodic rebalancing followed in practice. 
 
 
 The basic model along the lines of \eqref{eqn:returnflows} can be stated as follows:
@@ -801,8 +802,18 @@ portfolio weights have changed and why.
     
     
 
+\item[7.] The file Exchange rates.csv contains exchange rates between US\$ and 25 major currencies; the daily data spans from Jan 3, 2000 to April 10, 2012. Consider the data from Jan 3, 2002 for the following currencies: EUR, GBP, DKK, JPY and CNY. Compute $r_t = \ln{p_t} - \ln{p_{t-1}}$, returns for each series. \\
 
-\item[7.] Consider the exchange rate data in the file \path{Forex1.csv} for 24 currencies; consider the returns on these currencies along with the market return and the risk free rate. The daily data spans from 3/1/2005 to 10/4/2012. We will use the data from 2005 to 2010 to construct a portfolio and the data from 2011 to 2012 to evaluate the portfolio.
+\indent\textbf{A. }\begin{minipage}[t]{0.8\linewidth}
+	\begin{enumerate}[(a)]
+	\item Estimate the mean vector and the covariance matrix of the returns.
+	\item Construct a portfolio with Markowitz's minimum variance objective with expected returns at least R, the median of the elements in the mean vector. The weights must be positive and should sum to 1.
+	\item Repeat (a) and (b) for each year and comment on the variation in the composition of the portfolios. \\
+	\end{enumerate}
+	\end{minipage}
+
+
+\item[8.] Consider the exchange rate data in the file \path{Forex1.csv} for 24 currencies; consider the returns on these currencies along with the market return and the risk free rate. The daily data spans from 3/1/2005 to 10/4/2012. We will use the data from 2005 to 2010 to construct a portfolio and the data from 2011 to 2012 to evaluate the portfolio.
 	\begin{enumerate}[(a)]
 	\item Compute the mean $\hat{\mu}$ and sample convariance matrix, $\hat{\Sigma}$ of the log returns.
 	\item Compute the shrinkage estimate $\hat{\Sigma}^*$ of the covariance matrix, under one factor model.
@@ -812,7 +823,7 @@ portfolio weights have changed and why.
 	\end{enumerate}
     
     
-\item[8.] Consider the data in Problem 7.
+\item[9.] Consider the data in Problem 8.
 	\begin{enumerate}[(a)]
 	\item Perform a PCA on the 24 exchange returns; use the first two principal components on factors in a two-factor model for $F$, estimate $F$.
 	\item Using the estimated $\hat{F}$ in (a) as the shrinkage target, compute a new shrinkage coefficient and the new shrinkage estimate of $\Sigma$. 
@@ -823,7 +834,7 @@ portfolio weights have changed and why.
 
 
 
-\item[9.] Consider again the data in the file \path{FF_Data_ForGRStest.csv}. Consider the returns on 25 size sorted portfolios along with the risk free rate and Fama-French factors. The monthly data spans from 1926 to 2012. We will use the data from 1926 to 2000 to construct a portfolio and the data from 2001 to 2012 to evaluate the portfolio. 
+\item[10.] Consider again the data in the file \path{FF_Data_ForGRStest.csv}. Consider the returns on 25 size sorted portfolios along with the risk free rate and Fama-French factors. The monthly data spans from 1926 to 2012. We will use the data from 1926 to 2000 to construct a portfolio and the data from 2001 to 2012 to evaluate the portfolio. 
 	\begin{enumerate}[(a)]
 	\item Compute the mean $\hat{\mu}$ and sample convariance matrix, $\hat{\Sigma}$ of the log returns.
 	\item Compute the shrinkage estimate $\hat{\Sigma}^*$ of the covariance matrix, under one factor model.
@@ -838,7 +849,7 @@ portfolio weights have changed and why.
 
 
 
-\item[10.] Consider the data in Problem~9.
+\item[11.] Consider the data in Problem~10.
 	\begin{enumerate}[(a)]
 	\item Perform a PCA on the 25 portfolio returns; use the first two principal components on factors in a two-factor model for $F$, estimate $F$.
 	\item Using the estimated $\hat{F}$ in (a) as the shrinkage target, compute the new shrinkage estimate of $\Sigma$.
