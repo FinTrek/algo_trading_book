@@ -472,7 +472,7 @@ Historical market data available to researchers and practitioners alike varied i
 Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The level II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available level III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime. \\
 
 
-\subsubsection{Reference Data:} 
+\subsubsection{Reference Data} 
 While often overlooked, or merely considered as an afterthought in the development of a research platform\footnote{More details are presented in a further chapter on research environment}, reliable reference data is the key foundation of a robust quantitative strategy development. The experienced practitioner might want to skip this section, however we encourage the neophyte to read through the tedious details to get a better grasp of the complexity at hand in the
 different categories of reference data.
 
@@ -692,11 +692,18 @@ As a reminder to the reader, aggregated data need to fully support the peculiari
 \subsubsection{Bin Data}
 
 
-Aggregated bar data....
-Particularly useful to detect seasonalities eg Spread size shrinking in the post-open price discovery period and for quick backtesting of intraday trading strategies
+The first natural extension to daily datasets is a discretization of the day into bins ranging from a few seconds to 30 minutes. The features collected are comparable to the ones relevant for daily datasets (period volume, open, high, low, close, VWAP, spread, etc.), but computed at higher frequency. It is worth mentioning that minute bar data actually underpins the vast majority of microstructure models used in the electronic execution space. Volume and spread profiles, for instance, are rarely built with a granularity finer than one minute to prevent introducing excess noise.
+
+These minute bar datasets are also quite popular for the backtesting of low-to-medium frequency trading strategies targeting intraday alpha (short duration market neutral long-short baskets, momentum and mean-reversion strategies). The main benefit they provide is a significant dimension reduction compared to raw market data (390 rows per stock per day in the U.S. compared to hundreds of thousands or millions for raw data), which allows researchers to perform rapid and efficient backtesting as they search for alpha. However, increasing data frequency from daily data to intraday minute bars also present challenges. In particular, relationships that appears to be stable using close-to-close values become much noisier as granularity increases and signals become harder to extract (e.g., drop in correlation between assets, pricing inefficiency moves due to sudden liquidity demand, etc.). Similarly, less liquid assets with a low trade frequency might not have any trading activity during shorter periods of time, resulting in empty bins that need to be handled carefully when modeling, or requiring the creation of variable bin sizes.
 
 
-\subsubsection{Level 1: Trade, Quotes, BBO and NBBO}
+\subsubsection{Raw Market Data}
+
+While historically a large swath of modeling was carried out on daily data or minute bar datasets, the past fifteen years have seen a significant rise in the usage raw market data in an attempt to extract as much information as possible, and act on it before the opportunity (or market inefficiency) dissipates.
+
+Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as "direct feeds") or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level 1, Level 2 or Level 3 market data.\\
+
+\noindent\textbf{Level I data: Trade, Quotes, BBO and NBBO}\\
 
 Superbook \\
 Trade time, trade exch time, trade source time \\
@@ -705,19 +712,18 @@ Quote time, exch time, source time \\
 Trade status \\
 LULD indicator \\
 Qualifiers TRADES AND QUOTES \\
-Part ID
+Part ID\\
 
 
-\subsubsection{Level 2: Market Depth}
+\noindent\textbf{Level II data: Market Depth} 
 
 
-\subsubsection{Level 3: Orders}
 
+\noindent\textbf{Level III data: Full Order View} 
 
 --> mention that for generalisation purposes we take the example of US Level 3 data, in particular w.r.t. Table 8.1  \\
 
-
-\noindent\textbf{Description of Level III data:} The dataset consist of activities during the entire trading session, including early and late hours from 6:00~A.M. to 8:00~P.M. EST in a trading day. It provides intraday depth book activity for 12000 tickers from major national exchanges: Nasdaq, Direct Edge, NYSE, ARCA and BATS (exact number of exchanges depends on the historical period). All messages are consolidated into one file ordered by timestamp. This data allows to build a full national depth book at any moment intraday. The description of the level III data is given in Table~\ref{tab:level3data}. \\
+The dataset consist of activities during the entire trading session, including early and late hours from 6:00~A.M. to 8:00~P.M. EST in a trading day. It provides intraday depth book activity for 12000 tickers from major national exchanges: Nasdaq, Direct Edge, NYSE, ARCA and BATS (exact number of exchanges depends on the historical period). All messages are consolidated into one file ordered by timestamp. This data allows to build a full national depth book at any moment intraday. The description of the level III data is given in Table~\ref{tab:level3data}. \\
 	\begin{table}[!ht]
 	\centering
 	\caption{Level III data \label{tab:level3data}}
