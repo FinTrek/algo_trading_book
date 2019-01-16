@@ -1,24 +1,30 @@
 % !TEX root = ../../book.tex
-\chapter{Modeling Execution Strategies}\label{chap:ch_exec_models}
+\chapter{Execution Strategies\label{chap:ch_exec_models}}
 
-While algorithmic trading techniques are useful in both low and high frequency settings, their importance has become more pronounced in the age of electronic trading because of the speed in execution and the necessity for efficient matching of demand and supply sides in the limit order books. Added to this is that modern equity markets where order submission and cancellations are automated and are also highly fragmented with dozens of exchanges and about forty alternative trading systems where investors can choose to trade. The trading algorithms also differ over various types of market participants, but all of them try broadly to optimize dynamically where, how often and at what price to trade. Typically, the execution can be broadly classified into the following layers.
+While algorithmic trading techniques are useful in both low and high frequency settings, their importance has become more pronounced in the age of electronic trading because of the speed in execution and the necessity for efficient matching of demand and supply sides in the limit order book. Added to this is that modern equity markets where order submission and cancellations are automated and are also highly fragmented with dozens of exchanges and about forty alternative trading systems where investors can choose to trade. The trading algorithms also differ over various types of market participants, but all of them have common objectives, that is to optimize dynamically where, how often and at what price to trade. The algorithms ? small reaction ? to changing liquidity and price. Typically, the execution has been broadly classified into the following layers.
 	\begin{itemize}
-	\item \textbf{Macro Level:} Given a meta-order (parent trade) translate the objective function of a strategy into a trading schedule; when the algorithm should trade, in what size (child order) and for how long.
+	\item \textbf{Macro Level:} Given a meta-order (parent trade) translate the objective function of a strategy into a trading schedule; when the algorithm should trade, in what size (child order), for how long and the spread of trading.
 	\item \textbf{Micro Level:} Given a slice (child order) of the meta-order to trade, this layer of algorithm decides whether to place it as a market or as a  limit order and at what price level.
-	\item \textbf{Smart Order Router:} For a given order (quantity and price level) to which venue should the order be sent.
+	\item \textbf{Smart Order Router:} For a given order (quantity and price level) to which venue should the order be sent. This part covers the so called space dimension.
 	\end{itemize}
 
 
 In this chapter we discuss these and other execution issues in the high frequency trading context. Generally the objectives of equity trading are to minimize the probability of making errors---minimizing the trading impact and avoiding adverse selection. In order to achieve high completion rates, the trading should operate with speed and necessary risk control. It has to be noted that the average trade size has come down over time; thus the parent orders are increasingly decimated and are sent to the exchanges as small child orders. Handling this with large parent order sizes with the focus on short-term alphas requires a great deal of trade timing insights.  
 
 
+The execution agencies engage in providing pre-trade advice and post-trade reporting. The pre-trade advice include the estimation of market impact cost covered in Chapter~\ref{chap:ch_mi_models} and the post-trade reporting is useful for evaluating how well the agency's execution algorithm has performed as compared to some benchmarks. These include the fill rate, the fill composition (passive values aggressive covering the spread) and the evaluation measures such as the magnitude of price revision against the order after the trading ends. Different clients are likely to put different emphasis on these measures. 
 
-\section{Execution Algorithms: Select Review}
+
+These algorithms have been generated over time and they depend on how the complexity in trading has grown. In the first generation algorithms focus on trading at fixed rate over a time-aggregated interval, trading at a fixed participation rate and trading such that the average execution price is closer to market volume-weighted average price. The second generation algorithms focus on market impact and risk. The methods here are formalized similar to Markowitz's portfolio theory. Increasing risk aversion generally leads to shorter execution with higher market impact. As more trades occur near the market close, risk ? clients may trade entirely at the closing auction. Finally, the third generation algorithms closely track the state of the limit order book and market data and are adaptive. The optimal decision such as updating the limit price, crossing the spread, cancellation of orders result from stochastic control formulation. The basic data used in these algorithms follow from microstructure signals covered in Chapter~\ref{chap:ch_trade_data_models}. 
+
+
+
+\section{Execution Algorithms: Some Preliminaries}
 
 The primary goal of most of the execution algorithms is to minimize the transaction costs which are broadly divided into direct costs and into indirect costs. The direct costs such as commissions, taxes etc are easy to measure and they primarily depend on quantity of trading. The indirect costs such as market impact and opportunity costs are hard to measure and depend upon trading strategies. Because many mutual fund and hedge fund companies engage in portfolio rebalancing periodically, they trade a large block of shares in a fixed duration. There is a trade-off between trading a large market order that is likely to affect the price adversely and splitting the parent order into many child orders and let the market recover after each trade. The modeling elements generally involve representing the permanent impact of a parent order and the temporary impact of trading a child order when the price normally returns back to equilibrium, short time after the trade, drift in price (alpha) and the volatility of the stock. The optimizing function balances the cost-loss in revenue due to price impact and the risk-uncertainty due to volatility of the underlying stock. If the trade occurs fast, we incur high cost and low risk but if the trade occurs slowly, we incur low cost and high risk.
 
 
-The execution algorithms are generally evaluated through some benchmark prices. Some examples are:
+The execution algorithms are generally evaluated through some benchmark prices. Some key quantities are:
 	\begin{enumerate}[--]
 	\item Arrival price, that is the market mid-quote at the start of parent order execution at $t=0$, $p_0$.
 	\item Volume weighted average market price over the period of execution, $t \in (0,T)$, $p_{\text{VWAP}}= \sum_{i=1}^N V_ip_i/V$. \\ \\
@@ -26,7 +32,7 @@ The execution algorithms are generally evaluated through some benchmark prices. 
 	\item Volume weighted average price of the parent order's execution, $p_{\text{exec}}= \sum_{i=1}^n x_ip_i/X$. 
 	\end{enumerate}
 	
-	Two related quantities that the traders examine in their evaluation strategies are
+Two other related quantities that the traders examine in their evaluation strategies are:
 	\begin{enumerate}[--]
 	\item Slippage: $s= p_{\text{bench}} - p_{\text{exec}}$
 	\item Market Impact: $p_0 - p_{\text{VWAP}}$
@@ -48,10 +54,35 @@ These strategies as stated are static and they are based on a priori models for 
 We present below select results in this area. The quantities that the trader can determine are the number of child orders $(n)$ and their sizes $(x_k)$ and the duration for the parent order trading $(T)$. The relevance of this problem to the practitioners is discussed in Chan and Lakonishok (1997)~\cite{lakon} and Keim and Madhavan (1997)~\cite{madhavan}. Bestimas and Lo (1998)~\cite{berlo} develop a model that suggests splitting the parent order to reduce the average trading costs. Almgren and Chriss (2000)~\cite{alm2000} split the parent order to minimize the mean-variance of trading costs similar to Markowitz's portfolio theorem. Some recent works on this topic are also briefly mentioned but, describe in some detail in the following sections.
 
 
+\section{First Generation Algorithms\label{sec:first_gen}}
 
-\subsection{Bertsimas and Lo Model}
+The performance of traders is evaluated by how they execute the orders in comparison to volume weighted average price (VWAP), because it is generally considered to be closer to how a passive trader would trade. Madhavan (2002)~\cite{mad_a02} warns that the uncritical use of VWAP as a benchmark can promote non-optimal trading behavior. As noted in the last section, other alternatives to VWAP as possible. The choice of a benchmark will obviously affect the placement strategies by the traders. Using daily VWAP as a benchmark leads to traders spread over the day and thus passive trading can significantly affect alpha. The pre-trade benchmarks such as the arrival price ignore the short-term trends in prices. The post-trade benchmarks are sensitive to order flows towards the end of the day and thus have higher price impact. The VWAP strategy can be automated so that order submissions can follow historical volume pattern during the course of the day with finer time grids. This practical approach is expounded in this section.
 
-The basis of the model discussed here is that trading affects not only the current prices but also the price dynamics that affect the future trading costs. Thus the problem involves dynamic optimization but the solution turns out to be static. Assume that an investor wants to sell a parent order of $X$-shares in $(0,T)$, where $T$ is arbitrary, and let $x_k$ be the number of shares sold (child orders) with the realized price, $\widetilde{p}_k$. The cost of trading, also know as slippage is
+
+We will follow the formulation of the optimization problem as given in Busseli and Boyd (2015)~\cite{busseli_boyd}. With $x$, the total number of shares to be traded over the time horizon, $(0,T)$ in `$n$' discrete time intervals, the problem is to decide how to divide the parent order $X$ into child orders $x_1, \ldots, x_n$ so that the executed average price $p_{\text{exec}}$ is closer to $p_{\text{VWAP}}$. It is assumed that the price, $p_t$, is a random walk and thus the return is white noise. It is assumed that the trading algorithm mixes optimally market and limit orders. Defining the cost of trade in time interval $t$ as $x_t \hat{p}_t$, where $\hat{p}_t$ is the effective price that depends on the instantaneous transaction costs such as bid-ask spread with `$s_t$' as the fractional bid-ask spread with a certain participation rate $x_t/v_t$, it can be shown that the effective price is
+	\begin{equation}
+	\hat{p}_t= p_t \left(1 - \dfrac{s_t}{2} + \alpha \, \dfrac{s_t}{2} \cdot \dfrac{x_t}{v_t} \right),
+	\end{equation}
+which gives in the end quadratic transaction costs which is a reasonable approximation as seen from Chapter~\ref{chap:ch_trade_data_models}. Here `$\alpha$' is taken to be proportionally factor of market orders to total orders. Defining the proportional ratio
+	\begin{equation}
+	s= \dfrac{x p_{\text{VWAP}} - \sum x_t \hat{p}_t}{x p_{\text{VWAP}}}
+	\end{equation}
+as slippage, where the numerator is the cash flow to the broker, the optimizing function is
+	\begin{equation} \label{eq:opt_function}
+	E(s) + \lambda \Var(s).
+	\end{equation}
+Here `$\lambda$' is the risk-aversion parameter. It has to be kept in mind that the quantities $p_t$ and $v_t$ are random variables and the decision variable is `$x_t$'. Note with some approximation, $p_t \sim p_{t-1} \sim p_{\text{VWAP}}$ and with applying the law of iterated expectation, the optimization in \eqref{eq:opt_function} simplifies to
+	\begin{equation}
+	\min_{x_t} \sum_{t=1}^n \left[ \dfrac{s_t}{2x} (\alpha x_t^2 k_t - x_t) + \lambda \sigma_t^2 \left( \left( \sum_{r=1}^t u_r/x \right)^2 - 2 M_t \sum_{r=1}^{t-1} u_t \right) \right]
+	\end{equation}
+with constraints $x_t \geq 0$ and $\sum_{t=1}^n x_t= x$. Here the quantities $M_t= E \left[ \sum_{r=1}^{t-1} v_t/v\right]$ and $k_t= E[\frac{1}{v_t}]$ refer to market intra-day volume distribution. Assuming that the spread is a constant which is generally true for actively traded stocks, the optimal static solution can be shown to be equal to:
+	\begin{equation} \label{eq:optimal_result_xt}
+	x_t^*= x E\left(\dfrac{v_t}{v}\right), \enskip\enskip t=1,\ldots,n.
+	\end{equation}
+From the above discussion, it is clear that forecasting both the distribution of volume, $v_t$, and the total volume for the day, $v$, is essential for achieving optimal results. The optimal result in \eqref{eq:optimal_result_xt} can be obtained with slippage as defined in the previous section. \\
+
+
+\noindent\textbf{Bertsimas and Lo Model:} The basis of the model discussed here is that trading affects not only the current prices but also the price dynamics that affect the future trading costs. Thus the problem involves dynamic optimization but the solution turns out to be static. Assume that an investor wants to sell a parent order of $X$-shares in $(0,T)$, where $T$ is arbitrary, and let $x_k$ be the number of shares sold (child orders) with the realized price, $\widetilde{p}_k$. The cost of trading, also know as slippage is
 	\begin{equation}\label{eqn:x7}
 	s= Xp_0 - \sum_{k=1}^n x_k\widetilde{p}_k,
 	\end{equation}
@@ -73,17 +104,13 @@ the equal split. What the trader needs to decide a priori is the number of split
 The dynamic programming solution to (\ref{eqn:xk7}) via the so called Bellmann equations turns out to be elegant and simple because the price impact $(\theta x_k)$ does not depend upon the prevailing price $(p_{k-1})$ nor on the size of the unexecuted order $(X - \sum_{j=1}^{k-1} x_j)$. The indirect assumptions here are that the volume curve is even over different times of the day and the volatility profile is flat. Bestimas and Lo (1998)~\cite{berlo} also consider extensions of the model (\ref{eqn:pk7}), where a serially correlated state variable such as market condition (S\&P 500) is added. In this case it is shown that the best execution strategy at any point is a function of the state variable and the remaining unexecuted size. 
 
 
-As a point of comparison to the equal allocation strategy observe that VWAP-strategy is similar in the sense that is does not also depend explicitly on any price movement. Simply the allocation is made as $\frac{x_k}{X}=\frac{V_k}{V}$, which leads to
-	\begin{equation}\label{eqn:xk}
-	x_k= X \; \dfrac{V_k}{V},
-	\end{equation}
-where $V_k$ is the market volume during the $k$th time interval. If the traders are restricted to only `$n$' time intervals, it is important to have a good forecast for the quantities, $V_k$ and thus, $V$, the total volume for the day. 
+As a point of comparison to the equal allocation strategy observe that VWAP-strategy is similar in the sense that is does not also depend explicitly on any price movement. Simply the allocation is made in \eqref{eqn:equals} can be intuitively justified as resulting from $\frac{x_k}{X}=\frac{V_k}{V}$. If the traders are restricted to only `$n$' time intervals, it is important to have a good forecast for the quantities, $V_k$ and thus, $V$, the total volume for the day. 
 
 
 
-\subsection{Almgren and Chriss Model \label{subsec:almchrmodel}}
+\section{Second Generation Models\label{subsec:almchrmodel}}
 
-The seminal paper by Almgren and Chriss (2000)~\cite{alm2000} and Almgren (2003)~\cite{almgren2003} consider the same problem taking into account the stock characteristics such as volatility via the mean-variance formulation of minimizing execution costs. This formulation treats the execution as a tradeoff between risk and cost; the faster the execution, higher the cost but lower the risk. The objective again is to liquidate, $X$ units before time `$T$' at minimum cost, in time steps, $t_k = k\tau$ for $k = 0,1,\ldots, n$ where $\tau = T/n$ is the average length of interval between successive child order submission times. If $X_k$ is the number of units held at $t_k$, the goal is to decide on the trading trajectory, $X_0,X_1,\ldots,X_n$ with $X_0=X$ and $X_n=0$. The number of units liquidated $x_k$ between $t_{k-1}$ and $t_k$ is called the trading schedule, with $x_k = X_{k-1} - X_k$. The trading strategy requires determining `$x_k$' in terms of information available at $t_{k-1}$. The static strategies determine the trading schedule in advance of starting trade time, $t_0$ and the dynamic strategies depend on information available up to $t_{k-1}$. Almgren and Chriss (2000)~\cite{alm2000} find trading trajectories that minimize $E(s)+\lambda \Var(s)$ for various values of $\lambda$.
+\noindent\textbf{Almgren and Chriss Model:} The seminal paper by Almgren and Chriss (2000)~\cite{alm2000} and Almgren (2003)~\cite{almgren2003} consider the same problem taking into account the stock characteristics such as volatility via the mean-variance formulation of minimizing execution costs. This formulation treats the execution as a tradeoff between risk and cost; the faster the execution, higher the cost but lower the risk. The objective again is to liquidate, $X$ units before time `$T$' at minimum cost, in time steps, $t_k = k\tau$ for $k = 0,1,\ldots, n$ where $\tau = T/n$ is the average length of interval between successive child order submission times. If $X_k$ is the number of units held at $t_k$, the goal is to decide on the trading trajectory, $X_0,X_1,\ldots,X_n$ with $X_0=X$ and $X_n=0$. The number of units liquidated $x_k$ between $t_{k-1}$ and $t_k$ is called the trading schedule, with $x_k = X_{k-1} - X_k$. The trading strategy requires determining `$x_k$' in terms of information available at $t_{k-1}$. The static strategies determine the trading schedule in advance of starting trade time, $t_0$ and the dynamic strategies depend on information available up to $t_{k-1}$. Almgren and Chriss (2000)~\cite{alm2000} find trading trajectories that minimize $E(s)+\lambda \Var(s)$ for various values of $\lambda$.
 
 
 The model for price impact is same as in (\ref{eqn:pk7}) but stated as
@@ -160,13 +187,10 @@ Various extensions of the basic model (\ref{eqn:bigpk}) are considered by Almgre
 Some questions remain: what is the link between market impact and the dynamics of limit order book, is the impact function linear empirically, etc.. The effect of a short term drift in prices and the serial correlation in the errors which is observed in high frequency etc can be incorporated easily in the model (\ref{eqn:morepk}). Lorenz and Almgren (2011) \cite{lovenz2011} provide a Bayesian approach to the optimization problem. While the methodology yields elegant solutions, empirical use of these results require a close monitoring of order book dynamics as the changes in demand and supply sides can be quite rapid. The general behavior of this adaptive strategy is aggressive; it depends on the prediction of short term price change; generally, if price goes up sell faster. 
 
 
-The above mean-variance formulation of execution cost is combined with the traditional mean-variance portfolio optimization in Engle and Ferstenberg (2007)~\cite{engle2007} and Engle, Ferstenberg and Russell (2012)~\cite{engle2012}. We will discuss this in the context of portfolio rebalancing and the need for minimizing the transaction costs associated with all trades. While the above methods can be taken as first generation methods that are purely based on slippage, more recent work focus on adding other constraints such as incorporating the market VWAP and simultaneously determining the limit and market orders to achieve optimal results. 
+The above mean-variance formulation of execution cost is combined with the traditional mean-variance portfolio optimization in Engle and Ferstenberg (2007)~\cite{engle2007} and Engle, Ferstenberg and Russell (2012)~\cite{engle2012}. We will discuss this in the context of portfolio rebalancing and the need for minimizing the transaction costs associated with all trades. While the above methods can be taken as first generation methods that are purely based on slippage, more recent work focus on adding other constraints such as incorporating the market VWAP and simultaneously determining the limit and market orders to achieve optimal results. \\
 
 
-
-\subsection{Obizhaeva and Wang Model}
-
-The models discussed in the previous sections assume price impact function that is not sensitive to liquidity dynamics. Obizhaeva and Wang (2013)~\cite{obizhaeva} develop a model that accounts for the dynamic properties of supply and demand as represented in the limit order book. The model captures `resilience'; that is, how the current trade affects the state of the future limit order book. The resulting strategy consists of a large trade initially aimed at moving the order book away from its steady state followed by a number of small trades that will utilize the inflow from new liquidity providers. The speed at which the book replenishes itself is an important part of execution cost. The level of resilience depends on the level of hidden liquidity in the market. The price impact model considered here takes into account the dynamics of the limit order book.
+\noindent\textbf{Obizhaeva and Wang Model:} The models discussed in the previous sections assume price impact function that is not sensitive to liquidity dynamics. Obizhaeva and Wang (2013)~\cite{obizhaeva} develop a model that accounts for the dynamic properties of supply and demand as represented in the limit order book. The model captures `resilience'; that is, how the current trade affects the state of the future limit order book. The resulting strategy consists of a large trade initially aimed at moving the order book away from its steady state followed by a number of small trades that will utilize the inflow from new liquidity providers. The speed at which the book replenishes itself is an important part of execution cost. The level of resilience depends on the level of hidden liquidity in the market. The price impact model considered here takes into account the dynamics of the limit order book.
 
 
 It is assumed that the parent order $X$ will be traded in the interval $(0,T)$, `$n$' times at $t_1,t_2,\ldots,t_n$. To model the execution of a large order in the limit order book, it is assumed that the price of execution ($p_t$) depends on the true value of the equity ($p_t^*$) and the state variables ($z_t$) such as past trades that may affect the book. Let $q(p_t^*,p_t;z_t)$ be the density of the limit orders in the other side of the book. The mid-quote ($\overline{p}_t$) is generally taken to reflect the true price, $p_t^*$. If the trade is on the buy side, the initial large transaction, $x_1$, can push the ask price to a higher level, $p_1^*+(s/2)+(x_1/q)$, where `$s$' is the spread and the average execution price is then equal to $p_1^*+(s/2)+x_1/(2q)$. After the initial execution the price converges to a new steady state, $p_t^*+s/2+\lambda x_1$. Assuming that the limit-order book converges to its steady-state exponentially and at time `$t$', 
@@ -209,10 +233,7 @@ and it is shown to be smaller than the cost incurred if the strategy of constant
 Obizhaeva and Wang (2013)~\cite{obizhaeva} consider the extension of the optimization criterion in (\ref{eqn:min}) to include the risk aversion as well, as in Almgren and Chriss (2000)~\cite{alm2000}. Interested readers should refer to Section~8 their paper. For a practical implementation of these methods, it is necessary to consider the trading that happens in multiple exchanges and how the replenishment patterns can differ over different exchanges where `liquidity' and the fee structure have become major considerations for the order flow. 
 
 
-\subsection{Easley, De Prado and O'Hara Model}
-
-
-In the models described so far in this section, it is assumed that the number of child orders `$n$' and the execution horizon, `$T$', are decided exogenously. Also the impact of a trade is modeled through the modified random walk model for the price with additional terms reflecting the permanent or temporary impact (Equation (\ref{eqn:pk7}), (\ref{eqn:bigpk}) and (\ref{eqn:pdouble})). The process of how price impact arises due to friction in the liquidity access is an important part of market microstructure theory and this needs to be taken into account in determining the optimal execution. For example, a buyer in a seller's market can incur a lower cost of trading than a seller in a similar market. Obizhaeva and Wang model is based on the arrival dynamics to the order book. 
+\noindent\textbf{Easley, De Prado and O'Hara Model:} In the models described so far in this section, it is assumed that the number of child orders `$n$' and the execution horizon, `$T$', are decided exogenously. Also the impact of a trade is modeled through the modified random walk model for the price with additional terms reflecting the permanent or temporary impact (Equation (\ref{eqn:pk7}), (\ref{eqn:bigpk}) and (\ref{eqn:pdouble})). The process of how price impact arises due to friction in the liquidity access is an important part of market microstructure theory and this needs to be taken into account in determining the optimal execution. For example, a buyer in a seller's market can incur a lower cost of trading than a seller in a similar market. Obizhaeva and Wang model is based on the arrival dynamics to the order book. 
 
 
 The approach taken by Easley, De Prado and O'Hara (2015)~\cite{prado2} is based on an asymmetric information model of the market maker's behavior. The key measure is the probability of information-based (PIN) trading that is estimated by the order book imbalance (see Easley, De Prado and O'Hara (2012)~\cite{prado3}). Selling a large order in a market already imbalanced toward sell, will reinforce adverse selection from the other side and thus widen the bid-ask spread resulting in higher market impact. The optimal execution horizon (OEH) model in Easley et al (2015) provide a framework for determining the trading horizon, `$T$', and does complement other earlier studies on execution strategies that minimize the price impact. 
@@ -339,7 +360,38 @@ To summarize, recall that the algorithm needs the following input:
 While many of these quantities can be estimated using past transactions, the limit order queues ($Q_k$) and the cancellations ($\xi_k$) are to be obtained at the time of execution.
 
 
-\section{Microstructure Noise Models for Multiple Stocks:  Issues of Synchronizations, etc.}
+
+\section{Execution Algorithms for Multiple Assets}
+
+The execution of trading entry-exit decisions can be made using the methods described in the earlier section for individual assets. Most investors hold multiple assets in their portfolios and evaluate their investments as a whole rather than in parts. In Section~\ref{sec:sec:port_trad_strat}, we discussed the trading strategies with the focus on rebalancing the portfolios. The criteria used were in the traditional framework of mean-variance efficiency with some constraints on the transaction costs. When it comes to execution, the criteria as noticed from earlier sections is on execution costs and the market impact. We will briefly outline some models presented in the literature for multiple-security portfolios.
+
+
+Only recently there are efforts made to better understand and model cross-impact of trading on asset on trading of related assets. If a trader is liquidating simultaneously multiple assets as part of the rebalancing effort, we should expect some cross-impact. In the low frequency setting this is studied under `commonality' or `co-movement' as discussion in Chapter~\ref{ch:ch_mvts}. In the high-frequency setting, the problem is harder to study due to short-term market frictions. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Simultaneous Execution Algorithms for Multiple Instruments}
 \section{A Stochastic Adaptive Control Approach to Optimal Execution}
 \section{Role of Market Makers in Limit Order Markets}
