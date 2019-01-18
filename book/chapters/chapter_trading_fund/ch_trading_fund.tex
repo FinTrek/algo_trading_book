@@ -701,22 +701,19 @@ These minute bar datasets are also quite popular for the backtesting of low-to-m
 
 While historically a large swath of modeling was carried out on daily data or minute bar datasets, the past fifteen years have seen a significant rise in the usage raw market data in an attempt to extract as much information as possible, and act on it before the opportunity (or market inefficiency) dissipates.
 
-Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as "direct feeds") or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level 1, Level 2 or Level 3 market data.\\
+Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as "direct feeds") or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level I, Level II or Level III market data.\\
 
-\noindent\textbf{Level I data: Trade, Quotes, BBO and NBBO}\\
+\noindent\textbf{Level I data: Trade and BBO Quotes:} Level I market data is the most basic form of tick-by-tick data. Historically, the level I data feed would only refer to trade information (Price, Size, Time of each trade reported to the tape) but has grown over time into a term generally accepted to mean both trades and top of book quotes. While the trade feed updates with each trade printed on the tape, the quote feed tends to update much more frequently each time liquidity is added to or removed from the top of book (a rough estimate in liquid markets is the quotes present more updates than the trades by about an order of magnitude). 
 
-Superbook \\
-Trade time, trade exch time, trade source time \\
-Price, size, bid ask price size \\
-Quote time, exch time, source time \\
-Trade status \\
-LULD indicator \\
-Qualifiers TRADES AND QUOTES \\
-Part ID\\
+In order to build strategies, the timing of each event needs to be as precise as possible. While the time reported for trade and quotes is the matching engine time at the exchange, most databases also store a reception or record time to reflect the potential latency between the trade happening and one being aware it did happen and able to start making decision on it. Accounting for this real-world latency is a necessary step for researchers building strategies on raw market data for which opportunities might be very short lived and impossible to exploit for participants who are not fast enough.
 
+The level I data is enough to reconstruct the Best Bid and Offer (BBO) of the market. However, in fragmented markets, it is also useful to obtain an aggregated consolidated view of all available liquidity at a given price level across all exchanges. Market data aggregator usually provide this functionality for users who do not wish to reconstruct the full order book themselves. 
 
-\noindent\textbf{Level II data: Market Depth} 
+Finally, it is worth noting that even Level I data contains significant additional information in the form of trade status (cancelled, reported late, etc.) and, trade and quote qualifiers. These qualifiers provide granular details such as whether a trade was an odd lot, a normal trade, an auction trade, an Intermarket Sweep, an average price reporting, on which exchange it took place, etc. These details can be used to better analyze the sequence of events and decide if a given print should be used to update the last price and total volume traded at that point in time or not. For instance, if not processed appropriately, a trade reported to the tape out of sequence could result in a large jump in price if the market has since moved, and consequently the trade status is an indication that the print should not be utilized as is.
 
+Capturing raw market data, whether to build a research database or process it in real-time to make trading decisions requires significant investments and expert knowledge to handle all the inherent complexity. Hence, one should carefully consider the trade off between the expected value that can be extracted from the extra granularity, and the additional overhead compared to simpler solutions such as bin data.\\
+
+\noindent\textbf{Level II data: Market Depth:}  Level II market data contains the same information as Level I, but with the addition of quote depth data. The quote feed displays all lit limit order book updates (price changes, addition or removal of shares quoted) at any level in the book, and for all of the lit venues in fragmented markets. Given the volume of data generated and the decreasing actionable value of quotes updates as their distance to top of book increases, some users limit themselves to the top 5 or 10 levels of the order book  when they collect or process the data.\\
 
 
 \noindent\textbf{Level III data: Full Order View} 
