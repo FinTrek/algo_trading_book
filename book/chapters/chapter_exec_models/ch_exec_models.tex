@@ -108,7 +108,7 @@ As a point of comparison to the equal allocation strategy observe that VWAP-stra
 
 
 
-\section{Second Generation Models\label{subsec:almchrmodel}}
+\section{Second Generation Algorithms\label{subsec:almchrmodel}}
 
 \noindent\textbf{Almgren and Chriss Model:} The seminal paper by Almgren and Chriss (2000)~\cite{alm2000} and Almgren (2003)~\cite{almgren2003} consider the same problem taking into account the stock characteristics such as volatility via the mean-variance formulation of minimizing execution costs. This formulation treats the execution as a tradeoff between risk and cost; the faster the execution, higher the cost but lower the risk. The objective again is to liquidate, $X$ units before time `$T$' at minimum cost, in time steps, $t_k = k\tau$ for $k = 0,1,\ldots, n$ where $\tau = T/n$ is the average length of interval between successive child order submission times. If $X_k$ is the number of units held at $t_k$, the goal is to decide on the trading trajectory, $X_0,X_1,\ldots,X_n$ with $X_0=X$ and $X_n=0$. The number of units liquidated $x_k$ between $t_{k-1}$ and $t_k$ is called the trading schedule, with $x_k = X_{k-1} - X_k$. The trading strategy requires determining `$x_k$' in terms of information available at $t_{k-1}$. The static strategies determine the trading schedule in advance of starting trade time, $t_0$ and the dynamic strategies depend on information available up to $t_{k-1}$. Almgren and Chriss (2000)~\cite{alm2000} find trading trajectories that minimize $E(s)+\lambda \Var(s)$ for various values of $\lambda$.
 
@@ -392,9 +392,8 @@ Only recently there are efforts made to better understand and model cross-impact
 
 
 
-\section{Simultaneous Execution Algorithms for Multiple Instruments}
+\section{Multiple Stocks: Microstructure Issues}
 \section{A Stochastic Adaptive Control Approach to Optimal Execution}
-\section{Role of Market Makers in Limit Order Markets}
 \section{Algorithmic Trading Next Frontiers}
 \subsection{Extending the Algorithms to Derivative markets}
 \subsection{Developing a Trading Platforms for Simultaneous Execution of Assets}
