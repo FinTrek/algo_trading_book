@@ -187,14 +187,14 @@ This process happen in a continuous fashion between the opening of the market an
    \begin{tabular}{ll} 
 	4:00 a.m. EST & Extended hours trading and order entry begins  \\ \hline
 	9:25 a.m. EST & Nasdaq enters quotes for participants with no open interest \\ \hline
-	9:28 a.m. EST & Dissemination of order imbalance information every 5 sec  \\ 
+	9:28 a.m. EST & Dissemination of order imbalance information every 1 sec  \\ 
 	 & Market-on-open orders must be received prior to 9:28 a.m.   \\ \hline	
 	9:30 a.m. EST & The opening cross occurs		
    \end{tabular}
 \end{table}	
 
 
-Most exchanges publish order imbalance that exists among orders on the opening or closing books, along with the indicative opening or closing price and volume. For instance, Nasdaq publishes the following information\footnote{Source: Nasdaq Trader website} between 9:28~a.m. EST and 9:30~a.m. EST,  every 5~seconds \todo{It's changing on Monday to 1s, check the new starting time too}, on its market data feeds:
+Most exchanges publish order imbalance that exists among orders on the opening or closing books, along with the indicative opening or closing price and volume. For instance, Nasdaq publishes the following information\footnote{Source: Nasdaq Trader website} between 9:28~a.m. EST and 9:30~a.m. EST,  every 1~second, on its market data feeds:
         \begin{itemize}
         \item  Current Reference Price: price within the Nasdaq Inside at which paired shares are maximized, the imbalance is minimized and the distance from the bid-ask midpoint is minimized, in that order.
         \item  Near Indicative Clearing Price: The crossing price at which orders in the Nasdaq opening / closing book and continuous book would clear against each other. 
@@ -424,15 +424,13 @@ The mechanics of the closing auction are in most part similar to the ones descri
    \centering
    \caption{Nasdaq Closing Cross\label{tab:NASDAQclose}}
    \begin{tabular}{ll} 
-	3:50 p.m. EST & Dissemination of imbalance information begins  \\ \hline
-	3:55 p.m. EST &  \\ \hline
-	3:58 p.m. EST & Freeze period - MOC and LOC orders cannot be canceled  \\ 
-	 & LOC and OI orders offsetting the imbalance are still accepted   \\ \hline	
+	3:55 p.m. EST & Dissemination of imbalance information begins  \\ \hline
+	3:55 p.m. EST & Cutoff for entry/amend/cancel of MOC orders\\ \hline
+	3:58 p.m. EST & Freeze period - LOC orders cannot be added/canceled  \\ 
+	 & OI orders offsetting the imbalance are still accepted   \\ \hline	
 	4:00 p.m. EST & The Closing Cross occurs		
    \end{tabular}
 \end{table}	
-
-\todo{amend times/cutoffs with new ones as of Oct 26th}
 
 \begin{table}[!ht]
    \centering
@@ -451,6 +449,21 @@ The mechanics of the closing auction are in most part similar to the ones descri
 \todo{Check if NYSE allows certain imbalance canceling orders after 3:45}
 
 \todo{Add timing table for HKSE or Euronext as a non-US example}
+
+\begin{table}[!ht]
+   \centering
+   \caption{LSE Session Times\label{tab:LSEclose}}
+   \begin{tabular}{ll} 
+	7:00-7:50 a.m. GMT & Pre-Trading  \\ \hline
+	7:50-8:00 a.m. GMT & Opening Auction Call\\ \hline
+	8:00-12:00 p.m. GMT & Regular Trading \\ \hline
+	12:00-12:02 p.m. GMT & Periodic Call Auction \\ \hline
+	12:02-4:30 p.m. GMT & Regular Trading \\ \hline
+	4:30-4:35 p.m. GMT & Closing Auction Call \\ \hline
+	4:35-4:40 p.m. GMT & Closing Price Crossing \\ \hline	
+	4:40-5:15 p.m. GMT & Post-Close Trading
+   \end{tabular}
+\end{table}	
 
 One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary e-Quote orders (known as ``d-Quote'' orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since their is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. \\
 
@@ -579,10 +592,10 @@ It is worth noting that a special day calendar usage needs not be limited to the
 \item \textbf{Futures-specific Reference Data:} Futures contracts present particular characteristics requiring additional reference data to be collected. One of the core differences of futures contracts compared to regular stocks is the fact that instruments have an expiry date, after which they cease to exist. For the purpose of backtesting strategies, it is necessary to know which contract was live at any point in time through the use of an expiry calendar, but also which contract was the most liquid (for instance, equity index futures tend to be the most liquid for the first contract available (also known as front month) while energy futures such as oil tend to be more liquid for the second contract. While this may appear to be trivial, when building a trading strategy and modeling price series, it is particularly important to know which contract carries the most significant price formation characteristics and what is the true liquidity available in order to estimate transaction costs to properly estimate the market impact. 
 
 
-The task of implementing a futures expiry calendar is further complicated by the fact there is no real standardized frequency that applies across markets. For instance, European equity index futures tend to expire monthly, while U.S. index futures expire quarterly. Some contracts even follow an irregular cycle through the course of the year as it is the case for grain futures (e.g. wheat) that were originally created for hedging purposes and as a result have expiry months that follow the crop cycle. \todo{GIVE AN EXAMPLE OF WHEAT FULL YEAR CYCLE}
+The task of implementing a futures expiry calendar is further complicated by the fact there is no real standardized frequency that applies across markets. For instance, European equity index futures tend to expire monthly, while U.S. index futures expire quarterly. Some contracts even follow an irregular cycle through the course of the year as it is the case for grain futures (e.g. wheat) that were originally created for hedging purposes and as a result have expiry months that follow the crop cycle\footnote{U.S. Wheat Futures expire in March, May, July, September and December}.
 
 
-The fact futures contracts expire on a regular basis has further implications in terms of liquidity. As investors holding these contracts, they want to maintain their exposure for longer than the lifespan of the contract, they need to roll over their positions onto the next contract. There is often a noticeable difference in the liquidity of consecutive contracts (for instance, the front contract of the S\&P500 (e.g. ESM8) trades roughly 2 million contracts per day--- \todo{NEED TO CHECK ACTUAL ADV}--- while the next month contract (ESH8) only trades 100,000 contracts per day--- \todo{NEED TO CHECK THE ACTUAL ADV} --). However, this liquidity relationship will invert in the few days leading to the expiry of the front contract as most investors roll their positions, and the most liquid contract will become the back month contract (\todo{INSERT GRAPH for contracts Rolling}). As a result, when computing rolling-window metrics (such as average daily volume for instance), it is necessary to account for potential roll dates that might have happen during the span of the time series. In the example above, a simple 60-day average daily volume on ESH8 taken in early April 2018 would capture a large number of days with very low volume (January-March) owing to the fact the most liquid contract at the time was the ESM8 contract, and not accurately represent the volume activity of the S\&P500 futures contract. A more appropriate average volume metric to be used as a forward looking value for execution purposes would blend the volume time series of ESH8 prior to the roll date, and ESM8 after the roll date\footnote{It is worth noting that different contracts 'roll' at different speed. While for monthly expiry contracts it is possible to see most of the open interest switch from the front month contract to the back month on the day prior to the expiry, for quarterly contracts it is not uncommon to see the roll happen over the course of a week or more, and the front month liquidity vanish several days ahead of the actual expiry. Careful modeling is recommended on a case by case basis.}. Additionally, in order to efficiently merge futures positions with other assets in an investment strategy, one needs to store reference data relative to the quotation of these contracts: contract size (translation between the quotation points and the actual monetary value), currency, etc. 
+The fact futures contracts expire on a regular basis has further implications in terms of liquidity. As investors holding these contracts, they want to maintain their exposure for longer than the lifespan of the contract, they need to roll over their positions onto the next contract. There is often a noticeable difference in the liquidity of consecutive contracts (for instance, the front contract of the S\&P500 (e.g. ESH8) trades roughly 1.5 million contracts per day in the weeks preceding expiry while the next month contract (ESM8) only trades about 30,000 contracts per day). However, this liquidity relationship will invert in the few days leading to the expiry of the front contract as most investors roll their positions, and the most liquid contract will become the back month contract (\todo{INSERT GRAPH for contracts Rolling}). As a result, when computing rolling-window metrics (such as average daily volume for instance), it is necessary to account for potential roll dates that might have happen during the span of the time series. In the example above, a simple 60-day average daily volume on ESM8 taken in early April 2018 would capture a large number of days with very low volume (January-March) owing to the fact the most liquid contract at the time was the ESH8 contract, and not accurately represent the volume activity of the S\&P500 futures contract. A more appropriate average volume metric to be used as a forward looking value for execution purposes would blend the volume time series of ESH8 prior to the roll date, and ESM8 after the roll date\footnote{It is worth noting that different contracts 'roll' at different speed. While for monthly expiry contracts it is possible to see most of the open interest switch from the front month contract to the back month on the day prior to the expiry, for quarterly contracts it is not uncommon to see the roll happen over the course of a week or more, and the front month liquidity vanish several days ahead of the actual expiry. Careful modeling is recommended on a case by case basis.}. Additionally, in order to efficiently merge futures positions with other assets in an investment strategy, one needs to store reference data relative to the quotation of these contracts: contract size (translation between the quotation points and the actual monetary value), currency, etc. 
 
 
 Finally, futures markets are characterized by the existence of different market phases during the day, with significantly different liquidity characteristics. For instance, equity index futures are much more liquid during the hours when the corresponding equities markets are open. However, one can trade during the overnight session if they need to. The overnight session being much less liquid, the expected execution cost tends to be higher, and as such, the various market data metrics (volume profile, average spread, average bid-ask sizes, ...) should be computed separately for each market phase, which requires maintaining a table of the start and end times of each session for each contracts. 
@@ -681,9 +694,9 @@ The second group of daily data represents granular intraday microstructure activ
 
 Finally, the last group of daily data can be derived from the previous two groups through aggregation but is usually stored pre-computed in order to save time during the research phase (e.g. X-day trailing data), or to be used as normalizing values (e.g. size as a percentage of ADV, spread in relation to long-term average, \dots). Some common examples would be:
         \begin{itemize}
-        \item X-day ADV / Avg auction Volume
-        \item X-day volatility
-        \item Beta w.r.t. index or sector (plain beta, or up-days/down-days beta)
+        \item X-day Average Daily Volume (ADV) / Average auction volume
+        \item X-day volatility (Close-to-close, Open-to-close, etc.)
+        \item Beta w.r.t. index or sector (plain beta, or asymmetric up-days/down-days beta)
         \item Correlation matrix
         \end{itemize}
 As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.)
@@ -716,11 +729,7 @@ Capturing raw market data, whether to build a research database or process it in
 \noindent\textbf{Level II data: Market Depth:}  Level II market data contains the same information as Level I, but with the addition of quote depth data. The quote feed displays all lit limit order book updates (price changes, addition or removal of shares quoted) at any level in the book, and for all of the lit venues in fragmented markets. Given the volume of data generated and the decreasing actionable value of quotes updates as their distance to top of book increases, some users limit themselves to the top 5 or 10 levels of the order book  when they collect or process the data.\\
 
 
-\noindent\textbf{Level III data: Full Order View} 
-
---> mention that for generalisation purposes we take the example of US Level 3 data, in particular w.r.t. Table 8.1  \\
-
-The dataset consist of activities during the entire trading session, including early and late hours from 6:00~A.M. to 8:00~P.M. EST in a trading day. It provides intraday depth book activity for 12000 tickers from major national exchanges: Nasdaq, Direct Edge, NYSE, ARCA and BATS (exact number of exchanges depends on the historical period). All messages are consolidated into one file ordered by timestamp. This data allows to build a full national depth book at any moment intraday. The description of the level III data is given in Table~\ref{tab:level3data}. \\
+\noindent\textbf{Level III data: Full Order View:} Level III market data - also known as message data - provides the most granular view of the activity in the limit order book. Each order arriving is attributed a unique ID which allows for its tracking over time, and precisely know when it is executed, canceled or amended. Similar to Level II, the dataset contains intraday depth of book activity for all securities on an exchange. Once all messages from different exchanges are consolidated into one single dataset ordered by timestamp, it is possible to build a full national depth book at any moment intraday. For illustration purposes, we take the example of U.S. Level III data and provide a short description below and in Table~\ref{tab:level3data}. \\
 	\begin{table}[!ht]
 	\centering
 	\caption{Level III data \label{tab:level3data}}
@@ -746,7 +755,7 @@ The dataset consist of activities during the entire trading session, including e
 	\end{table}
 	
 
-\noindent\textbf{Special types of orders:} While the display and issuance of new ID to the modified order varies from exchange to exchange, we provide a brief description of these orders below:
+While the display and issuance of new ID to the modified order varies from exchange to exchange, a few special types of orders are worth mentioning:
         \begin{enumerate}[1.]
         \item Order subject to price sliding: the execution price could be one cent worse than the display price at NASDAQ; it is ranked at the locking price as a hidden order, and displayed at the price one minimum price variation (normally 1 cent) inferior to the locking price. New order ID will be used if the order is replaced as a display order. At other exchanges the old order ID will be used.
         \item Pegged order: Based on NBBO, not routable, new timestamp upon re-pricing, display rules vary over exchanges.
@@ -757,16 +766,13 @@ The dataset consist of activities during the entire trading session, including e
         \end{enumerate}
 
 
-Some key measures of the LOB are: relative position of an order from the top position of the side (buy or sell), the depth which is the total number of shares at a given price and the depth profile of the book reflects the depth of both prices. Large market orders can shift the bid and ask prices. If the limit price of a new order crosses the best price on the opposite side of the book, it is executed immediately and these are termed as crossing or marketable limit orders. These are used at times to explore the existence of hidden orders.
-
-
-The limit order book data provides a rich source of information to better understand the market microstructure. The information is also useful for developing trading strategies. Some key issues that may be explored are:
+The richness of the dataset allows sophisticated players such as market makers to know not only the depth of book at a given price and the depth profile of the book on both sides, but more importantly the relative position of an order from the top position of the side (buy or sell).Among the most common granular microstructure behaviors studied with Level III data, we can mention:
         \begin{itemize}
         \item The pattern of inter-arrival times of various events.
         \item Arrival and cancellation rates as a function of distance from nearest touch price.
         \item Arrival and cancellation rates as a function of other available information, such as in the queue on either side of the book.
         \end{itemize}
-The key issues from the trading point of view are:
+Once modeled, these behaviors can, in turn, be employed to design more sophisticated strategies by focusing on trading related questions:
         \begin{itemize}
         \item What is the impact of market order on the limit order book?
         \item What are the chances for a limit order to move up the queue from a given entry position?
@@ -774,25 +780,7 @@ The key issues from the trading point of view are:
         \item What is the direction of the price movement in short duration?
         \end{itemize}
 
-We try to provide methodologies to answer some of these questions in later chapters.
-
-
-\todo{An overall summary of this section would be helpful}
-\todo{Comment again on the use of binned data.}
-
-
-
-\section{The Dynamics of Trading: Market Micro-structure}
-
-Market structure constraints imposed on execution:
-        \begin{itemize}
-        \item tick sizes
-        \item Short sell rules
-        \item Long queue names
-        \item 10b-18 rule in US equity
-        \item Pro-rata markets
-        \end{itemize}
-
+As illustrated by the diversity and granularity of information available to traders, markets mechanics have grown ever more complex over time, and a great deal of peculiarities (in particular at the reference data level) need to be accounted for in order to design robust and performing strategies. The proverbial devil is in the details when in comes to quantitative trading but while it might be tempting to go straight to the most granular source of data, in practice - with the exception of truly high frequency strategies - most practitioners build their algorithmic trading strategies relying essentially on binned data. This simplifies the data collection and handling processes and also greatly reduces the dimension of the datasets so one can focus more on modeling rather than data wrangling. Most of the models and techniques described in subsequent chapters a suited to daily or binned data.
 
 
 \section{Execution and its components}
