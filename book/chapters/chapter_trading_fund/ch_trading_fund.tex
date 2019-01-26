@@ -113,7 +113,7 @@ This space is still very active with new venues popping up on a regular basis wi
 \noindent\textbf{Auctions:} Primary exchanges (exchanges on which a particular instrument is listed) begin and end the day with a (primary) auction procedure that leverages special order types to accumulate supply and demand and then run an algorithm that determines the price that would pair off the most volume. The Closing Auction is of particular importance since many funds set their Net Asset Value (NAV) using the official closing price. This generally leads traders to trade as nearly to the close as possible to optimize the dual objective of getting the best price but also not deviating from the close price. The explosive growth of ETFs (Exchange traded Funds) and other passive funds has exacerbated this trend in recent years and at the time of writing about 8\% of the total day U.S. volume in index names trades at the close. Recent months have brought a lot of movement in this area with brokers and SDPs trying to provide unique ways to expose internal liquidity marked for the closing auction. \\
  
  
-\noindent\textbf{Beyond the US:} Is this situation unique to the US? Yes and no. European and Asian exchanges have operated as monopolies for a lot longer than their US counterparts and the evolution of ATS/Dark Pools and other MTFs (Multilateral Trading Facilities) have followed suit but in a more subdued manner. The trading in these markets has always been smaller and concentrated and there is not enough liquidity to support as many different venues. So often new venues pop up but are often quickly absorbed by a competitor when they fail to move a significant portion of the traded volume. Additional complexity arises in regulatory environments in these various countries limiting cross-border trading. Today off exchange volume in EU is still limited to around \todo{Get a recent stat for of EMEA off exchange volume} \%  of total volume in the region and  and even smaller \todo{ get a recent stat for of APAC off exchange volume}\% in Asia. \\
+\noindent\textbf{Beyond the US:} Is this situation unique to the US? Yes and no. European and Asian exchanges have operated as monopolies for a lot longer than their US counterparts and the evolution of ATS/Dark Pools and other MTFs (Multilateral Trading Facilities) have followed suit but in a more subdued manner. The trading in these markets has always been smaller and concentrated and there is not enough liquidity to support as many different venues. So often new venues pop up but are quickly absorbed by a competitor when they fail to move a significant portion of the traded volume. Additional complexity arises with regulatory environments in these various countries limiting cross-border trading. As of December 2018, European fragmentation is still quite lower than in the US, with 59\% traded on primary exchange, 22\% on lit MTF (there are only 6, and 4 of them trade roughly 98\% of the volume), 6.5\% on dark MTF (10 different ones), and 6\% traded in systematic internalizers. In APAC, with the exception of Australia, Hong Kong and Japan, most countries only have one primary exchange where all transactions take place. In Japan in particular, the historical Tokyo Stock Exchange still garners over 85\% of the total volume traded. \\
 
 
 \noindent\textbf{Conclusions:} Modern market structure may appear to be a jumbled mess. It is. Fully understanding the implications of these different methods of trading tied by regulation, competition, behavioral idiosyncrasies ( often due to participants lack of understanding and influenced by perception and preconceived notions)  is a daunting if not impossible task. It is however an environment that all practitioners have to navigate and make the best of. Creating mathematical models that capture all these subtle differences is a futile effort and the quantitative modeler in Algorithmic Trading will be forced into coarse abstractions and generalizations. These models will then have to be most likely enhanced by (often questionable) heuristics to account for the residual complexity. 
@@ -437,7 +437,8 @@ The mechanics of the closing auction are in most part similar to the ones descri
    \caption{NYSE Closing Cross\label{tab:NYSEclose}}
    \begin{tabular}{ll} 
 	3:45 p.m. EST & Cutoff for MOC/LOC order entry and modifications  \\ 
-	 & Dissemination of imbalance information begins  \\ \hline
+     & Dissemination of imbalance information begins \\
+	 & Closing Offset orders can be entered until 4:00 p.m.  \\ \hline	 
 	3:55 p.m. EST &  Dissemination of d-quote imbalance information\\ \hline
 	3:58 p.m. EST & Cutoff for MOC/LOC cancellation for legitimate error \\ \hline
 	3:59:50 p.m. EST & Cutoff for d-Quote order entry and modification \\ \hline
@@ -446,23 +447,24 @@ The mechanics of the closing auction are in most part similar to the ones descri
    \end{tabular}
 \end{table}	
 
-\todo{Check if NYSE allows certain imbalance canceling orders after 3:45}
-
-\todo{Add timing table for HKSE or Euronext as a non-US example}
 
 \begin{table}[!ht]
    \centering
-   \caption{LSE Session Times\label{tab:LSEclose}}
+   \caption{London Stock Exchange Sessions Times\label{tab:LSEclose}}
    \begin{tabular}{ll} 
 	7:00-7:50 a.m. GMT & Pre-Trading  \\ \hline
-	7:50-8:00 a.m. GMT & Opening Auction Call\\ \hline
-	8:00-12:00 p.m. GMT & Regular Trading \\ \hline
-	12:00-12:02 p.m. GMT & Periodic Call Auction \\ \hline
-	12:02-4:30 p.m. GMT & Regular Trading \\ \hline
-	4:30-4:35 p.m. GMT & Closing Auction Call \\ \hline
-	4:35-4:40 p.m. GMT & Closing Price Crossing \\ \hline	
+	7:50-8:00* a.m. GMT & Opening Auction Call\\ \hline
+	*8:00-12:00 p.m. GMT & Regular Trading \\ \hline
+	12:00-12:02* p.m. GMT & Periodic Call Auction \\ \hline
+	*12:02-4:30 p.m. GMT & Regular Trading \\ \hline
+	4:30-4:35* p.m. GMT & Closing Auction Call \\ \hline
+	*4:35-4:40 p.m. GMT & Closing Price Crossing \\ \hline	
 	4:40-5:15 p.m. GMT & Post-Close Trading
    \end{tabular}
+\begin{minipage}[t]{1\textwidth}
+\small{*Each auction end time is subject to a random 30 second uncross period.\\}
+\small{An additional intraday auction call takes place every 3rd Friday of each month for stocks underlying FTSE 100 index options, and the 3rd Friday of every quarter for stocks underlying FTSE 100/250 Index Futures to determine the EDSP (Exchange Delivery Settlement Price). The settlement price is determined as the index value derived from the individual constituents intraday auction taking place between 10 a.m. and 10:15 a.m. and during which the electronic continuous trading is suspended. Using a call auction ensures the settlement price for these contracts is more representative of a fair market price.}
+\end{minipage}   
 \end{table}	
 
 One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary e-Quote orders (known as ``d-Quote'' orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since their is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. \\
@@ -549,7 +551,7 @@ Maintaining a table of the quotation currency per instrument is also necessary i
 \item Exchange sessions hours: these seemingly trivial data points can get quite complex on a global scale. What are the different available sessions (Pre-Market session, Continuous core session, After-Hour session, etc.)? What are the auction times as well as their respective cutoff times for order submission?Is there a lunch break restricting intraday trading? And if so, are there auctions before and after the lunch break? \dots Futures markets sessions can also be quite complex with multiple phases, breaks, as well as official settlement times that might differ from the closing time and have an effect on liquidity.
 
 
-In Indonesia, for instance, markets have different trading hours on Fridays. Monday through Thursday the Indonesia Stock Exchange (IDX) is open from 9:00~a.m. to 12:00~p.m., and then, from 1:30~p.m. to 4:00~p.m.. On Fridays, however, the lunch break is one hour longer and stretches from 11:30~a.m. to 2:00~p.m.. This weekly (day) seasonality effect is particularly important to consider when building volume profiles as described in the next Chapter~\todo{add dynamic pointer to the right chapter}.
+In Indonesia, for instance, markets have different trading hours on Fridays. Monday through Thursday the Indonesia Stock Exchange (IDX) is open from 9:00~a.m. to 12:00~p.m., and then, from 1:30~p.m. to 4:00~p.m.. On Fridays, however, the lunch break is one hour longer and stretches from 11:30~a.m. to 2:00~p.m.. This weekly (day) seasonality effect is particularly important to consider when building volume profiles as described in Chapter~\ref{chap:ch_trade_data_models}.
 
 
 Along with local times of operation, it is necessary to consider eventual Daylight Saving Time (DST) adjustments that might effect the relative trading hours of different markets (some countries do not have DST adjustment at all, while for countries that do have one, the dates at which it applies are not always coordinated). Usually, DST starts about two weeks prior to its start in Europe, bringing the time difference between New York and London to 4~hours instead of 5~hours. This results in the volume spike in European equities associated to the U.S. market open being one hour earlier, requiring adjustment of volume profiles used for trading execution.
@@ -827,7 +829,7 @@ The decisions available to the scheduler aim at optimally implementing the end u
 
 The scheduler also plays an important role in  implementing liquidity sourcing preferences, such as how much to participate in volatile periods of price discovery when spreads are wide (e.g. in the first few minutes after the market open), or allocating volume between lit and dark venues (where one trades certainty of execution for lower price impact).
 
-Finally, the scheduling layer is also responsible for appropriately handling microstructure features seasonalities. There are well documented intraday volume patterns that can be leveraged to forecast liquidity, volatility and spreads (\todo{TODO: point to chapter on volume profiles}), both on regular days and special days like index rebalances or option expiries. Seasonality can also be witnessed at larger scales: Mondays tend to have more volume, but also more volatility, Asian markets tend to have early morning price action driven by the outcome of the previous market day in the US, etc. All of these can be leveraged by the scheduler to allocate volume more efficiently over time (front load the execution if the market is expected to move unfavorably, or back load it in case of expected favorable move) and across liquidity sources (lit or dark markets). 
+Finally, the scheduling layer is also responsible for appropriately handling microstructure features seasonalities. There are well documented intraday volume patterns that can be leveraged to forecast liquidity, volatility and spreads (see Chapter~\ref{chap:ch_trade_data_models}), both on regular days and special days like index rebalances or option expiries. Seasonality can also be witnessed at larger scales: Mondays tend to have more volume, but also more volatility, Asian markets tend to have early morning price action driven by the outcome of the previous market day in the US, etc. All of these can be leveraged by the scheduler to allocate volume more efficiently over time (front load the execution if the market is expected to move unfavorably, or back load it in case of expected favorable move) and across liquidity sources (lit or dark markets). 
 
 It is worth noting that when decomposing execution slippage, the largest contribution can generally be attributed to the scheduling layer, and can range from a few to double digits basis points. Consequently scheduling remains an area of active research for both academia and practitioners.
 
