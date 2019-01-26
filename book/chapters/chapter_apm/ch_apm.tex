@@ -715,152 +715,152 @@ There are some practical considerations that must be taken into account while im
 
 
 
-\section{Supplements and Problems} 
-
-\begin{enumerate}
-
-\item[1.] Using the historical log returns of the following tickers: CME, GS, ICE, LM, MS, for the year 2014 (Exercise 7.7.1.csv), estimate their means $\mu_i$ and covariance matrix $\Sigma$; let $R$ be the median of the $\mu_i$'s. 
-	\begin{enumerate}[(a)]
-	\item Test if the returns series are random via the autocorrelation function.
-	\item Solve the Markowitz's minimum variance objective to construct a portfolio with the above stocks, that has expected return at least $R$. The weight $\omega_i$ should sum to 1. Assume short selling is possible.
-	\item Generate a random value uniformly in the interval $[0.95\mu_i,1.05\mu_i]$, for each stock $i$. Resolve Markowitz's objective with these mean returns, instead of $\mu_i$ as in (b). Compare the results in (b) and (c).
-	\item Repeat three more times and average the five portfolios found in (a), (b) and (c). Compare this portfolio with the one found in (a).
-	\item Repeat (a), (b) and (c) under no short selling and compare the results obtained with short selling.
-	\item Use the LASSO method to construct the portfolio and compare it with the result in (e).
-	\end{enumerate}
-	
-\item[2.] Suppose that it is impractical to construct an efficient portfolio using all assets. One alternative is to find a portfolio, made up of a given set of $n$ stocks, that tracks the efficient portfolio closely---in the sense of minimizing the variance of the difference in returns.
-
-
-Specifically, suppose that the efficient portfolio has (random) rate of return $r_M$. Suppose that there are $N$ assets with (random) rates of return $r_1,r_2,\ldots,r_n$. We wish to find the portfolio whose rate of return is $r=\alpha_1 r_1+ \alpha_2 r_2+ \cdots+ \alpha_n r_n$ (with $\sum_{i=1}^n \alpha_i=1$) by minimizing $\Var(r - r_M)$.
-	\begin{enumerate}[(a)]
-	\item Find a set of equations for the $\alpha_i$'s.
-	\item Another approach is to minimize the variance of the tracking error subject to achieving a given mean return. Find the equation for the $\alpha_i$'s that are tracking efficient.
-	\item Instead of minimizing $\Var(r-r_M)$, obtain $\alpha$'s that result from minimizing mean-squares of the difference ($r-r_M$).
-	\end{enumerate}
-
-
-
-\item[3.] The file \path{m_logret_10stocks.txt} contains the monthly returns of ten stocks from January 1994 to December 2006. The ten stocks include Apple Computer, Adobe Systems, Automatic Data Processing, Advanced Micro Devices, Dell, Gateway, Hewlett-Packard Company, International Business Machines corp., and Oracle Corp.. Consider portfolios that consists of these ten stocks.
-	\begin{enumerate}[(a)]
-	\item Compute the sample mean $\hat{\mu}$ and the sample covariance matrix $\hat{\Sigma}$ of the log returns. 
-	\item Assume that the monthly target return is 0.3\% and that short selling is allowed. Estimate the optimal portfolio weights by replacing $(\mathbf{\mu},\mathbf{\Sigma})$ in Markowitz's Theory by $(\hat{\mathbf{\mu}}, \hat{\mathbf{\Sigma}})$. 
-	\item Do the same as in (b) for Michaud's resamples weights described in the text using $B=500$ bootstrap samples.
-	\item Plot the estimated frontier (by varying $\mu_*$ over a grid that uses $(\hat{\mathbf{\mu}},\hat{\mathbf{\Sigma}})$ to replace $(\mathbf{\mu},\mathbf{\Sigma})$ in Markowitz's efficient frontier.
-	\item Plot Michaud's resampled efficient frontier using $B=500$ bootstrap samples. Compare the plot in (d). 
-	\end{enumerate}
-
-
-
-
-\item[4.] The file {\tt FF\_Data\_ForGRStest.csv} contains historical monthly returns for one set of 6 portfolios and another set of 25 portfolios, formed based on the size and book-to-market ratio (BM). The data is obtained from French's data library. The portfolios are formed as the intersection of size (or market equity, ME) based portfolios and book equity to market equity ratio (BE/ME) based portfolios ($2\times 3$ forming the first set of 6 portfolios and $5\times 5$ forming the second set of 25 portfolios). These portfolios are discussed in their 1993 paper by Fama and French.
-
-In this exercise we will only work with the first set of 6 portfolios, which are contained in the columns named beginning with ``PF6'', with the rest of the column name following French's naming convention about the size and BM of the corresponding portfolios -- SML contains small size + low BM, SM2 contains small size + medium BM, SMH contains small size + high BM, BIGL contains big size + low BM, etc.
-
-Finally, the last 4 columns of the data set contain the Fama-French factors themselves along with the risk-free rate: MktMinusRF contains the excess return of the market over the risk-free rate, SMB contains the small-minus-big size factor, HML contains the high-minus-low BM factor and RF contains the risk-free rate.
-
-	\begin{enumerate}
-	\item Using the entire sample, regress the excess returns (over the risk-free rate) of each of the 6 portfolios on the excess market return, and perform tests with a size of 5\% that the intercept is 0. Report the point estimates, $t$-statistics, and whether or not you reject the CAPM. Perform regression diagnostics to check your specification.
-	
-	\item For each of the 6 portfolios, perform the same test over each of the two equi-partitioned subsamples and report the point estimates, $t$-statistics, and whether or not you reject the CAPM in each subperiod. Also include the same diagnostics as above.
-	
-	\item Repeat (a) and (b) by regressing the excess portfolio returns on all three Fama-French factors (excess market return, SMB factor and HML factor).
-	
-	\item Jointly test that the intercepts for all 6 portfolios are zeros using the $F$-test statistic or Hotelling's $T^2$ for the whole sample and for each subsample when regressing on all three Fama-French factors.
-	
-	\item Are the 6 portfolio excess returns (over the risk-free rate) series cointegrated? Use Johansen's test to identify the number of cointegrating relationships.
-	\end{enumerate}
-
-
-\item[5.] The file \path{FF_Data_ForGRStest.csv} contains returns on 25 size sorted portfolios along with the risk free rate, excess market return along with two Fama-French factors. The monthly data spans from 1926 to 2012.
-	\begin{enumerate}[(a)]
-	\item Fit CAPM to the 25 portfolios. Give point estimates and 95\% confidence intervals of $\alpha$, $\beta$, the Sharpe index, and the Treynor index. (Hint: Use the delta method for the Sharpe and Treynor indices.)
-	\item Test for each portfolio the null hypothesis $\alpha=0$.
-	\item Use the multivariate regression model to test for the 25 portfolios the null hypothesis $\alpha=0$.
-	\item Perform a factor analysis on the excess returns of the 25 portfolios. Show the factor loadings and the rotated factor loadings. Explain your choice of the number of factors.
-	\item Consider the model
-		\[
-		r_t^e= \beta_1 \mathbf{1}_{t<t_0} r_M^e + \beta_2 \mathbf{1}_{t\geq t_0} + \epsilon_t
-		\]
-	in which $r_t^e=r_t-r_f$ and $r_M^e=r_M-r_f$ are the excess returns of the portfolio and market index. The model suggests that the $\beta$ in the CAPM might not be constant (i.e. $\beta_1\neq\beta_2$. Taking February 2001 as the month $t_0$, test for each portfolio the null hypothesis that $\beta_1=\beta_2$.
-	\item Estimate $t_0$ in (e) by the least squares criterion that minimizes the residual sum of the squares over $(\beta_1,\beta_2,t_0)$.
-	\item Fit the Fama-French model and repeat (a)--(c). 
-	\end{enumerate}
-
-
-
-
-\item[6.] Portfolio Rebalancing: Consider the 10 stocks in file from Exercise 3: Divide the duration of the data into four time intervals.
-
-    \begin{enumerate}[(a)]
-    \item At the end of each interval, compute the optimal portfolio weights using the risk-aversion
-formulation; choose $2 \leq \lambda \leq 4$ (evaluate at $\lambda = 2, 3 \text{ and } 4$). Comment on how the
-portfolio weights have changed and why.
-    \item For each interval, construct factor models; sort the stocks based on the first factor. Follow 130/30 strategy and evaluate the allocation procedure.
-    \end{enumerate}
-    
-    
-
-\item[7.] The file Exchange rates.csv contains exchange rates between US\$ and 25 major currencies; the daily data spans from Jan 3, 2000 to April 10, 2012. Consider the data from Jan 3, 2002 for the following currencies: EUR, GBP, DKK, JPY and CNY. Compute $r_t = \ln{p_t} - \ln{p_{t-1}}$, returns for each series. \\
-
-\indent\textbf{A. }\begin{minipage}[t]{0.8\linewidth}
-	\begin{enumerate}[(a)]
-	\item Estimate the mean vector and the covariance matrix of the returns.
-	\item Construct a portfolio with Markowitz's minimum variance objective with expected returns at least R, the median of the elements in the mean vector. The weights must be positive and should sum to 1.
-	\item Repeat (a) and (b) for each year and comment on the variation in the composition of the portfolios. \\
-	\end{enumerate}
-	\end{minipage}
-
-
-\item[8.] Consider the exchange rate data in the file \path{Forex1.csv} for 24 currencies; consider the returns on these currencies along with the market return and the risk free rate. The daily data spans from 3/1/2005 to 10/4/2012. We will use the data from 2005 to 2010 to construct a portfolio and the data from 2011 to 2012 to evaluate the portfolio.
-	\begin{enumerate}[(a)]
-	\item Compute the mean $\hat{\mu}$ and sample convariance matrix, $\hat{\Sigma}$ of the log returns.
-	\item Compute the shrinkage estimate $\hat{\Sigma}^*$ of the covariance matrix, under one factor model.
-	\item Estimate the optimal weights, both with and without short selling under the regular estimate of $\Sigma$ and as well as under the shrinkage estimate. Also consider equal weighted portfolio and the portfolio weighted by the inverse of variances. Compute the optimal weights for all combinations and discuss them.
-	\item Estimate the optimal weights using LASSO both for short and no-short positions.
-	\item Evaluate the different weighting schemes in terms of their performance during the validation period, 2011--2012. Summarize your findings and offer some intuitive explanations.
-	\end{enumerate}
-    
-    
-\item[9.] Consider the data in Problem 8.
-	\begin{enumerate}[(a)]
-	\item Perform a PCA on the 24 exchange returns; use the first two principal components on factors in a two-factor model for $F$, estimate $F$.
-	\item Using the estimated $\hat{F}$ in (a) as the shrinkage target, compute a new shrinkage coefficient and the new shrinkage estimate of $\Sigma$. 
-	\item Compare the efficient frontier corresponding to this estimate with those obtained in (1.c). 
-	\item Group the currencies in terms of their performance during 2005--2010 into four quantiles. Construct a portfolio based on the top performing quantile and another portfolio based on the bottom quantile; evaluate their performance using the data for 2011--2012.
-	\end{enumerate}
-
-
-
-
-\item[10.] Consider again the data in the file \path{FF_Data_ForGRStest.csv}. Consider the returns on 25 size sorted portfolios along with the risk free rate and Fama-French factors. The monthly data spans from 1926 to 2012. We will use the data from 1926 to 2000 to construct a portfolio and the data from 2001 to 2012 to evaluate the portfolio. 
-	\begin{enumerate}[(a)]
-	\item Compute the mean $\hat{\mu}$ and sample convariance matrix, $\hat{\Sigma}$ of the log returns.
-	\item Compute the shrinkage estimate $\hat{\Sigma}^*$ of the covariance matrix, under one factor model.
-	\item Estimate the optimal portfolio weights, both with and without short selling under the regular estimate of $\Sigma$ and as well as under the shrinkage estimate. Also consider equal weighted portfolio and the portfolio weighted by the inverse of variances. Compute the optimal weights for all combinations and discuss them.
-	\item Evaluate the different weighting schemes in terms of their performance during the validation period, 2001--2012. Summarize your findings and offer some intuitive explanations. 
-	\end{enumerate}
-
-
-
-
-
-
-
-
-\item[11.] Consider the data in Problem~10.
-	\begin{enumerate}[(a)]
-	\item Perform a PCA on the 25 portfolio returns; use the first two principal components on factors in a two-factor model for $F$, estimate $F$.
-	\item Using the estimated $\hat{F}$ in (a) as the shrinkage target, compute the new shrinkage estimate of $\Sigma$.
-	\item Compare the efficient frontier corresponding to this estimate with those obtained in (10.c)
-	\end{enumerate}
-
-
-
-
-
-
-
-
-
-\end{enumerate} 
+%\section{Supplements and Problems} 
+%
+%\begin{enumerate}
+%
+%\item[1.] Using the historical log returns of the following tickers: CME, GS, ICE, LM, MS, for the year 2014 (Exercise 7.7.1.csv), estimate their means $\mu_i$ and covariance matrix $\Sigma$; let $R$ be the median of the $\mu_i$'s. 
+%	\begin{enumerate}[(a)]
+%	\item Test if the returns series are random via the autocorrelation function.
+%	\item Solve the Markowitz's minimum variance objective to construct a portfolio with the above stocks, that has expected return at least $R$. The weight $\omega_i$ should sum to 1. Assume short selling is possible.
+%	\item Generate a random value uniformly in the interval $[0.95\mu_i,1.05\mu_i]$, for each stock $i$. Resolve Markowitz's objective with these mean returns, instead of $\mu_i$ as in (b). Compare the results in (b) and (c).
+%	\item Repeat three more times and average the five portfolios found in (a), (b) and (c). Compare this portfolio with the one found in (a).
+%	\item Repeat (a), (b) and (c) under no short selling and compare the results obtained with short selling.
+%	\item Use the LASSO method to construct the portfolio and compare it with the result in (e).
+%	\end{enumerate}
+%	
+%\item[2.] Suppose that it is impractical to construct an efficient portfolio using all assets. One alternative is to find a portfolio, made up of a given set of $n$ stocks, that tracks the efficient portfolio closely---in the sense of minimizing the variance of the difference in returns.
+%
+%
+%Specifically, suppose that the efficient portfolio has (random) rate of return $r_M$. Suppose that there are $N$ assets with (random) rates of return $r_1,r_2,\ldots,r_n$. We wish to find the portfolio whose rate of return is $r=\alpha_1 r_1+ \alpha_2 r_2+ \cdots+ \alpha_n r_n$ (with $\sum_{i=1}^n \alpha_i=1$) by minimizing $\Var(r - r_M)$.
+%	\begin{enumerate}[(a)]
+%	\item Find a set of equations for the $\alpha_i$'s.
+%	\item Another approach is to minimize the variance of the tracking error subject to achieving a given mean return. Find the equation for the $\alpha_i$'s that are tracking efficient.
+%	\item Instead of minimizing $\Var(r-r_M)$, obtain $\alpha$'s that result from minimizing mean-squares of the difference ($r-r_M$).
+%	\end{enumerate}
+%
+%
+%
+%\item[3.] The file \path{m_logret_10stocks.txt} contains the monthly returns of ten stocks from January 1994 to December 2006. The ten stocks include Apple Computer, Adobe Systems, Automatic Data Processing, Advanced Micro Devices, Dell, Gateway, Hewlett-Packard Company, International Business Machines corp., and Oracle Corp.. Consider portfolios that consists of these ten stocks.
+%	\begin{enumerate}[(a)]
+%	\item Compute the sample mean $\hat{\mu}$ and the sample covariance matrix $\hat{\Sigma}$ of the log returns. 
+%	\item Assume that the monthly target return is 0.3\% and that short selling is allowed. Estimate the optimal portfolio weights by replacing $(\mathbf{\mu},\mathbf{\Sigma})$ in Markowitz's Theory by $(\hat{\mathbf{\mu}}, \hat{\mathbf{\Sigma}})$. 
+%	\item Do the same as in (b) for Michaud's resamples weights described in the text using $B=500$ bootstrap samples.
+%	\item Plot the estimated frontier (by varying $\mu_*$ over a grid that uses $(\hat{\mathbf{\mu}},\hat{\mathbf{\Sigma}})$ to replace $(\mathbf{\mu},\mathbf{\Sigma})$ in Markowitz's efficient frontier.
+%	\item Plot Michaud's resampled efficient frontier using $B=500$ bootstrap samples. Compare the plot in (d). 
+%	\end{enumerate}
+%
+%
+%
+%
+%\item[4.] The file {\tt FF\_Data\_ForGRStest.csv} contains historical monthly returns for one set of 6 portfolios and another set of 25 portfolios, formed based on the size and book-to-market ratio (BM). The data is obtained from French's data library. The portfolios are formed as the intersection of size (or market equity, ME) based portfolios and book equity to market equity ratio (BE/ME) based portfolios ($2\times 3$ forming the first set of 6 portfolios and $5\times 5$ forming the second set of 25 portfolios). These portfolios are discussed in their 1993 paper by Fama and French.
+%
+%In this exercise we will only work with the first set of 6 portfolios, which are contained in the columns named beginning with ``PF6'', with the rest of the column name following French's naming convention about the size and BM of the corresponding portfolios -- SML contains small size + low BM, SM2 contains small size + medium BM, SMH contains small size + high BM, BIGL contains big size + low BM, etc.
+%
+%Finally, the last 4 columns of the data set contain the Fama-French factors themselves along with the risk-free rate: MktMinusRF contains the excess return of the market over the risk-free rate, SMB contains the small-minus-big size factor, HML contains the high-minus-low BM factor and RF contains the risk-free rate.
+%
+%	\begin{enumerate}
+%	\item Using the entire sample, regress the excess returns (over the risk-free rate) of each of the 6 portfolios on the excess market return, and perform tests with a size of 5\% that the intercept is 0. Report the point estimates, $t$-statistics, and whether or not you reject the CAPM. Perform regression diagnostics to check your specification.
+%	
+%	\item For each of the 6 portfolios, perform the same test over each of the two equi-partitioned subsamples and report the point estimates, $t$-statistics, and whether or not you reject the CAPM in each subperiod. Also include the same diagnostics as above.
+%	
+%	\item Repeat (a) and (b) by regressing the excess portfolio returns on all three Fama-French factors (excess market return, SMB factor and HML factor).
+%	
+%	\item Jointly test that the intercepts for all 6 portfolios are zeros using the $F$-test statistic or Hotelling's $T^2$ for the whole sample and for each subsample when regressing on all three Fama-French factors.
+%	
+%	\item Are the 6 portfolio excess returns (over the risk-free rate) series cointegrated? Use Johansen's test to identify the number of cointegrating relationships.
+%	\end{enumerate}
+%
+%
+%\item[5.] The file \path{FF_Data_ForGRStest.csv} contains returns on 25 size sorted portfolios along with the risk free rate, excess market return along with two Fama-French factors. The monthly data spans from 1926 to 2012.
+%	\begin{enumerate}[(a)]
+%	\item Fit CAPM to the 25 portfolios. Give point estimates and 95\% confidence intervals of $\alpha$, $\beta$, the Sharpe index, and the Treynor index. (Hint: Use the delta method for the Sharpe and Treynor indices.)
+%	\item Test for each portfolio the null hypothesis $\alpha=0$.
+%	\item Use the multivariate regression model to test for the 25 portfolios the null hypothesis $\alpha=0$.
+%	\item Perform a factor analysis on the excess returns of the 25 portfolios. Show the factor loadings and the rotated factor loadings. Explain your choice of the number of factors.
+%	\item Consider the model
+%		\[
+%		r_t^e= \beta_1 \mathbf{1}_{t<t_0} r_M^e + \beta_2 \mathbf{1}_{t\geq t_0} + \epsilon_t
+%		\]
+%	in which $r_t^e=r_t-r_f$ and $r_M^e=r_M-r_f$ are the excess returns of the portfolio and market index. The model suggests that the $\beta$ in the CAPM might not be constant (i.e. $\beta_1\neq\beta_2$. Taking February 2001 as the month $t_0$, test for each portfolio the null hypothesis that $\beta_1=\beta_2$.
+%	\item Estimate $t_0$ in (e) by the least squares criterion that minimizes the residual sum of the squares over $(\beta_1,\beta_2,t_0)$.
+%	\item Fit the Fama-French model and repeat (a)--(c). 
+%	\end{enumerate}
+%
+%
+%
+%
+%\item[6.] Portfolio Rebalancing: Consider the 10 stocks in file from Exercise 3: Divide the duration of the data into four time intervals.
+%
+%    \begin{enumerate}[(a)]
+%    \item At the end of each interval, compute the optimal portfolio weights using the risk-aversion
+%formulation; choose $2 \leq \lambda \leq 4$ (evaluate at $\lambda = 2, 3 \text{ and } 4$). Comment on how the
+%portfolio weights have changed and why.
+%    \item For each interval, construct factor models; sort the stocks based on the first factor. Follow 130/30 strategy and evaluate the allocation procedure.
+%    \end{enumerate}
+%    
+%    
+%
+%\item[7.] The file Exchange rates.csv contains exchange rates between US\$ and 25 major currencies; the daily data spans from Jan 3, 2000 to April 10, 2012. Consider the data from Jan 3, 2002 for the following currencies: EUR, GBP, DKK, JPY and CNY. Compute $r_t = \ln{p_t} - \ln{p_{t-1}}$, returns for each series. \\
+%
+%\indent\textbf{A. }\begin{minipage}[t]{0.8\linewidth}
+%	\begin{enumerate}[(a)]
+%	\item Estimate the mean vector and the covariance matrix of the returns.
+%	\item Construct a portfolio with Markowitz's minimum variance objective with expected returns at least R, the median of the elements in the mean vector. The weights must be positive and should sum to 1.
+%	\item Repeat (a) and (b) for each year and comment on the variation in the composition of the portfolios. \\
+%	\end{enumerate}
+%	\end{minipage}
+%
+%
+%\item[8.] Consider the exchange rate data in the file \path{Forex1.csv} for 24 currencies; consider the returns on these currencies along with the market return and the risk free rate. The daily data spans from 3/1/2005 to 10/4/2012. We will use the data from 2005 to 2010 to construct a portfolio and the data from 2011 to 2012 to evaluate the portfolio.
+%	\begin{enumerate}[(a)]
+%	\item Compute the mean $\hat{\mu}$ and sample convariance matrix, $\hat{\Sigma}$ of the log returns.
+%	\item Compute the shrinkage estimate $\hat{\Sigma}^*$ of the covariance matrix, under one factor model.
+%	\item Estimate the optimal weights, both with and without short selling under the regular estimate of $\Sigma$ and as well as under the shrinkage estimate. Also consider equal weighted portfolio and the portfolio weighted by the inverse of variances. Compute the optimal weights for all combinations and discuss them.
+%	\item Estimate the optimal weights using LASSO both for short and no-short positions.
+%	\item Evaluate the different weighting schemes in terms of their performance during the validation period, 2011--2012. Summarize your findings and offer some intuitive explanations.
+%	\end{enumerate}
+%    
+%    
+%\item[9.] Consider the data in Problem 8.
+%	\begin{enumerate}[(a)]
+%	\item Perform a PCA on the 24 exchange returns; use the first two principal components on factors in a two-factor model for $F$, estimate $F$.
+%	\item Using the estimated $\hat{F}$ in (a) as the shrinkage target, compute a new shrinkage coefficient and the new shrinkage estimate of $\Sigma$. 
+%	\item Compare the efficient frontier corresponding to this estimate with those obtained in (1.c). 
+%	\item Group the currencies in terms of their performance during 2005--2010 into four quantiles. Construct a portfolio based on the top performing quantile and another portfolio based on the bottom quantile; evaluate their performance using the data for 2011--2012.
+%	\end{enumerate}
+%
+%
+%
+%
+%\item[10.] Consider again the data in the file \path{FF_Data_ForGRStest.csv}. Consider the returns on 25 size sorted portfolios along with the risk free rate and Fama-French factors. The monthly data spans from 1926 to 2012. We will use the data from 1926 to 2000 to construct a portfolio and the data from 2001 to 2012 to evaluate the portfolio. 
+%	\begin{enumerate}[(a)]
+%	\item Compute the mean $\hat{\mu}$ and sample convariance matrix, $\hat{\Sigma}$ of the log returns.
+%	\item Compute the shrinkage estimate $\hat{\Sigma}^*$ of the covariance matrix, under one factor model.
+%	\item Estimate the optimal portfolio weights, both with and without short selling under the regular estimate of $\Sigma$ and as well as under the shrinkage estimate. Also consider equal weighted portfolio and the portfolio weighted by the inverse of variances. Compute the optimal weights for all combinations and discuss them.
+%	\item Evaluate the different weighting schemes in terms of their performance during the validation period, 2001--2012. Summarize your findings and offer some intuitive explanations. 
+%	\end{enumerate}
+%
+%
+%
+%
+%
+%
+%
+%
+%\item[11.] Consider the data in Problem~10.
+%	\begin{enumerate}[(a)]
+%	\item Perform a PCA on the 25 portfolio returns; use the first two principal components on factors in a two-factor model for $F$, estimate $F$.
+%	\item Using the estimated $\hat{F}$ in (a) as the shrinkage target, compute the new shrinkage estimate of $\Sigma$.
+%	\item Compare the efficient frontier corresponding to this estimate with those obtained in (10.c)
+%	\end{enumerate}
+%
+%
+%
+%
+%
+%
+%
+%
+%
+%\end{enumerate} 
