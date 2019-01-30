@@ -44,7 +44,6 @@
 % PGF
 % ------------------------
 \usepackage{pgfplots}
-\usepackage{epstopdf}
 \usepgfplotslibrary{fillbetween}
 \usepackage{tikz}
 \usetikzlibrary{shapes.misc,shadows,arrows,decorations.pathmorphing,patterns}
@@ -189,7 +188,7 @@
 \include{frontmatter/preamble} %place custom commands and macros here
 \begin{document}
 \frontmatter
-\title{Algorithmic Trading and Quantitative Strategies \\ \vspace{3cm}  (Version: \today)} %This is a placeholder titlepage, it will not be final.
+\title{Algorithmic Trading and Quantitative Strategies \\[1cm] Exercises} %This is a placeholder titlepage, it will not be final.
 
 \author{\scalebox{1.5}{ Raja Velu\footnote{Department of Finance \hfill \newline \indent \indent Whitman School of Management \hfill \newline \indent \indent Syracuse University}, Maxence Hardy\footnote{Linear Quantitative Research \hfill \newline \indent \indent J.P. Morgan} and Daniel Nehren\footnote{Statistical Modeling \& Development \hfill \newline \indent \indent Barclays}}}
 \date{}
@@ -211,29 +210,24 @@
 \include{chapters/chapter_trading_fund/ch_trading_fund}
 
 \part{Foundations: Basic Models and Empirics}
-\include{chapters/parts/part_one/part_one}
 \include{chapters/chapter_uvts/ch_uvts}
 \include{chapters/chapter_mvts/ch_mvts}
 \include{chapters/chapter_advanced/ch_advanced}
 
 \part{Trading Algorithms}
-\include{chapters/parts/part_two/part_two}
 \include{chapters/chapter_stat_ts/ch_stat_ts}
 \include{chapters/chapter_apm/ch_apm}
 \include{chapters/chapter_news_an/ch_news_an}
 
 \part{Execution Algorithms}
-\include{chapters/parts/part_three/part_three}
 \include{chapters/chapter_trade_data_models/ch_trade_data_models}
 \include{chapters/chapter_mi_models/ch_mi_models}
 \include{chapters/chapter_exec_models/ch_exec_models}
 
 \part{Technology and Regulatory Considerations}
-\include{chapters/parts/part_four/part_four}
 \include{chapters/chapter_tech/ch_tech}
 \include{chapters/chapter_tech_res/ch_tech_res}
 %\include{chapters/chapter_rm_reg/ch_rm_reg}
-%\include{chapters/appendix/appendix}
 \bibliographystyle{plain}
 \bibliography{bibtex}
 \end{document}
