@@ -22,7 +22,7 @@ At this point we are going to start deviating from other treatments of the subje
 
 Once the approach has been defined the outcome will need to be measured to have a view of how well the trader did. The standard benchmark to measure a trading outcome is the ``Implementation Shortfall'' (IS). This the execution price compared to the ``prevailing'' price at the time the trader received the order \footnote{From a PM perspective the implementation Shortfall is against the prevailing price at the time the decision was made. This book we take the Trader perspective}. Formally:
 \begin{equation}
-	IS = side\frac{p_{\text{exec}} - p_{\text{arrival}}}{p_{\text{arrival}}}
+	\mathit{IS} = \mathit{side}\frac{p_{\text{exec}} - p_{\text{arrival}}}{p_{\text{arrival}}}
 \end{equation}
 
 where $side$ is the side multiplier: $1$ for buys $-1$ for sells, $p_{\text{exec}}$ is the execution price achieved and $p_{\text{arrival}}$ is the prevailing price at order arrival. This is usually the mid point at time of arrival but could also be the last traded price before the order arrived. \footnote{Theses choices while seemingly benign are actually somewhat tricky as they can lead, in some fringe cases, to big measurement outliers. Think for example if right before the order the spread gaps for a short moment leading the mid point to be very different than what one would call prevailing price. Alternatively on less liquid stock that don't trade often, the last traded price might be several minutes old the the prevailing price might have moved significantly.}
@@ -31,11 +31,86 @@ Implementation Shortfall is the most sensible choice because it's related to tra
 \begin{itemize}
 \item This benchmark captures the effects of the particular trading activity (i.e. market impact) that are due to the trading approach chosen but also any the exogenous price diffusion due to alpha embedded in the investment decision and the activity of other participants. In most cases the exogenous effects are much larger than the endogenous ones and even on the endogenous side the more significant components are not under the control of the strategy and it's dependent on the exogenous order characteristics and choice of approach. This makes Implementation Shortfall not well suited to understand how well the strategy is working.
 \item The IS benchmark attributes special meaning to the $p_{\text{arrival}}$ anchor price. This led to a widespread belief that in order to minimize the slippage vs arrival one should adjust the trading approach as prices deviate either in favor or against the   $p_{\text{arrival}}$. Lacking any additional information and under a weak market efficiency assumption this is clearly erroneous as the strategy would make decision based on spurious noise leading to a much wider distribution of outcomes.
-\item This benchmarks tells us nothing on how close the trade was to the ``best price'' and thus, on it's own does not provide any additional support on how to improve the particular trading approach
+\item This benchmarks tells us little on how close the trade was to the ``best price'' and thus, on it's own does not provide any additional support on how to improve the particular trading approach
+\end{itemize}
+
+For this reason early practitioners started using benchmarks meant at measuring how well the strategy implemented the particular approach of trading. The strategy name took the name of the benchmark it tries to achieve. One cannot talk about the benchmark without discussing, at a high level, the approach taken by the  eponymous strategy. \\
+
+This approach, while sensible, had unintended consequence we are still facing today to some extent. Early users and sellers of these algorithms started equating the benchmark and the strategy used to achieve it as the actual ultimate objective of the strategy and that these strategies should not be used if a trader has an IS benchmark, which arguably any trader ultimately has. Our claim is that all these strategies are IS strategies that, when no better information around price direction/dynamics exist, are focusing on trying to minimize impact by managing the realized trading rate which as we know is the most understood driver of market impact.
+
+Let's review the basic benchmarks and related strategies.
+
+\paragraph{TWAP}
+The Trade Weighted Average Price (TWAP) is the simplest of all the benchmarks and is simply the simple average price of every trade over the time horizon. 
+
+\begin{equation}
+	\mathit{TWAP}_{\text{st}} ^{\text{et}}= \frac{1}{N}\sum_{i=0}^N{p_i}
+\end{equation}
+
+While very simple this benchmark tries to compare the price with the prices achieved by other participants over the time horizon allotted. It's essentially a measure of mediocrity but it's at least stable and corrects for the exogenous price moves and is thus much more stable over time. That bein said it also has several downsides. As a benchmark TWAP it is unknown until the end of execution (each trade in the market changes the value of the benchmark, contrary to the arrival price). It is also directly impacted by one's trades (they count toward the TWAP market price) and thus not really an independent benchmark and could be manipulated. This benchmark is rarely used today being superseded by VWAP which we discuss in the next paragraph.\\
+
+This TWAP strategy, is the embodiment of the simplest way to split a large order: equally slice the order over the available time. Technically if wanted to achieve the best trade weighted price one would want to trade more when there are more trades but early algo designer probably did not really spent too much time thinking about it and it never felt important enough to actually implement it correctly.\\
+
+It's hard to argue that there is anything optimal in this approach but lacking any other information and knowledge about the behavior of price and volume it would be one of the only alternative when completing the order is a requirement. We'll see below an arguably better approach if order completion is not required. 
+
+While very simple TWAP is still used in particular in some less developed markets, it's also used by some systematic quantitative strategy where the joint trading schedule of a long-short portfolio is optimized as part of the investment strategy and then each individual short term slice (5-15m) is sent to a TWAP algorithm. This will help maintain the dollar neutrality of the portfolio.
+
+\todo{ADD Chart}
+
+\paragraph{VWAP:} 
+
+The Volume Weighted Average Price (VWAP) is the next simplest benchmark. Simply weight every trade by the normalized trade size.
+\begin{equation}
+	\mathit{VWAP}_{\text{st}} ^{\text{et}}= \frac{\sum_{i=0}^N{p_i*s_i}}{\sum_{i=0}^N{s_i}}
+\end{equation}
+
+This benchmark  is arguably a better measure of the fair market price over the period (trading a times and prices that are closer to the times and prices other market participants - who might have a better assessment of the short term price - trade). All the arguments for and against the VWAP benchmark are the same as the ones discussed for TWAP.\\
+
+The VWAP strategy, in order to achieve it's goal, takes advantage of the relative stability of the volume distribution over the day we discussed in \todo{Add reference}. Instead of trading equally throughout the time period is splits the order proportionally to the volume profile re-normalized over the time horizon. \\
+
+The VWAP strategy is conceptually superior to TWAP as a market impact reduction approach since by trading more (less) when more  (less) volume is expected to trade it does a better job ad minimizing the realized trading rate. That being said if the volume profile is extremely noisy or unpredictable because of special circumstances trading VWAP might actually be inferior to TWAP since the error in our volume profile prediction might cause the strategy to achieve a higher trading rate than the simpler strategy.
+
+There is an argument to be made that, reiterating the lack of any price dynamic/prediction information, VWAP is the best approach to trade an order when the order needs to complete. For this reason the strategy is still one of the most used strategy by quantitatively driven funds in which the investment strategy correctly sizes the order to minimize overall impact. 
+
+Generally, while in recent years the popularity of VWAP has decreased in favor of the more flashy ``Liquidity Seeking'' strategies, this approach is still one of the most used strategy in the market. We'll discuss Liquidity Seeking strategies in a later section.
+
+\todo{ADD Chart}
+
+\paragraph{Inline with Volume aka POV:} 
+
+The previous paragraph hinted that one of the limitation of VWAP (and TWAP) as a market impact reducing approach is that id does not take into consideration the high degree of volatility of the daily volume. If in a particular day the volume is significantly less than expected over the time horizon (due to lack of activity or large distortion in the volume profile) the VWAP strategy will just trade at a higher rate than envisioned by the trader leading to a higher total cost. Conversely If a trader who is trading a multiday order is too conservative and in that day there is a lot more volume than expected, she might trade a smaller portion of the order than the market would have been able to absorb. \\
+
+If completing the order is an absolute hard necessity, arguably, there is little that can be done however if there is some flexibility then another approach can be taken. This is where Inline strategies come into play. Inline or alternatively called POV (Percentage of Volume) strategies have a benchmark that is not a price but a target trading rate. They aim at trading at a fixed rate as a way to directly control market impact. 
+While seemingly straightforward, following a certain participation rate is not at all an easy task and these strategies can have some severe drawbacks unless carefully implemented.
+\begin{itemize}
+\item Early implementation where purely reactive meaning they would observe volume for a certain period and then trade the proscribed portion of that volume in the next iteration. Due to the noise in the volume dynamics this could lead the strategy to oversize the market after in the period after a large volume period. In particular large block prints if not correctly managed can cause the strategy to severely over-trade
+\item Even when a volume forecast is used there is still a lot of error in the estimates and any shortfall needs to correctly managed and possibly smoothed over multiple periods to avoid excessive impact
+\item The POV benchmark is extremely noisy at the beginning of the order due to the granularity of trading which could lead to no trading at the beginning until enough volume as traded and then immediately chasing that volume aggressively because immediately well behind the target volume.
+\end{itemize}
+
+Because of these drawbacks and complexities Inline strategies have somewhat lost their popularity and the more flexible Liquidity Seeking approaches  have more or less sub-plant them.
+
+The POV benchmark does not provide a way to measure effectiveness of the strategy as an impact prevention approach in particular because of the issues discussed above. The PWP X (Participation Weighted Price at X\% of the market) price is used as a measure of execution quality for the inline benchmark. It represents the price one would have obtained had they traded X\% of the market volume until completion of the order (in practice, the VWAP of the period from order start until (1/X x Order Size) has traded in the market).
+
+\paragraph{Close:} 
+
+Most quantitative strategies leverage close-to-close time series. As a result, some of them favor this price point as a benchmark for their execution strategies. This is also the case for passive indexers whose fund tracking error is computed based on close prices. 
+
+\begin{comment}
+
+Also, the close price being the last accessible price of the day, it is often used to compute the opportunity cost for unexecuted quantity. 
+There are different variations of this benchmark, most notably benchmarking execution performance versus the previous close (for strategies that select their target holdings through an overnight process using the latest available close price as an input in their model) or the open price to reflect the fact the previous close is a price point that was not accessible to the strategy.
+
+On top of these standard primary benchmarks, several additional metrics are used to shed more light on execution performance:
+\begin{itemize}
+\item \textbf{Completion rate:} while achieving low slippage versus arrival price might be considered as a desirable outcome, if only a fraction of the parent order got executed, the user of the execution strategy is left facing a potentially significant opportunity cost as the expected alpha wasn't fully captured. In order to avoid rewarding strategies that achieve low implementation shortfall just by being extremely passive and stopping trading when prices become unfavorable, most practitioners add a penalty term for the unexecuted portion of the order. There are several approaches to do so, one of the simplest being to apply a slippage to the unexecuted quantity equal to the difference between the arrival price and the close price of the day. 
+\item \textbf{Make/Take ratio:} this ratio provides some indication of the execution efficiency. How much of the liquidity was sourced on the passive side of the spread (at the bid or lower for a buy order), versus how much required the algorithm to pay the spread? This metrics highlights the quality of the order placement of the execution strategy though its ability to provide liquidity while achieving its desired trading rate. It is worth noting, however, that more passive fills do not guarantee overall better performance with regard to the primary benchmark. For instance, if a security exhibits strong intraday adverse momentum, a very passive strategy favoring passive fills would result in lower participation rates, hence delaying the total execution and exposing the user to worst prices later in the day. Similarly, highly passive VWAP algorithms do not always have better slippage versus VWAP. As the security price moves away, the algo will progressively fall behind its target schedule, only to catch up to it once hitting the bands controlling the deviation from target, but at a worse price than at the beginning of the period.
+One should also ask themselves if a buy child order finally getting filled passively after being re-pegged successively to an increasing bid price represents a better execution than having paid for the spread right at the beginning of the period\footnote{As throughout this book, the reader is encouraged to remain critical when analyzing performance benchmarks and metrics, and eventually create more sophisticated versions of them to more accurately capture existing trade offs.}. 
+\item \textbf{Mean vs. Variance of performance:} while absolute performance tends to be the main focus of execution benchmarking, a trader might also want to control the level of dispersion around the mean. In practice, traders with large amounts of flow on a daily basis often focus more on the attained mean as their risk of being adversely affected by outliers is somewhat mitigated by the number of orders. Conversely, occasional traders are often willing to accept a slightly less optimal mean performance if it is accompanied by a reduced variance of performance.
 \end{itemize}
 
 
-\begin{comment}
+
 
 \subsection{Benchmarks}
 
