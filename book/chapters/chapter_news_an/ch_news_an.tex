@@ -339,45 +339,33 @@ that adjusts for the baseline activities, here $B_{u_t}$ denotes the number of b
 Thomson Reuters MarkerPsych Indices (TRMI): The TRMI are also based on news and social media that produce three key types of indicators: Emotional indicators, Macroeconomic metrics and the so called Buzz metrics. These are updated on a minute basis and covers various economic entities. The indices cover over fifty items and they are scored from $-1$ to 1 or from zero to 1. 
 
 
-We want to conclude this section by noting some recent research that further demonstrates the use of sentiment data in trading. First Constantinos, Donkas and Subrahmanyam (2013)~\cite{contdonksub13} establish a link between sentiment and momentum. The news diffuses through the actions of various `newswatchers' and creates momentum, which was attributed to mainly part price movements. Reactive trading gets corrected when momentum positions are reversed as the difference between fundamental information and the news becomes apparent. It is argued that those who follow news closely will under-react if the information contradicts their sentiment. This means that bad news among loser stocks will diffuse slowly where sentiment is optimistic. The sentiment measure that is used is the widely recognized conference Board's Consumer Confidence index. The central hypothesis that sentiment impacts momentum via cognitive dissonance is generally supported by the empirical analysis.
+We want to conclude this section by noting some recent research that further demonstrates the use of sentiment data in trading. First Constantinos, Donkas and Subrahmanyam (2013)~\cite{contdonksub13} establish a link between sentiment and momentum. The news diffuses through the actions of various `newswatchers' and creates momentum, which was attributed to mainly past price movements. Reactive trading gets corrected when momentum positions are reversed as the difference between fundamental information and the news becomes apparent. It is argued that those who follow news closely will under-react if the information contradicts their sentiment. This means that bad news among loser stocks will diffuse slowly where sentiment is optimistic. The sentiment measure that is used is the widely recognized conference Board's Consumer Confidence index. The central hypothesis that sentiment impacts momentum via cognitive dissonance is generally supported by the empirical analysis.
 
 
 The statistical arbitrage rules developed in Chapter~\ref{ch:stat_ts} are widely used in industry. They exploit market anomalies that can arise due to a number of reasons: fundamental news or sentiments. The sentiments can lead to mispricing of assets. The efficacy of technical analysis and how it is related to investor sentiment is studied in Smith, Wang, Wang and Zychowicz (2016)~\cite{smithwangwangzy16} by focusing on its usage by the sophisticated group of traders, the hedge fund managers. 
 
 
-It is observed that one in five hedge funds employ technical analysis. The hedge fund managers integrate both fundamental and technical analysis in their decision-making process on market timing. Sentiment analysis is shown to be an important catalyst in this regard. It is documented that the performance of technical analysis users is better than nonusers in high-sentiment periods but technical tools are less valuable during low sentiment periods. The sentiment data is found to be very useful for market timing. 
+It is observed that one in five hedge funds employ technical analysis. The hedge fund managers integrate both fundamental and technical analysis in their decision-making process on market timing. Sentiment analysis is shown to be an important catalyst in this regard. It is documented that the performance of technical analysis users is better than nonusers in high-sentiment periods but technical tools are less valuable during low sentiment periods. The sentiment data is found to be very useful for market timing. The idea of using sentiment data for return movements has been extended to other dimensions as well. \\
+
+
+\noindent \textbf{Manager Sentiment Index:} It should be expected that the corporate manager's sentiment could play a role in the investment decisions as they may have informational advantage over outside investors. As they are humans, some behavioral biases are likely to be present. Investors may simply follow managers reading of financial disclosures. Jiang, Lee, Martin and Zhou (2019)~\cite{jianleemartin} construct a manager sentiment index from the textual tone in conference calls and in financial statements related to the firm as it reflects manager's subjective views. The measure is the difference between the positive and negative words standardized by the total word count on a monthly basis. This new index is shown to predict future aggregate stock returns negatively consistent with theory and its predictive power is shown to be greater than other macroeconomic predictors discussed earlier. Thus, the proposed index can act as complimentary to other investor sentiment measures. 
 
 
 
+\section{Discussion / Future of Social Media and News in Algorithmic Trading}
 
 
+We have presented in this chapter summaries of studies that clearly document the efficacy of the statistical arbitrage in high-sentiment periods when the short-sale constraints can discourage the elimination of overpricing that may be due to sentiment. The benefits seem to disappear in the low-sentiment periods. These results are quite robust and stand true in different volatility regimes as well. The momentum rule results in profits when investors are optimistic which happens during high sentiment periods. Large investors can read this better and promptly sell losing stocks in optimistic periods.
 
 
+In a recent article, Zhou~(2018)~\cite{zhou18measure} discusses open issues related to measuring and using investor sentiment. First is related to aggregating various proxies of available sentiment measures. The aggregation by PCA captures only the total variance in the proxies but does not necessarily relate to the investment characteristics. An alternative is to use PLS or canonical correlation methods to find the optimal aggregation of the sentiment measures but this can change over time. The problem is somewhat related to combinations of forecasts, discussed in Section~\ref{sec:multindboostmeth}. In the use of iSentium data, we dealt with the time aggregation of individual sentiment scores with simply averaging them. Each tweet contains other information such as retweets, number of followers and whether the tweeter has a finance bio, etc.. All these additional details may capture the reliability of a sentiment score and so deserve further attention. The second issue mentioned is to carefully study the relationship between technical rules-based sentiment (which results in momentum or contrarian strategies) and other sentiment measures. One indicator that is based on technical analysis is
+	\begin{equation}\label{eqn:williams}
+	\text{Williams \% }R= \dfrac{\text{highest high}-\text{closing price}}{\text{highest high}-\text{lowest price}} \times 100.
+	\end{equation}
+The above is calculated based on the past ten days and indicates if a stock is overbought or oversold, which may be the result of executive optimism or pessimism. If the above measure is less than 20, it is taken to indicate that it is `overbought' and if it is greater than 80, it is taken as `oversold'. The idea is similar to the oscillator index discussed in Chapter~\ref{ch:stat_ts}. Finally, which sentiment features are useful to forecast asset returns? What does the volatility in sentiment mean? How long does the memory in sentiment last? These are open issues that need further investigation. 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Discussion / Future of News in Algorithmic Trading}
-
-
-
-
+There is a growing concern about the quality of news or information as we move from print mediums to web to social media. News, good or bad, travels faster now; the news distribution platforms have reduced market entry costs but the goal is to maximize traffic. This also results in weakening of knowledge editors as quality control intermediaries. Non-regulatory initiatives such as fact-checking and codes of conduct do seem to correct for potential failures. Online consumption of news is now channeled through platforms such as search engines, news aggregators and social media which are mostly algorithm-driven. Although editors retain control over the content, they do not control the reach to potential readers. A recent estimate of print media shows only 32\% get their news through print and the rest gather their news through web related media. Search engines are subject to manipulation. Now users are spending more time to interact with each other via social media. Content can propagate via stronger network links between users. The content editors role seems to be greatly diminished. While these observations are made in the context of general information, in-depth studies in the context of financial markets are called for. 
 
 
 
