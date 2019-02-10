@@ -39,7 +39,7 @@ Notice how volatile the data is from Figure~\ref{fig:daily_volume}. The volume i
 	\begin{figure}[!ht]
 		\centering
 			\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/adv.png} 
-		\caption{Average Daily Volume.\label{fig:adv}}
+		\caption{Amazon ADV based on Rolling Stats\label{fig:adv}}
 	\end{figure}
 Notice how the two measures differ. The median is more stable and smooth while the average is more reactive to changes. Which one to use depends on the application. Note in this section we discussed only about normalizing the volume and not the prediction aspects. These two quantities are used differently. A common use of relative order size is, as we will see in Chapter~10, in the calibration of a market impact model. One would intuitively think that because the calibration is done ex-post it should be normalized using the realized daily volume instead of the ADV. Empirical research has shown that this approach leads to somewhat poorer predictions. It is possible that the large-noise-to-signal ratio is better adjusted by a more stable normalizer in place for a more noisy but more precise one. For consistency reasons because we use ADV as normalizer in the calibration it is often suggested to use of the same normalizer when used for market impact estimation rather than using our best prediction of daily volume. This can be problematic in particular on days where the volume is predictably higher. Practitioners are interested in this important issue and some research in this area would be of practical interest. For a discussion on volume weighted average price (VWAP) prediction refer to Brownlees et al. (2011)~\cite{brownless}.
 
@@ -115,7 +115,7 @@ As a supervised learning model, intraday seasonality is definitively not trivial
 
 \noindent\textbf{Per Stock Profiles vs. Clustered Profiles:} One of the key decisions to be made is whether to create a profile for each individual stock in the universe or use some sort of group profiles. With a universe of several trading instruments it might be impractical to build and maintain stable individual profiles. The stability of the profiles is important in order for their use to be effective. Overly illiquid and slowly moving stocks are usually not good candidates for single stock profiles. 
 
-A common approach is to use a statistical clustering approach using a distance measure based on trading characteristics and a grid search to identify the number of clusters that provides good separation using the so-called elbow method \textnote{[TODO add reference]}. Given that the market has many thousand instruments to deal with, enough clusters, eight to nine hundred of them, is not uncommon. The result of this approach is that the most liquid and active instruments will likely end up in their own cluster while lower liquidity stocks will end up into their own clusters. \\
+A common approach is to use a statistical clustering approach using a distance measure based on trading characteristics and running a model selection approach to identify the number of clusters that provides good . Given that the market has many thousand instruments to deal with, enough clusters, eight to nine hundred of them, is not uncommon. The result of this approach is that the most liquid and active instruments will likely end up in their own cluster while lower liquidity stocks will end up into their own clusters. \\
 
 \noindent\textbf{Length of History:} Another open question is the length of history that should be used. The more data is used, the more stable the profiles are however unless great care is given to various seasonal effects and continued changes in market microstructure, there is the risk for the profile not incorporating more recent shifts. This is a particular concern now as the explosion of ETF trading has been consistently shifting more and more volume toward the close. The length of history can be used as a hyper-parameter to be trained on a per-cluster basis. \\
 
@@ -125,13 +125,20 @@ A common approach is to use a statistical clustering approach using a distance m
 
 As far as smoothing algorithms there are a lot of choices available. Kernel smoothing methods discussed in Chapter~\ref{ch:ch_uvts} have been proven effective. However, care must be given at the boundaries (beginning and end) of the profile. There is a large body of work on how to solve boundary problems in smoothing. We will not delve on it here. \\
 
-\missingfigure{Show an example of smoothed Volume profile vs non smoothed with the jumps removed}
+\begin{figure}[!ht]
+		\centering
+			\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/amzn_profile.png} 
+		\caption{Amazon Profile, Cumulative Profiles and Smoothing Details\label{fig:adv}}
+\end{figure}
 
 
 \noindent\textbf{Special Days:} Special days present additional challenges due to limited data (e.g triple witching occurs only four times a year). So using larger clusters (one cluster as a limit) is often the only option. One way to handle this would be to use these separately calibrated profiles across all special-day clusters. However this would lose the granularity of the regular day clustering. In order to maintain some of the  regular cluster level characteristics a common approach is to use a ``difference'' profile created by a normalized per-bin ratio between and average regular day profile and the special day profile. This captures the special day systematic shift that can then be multiplied back to the cluster profile essentially mixing the two components. While in most cases this has proven effective we would recommend out of sample testing at the cluster level to see in which profile this is effective. 
 
-\missingfigure{Show an example of the Fed-Announcement vol profile As part of the special day treatment}\\
-
+\begin{figure}[!ht]
+		\centering
+			\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/fomc_profile.png} 
+		\caption{FOMC Profile, Cumulative Profiles and Smoothing Details\label{fig:adv}}
+\end{figure}
 
 \noindent\textbf{Dynamic Profiles:} Volume distributions are relatively stable but for reasons we have discussed above they are subject to large distortions due to some `surprise' events such as unexpected news. In such cases the volume can spike dramatically and the overall realized distribution will end up being highly skewed. To address this issue, dynamic models that take into account the clustering of volume during surprise events skewing rest of the day's profile more towards the event must be developed. Most models used in industry are proprietary and often heuristic and some academic research is called for. They also require a sophisticated real-time analytics infrastructure, and they should be able to instantly measure and apply these adjustments while the algorithm trades.
 
