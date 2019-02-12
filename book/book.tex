@@ -186,18 +186,26 @@
 % Document
 % ------------------------
 
-\include{frontmatter/preamble} %place custom commands and macros here
+\include{frontmatter/preamble} 
 \begin{document}
 \frontmatter
 \title{Algorithmic Trading and Quantitative Strategies \\ \vspace{3cm}  (Version: \today)} %This is a placeholder titlepage, it will not be final.
 
 \author{\scalebox{1.5}{ Raja Velu\footnote{Department of Finance \hfill \newline \indent \indent Whitman School of Management \hfill \newline \indent \indent Syracuse University}, Maxence Hardy\footnote{Linear Quantitative Research \hfill \newline \indent \indent J.P. Morgan} and Daniel Nehren\footnote{Statistical Modeling \& Development \hfill \newline \indent \indent Barclays}}}
-\date{}
-\maketitle
+
+
+%\date{}
+%\maketitle
+
+\include{chapters/title/title}
+\include{chapters/preface/preface}
+
+
+
 
 \cleardoublepage
 \setcounter{part}{-1}
-\setcounter{page}{7} %previous pages will be reserved for frontmatter to be added in later.
+\setcounter{page}{7} % previous pages will be reserved for frontmatter to be added in later.
 \tableofcontents
 \raggedbottom
 
@@ -232,8 +240,8 @@
 \include{chapters/parts/part_four/part_four}
 \include{chapters/chapter_tech/ch_tech}
 \include{chapters/chapter_tech_res/ch_tech_res}
-%\include{chapters/chapter_rm_reg/ch_rm_reg}
-%\include{chapters/appendix/appendix}
+\include{chapters/chapter_rm_reg/ch_rm_reg}
+\include{chapters/appendix/appendix}
 \bibliographystyle{plain}
 \bibliography{bibtex}
 \end{document}
