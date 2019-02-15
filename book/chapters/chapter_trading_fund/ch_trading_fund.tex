@@ -933,6 +933,11 @@ As illustrated by the diversity and granularity of information available to trad
 
 
 
+
+
+
+\begin{comment}
+
 \section{Execution and its components}
 
 Execution generally refers to a subsection of algorithmic trading where the transactions are not directly meant to generate returns, but to implement as efficiently as possible a trading decision from a portfolio manager (PM). The PM trading decision can be summarized as: the instrument to transact, the direction (buy or sell) and the quantity (how many shares or contracts); along with some potential constraints such as maximum participation rate, limit price, etc.
@@ -944,6 +949,7 @@ The main difference between a quantitative trading strategy and a pure execution
 \subsection{Benchmarks}
 
 The benchmark represents a quantitatively measurable observation of the execution objective(s). The choice of a particular benchmark is an indirect means for the end user of an execution product to communicate her intentions with regards to the way the order should be handled. In order to achieve a certain benchmark, the optimal trading implementation will require different actual trading actions, from the scheduling of the parent order over the eligible time window, to child order placement and order routing. The most common benchmarks used are:
+
 
 \begin{itemize}
 \item \textbf{Arrival Price:} The arrival price is the price (generally the mid-quote) at the time the order was received by the executing party. As such, any deviation from it is considered \textbf{Implementation Shortfall} and is the cost incurred (in the form diminished investment performance) to implement the decision to buy (or sell). As it directly impacts investors performance, this is the most commonly used benchmark. It is also one of the fairest as it judges performance based on the time one received the order and could effectively start implementing execution decisions. Sell-Side brokers have dedicated execution algorithms optimized to minimize slippage to arrival price, mostly following the Almgren-Chriss framework and resulting in front loaded executions (more executions in the early part of the order in order to reduce Timing Risk exposure, then progressively slowing down in order to mitigate market impact).
@@ -960,10 +966,6 @@ There are different variations of this benchmark, most notably benchmarking exec
 \end{itemize}
 
 
-
-
-
-\begin{comment}
 On top of these standard primary benchmarks, several additional metrics are used to shed more light on execution performance:
 \begin{itemize}
 \item \textbf{Completion rate:} While achieving low slippage versus arrival price might be considered as a desirable outcome, if only a fraction of the parent order got executed, the user of the execution strategy is left facing a potentially significant opportunity cost as the expected alpha wasn't fully captured. In order to avoid rewarding strategies that achieve low implementation shortfall just by being extremely passive and stopping trading when prices become unfavorable, most practitioners add a penalty term for the unexecuted portion of the order. There are several approaches to do so, one of the simplest being to apply a slippage to the unexecuted quantity equal to the difference between the arrival price and the close price of the day. 
