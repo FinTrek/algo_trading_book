@@ -211,9 +211,15 @@
 
 %To be removed
 \listoftodos
-
+\newcommand{\zeropartnum}[1]{
+	\ifcase\value{#1}\relax 0\else%
+	\Roman{#1}\fi}% 
+	\renewcommand{\thepart}{\zeropartnum{part}
+}
+\setcounter{part}{-1}
 
 \mainmatter
+
 \part{Context: Introduction and Overview}
 \include{chapters/chapter_intro/ch_intro}
 \include{chapters/chapter_trading_fund/ch_trading_fund}
@@ -240,8 +246,8 @@
 \include{chapters/parts/part_four/part_four}
 \include{chapters/chapter_tech/ch_tech}
 \include{chapters/chapter_tech_res/ch_tech_res}
-\include{chapters/chapter_rm_reg/ch_rm_reg}
-\include{chapters/appendix/appendix}
+%\include{chapters/chapter_rm_reg/ch_rm_reg}
+%\include{chapters/appendix/appendix}
 \bibliographystyle{plain}
 \bibliography{bibtex}
 \end{document}

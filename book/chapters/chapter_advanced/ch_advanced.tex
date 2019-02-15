@@ -358,7 +358,7 @@ The value of `$\theta$' generally tends to be small, but nevertheless significan
 
 \noindent \textit{Commonly used duration models:} The timing aspect of transaction was discussed in Easley and O'Hara (1992)~\cite{easley1992} and a rigorous set of tools was developed by Engle and Russell (1998)~\cite{engle1998}, as an alternative to fixed interval analysis. Treating the ticks as random variables that follow a point process, the intensity of transactions in an interval of length, $\Delta$, is defined as
 	\begin{equation}\label{eqn:2lambda}
-	\lambda(t) = \lim\limits_{\Delta \rightarrow 0}\frac{E[N(t+\Delta) - N(t)|F_t]}{\Delta}
+	\lambda(t) = \lim\limits_{\Delta \rightarrow 0}\frac{E[N(t+\Delta) - N(t)|F_t]}{\Delta},
 	\end{equation}
 where $N(t)$ denotes the number of ticks until `t' and $F_t$ is the information available until that time. The commonly used model for such arrival rates is Poisson that implies that the time between the two successive ticks is independent of pairwise ticks and follows an exponential distribution. But the duration data, $d_i = t_i - t_{i-1}$ exhibit some dependence, thus implying that time moves faster sometimes, faster than the clock time. The intensity rate, $\lambda(t)$ is not a constant, which is a typical characteristic of the exponential distribution. We briefly outline how the durations are modeled. For detailed discussion, see Tsay (2010)~\cite{tsay} or Lai and Xing (2008, Section 11.2)~\cite{lai1}. The autoregressive conditional duration (ACD) model is defined as follows:
 	\begin{flalign}\label{eqn:2dipsi}
