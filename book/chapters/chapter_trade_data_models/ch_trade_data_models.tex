@@ -58,9 +58,15 @@ Trading dynamics have an intrinsic time scale that varies significantly across t
         \item Volume Time: This normalization uses a certain specified amount of volume (e.g. 1000 shares). Coarser than tick time but easier to implement as most algorithms already keep track of how much volume has been traded. It also suffers from issues similar to tick time regarding conceptualization.
         \item Turnover/Characteristic Time: This measures the time it takes for the quote to move on average (more often median). In the simplest setting a quote moves when all the liquidity is removed from a level. This would be the time it takes for a passive order to get executed if it is placed on the queue. It is a simple measure since this can be calculated in advance as a historical mean (median). It also represents a time scale, thus making it easy to conceptualize.
         \end{itemize}
+        
+In figure~\ref{ch:char_time} We show a simple example of characteristic times for various stocks calculated as 1m average of daily medians in the month of October 2016. You can see that the differences can be quite large. A better measure would be to have a term structure of these characteristic times.
 
 
-\textnote{TO DO: Graph showing the characteristic time for various stocks}
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/char_time.png} 
+	\caption{Charateristic time for various stocks in October 2016\label{fig:char_time}}
+	\end{figure}
 
 
 
