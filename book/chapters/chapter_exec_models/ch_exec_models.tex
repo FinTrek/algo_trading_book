@@ -164,13 +164,13 @@ The decisions available to the scheduler aim at optimally implementing the end u
 
 The scheduler also plays an important role in  implementing liquidity sourcing preferences, such as how much to participate in volatile periods of price discovery when spreads are wide (e.g. in the first few minutes after the market open), or allocating volume between lit and dark venues (where one trades certainty of execution for lower price impact).
 
-Finally, the scheduling layer is also responsible for appropriately handling microstructure features seasonalities. There are well documented intraday volume patterns that can be leveraged to forecast liquidity, volatility and spreads (\todo{TODO: point to chapter on volume profiles}), both on regular days and special days like index rebalances or option expiries. Seasonality can also be witnessed at larger scales: Mondays tend to have more volume, but also more volatility, Asian markets tend to have early morning price action driven by the outcome of the previous market day in the US, etc. All of these can be leveraged by the scheduler to allocate volume more efficiently over time (front load the execution if the market is expected to move unfavorably, or back load it in case of expected favorable move) and across liquidity sources (lit or dark markets). 
+Finally, the scheduling layer is also responsible for appropriately handling microstructure features seasonalities. There are well documented intraday volume patterns that can be leveraged to forecast liquidity, volatility and spreads (see Chapter~\ref{chap:ch_trade_data_models}), both on regular days and special days like index rebalances or option expiries. Seasonality can also be witnessed at larger scales: Mondays tend to have more volume, but also more volatility, Asian markets tend to have early morning price action driven by the outcome of the previous market day in the US, etc. All of these can be leveraged by the scheduler to allocate volume more efficiently over time (front load the execution if the market is expected to move unfavorably, or back load it in case of expected favorable move) and across liquidity sources (lit or dark markets). 
 
 It is worth noting that when decomposing execution slippage, the largest contribution can generally be attributed to the scheduling layer, and can range from a few to double digits basis points. Consequently scheduling remains an area of active research for both academia and practitioners.
 
 \subsection{Order Placement}
 
-he order placement layer sits downstream from the scheduling layer and can be seen as the micro trader of the strategy, in charge of decisions spanning the upcoming few seconds or minutes of trading. While it is generally unaware of the overall trading intention received by the scheduler, it is responsible for implementing locally its decisions. As such, the micro trader answers the question "at what price should I trade the quantity allocated for the upcoming period in order to complete and obtain the best possible price?". 
+The order placement layer sits downstream from the scheduling layer and can be seen as the micro trader of the strategy, in charge of decisions spanning the upcoming few seconds or minutes of trading. While it is generally unaware of the overall trading intention received by the scheduler, it is responsible for implementing locally its decisions. As such, the micro trader answers the question "at what price should I trade the quantity allocated for the upcoming period in order to complete and obtain the best possible price?". 
 
 By nature, this component leverages techniques that are very similar to the ones employed by market making strategies, aiming to capture passive liquidity while avoiding adverse selection. The order placement component is also responsible for the decision to cross the spread, either to capture an opportunity, or to attain a desired participation rate if the liquidity sourced on the passive side is not sufficient. Consequently, it relies heavily on microstructure models to take advantage of short-term order book price movements. Among the most commonly used signals for order placement, we can mention:
 
@@ -191,7 +191,7 @@ The output of the order placement module can be modeled as an array of price lev
 The order routing layer sits downstream from the order placement layer and is generally a standalone component - known as the Smart Order Router (SOR) - in charge of the highest frequency decisions (of the order of microseconds to milliseconds). 
 While it is also generally unaware of the overall trading intention received by the scheduler, it is responsible for implementing the decisions of the order placement module. As such, the SOR answers the question "to which exchange(s) should I route the child order in order to maximize my probability of getting a fill at or better than the desired price?". This component is of particular importance in fragmented markets, and might be absent in execution strategies interacted with single markets (EM Equities, Futures, etc.)
 
-Lit and Dark order routing present different challenges. While lit executions and order books are public and can be observed in market data feeds, dark order books are invisible and dark executions tend to be reported in aggregate (for instance, under a single condition code), thus making attribution of actual execution venue more challenging. For instance, if solely observed from market data, dark executions in the US cannot be directly attributed one of the numerous non-displayed venues. However, if observed from the point of view of an executing entity (through execution fills received), one is in possession of sensored observations of the available – otherwise invisible – liquidity (I.e. When receiving a fill for X shares one knows there was at least X shares available to trade on the other side in this particular venue). 
+Lit and Dark order routing present different challenges. While lit executions and order books are public and can be observed in market data feeds, dark order books are invisible and dark executions tend to be reported in aggregate (for instance, under a single condition code), thus making attribution of actual execution venue more challenging. For instance, if solely observed from market data, dark executions in the US cannot be directly attributed one of the numerous non-displayed venues. However, if observed from the point of view of an executing entity (through execution fills received), one is in possession of sensored observations of the available---otherwise invisible---liquidity (I.e. When receiving a fill for X shares one knows there was at least X shares available to trade on the other side in this particular venue). 
 
 The SOR implements both the aggressive and passive child order submissions, accounting for their respective goals:
 \begin{itemize}
@@ -204,6 +204,7 @@ In the second case, the objective of the aggressive order is just to catch-up to
     \end{itemize}
 
 \end{itemize}
+
 
 
 \begin{comment}
@@ -608,6 +609,69 @@ Only recently there are efforts made to better understand and model cross-impact
 \section{Multiple Stocks: Microstructure Issues}
 \section{A Stochastic Adaptive Control Approach to Optimal Execution}
 \section{Algorithmic Trading Next Frontiers}
-\subsection{Extending the Algorithms to Derivative markets}
+\subsection{Extending the Algorithms to Other Asset Classes}
+
+While the electronification of trading first took place in the equity space, recent years have seen a significant growth of electronic trading and market making in the fixed income world, opening new opportunities to quantitative trading strategies. \\
+
+\noindent\textbf{a) Equity Options:} \\
+
+\noindent\textbf{a) Credit Derivatives:} \\
+
+When an entity, whether private or public, borrows money, the lender or debt holder bears some default risk until maturity. There is always a risk that the entity will not be able to repay the debt in full or per the agreed terms (coupons, maturity, \dots). Credit derivatives allow debt holders to hedge all or part of that risk, as well as speculators to express their views on the creditworthiness of various entities. 
+
+
+A credit default swap (CDS) is a derivative contract allowing to buy or sell protection on a single reference entity. The protection buyer pays a fixed, running or upfront, premium in return for the right to receive a payment should the reference entity suffer a credit event. Depending on the CDS contract, an eligible credit event might correspond to a payment default on the debt, a restructuring or a simple credit downgrade of the reference entity. In return for the premium, the writer of the CDS agrees to pay to the buyer (1 $-$ recovery rate) times the notional of the contract upon the realization of an eligible credit event. Here, the recovery rate represents the fraction of the face value of the debt that can be recovered following a credit event.
+
+
+By entering a default swap, the buyer is essentially purchasing an insurance against the risk of default of a borrower. However, that insurance being paid by the CDS issuer bears counter-party risk (the ability of the issuer to pay the agreed amount in the event of a credit event affecting the borrower). Consequently, the valuation of a CDS depends, among other factors, on the default probability of the borrowing entity over the life of the contract, on the default probability of issuing counter-party, as well as the correlation between them.
+
+
+The estimated CDS notional outstanding stands above \$10~trillions, after having peaked at about \$62~trillions at the end of 2007 (International Swaps and Derivatives Association (ISDA)~\cite{ISDA}), and north of 1~million trades are recorded per week. In the aftermath of the Global Financial Crisis of 2008, trading liquidity shifted from single name CDS toward CDS Indices, which are essentially baskets of single name CDS. Roughly half of the outstanding notional originates from single reference entity contracts, while most of the other half emanates from credit indices (roughly 130,000~trades per week in 2016).
+
+
+Over-the-counter (OTC) derivatives markets are considered dealer markets, as they tend to be traded through a network of private dealers who stand ready to provide liquidity in various instruments while maintaining a relatively neutral net risk exposure. This, traditionally, is conducted one on one, off exchanges. However, the introduction of the Dodd-Frank Act of 2010 brought significant transformation to the U.S. swap markets by mandating central clearing for standardized over-the-counter derivatives such as swaps, as well as forcing their execution on a swap execution facility (SEF).\footnote{In Europe, the MiFID II directive adopted by the EU in 2014, with applicability on January 3rd, 2018, also introduces obligations for sufficiently liquid standardized derivatives contracts to be traded only on regulated platforms such as OTFs: Organized Trading Platform.}
+
+
+The term `swap execution facility' defines a registered ``trading platform in which multiple participants have the ability to execute or trade swaps by accepting bids and offers made by multiple participants'' (Dodd-Frank Act, Section 733~\cite{DoddFrank}). Among the stated goals of mandating swaps execution on SEFs are promoting pre-trade transparency in the swaps market as well as facilitating the real-time publication of trading information such as price and volume to enhance price discovery. As such, the Dodd-Frank Act addressed for swap markets the three main challenges that had historically prevented a significant electronification of trading in fixed income markets: 1) lack of standardized instruments, 2) lack of centralized trading platforms, 3) lack of available transaction data.
+
+
+SEF usually offer multiple trading protocols giving investors the flexibility to choose the most appropriate trading style for their needs. Existing trading protocols center around either an Order Book-like approach where all markets participants have the ability to execute available bids or offers from multiple participants as well as leave their own limit orders; or a Request-For-Quote (RFQ)-like approach where participants request a single or two-sided market from multiple dealers during a real-time auction.
+
+
+A variety of credit Indices are fairly liquid and trading on SEFs, in particular U.S. indices (CDX(c)) and European indices (iTraxx(c)). The CDX indices are further broken out by the type of debt covered such as Investment Grade (IG) and High Yield (HY) for the most liquid ones. Due to their liquidity, both CDX IG and CDX HY are examples of credit indices that lends themselves well to electronic market making activities.
+
+
+However, the CDS Index market presents a certain number of idiosyncrasies compared to equities markets when it comes to market making. While there is an order book available to all participants, most of the volume still gets transacted via RFQ mechanism for which market makers are not always allowed to see the quotes. Consequently, market makers only have partial information regarding the true position of the market when time comes to decide where to place their own orders. Using a a mixture of historical trades and partial real-time information, market makers can reconstruct a theoretical mid price of the market. They can set then the bid and ask quotes at an appropriate distance from that mid price, accounting for the trade-off between their desire to obtain a fill and the risk associated with maintaining their inventory. \\
+
+\noindent\textbf{b) Corporate Bonds:} \\
+
+The corporate bond market is also an OTC market where market participants only have access to limited information prior to placing a trade. The main market participants can be categorized as pension funds and insurance companies which tend have longer investment horizons, hedge funds which tend to have more tactical trading allocations, and corporations treasury departments whose objectives and horizons can span a wide spectrum.
+
+
+Compared to other assets, it is also interesting to note that most of the secondary market transactions happen in the first few months following issuance, and after that a significant portion of the amount of bonds issued is held to maturity. Similarly to other fixed income products, the key challenges for secondary trading of bonds and the electronification of its secondary market have historically been 1) lack of centralized market place, 2) lack of harmonized instrument characteristics and 3) lack of transaction data.
+
+
+The corporate bonds secondary market remains dominated by one-to-one privately negotiated trades, but electronic platforms allow transacting via similar execution protocols as what traders can use for CDSs: limit order book type of executions as well as request-for-quotes (RFQ) on platforms such as Tradeweb, Bloomberg, MarketAccess and a variety of others.
+
+
+In the U.S., for instance, under FINRA Rule~6730, Broker-dealer FINRA member firms have the obligation to report transactions in TRACE-eligible securities to the TRACE\footnote{Trade Reporting And Compliance Engine} database as soon as practicable, but no later than within 15~minutes of the Time of Execution. FINRA Rule~6710 defines TRACE-eligible securities as USD denominated debt securities (whether issued by a U.S or foreign private issuer), and USD denominated debt issued or guaranteed by an Agency or Government-Sponsored Enterprise. Foreign sovereign, U.S. Treasuries and money market instruments are specifically excluded from the eligible list. The TRACE database then disseminates price, size\footnote{The actual size disseminated back to the market is capped to prevent excessive information leakage: for investment-grade corporate bonds and agency debt securities, for any trade greater than \$5~million, the par value is displayed as \$5~MM$+$; for non-investment grade corporate bond, the displayed quantity is capped to \$1~million par value}, time stamp and direction of the trade to the public.
+
+
+While the rules require reporting in no more than 15~minutes, most reporting and public dissemination now happens within seconds or minutes of execution (with the exception of overnight trades being batch-reported the next morning), giving participants some transparency about the current market levels.
+
+
+The combination of existing venues allowing for click-to-trade or RFQ protocols and trade events information facilitated the expansion of electronic trading for corporate bonds as well. A fifth to a quarter of the investment grade market is now transacted electronically, while on the high yield side, roughly 10\% of the market is traded through RFQs.
+
+
+Similarly to credit indices, the first challenge for dealers in corporate bond electronic market making is to infer the value of the current ``fair mid'' for the market following each transaction. Given the relatively infrequent updates observations even for bonds that are considered liquid, quantitative techniques employed tend to vary from the ones used in markets with higher frequency data available such as equities. Practitioners rely much more, for instance, on probabilistic state-space models to estimate unobservable data.
+
+
+This type of approach obviously becomes increasingly more challenging as one moves down the liquidity spectrum. It is not uncommon for illiquid bonds to not trade for months, in which case assessing a fair mid price cannot solely rely on prior transactions. Among possible solutions, modelers can use bonds of other maturities from the same issuers, or bonds from correlated issuers or comparable investment grades. Additionally, more liquid credit derivatives are also a potential sources of information that can be leveraged for better valuations.\\
+
+\noindent\textbf{c) RFQ Markets:} \\
+
+Outside of continuous double auction markets the problem is somewhat simplified and might not require the same layered structured. For instance, RFQ markets can be modeled as single step Markov decision process where one submits a quote (a quantity at a certain price) and receives an execution or not which end the process for this order. The execution policy can then be simply optimized to achieve a desired hit ratio or control inventory risk.
+
+
 \subsection{Developing a Trading Platforms for Simultaneous Execution of Assets}
 \subsection{Future of Algorithmic Trading}

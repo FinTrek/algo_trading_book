@@ -1,5 +1,168 @@
 % !TEX root = ../../book.tex
 \chapter{Trading Fundamentals \label{chap:ch_trading_fund}}
+
+\section{Max old stuffs put back}
+
+\subsection{From Trading Floors to Electronic Trading}
+
+In less than a decade, electronification of financial markets has profoundly changed the way equities are traded. In this short timeframe, equity trading evolved from primarily manual trading on a central exchange to primarily automated trading on multiple fragmented venues, driven by both advances in technology and by changes in the regulatory framework. This unprecedented transformation in market structure has given rise to new types of market participants and novel trading strategies that have become widespread, so the terms ``High Frequency Trading'' (HFT) and ``Algorithmic Trading'' have become part of household usage.
+
+
+Secondary markets for trading equities serve two complementary purposes; price discovery and liquidity aggregation (O'Hara (2003)~\cite{ohara}). Buyers and sellers meet and agree on a price to exchange a security. When that transaction is made public it, in turn, informs other potential buyers and sellers of the most recent valuation of the security.  Additionally, would-be buyers or sellers need to find matching opposite side interest in order to transact. In absence of enough selling interest, a large buyer would significantly displace the supply and demand equilibrium price and have to pay more to transact.
+
+
+As such, when exchange price matching was still manual, a single, physical, centralised location (the Exchange) benefited from significant network externalities. The exchange trading floor was the physical location where buyers and sellers (or their intermediaries) met to negotiate the transactions. In addition to providing an aggregation of potential counterparts, the open outcry nature of the transaction rewarded physical presence on the floor and that was the only way to gather the most up to date information on securities prices.
+
+
+Starting in the seventies in US, the implementation of electronic dissemination of quotes by NASDAQ removed the need for a physical presence at the exchange. The participants were granted the same level of real time access to price discovery irrespective of their locations. Once exchanges became fully automated allowing buy and sell orders to match without human intervention, traditional intermediaries gave place to automated market makers, leveraging technology to produce and display optimal bids and offers. These participants compete to provide liquidity to liquidity demanders by displaying quotes (bid to purchase or offer to sell) on the exchange for a certain number of shares at a given price. The spread between bid and ask compensates them for the inventory risk associated with providing liquidity. 
+
+
+The promulgation of \textit{Regulation National Market System} (Reg NMS) by the  \textit{Securities and Exchange Commission} (SEC) in 2005 further accelerated the transformation of market structure in the US\footnote{equivalent regulation had a similar impact in Europe - see MiFID}. Through its two main rules, the Reg NMS was to promote best price execution for investors by encouraging competition among individual exchanges and individual orders. The Access Rule promoted non-discriminary access to quotes displayed by Self-Regulatory Organization (SRO) trading centers as well as established a cap, limiting the fees that a trading center can charge for accessing a displayed quote. The Order Protection Rule required trading centers to obtain the best possible price for investors when such price was represented by an automated immediately accessible quote. In essence, aside from a series of exemptions, the Order Protection Rule mandated market participants to transact first at a price better or equal to the National Best Bid Offer (NBBO). 
+
+
+The latter rule, in particular, had a significant effect on the US market structure. Market makers, who had traditionally been competing for quotes on a given exchange, quickly became multi-venue market makers by leveraging technology to process real time  quotes from all Reg NMS protected venues to determine where and at what price to provide their own quotations. Automated market makers therefore played a critical role in linking various trading venues and allowing for fragmentation to increase. The NYSE market share in NYSE-listed stocks was still above 80\% in 2005 but that number quickly declined as Reg NMS facilitated competition among venues to reduce NYSE's share to 25\% by 2010. 
+
+
+As fragmentation increased, speed and technology became major differentiating factors of success for market makers and other participants. The ability to process market data, analyze it, and submit one's orders faster than competing participants meant capturing fleeting opportunities or successfully avoiding adverse selection. To gain or maintain an edge, market participants heavily invested in technology, faster networks, and installed their servers in the same data centers as the venues they transacted on (co-location). 
+
+
+\subsection{Liquidity and Market Making}
+
+
+\begin{enumerate}
+\item[\textbf{a)}] \textbf{A definition of liquidity:} Financial markets are commonly described as carrying the function of efficiently directing the flow of savings and investments to the real economy to allow the production of goods and services. An important factor contributing to well-developed financial markets is their liquidity which enables investors to diversity their asset allocation and facilitate the transfers of securities at a reasonable transaction cost. 
+
+
+Properly describing ``liquidity'' often proves to be elusive as there is no commonly agreed upon definition of it. Black (1971)~\cite{black71} proposes a relatively intuitive description of a liquid market:
+\textit{``The market for a stock is liquid if the following conditions hold:}
+
+\begin{itemize}
+\item \textit{There are always bid and ask prices for the investor who wants to buy or sell small amounts of stock immediately.}
+
+\item \textit{The difference between the bid and ask prices (the spread) is always small.}
+
+\item \textit{An investor who is buying or selling a large amount of stock, in the absence of special information, can expect to do so over a long period of time at a price not very different, on average, from the current market price.}
+
+\item \textit{An investor can buy or sell a large block of stock immediately, but at a premium or discount that depends on the size of the block. The larger the block, the larger the premium or discount.''}
+	\end{itemize}
+In other words, Black defines a liquid market as a continuous market having the characteristics of relatively tight spread, with enough depth on each side of the limit order book to accommodate instantaneous trading of small orders, and resilient enough to allow large orders to be traded slowly without significant impact on the price of the asset. This general definition remains particularly well suited to today's modern electronic markets and can be used to by practitioners to assess the difference in liquidity between various markets when choosing where to deploy a strategy.
+
+\item[\textbf{b)}] \textbf{Different types of market participants: liquidity demanders (generally, Algorithmic Traders, AT) and liquidity providers (generally, Market Makers---MM):}
+Liquid financial markets carry their primary economic function by facilitating savings and investment flows as well as allowing investors to exchange securities in the secondary market. Economic models of financial markets attempt to classify market participants into different categories. These can be broadly delineated as: 
+
+\textbf{Informed Traders,} making trading decisions based on superior information that is not yet fully reflected in the asset price. That knowledge can be derived from either fundamental analysis or information not directly available nor known to other market participants.
+
+\textbf{News Traders,} making trading decisions based on market news or announcements and trying to make profits by anticipating the market's response to a particular news or event. The electronification of news dissemination offers new opportunities for developing quantitative trading strategies by leveraging text-mining tools such as natural language processing to interpret, and trade on, machine readable news before it is fully reflected in the market prices. Chapter 4 will detail some of the advances in the field.
+
+\textbf{Noise Traders} (as introduced by Kyle (1985)~\cite{kyle1985}), making trading decisions without particular information and at random times mainly for liquidity. They can be seen as adding liquidity to the market through additional volume transacted, but only have a temporary effect on price formation. Their presence in the market allows informed traders to not be immediately detected when they start transacting as market makers cannot normally distinguish the flow origin between these two types of participants. In a market without noise traders, being fully efficient, at equilibrium each trade would be revealing information that would instantly be incorporated in prices, hereby removing any profit opportunities.
+
+\textbf{Market Makers,} providing liquidity to the market with the intent of collecting profits originating from trading frictions in the market place (bid ask spread). Risk-neutral market makers are exposed to adverse selection risk arising from the presence of informed traders in the marketplace, and therefore establish their trading decisions mostly based on their current inventory. As such, they are often considered in the literature to drive the determination of efficient prices by acting as the rational intermediaries.  
+
+Generalizing these concepts, market participants and trading strategies can be separated between liquidity providing and liquidity demanding. The former being essentially the domain of market makers whose level of activity, proxied by market depth, is proportional to the amount of noise trading and inversely proportional to the amount of informed trading (Kyle (1985)~\cite{kyle1985}). The latter being the domain of a variety of algorithmic trading users (mutual funds, hedge funds, asset managers,\dots).
+
+
+Given the key role played by market makers in the liquidity of electronic markets, we want to elaborate a bit more on their activities.
+
+\item[\textbf{c)}] \textbf{The objectives of the modern Market Maker:}
+In present days, market making can broadly be separated into two main categories based on the trading characteristics. The first one is the provision of large liquidity---known as blocks---to institutional investors, and has traditionally been in the realm of sell side brokers acting as intermediaries and maintaining significant inventories. Such market makers usually transact through a non-continuous, negotiated, process based on their current inventory as well as assessment of the risk involved in liquidation of the position in the future. Larger or more volatile positions generally tend to come at a higher cost, reflecting the increased risk for the intermediary, but provide the end investor with a certain price and an immediate execution bearing no timing risk that is associated with execution over time. These transactions, because they involve negotiation between two parties, still mostly happen in a manual fashion or over the phone and then get reported to an appropriate exchange for public dissemination.
+
+
+The second category of market making involves the provision of quasi-continuous, immediately accessible quotes on an electronic venue. With the advent of electronic trading described in the previous section, market makers originally seated on the exchange floors have progressively been replaced by electronic liquidity providers (ELP) who leverage fast technology to disseminate timely quotes across multiple exchanges and develop automated quantitative strategies to manage their inventory and the associated risk. As such, most ELPs can be classified as high frequency traders. They derive their profits from three main sources: from liquidity rebates on exchanges that offer maker-taker fee structure, from spread earned when successfully buying on the bid and selling on the offer, and from short-term price move favorable to their inventory. 
+
+
+Hendershott, Brogaard and Riordan (2014)~\cite{hendershott2014} find that HFT activity tends to be concentrated in large liquid stocks and postulate that this can be attributed to a combination of larger profit opportunities emanating from trades happening more often, and easier risk management due to larger liquidity that allow for easier exit of unfavorable positions at a reasonable cost. 
+
+\item[\textbf{d)}] \textbf{Risk management:} In the existing literature on informed trading, it is observed that liquidity supplying risk-neutral market makers are adversely selected by informed traders suddenly moving prices against them. For example, a market marker buy quote tends to executed when large sellers are pushing the price down, resulting in even lower prices in the near term. This significant potential asymmetry of information at any point in time emphasizes the need for market makers to employ robust risk management techniques, particularly in the domain of inventory risk. For a market maker, risk management is generally accomplished by first adjusting market quotes upward or downward to increase the arrival rate of sellers or buyers and similarly adjusting the inventory in the desired direction. If biasing the quotes doesn't result in a successful inventory adjustment, the market makers generally employ limit orders to cross the spread.
+\end{enumerate}
+
+
+Ho and Stoll (1981)~\cite{ho1981} introduced a market making model in which the market makers objective is to maximize the profit while minimizing the probability of ruin by determining the optimal bid-ask spread to quote. The inventory held evolves through the arrival of bid and ask orders where arrival rate is taken to be a function of bid and ask prices. Their model also incorporates the relevant notion of spread size dependence on the market marker's time horizon. The longer the remaining time, there is a greater potential for adverse move risk for liquidity providers, and vice versa, which is consistent with observed spreads. In most markets, the spread is wider at the beginning of the day, narrowing toward the close. An additional reason annotated for the wider spread right after the beginning of the trading day is due to existence of potentially significant information asymmetry accumulated overnight. As market makers are directly exposed to that information asymmetry, they tend to quote wider spreads while the price discovery process unfolds following the opening of continuous trading, and progressively tighten them as uncertainty about the fair price for the asset dissipates.
+
+
+Understanding the dynamics of market makers inventory and risk management, and their effect on spreads, has direct implications for the practitioners who intend to deploy algorithmic trading strategies as the spread paid to enter and exit positions is a non-negligible source of cost that can erode the profitability of low alpha quantitative strategies. 
+
+
+Hendershott and Seasholes (2007)~\cite{hendersea} confirms that market makers' inventories are negatively correlated with previous price changes and positively correlated with subsequent changes. This is consistent with market makers first acting as dampener of buying or selling pressure by bearing the risk of temporarily holding inventory in return for earning the spread and thus potential price appreciation from market reversal. This model easily links liquidity provision and asset prices dynamics. 
+
+
+In the context of market making, two important price behaviors are relevant to model: momentum and mean-reversion. Both of these price dynamics represent a departure from the pure random walk assumption for asset prices as well as the efficient market hypothesis developed by Eugene Fama that states that asset prices reflect all available information and consequently that past prices cannot predict future performance. Jegadeesh and Titman (1993)~\cite{JeTit1993} identified the potential profitability of momentum in equities documenting the outperformance of strategies that suggest buying stocks that have performed well in the recent past while selling stocks that have performed poorly. CTA funds are among the first to have implemented momentum strategies in a systematic way, in the commodities futures space, both on single and multiple assets (such as baskets of commodities where momentum metrics can be applied either to the single assets or to the relative performance of assets within the basket). 
+
+
+The most na\"ive momentum strategies rely on simple time series analysis such as price return over a period of time to decide which asset go long (previous positive return) and which asset go short (previous negative return). Other commonly used momentum signals include simple moving averages (MA), moving averages crossovers (of a short-term MA with a longer term MA), exponential weighted moving averages  (EWMA), as well as more sophisticated techniques leveraging machine learning tools. The key characteristic of momentum strategies is their flexibility and relative low complexity. They can be designed at various time intervals (from minutes to months), make use of cross-sectional indicators, be corrected for seasonal effects, and so on. Chapter 2 on Time Series will provide in-depth coverage of techniques that are commonly used by practitioners. In discrete time, the AR(1) process is typically used to model mean-reversion, and it will be described in more details in Chapter 2 as well. 
+
+
+In continuous time, one well known mean-reverting process is the Ornstein-Uhlenbeck (OU) stochastic process (Uhlenbeck and Ornstein (1930)~\cite{uhlenbeck}). It is described by the following stochastic differential equation:
+	\begin{equation}\label{eqn:dxttheta}
+	 dX_t = \theta(\mu - X_t)\,dt + \sigma \, dW_t 
+	\end{equation}
+where $W_t$ is a standard Brownian motion, and $\theta, \sigma$ are positive constants. The value $\mu$ is the long term mean of the process, the coefficient of $dt$ is called the drift, and $\sigma$ is the volatility. One can observe that the drift is negative for $X_t > \mu$ and positive for $X_t < \mu$ , making the process revert towards $\mu$ over time. $\theta$ is commonly known as the rate of mean reversion. While the OU process assumes the volatility $\sigma$ is a constant term, more advanced models with varying volatility allow for behaviors closer to real asset price dynamics. With the increasing availability of ultra-high frequency data, the trading data arrives at a quasi-continuous time scale and the models such OU process have become easily testable.
+
+
+Going back to Hendershott (2006) observation of a positive correlation of market makers inventory with subsequent prices changes, inventories can complement past returns when predicting future return. Since inventories are not publicly known, market participants use different proxies to infer their values throughout the day. Two commonly used proxies are trade imbalances (the net excess of buy or sell initiated trade volume) and spreads. Trade imbalance aims at signaling trades, either buy initiated or sell initiated, by comparing their price with the prevailing quote. Given market makers try to minimize their directional risk, they can only accommodate a limited amount of non-diversified inventory over a finite period of time. As such, spread sizes, and more particularly their sudden variation, have also been used as a proxy for detecting excess inventory from liquidity providers.
+
+
+\subsection{Algorithmic Trading: Some Basic Elements}
+
+
+The automation of trading and the resulting wealth of data have had a significant impact on the field of quantitative finance in general. It has allowed for a seamless integration of quantitative strategies used for portfolio construction with the executions based on algorithmic trading strategies. Progressively, portfolio managers realized that the alpha generation problem cannot be decoupled from the execution problem as transaction costs can have a material effect on the profitability of the overall strategy. For example, a fund manager back-testing a strategy might assume he or she will be able to obtain the VWAP (Volume-Weighted Average Price) of the day instead of the previous night close which is not a realistic benchmark. The initial algorithmic trading strategies were targeting average prices over the period of execution (either volume-weighted average for VWAP or time-weighted average for TWAP). The VWAP benchmark price is defined as,
+	\begin{equation} 
+	\text{VWAP}=\dfrac{\sum_iV_iP_i}{\sum_iV_i} 
+	\end{equation}
+where $i$ represents each trade over the trading period, $V_i$ represents the volume and $P_i$ is the price.
+
+
+Without having prior knowledge of $P_i$ trajectory, a natural way to minimize slippage (executed price less arrival price) to VWAP is to try to achieve a constant proportion of all $V_i$ throughout the execution period. As a result, the first generation trading algorithms targeting VWAP had a natural incentive to break down parent orders in smaller child orders traded throughout the prescribed execution period, naively following the expected intraday distribution of market volume. The more granular data resulting from the automation of exchanges has allowed algorithmic traders to progressively build more sophisticated execution strategies. Data on trade and quote events (tick-by-tick data) are now easily accessible to researchers interested in studying microstructure behavior. The amount of available tick data now is very large and calls for techniques used for big data analysis and modeling. For instance, the constituents of the S\&P500 alone record an average of 12~million trade events per day (the simplest level of information), and that number can grow significantly larger if one collects so called message data (containing all trade and quote events processed in the limit order book) published by the exchanges.
+
+
+As such, algorithmic trading can be described as a broader field combining several areas such as mathematical modeling, computer science and statistical analysis. Quantitative strategies, such as the ones detailed in the subsequent chapters, call for robust and methodical research, a good understanding of economics fundamentals, while the amount of data available and the complexity of reproducing realistic trading conditions require a reliable and fast infrastructure for backtesting and calibrating models.
+
+
+More simply, the practitioner working on developing quantitative algorithmic strategies goes through the following steps:
+\begin{itemize}
+\item \textbf{Data collection:} As mentioned previously, there is no dearth of available data. That said, the researcher needs to put particular emphasis on understanding the data structure as well as the methodology used to collect it (Which data feed is used? At what point is the data time stamped? What is the impact on recording the market performance of when there are activity bursts? How to order in the correct sequence, data coming from different origins or different asset classes in the correct time scale? etc.). High frequency data tends to be noisy, and one of the significant challenges faced in practice is to devise appropriate mechanisms to clean-up possibly corrupted data, to handle missing data, to tag outliers so that they can be isolated from the general modeling and to study how to use them for modeling extreme scenarios that may arise in the future. Failure to properly correct for errors in the data inevitably will lead to misspecified trading strategies that will not perform as expected.
+
+\item \textbf{Modeling:} The core of the subsequent chapters will cover in detail the models commonly used in existing quantitative strategies. These models cover the diverse nature of the trading data.  Particular attention should be paid to the underlying assumptions of the model (characteristics of the distribution, independence, stationarity, etc.), as well as the robustness and stability of the calibration under model deviations. While violation of model assumptions is one of the most common pitfalls encountered in practice, model misspecification (whether due to missing variables or inclusion of wrong variables) can also lead to significant bias (see Rao (1973)~\cite{rao1973}). 
+
+\item \textbf{Backtesting:} Once the strategy is designed, the next step involves backtesting it, both on in and out of sample data. The objective is to determine the behavior and profitability of the strategy over time in order to fine tune the calibrated parameters. Backtesting can be carried out with different objectives, from simply maximizing returns to maximizing risk-adjusted returns metrics such as Sharpe ratio or Sortino ratio. However, a key factor in successful and realistic backtesting depends on the assumptions of the model. Among the relevant issues to consider for execution: the fill probability (for passive orders), the models for market impact that determines the actual transactions and the scalability of the strategy all require particular attention. Additionally, for high frequency strategies, the backtesting should account for bursts of market events and latency effects. Finally, while the goal of backtesting is to find the optimal model, the most common pitfall encountered by practitioners is overfitting with a large set of parameters that simply introduce noise rather than capturing the signal (see Easley, Lopez de Prado and O'Hara (2014)~\cite{easley}).  
+
+\item \textbf{Execution:} The final step involves deploying the strategy in production and continually monitoring its performance to determine if there is a need for potential adjustments. The field of Transaction Cost Analysis is relevant to both developers of algorithmic trading strategies and users of strategies developed by third parties such as sell-side brokers. We give some initial thoughts on this topic in the remainder of the chapter.
+\end{itemize}
+
+\noindent\textbf{Measuring algorithmic trading performance} \\
+
+Whether one builds a proprietary algorithmic trading strategy or uses the ones provided by a third party, the implementation requires the deployment of an appropriate performance measurement framework to assess the quality of decisions made at the time of trading and to explore potential avenues to improve future trades.
+
+The main objective of algorithmic trading, whether it is a stand alone strategy or is part of a broader, longer term, trading strategy is to achieve the optimal balance between market impact (how much one moves the market with trader's own transactions) and timing risk (the risk that the traded instrument price moves away over time). These two quantities are respectively proportional and inversely proportional to the trading rate (how much of the current market volume is transacted by a given trader) and therefore a high level decision on strategy selection can be reduced to the question of speed, that is how fast to trade. Given the wide variety of trading strategies available, transaction cost analysis generally focuses on two questions:
+\begin{itemize}
+\item What is the optimal strategy to select?
+\item How does the strategy perform against a stated benchmark? What is the quality of the execution?
+\end{itemize}
+
+However, measuring the performance of a strategy is complex due to its multiple objectives (e.g. maximize liquidity sourcing while minimizing market impact), so, no single metric can capture all the dimensions. Here, we give a brief description of some commonly used metrics:
+
+\begin{itemize}
+\item \textbf{Slippage vs. arrival price:} This metric, also named Implementation Shortfall, was introduced by Almgren and Chriss (2000)~\cite{alm2000} in a seminal paper. By measuring the deviation between the (arrival) price at the time of the investment decision (or at the initiation of the order) and the average price obtained by the investor, we can assess if the algorithm was good at capturing the desired alpha opportunity without generating excess market impact. 
+
+\item \textbf{Slippage vs. period VWAP:} Comparing the average execution price with the market volume-weighted average price during the same trading period measures the ability of the algorithm to capture favorable price points during the execution window, rather than just simply following market volume.  
+
+\item \textbf{Participation rate:} Comparing participation rates gives an indication of how much of the period volume is obtained by the investor. Generally, a higher participation rate, without higher market impact, would mean the order was completed faster, and thus incurring less exposure to timing risk. That said, a higher participation rate is not always desirable; for instance in the case of a favorable slippage versus arrival price (e.g. a stock going down over time while the investor is buying), trading too fast would prevent the investor from getting better prices. Studying the participation rate in conjunction with the patterns of momentum or mean-reversion at times of order entry can help assess if the rate of participation was appropriate.
+
+\item \textbf{Opportunity Cost:} In attempting to minimize price impact there is an obvious trade-off between lowering the trading rate and the potential for not being able to complete the order. The slower the trading rate, the more likely the market impact will be low, but a portion of the order is likely to remain unfilled, generating an opportunity cost for the investor. The common metrics for intraday opportunity cost measurement include performance versus close price as well as participation-weighted price (PWP) at different participation rates. For a strategy that spans over several days in splitting parent orders over many days, the opportunity cost of the unfilled quantity can be computed either with the last day close, or with the theoretical alpha left on the table.
+
+\item \textbf{Reversion:} An additional way to analyze market impact or short term opportunity cost is to study the stock price trajectory once the execution is over. A sustained high demand for liquidity results in a displacement of the Supply-Demand equilibrium, as liquidity providers need to manage their inventories, that may lead to an adverse price move (market impact). Empirical evidence (as mentioned in Gatheral (2010)~\cite{gatheral}) suggests the temporary component of price impact reverts once the execution stops, and the impact function follows a power law decay function. Hence, studying reversion at a time window commensurate with the order duration informs the trader of the impact cost that might have been incurred due to a participation rate that is not adapted to the liquidity that the market was able to provide at the time of the transaction.
+
+\item \textbf{Ability to capture passive liquidity:} Another non-negligible source of transaction cost that a trading strategy aims at reducing is the spread cost; thus the ability to trade on the passive side of the order book and capture the spread by providing liquidity should also be measured. The less the liquidity demand is, on the average, the lower the aggressive take rate would be as the algorithm has more time to source passive fills. While some strategies do not explicitly distinguish between providing or taking liquidity in their objective function (like VWAP), removing liquidity from the limit order book tends to generate higher market impact and results in information leakage particularly when a full level is depleted. The less liquid markets or securities are, the more the spread cost contributes to the total transaction cost. For instance, in low market capitalization stocks or emerging markets, bid-ask spreads greater than 50~bps are not uncommon and can significantly affect the profitability of higher turnover strategies.  Furthermore, in markets where the pricing of exchange fees follows a maker-taker model, liquidity providers are entitled to receive a rebate (for instance, a cent per hundred shares traded) from the exchange where the transaction took place. This rebate can further improve the profitability of their strategy and encourages the focus on passive orders. 
+
+\item \textbf{Order Routing Performance:} Fragmented markets, whether due to the existence of several lit venues or numerous dark pools, add an extra layer of complexity. In a fragmented market, the routing decisions become important to optimal liquidity sourcing. Sending a passive child order to a venue and resting it there for a period of time without getting any execution while transactions happen elsewhere in different venues might incur opportunity cost if the market moves away and the child order ends up being traded at a less favorable price later on. Similarly, if the algorithm sends an aggressive child order to capture liquidity on the far touch, routing decisions as well as the speed of the router will affect how much of the displayed liquidity at the time of decision can be captured (fill rate). Other market participants, particularly high frequency market makers, tend to display liquidity on multiple venues simultaneously and are likely to attempt to cancel all other outstanding child orders once they receive the execution confirmation from the first hit venue to avoid adverse selection, and may replace their quotes deeper in the book. Hence, the trading algorithm attempting to capture all visible liquidity on the far touch at a point in time might end up only in a partial execution and may have to trade the remainder at a less favorable price. Given the volume and complexity of events to process in a fragmented market environment and the sensitivity to latency, the routing decisions are often delegated to the Smart Order Router (SOR) rather than handled by the algorithmic strategy itself. Most advanced SOR handle real-time market data feeds from various venues and incorporate estimations of the distance separating them from the matching engines of these venues in order to optimize child order routing sequence. Some of the common metrics used to measure performance of liquidity sourcing include analyzing fill rate on aggressive limit orders (higher fill rate meaning a more efficient routing), the ratio of routed versus executed quantity, and average time to fill on passive orders (less unsuccessful routing and shorter time to fill meaning less potential opportunity cost incurred by child orders).
+\end{itemize}
+
+The diversity of these metrics highlights the complexity of the task at hand when assessing the performance of an algorithmic trading strategy. Additionally, they have to be put in perspective with what is the state of the market at the time of execution. The outcome of a given trade is in most part determined by market conditions at the time of trading. Being a buyer ``at 20\%'' of the volume in a market trending downward on large sellers volume is significantly easier than being a seller at 20 percent of the volume in similar conditions. As such, it is often necessary to normalize the data based on market conditions, or cluster executions by their most relevant features such as: market is significantly trending away or trending in, is there a low liquidity demand or a high liquidity demand, presence or not of user-imposed constraints such as minimum/maximum participation rate or limit price. 
+
+
+One point worth noting for the practitioner is that defining a priori the metrics to be used to assess the performance of the strategy can help inform the design of the algorithm itself, as well as the areas of focus for backtesting and in providing a framework for data collection a priori before deploying strategies in production. 
+
+
+
 \section{A Brief History of Stock Trading}
 
 \noindent\textbf{Why Do We Trade:} Companies need capital to run and expand their businesses. To raise capital, they can either borrow money, paying it back over time with interest, or they can sell a stake (equity) in the company to an investor. As part owner of the company the investor would then receive a portion of the profits in the form of dividends. Equity and Debt, being scarce resources, have also intrinsic values that change over time; their prices are influenced by factors related to the performance of the company, existing market conditions and, in particular, the future outlook of the company, the sector and the economy as a whole. For instance, if interest rates charged to borrow capital change, this would affect the value of existing debt since its returns would be compared to the returns of similar products/companies that offer higher/lower rates of return. When we discuss trading in this book we refer to the act of buying and selling debt or equity (as well as other types of instruments) of various companies and institutions among investors who have different views of their intrinsic value.
@@ -796,6 +959,11 @@ There are different variations of this benchmark, most notably benchmarking exec
 \item \textbf{``All of the above'':} In practice, no single benchmark truly captures execution performance end to end. As a result, practitioners tend to favor multiple benchmarks to evaluate their executions, attributing different weights to them in order to reflect what matters most to their investment strategy.
 \end{itemize}
 
+
+
+
+
+\begin{comment}
 On top of these standard primary benchmarks, several additional metrics are used to shed more light on execution performance:
 \begin{itemize}
 \item \textbf{Completion rate:} While achieving low slippage versus arrival price might be considered as a desirable outcome, if only a fraction of the parent order got executed, the user of the execution strategy is left facing a potentially significant opportunity cost as the expected alpha wasn't fully captured. In order to avoid rewarding strategies that achieve low implementation shortfall just by being extremely passive and stopping trading when prices become unfavorable, most practitioners add a penalty term for the unexecuted portion of the order. There are several approaches to do so, one of the simplest being to apply a slippage to the unexecuted quantity equal to the difference between the arrival price and the close price of the day. 
@@ -805,10 +973,17 @@ On top of these standard primary benchmarks, several additional metrics are used
 \item \textbf{Mean vs. Variance of performance:} While absolute performance tends to be the main focus of execution benchmarking, a trader might also want to control the level of dispersion around the mean. In practice, traders with large amounts of flow on a daily basis often focus more on the attained mean as their risk of being adversely affected by outliers is somewhat mitigated by the number of orders. Conversely, occasional traders are often willing to accept a slightly less optimal mean performance if it is accompanied by a reduced variance of performance.
 \end{itemize}
 
+\end{comment}
+
+
+
 
 In order to develop an execution strategy achieving the objective(s) prescribed by the given benchmark(s), the execution problem can be modeled as a multi-step Markov decision process. However, the dimensionality of the problem explodes rapidly given the quasi infinite size of the state space (to represent the market), the large number of steps (even simplifying to 1s resolution, it results in over 20,000 steps for U.S. equities - compared, for instance, to an average of only 40 moves per chess game,\footnote{Chessgames database: www.chessgames.com/chessstats.html}) and also the large size of the action space. To address this complexity, most execution algorithms decompose the problem into different timeframe decisions such as scheduling, placement and routing. 
 
 
+
+
+\begin{comment}
 \subsection{Scheduling}
 
 In electronic execution, the scheduling layer is often described as the macro trader of the strategy, in charge of decisions spanning the whole order duration such as allocating the parent order quantity through the life of the the order. It answers the question: “how much should I trade in each period?”.
@@ -868,13 +1043,13 @@ In the second case, the objective of the aggressive order is just to catch-up to
 \end{itemize}
 
 
-
 \subsection{RFQ Markets}
 
 
 Outside of continuous double auction markets the problem is somewhat simplified and might not require the same layered structured. For instance, RFQ markets can be modeled as single step Markov decision process where one submits a quote (a quantity at a certain price) and receives an execution or not which end the process for this order. The execution policy can then be simply optimized to achieve a desired hit ratio or control inventory risk.
 
 
+\end{comment}
 
 
 
