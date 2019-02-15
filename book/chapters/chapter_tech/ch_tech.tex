@@ -185,24 +185,24 @@ To address the increasing reliance on technology of the US market place, the SEC
 
 In today's low latency trading landscape, the speed of the matching engine is also regarded as a significant competitive advantage among venues. Consequently, ATS  matching engines and market data processing layers are often built leveraging technology of similar grade as the ones employed by main exchanges, using third parties software\footnote{\url{www.cinnober.com}, \url{www.reconart.com}}. 
 
-The matching logic, however remains relatively simple and - in its more basic form - similar to what happens on exchanges. In the next section we will provide some examples of specificities, but at its core, in its simplest form the matching engine of an ATS or Dark Pool would adhere to the following logic for midpoint orders:\\
+The matching logic, however remains relatively simple and - in its more basic form - similar to what happens on exchanges. In the next section we will provide some examples of specificities, but at its core, in its simplest form the matching engine of an ATS or Dark Pool would adhere to the following logic for midpoint orders: \\
 
-\noindent{ Buy order defined by: BUY_{price}, BUY_{size}}\todo{Caleb: how do I ensure the second 'BUY' doesn't show up as italic?}
+\noindent Buy order defined by: $BUY_{price}, BUY_{size}$ \todo{Caleb: how do I ensure the second 'BUY' doesn't show up as italic?}
 
-\noindent{ Sell order defined by: SELL_{price}, SELL_{size}}\todo{Caleb: how do I ensure the second 'SELL' doesn't show up as italic?}
+\noindent Sell order defined by: $SELL_{price}, SELL_{size}$ \todo{Caleb: how do I ensure the second 'SELL' doesn't show up as italic?}
 
 
-\noindent{ Prevailing midpoint defined as: MID}\\
+\noindent Prevailing midpoint defined as: MID \\
 
-\noindent{ If BUY_{price} >= MID:}\todo{Caleb: how do I ensure the 'MID' doesn't show up as italic?}
+\noindent I$f BUY_{price} >= MID:$ \todo{Caleb: how do I ensure the 'MID' doesn't show up as italic?}
 
  
-If SELL_{price} <= MID:\todo{Caleb: how do I ensure the 'MID' doesn't show up as italic?}
+If $SELL_{price}$ <= MID: \todo{Caleb: how do I ensure the 'MID' doesn't show up as italic?}
 
-      Executed order quantity = min(SELL_{size}, BUY_{size})\todo{Caleb: how do I ensure the second 'BUY' doesn't show up as italic?}\todo{Caleb: how do I create an extra indent toward the right?}
+      Executed order quantity = $min(SELL_{size}, BUY_{size})$ \todo{Caleb: how do I ensure the second 'BUY' doesn't show up as italic?}\todo{Caleb: how do I create an extra indent toward the right?}
 
 
-      Executed order price = MID\todo{Caleb: how do I create an extra indent toward the right aligned with the one above?}\\
+      Executed order price = MID\todo{Caleb: how do I create an extra indent toward the right aligned with the one above?} \\
 
 Once trades happen, dark pools are required to "quickly report" them to the consolidated tape, but this process is not instant, creating a temporary asymmetry between the two parties to the trade (who get immediate execution reports) and the rest of the market. More importantly, subscribers to the public tape also do not know which dark pool (or wholesaler/ELP) reported a given trade as it simply appears under the FINRA ADF Reporting Facility code.\\
 
