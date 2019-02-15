@@ -122,9 +122,9 @@ As the business evolved practitioners where looking for better approaches, somet
 We briefly look at how these efforts evolved and the drivers behind the evolution.
 
 \paragraph{Implementations Shortfall}
-Around 2000 things changed with the seminal paper from Almgren and Chriss ~\cite{alm2000} that proposed an approach to ``optimal execution''. Finally a more quantitative treatment of the subject, the approach was based on a variational  mean-variance optimization framework similar in spirit with the Markowitz optimal portfolio allocation setup. \\
+At the turn of the century things changed with the seminal paper from Almgren and Chriss ~\cite{alm2000} that proposed an approach to ``optimal execution''. Finally a more quantitative treatment of the subject, the approach was based on a variational  mean-variance optimization framework similar in spirit with the Markowitz optimal portfolio allocation setup. \\
 We'll discuss the more mathematical setup and results in the section around optimal execution academic literature. Here we limit ourselves to the high level results of the approach.
-The optimal schedule, claim Almgren and Chris, is one that trades-off minimizing impact with the volatility of the overall cost. Like Markovizt the tradeoff between mean and variance is governed by a hyperparmeter $\lambda$ which was meant to incorporate the specific ``risk aversion'' of a particular trader. Since the overall volatility cost depends on the remaining quantity the variance is highest at the beginning of the order and thus the optimal schedule will trade-off more impact cost and thus a higher trading rate to reduce that variance. As the position decreases the risk decreases and thus the optimal schedules reduces it's trading rate. The optimal schedule displays a very typical front loaded shaped curve that vanishes to zero at the trading end time.
+The optimal schedule, claim Almgren and Chris (2000), is one that trades-off minimizing impact with the volatility of the overall cost. Like Markovizt the tradeoff between mean and variance is governed by a hyperparmeter $\lambda$ which was meant to incorporate the specific ``risk aversion'' of a particular trader. Since the overall volatility cost depends on the remaining quantity the variance is highest at the beginning of the order and thus the optimal schedule will trade-off more impact cost and thus a higher trading rate to reduce that variance. As the position decreases the risk decreases and thus the optimal schedules reduces it's trading rate. The optimal schedule displays a very typical front loaded shaped curve that vanishes to zero at the trading end time.
 
 The approach generated a huge amount of interest in the industry and  brokers increased their investment in quantitatively strong personnel who could understand and implement these strategies leading to the evolution of a new type of quant: the execution quant. Most algo providers implemented a version of this algorithm and hailed the arrival of the ultimate solution to the IS problem. 
 
@@ -207,12 +207,9 @@ In the second case, the objective of the aggressive order is just to catch-up to
 
 
 
+
+
 \begin{comment}
-
-\subsection{RFQ Markets}
-Outside of continuous double auction markets the problem is somewhat simplified and might not require the same layered structured. For instance, RFQ markets can be modeled as single step Markov decision process where one submits a quote (a quantity at a certain price) and receives an execution or not which end the process for this order. The execution policy can then be simply optimized to achieve a desired hit ratio or control inventory risk.
-
-
 
 
 While algorithmic trading techniques are useful in both low and high frequency settings, their importance has become more pronounced in the age of electronic trading because of the speed in execution and the necessity for efficient matching of demand and supply sides in the limit order book. Added to this is that modern equity markets where order submission and cancellations are automated and are also highly fragmented with dozens of exchanges and about forty alternative trading systems where investors can choose to trade. The trading algorithms also differ over various types of market participants, but all of them have common objectives, that is to optimize dynamically where, how often and at what price to trade. The algorithms have small reaction times to changing liquidity and price. Typically, the execution has been broadly classified into the following layers.
@@ -273,7 +270,7 @@ We present below select results in this area. The quantities that the trader can
 The performance of traders is evaluated by how they execute the orders in comparison to volume weighted average price (VWAP), because it is generally considered to be closer to how a passive trader would trade. Madhavan (2002)~\cite{mad_a02} warns that the uncritical use of VWAP are a benchmark can promote non-optimal trading behavior. As noted in the last section, other alternatives to VWAP as possible. The choice of a benchmark will obviously affect the placement strategies by the traders. Using daily VWAP as a benchmark leads to trades spread over the day and thus passive trading can significantly affect alpha. The pre-trade benchmarks such as the arrival price ignore the short-term trends in prices. The post-trade benchmarks are sensitive to order flows towards the end of the day and thus have higher price impact. The VWAP strategy can be automated so that order submissions can follow historical volume pattern during the course of the day with finer time grids. This practical approach is expounded in this section.
 
 
-We will follow the formulation of the optimization problem as given in Busseli and Boyd (2015)~\cite{busseli_boyd}. With $X$, the total number of shares to be traded over the time horizon, $(0,T)$ in `$n$' discrete time intervals, the problem is to decide how to divide the parent order $X$ into child orders $x_1, \ldots, x_n$ so that the executed average price $p_{\text{exec}}$ is closer to $p_{\text{VWAP}}$. It is assumed that the price, $p_t$, is a random walk and thus the return is white noise. It is assumed that the trading algorithm mixes optimally market and limit orders. Defining the cost of trade in time interval $t$ as $x_t \hat{p}_t$, where $\hat{p}_t$ is the effective price that depends on the instantaneous transaction costs such as bid-ask spread with `$s_t$' as the fractional bid-ask spread with a certain participation rate $x_t/v_t$, it can be shown that the effective price is
+We will follow the formulation of the optimization problem as given in Busseti and Boyd (2015)~\cite{busseti_boyd}. With $X$, the total number of shares to be traded over the time horizon, $(0,T)$ in `$n$' discrete time intervals, the problem is to decide how to divide the parent order $X$ into child orders $x_1, \ldots, x_n$ so that the executed average price $p_{\text{exec}}$ is closer to $p_{\text{VWAP}}$. It is assumed that the price, $p_t$, is a random walk and thus the return is white noise. It is assumed that the trading algorithm mixes optimally market and limit orders. Defining the cost of trade in time interval $t$ as $x_t \hat{p}_t$, where $\hat{p}_t$ is the effective price that depends on the instantaneous transaction costs such as bid-ask spread with `$s_t$' as the fractional bid-ask spread with a certain participation rate $x_t/v_t$, it can be shown that the effective price is
 	\begin{equation}
 	\hat{p}_t= p_t \left(1 - \dfrac{s_t}{2} + \alpha \, \dfrac{s_t}{2} \cdot \dfrac{x_t}{v_t} \right),
 	\end{equation}
@@ -607,15 +604,63 @@ Only recently there are efforts made to better understand and model cross-impact
 
 
 \section{Multiple Stocks: Microstructure Issues}
+
+The execution of trading entry-exit decisions can be made using the methods described in the earlier section for individual assets. Most investors hold multiple assets in their portfolios and evaluate their investments as a whole rather than in parts. In Section~\ref{sec:port_trad_strat}, we discussed the trading strategies with the focus on rebalancing the portfolios. The criteria used were in the traditional framework of mean-variance efficiency with some constraints on the transaction costs. When it comes to execution, the criteria as noticed from earlier sections is on execution costs and the market impact. We will briefly outline some models presented in the literature for multiple-security portfolios.
+
+
+Only recently there are efforts made to better understand and model cross-impact of trading an asset on trading of related assets. If a trader is liquidating simultaneously multiple assets as part of the rebalancing effort, we should expect some cross-impact. In the low frequency setting this is studied under `commonality' or `co-movement' as discussion in Chapter~\ref{ch:ch_mvts}. In the high-frequency setting, the problem is harder to study due to short-term market frictions. 
+
 \section{A Stochastic Adaptive Control Approach to Optimal Execution}
 \section{Algorithmic Trading Next Frontiers}
 \subsection{Extending the Algorithms to Other Asset Classes}
 
-While the electronification of trading first took place in the equity space, recent years have seen a significant growth of electronic trading and market making in the fixed income world, opening new opportunities to quantitative trading strategies. \\
+While the electronification of trading first took place in the equity space, recent years have seen a significant growth of electronic trading and market making in the fixed income world, opening new opportunities to quantitative trading strategies. We give a brief overview of the characteristics of some of these products.\\
 
 \noindent\textbf{a) Equity Options:} \\
 
-\noindent\textbf{a) Credit Derivatives:} \\
+\todo{NOTE: Work in progress, still needs completion}
+
+Historically, equity options markets have presented unique challenges to the successful deployment of sophisticated algorithmic trading strategies. First, options markets are significantly more fragmented than their equities counterparts, not just in space (i.e. across multiple exchanges) but also in terms of instruments. For one equity instrument representing a company (or for one index), there is a grid of available options over multiple maturities and multiple strike prices.  
+
+wikipedia def:
+The Options Price Reporting Authority (OPRA) provides, through market data vendors, last sale information and current options quotations from a committee of participant exchanges designated as the Options Price Reporting Authority.
+OPRA is a national market system plan that governs the process by which options market data are collected from participant exchanges, consolidated, and disseminated.
+
+OPRA disseminates last sale reports and quotes. OPRA also disseminates certain other types of information with respect to the trading of options on the markets of the OPRA Participants, such as the number of options contracts traded, open interest and end of day summaries.\\
+
+message rates: 4Q2018 source \url{https://www.opradata.com/}
+
+Peak Messages Per Second (millions): 19.8
+
+Peak Messages Per 100 Milliseconds (millions): 4.2
+
+Peak Transactions Per Day (billions): 45.9\\
+
+
+
+
+Options participant exchanges in OPRA; 
+BOX Exchange
+Cboe BZX Options Exchange
+Cboe C2 Options Exchange
+Cboe EDGX Options Exchange
+Cboe Options Exchange
+Miami International Securities Exchange
+MIAX PEARL
+Nasdaq BX
+Nasdaq GEMX
+Nasdaq ISE
+Nasdaq MRX
+Nasdaq PHLX
+The Nasdaq Stock Market
+NYSE American
+NYSE Arca\\
+
+Automated options market making strategies were the first ones to be deployed, and we are now witnessing the emergence of execution strategies in the option space. for instance targeting certain volatility levels (instead of price-based benchmarks). Given the natural relationship that exists with the underlying assets, options algorithmic trading strategies also require the implementation of automated delta and gamma hedging execution strategies.
+
+It is also worth noting that most exchanges now support order types such as spreads making multi-leg strategies easier to implement. \\
+
+\noindent\textbf{b) Credit Derivatives:} \\
 
 When an entity, whether private or public, borrows money, the lender or debt holder bears some default risk until maturity. There is always a risk that the entity will not be able to repay the debt in full or per the agreed terms (coupons, maturity, \dots). Credit derivatives allow debt holders to hedge all or part of that risk, as well as speculators to express their views on the creditworthiness of various entities. 
 
@@ -643,7 +688,7 @@ A variety of credit Indices are fairly liquid and trading on SEFs, in particular
 
 However, the CDS Index market presents a certain number of idiosyncrasies compared to equities markets when it comes to market making. While there is an order book available to all participants, most of the volume still gets transacted via RFQ mechanism for which market makers are not always allowed to see the quotes. Consequently, market makers only have partial information regarding the true position of the market when time comes to decide where to place their own orders. Using a a mixture of historical trades and partial real-time information, market makers can reconstruct a theoretical mid price of the market. They can set then the bid and ask quotes at an appropriate distance from that mid price, accounting for the trade-off between their desire to obtain a fill and the risk associated with maintaining their inventory. \\
 
-\noindent\textbf{b) Corporate Bonds:} \\
+\noindent\textbf{c) Corporate Bonds:} \\
 
 The corporate bond market is also an OTC market where market participants only have access to limited information prior to placing a trade. The main market participants can be categorized as pension funds and insurance companies which tend have longer investment horizons, hedge funds which tend to have more tactical trading allocations, and corporations treasury departments whose objectives and horizons can span a wide spectrum.
 
@@ -668,9 +713,6 @@ Similarly to credit indices, the first challenge for dealers in corporate bond e
 
 This type of approach obviously becomes increasingly more challenging as one moves down the liquidity spectrum. It is not uncommon for illiquid bonds to not trade for months, in which case assessing a fair mid price cannot solely rely on prior transactions. Among possible solutions, modelers can use bonds of other maturities from the same issuers, or bonds from correlated issuers or comparable investment grades. Additionally, more liquid credit derivatives are also a potential sources of information that can be leveraged for better valuations.\\
 
-\noindent\textbf{c) RFQ Markets:} \\
-
-Outside of continuous double auction markets the problem is somewhat simplified and might not require the same layered structured. For instance, RFQ markets can be modeled as single step Markov decision process where one submits a quote (a quantity at a certain price) and receives an execution or not which end the process for this order. The execution policy can then be simply optimized to achieve a desired hit ratio or control inventory risk.
 
 
 \subsection{Developing a Trading Platforms for Simultaneous Execution of Assets}
