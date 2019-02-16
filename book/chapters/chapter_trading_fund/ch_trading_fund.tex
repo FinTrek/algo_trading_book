@@ -1,6 +1,9 @@
 % !TEX root = ../../book.tex
 \chapter{Trading Fundamentals \label{chap:ch_trading_fund}}
 
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
 \begin{comment}
 \section{Max old stuffs temporary reinstated for my ease of use...}
 
@@ -65,27 +68,32 @@ The diversity of these metrics highlights the complexity of the task at hand whe
 One point worth noting for the practitioner is that defining a priori the metrics to be used to assess the performance of the strategy can help inform the design of the algorithm itself, as well as the areas of focus for backtesting and in providing a framework for data collection a priori before deploying strategies in production. 
 
 \end{comment}
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+
 
 
 \section{A Brief History of Stock Trading}
 
 \noindent\textbf{Why Do We Trade:} Companies need capital to run and expand their businesses. To raise capital, they can either borrow money, paying it back over time with interest, or they can sell a stake (equity) in the company to an investor. As part owner of the company the investor would then receive a portion of the profits in the form of dividends. Equity and Debt, being scarce resources, have also intrinsic values that change over time; their prices are influenced by factors related to the performance of the company, existing market conditions and, in particular, the future outlook of the company, the sector and the economy as a whole. For instance, if interest rates charged to borrow capital change, this would affect the value of existing debt since its returns would be compared to the returns of similar products/companies that offer higher/lower rates of return. When we discuss trading in this book we refer to the act of buying and selling debt or equity (as well as other types of instruments) of various companies and institutions among investors who have different views of their intrinsic value.
 
+
 These secondary markets transaction also serve a purposes of price discovery (O'Hara (2003)~\cite{ohara}). Buyers and sellers meet and agree on a price to exchange a security. When that transaction is made public it, in turn, informs other potential buyers and sellers of the most recent valuation of the security.  
+
 
 How the trading process has evolved over the last 200 years makes for an incredible tale of ingenuity, fierce competition and adept technology. To a large extent It was (and continues to be) driven by the positive (and at times not so positive) forces of money and greed, creating over time, a highly complex but, in most cases, amazingly efficient mechanism for evaluating the real value of a company. \\
 
 
-\noindent\textbf{The Origins of Equity Trading:} The tale begins on May 17, 1792 when a group of 24 brokers signed the Buttonwood Agreement which bound the brokers to trade only with each other under specific rules. This agreement marked the birth of the New York Stock Exchange or NYSE. While the NYSE is not the oldest Stock Exchange in the world,\footnote{this honor sits with the Amsterdam Stock Exchange dating back to 1602} nor the oldest in the US \footnote{the Philadelphia Stock Exchange has a 2 year head start having been established in 1790} it is without a question the most historically important one and the undisputed symbol of financial markets. Thus it is, in our opinion, the most suitable place to start off our journey. The NYSE soon moved their operations to the nearby Tontine Coffee House and subsequently to various other locations around the Wall Street area before settling in the current location on the corner of Wall St. and Broad St. in 1865. \\
+\noindent\textbf{The Origins of Equity Trading:} The tale begins on May 17, 1792 when a group of 24 brokers signed the Buttonwood Agreement which bound the brokers to trade only with each other under specific rules. This agreement marked the birth of the New York Stock Exchange or NYSE. While the NYSE is not the oldest Stock Exchange in the world,\footnote{this honor sits with the Amsterdam Stock Exchange dating back to 1602} nor the oldest in the US \footnote{the Philadelphia Stock Exchange has a 2 year head start having been established in 1790} it is without a question the most historically important one and the undisputed symbol of financial markets. Thus it is, in our opinion, the most suitable place to start off our journey. The NYSE soon moved their operations to the nearby Tontine Coffee House and subsequently to various other locations around the Wall Street area before settling in the current location on the corner of Wall St. and Broad St. in 1865.
 
 
-For the next almost 200 years, stock exchanges evolved in complexity and in scope but remaining conceptually unchanged, functioning at physical locations where traders and stockbrokers met in person to buy and sell securities. Most of the exchanges settled to an interaction system called Open Outcry where new orders were communicated to the floor via hand signals and with a Market Maker facilitating the transactions often stepping in to provide short term liquidity. The advent of the Telegraph and then the Telephone had big effects in accelerating the process and the dissemination of the information but not on the fundamental process through which trading was done. \\
+For the next almost 200 years, stock exchanges evolved in complexity and in scope but remaining conceptually unchanged, functioning at physical locations where traders and stockbrokers met in person to buy and sell securities. Most of the exchanges settled to an interaction system called Open Outcry where new orders were communicated to the floor via hand signals and with a Market Maker facilitating the transactions often stepping in to provide short term liquidity. The advent of the Telegraph and then the Telephone had big effects in accelerating the process and the dissemination of the information but not on the fundamental process through which trading was done.
 
 
 \noindent\textbf{Electronification and the Start of Fragmentation:} This all changed in the late 60s and early 70s. In 1971, the NASDAQ Stock Exchange launched as a completely electronic system. Initially started as a quotation site, it turned into a full exchange and  quickly became the second largest US exchange by market capitalization. In the meantime, another trend had already started. In 1969, the Institutional Networks Corporation launched Instinet, a computerized link between banks, mutual fund companies, insurance companies so that they could trade with each other with immediacy, completely bypassing the NYSE. Instinet was the first example of an Electronic Communication Networks (ECNs), an alternative approach to trading that grew in popularity in the 80s and 90s to include other notable venues like Archipelago and Island ECNs.
 
 
-This evolution started a trend in market structure that only got more accentuated over time resulting in ``liquidity fragmentation'' meaning that all available interest for a security is not centralized but rather distributed across multiple ``liquidity pools.''  This decentralization of liquidity created significant challenges to the traditional approach of trading and accelerated the drive toward electronification. \\
+This evolution started a trend in market structure that only got more accentuated over time resulting in ``liquidity fragmentation'' meaning that all available interest for a security is not centralized but rather distributed across multiple ``liquidity pools.''  This decentralization of liquidity created significant challenges to the traditional approach of trading and accelerated the drive toward electronification.
 
 
 \noindent\textbf{The Birth of HFT and Algorithmic Trading:} The year 2001 brought another momentous change in the structure of the market. On April 9, 2001, the SEC mandated that the minimum price increment on any exchange should change from 1/16th of a dollar ($\approx6.25$ cents) to 1~cent.\footnote{ The 1/16th price increment was a vestige of Spanish monetary standards of the 1600s when dobloons where divided in 2, 4, 8 parts} This seemingly minor rule change with the benign name of `Decimalization' (moving from fractions to decimal increments) had a dramatic effect, causing the average spread to significantly drop and with that, the profits of market makers and broker dealers. The reduction in profit forced many market making firms to exit the business and thus, reduced the  available market liquidity. To bring this liquidity back, exchanges introduced the maker-taker fee model which would compensate, in the form of rebates, the trader that provided liquidity (makers) while charging the regular fee to the consumer of liquidity (takers).\footnote{For some readers the concepts of providing and taking liquidity might be murky at best. No fret, this will all become clear when we discuss the trading process and introduce market microstructure}
@@ -94,7 +102,7 @@ This evolution started a trend in market structure that only got more accentuate
 This decision created unintended consequences. In this new setup if one could provide liquidity while limiting liquidity taking, one could make a small profit, due to the rebate with minimal risk and capital. This process would need to be fairly automated as the per trade profit would be minimal and requires to trade a lot to generate real revenue. It would also need to be fast because position in the order book and speed of cancellation of orders are both critical for profitability. This led to the explosion of what today we call High Frequency Trading (HFT) and to the wild technology arms race to become faster and faster that has swept the industry in the last 15 years. HFT style trading (what used to be called opportunistic market making) already existed but never as a significant portion of the market. At its peak it was estimated that more than 60\% of all trading was generated by HFTs.
 
 
-With trading costs decreasing trading volume increased but the drop in trading commission and profitability forced broker dealers to start automating some of their more mundane trading activities. Simple workflow strategies slowly evolved into a field that we now call Algorithmic Trading which is one of the main topic of this book. \\
+With trading costs decreasing trading volume increased but the drop in trading commission and profitability forced broker dealers to start automating some of their more mundane trading activities. Simple workflow strategies slowly evolved into a field that we now call Algorithmic Trading which is one of the main topic of this book.
 
 
 \noindent\textbf{Dark Pools and Reg NMS:} Over the years, fragmentation has continued to increase and the changes in market structure evolved further. New venues have surfaced with different value propositions: allow traders to find a block of liquidity without necessarily conveying that information to a block trader or market maker thus reducing risk of information leakage. No market data is published from these venues, only the notification of a trade after the fact is conveyed; these venues are aptly, but somewhat ominously, named Dark Pools.
@@ -102,35 +110,32 @@ With trading costs decreasing trading volume increased but the drop in trading c
 
 In 2005, Regulation National Market System (Reg NMS) was introduced to try to protect investors from the increase in trading complexity and fragmentation, and further accelerated the transformation of market structure in the US\footnote{equivalent regulation had a similar impact in Europe - see MiFID}. Through its two main rules, the Reg NMS was to promote best price execution for investors by encouraging competition among individual exchanges and individual orders. The Access Rule promoted non-discriminary access to quotes displayed by Self-Regulatory Organization (SRO) trading centers as well as established a cap, limiting the fees that a trading center can charge for accessing a displayed quote. The Order Protection Rule required trading centers to obtain the best possible price for investors when such price was represented by an automated immediately accessible quote. In essence, aside from a series of exemptions, the Order Protection Rule mandated market participants to transact first at a price better or equal to the National Best Bid Offer (NBBO). 
 
+
 The latter rule, in particular, had a significant effect on the US market structure. Market makers, who had traditionally been competing for quotes on a given exchange, quickly became multi-venue market makers by leveraging technology to process real time  quotes from all Reg NMS protected venues to determine where and at what price to provide their own quotations. Automated market makers therefore played a critical role in linking various trading venues and allowing for fragmentation to increase. The NYSE market share in NYSE-listed stocks was still above 80\% in 2005 but that number quickly declined as Reg NMS facilitated competition among venues to reduce NYSE's share to 25\% by 2010. 
 
-As fragmentation increased, speed and technology became major differentiating factors of success for market makers and other participants. The ability to process market data, analyze it, and submit one's orders faster than competing participants meant capturing fleeting opportunities or successfully avoiding adverse selection. To gain or maintain an edge, market participants heavily invested in technology, faster networks, and installed their servers in the same data centers as the venues they transacted on (co-location). \\
+
+As fragmentation increased, speed and technology became major differentiating factors of success for market makers and other participants. The ability to process market data, analyze it, and submit one's orders faster than competing participants meant capturing fleeting opportunities or successfully avoiding adverse selection. To gain or maintain an edge, market participants heavily invested in technology, faster networks, and installed their servers in the same data centers as the venues they transacted on (co-location).
 
 
 \noindent\textbf{Conclusion:} This brings us to present times. Of course, this whirlwind tour was not meant to be comprehensive but simply to provide the background forces and dynamics that led to the dizzying complexity of modern market structure which would seem hard to comprehend without the appropriate context. Readers might be wondering why this treatment of the history of trading was limited to the US alone. This is not meant to imply that the rest of the world stayed still. Europe and Asia had somewhat slower and somewhat compressed evolution. The main features are more or less similar but have had a much less colorful and exciting evolution. Markets continue to evolve and we will discuss more recent events in the next section where we provide an overview of the current state of Market Structure.
 
 
 
+% Market Structure and Trading Venues: A Review
 \section{Market Structure and Trading Venues: A Review}
-
 \subsection{Liquidity and Market Making}
 
 
 \begin{enumerate}
 \item[\textbf{a)}] \textbf{A definition of liquidity:} Financial markets are commonly described as carrying the function of efficiently directing the flow of savings and investments to the real economy to allow the production of goods and services. An important factor contributing to well-developed financial markets is their liquidity which enables investors to diversity their asset allocation and facilitate the transfers of securities at a reasonable transaction cost. 
 
-
 Properly describing ``liquidity'' often proves to be elusive as there is no commonly agreed upon definition of it. Black (1971)~\cite{black71} proposes a relatively intuitive description of a liquid market:
-\textit{``The market for a stock is liquid if the following conditions hold:}
-
-\begin{itemize}
-\item \textit{There are always bid and ask prices for the investor who wants to buy or sell small amounts of stock immediately.}
-
-\item \textit{The difference between the bid and ask prices (the spread) is always small.}
-
-\item \textit{An investor who is buying or selling a large amount of stock, in the absence of special information, can expect to do so over a long period of time at a price not very different, on average, from the current market price.}
-
-\item \textit{An investor can buy or sell a large block of stock immediately, but at a premium or discount that depends on the size of the block. The larger the block, the larger the premium or discount.''}
+\emph{``The market for a stock is liquid if the following conditions hold}:
+	\begin{itemize}
+	\item \emph{There are always bid and ask prices for the investor who wants to buy or sell small amounts of stock immediately.}
+	\item \emph{The difference between the bid and ask prices (the spread) is always small.}
+	\item \emph{An investor who is buying or selling a large amount of stock, in the absence of special information, can expect to do so over a long period of time at a price not very different, on average, from the current market price.}
+	\item \emph{An investor can buy or sell a large block of stock immediately, but at a premium or discount that depends on the size of the block. The larger the block, the larger the premium or discount.''}
 	\end{itemize}
 In other words, Black defines a liquid market as a continuous market having the characteristics of relatively tight spread, with enough depth on each side of the limit order book to accommodate instantaneous trading of small orders, and resilient enough to allow large orders to be traded slowly without significant impact on the price of the asset. This general definition remains particularly well suited to today's modern electronic markets and can be used to by practitioners to assess the difference in liquidity between various markets when choosing where to deploy a strategy.
 

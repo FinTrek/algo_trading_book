@@ -185,31 +185,31 @@ To address the increasing reliance on technology of the US market place, the SEC
 
 In today's low latency trading landscape, the speed of the matching engine is also regarded as a significant competitive advantage among venues. Consequently, ATS  matching engines and market data processing layers are often built leveraging technology of similar grade as the ones employed by main exchanges, using third parties software\footnote{\url{www.cinnober.com}, \url{www.reconart.com}}. 
 
-The matching logic, however remains relatively simple and - in its more basic form - similar to what happens on exchanges. In the next section we will provide some examples of specificities, but at its core, in its simplest form the matching engine of an ATS or Dark Pool would adhere to the following logic for midpoint orders:\\
-
-\noindent Buy order defined by: $BUY_{price}, BUY_{size}$
-
-\noindent Sell order defined by: $SELL_{price}, SELL_{size}$
-
-\noindent Prevailing midpoint defined as: MID\\
-
-\noindent If $BUY_{price} >= MID$:
-
- 
-If $SELL_{price} <= MID$:
-
-      Executed order quantity = $min(SELL_{size}, BUY_{size})$\todo{Caleb: how do I create an extra indent toward the right?}
+The matching logic, however remains relatively simple and---in its more basic form---similar to what happens on exchanges. In the next section we will provide some examples of specificities, but at its core, in its simplest form the matching engine of an ATS or Dark Pool would adhere to the following logic for midpoint orders: \\
 
 
-      Executed order price = MID\todo{Caleb: how do I create an extra indent toward the right aligned with the one above?}\\
+\noindent Buy order defined by: BUY\textsubscript{price}, BUY\textsubscript{size} \\
+\noindent Sell order defined by: SELL\textsubscript{price}, SELL\textsubscript{size}  \\
+\noindent Prevailing midpoint defined as: MID \\
 
-Once trades happen, dark pools are required to "quickly report" them to the consolidated tape, but this process is not instant, creating a temporary asymmetry between the two parties to the trade (who get immediate execution reports) and the rest of the market. More importantly, subscribers to the public tape also do not know which dark pool (or wholesaler/ELP) reported a given trade as it simply appears under the FINRA ADF Reporting Facility code.\\
+\noindent If BUY\textsubscript{price} $\geq$ MID: \\
+\indent If SELL\textsubscript{price} $\leq$ MID: \\
+\indent\indent Executed order quantity $= \min(\text{SELL}_{\text{size}}, \text{BUY}_{\text{size}})$ \\
+\indent\indent Executed order price = MID \\
+
+
+Once trades happen, dark pools are required to ``quickly report'' them to the consolidated tape, but this process is not instant, creating a temporary asymmetry between the two parties to the trade (who get immediate execution reports) and the rest of the market. More importantly, subscribers to the public tape also do not know which dark pool (or wholesaler/ELP) reported a given trade as it simply appears under the FINRA ADF Reporting Facility code.
+
 
 To help shed some light on dark activity, FINRA Rule 4552 specifies that weekly dark pool volume be published per security and made public on a 2-week delayed basis for Tier 1 securities, and 1-month delayed basis for Tier 2 securities\footnote{\url{https://otctransparency.finra.org/}}. While the data is not high frequency enough to make direct trading decision, it does provide a helpful aggregate view of the non-displayed liquidity to allow market participants to adapt their liquidity sourcing strategies to an ever evolving landscape (market share per security, average order size, \dots).
 
+
+
 \subsection{Client Tiering and other Rules}
 
+
 Registered ATS offer a range of specificities over regular public exchanges, mainly in the way they handle order matching. While most exchanges match orders on a price-time priority, ATS might elect to have different structures such as matching order with a price-size or price-tier-time priority, enforcing minimum trade sizes, etc. The common variations include:
+
 
 \begin{itemize}
 \item{\textbf{Client tiering:}} Some ATSs offer a counterparty tiering mechanism leveraging either a predetermined classification (Institutional Investors, Electronic Liquidity Providers (ELP), Broker Dealers, Principal flow, ...) or a scoring of the order based or more arbitrary metrics (orders frequency, average order size, post-trade mark outs, \dots). The tiering of the pool can allow participants to opt out of interacting with certain counterparties\footnote{For instance, traditional long only funds might be concerned about adverse selection if they interact with ELP.} or in certain cases alter the priority of order matching. Some pools have a matching engine that follows a price-tier-time priority, meaning that at an equivalent price level orders originating from certain institutions would be given priority (for instance long only funds would transact first, even if they submitted their order after faster players like ELPs, in an approach believed to level the playing field between natural investors and short term liquidity providers). 
