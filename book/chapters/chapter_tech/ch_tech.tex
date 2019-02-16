@@ -187,19 +187,18 @@ In today's low latency trading landscape, the speed of the matching engine is al
 
 The matching logic, however remains relatively simple and - in its more basic form - similar to what happens on exchanges. In the next section we will provide some examples of specificities, but at its core, in its simplest form the matching engine of an ATS or Dark Pool would adhere to the following logic for midpoint orders:\\
 
-\noindent Buy order defined by: BUY_{price}, BUY_{size} \todo{Caleb: how do I ensure the second 'BUY' doesn't show up as italic?}
+\noindent Buy order defined by: $BUY_{price}, BUY_{size}$
 
-\noindent Sell order defined by: SELL_{price}, SELL_{size}\todo{Caleb: how do I ensure the second 'SELL' doesn't show up as italic?}
-
+\noindent Sell order defined by: $SELL_{price}, SELL_{size}$
 
 \noindent Prevailing midpoint defined as: MID\\
 
-\noindent If BUY_{price} >= MID:\todo{Caleb: how do I ensure the 'MID' doesn't show up as italic?}
+\noindent If $BUY_{price} >= MID$:
 
  
-If SELL_{price} <= MID:\todo{Caleb: how do I ensure the 'MID' doesn't show up as italic?}
+If $SELL_{price} <= MID$:
 
-      Executed order quantity = min(SELL_{size}, BUY_{size})\todo{Caleb: how do I ensure the second 'BUY' doesn't show up as italic?}\todo{Caleb: how do I create an extra indent toward the right?}
+      Executed order quantity = $min(SELL_{size}, BUY_{size})$\todo{Caleb: how do I create an extra indent toward the right?}
 
 
       Executed order price = MID\todo{Caleb: how do I create an extra indent toward the right aligned with the one above?}\\
