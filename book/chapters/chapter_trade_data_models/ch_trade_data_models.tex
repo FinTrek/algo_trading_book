@@ -84,7 +84,7 @@ It must be noted that the characteristics of microstructure noise in mid-quote p
 	\end{equation}
 where `$p_t^*$' is the efficient price. Note the first equation, when $\alpha=1$ is the same as Roll's model if `$p_t$' is taken to be the transaction price. In this formulation, $\mu_t= p_t - p_t^*$ is taken to be the mispricing component. From \eqref{eqn:pricedynam}, note that the return variance, because $r_t= -\alpha \mu_{t-1} + a_t$,
 	\[
-	\Var(r_t)= \dfrac{2-\alpha} (2 \sigma_a^2 + \alpha \sigma_\epsilon^2),
+	\Var(r_t)= \dfrac{2-\alpha} {2 \sigma_a^2 + \alpha \sigma_\epsilon^2},
 	\]
 which is the mid-quote volatility. If $\lambda= \sigma_a^2/\sigma_\epsilon^2$ denotes the noise to signal ratio,
 	\begin{equation} \label{eqn:signalrationoise}
@@ -93,10 +93,11 @@ which is the mid-quote volatility. If $\lambda= \sigma_a^2/\sigma_\epsilon^2$ de
 which can be used to isolate the information content in the mid-quote volatility. 
 
 
-
-\textnote{TO DO (Raja):  Formulate this in mathematical terms}
-
-\textnote{TO DO (Daniel)  Graph showing examples for different liquidity}
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/mid_vol.png} 
+	\caption{Mid quote volatility for various stocks in October 2016\label{fig:mid_vol}}
+	\end{figure}
 
 
 \subsection{Other Microstructure Normalization}
@@ -117,7 +118,7 @@ Other usage of microstructure normalizer is to support decision making by compar
 
 
 
-\subsection{Intraday Normalization: Profiles}
+\subsection{Intraday Normalization: Profiles \label{s:profiles}}
 
 Incorporating intraday seasonality is a critical component of any execution strategy. Intraday seasonality arises from primarily behavioral and practical reasons around trading discontinuities such as the open and the close (and the lunch break period in certain Asian markets) and other scheduled events (e.g. the US open for European markets). Information dissemination tends to cluster around such times and so does the trading activity. The intraday variability of the measures affected by this seasonality is so strong that not considering them would lead to sub-optimal decisions. Thus, standard practice is to incorporate intra-day seasonality using normalized profiles, so that the deviations from the expected value are stated in relative terms. While most microstructure variables discussed above showcase some of this seasonality the most used profiles are: (some of these are covered in Chapter~\ref{ch:ch_uvts} and \ref{ch:ch_advanced}). For any particular duration,
 \begin{itemize}
@@ -131,7 +132,12 @@ Of particular importance is the Volume Distribution (or daily profile) as it is 
 Volume distribution during the course of a day is most invariably shaped like a flattened U (often called the Volume Smile). Volatility and spread distributions are both shaped vaguely exponential. Volume is generally clustered around the opening auction(s) and the first several minutes after the market opens. This makes intuitive sense as the market is re-opening after a trading halt and all new information accrued overnight needs to be incorporated in the trading decisions. Spread and Volatility are also large during this period signifying the increased uncertainty around the stock valuation. After this period of heightened activity,  trading normally settles in and volume flattens out only to pick up again in the period before closing as mutual funds and other investment firms often use the closing price to determine the stock net asset value (NAV) used for creation/redemption and thus prefer trading around the closing auction to minimize the risk of large negative deviations, while still striving to minimize price impact.\footnote{In this section with ignore the fact that certain markets have lunch breaks. This clearly complicates but does not change the overall picture or approach and it's a relatively trivial extension to the treatment of profiles}. With the recent strong push away from active investing into passive instrument, in particular such as ETFs, the shape of the volume profiles has become increasingly back-loaded to such an extent that it almost results in a shape, `$X$'\%. The Volume Smile is turning into a Volume Smirk! Volatility and spread also have a maximum at the open to account for the uncertainty around the market reaction to  overnight news. As soon as price discovery takes place their values quickly settle and gradually decay to minimum usually at the end of the day.\\
 
 \textnote{TODO:  DN. Confirm of the total volume of many stocks happen in the last hour of the trading day]} 
-\missingfigure{Show example of smoothed profile both in regular and cumulative terms}
+
+\begin{figure}[!ht]
+		\centering
+			\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/amzn_profile.png} 
+		\caption{Amazon Profile, Cumulative Profiles and Smoothing Details\label{fig:adv}}
+\end{figure}
 
 Having accurate profiles is of critical importance in execution and in the next section we delve into some of the decisions and considerations on how we would create these profiles.
 
@@ -158,12 +164,6 @@ A common approach is to use a statistical clustering approach using a distance m
 
 
 \noindent\textbf{Volume Profile Smoothing:} Intraday volume profiles tend to be extremely noisy and require smoothing to be effective. Without smoothing the volume profile performs worse than a completely flat profiles. Care must be taken to avoid smoothing over real discontinuities (e.g. there is a predictable spike in volume in European profiles when the US market opens). These spikes usually are preceded by a period of reduced trading activity, as the traders wait for the event. Smoothing these spikes will have the effect of spreading the spikes over previous bins and thus reducing the precision of the profile. One common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and then bring the spike back. It has been observed that this approach improves the overall predictability of the profile. As far as smoothing algorithms there are a lot of choices available. Kernel smoothing methods discussed in Chapter~\ref{ch:ch_uvts} have been proven effective. However, care must be given at the boundaries (beginning and end) of the profile. \\
-
-\begin{figure}[!ht]
-		\centering
-			\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/amzn_profile.png} 
-		\caption{Amazon Profile, Cumulative Profiles and Smoothing Details\label{fig:adv}}
-\end{figure}
 
 
 \noindent\textbf{Special Days:} Special days present additional challenges due to limited data (e.g triple witching occurs only four times a year). So using larger clusters (one cluster as a limit) is often the only option. One way to handle this would be to use these separately calibrated profiles across all special-day clusters. However this would lose the granularity of the regular day clustering. In order to maintain some of the  regular cluster level characteristics a common approach is to use a ``difference'' profile created by a normalized per-bin ratio between and average regular day profile and the special day profile. This captures the special day systematic shift that can then be multiplied back to the cluster profile essentially mixing the two components. While in most cases this has proven effective we would recommend out of sample testing at the cluster level to see in which profile this is effective. 

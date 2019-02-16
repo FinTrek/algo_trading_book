@@ -27,11 +27,7 @@ Once the approach has been defined the outcome will need to be measured to have 
 
 where $side$ is the side multiplier: $1$ for buys $-1$ for sells, $p_{\text{exec}}$ is the execution price achieved and $p_{\text{arrival}}$ is the prevailing price at order arrival. This is usually the mid point at time of arrival but could also be the last traded price before the order arrived. \footnote{Theses choices while seemingly benign are actually somewhat tricky as they can lead, in some fringe cases, to significant measurement outliers. Think for example if right before the order the spread gaps for a short moment leading the mid point to be very different than what one would call prevailing price. Alternatively on less liquid stock that don't trade often, the last traded price might be several minutes old the the prevailing price might have moved significantly.}
 
-<<<<<<< HEAD
-Implementation Shortfall is the most sensible choice because it's related to trading P\&L achieved during the trade.  It suffers however from several drawbacks:
-=======
 Implementation Shortfall is the most sensible choice because it is related to trading P\&L achieved during the trade.  It suffers however from several drawbacks:
->>>>>>> 024dd21b037fd779753a6152941abc08ac9b5ee9
 \begin{itemize}
 \item This benchmark captures the effects of the particular trading activity (i.e. market impact) that are due to the trading approach chosen but also the exogenous price diffusion due to alpha embedded in the investment decision and the activity of other participants. In most cases the exogenous effects are much larger than the endogenous ones and even on the endogenous side the more significant components are not under the control of the strategy and are dependent on the exogenous order characteristics and choice of approach. This makes Implementation Shortfall not well suited to understand how well the strategy is working.
 \item The IS benchmark attributes special meaning to the $p_{\text{arrival}}$ anchor price. This led to a widespread belief that in order to minimize the slippage vs arrival one should adjust the trading approach as prices deviate either in favor or against the   $p_{\text{arrival}}$. Lacking any additional information and under a weak market efficiency assumption this is clearly erroneous as the strategy would make decision based on spurious noise leading to a much wider distribution of outcomes.
@@ -59,7 +55,11 @@ It's hard to argue that there is anything optimal in this approach but lacking a
 
 While very simple TWAP is still used in particular in some less developed markets, it's also used by some systematic quantitative strategy where the joint trading schedule of a long-short portfolio is optimized as part of the investment strategy and then each individual short term slice (5-15m) is sent to a TWAP algorithm. This will help maintain the dollar neutrality of the portfolio.
 
-\todo{ADD Chart}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{chapters/chapter_exec_models/figures/twap.png} 
+	\caption{Example of TWAP Trade \label{fig:vwap}}
+	\end{figure}
 
 \paragraph{VWAP:} 
 
@@ -70,7 +70,7 @@ The Volume Weighted Average Price (VWAP) is the next simplest benchmark. Simply 
 
 This benchmark  is arguably a better measure of the fair market price over the period (trading a times and prices that are closer to the times and prices other market participants - who might have a better assessment of the short term price - trade). All the arguments for and against the VWAP benchmark are the same as the ones discussed for TWAP.\\
 
-The VWAP strategy, in order to achieve it's goal, takes advantage of the relative stability of the volume distribution over the day we discussed in \todo{Add reference}. Instead of trading equally throughout the time period is splits the order proportionally to the volume profile re-normalized over the time horizon. \\
+The VWAP strategy, in order to achieve it's goal, takes advantage of the relative stability of the volume distribution over the day we discussed in Section~\ref{s:profiles}. Instead of trading equally throughout the time period is splits the order proportionally to the volume profile re-normalized over the time horizon. \\
 
 The VWAP strategy is conceptually superior to TWAP as a market impact reduction approach since by trading more (less) when more  (less) volume is expected to trade it does a better job ad minimizing the realized trading rate. That being said if the volume profile is extremely noisy or unpredictable because of special circumstances trading VWAP might actually be inferior to TWAP since the error in our volume profile prediction might cause the strategy to achieve a higher trading rate than the simpler strategy.
 
@@ -78,11 +78,15 @@ There is an argument to be made that, reiterating the lack of any price dynamic/
 
 Generally, while in recent years the popularity of VWAP has decreased in favor of the more flashy ``Liquidity Seeking'' strategies, this approach is still one of the most used strategy in the market. We'll discuss Liquidity Seeking strategies in a later section.
 
-\todo{ADD Chart}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{chapters/chapter_exec_models/figures/vwap.png} 
+	\caption{Example of VWAP Trade \label{fig:vwap}}
+	\end{figure}
 
 \paragraph{Inline with Volume aka POV:} 
 
-The previous paragraph hinted that one of the limitation of VWAP (and TWAP) as a market impact reducing approach is that id does not take into consideration the high degree of volatility of the daily volume. If in a particular day the volume is significantly less than expected over the time horizon (due to lack of activity or large distortion in the volume profile) the VWAP strategy will just trade at a higher rate than envisioned by the trader leading to a higher total cost. Conversely If a trader who is trading a multiday order is too conservative and in that day there is a lot more volume than expected, she might trade a smaller portion of the order than the market would have been able to absorb. \\
+The previous paragraph hinted that one of the limitation of VWAP (and TWAP) as a market impact controlling approach is that id does not take into consideration the high degree of volatility of the daily volume. If in a particular day the volume is significantly less than expected over the time horizon (due to lack of activity or large distortion in the volume profile) the VWAP strategy will just trade at a higher rate than envisioned by the trader leading to a higher total cost. Conversely If a trader who is trading a multiday order is too conservative and in that day there is a lot more volume than expected, she might trade a smaller portion of the order than the market would have been able to absorb. \\
 
 If completing the order is an absolute hard necessity, arguably, there is little that can be done however if there is some flexibility then another approach can be taken. This is where Inline strategies come into play. Inline or alternatively called POV (Percentage of Volume) strategies have a benchmark that is not a price but a target trading rate. They aim at trading at a fixed rate as a way to directly control market impact. 
 While seemingly straightforward, following a certain participation rate is not at all an easy task and these strategies can have some severe drawbacks unless carefully implemented.
