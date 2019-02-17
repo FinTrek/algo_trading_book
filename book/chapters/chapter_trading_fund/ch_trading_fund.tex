@@ -2,13 +2,14 @@
 \chapter{Trading Fundamentals \label{chap:ch_trading_fund}}
 
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{comment}
 \section{Max old stuffs temporary reinstated for my ease of use...}
 
-\subsection{Algorithmic Trading: Some Basic Elements}
 
+% Algorithmic Trading: Some Basic Elements
+\subsection{Algorithmic Trading: Some Basic Elements}
 
 The automation of trading and the resulting wealth of data have had a significant impact on the field of quantitative finance in general. It has allowed for a seamless integration of quantitative strategies used for portfolio construction with the executions based on algorithmic trading strategies. Progressively, portfolio managers realized that the alpha generation problem cannot be decoupled from the execution problem as transaction costs can have a material effect on the profitability of the overall strategy. For example, a fund manager back-testing a strategy might assume he or she will be able to obtain the VWAP (Volume-Weighted Average Price) of the day instead of the previous night close which is not a realistic benchmark. The initial algorithmic trading strategies were targeting average prices over the period of execution (either volume-weighted average for VWAP or time-weighted average for TWAP). The VWAP benchmark price is defined as,
 	\begin{equation} 
@@ -24,43 +25,59 @@ As such, algorithmic trading can be described as a broader field combining sever
 
 
 More simply, the practitioner working on developing quantitative algorithmic strategies goes through the following steps:
+
 \begin{itemize}
 \item \textbf{Data collection:} As mentioned previously, there is no dearth of available data. That said, the researcher needs to put particular emphasis on understanding the data structure as well as the methodology used to collect it (Which data feed is used? At what point is the data time stamped? What is the impact on recording the market performance of when there are activity bursts? How to order in the correct sequence, data coming from different origins or different asset classes in the correct time scale? etc.). High frequency data tends to be noisy, and one of the significant challenges faced in practice is to devise appropriate mechanisms to clean-up possibly corrupted data, to handle missing data, to tag outliers so that they can be isolated from the general modeling and to study how to use them for modeling extreme scenarios that may arise in the future. Failure to properly correct for errors in the data inevitably will lead to misspecified trading strategies that will not perform as expected.
 
+
 \item \textbf{Modeling:} The core of the subsequent chapters will cover in detail the models commonly used in existing quantitative strategies. These models cover the diverse nature of the trading data.  Particular attention should be paid to the underlying assumptions of the model (characteristics of the distribution, independence, stationarity, etc.), as well as the robustness and stability of the calibration under model deviations. While violation of model assumptions is one of the most common pitfalls encountered in practice, model misspecification (whether due to missing variables or inclusion of wrong variables) can also lead to significant bias (see Rao (1973)~\cite{rao1973}). 
+
 
 \item \textbf{Backtesting:} Once the strategy is designed, the next step involves backtesting it, both on in and out of sample data. The objective is to determine the behavior and profitability of the strategy over time in order to fine tune the calibrated parameters. Backtesting can be carried out with different objectives, from simply maximizing returns to maximizing risk-adjusted returns metrics such as Sharpe ratio or Sortino ratio. However, a key factor in successful and realistic backtesting depends on the assumptions of the model. Among the relevant issues to consider for execution: the fill probability (for passive orders), the models for market impact that determines the actual transactions and the scalability of the strategy all require particular attention. Additionally, for high frequency strategies, the backtesting should account for bursts of market events and latency effects. Finally, while the goal of backtesting is to find the optimal model, the most common pitfall encountered by practitioners is overfitting with a large set of parameters that simply introduce noise rather than capturing the signal (see Easley, Lopez de Prado and O'Hara (2014)~\cite{easley}).  
 
+
 \item \textbf{Execution:} The final step involves deploying the strategy in production and continually monitoring its performance to determine if there is a need for potential adjustments. The field of Transaction Cost Analysis is relevant to both developers of algorithmic trading strategies and users of strategies developed by third parties such as sell-side brokers. We give some initial thoughts on this topic in the remainder of the chapter.
 \end{itemize}
+
 
 \noindent\textbf{Measuring algorithmic trading performance} \\
 
 Whether one builds a proprietary algorithmic trading strategy or uses the ones provided by a third party, the implementation requires the deployment of an appropriate performance measurement framework to assess the quality of decisions made at the time of trading and to explore potential avenues to improve future trades.
 
+
 The main objective of algorithmic trading, whether it is a stand alone strategy or is part of a broader, longer term, trading strategy is to achieve the optimal balance between market impact (how much one moves the market with trader's own transactions) and timing risk (the risk that the traded instrument price moves away over time). These two quantities are respectively proportional and inversely proportional to the trading rate (how much of the current market volume is transacted by a given trader) and therefore a high level decision on strategy selection can be reduced to the question of speed, that is how fast to trade. Given the wide variety of trading strategies available, transaction cost analysis generally focuses on two questions:
+
 \begin{itemize}
 \item What is the optimal strategy to select?
 \item How does the strategy perform against a stated benchmark? What is the quality of the execution?
 \end{itemize}
 
+
 However, measuring the performance of a strategy is complex due to its multiple objectives (e.g. maximize liquidity sourcing while minimizing market impact), so, no single metric can capture all the dimensions. Here, we give a brief description of some commonly used metrics:
+
 
 \begin{itemize}
 \item \textbf{Slippage vs. arrival price:} This metric, also named Implementation Shortfall, was introduced by Almgren and Chriss (2000)~\cite{alm2000} in a seminal paper. By measuring the deviation between the (arrival) price at the time of the investment decision (or at the initiation of the order) and the average price obtained by the investor, we can assess if the algorithm was good at capturing the desired alpha opportunity without generating excess market impact. 
 
+
 \item \textbf{Slippage vs. period VWAP:} Comparing the average execution price with the market volume-weighted average price during the same trading period measures the ability of the algorithm to capture favorable price points during the execution window, rather than just simply following market volume.  
+
 
 \item \textbf{Participation rate:} Comparing participation rates gives an indication of how much of the period volume is obtained by the investor. Generally, a higher participation rate, without higher market impact, would mean the order was completed faster, and thus incurring less exposure to timing risk. That said, a higher participation rate is not always desirable; for instance in the case of a favorable slippage versus arrival price (e.g. a stock going down over time while the investor is buying), trading too fast would prevent the investor from getting better prices. Studying the participation rate in conjunction with the patterns of momentum or mean-reversion at times of order entry can help assess if the rate of participation was appropriate.
 
+
 \item \textbf{Opportunity Cost:} In attempting to minimize price impact there is an obvious trade-off between lowering the trading rate and the potential for not being able to complete the order. The slower the trading rate, the more likely the market impact will be low, but a portion of the order is likely to remain unfilled, generating an opportunity cost for the investor. The common metrics for intraday opportunity cost measurement include performance versus close price as well as participation-weighted price (PWP) at different participation rates. For a strategy that spans over several days in splitting parent orders over many days, the opportunity cost of the unfilled quantity can be computed either with the last day close, or with the theoretical alpha left on the table.
+
 
 \item \textbf{Reversion:} An additional way to analyze market impact or short term opportunity cost is to study the stock price trajectory once the execution is over. A sustained high demand for liquidity results in a displacement of the Supply-Demand equilibrium, as liquidity providers need to manage their inventories, that may lead to an adverse price move (market impact). Empirical evidence (as mentioned in Gatheral (2010)~\cite{gatheral}) suggests the temporary component of price impact reverts once the execution stops, and the impact function follows a power law decay function. Hence, studying reversion at a time window commensurate with the order duration informs the trader of the impact cost that might have been incurred due to a participation rate that is not adapted to the liquidity that the market was able to provide at the time of the transaction.
 
+
 \item \textbf{Ability to capture passive liquidity:} Another non-negligible source of transaction cost that a trading strategy aims at reducing is the spread cost; thus the ability to trade on the passive side of the order book and capture the spread by providing liquidity should also be measured. The less the liquidity demand is, on the average, the lower the aggressive take rate would be as the algorithm has more time to source passive fills. While some strategies do not explicitly distinguish between providing or taking liquidity in their objective function (like VWAP), removing liquidity from the limit order book tends to generate higher market impact and results in information leakage particularly when a full level is depleted. The less liquid markets or securities are, the more the spread cost contributes to the total transaction cost. For instance, in low market capitalization stocks or emerging markets, bid-ask spreads greater than 50~bps are not uncommon and can significantly affect the profitability of higher turnover strategies.  Furthermore, in markets where the pricing of exchange fees follows a maker-taker model, liquidity providers are entitled to receive a rebate (for instance, a cent per hundred shares traded) from the exchange where the transaction took place. This rebate can further improve the profitability of their strategy and encourages the focus on passive orders. 
+
 
 \item \textbf{Order Routing Performance:} Fragmented markets, whether due to the existence of several lit venues or numerous dark pools, add an extra layer of complexity. In a fragmented market, the routing decisions become important to optimal liquidity sourcing. Sending a passive child order to a venue and resting it there for a period of time without getting any execution while transactions happen elsewhere in different venues might incur opportunity cost if the market moves away and the child order ends up being traded at a less favorable price later on. Similarly, if the algorithm sends an aggressive child order to capture liquidity on the far touch, routing decisions as well as the speed of the router will affect how much of the displayed liquidity at the time of decision can be captured (fill rate). Other market participants, particularly high frequency market makers, tend to display liquidity on multiple venues simultaneously and are likely to attempt to cancel all other outstanding child orders once they receive the execution confirmation from the first hit venue to avoid adverse selection, and may replace their quotes deeper in the book. Hence, the trading algorithm attempting to capture all visible liquidity on the far touch at a point in time might end up only in a partial execution and may have to trade the remainder at a less favorable price. Given the volume and complexity of events to process in a fragmented market environment and the sensitivity to latency, the routing decisions are often delegated to the Smart Order Router (SOR) rather than handled by the algorithmic strategy itself. Most advanced SOR handle real-time market data feeds from various venues and incorporate estimations of the distance separating them from the matching engines of these venues in order to optimize child order routing sequence. Some of the common metrics used to measure performance of liquidity sourcing include analyzing fill rate on aggressive limit orders (higher fill rate meaning a more efficient routing), the ratio of routed versus executed quantity, and average time to fill on passive orders (less unsuccessful routing and shorter time to fill meaning less potential opportunity cost incurred by child orders).
 \end{itemize}
+
 
 The diversity of these metrics highlights the complexity of the task at hand when assessing the performance of an algorithmic trading strategy. Additionally, they have to be put in perspective with what is the state of the market at the time of execution. The outcome of a given trade is in most part determined by market conditions at the time of trading. Being a buyer ``at 20\%'' of the volume in a market trending downward on large sellers volume is significantly easier than being a seller at 20 percent of the volume in similar conditions. As such, it is often necessary to normalize the data based on market conditions, or cluster executions by their most relevant features such as: market is significantly trending away or trending in, is there a low liquidity demand or a high liquidity demand, presence or not of user-imposed constraints such as minimum/maximum participation rate or limit price. 
 
@@ -137,32 +154,31 @@ Properly describing ``liquidity'' often proves to be elusive as there is no comm
 	\item \emph{An investor who is buying or selling a large amount of stock, in the absence of special information, can expect to do so over a long period of time at a price not very different, on average, from the current market price.}
 	\item \emph{An investor can buy or sell a large block of stock immediately, but at a premium or discount that depends on the size of the block. The larger the block, the larger the premium or discount.''}
 	\end{itemize}
-In other words, Black defines a liquid market as a continuous market having the characteristics of relatively tight spread, with enough depth on each side of the limit order book to accommodate instantaneous trading of small orders, and resilient enough to allow large orders to be traded slowly without significant impact on the price of the asset. This general definition remains particularly well suited to today's modern electronic markets and can be used to by practitioners to assess the difference in liquidity between various markets when choosing where to deploy a strategy.
+In other words, Black defines a liquid market as a continuous market having the characteristics of relatively tight spread, with enough depth on each side of the limit order book to accommodate instantaneous trading of small orders, and resilient enough to allow large orders to be traded slowly without significant impact on the price of the asset. This general definition remains particularly well suited to today's modern electronic markets and can be used to by practitioners to assess the difference in liquidity between various markets when choosing where to deploy a strategy. \\
 
-\item[\textbf{b)}] \textbf{Different styles of market participants: liquidity demanders and liquidity providers:}
-Liquid financial markets carry their primary economic function by facilitating savings and investment flows as well as allowing investors to exchange securities in the secondary market. Economic models of financial markets attempt to classify market participants into different categories. These can be broadly delineated as: 
 
-\textbf{Informed Traders,} making trading decisions based on superior information that is not yet fully reflected in the asset price. That knowledge can be derived from either fundamental analysis or information not directly available nor known to other market participants.
+\item[\textbf{b)}] \textbf{Different styles of market participants: liquidity demanders and liquidity providers:} Liquid financial markets carry their primary economic function by facilitating savings and investment flows as well as allowing investors to exchange securities in the secondary market. Economic models of financial markets attempt to classify market participants into different categories. These can be broadly delineated as: \\
 
-\textbf{News Traders,} making trading decisions based on market news or announcements and trying to make profits by anticipating the market's response to a particular news or event. The electronification of news dissemination offers new opportunities for developing quantitative trading strategies by leveraging text-mining tools such as natural language processing to interpret, and trade on, machine readable news before it is fully reflected in the market prices. Chapter 4 will detail some of the advances in the field.
+\textbf{Informed Traders,} making trading decisions based on superior information that is not yet fully reflected in the asset price. That knowledge can be derived from either fundamental analysis or information not directly available nor known to other market participants. \\
 
-\textbf{Noise Traders} (as introduced by Kyle (1985)~\cite{kyle1985}), making trading decisions without particular information and at random times mainly for liquidity. They can be seen as adding liquidity to the market through additional volume transacted, but only have a temporary effect on price formation. Their presence in the market allows informed traders to not be immediately detected when they start transacting as market makers cannot normally distinguish the flow origin between these two types of participants. In a market without noise traders, being fully efficient, at equilibrium each trade would be revealing information that would instantly be incorporated in prices, hereby removing any profit opportunities.
+\textbf{News Traders,} making trading decisions based on market news or announcements and trying to make profits by anticipating the market's response to a particular news or event. The electronification of news dissemination offers new opportunities for developing quantitative trading strategies by leveraging text-mining tools such as natural language processing to interpret, and trade on, machine readable news before it is fully reflected in the market prices. Chapter 4 will detail some of the advances in the field. \\
+
+\textbf{Noise Traders} (as introduced by Kyle (1985)~\cite{kyle1985}), making trading decisions without particular information and at random times mainly for liquidity. They can be seen as adding liquidity to the market through additional volume transacted, but only have a temporary effect on price formation. Their presence in the market allows informed traders to not be immediately detected when they start transacting as market makers cannot normally distinguish the flow origin between these two types of participants. In a market without noise traders, being fully efficient, at equilibrium each trade would be revealing information that would instantly be incorporated in prices, hereby removing any profit opportunities. \\
 
 \textbf{Market Makers,} providing liquidity to the market with the intent of collecting profits originating from trading frictions in the market place (bid ask spread). Risk-neutral market makers are exposed to adverse selection risk arising from the presence of informed traders in the marketplace, and therefore establish their trading decisions mostly based on their current inventory. As such, they are often considered in the literature to drive the determination of efficient prices by acting as the rational intermediaries.  
 
 Generalizing these concepts, market participants and trading strategies can be separated between liquidity providing and liquidity demanding. The former being essentially the domain of market makers whose level of activity, proxied by market depth, is proportional to the amount of noise trading and inversely proportional to the amount of informed trading (Kyle (1985)~\cite{kyle1985}). The latter being the domain of a variety of algorithmic trading users (mutual funds, hedge funds, asset managers,\dots).
 
+Given the key role played by market makers in the liquidity of electronic markets, we want to elaborate a bit more on their activities. \\
 
-Given the key role played by market makers in the liquidity of electronic markets, we want to elaborate a bit more on their activities.
 
 \item[\textbf{c)}] \textbf{The objectives of the modern Market Maker:}
 In present days, market making can broadly be separated into two main categories based on the trading characteristics. The first one is the provision of large liquidity---known as blocks---to institutional investors, and has traditionally been in the realm of sell side brokers acting as intermediaries and maintaining significant inventories. Such market makers usually transact through a non-continuous, negotiated, process based on their current inventory as well as assessment of the risk involved in liquidation of the position in the future. Larger or more volatile positions generally tend to come at a higher cost, reflecting the increased risk for the intermediary, but provide the end investor with a certain price and an immediate execution bearing no timing risk that is associated with execution over time. These transactions, because they involve negotiation between two parties, still mostly happen in a manual fashion or over the phone and then get reported to an appropriate exchange for public dissemination.
 
-
 The second category of market making involves the provision of quasi-continuous, immediately accessible quotes on an electronic venue. With the advent of electronic trading described in the previous section, market makers originally seated on the exchange floors have progressively been replaced by electronic liquidity providers (ELP) who leverage fast technology to disseminate timely quotes across multiple exchanges and develop automated quantitative strategies to manage their inventory and the associated risk. As such, most ELPs can be classified as high frequency traders. They derive their profits from three main sources: from liquidity rebates on exchanges that offer maker-taker fee structure, from spread earned when successfully buying on the bid and selling on the offer, and from short-term price move favorable to their inventory. 
 
+Hendershott, Brogaard and Riordan (2014)~\cite{hendershott2014} find that HFT activity tends to be concentrated in large liquid stocks and postulate that this can be attributed to a combination of larger profit opportunities emanating from trades happening more often, and easier risk management due to larger liquidity that allow for easier exit of unfavorable positions at a reasonable cost. \\
 
-Hendershott, Brogaard and Riordan (2014)~\cite{hendershott2014} find that HFT activity tends to be concentrated in large liquid stocks and postulate that this can be attributed to a combination of larger profit opportunities emanating from trades happening more often, and easier risk management due to larger liquidity that allow for easier exit of unfavorable positions at a reasonable cost. 
 
 \item[\textbf{d)}] \textbf{Risk management:} In the existing literature on informed trading, it is observed that liquidity supplying risk-neutral market makers are adversely selected by informed traders suddenly moving prices against them. For example, a market marker buy quote tends to executed when large sellers are pushing the price down, resulting in even lower prices in the near term. This significant potential asymmetry of information at any point in time emphasizes the need for market makers to employ robust risk management techniques, particularly in the domain of inventory risk. For a market maker, risk management is generally accomplished by first adjusting market quotes upward or downward to increase the arrival rate of sellers or buyers and similarly adjusting the inventory in the desired direction. If biasing the quotes doesn't result in a successful inventory adjustment, the market makers generally employ limit orders to cross the spread.
 \end{enumerate}
@@ -184,16 +200,19 @@ The most na\"ive momentum strategies rely on simple time series analysis such as
 
 
 In continuous time, one well known mean-reverting process is the Ornstein-Uhlenbeck (OU) stochastic process (Uhlenbeck and Ornstein (1930)~\cite{uhlenbeck}). It is described by the following stochastic differential equation:
-	\begin{equation}\label{eqn:dxttheta}
-	 dX_t = \theta(\mu - X_t)\,dt + \sigma \, dW_t 
+	\begin{equation} \label{eqn:dxttheta}
+	 dX_t = \theta(\mu - X_t)\,dt + \sigma \, dW_t,
 	\end{equation}
 where $W_t$ is a standard Brownian motion, and $\theta, \sigma$ are positive constants. The value $\mu$ is the long term mean of the process, the coefficient of $dt$ is called the drift, and $\sigma$ is the volatility. One can observe that the drift is negative for $X_t > \mu$ and positive for $X_t < \mu$ , making the process revert towards $\mu$ over time. $\theta$ is commonly known as the rate of mean reversion. While the OU process assumes the volatility $\sigma$ is a constant term, more advanced models with varying volatility allow for behaviors closer to real asset price dynamics. With the increasing availability of ultra-high frequency data, the trading data arrives at a quasi-continuous time scale and the models such OU process have become easily testable.
 
 
-Going back to Hendershott (2006) observation of a positive correlation of market makers inventory with subsequent prices changes, inventories can complement past returns when predicting future return. Since inventories are not publicly known, market participants use different proxies to infer their values throughout the day. Two commonly used proxies are trade imbalances (the net excess of buy or sell initiated trade volume) and spreads. Trade imbalance aims at signaling trades, either buy initiated or sell initiated, by comparing their price with the prevailing quote. Given market makers try to minimize their directional risk, they can only accommodate a limited amount of non-diversified inventory over a finite period of time. As such, spread sizes, and more particularly their sudden variation, have also been used as a proxy for detecting excess inventory from liquidity providers.
+Going back to Hendershott (2006)\todo{Missing reference} observation of a positive correlation of market makers inventory with subsequent prices changes, inventories can complement past returns when predicting future return. Since inventories are not publicly known, market participants use different proxies to infer their values throughout the day. Two commonly used proxies are trade imbalances (the net excess of buy or sell initiated trade volume) and spreads. Trade imbalance aims at signaling trades, either buy initiated or sell initiated, by comparing their price with the prevailing quote. Given market makers try to minimize their directional risk, they can only accommodate a limited amount of non-diversified inventory over a finite period of time. As such, spread sizes, and more particularly their sudden variation, have also been used as a proxy for detecting excess inventory from liquidity providers.
 
 
+
+% Equity Markets Participants
 \subsection{Equity Markets Participants} 
+
 With the context acquired in the previous section, we can now jump in a few brief review on the state of modern Market Structure. In order to get a sense of the underpinning of Equity markets, it is important to understand the the various participants, why they trade and what their principal focus is. \\
 
 
@@ -209,10 +228,12 @@ With the context acquired in the previous section, we can now jump in a few brie
 \noindent\textbf{HFTs and ELPs (Electronic Liquidity Providers), DMMs (Designated Market Makers):} These participants generate returns by acting as facilitators between the above participants, providing liquidity and then unwinding it at a profit. They can also be aggregators of retail liquidity, e.g. individual investors trading using online providers like ETrade. Likely the most technology savvy operators in the market place, they leverage ultra-low-latency infrastructure to be extremely nimble in getting in and out of positions and taking advantage of tiny mis-pricing. 
 
 
+
+%  Equity Markets Watering Holes
 \subsection{Equity Markets Watering Holes}
 
-
 Now that we know who the players are, we briefly review various approaches they use to access liquidity. \\
+
 
 \noindent\textbf{Exchanges:} This is the default approach to trading and still accounts for about 60--70\% of all activities. This is where an investor will go for immediacy and for a more certain outcome. Because the full order-book of an exchange is public and arrivals/cancellations are all published, the trader knows almost exactly what liquidity is available and can plan accordingly. This, unfortunately, comes at a cost as the same information is known by all participants especially (due to their often technological advantages) the ones whose strategies are looking for patterns of large directional trades that they can take advantage of. A trader that needs to buy or sell in size will need to be very careful on how much information their trades disseminate; otherwise, the trader may pay dearly. The field of Algorithmic Trading Execution is the effort of trading large sizes while minimizing market impact and information leakage. 
 
@@ -238,7 +259,7 @@ It is also interesting to note that these exchanges are all hosted in one of fou
 All exchanges have almost exactly the same trading mechanism and from the trading perspective behave exactly the same way during the continuous part of the trading day (i.e excluding the opening and closing auctions which we will discuss in a separate section). They provide visible (meaning that market data is disseminated) order books and operate in a price/time priority basis. Most of them use the Maker-Taker fee model that we discussed earlier but a few: BYX, EDGA, NSX, have adopted an `Inverted' fee model where posting liquidity incurs a fee while a rebate is provided for taking liquidity. This subtle but significant difference causes these venues to display a markedly different behavior. The cost for providing liquidity removes the incentive of rebate seeking HFTs; however since the taker is compensated, these venues are used first when needing urgent liquidity. This in turn brings in passive liquidity providers who agree to pay for trading passively at that price. This interplay creates subtle and still not well understood dynamics about how the market as a whole behaves.
 
 
-Finally, some observations about IEX. It started as an ATS whose main innovation is a 38-mile coil of optical fiber placed in front of its trading engine. This introduces a 350 microseconds delay each way aptly named a ``speed bump'' that is meant to remove the speed advantages of HFTs. The intent is to reduce the efficacy of the more predatory tactics and thus provide a liquidity pool that is less ``toxic''. On June 17, 2016 IEX became a full fledged exchange after a very controversial process, and marketed themselves as an exchange that would be different and would attract substantial liquidity due to it's innovative speed bump. As of 2018 this potential remains mostly unrealized and IEX has not moved much from the 2\% market share of which 80\% is still in the form of hidden liquidity. \\
+Finally, some observations about IEX. It started as an ATS whose main innovation is a 38-mile coil of optical fiber placed in front of its trading engine. This introduces a 350 microseconds delay each way aptly named a ``speed bump'' that is meant to remove the speed advantages of HFTs. The intent is to reduce the efficacy of the more predatory tactics and thus provide a liquidity pool that is less ``toxic''. On June 17, 2016 IEX became a full fledged exchange after a very controversial process, and marketed themselves as an exchange that would be different and would attract substantial liquidity due to its innovative speed bump. As of 2018, this potential remains mostly unrealized and IEX has not moved much from the 2\% market share of which 80\% is still in the form of hidden liquidity. \\
 
 
 \noindent\textbf{Alternative Trading Systems/Dark Pools:} As discussed above trading in large blocks in exchanges is not a simple matter and requires advanced algorithms and smart order routers. Even then the risk and realized costs due to information leakage can be significant. Dark Pools were invented to counterbalance this situation. One investor can have a large order ``sitting'' in a dark pool without anybody knowing that it is there and might be able to find the other side without showing any signals. Dark pools do not display any order information and uses the NBBO (National Best Bid/Offer) as the reference price. In almost all cases, to avoid having to access protected venues, these pools only trade at the inside market (at or within the bid ask spread) although, in order to maximize the probability of finding liquidity most of the block interaction happens at the midpoint. This type of trading has gained more and more traction in the last fifteen years and now accounts for 30--40\% of all traded volume in certain markets. Clearly, the growth of dark execution has spurred a lot of competition which is taken to be too much of a good thing. 
@@ -266,23 +287,27 @@ But even with the dizzying complexity, market structure is a fascinating ecosyst
 
 
 
+%  The Mechanics of Trading
 \section{The Mechanics of Trading}
 
 In order to fully understand a large part of this book one requires at least a basic understanding the mechanics of how trading actually takes place. This process is somewhat complicated and full of technical details and terminology. In this section, we will strive to provide a brief but fairly complete overview of the fundamentals which should suffice for our purposes. For a more complete and thorough treatment we refer the readers to the existing literature, most notably Harris (2003)~\cite{harris03trade}
 
 
+
+% How Double Auction Markets Work
 \subsection{How Double Auction Markets Work}
 
 The most common approach used by modern trading exchanges can be termed as an electronic, time/price priority, continuous double auction trading system. The term double auction refers to the nature of the markets where, unlike a common auction with one auctioneer and many potential buyers, there are multiple buyers and multiple sellers. These buyers and sellers interact with the exchange by sending electronic instructions through a networking protocol. There are three basic instructions: Insert, Cancel, and Amend, with Insert initiating a new order, Cancel removing an existing order from the market and Amend modifying some of the parameters of the existing order. The full intention of the trader is embedded in the the submitted ``order type'' with additional information provided as parameters. There are two basic order types: Limit Orders and Market Orders.
 
-A limit order has an associated side (Buy or Sell), a quantity and a price which represent the highest (lowest) price the trader is willing to buy (sell). Once a limit order is received by the exchange it is inserted in a data structure called a Limit Order Book (LOB) which contain two sub-structures, one per side. Orders are inserted in this structure in price priority, highest prices for buys, lower prices for sells, and for orders at the same price the orders are stored in the order in which they were received. That is what is meant by price/time priority.\footnote{Note: Not all exchanges are matching orders following a Price/Time priority algorithm; a key characteristic of the Futures market, for instance, is the existence of pro-rata markets for some fixed income contracts where passive child orders receive fill from aggressive orders based on their size as a fraction of the total passive posted quantity}. If the price of a newly arrived order overlaps with the best price available at the opposite side, the order is executed either fully or up to the available quantity on the other side for that. These orders are said to be ``matched'' and again this matching happens in price and time priority meaning that the better prices (lower for buys, higher for sells) are executed first and orders that arrived beforehand at that price level are executed first.  This matching continues until all overlapping orders have been matched and there is a price differential between the highest bidder and the lowest offer. This distance between these two prices is called the Spread.
+
+A limit order has an associated side (Buy or Sell), a quantity and a price which represent the highest (lowest) price the trader is willing to buy (sell). Once a limit order is received by the exchange it is inserted in a data structure called a Limit Order Book (LOB) which contain two sub-structures, one per side. Orders are inserted in this structure in price priority, highest prices for buys, lower prices for sells, and for orders at the same price the orders are stored in the order in which they were received. That is what is meant by price/time priority.\footnote{Note: Not all exchanges are matching orders following a Price/Time priority algorithm; a key characteristic of the Futures market, for instance, is the existence of pro-rata markets for some fixed income contracts where passive child orders receive fill from aggressive orders based on their size as a fraction of the total passive posted quantity} If the price of a newly arrived order overlaps with the best price available at the opposite side, the order is executed either fully or up to the available quantity on the other side for that. These orders are said to be ``matched'' and again this matching happens in price and time priority meaning that the better prices (lower for buys, higher for sells) are executed first and orders that arrived beforehand at that price level are executed first.  This matching continues until all overlapping orders have been matched and there is a price differential between the highest bidder and the lowest offer. This distance between these two prices is called the Spread.
+
 
 Market orders on the other hand do not have a price associated to it and will immediately executed against the other side and will match with more and more aggressive prices until the full order is executed. This process happens in a continuous fashion between the opening of the market and the closing. This continuous phase is preceded and followed by two discontinuous phases called the Open and Close auctions which we will discuss shortly. \\
 
 
 
-
-
+% The Open Auction
 \subsection{The Open Auction} 
 The Open Auction is only one type of call auctions that are commonly held on exchanges. The term ``call auction'' explains the liquidity aggregating nature of this event. Market participants are `called' to submit their quotes to the market place, at a consistent time, in order to determine a matching price that will maximize the amount of shares that can be transacted. To facilitate timely and orderly cross, auctions have strict order submission rules, including prescribed timing for entries (see Table~\ref{tab:NASDAQopen}) and information dissemination to prevent wild price fluctuations and ensure the process of efficient price discovery.
         \begin{table}[!ht]
@@ -321,10 +346,10 @@ In a double auction setup, the existence of multiple buyers and sellers requires
         \end{itemize} 
 
 
-\begin{table}[!ht]
-   \centering
-   \caption{Pre-Open Order Book Submissions \label{tab:openAuct}}
-   \begin{tabular}{cccrr} 
+	\begin{table}[!ht]
+	\centering
+   	\caption{Pre-Open Order Book Submissions \label{tab:openAuct}}
+  	\begin{tabular}{cccrr} 
 	Timestamp & Seq. Number & Side & Quantity & Price \\ \hline
 	9:01:21 & 1  &  B & 1500 &  12.10 \\
 	9:02:36 & 2  &  S & 1750 & 12.12 \\	
@@ -351,17 +376,17 @@ In a double auction setup, the existence of multiple buyers and sellers requires
 	9:18:27 &  23 & S & 450 & 12.23 \\
 	9:19:13 &  24 & S & 3500 & 12.20 \\	
 	9:19:54 &  25 & B & 1120 & 12.16
-   \end{tabular}
-\end{table}
+  	\end{tabular}
+	\end{table}
 
 
 The first step is to organize orders by limit price, segregating buys and sells as shown in Table~\ref{tab:openAuct2}. A buy order submitted with a limit price of 12.25 represents an intent to execute at any price lower or equal to 12.25. Similarly, a sell order submitted at 12.25 represents an intent to sell at any price higher or equal to 12.25. For each price level, we can then determine the cumulative buy interest and sell interest. The theoretical cross quantity at each price point is then simply the minimum of the cumulative buy interest and the cumulative sell interest as shown in Table~\ref{tab:openAuct3}. The crossing price is determined as the price that would maximize the crossed quantity. In our example, the opening price will be 12.19, and the opening quantity will be 15,750 shares.
 
 
-\begin{table}[!ht]
-   \centering
-   \caption{Ranked Order Book Submissions \label{tab:openAuct2}}
-   \begin{tabular}{crcrrr} 
+	\begin{table}[!ht]
+   	\centering
+   	\caption{Ranked Order Book Submissions \label{tab:openAuct2}}
+   	\begin{tabular}{crcrrr} 
 	Timestamp & Seq. Number & Buy Price & Buy Quantity & Sell Quantity & Sell Price\\ \hline
 	9:13:12 &  17 & 12.35  & 5500 &  &\\
 	9:10:39 & 12 & 12.34 & 2000 & & \\	
@@ -388,14 +413,14 @@ The first step is to organize orders by limit price, segregating buys and sells 
 	9:06:59 & 5  &  & & 2500 & 12.11 \\				
 	9:01:21 & 1  &  12.10 & 1500 & &  \\
 	9:10:04 & 11 & & & 3500 & 12.05 					
-   \end{tabular}
-\end{table}
+   	\end{tabular}
+	\end{table}
 
 
-\begin{table}[!ht]
-   \centering
-   \caption{Cumulative Order Book Quantities \label{tab:openAuct3}}
-   \begin{tabular}{lcrrrrr} 
+	\begin{table}[!ht]
+   	\centering
+   	\caption{Cumulative Order Book Quantities \label{tab:openAuct3}}
+   	\begin{tabular}{lcrrrrr} 
 	Price & Seq. Number & Cum. Buy Qty & Buy Qty & Sell Qty & Cum. Sell Qty & Qty Crossed at Price \\ \hline
 	12.35 &  17 & 5500  & 5500 &  & 38130 & 5500 \\
 	12.34 & 12 & 7500 & 2000 & & 38130 & 7500  \\	
@@ -422,17 +447,17 @@ The first step is to organize orders by limit price, segregating buys and sells 
 	12.11  & 5  & 35370 & & 2500 & 6000 & 6000 \\				
 	12.10 & 1  &  36870 & 1500 & & 3500 & 3500 \\
 	12.05  & 11 & 36870 & & 3500 & 3500 & 3500 	
-   \end{tabular}
-\end{table}
+   	\end{tabular}
+	\end{table}
 
 
 The list of buy orders executed during the auction is shown in Table~\ref{tab:openAuct4} and the sell orders in Table~\ref{tab:openAuct5}. It is worth mentioning that the open auction tends to be considered as a major price discovery mechanism given the fact that it occurs after a period of market inactivity when market participants were unable to transact even if they have any information. All new information accumulated overnight will be reflected in the first print of the day, matching buying and selling interests.  
 
 
-\begin{table}[!ht]
-   \centering
-   \caption{Crossed Buy Orders \label{tab:openAuct4}}
-   \begin{tabular}{lcr} 
+	\begin{table}[!ht]
+   	\centering
+   	\caption{Crossed Buy Orders \label{tab:openAuct4}}
+   	\begin{tabular}{lcr} 
 	Price & Seq. Number & Buy Qty  \\ \hline
 	12.35 &  17 & 5500 \\
 	12.34 & 12 & 2000\\	
@@ -442,18 +467,18 @@ The list of buy orders executed during the auction is shown in Table~\ref{tab:op
 	12.23 & 6 & 1200\\		
 	12.21  & 10& 1000\\		
 	12.19$^*$ &  14  & 2050 		
-   \end{tabular}
-\begin{minipage}[t]{1\textwidth}
-\small{*Order number 14 was for 2750 shares but did not get fully executed as the bid quantity up to 12.19 exceeded the offered quantity at that price. The balance of order 14 will then be posted as a limit order in the continuous trading session}
-\end{minipage}   
-\end{table}
+   	\end{tabular}
+	\begin{minipage}[t]{1\textwidth}
+	\small{*Order number 14 was for 2750 shares but did not get fully executed as the bid quantity up to 12.19 exceeded the offered quantity at that price. The balance of order 14 will then be posted as a limit order in the continuous trading session}
+	\end{minipage}   
+	\end{table}
 
 	
-\begin{table}[!ht]
-   \centering
-   \caption{Crossed Sell Orders\label{tab:openAuct5}}
-   \hspace*{-3.3cm}
-   \begin{tabular}{ccc} 
+	\begin{table}[!ht]
+   	\centering
+   	\caption{Crossed Sell Orders\label{tab:openAuct5}}
+   	\hspace*{-3.3cm}
+   	\begin{tabular}{ccc} 
 	Price & Seq. Number & Sell Qty  \\ \hline
 	12.19 &  20 & 1200 \\
 	12.18 &  18 & 1800 \\
@@ -461,19 +486,22 @@ The list of buy orders executed during the auction is shown in Table~\ref{tab:op
 	12.12 & 2 & 1750 \\		
 	12.11 & 5 & 2500 \\				
 	12.05 & 11 & 3500 		
-   \end{tabular}
-\end{table}	
+   	\end{tabular}
+	\end{table}	
 
 
 As market participants with better information are more likely to be participating in the open auction with more aggressive orders in order to extract liquidity (and, as such, setting the price), the price discovery mechanism is often considered to be quite volatile and more suited for short-term alpha investors. Similarly, the period immediately following the open auction also tends to be much more volatile than the rest of the day. As a result of which, most markets experience wider spreads while market makers try to protect themselves against information asymmetry by quoting wider bid and offers. The increased volatility and wider spreads might discourage certain investors from participating in the market at the open auction and in the period immediately following the open. While this appears to be reasonable from a price risk perspective, it is worth mentioning that for a lot of less liquid stocks (in particular small and mid cap stocks), the open auction can be a significant liquidity aggregation point that even surpasses the close auction. In Australia for instance, the bottom 50\% less liquid stocks have more volume traded in the open auction than in the close auction. Similarly in Japan, the less liquid stocks see more volume traded in the open auction, but also in the afternoon open auction that follows the market lunch break.
 
 
-From a pure execution standpoint, though, the usage of the open auction has to be considered carefully. While this represents a liquidity opportunity, the first print of the day can also have a significant anchoring effect on the stock price for the remainder of the day. So, participating in the open should be considered in light of the liquidity demand of the order: orders that are small enough can likely do without participating in the open auction and the period that continues immediately following, while large orders try to extract significant liquidity from the market might benefit from participating in the open auction. The market intraday momentum study by Gao, Hen, Li and Zhou (2018)~\cite{ghliz} demonstrates how the first half-hour return on the market as measured from the previous day's market close predicts the last half hour return. \\
+From a pure execution standpoint, though, the usage of the open auction has to be considered carefully. While this represents a liquidity opportunity, the first print of the day can also have a significant anchoring effect on the stock price for the remainder of the day. So, participating in the open should be considered in light of the liquidity demand of the order: orders that are small enough can likely do without participating in the open auction and the period that continues immediately following, while large orders try to extract significant liquidity from the market might benefit from participating in the open auction. The market intraday momentum study by Gao, Hen, Li and Zhou (2018)~\cite{ghliz} demonstrates how the first half-hour return on the market as measured from the previous day's market close predicts the last half hour return.
 
 
 
+% Continuous Trading
 \subsection{Continuous Trading} 
+
 This refers to the market phase between the auctions. During this market session  the state of the order book changes quite rapidly due to the multi-agent nature of financial markets and the prevalence of high frequency trading. Consequently, it is quite important to understand the dynamic of the LOB before implementing trading strategies. The vast majority of order types described previously are relevant to the continuous trading session only. \\
+
 
 \noindent\textbf{Adding and Removing Liquidity:} There are six types of events, three on either side, that can alter the state of the order book:
 	\begin{itemize}
@@ -483,7 +511,7 @@ This refers to the market phase between the auctions. During this market session
 	\end{itemize}
 
 
-Orders on the buy side are called ``bids'' while those on the sell side are called ``asks.'' The above events are illustrated in Figure~\ref{fig:limbk1} to Figure~\ref{fig:limbk3}. \\
+Orders on the buy side are called ``bids'' while those on the sell side are called ``asks.'' The above events are illustrated in Figure~\ref{fig:limbk1} to Figure~\ref{fig:limbk3}.
 	\begin{figure}[!ht]
 	   \centering
 	   \includegraphics[width=0.9\textwidth]{chapters/chapter_trading_fund/figures/limitbk1.png} 
@@ -496,21 +524,24 @@ Orders on the buy side are called ``bids'' while those on the sell side are call
 	   \caption{Limit Order Book---Marketable Bid. \label{fig:limbk2}}
 	\end{figure}
 	
+	
 When a market (or marketable) order is submitted, it decreases the number of outstanding orders at the opposite best price. For example, if a market bid order arrives, it will decrease the number of outstanding asks at the best price.
 	\begin{figure}[!ht]
 	   \centering
 	   \includegraphics[width=\textwidth]{chapters/chapter_trading_fund/figures/limitbk3.png} 
 	   \caption{Limit Order Book---Ask Cancellation. \label{fig:limbk3}}
 	\end{figure}
-All unexecuted limit orders can be canceled. When a cancellation occurs, it will decrease the number of outstanding orders at the specified price level.\\
+All unexecuted limit orders can be canceled. When a cancellation occurs, it will decrease the number of outstanding orders at the specified price level.
 
 
 Limit orders make up a significant percentage (70\%) of stock market trading activity. The main advantage of a limit order is that there is no price risk associated to it, that is, when the order is executed the limit price is the maximum (for a buy order) or minimum (for a sell order) price that will be achieved. But if the limit order is not marketable, the execution is not guaranteed and the time to get an order executed depends on various market factors. The trade-off between limit orders and marketable orders depends on the investors need for immediate liquidity and the fill probability of limit orders. The limit price chosen (how deep in the order book is the order placed) as well as the amount of liquidity ahead of the submitted order (how many shares will need to trade before the order gets executed following, for instance, a price/time priority order matching of the exchange) affect both the order fill probability and its expected time to fill. 
 
 
-These two metrics are of particular relevance for execution algorithms and will be studied in more depth later. The execution of limit orders does affect how the quotes are posted and are updated. If the size of a market order exceeds the number of shares available at the top of book, it is usually split and is executed at consecutive order book levels until the order is filled. Market orders are usually restricted to be filled within a day and order placed after the markets close might be entered the next day\footnote{Depending on the Time-in-Force selected}.\\
+These two metrics are of particular relevance for execution algorithms and will be studied in more depth later. The execution of limit orders does affect how the quotes are posted and are updated. If the size of a market order exceeds the number of shares available at the top of book, it is usually split and is executed at consecutive order book levels until the order is filled. Market orders are usually restricted to be filled within a day and order placed after the markets close might be entered the next day.\footnote{Depending on the Time-in-Force selected} \\
+
 
 \noindent\textbf{Order Types:} The diversity of order types is a key component of continuous double auction electronic markets. Order types allow participants to precisely express their intentions with regards to their interaction with the limit order book. Over time, in an effort to cater to sophisticated electronic traders, exchanges around the world have raced to offer ever more complex order types. Here, we will just provide a brief description of the main ones:
+
 \begin{itemize}
 \item  Market: Request to buy or sell immediately at the best available price. While it does not guarantee the trader a price, it guarantees execution. For small order sizes in actively traded stocks, a buy market order would execute close to the best ask price, and a sell order close to the best bid price.
 
@@ -540,55 +571,56 @@ These two metrics are of particular relevance for execution algorithms and will 
 \end{itemize} 
 
 
-
-
 As described above, there exist a wide variety of orders types offered by different exchanges to facilitate certain types of trading activities. Two additional common order types used to automate interactions with the LOB are stop-limit orders and trailing-stop orders. The former type is typically used to trade a security at a specified limit price once it traded through a given stop price. If the stock declines in value and trades below or at the stop price, the order will become a limit order rather than a market order. Trailing-stop orders follow a similar objective but the stop price trails the best bid or ask by a certain percentage. These order types are primarily used by traders as a protection against sudden adverse market moves. \\
 
 
-\noindent\textbf{Validity of Instructions:} In addition to conditions on price, it is possible to add conditions on the life duration of the order known as Time-in-Force (TIF). The most common types of TIF instructions include Day orders which are valid for the full duration of the trading session, Extended Day orders which allow trading in extended hours, and Good-Till-Cancel (GTC) orders which will be placed again on the exchange the next day with similar instructions if they were not fully filled. More sophisticated market participants aiming at achieving greater control over their executions tend to also favor Immediate-or-Cancel (IOC) and Fill-or-Kill (FOK) Time-in-Force instructions. An IOC order will get immediately canceled back to the sender after reaching the matching engine if it doesn't get an immediate fill, and in case of a partial fill, the unfilled portion will be canceled, thus preventing it from creating a new price level in the order book. In a Fill-or-Kill scenario, the order gets either filled in its entirety or doesn't get filled at all. This instruction is particularly popular with high frequency market makers and arbitrageurs for which partial fills might result in unwanted legging risk as discussed in Chapter~\ref{ch:stat_ts} on pairs trading.
+\noindent\textbf{Validity of Instructions:} In addition to conditions on price, it is possible to add conditions on the life duration of the order known as Time-in-Force (TIF). The most common types of TIF instructions include Day orders which are valid for the full duration of the trading session, Extended Day orders which allow trading in extended hours, and Good-Till-Cancel (GTC) orders which will be placed again on the exchange the next day with similar instructions if they were not fully filled. More sophisticated market participants aiming at achieving greater control over their executions tend to also favor Immediate-or-Cancel (IOC) and Fill-or-Kill (FOK) Time-in-Force instructions. An IOC order will get immediately canceled back to the sender after reaching the matching engine if it does not get an immediate fill, and in case of a partial fill, the unfilled portion will be canceled, thus preventing it from creating a new price level in the order book. In a Fill-or-Kill scenario, the order gets either filled in its entirety or does not get filled at all. This instruction is particularly popular with high frequency market makers and arbitrageurs for which partial fills might result in unwanted legging risk as discussed in Chapter~\ref{ch:stat_ts} on pairs trading.
 
 
 Finally, it is worth mentioning that some exchanges as well as alternative venues offer the ability of specifying minimum fill sizes whereby a limit order which might be eligible for a fill due to an incoming order at the same price level only receives a fill if the incoming order is larger than a pre-specified number of shares or notional value. This type of instruction is used by market participants as a way of minimizing the number of small fills which carry the risk of excessive information dissemination, in particular in dark pools where they can be used to detect the presence of larger limit orders that would otherwise not be visible to market participants.  \\
 
 
+
+% The Closing Auction
 \subsection{The Closing Auction} 
 The Closing Auction tends to be the most popular of call auctions for a variety of interesting reasons. First, it is the last opportunity (exception made of off-hours trading) for market participants to transact in a relatively liquid environment before being exposed to the overnight period (when new information accumulates, but trades cannot easily take place). Second, with the increase in passive investment strategies providing investors with replication of a predetermined benchmark index, the closing auction has become a particularly relevant price setting event (most passive funds net asset valued (NAV) is based on close prices of the underlying assets). For such reasons, the closing auction is extremely important to many investors. From an execution standpoint, it is a major liquidity event that needs to be considered carefully.
 
 
 The mechanics of the closing auction are in most part similar to the ones described above for the open auction. The major differences across countries (and sometimes across exchanges within a country) have to do with order submission times. Some countries, such as the U.S., have order submissions start and end before the continuous session is over (see Table~\ref{tab:NASDAQclose} and Table~\ref{tab:NYSEclose}); while some other markets have two non-overlapping continuous and close order submission sessions.
 
-\begin{table}[!ht]
-   \centering
-   \caption{Nasdaq Closing Cross\label{tab:NASDAQclose}}
-   \begin{tabular}{ll} 
+	\begin{table}[!ht]
+   	\centering
+   	\caption{Nasdaq Closing Cross\label{tab:NASDAQclose}}
+   	\begin{tabular}{ll} 
 	3:55 p.m. EST & Dissemination of imbalance information begins  \\ \hline
 	3:55 p.m. EST & Cutoff for entry/amend/cancel of MOC orders\\ \hline
 	3:58 p.m. EST & Freeze period - LOC orders cannot be added/canceled  \\ 
 	 & OI orders offsetting the imbalance are still accepted   \\ \hline	
 	4:00 p.m. EST & The Closing Cross occurs		
-   \end{tabular}
-\end{table}	
+  	 \end{tabular}
+	\end{table}	
 
-\begin{table}[!ht]
-   \centering
-   \caption{NYSE Closing Cross\label{tab:NYSEclose}}
-   \begin{tabular}{ll} 
+
+	\begin{table}[!ht]
+   	\centering
+   	\caption{NYSE Closing Cross\label{tab:NYSEclose}}
+   	\begin{tabular}{ll} 
 	3:45 p.m. EST & Cutoff for MOC/LOC order entry and modifications  \\ 
-     & Dissemination of imbalance information begins \\
-	 & Closing Offset orders can be entered until 4:00 p.m.  \\ \hline	 
+     	& Dissemination of imbalance information begins \\
+	& Closing Offset orders can be entered until 4:00 p.m.  \\ \hline	 
 	3:55 p.m. EST &  Dissemination of d-quote imbalance information\\ \hline
 	3:58 p.m. EST & Cutoff for MOC/LOC cancellation for legitimate error \\ \hline
 	3:59:50 p.m. EST & Cutoff for d-Quote order entry and modification \\ \hline
 	4:00 p.m. EST & The Closing Auction starts \\ \hline
 	4:02 p.m. EST & DMM can automatically process auctions not yet complete
-   \end{tabular}
-\end{table}	
+   	\end{tabular}
+	\end{table}	
 
 
-\begin{table}[!ht]
-   \centering
-   \caption{London Stock Exchange Sessions Times\label{tab:LSEclose}}
-   \begin{tabular}{ll} 
+	\begin{table}[!ht]
+  	\centering
+   	\caption{London Stock Exchange Sessions Times\label{tab:LSEclose}}
+   	\begin{tabular}{ll} 
 	7:00-7:50 a.m. GMT & Pre-Trading  \\ \hline
 	7:50-8:00* a.m. GMT & Opening Auction Call\\ \hline
 	*8:00-12:00 p.m. GMT & Regular Trading \\ \hline
@@ -597,12 +629,13 @@ The mechanics of the closing auction are in most part similar to the ones descri
 	4:30-4:35* p.m. GMT & Closing Auction Call \\ \hline
 	*4:35-4:40 p.m. GMT & Closing Price Crossing \\ \hline	
 	4:40-5:15 p.m. GMT & Post-Close Trading
-   \end{tabular}
-\begin{minipage}[t]{1\textwidth}
-\small{*Each auction end time is subject to a random 30 second uncross period.\\}
-\small{An additional intraday auction call takes place every 3rd Friday of each month for stocks underlying FTSE 100 index options, and the 3rd Friday of every quarter for stocks underlying FTSE 100/250 Index Futures to determine the EDSP (Exchange Delivery Settlement Price). The settlement price is determined as the index value derived from the individual constituents intraday auction taking place between 10 a.m. and 10:15 a.m. and during which the electronic continuous trading is suspended. Using a call auction ensures the settlement price for these contracts is more representative of a fair market price.}
-\end{minipage}   
-\end{table}	
+   	\end{tabular}
+	\begin{minipage}[t]{1\textwidth}
+	\small{*Each auction end time is subject to a random 30 second uncross period.\\}
+	\small{An additional intraday auction call takes place every 3rd Friday of each month for stocks underlying FTSE 100 index options, and the 3rd Friday of every quarter for stocks underlying FTSE 100/250 Index Futures to determine the EDSP (Exchange Delivery Settlement Price). The settlement price is determined as the index value derived from the individual constituents intraday auction taking place between 10 a.m. and 10:15 a.m. and during which the electronic continuous trading is suspended. Using a call auction ensures the settlement price for these contracts is more representative of a fair market price.}
+	\end{minipage}   
+	\end{table}	
+
 
 One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary e-Quote orders (known as ``d-Quote'' orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since there is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. \\
 
@@ -614,8 +647,8 @@ It also represents a liquidity opportunity for active and passive investors to e
 
 
 
+% Data to Model Trading
 \section{Data to Model Trading}
-
 
 Historical market data available to researchers and practitioners alike but varied in degrees of granularity over time. From daily trade data (closing price and volume), to tick-by-tick trade and quote data (also known as TAQ data), to full message data, the progression in granularity not only reflects the focus in intraday trading complexity but also opens up the way for more advanced strategies. 
 
@@ -623,9 +656,13 @@ Historical market data available to researchers and practitioners alike but vari
 Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The level II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available level III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime. \\
 
 
+
+% Reference Data
 \subsection{Reference Data} 
-While often overlooked, or merely considered as an afterthought in the development of a research platform\footnote{More details are presented in a further chapter on research environment}, reliable reference data is the key foundation of a robust quantitative strategy development. The experienced practitioner might want to skip this section, however we encourage the neophyte to read through the tedious details to get a better grasp of the complexity at hand in the
+
+While often overlooked, or merely considered as an afterthought in the development of a research platform,\footnote{More details are presented in a further chapter on research environment} reliable reference data is the key foundation of a robust quantitative strategy development. The experienced practitioner might want to skip this section, however we encourage the neophyte to read through the tedious details to get a better grasp of the complexity at hand in the
 different categories of reference data.
+
 
 \begin{itemize}
 \item \textbf{Symbology Mapping:} ISIN, SEDOL, RIC, Bloomberg Tickers, \dots
@@ -637,20 +674,18 @@ It is important to note that such mapping needs to be persisted as point-in-time
 
 
 For instance, in the simple example mentioned, in order to efficiently backtest strategies over a period of time spanning $T_0$, one needs a robust mapping that will allow to seamlessly query the data for the underlying asset in a variety of scenarios such as:
+
 \begin{itemize}
-\item Signal generation: 30-day backward close time series as of date T < $T_0$:
+\item Signal generation: 30-day backward close time series as of date $T < T_0$: \par
+{\ttfamily select close from data where date in [T-30,  T], sym = ABC}
 
-\hspace*{-0.5cm}{\tt select close from data where date in [T-30,  T], sym=ABC}
+\item Signal generation: 30-day backward close time series as of date $T= T_0+10$: \par
+{\ttfamily select close from data where date in [T$_0$ - 20, T$_0$ + 10], sym = EDF}
 
-\item Signal generation: 30-day backward close time series as of date T = $T_0$+10:
-
-\hspace*{-0.5cm}{\tt select close from data where date in [$T_0$-20,  $T_0$+10], sym=EDF}
-
-\item Position holding: 30-day forward close time series as of date T = $T_0$-10
-
-\hspace*{-0.5cm}{\tt select close from data where date in [$T_0$-10,  $T_0$+20], sym=ABC}
-
+\item Position holding: 30-day forward close time series as of date $T= T_0-10$: \par
+{\ttfamily select close from data where date in [T$_0$ - 10,  T$_0$ + 20], sym = ABC}
 \end{itemize}
+
 
 \item \textbf{Ticker Changes:} For comparable reasons as the ones described above in the Symbology Mapping section, one needs to maintain a historical table of ticker changes allowing to seamlessly go up and down time series. 
 
@@ -667,34 +702,30 @@ Additional types of corporate actions generating discontinuity in historical tim
 Mergers \& Acquisitions and Spin-offs are also regular events in the lifecycle of corporations. Their history needs to be recorded in order to account for the resulting changes in valuation that might affect a given ticker or tickers. These situations can also be exploited by trading strategies known as Merger Arbitrage.
 
 
-Stocks quotation can be suspended as a cooling mechanism (often at the request of the underlying company) to prevent excess price volatility when significant information is about to be released to the market. Depending on the situation, the suspension can be temporary and intraday, or can last for extended periods of time if the market place allows it.\footnote{For instance, it was the case for a large number of companies in China in 2016.} Suspensions result in gaps in time series and are worth keeping track of, as they can impact strategies in backtesting (inability to enter or exit a position, uncertainty in the pricing of composite assets if a given stock has a significant weight in ETFs or Indexes). 
-Some markets will also suspend trading if the price swings more than a predefined amount (limit up / limit down situations) for either a period of time or for the remainder of the trading session.
+Stocks quotation can be suspended as a cooling mechanism (often at the request of the underlying company) to prevent excess price volatility when significant information is about to be released to the market. Depending on the situation, the suspension can be temporary and intraday, or can last for extended periods of time if the market place allows it.\footnote{For instance, it was the case for a large number of companies in China in 2016.} Suspensions result in gaps in time series and are worth keeping track of, as they can impact strategies in backtesting (inability to enter or exit a position, uncertainty in the pricing of composite assets if a given stock has a significant weight in ETFs or Indexes). Some markets will also suspend trading if the price swings more than a predefined amount (limit up / limit down situations) for either a period of time or for the remainder of the trading session.
 
 
 \item \textbf{Static Data:} country, sector, primary exchange, currency and quote factor.
 
 
-Pure static data is also relevant for the development of quantitative trading strategies. In particular, country, currency and sector are useful to group instruments based on their fundamental similarities. A well known example is the usage of sectors to group stocks in order to create pairs trading strategies. It is worth mentioning that there exist different types of sector classifications (e.g. GICS\textsuperscript\textregistered from S\&P, ICB\textsuperscript\textregistered from FTSE) offering several levels of granularity\footnote{The Global Industry Classification Standard (GICS\textsuperscript\textregistered) structure consists of 11 sectors, 24 industry groups, 68 industries and 157 sub-industries. An example of this hierarchical structure would be: Industrials / Capital Goods / Machinery / Agricultural \& Farm Machinery.}, and that different classifications might be better suited to different asset classes or countries. The constituents of the Japanese index TOPIX, for instance, are classified into 33 sectors that are thought to better reflect the fundamental structure of the Japanese economy and the existence of large diversified conglomerates. 
+Pure static data is also relevant for the development of quantitative trading strategies. In particular, country, currency and sector are useful to group instruments based on their fundamental similarities. A well known example is the usage of sectors to group stocks in order to create pairs trading strategies. It is worth mentioning that there exist different types of sector classifications (e.g. GICS\textsuperscript\textregistered from S\&P, ICB\textsuperscript\textregistered from FTSE) offering several levels of granularity,\footnote{The Global Industry Classification Standard (GICS\textsuperscript\textregistered) structure consists of 11 sectors, 24 industry groups, 68 industries and 157 sub-industries. An example of this hierarchical structure would be: Industrials / Capital Goods / Machinery / Agricultural \& Farm Machinery.} and that different classifications might be better suited to different asset classes or countries. The constituents of the Japanese index TOPIX, for instance, are classified into 33 sectors that are thought to better reflect the fundamental structure of the Japanese economy and the existence of large diversified conglomerates. 
 
 
 Maintaining a table of the quotation currency per instrument is also necessary in order to be able to aggregate positions at a portfolio level. Some exchanges allow the quotation of prices in currencies different from the one of the country in which the exchange is located.\footnote{For example, Jardine Matheson Holdings quotes in USD on the Singapore exchange while most of the other securities quote in Singapore Dollars.} Additionally, the Quote Factor associated with the quotation currency data needs to be stored. To account for the wide range of currency values and preserve pricing precision, market data providers might be publishing FX rates with a factor of 100 or 1000. Hence, to convert prices to USD one needs to multiply by the quote factor: usd price $=$ local price $\cdot$ fx $\cdot$ quote factor. Similarly, some exchanges quote prices in cents, and the associated quotation currency is reflected with a small cap letter: GBP/GBp, ZAR/ZAr, ILS/ILs, \dots).
 
 
 \item \textbf{Exchange Specific Data:}  Despite the electronification of markets, individual exchanges present a variety of differences that need to be accounted for when designing trading strategies. The first group of information concerns the hours and dates of operation:
+
 \begin{itemize}
 \item Holiday calendar: As not all exchanges are closed on the same day, and trading days off do not always fully follow the country public holidays, it is valuable to record them in particular in the international context. Strategies trading simultaneously in several markets and leveraging their correlation might not perform as expected if one of the markets is closed while the others are open. Similarly, execution strategies in one market might be impacted by the absence of trading in another market (for instance, European equity markets volume tends to be 30\% to 40\% lower during U.S. market holidays).
 
 \item Exchange sessions hours: These seemingly trivial data points can get quite complex on a global scale. What are the different available sessions (Pre-Market session, Continuous core session, After-Hour session, etc.)? What are the auction times as well as their respective cutoff times for order submission? Is there a lunch break restricting intraday trading? And if so, are there auctions before and after the lunch break? \dots Futures markets sessions can also be quite complex with multiple phases, breaks, as well as official settlement times that might differ from the closing time and have an effect on liquidity.
 
-
 In Indonesia, for instance, markets have different trading hours on Fridays. Monday through Thursday the Indonesia Stock Exchange (IDX) is open from 9:00~a.m. to 12:00~p.m., and then, from 1:30~p.m. to 4:00~p.m.. On Fridays, however, the lunch break is one hour longer and stretches from 11:30~a.m. to 2:00~p.m.. This week day effect is particularly important to consider when building volume profiles as described in Chapter~\ref{ch:stat_ts}.
-
 
 Along with local times of operation, it is necessary to consider eventual Daylight Saving Time (DST) adjustments that might effect the relative trading hours of different markets (some countries do not have DST adjustment at all, while for countries that do have one, the dates at which it applies are not always coordinated). Usually, DST starts about two weeks prior to its start in Europe, bringing the time difference between New York and London to 4~hours instead of 5~hours. This results in the volume spike in European equities associated to the U.S. market open being one hour earlier, requiring adjustment of volume profiles used for trading execution.
 
-
 Some exchanges might also adjust the length of trading hours during the course of the year. In Brazil for instance, the Bovespa trading hours are 10:00~a.m. to 6:00~pm. from October to March, but an hour shorter (10:00~a.m. to 5:00~p.m.) from April to September to be more consistent with U.S. market hours. Finally, within one country there might also exist different trading hours by venues as it is the case in Japan where the Nagoya Stock Exchange closes 30~minutes after the major Tokyo Stock Exchange.
-
 
 \item Disrupted days: Exchange outages or trading disruptions, as well as market data issues, need to be recorded so they can be filtered out when building or testing strategies as the difference in liquidity patterns or the lack of data quality might impact the overall outcome.
 \end{itemize}
@@ -711,6 +742,7 @@ Because these values and their potential activation threshold can vary over time
 
 
 \item \textbf{Market Data Condition Codes:} With ever-growing complexity in market microstructure complexity, the dissemination of market data has grown complex as well. While it is possible to store daily data as a single entry per day and per instrument, investors building intraday strategies likely need to collect tick by tick data of all the events occurring in the market place. To help classify events, exchanges and market data providers attribute so-called condition codes to the trades and quotes they publish. These condition codes vary per exchange and per asset class, and each market event can be attributed several codes at once. So, to aggregate intraday market data properly and efficiently, and decide which events to keep and which ones to exclude, it is necessary to build a mapping table of these condition codes and their meaning: auction trade, lit or dark trade, cancelled or corrected trade, regular trade, off-exchange trade reporting, block-size trade, trade originating from a multi-leg order such as an option spread trade, \dots
+
 
 For instance, in order to assess accessible liquidity for a trading algorithm, trades that are published for reporting purposes (e.g. negotiated transactions that happened off-exchange) need to be excluded. These trades should also not been used to update some of the aggregated daily data used in the construction of trading strategies (daily volume, high, low, \dots). Execution algorithms also leverage extensively distribution of intraday liquidity metrics to gauge their own participation in auctions and continuous sessions, or in lit versus dark venues, therefore requiring a precise classification of intraday market data. 
 
@@ -730,10 +762,10 @@ It is worth noting that a special day calendar usage needs not be limited to the
 \item \textbf{Futures-specific Reference Data:} Futures contracts present particular characteristics requiring additional reference data to be collected. One of the core differences of futures contracts compared to regular stocks is the fact that instruments have an expiry date, after which they cease to exist. For the purpose of backtesting strategies, it is necessary to know which contract was live at any point in time through the use of an expiry calendar, but also which contract was the most liquid (for instance, equity index futures tend to be the most liquid for the first contract available (also known as front month) while energy futures such as oil tend to be more liquid for the second contract. While this may appear to be trivial, when building a trading strategy and modeling price series, it is particularly important to know which contract carries the most significant price formation characteristics and what is the true liquidity available in order to estimate transaction costs to properly estimate the market impact. 
 
 
-The task of implementing a futures expiry calendar is further complicated by the fact there is no real standardized frequency that applies across markets. For instance, European equity index futures tend to expire monthly, while U.S. index futures expire quarterly. Some contracts even follow an irregular cycle through the course of the year as it is the case for grain futures (e.g. wheat) that were originally created for hedging purposes and as a result have expiry months that follow the crop cycle\footnote{U.S. Wheat Futures expire in March, May, July, September and December}.
+The task of implementing a futures expiry calendar is further complicated by the fact there is no real standardized frequency that applies across markets. For instance, European equity index futures tend to expire monthly, while U.S. index futures expire quarterly. Some contracts even follow an irregular cycle through the course of the year as it is the case for grain futures (e.g. wheat) that were originally created for hedging purposes and as a result have expiry months that follow the crop cycle.\footnote{U.S. Wheat Futures expire in March, May, July, September and December}
 
 
-The fact futures contracts expire on a regular basis has further implications in terms of liquidity. As investors holding these contracts, they want to maintain their exposure for longer than the lifespan of the contract, they need to roll over their positions onto the next contract. There is often a noticeable difference in the liquidity of consecutive contracts (for instance, the front contract of the S\&P500 (e.g. ESH8) trades roughly 1.5 million contracts per day in the weeks preceding expiry while the next month contract (ESM8) only trades about 30,000 contracts per day). However, this liquidity relationship will invert in the few days leading to the expiry of the front contract as most investors roll their positions, and the most liquid contract will become the back month contract (see Figure~\ref{fig:FutRoll}). As a result, when computing rolling-window metrics (such as average daily volume for instance), it is necessary to account for potential roll dates that might have happen during the span of the time series. In the example above, a simple 60-day average daily volume on ESM8 taken in early April 2018 would capture a large number of days with very low volume (January-March) owing to the fact the most liquid contract at the time was the ESH8 contract, and not accurately represent the volume activity of the S\&P500 futures contract. A more appropriate average volume metric to be used as a forward looking value for execution purposes would blend the volume time series of ESH8 prior to the roll date, and ESM8 after the roll date\footnote{It is worth noting that different contracts 'roll' at different speed. While for monthly expiry contracts it is possible to see most of the open interest switch from the front month contract to the back month on the day prior to the expiry, for quarterly contracts it is not uncommon to see the roll happen over the course of a week or more, and the front month liquidity vanish several days ahead of the actual expiry. Careful modeling is recommended on a case by case basis.}. Additionally, in order to efficiently merge futures positions with other assets in an investment strategy, one needs to store reference data relative to the quotation of these contracts: contract size (translation between the quotation points and the actual monetary value), currency, etc. 
+The fact futures contracts expire on a regular basis has further implications in terms of liquidity. As investors holding these contracts, they want to maintain their exposure for longer than the lifespan of the contract, they need to roll over their positions onto the next contract. There is often a noticeable difference in the liquidity of consecutive contracts (for instance, the front contract of the S\&P500 (e.g. ESH8) trades roughly 1.5 million contracts per day in the weeks preceding expiry while the next month contract (ESM8) only trades about 30,000 contracts per day). However, this liquidity relationship will invert in the few days leading to the expiry of the front contract as most investors roll their positions, and the most liquid contract will become the back month contract (see Figure~\ref{fig:FutRoll}). As a result, when computing rolling-window metrics (such as average daily volume for instance), it is necessary to account for potential roll dates that might have happen during the span of the time series. In the example above, a simple 60-day average daily volume on ESM8 taken in early April 2018 would capture a large number of days with very low volume (January-March) owing to the fact the most liquid contract at the time was the ESH8 contract, and not accurately represent the volume activity of the S\&P500 futures contract. A more appropriate average volume metric to be used as a forward looking value for execution purposes would blend the volume time series of ESH8 prior to the roll date, and ESM8 after the roll date.\footnote{It is worth noting that different contracts 'roll' at different speed. While for monthly expiry contracts it is possible to see most of the open interest switch from the front month contract to the back month on the day prior to the expiry, for quarterly contracts it is not uncommon to see the roll happen over the course of a week or more, and the front month liquidity vanish several days ahead of the actual expiry. Careful modeling is recommended on a case by case basis.} Additionally, in order to efficiently merge futures positions with other assets in an investment strategy, one needs to store reference data relative to the quotation of these contracts: contract size (translation between the quotation points and the actual monetary value), currency, etc. 
 
 	\begin{figure}[!ht]
 	\centering
@@ -763,48 +795,72 @@ In order to be leveraged in quantitative strategies, one needs to maintain a var
 
 While the points mentioned above represent a non-exhaustive list of the reference data available to build a quantitative research platform, they highlight the challenges that need to be taken into account when designing and implementing algorithmic trading strategies. Once in place, a proper set of reference data will allow the quantitative trader to systematically harness the actual content of the types of data described later on without being caught off-guard by the minutiae of trading.\\
 
+
+
+% Fundamental Data
 \subsection{Fundamental Data}
+
 A very large number of quantitative investment strategies are still based on fundamental data, and consequently countless research papers are available to the interested reader describing examples of usages. Here we will only describe the main classes of existing fundamental data:
+
 
 \begin{itemize}
 \item \textbf{Key ratios:} EPS (Earnings Per Share), P/E (Price-to-Earning), P/B (Price-to-Book Value), \dots These metrics represent a normalized view of the financials of companies allowing for easier cross-sectional comparisons and ranking over time.
 
+
 \item \textbf{Analyst recommendations:} Research analysts at Sell Side institutions spend a great deal of resources analyzing companies they cover in order to provide investment recommendations (usually in the form of a Buy/Hold/Sell rating accompanied by a price target). While individual recommendations might prove noisy, the aggregate values across a large number of institutions can be interpreted as a market consensus for the valuation of a given stock, and material changes in consensus can have a direct impact on price.
 
-\item \textbf{Earnings data:} Similarly research analysts also provide quarterly earning estimates that can be used as an indication of the performance of a stock before the actual value gets published by the company. Here too consensus values tend to play a larger role, in particular when the difference between the forecast consensus and the realized value is large (known as earning surprise), as the stock might then experience outsized returns in the following days. Thus, collecting analysts' forecasts as well as realized values can be a valuable source of information in the design of strategies.
+
+\item \textbf{Earnings data:} Similarly research analysts also provide quarterly earning estimates that can be used as an indication of the performance of a stock before the actual value gets published by the company. Here, too, consensus values tend to play a larger role, in particular when the difference between the forecast consensus and the realized value is large (known as earning surprise), as the stock might then experience outsized returns in the following days. Thus, collecting analysts' forecasts as well as realized values can be a valuable source of information in the design of strategies.
+
 
 \item \textbf{Holders:} \todo{check FINRA/SEC filing 13F forms} In some markets, shareholders are required to disclose their holdings once they pass certain ownership thresholds. Sudden changes in such ownership might indicate changes in sentiment by sophisticated investor and can have a significant impact on stock performance.
 
+
 \item \textbf{Insiders Purchase/Sale:} \todo{check FINRA/SEC filing forms} In some markets, companies directors are required by law to disclose their holdings of the company stock as well as any increase or decrease of such holdings. This is thought to be an indicator of future stock price moves from the group of people who has access to the best possible information about the company and the current environment in which it evolves.
+
 
 \item \textbf{Credit Ratings:} Most companies issue both stocks and bonds to finance their operations. Bonds credit ratings and their changes over time provide additional insight into the health of a company and are worth leveraging. In particular, credit downgrades resulting in higher funding costs in the future generally have a negative impact on equity prices.
 
-\item \textbf{And much, much more:} Recent years have seen the emergence of a wide variety of alternative data sets that are available to researchers and practitioners alike. \todo{Give a few examples of unstructured and novel data types for illustration} While impossible to make a comprehensive list of all the ones that are available, they can generally be classified based on their characteristics: frequency of publication, structured or unstructured, and velocity of dissemination. The value of such data depends on the objectives and resources of the user (natural language processing or image recognition for unstructured data require significant time and efforts), but also -- and maybe more importantly -- on the uniqueness of the dataset. The more investors get access to it, the harder it becomes to extract meaningful alpha from it.\\
+
+\item \textbf{And much, much more:} Recent years have seen the emergence of a wide variety of alternative data sets that are available to researchers and practitioners alike. \todo{Give a few examples of unstructured and novel data types for illustration} While impossible to make a comprehensive list of all the ones that are available, they can generally be classified based on their characteristics: frequency of publication, structured or unstructured, and velocity of dissemination. The value of such data depends on the objectives and resources of the user (natural language processing or image recognition for unstructured data require significant time and efforts), but also---and maybe more importantly---on the uniqueness of the dataset. The more investors get access to it, the harder it becomes to extract meaningful alpha from it.
 \end{itemize}
 
+
+
+% Daily Statistics
 \subsection{Daily Statistics}
-On top of fundamental data, quantitative trading strategies (in particular shorter term and intraday ones) often make use of market statistics. While strategies of higher frequency leverage more and more granular data, day level aggregated statistics are a good place to start when building a strategy. Here we give a list of the most common ones used by practitioners and researchers alike. \\
+On top of fundamental data, quantitative trading strategies (in particular shorter term and intraday ones) often make use of market statistics. While strategies of higher frequency leverage more and more granular data, day level aggregated statistics are a good place to start when building a strategy. Here we give a list of the most common ones used by practitioners and researchers alike.
+
 
 The first group represents the overall trading activity in the instrument: 
 
 \begin{itemize}
 \item \textbf{Open, High, Low, Close (OHLC) and Previous Close Price:} The OHLC provides a good indication of the trading activity as well as the intraday volatility experienced by the instrument. The distance traveled between the lowest and highest point of the day usually gives a better indication of market sentiment than the simple close-to-close return. Keeping the previous close value as part of the same time series is also a good way to improve computation efficiency by not having make an additional database query to compute intraday return and overnight gap. The previous close needs, however, to be properly adjusted for corporate actions and dividends. 
 
+
 \item \textbf{Last trade before close (Price/Size/Time):} It is useful in determining how much the close price might have jumped in the final moments of trading, and consequently, how stable a reference value it might be for the next day.
+
 
 \item \textbf{Volume:} It is another valuable source of trading activity indication, in particular when the level jumps from longer term average. It is also worth collecting the breakdown between lit and dark volume, in particular for execution strategies.
 
+
 \item \textbf{Auctions volume:} Depending on the exchange, there can be multiple auctions in a day (Open, Close, Morning Close and Afternoon Open - for markets with a lunch break -, as well as adhoc liquidity or intraday auctions). Owing to their liquidity aggregation nature, they often time can be considered as a valuable price discovery event when significant volume prints.
+
 
 \item \textbf{VWAP:} Similar to the OHLC, the intraday VWAP price gives a good indication of the trading activity on the day. It is not uncommon to build trading strategies using VWAP time series instead of just close-to-close prices. The main advantage being that VWAP prices represent a value over the course of the whole day and, as such, for larger orders are easier to achieve through algorithmic execution than a single print.
 
+
 \item \textbf{Short Interest / days-to-cover / utilization:} This dataset is a good proxy for investors positioning. The short pressure might be an indication of upcoming short term moves: a large short interest usually indicates a bearish view from institutional investors. Similarly, the utilization level of available securities to borrow (in order to short) gives an indication of how much room is left for further shorting (when securities become ``Hard to Borrow'', the cost of shorting becomes significantly higher requiring short seller to have strong enough beliefs in the price direction in the short term. Finally, days-to-cover data is also valuable to assess the magnitude of a potential short squeeze. If short sellers need to unwind their positions, how much volume does this represent as a fraction of available daily liquidity. The larger the value, the larger the potential sudden upswing on heavily shorted securities.
+
 
 \item \textbf{Futures data:} Futures markets provide additional insight into the activity of large investors through open interest data that can be useful to develop alpha strategies. Additionally, financial futures offer arbitrage opportunities if their basis exhibits mispricing compared to one's dividend estimates. As such, recording the basis of futures contracts is worthwhile even for strategies that don't particularly target futures.
 
+
 \item \textbf{Index-level data:} This is also a valuable dataset to collect as a source of relative measures for instrument specific features (Index OHLC, Volatility, \dots). In particular for dispersion strategies, normalized features help identify individual instruments from their benchmark. 
 
+
 \item \textbf{Options data:} The derivatives market is a good source of information about the positioning of traders (through open interest and Greeks such as Gamma and Vega) as well as how the broader market is pricing an instrument (through implied volatility for instance).
+
 
 \item \textbf{Asset Class Specific:} There is a wealth of cross-asset information available when building strategies, in particular in Fixed Income, FX, and Credit. Among the basic ones, we would note:
         \begin{itemize}
@@ -814,14 +870,21 @@ The first group represents the overall trading activity in the instrument:
         \end{itemize}
 \end{itemize}
 
+
 The second group of daily data represents granular intraday microstructure activity and is mostly of interest to intraday or execution trading strategies:
         \begin{itemize}
         \item \textbf{Number of trades:} A proxy for the activity level of an instrument, and how continuous it is (instruments with a low number of trades are harder to execute and can be more volatile). 
+        
         \item \textbf{Number and frequency of quote updates:} Similar proxy for the activity level.
+        
         \item \textbf{Top of book size:} A proxy for liquidity of the instrument (larger top of book size make it possible to trade larger order size quasi immediately if needed).
+        
         \item \textbf{Depth of book (price and size):} Similar proxy for liquidity.
+        
         \item \textbf{Spread size (average, median, time weighted average):} This provides a proxy for cost of trading. A parametrized distribution of spread size can be used to identify cheap or expensive intraday trading opportunities.
+        
         \item \textbf{Trade size (average, median):} Similar to spread size, trade sizes and their distribution are useful to identify intraday liquidity opportunities when looking at the volume available in the order book.
+        
         \item \textbf{Ticking time (average, median):} The ticking time and its distribution is a representation of how often one should expect changes in the order book first level. This is particularly helpful for execution algorithms for which the frequency of updates (adding/canceling child orders, reevaluating decisions, etc.) should be commensurate with the characteristics of the traded instrument.
         
         These daily level distribution of microstructure variable can be used as start of day estimates in trading algorithms and be updated intraday as additional data flows in through bayesian update.
@@ -835,18 +898,25 @@ Finally, the last group of daily data can be derived from the previous two group
         \item Beta w.r.t. index or sector (plain beta, or asymmetric up-days/down-days beta)
         \item Correlation matrix
         \end{itemize}
-As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.). \\
+As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.).
 
+
+
+% Bin Data
 \subsection{Bin Data} 
 The first natural extension to daily data sets is a discretization of the day into bins ranging from a few seconds to 30 minutes. The features collected are comparable to the ones relevant for daily datasets (period volume, open, high, low, close, VWAP, spread, etc.), but computed at higher frequency. It is worth mentioning that minute bar data actually underpins the vast majority of microstructure models used in the electronic execution space. Volume and spread profiles, for instance, are rarely built with a granularity finer than one minute to prevent introducing excess noise due to market friction.
 
-These minute bar datasets are also quite popular for the backtesting of low-to-medium frequency trading strategies targeting intraday alpha (short duration market neutral long-short baskets, momentum and mean-reversion strategies). The main benefit they provide is a significant dimension reduction compared to raw market data (390 rows per stock per day in the U.S. compared to hundreds of thousands or millions for raw data), which allows researchers to perform rapid and efficient backtesting as they search for alpha. However, increasing data frequency from daily data to intraday minute bars also present challenges. In particular, relationships that appears to be stable using close-to-close values become much noisier as granularity increases and signals become harder to extract (e.g., drop in correlation between assets, pricing inefficiency moves due to sudden liquidity demand, etc.). Similarly, less liquid assets with a low trade frequency might not have any trading activity for shorter durations, resulting in empty bins that need to be handled carefully when modeling, or requiring the creation of variable bin sizes. \\
+
+These minute bar datasets are also quite popular for the backtesting of low-to-medium frequency trading strategies targeting intraday alpha (short duration market neutral long-short baskets, momentum and mean-reversion strategies). The main benefit they provide is a significant dimension reduction compared to raw market data (390 rows per stock per day in the U.S. compared to hundreds of thousands or millions for raw data), which allows researchers to perform rapid and efficient backtesting as they search for alpha. However, increasing data frequency from daily data to intraday minute bars also present challenges. In particular, relationships that appears to be stable using close-to-close values become much noisier as granularity increases and signals become harder to extract (e.g., drop in correlation between assets, pricing inefficiency moves due to sudden liquidity demand, etc.). Similarly, less liquid assets with a low trade frequency might not have any trading activity for shorter durations, resulting in empty bins that need to be handled carefully when modeling, or requiring the creation of variable bin sizes.
 
 
+
+% Raw Market Data
 \subsection{Raw Market Data} 
 While historically a large swath of modeling was carried out on daily data or minute bar datasets, the past fifteen years have seen a significant rise in the usage raw market data in an attempt to extract as much information as possible, and act on it before the opportunity (or market inefficiency) dissipates.
 
-Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as ``direct feeds'') or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level I, Level II or Level III market data.\\
+
+Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as ``direct feeds'') or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level I, Level II or Level III market data.
 
 
 \noindent\textbf{Level I data: Trade and BBO Quotes:} Level I market data is the most basic form of tick-by-tick data. Historically, the level I data feed would only refer to trade information (Price, Size, Time of each trade reported to the tape) but has grown over time into a term generally accepted to mean both trades and top of book quotes. While the trade feed updates with each trade printed on the tape, the quote feed tends to update much more frequently each time liquidity is added to or removed from the top of book (a rough estimate in liquid markets is the quotes present more updates than the trades by about an order of magnitude). 
@@ -855,19 +925,19 @@ Market data, itself, comes in various levels of granularity (and price!) and can
 In order to build strategies, the timing of each event needs to be as precise as possible. While the time reported for trade and quotes is the matching engine time at the exchange, most databases also store a reception or record time to reflect the potential latency between the trade happening and one being aware it did happen and able to start making decision on it. Accounting for this real-world latency is a necessary step for researchers building strategies on raw market data for which opportunities might be very short lived and impossible to exploit by participants who are not fast enough.
 
 
-The level I data is enough to reconstruct the Best Bid and Offer (BBO) of the market. However, in fragmented markets, it is also useful to obtain an aggregated consolidated view of all available liquidity at a given price level across all exchanges. Market data aggregator usually provide this functionality for users who do not wish to reconstruct the full order book themselves. 
+The Level I data is enough to reconstruct the Best Bid and Offer (BBO) of the market. However, in fragmented markets, it is also useful to obtain an aggregated consolidated view of all available liquidity at a given price level across all exchanges. Market data aggregator usually provide this functionality for users who do not wish to reconstruct the full order book themselves. 
 
 
 Finally, it is worth noting that even Level I data contains significant additional information in the form of trade status (cancelled, reported late, etc.) and, trade and quote qualifiers. These qualifiers provide granular details such as whether a trade was an odd lot, a normal trade, an auction trade, an Intermarket Sweep, an average price reporting, on which exchange it took place, etc. These details can be used to better analyze the sequence of events and decide if a given print should be used to update the last price and total volume traded at that point in time or not. For instance, if not processed appropriately, a trade reported to the tape out of sequence could result in a large jump in price if the market has since moved, and consequently the trade status is an indication that the print should not be utilized as is.
 
 
-Capturing raw market data, whether to build a research database or process it in real-time to make trading decisions requires significant investments and expert knowledge to handle all the inherent complexity. Hence, one should carefully consider the trade off between the expected value that can be extracted from the extra granularity, and the additional overhead compared to simpler solutions such as bin data.\\
+Capturing raw market data, whether to build a research database or process it in real-time to make trading decisions requires significant investments and expert knowledge to handle all the inherent complexity. Hence, one should carefully consider the trade off between the expected value that can be extracted from the extra granularity, and the additional overhead compared to simpler solutions such as bin data. \\
 
 
-\noindent\textbf{Level II data: Market Depth:}  Level II market data contains the same information as Level I, but with the addition of quote depth data. The quote feed displays all lit limit order book updates (price changes, addition or removal of shares quoted) at any level in the book, and for all of the lit venues in fragmented markets. Given the volume of data generated and the decreasing actionable value of quotes updates as their distance to top of book increases, some users limit themselves to the top 5 or 10 levels of the order book  when they collect or process the data.\\
+\noindent\textbf{Level II data: Market Depth:}  Level~II market data contains the same information as Level I, but with the addition of quote depth data. The quote feed displays all lit limit order book updates (price changes, addition or removal of shares quoted) at any level in the book, and for all of the lit venues in fragmented markets. Given the volume of data generated and the decreasing actionable value of quotes updates as their distance to top of book increases, some users limit themselves to the top 5 or 10 levels of the order book  when they collect or process the data. \\
 
 
-\noindent\textbf{Level III data: Full Order View:} Level III market data - also known as message data - provides the most granular view of the activity in the limit order book. Each order arriving is attributed a unique ID which allows for its tracking over time, and precisely know when it is executed, canceled or amended. Similar to Level II, the dataset contains intraday depth of book activity for all securities on an exchange. Once all messages from different exchanges are consolidated into one single dataset ordered by timestamp, it is possible to build a full national depth book at any moment intraday. For illustration purposes, we take the example of U.S. Level III data and provide a short description below and in Table~\ref{tab:level3data}. \\
+\noindent\textbf{Level III data: Full Order View:} Level~III market data---also known as message data---provides the most granular view of the activity in the limit order book. Each order arriving is attributed a unique ID which allows for its tracking over time, and precisely know when it is executed, canceled or amended. Similar to Level II, the dataset contains intraday depth of book activity for all securities on an exchange. Once all messages from different exchanges are consolidated into one single dataset ordered by timestamp, it is possible to build a full national depth book at any moment intraday. For illustration purposes, we take the example of U.S. Level III data and provide a short description below and in Table~\ref{tab:level3data}.
 	\begin{table}[!ht]
 	\centering
 	\caption{Level III data \label{tab:level3data}}
@@ -918,15 +988,26 @@ Once modeled, these behaviors can, in turn, be employed to design more sophistic
         \item What is the direction of the price movement in short duration?
         \end{itemize}
 
-As illustrated by the diversity and granularity of information available to traders, markets mechanics have grown ever more complex over time, and a great deal of peculiarities (in particular at the reference data level) need to be accounted for in order to design robust and well performing strategies. The proverbial devil is in the details when in comes to quantitative trading but while it might be tempting to go straight to the most granular source of data, in practice - with the exception of truly high frequency strategies - most practitioners build their algorithmic trading strategies relying essentially on binned data. This simplifies the data collection and handling processes and also greatly reduces the dimension of the datasets so one can focus more on modeling rather than data wrangling. Most of the models and techniques described in subsequent chapters a suited to daily or binned data.
+
+As illustrated by the diversity and granularity of information available to traders, markets mechanics have grown ever more complex over time, and a great deal of peculiarities (in particular at the reference data level) need to be accounted for in order to design robust and well performing strategies. The proverbial devil is in the details when in comes to quantitative trading but while it might be tempting to go straight to the most granular source of data, in practice---with the exception of truly high frequency strategies---most practitioners build their algorithmic trading strategies relying essentially on binned data. This simplifies the data collection and handling processes and also greatly reduces the dimension of the datasets so one can focus more on modeling rather than data wrangling. Most of the models and techniques described in subsequent chapters a suited to daily or binned data.
 
 
 
 
 
 
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{comment}
 
+
+
+% Execution and its components
 \section{Execution and its components}
 
 Execution generally refers to a subsection of algorithmic trading where the transactions are not directly meant to generate returns, but to implement as efficiently as possible a trading decision from a portfolio manager (PM). The PM trading decision can be summarized as: the instrument to transact, the direction (buy or sell) and the quantity (how many shares or contracts); along with some potential constraints such as maximum participation rate, limit price, etc.
@@ -935,6 +1016,8 @@ Execution generally refers to a subsection of algorithmic trading where the tran
 The main difference between a quantitative trading strategy and a pure execution strategy is that for the latter the instrument, direction and quantity to trade are exogenous variables. Execution strategies are mainly products developed by Sell-Side agency brokers who execute trades on behalf of their clients, as well as some sophisticated Buy-Side who develop tailored execution strategies with the objective to squeeze extra returns through lower transaction costs.
 
 
+
+% Benchmarkss
 \subsection{Benchmarks}
 
 The benchmark represents a quantitatively measurable observation of the execution objective(s). The choice of a particular benchmark is an indirect means for the end user of an execution product to communicate her intentions with regards to the way the order should be handled. In order to achieve a certain benchmark, the optimal trading implementation will require different actual trading actions, from the scheduling of the parent order over the eligible time window, to child order placement and order routing. The most common benchmarks used are:
@@ -943,52 +1026,64 @@ The benchmark represents a quantitatively measurable observation of the executio
 \begin{itemize}
 \item \textbf{Arrival Price:} The arrival price is the price (generally the mid-quote) at the time the order was received by the executing party. As such, any deviation from it is considered \textbf{Implementation Shortfall} and is the cost incurred (in the form diminished investment performance) to implement the decision to buy (or sell). As it directly impacts investors performance, this is the most commonly used benchmark. It is also one of the fairest as it judges performance based on the time one received the order and could effectively start implementing execution decisions. Sell-Side brokers have dedicated execution algorithms optimized to minimize slippage to arrival price, mostly following the Almgren-Chriss framework and resulting in front loaded executions (more executions in the early part of the order in order to reduce Timing Risk exposure, then progressively slowing down in order to mitigate market impact).
 
+
 \item \textbf{VWAP:} This was one of the original benchmarks used in the early days of electronic execution, either as a full day or period benchmark. If the end investor doesn't have a particular view about the price of the asset at the time of the transaction, choosing the Volume Weighted Average Price (VWAP) as a benchmark targets obtaining an execution price that represents a fair market price over the period (trading a times and prices that are closer to the times and prices other market participants - who might have a better assessment of the short term price - trade). By construction, the resulting execution style tends to be relatively passive and yield  less market impact. Consequently, VWAP slippage is primarily used as a benchmark to measure the execution strategy efficiency at sourcing liquidity at price points that are better than what the market has a whole achieved over the same period.
+
 Most Sell-Side brokers have dedicated VWAP algorithms aiming at minimizing slippage to the benchmark. Two interesting points to note about VWAP as a benchmark is that it is both unknown until the end of execution (each trade in the market changes the value of the benchmark, contrary to Arrival), and directly impacted by one's trades (they count toward the VWAP market price). As a result of not being a fully independent benchmark, best practices warrant that it is rarely used in isolation to judge execution performance.
+
 
 \item \textbf{Inline:} One of the main drawbacks of VWAP as a benchmark is the fact that, in order to minimize slippage, most algorithms tend to follow a historical intraday volume distribution. While on average this ensures that one's trading volume will be roughly in line with the market volume at each point in time through the day, if today's volume pattern is significantly different from history (e.g. much lower volume around midday than expected) the algorithm participation rate at that time might end up being higher than expected and result in higher market impact. In cases when volume distribution is less certain, traders might opt to trade with a strategy that remains ``in line with market volumes.'' That is, aim to be a constant proportion of the market volume traded. While this approach doesn't guarantee a particular trade duration or completion of the execution (if volume is much lower than usual), it allows the user to maintain a better control over the expected market impact. The PWP X (Participation Weighted Price at X\% of the market) price is used as a measure of execution quality for the inline benchmark. It represents the price one would have obtained had they traded X\% of the market volume until completion of the order (in practice, the VWAP of the period from order start until (1/X x Order Size) has traded in the market).
 
+
 \item \textbf{Close:} Most quantitative strategies leverage close-to-close time series. As a result, some of them favor this price point as a benchmark for their execution strategies. This is also the case for passive indexers whose fund tracking error is computed based on close prices. Also, the close price being the last accessible price of the day, it is often used to compute the opportunity cost for unexecuted quantity. 
+
 There are different variations of this benchmark, most notably benchmarking execution performance versus the previous close (for strategies that select their target holdings through an overnight process using the latest available close price as an input in their model) or the open price to reflect the fact the previous close is a price point that was not accessible to the strategy.
+
 
 \item \textbf{``All of the above'':} In practice, no single benchmark truly captures execution performance end to end. As a result, practitioners tend to favor multiple benchmarks to evaluate their executions, attributing different weights to them in order to reflect what matters most to their investment strategy.
 \end{itemize}
 
 
 On top of these standard primary benchmarks, several additional metrics are used to shed more light on execution performance:
+
+
 \begin{itemize}
 \item \textbf{Completion rate:} While achieving low slippage versus arrival price might be considered as a desirable outcome, if only a fraction of the parent order got executed, the user of the execution strategy is left facing a potentially significant opportunity cost as the expected alpha wasn't fully captured. In order to avoid rewarding strategies that achieve low implementation shortfall just by being extremely passive and stopping trading when prices become unfavorable, most practitioners add a penalty term for the unexecuted portion of the order. There are several approaches to do so, one of the simplest being to apply a slippage to the unexecuted quantity equal to the difference between the arrival price and the close price of the day. 
 
-\item \textbf{Make/Take ratio:} This ratio provides some indication of the execution efficiency. How much of the liquidity was sourced on the passive side of the spread (at the bid or lower for a buy order), versus how much required the algorithm to pay the spread? This metrics highlights the quality of the order placement of the execution strategy though its ability to provide liquidity while achieving its desired trading rate. It is worth noting, however, that more passive fills do not guarantee overall better performance with regard to the primary benchmark. For instance, if a security exhibits strong intraday adverse momentum, a very passive strategy favoring passive fills would result in lower participation rates, hence delaying the total execution and exposing the user to worst prices later in the day. Similarly, highly passive VWAP algorithms do not always have better slippage versus VWAP. As the security price moves away, the algorithm will progressively fall behind its target schedule, only to catch up to it once hitting the bands controlling the deviation from target, but at a worse price than at the beginning of the period. One should also ask themselves if a buy child order finally getting filled passively after being re-pegged successively to an increasing bid price represents a better execution than having paid for the spread right at the beginning of the period\footnote{As throughout this book, the reader is encouraged to remain critical when analyzing performance benchmarks and metrics, and eventually create more sophisticated versions of them to more accurately capture existing trade offs.}. 
+
+\item \textbf{Make/Take ratio:} This ratio provides some indication of the execution efficiency. How much of the liquidity was sourced on the passive side of the spread (at the bid or lower for a buy order), versus how much required the algorithm to pay the spread? This metrics highlights the quality of the order placement of the execution strategy though its ability to provide liquidity while achieving its desired trading rate. It is worth noting, however, that more passive fills do not guarantee overall better performance with regard to the primary benchmark. For instance, if a security exhibits strong intraday adverse momentum, a very passive strategy favoring passive fills would result in lower participation rates, hence delaying the total execution and exposing the user to worst prices later in the day. Similarly, highly passive VWAP algorithms do not always have better slippage versus VWAP. As the security price moves away, the algorithm will progressively fall behind its target schedule, only to catch up to it once hitting the bands controlling the deviation from target, but at a worse price than at the beginning of the period. One should also ask themselves if a buy child order finally getting filled passively after being re-pegged successively to an increasing bid price represents a better execution than having paid for the spread right at the beginning of the period.\footnote{As throughout this book, the reader is encouraged to remain critical when analyzing performance benchmarks and metrics, and eventually create more sophisticated versions of them to more accurately capture existing trade offs.}
+
 
 \item \textbf{Mean vs. Variance of performance:} While absolute performance tends to be the main focus of execution benchmarking, a trader might also want to control the level of dispersion around the mean. In practice, traders with large amounts of flow on a daily basis often focus more on the attained mean as their risk of being adversely affected by outliers is somewhat mitigated by the number of orders. Conversely, occasional traders are often willing to accept a slightly less optimal mean performance if it is accompanied by a reduced variance of performance.
 \end{itemize}
 
+
+
 \end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-.\\
 
 In order to develop an execution strategy achieving the objective(s) prescribed by the given benchmark(s), the execution problem can be modeled as a multi-step Markov decision process. However, the dimensionality of the problem explodes rapidly given the quasi infinite size of the state space (to represent the market), the large number of steps (even simplifying to 1s resolution, it results in over 20,000 steps for U.S. equities - compared, for instance, to an average of only 40 moves per chess game\footnote{Chessgames database: www.chessgames.com/chessstats.html}) and also the large size of the action space. To address this complexity, most execution algorithms decompose the problem into different timeframe decisions such as scheduling, placement and routing. 
 
 
 
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{comment}
 
-\subsection{RFQ Markets}
 
+
+% RFQ Markets
+\subsection{RFQ Markets}
 
 Outside of continuous double auction markets the problem is somewhat simplified and might not require the same layered structured. For instance, RFQ markets can be modeled as single step Markov decision process where one submits a quote (a quantity at a certain price) and receives an execution or not which end the process for this order. The execution policy can then be simply optimized to achieve a desired hit ratio or control inventory risk.
 
 
 \end{comment}
-
-
-
-
-
-
-
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -8,40 +8,40 @@ In the area of multivariate analysis, there are two broad themes that have emerg
 
 
 
+% Multivariate Regression
 \section{Multivariate Regression \label{s:s_mr}} 
-
 
 We begin with the general multivariate linear regression model,
 	\begin{equation} \label{eqn:5lmyk}
-	Y_t = C X_t + \epsilon_t
+	Y_t = C X_t + \epsilon_t,
 	\end{equation}
-where $Y_t=(Y_{1t},\ldots,Y_{mk})'$ is an $m \times 1$ vector of responsive variables and $X_t=(X_{1t},\ldots,X_{nt})'$ is an $n \times 1$ vector of predictors, $C$ is an $m \times n$ coefficient matrix and $\epsilon_t=(\epsilon_{it}, \ldots, \epsilon_{mt})'$ is the $m \times 1$ vector of random errors. We assume $E(\epsilon_t)=0$ and $\Cov(\epsilon_t)=\Sigma_{\epsilon \epsilon}$ is a $m \times m$ positive definite covariance matrix. The errors are independent over `$t$', the time index. Thus if we arrange the data and error as matrices,
+where $Y_t= (Y_{1t}, \ldots,Y_{mk})'$ is an $m \times 1$ vector of responsive variables and $X_t= (X_{1t}, \ldots, X_{nt})'$ is an $n \times 1$ vector of predictors, $C$ is an $m \times n$ coefficient matrix and $\epsilon_t= (\epsilon_{it}, \ldots, \epsilon_{mt})'$ is the $m \times 1$ vector of random errors. We assume $E(\epsilon_t)= 0$ and $\corr(\epsilon_t)= \Sigma_{\epsilon \epsilon}$ is a $m \times m$ positive definite covariance matrix. The errors are independent over `$t$', the time index. Thus if we arrange the data and error as matrices,
 	\begin{equation} \label{eqn:5yyt}
-	Y=[Y_1,\ldots,Y_T], X=[X_1,\ldots,X_T] \text{ and }\epsilon=[\epsilon_1, \ldots,\epsilon_T]
+	Y= [Y_1,\ldots,Y_T], \enskip X=[X_1,\ldots,X_T] \text{ and } \epsilon= [\epsilon_1, \ldots,\epsilon_T],
 	\end{equation}
 and if $e=\text{vec}(\epsilon')$,
 	\begin{equation} \label{eqn:5Ee0}
-	E(e)=0, \Cov(e)= \Sigma_{\epsilon \epsilon} \otimes I_T
+	E(e)=0, \quad \cov(e)= \Sigma_{\epsilon \epsilon} \otimes I_T,
 	\end{equation}
 where the symbol $\otimes$ signifies the Kronecker's product. 
 
 
 The unknown parameters in model \eqref{eqn:5lmyk} are the ($mn$) elements of the regression coefficient matrix $C$ and ($m(m+1)/2$) elements of the error covariance matrix $\Sigma_{\epsilon \epsilon}$. These can be estimated by the method of maximum likelihood under the assumption of normality of the $\epsilon_k$ which is equivalent to least squares estimation. Note we can rewrite the model \eqref{eqn:5lmyk} in terms of the data matrices $\mathbf{Y}$ and $\mathbf{X}$ as
 	\begin{equation} \label{eqn:rewrite}
-	\mathbf{Y} = C \mathbf{X} + \mathbf{\epsilon}
+	\mathbf{Y} = C \mathbf{X} + \mathbf{\epsilon}.
 	\end{equation}
 The least squares estimates are obtained by minimizing
 	\begin{equation} \label{eqn:minimize}
-	e'e=\text{tr}(\epsilon\epsilon')=\text{tr}[(\mathbf{Y}-C\mathbf{X})(\mathbf{Y}-C\mathbf{X})']=\text{tr}\left[\sum_{t=1}^T \epsilon_t \epsilon_t'\right]
+	e'e= \tr (\epsilon\epsilon')= \tr [(\mathbf{Y} - C\mathbf{X}) (\mathbf{Y} - C \mathbf{X})']= \tr \left[\sum_{t=1}^T \epsilon_t \epsilon_t' \right],
 	\end{equation}
-where $\text{tr}(A)$ denotes the sum of the diagonal elements of $A$. This yields a unique solution for $C$ as
+where $\tr(A)$ denotes the sum of the diagonal elements of $A$. This yields a unique solution for $C$ as
 	\begin{equation} \label{eqn:solution}
-	\tilde{C}=\mathbf{Y} \mathbf{X}' (\mathbf{X}\mathbf{X}')^{-1} = \left(\dfrac{1}{T} \mathbf{Y}\mathbf{X}'\right) \left(\dfrac{1}{T} \mathbf{X}\mathbf{X}' \right)^{-1}
+	\tilde{C}= \mathbf{Y} \mathbf{X}' (\mathbf{X} \mathbf{X}')^{-1} = \left( \dfrac{1}{T} \mathbf{Y}\mathbf{X}' \right) \left( \dfrac{1}{T} \mathbf{X} \mathbf{X}' \right)^{-1}.
 	\end{equation}
-Hence, it can be seen from the form of \eqref{eqn:solution} the rows of the matrix $C$ are estimated by the least squares regression of each response variable on the predictor variables as $C'_j=(\mathbf{Y}_j' \mathbf{X})(\mathbf{X}\mathbf{X}')^{-1}$ and therefore the covariances among the response variables do not enter into the estimation. Thus, the multivariate regression is essentially a series of multiple regressions. 
+Hence, it can be seen from the form of \eqref{eqn:solution} the rows of the matrix $C$ are estimated by the least squares regression of each response variable on the predictor variables as $C'_j= (\mathbf{Y}_j' \mathbf{X})(\mathbf{X}\mathbf{X}')^{-1}$ and therefore the covariances among the response variables do not enter into the estimation. Thus, the multivariate regression is essentially a series of multiple regressions. 
 
 
-The maximum likelihood estimate of `$C$' under the normality assumption yields the same solution for $C$ as given in \eqref{eqn:solution}. The ML estimator of the error covariance matrix $\Sigma_{\epsilon\epsilon}$ is obtained from the least squares residuals $\hat{\mathbf{\epsilon}}=\mathbf{Y}- \tilde{C} \mathbf{X}$ as $\tilde{\Sigma}_{\epsilon\epsilon}= \frac{1}{T}(\mathbf{Y}-\tilde{C}\mathbf{X})(\mathbf{Y}-\tilde{C}\mathbf{X})' \equiv \frac{1}{T}S$, where $S= \sum_{t=1}^T \hat{\epsilon}_t \hat{\epsilon}_t'$ is the error sum of squares matrix, and $\hat{\epsilon}_t= Y_t - \tilde{C} \mathbf{X}_t$, $t=1,\ldots,T$, are the least squares residual vectors. An unbiased estimator of $\Sigma_{\epsilon\epsilon}$ is obtained as 
+The maximum likelihood estimate of `$C$' under the normality assumption yields the same solution for $C$ as given in \eqref{eqn:solution}. The ML estimator of the error covariance matrix $\Sigma_{\epsilon\epsilon}$ is obtained from the least squares residuals $\hat{\mathbf{\epsilon}}= \mathbf{Y} - \tilde{C} \mathbf{X}$ as $\tilde{\Sigma}_{\epsilon\epsilon}= \frac{1}{T}(\mathbf{Y} - \tilde{C}\mathbf{X})(\mathbf{Y} - \tilde{C} \mathbf{X})' \equiv \frac{1}{T}S$, where $S= \sum_{t=1}^T \hat{\epsilon}_t \hat{\epsilon}_t'$ is the error sum of squares matrix, and $\hat{\epsilon}_t= Y_t - \tilde{C} \mathbf{X}_t$, $t=1,\ldots,T$, are the least squares residual vectors. An unbiased estimator of $\Sigma_{\epsilon\epsilon}$ is obtained as 
 	\begin{equation} \label{eqn:5unbiased}
 	\overline{\Sigma}_{\epsilon\epsilon} = \dfrac{1}{T-n} \,\hat{\epsilon} \hat{\epsilon}' = \dfrac{1}{T-n} \sum_{t=1}^T \hat{\epsilon}_t \hat{\epsilon}_t'.
 	\end{equation}
@@ -50,44 +50,44 @@ The maximum likelihood estimate of `$C$' under the normality assumption yields t
 \noindent\textbf{Inference Properties:} \\
 
 
-First, $\tilde{C}$ is an unbiased estimator of $C$, $E(\tilde{C})=C$ and $\Cov(\tilde{C}_{(i)}, \tilde{C}_{(j)})=\sigma_{ij}(\mathbf{X}\mathbf{X}')^{-1}$ for $i,j=1,\ldots,m$, where $\sigma_{ij}$ denotes the $(i,j)$th element of the covariance matrix $\Sigma_{\epsilon\epsilon}$, since $\Cov(\mathbf{Y}_{(i)}, \mathbf{Y}_{(i)})=\sigma_{ij} I_T$. The distributional properties of $\tilde{C}$ follow easily from multivariate normality of the error terms $\epsilon_t$. Specifically, we consider the distribution of $\text{vec}(\tilde{C}')$, where the ``vec'' operation transforms an $m \times n$ matrix into an $mn$-dimensional column vector by stacking the columns of the matrix below each other. 
+First, $\tilde{C}$ is an unbiased estimator of $C$, $E(\tilde{C})= C$ and $\cov(\tilde{C}_{(i)}, \tilde{C}_{(j)})= \sigma_{ij} (\mathbf{X}\mathbf{X}')^{-1}$ for $i,j= 1,\ldots, m$, where $\sigma_{ij}$ denotes the $(i,j)$th element of the covariance matrix $\Sigma_{\epsilon\epsilon}$, since $\cov(\mathbf{Y}_{(i)}, \mathbf{Y}_{(i)})= \sigma_{ij} I_T$. The distributional properties of $\tilde{C}$ follow easily from multivariate normality of the error terms $\epsilon_t$. Specifically, we consider the distribution of $\tvec(\tilde{C}')$, where the ``vec'' operation transforms an $m \times n$ matrix into an $mn$-dimensional column vector by stacking the columns of the matrix below each other. 
 
 
 \setcounter{result}{0}
 \begin{result} \label{res:1}
 For the model \eqref{eqn:5lmyk} under the normality assumption on the $\epsilon_k$,  the distribution of the least squares estimator $\tilde{C}$ in \eqref{eqn:solution} is that 
 	\begin{equation} \label{eqn:distlsq}
-	\text{vec}(\tilde{C}') \sim N(\text{vec}(C'), \Sigma_{\epsilon\epsilon} \otimes (\mathbf{X} \mathbf{X}')^{-1}).
+	\tvec(\tilde{C}') \sim N(\tvec(C'), \Sigma_{\epsilon\epsilon} \otimes (\mathbf{X} \mathbf{X}')^{-1}).
 	\end{equation}
-Note, in particular, that this result implies that the $j$th row of $\tilde{C}$, $\tilde{C}_{(j)}'$, which is the vector of least squares estimates of regression coefficients for the $j$th response variable, has the distribution $\tilde{C}_{(j)} \sim N(C_{(j)}, \sigma_{jj}(\mathbf{X}\mathbf{X}')^{-1})$. The inference on the elements of the matrix $C$ can be made using the result in \eqref{eqn:distlsq}. In practice, because $\Sigma_{\epsilon\epsilon}$ is unknown, a reasonable estimator such as the unbiased estimator in \eqref{eqn:5unbiased} is substituted for the covariance matrix in \eqref{eqn:distlsq}.
+Note, in particular, that this result implies that the $j$th row of $\tilde{C}$, $\tilde{C}_{(j)}'$, which is the vector of least squares estimates of regression coefficients for the $j$th response variable, has the distribution $\tilde{C}_{(j)} \sim N(C_{(j)}, \sigma_{jj}( \mathbf{X} \mathbf{X}')^{-1} )$. The inference on the elements of the matrix $C$ can be made using the result in \eqref{eqn:distlsq}. In practice, because $\Sigma_{\epsilon\epsilon}$ is unknown, a reasonable estimator such as the unbiased estimator in \eqref{eqn:5unbiased} is substituted for the covariance matrix in \eqref{eqn:distlsq}.
 
 
-We shall indicate the likelihood ratio procedure for testing simple linear hypotheses regarding the regression coefficient matrix. Suppose $\mathbf{X}$ is partitioned as $\mathbf{X}=[\mathbf{X}_!', \mathbf{X}_2']$ and corresponding $C=[C_1,C_2]$, so that the model \eqref{eqn:rewrite} is written as $\mathbf{Y}=C_1 \mathbf{X}_1+C_2 \mathbf{X}_2+\mathbf{\epsilon}$, where $C_1$ is $m\times n_1$ and $C_2$ is $m \times n_2$ with $n_1+n_2=n$. Suppose we want to test the null hypothesis $H_0: C_2=0$ against the alternative $C_2 \neq 0$. The null hypothesis implies that the predictor variables $\mathbf{X}_2$ do not have any (additional) influence on the response variables $\mathbf{Y}$, given the impact of the variables $\mathbf{X}_1$. Essentially, this involves running two sets of regressions: one with all predictors ($\mathbf{X}$) and the one with the subset of the predictors ($\mathbf{X}_1$). The LR test statistic is $\lambda=U^{T/2}$, where $U=|S|/|S_1|$, $S=(\mathbf{Y}-\tilde{C}\mathbf{X})(\mathbf{Y}-\tilde{C}\mathbf{X})'$ and $S_1=(\mathbf{Y}-\tilde{C}_1\mathbf{X}_1)(\mathbf{Y}-\tilde{C}_1\mathbf{X}_1)'$. The matrix $S$ is the residual sum of squares matrix from fitting of the full model, while $S_1$ is the residual sum of squares matrix obtained from fitting the reduced model with $C_2=0$ and $\tilde{C}_1=\mathbf{Y}\mathbf{X}_1'(\mathbf{X}_1\mathbf{X}_1')^{-1}$. It has been shown [see Anderson (1984, Chap. 8)]~\cite{andersontw2} that for moderate and large sample size $T$, the test statistic 
+We shall indicate the likelihood ratio procedure for testing simple linear hypotheses regarding the regression coefficient matrix. Suppose $\mathbf{X}$ is partitioned as $\mathbf{X}= [\mathbf{X}_1', \mathbf{X}_2']$ and corresponding $C= [C_1, C_2]$, so that the model \eqref{eqn:rewrite} is written as $\mathbf{Y}= C_1 \mathbf{X}_1 + C_2 \mathbf{X}_2 + \mathbf{\epsilon}$, where $C_1$ is $m \times n_1$ and $C_2$ is $m \times n_2$ with $n_1 + n_2= n$. Suppose we want to test the null hypothesis $H_0: C_2= 0$ against the alternative $C_2 \neq 0$. The null hypothesis implies that the predictor variables $\mathbf{X}_2$ do not have any (additional) influence on the response variables $\mathbf{Y}$, given the impact of the variables $\mathbf{X}_1$. Essentially, this involves running two sets of regressions: one with all predictors ($\mathbf{X}$) and the one with the subset of the predictors ($\mathbf{X}_1$). The LR test statistic is $\lambda= U^{T/2}$, where $U= \lvert S\rvert / \lvert S_1 \rvert$, $S= (\mathbf{Y} - \tilde{C} \mathbf{X} )(\ mathbf{Y} - \tilde{C} \mathbf{X} )'$ and $S_1= (\mathbf{Y}-\tilde{C}_1 \mathbf{X}_1 )( \mathbf{Y} - \tilde{C}_1 \mathbf{X}_1 )'$. The matrix $S$ is the residual sum of squares matrix from fitting of the full model, while $S_1$ is the residual sum of squares matrix obtained from fitting the reduced model with $C_2=0$ and $\tilde{C}_1= \mathbf{Y} \mathbf{X}_1' (\mathbf{X}_1 \mathbf{X}_1')^{-1}$. It has been shown (see Anderson (1984)~\cite[Chap. 8]{andersontw2}) that for moderate and large sample size $T$, the test statistic 
 	\begin{equation} \label{eqn:mathcal}
-	\mathcal{M}=-[T-n+(n_2-m-1)/2] \log(U)
+	\mathcal{M}= -[T - n + (n_2 - m - 1)/2] \log(U)
 	\end{equation}
-is approximately distributed as Chi-squared with $n_2m$ degrees of freedom $(\chi_{n_2m}^2)$; the hypothesis is rejected when $\mathcal{M}$ is greater than a constant determined by the $\chi_{n_2m}^2$ distribution. 
+is approximately distributed as Chi-squared with $n_2 m$ degrees of freedom $(\chi_{n_2m}^2)$; the hypothesis is rejected when $\mathcal{M}$ is greater than a constant determined by the $\chi_{n_2m}^2$ distribution. 
 \end{result}
 
 
-Finally, we briefly consider testing the more general null hypotheses of the form $H_0: FC=0$ where $F$ is a known full-rank matrix of dimensions $m_1 \times m$. In the hypothesis $H_0$, the matrix $F$ provides for restrictions in the coefficients of $C$ across the different response variables. Using the LR approach, the likelihood ratio is given by $\lambda= U^{T/2}$ where $U= |S|/|S_1|$ and $S_1= (\mathbf{Y}-\hat{C}\mathbf{X})(\mathbf{Y}  - \hat{C}\mathbf{X})'$ with $\hat{C}$ denoting the ML estimator $C$ obtained subject to the constraint that $f_1C=0$. In fact, it can be shown that the constrained ML estimator under $FC= 0$ can be expressed as
+Finally, we briefly consider testing the more general null hypotheses of the form $H_0: FC=0$ where $F$ is a known full-rank matrix of dimensions $m_1 \times m$. In the hypothesis $H_0$, the matrix $F$ provides for restrictions in the coefficients of $C$ across the different response variables. Using the LR approach, the likelihood ratio is given by $\lambda= U^{T/2}$ where $U= |S|/|S_1|$ and $S_1= (\mathbf{Y} - \hat{C}\mathbf{X})(\mathbf{Y}  - \hat{C}\mathbf{X})'$ with $\hat{C}$ denoting the ML estimator $C$ obtained subject to the constraint that $f_1C=0$. In fact, it can be shown that the constrained ML estimator under $FC= 0$ can be expressed as
 	\begin{equation} \label{eqn:lagconstr}
-	\hat{C}= \tilde{C} - SF'(FSF')^{-1}F
+	\hat{C}= \tilde{C} - SF'(FSF')^{-1} F.
 	\end{equation}
 From \eqref{eqn:lagconstr}, we therefore have
 	\begin{equation} \label{eqn:boldys}
-	\mathbf{Y} - \hat{C}\,\mathbf{X}= (\mathbf{Y}-\tilde{C}\mathbf{X}) + SF'(FSF')^{-1}F\tilde{C},	
+	\mathbf{Y} - \hat{C} \,\mathbf{X}= ( \mathbf{Y} - \tilde{C} \mathbf{X}  ) + SF'(FSF')^{-1} F \tilde{C},
 	\end{equation}
 where the two terms on the right are orthogonal. We thus readily find that
 	\begin{equation} \label{eqn:lastdouble5}
 	\begin{split}
-	S_1= S + SF'&(FSF')^{-1}(F\tilde{C} (XX') \tilde{C} F')(FSF')^{-1} FS \equiv S + H,
+	S_1= S + SF'&(FSF')^{-1}( F\tilde{C} (XX') \tilde{C} F' )(FSF')^{-1} FS \equiv S + H,
 	\end{split}
 	\end{equation}
-and $U= 1/|I+S^{-1}H|$ so that the LR test can be based on the eigenvalues of $S^{-1}H$.
+and $U= 1/\lvert I + S^{-1}H \rvert$ so that the LR test can be based on the eigenvalues of $S^{-1}H$.
 
 
-The nonzero eigenvalues of the $m\times m$ matrix $S^{-1}H$ are the same as those of the $m_1 \times m_1$ matrix $S_*^{-1}H_*$, where $S_*= FSF'$ and $H_*= FHF'= F\tilde{C}(XX') \tilde{C}' F'$, so that $U^{-1}= |I+S_*^{-1}H_*|= \prod_{i=1}^{m_1}(1+\hat{\lambda}_i^2)$, where the $\hat{\lambda}_i^2$ are the eigenvalues of $S_*^{-1}H_*$. Analogous to \eqref{eqn:mathcal}, the test statistic used is $\mathcal{M}=-[T-n+\frac{1}{2}(n-m_!-1)]\log(U)$ which has an approximate $\chi_{nm_1}^2$ distribution under $H_0$. Somewhat more accurate approximation of the null distribution of $\log(U)$ is available based on the $F$-distribution, and in some cases (notably $m_1= 1$ or 2) exact $F$-distribution results for $U$ are available [see Anderson 1984, Chap. 8]~\cite{andersontw2}. However, for most of the applications the large sample $\chi_{nm_1}^2$ approximation for the distribution of the LR statistic $\mathcal{M}$ is normally used. \\
+The nonzero eigenvalues of the $m \times m$ matrix $S^{-1} H$ are the same as those of the $m_1 \times m_1$ matrix $S_*^{-1} H_*$, where $S_*= FSF'$ and $H_* = FHF' = F \tilde{C} (XX') \tilde{C}' F'$, so that $U^{-1} = \lvert I + S_*^{-1} H_* \rvert= \prod_{i=1}^{m_1} (1 + \hat{\lambda}_i^2 )$, where the $\hat{\lambda}_i^2$ are the eigenvalues of $S_*^{-1} H_*$. Analogous to \eqref{eqn:mathcal}, the test statistic used is $\mathcal{M}= -[T - n + \frac{1}{2}(n - m_1 - 1)]\log(U)$ which has an approximate $\chi_{nm_1}^2$ distribution under $H_0$. Somewhat more accurate approximation of the null distribution of $\log(U)$ is available based on the $F$-distribution, and in some cases (notably $m_1= 1$ or 2) exact $F$-distribution results for $U$ are available (see Anderson (1984)~\cite[Chap. 8]{andersontw2}). However, for most of the applications the large sample $\chi_{nm_1}^2$ approximation for the distribution of the LR statistic $\mathcal{M}$ is normally used. \\
 
 
 \noindent \textbf{Prediction:} \\
@@ -95,41 +95,42 @@ The nonzero eigenvalues of the $m\times m$ matrix $S^{-1}H$ are the same as thos
 
 Another problem of interest in regard to the multivariate linear regression model \eqref{eqn:5lmyk} is confidence regions for the mean responses corresponding to a fixed value $X_0$ of the predictor variables. The mean vector of responses at $X_0$ is $CX_0$ and its estimate is $\tilde{C}X_0$. Under the assumption of normality of the $\epsilon_k$, it follows that
 	\begin{equation} \label{eqn:tcal}
-	\mathcal{T}^2= (\tilde{C}X_0-CX_0)' \overline{\Sigma}_{\epsilon\epsilon}^{-1} (\tilde{C}X_0-CX_0)/ \{X_0'(\mathbf{X} \mathbf{X}')^{-1}X_0 \}
+	\mathcal{T}^2= ( \tilde{C }X_0 - CX_0)' \overline{\Sigma}_{\epsilon\epsilon}^{-1} (\tilde{C} X_0 - CX_0) / \{X_0'(\mathbf{X} \mathbf{X}')^{-1}X_0 \}
 	\end{equation}
-has the Hotelling's $T^2$-distribution with $T-n$ degrees of freedom (Anderson, 1984, Chap. 5)~\cite{andersontw2}. Thus, $\{(T-n-m+1)/m(T-n)\}\mathcal{T}^2$ has the $F$-distribution with $m$ and $T-n-m+1$ degrees of freedom, so that a $100(1-\alpha)\%$ confidence ellipsoid for the true mean response $CX_0$ at $X_0$ is given by 
+has the Hotelling's $T^2$-distribution with $T - n$ degrees of freedom, Anderson (1984)~\cite[Chap. 5]{andersontw2}. Thus, $\{(T - n - m + 1)/ m(T - n)\} \mathcal{T}^2$ has the $F$-distribution with $m$ and $T - n - m + 1$ degrees of freedom, so that a $100(1 - \alpha)\%$ confidence ellipsoid for the true mean response $CX_0$ at $X_0$ is given by 
 	\begin{equation} \label{eqn:52line}
 	\begin{split}
-	(\tilde{C}X_0 &-CX_0)' \overline{\Sigma}_{\epsilon\epsilon}^{-1}(\tilde{C}X_0-CX_0) \\
-	 &\leq \{X_0' (\mathbf{X}\mathbf{X}')^{-1}X_0\} \left[ \dfrac{m(T-n)}{T-n-m+1} F_{m,T-n-m+1}(\alpha) \right]
+	(\tilde{C}X_0 & -CX_0)' \overline{\Sigma}_{\epsilon\epsilon}^{-1} (\tilde{C}X_0 - CX_0) \\
+	&\leq \{X_0' (\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T - n)}{T - n - m + 1} F_{m,T - n - m + 1}(\alpha) \right],
 	 \end{split}
 	\end{equation}
-where $F_{m,T-n-m+1}(\alpha)$ is the upper 100$\alpha$th percentile of the $F$-distribution with $m$ and $T-n-m+1$ degrees of freedom. 
+where $F_{m,T - n - m + 1}(\alpha)$ is the upper 100$\alpha$th percentile of the $F$-distribution with $m$ and $T - n - m + 1$ degrees of freedom. 
 
 
-A related problem of interest is the prediction of values of a new response vector $Y_0=CX_0+\epsilon_0$ corresponding to the predictor variables $X_0$, where it is assumed that $Y_0$ is independent of the values $Y_1,\ldots,Y_T$. The predictor of $Y_0$ is given by $\hat{Y}_0=\tilde{C}X_0$, and it follows similarly to the above result \eqref{eqn:tcal} that a $100(1 - \alpha)\%$ prediction ellipsoid for $Y_0$ is
+A related problem of interest is the prediction of values of a new response vector $Y_0= CX_0 + \epsilon_0$ corresponding to the predictor variables $X_0$, where it is assumed that $Y_0$ is independent of the values $Y_1, \ldots, Y_T$. The predictor of $Y_0$ is given by $\hat{Y}_0= \tilde{C}X_0$, and it follows similarly to the above result \eqref{eqn:tcal} that a $100(1 - \alpha)\%$ prediction ellipsoid for $Y_0$ is
 	\begin{equation} \label{eqn:52another2}
 	\begin{split}
-	(Y_0 &-\tilde{C}X_0)' \overline{\Sigma}_{\epsilon\epsilon}^{-1}(Y_0-\tilde{C}X_0) \\
-	&\leq\{1+X_0'(\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T-n)}{T-n-m+1} F_{m,T-n-m+1}(\alpha) \right]
+	(Y_0 & -\tilde{C}X_0)' \overline{\Sigma}_{\epsilon\epsilon}^{-1} (Y_0 - \tilde{C} X_0) \\
+	&\leq \{1 + X_0'(\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T - n)}{T - n - m + 1} F_{m,T - n - m + 1}(\alpha) \right].
 	\end{split}
 	\end{equation}
 The application of Hotelling's $T^2$ in the context of testing related to CAPM model will be discussed later.
 
 
 
+% Dimension-Reduction via Reduced-Rank Regression
 \section{Dimension-Reduction via Reduced-Rank Regression \label{sec:s_dr}}
 
 
-In many practical situations, there is a need to reduce the dimensions of the variables and hence for succinct interpretation. A common approach with only one set of variables say, $Y$ or $X$, is to use Principal Components Analysis (PCA), which focuses on finding the linear combination that captures the most variance. Here doing PCA's on $Y$ and on $X$ and then relating them via regression is not optimal. We approach the problem through the assumption of lower rank of the matrix $C$ in model \eqref{eqn:5lmyk}. More formally, in the model $Y_k=CX_k+\epsilon_k$ we assume that with $m<n$,
+In many practical situations, there is a need to reduce the dimensions of the variables and hence for succinct interpretation. A common approach with only one set of variables say, $Y$ or $X$, is to use Principal Components Analysis (PCA), which focuses on finding the linear combination that captures the most variance. Here doing PCA's on $Y$ and on $X$ and then relating them via regression is not optimal. We approach the problem through the assumption of lower rank of the matrix $C$ in model \eqref{eqn:5lmyk}. More formally, in the model $Y_k= CX_k + \epsilon_k$ we assume that with $m < n$,
 	\begin{equation} \label{eqn:rankC}
 	\text{rank}(C)= r \leq \min(m,n)= m.
 	\end{equation}
-The rank condition \eqref{eqn:rankC} has two related practical implications. First, with $r<m$ it implies that there are $(m-r)$ linear restrictions on the regression coefficient matrix $C$ of the form
+The rank condition \eqref{eqn:rankC} has two related practical implications. First, with $r < m$ it implies that there are $(m - r)$ linear restrictions on the regression coefficient matrix $C$ of the form
 	\begin{equation} \label{eqn:lprimeC}
 	l_i' C= 0, \quad i=1,2,\ldots,(m-r)
 	\end{equation}
-and these restrictions themselves are often not known a priori in the sense that $l_1,\ldots,l_{m-r}$ are unknown, unlike the known constraints $FC=0$ discussed in the last section. Premultiplying \eqref{eqn:5lmyk}	by $l_i'$, we have
+and these restrictions themselves are often not known a priori in the sense that $l_1, \ldots, l_{m-r}$ are unknown, unlike the known constraints $FC=0$ discussed in the last section. Premultiplying \eqref{eqn:5lmyk} by $l_i'$, we have
 	\begin{equation} \label{eqn:lprimeY}
 	l_i' Y_k= l_i' \epsilon_k.
 	\end{equation}
@@ -147,12 +148,11 @@ where $A$ is of dimension $m \times r$ and $B$ is of dimension $r \times n$, but
 where $BX_k$ is of reduced dimension with only $r$ components. A practical use of \eqref{eqn:ykabxk} is that the $r$ linear combinations of the predictor variables $X_k$ are sufficient to model the variation in the response variables $Y_k$ and there may not be a need for all $n$ linear combinations or otherwise for all $n$ variables, as would be the case when no single predictor variable can be discarded from the full-rank analysis. Hence, there is a gain in simplicity and interpretation through the reduced-rank regression modeling, although from a practitioner point of view one would still need to have measurements on all $n$ predictor variables. But some recent developments on `sparsity' address this issue which will be mentioned briefly later.
 
 
-For presentation of reduced-rank estimation, we first need an important result known as the Householder-Young or Eckart-Young Theorem (Eckart and Young, 1936), which presents the tools for approximating a full-rank matrix by a matrix of lower rank. The solution is related to the singular value decomposition of the full-rank matrix. These results form the basis of most of the well-known dimension-reduction techniques such as principal components. As we shall see, the reduced-rank estimates are obtained as approximation of the full-rank estimate of the regression coefficient matrix. 
-
+For presentation of reduced-rank estimation, we first need an important result known as the Householder-Young or Eckart-Young Theorem (Eckart and Young, 1936)\todo{Missing Eckart reference}, which presents the tools for approximating a full-rank matrix by a matrix of lower rank. The solution is related to the singular value decomposition of the full-rank matrix. These results form the basis of most of the well-known dimension-reduction techniques such as principal components. As we shall see, the reduced-rank estimates are obtained as approximation of the full-rank estimate of the regression coefficient matrix. 
 
 
 \begin{result} \label{res:2}
-Let $A$ be a $m \times m$ symmetric matrix with eigenvalues $\lambda_1 \geq \cdots \geq \lambda_m$, and denote the corresponding normalized eigenvectors as $P_1,\ldots,P_m$. The supremum of $\sum_{i=1}^r X_i'AX_i=\text{tr}(X'AX)$, with $X=[X_1,\ldots,X_r]$, over all the sets of $r \leq m$ mutually orthonormal vectors $X_1,\ldots,X_r$ is equal to $\sum_{i=1}^r \lambda_i$ and is attained when the $X_i=P_i$, $i=1,\ldots,r$. 
+Let $A$ be a $m \times m$ symmetric matrix with eigenvalues $\lambda_1 \geq \cdots \geq \lambda_m$, and denote the corresponding normalized eigenvectors as $P_1, \ldots, P_m$. The supremum of $\sum_{i=1}^r X_i' A X_i= \tr(X'AX)$, with $X= [X_1, \ldots, X_r]$, over all the sets of $r \leq m$ mutually orthonormal vectors $X_1, \ldots, X_r$ is equal to $\sum_{i=1}^r \lambda_i$ and is attained when the $X_i=P_i$, $i= 1, \ldots, r$. 
 \end{result}
 
 
@@ -160,124 +160,127 @@ The eigenvectors $P_i$ are (essentially) unique, of course, if the eigenvalues $
 
 
 \begin{result} \label{res:3} 
-Let $S$ be a matrix of order $m \times n$ and of rank $m$. The Euclidean norm, $\text{tr}[(S-P)(S-P)']$, is minimum among matrices $P$ of the same order  as $S$ but of rank $r$ ($\leq m$), when $P=MM'S$, where $M$ is $m \times r$ and the columns of $M$ are the first $r$ (normalized) eigenvectors of $SS'$, that is, the normalized eigenvectors corresponding to the $r$ largest eigenvalues of $SS'$. 
+Let $S$ be a matrix of order $m \times n$ and of rank $m$. The Euclidean norm, $\tr[(S-P)(S-P)']$, is minimum among matrices $P$ of the same order  as $S$ but of rank $r$ ($\leq m$), when $P= MM'S$, where $M$ is $m \times r$ and the columns of $M$ are the first $r$ (normalized) eigenvectors of $SS'$, that is, the normalized eigenvectors corresponding to the $r$ largest eigenvalues of $SS'$. 
 \end{result}
 
 
-\noindent \textbf{Remark---Singular Value Decomposition.} The positive square roots of the eigenvalues of $SS'$ are referred to as the singular values of the matrix $S$. In general, an $m \times n$ matrix $S$, of rank $s$, can be expressed in the \emph{singular value decomposition} as $S=V \Lambda U'$, where $\Lambda=\text{diag}(\lambda_1,\ldots,\lambda_s)$ with $\lambda_1^2 \geq \cdots \geq \lambda_s^2 >0$ being the nonzero eigenvalues of $SS'$, $V=[V_1,\ldots,V_s]$ is an $m \times s$ matrix such that $V' V= I_s$, and $U=[U_1,\ldots,U_s]$ is $n \times s$ such that $U'U= I_s$. The columns $V_i$ are the normalized eigenvectors of $SS'$ corresponding to the $\lambda_i^2$, and $U_i= \frac{1}{\lambda_i}S'V_i$, $i=1, \ldots, s$. \\
+\noindent\textbf{Remark (Singular Value Decomposition).} The positive square roots of the eigenvalues of $SS'$ are referred to as the singular values of the matrix $S$. In general, an $m \times n$ matrix $S$, of rank $s$, can be expressed in the \emph{singular value decomposition} as $S= V \Lambda U'$, where $\Lambda= \diag(\lambda_1, \ldots, \lambda_s)$ with $\lambda_1^2 \geq \cdots \geq \lambda_s^2 > 0$ being the nonzero eigenvalues of $SS'$, $V= [V_1, \ldots, V_s]$ is an $m \times s$ matrix such that $V' V= I_s$, and $U= [U_1, \ldots, U_s]$ is $n \times s$ such that $U'U= I_s$. The columns $V_i$ are the normalized eigenvectors of $SS'$ corresponding to the $\lambda_i^2$, and $U_i= \frac{1}{\lambda_i}S'V_i$, $i=1, \ldots, s$. \\
 
 
 The ML estimation of model \eqref{eqn:ykabxk}, assuming the $\epsilon_k$ are independent and identically distributed (iid), following a multivariate normal distribution with mean 0 and covariance matrix $\Sigma_{\epsilon\epsilon}$, the solution is given as 
 	\begin{equation} \label{eqn:covarmatrixsol}
-	\hat{A}^{(r)}=\Gamma^{-1/2}[\hat{V}_1,\ldots,\hat{V}_r], \quad \hat{B}^{(r)}[\hat{V}_1,\ldots,\hat{V}_r]' \Gamma^{1/2} \hat{\Sigma}_{yx} \hat{\Sigma}_{xx}^{-1},
+	\hat{A}^{(r)}= \Gamma^{-1/2} [\hat{V}_1, \ldots, \hat{V}_r], \quad \hat{B}^{(r)}[ \hat{V}_1, \ldots, \hat{V}_r]' \Gamma^{1/2} \hat{\Sigma}_{yx} \hat{\Sigma}_{xx}^{-1},
 	\end{equation}
-where $\hat{\Sigma}_{yx}=(1/T)\mathbf{Y}\mathbf{X}'$, $\hat{\Sigma}_{xx}=(1/T)\mathbf{X}\mathbf{X}'$, and $\hat{V}_j$ is the eigenvector that corresponds to the $j$th largest eigenvalue $\hat{\lambda}_j^2$ of $\Gamma^{1/2}\hat{\Sigma}_{yx} \hat{\Sigma}_{xx}^{-1} \hat{\Sigma}_{xy}\Gamma^{1/2}$, with the choice $\Gamma=\tilde{\Sigma}_{\epsilon\epsilon}^{-1}$. The solution is based on the singular value decomposition of the standardized regression coefficient matrix $\tilde{\Sigma}_{\epsilon\epsilon}^{-1/2} \tilde{C} \hat{\Sigma}_{xx}^{1/2}$, where $\tilde{C}$ is the least-square estimate of full-rank $C$. The estimates of the constraints, $l_j$'s are obtained from the smallest $(m-r)$ eigenvalues of the same matrix and scaled as, $\hat{l}_j'=\hat{V}_j' \, \Gamma^{1/2}$. 
+where $\hat{\Sigma}_{yx}= (1/T) \mathbf{Y} \mathbf{X}'$, $\hat{\Sigma}_{xx}= (1/T) \mathbf{X} \mathbf{X}'$, and $\hat{V}_j$ is the eigenvector that corresponds to the $j$th largest eigenvalue $\hat{\lambda}_j^2$ of $\Gamma^{1/2} \hat{\Sigma}_{yx} \hat{\Sigma}_{xx}^{-1} \hat{\Sigma}_{xy}\Gamma^{1/2}$, with the choice $\Gamma= \tilde{\Sigma}_{\epsilon\epsilon}^{-1}$. The solution is based on the singular value decomposition of the standardized regression coefficient matrix $\tilde{\Sigma}_{\epsilon\epsilon}^{-1/2} \tilde{C} \hat{\Sigma}_{xx}^{1/2}$, where $\tilde{C}$ is the least-square estimate of full-rank $C$. The estimates of the constraints, $l_j$'s are obtained from the smallest $(m-r)$ eigenvalues of the same matrix and scaled as, $\hat{l}_j' = \hat{V}_j' \, \Gamma^{1/2}$. 
 
 
 It should be mentioned, perhaps, that estimation results are sensitive to the choice of scaling of the response variables $Y_k$, and in applications it is often suggested that the component variables $y_{ik}$ be standardized to have unit variances before applying the LS procedure. \\
 
 
-\begin{center} \textbf{Relation to Other Dimension-Reduction Methods} \newline \\ \end{center}
+\begin{center} \textbf{Relation to Other Dimension-Reduction Methods} \end{center} \vspace{0.5cm}
 
 
-\noindent \textbf{Principal Component Analysis (PCA)} \\
+\noindent\textbf{Principal Component Analysis (PCA)} \\
 
 
 \noindent Principal component analysis, originally developed by Hotelling (1933)\todo{missing reference}, is concerned with explaining the covariance structure of a large number of variables through a small number of linear combinations of the original variables. Although the two objectives of the PCA data reduction and interpretation which coincide with the objectives of the reduced-rank regression, a major difference is that the principal components are descriptive tools that do not usually rest on any modeling or distributional assumptions. 
 
 
-Let the $m \times 1$ random vector $Y$ have the covariance matrix $\Sigma_{yy}$ with eigenvlaues $\lambda_1^2 \geq \lambda_2^2 \geq \cdots \geq \lambda_m^2 \geq 0$. Consider the linear combinations $y_1^*=l_1'Y,\ldots,Y_m^* = l_m'Y$, normalized so that $l_i' l_i=1$, $i=1, \ldots, m$. These linear combinations have $\Var(y_i^*)= l_i' \Sigma_{yy} l_i$, $i= 1, 2, \ldots, m$, and $\Cov(y_i^*,y_j^*)= l_i' \Sigma_{yy}l_j$, $i,j= 1, 2, \ldots, m$. In a principal component analysis, the linear combinations $y_i^*$ are chosen so that they are not correlated but their variances are as large as possible. That is, $y_1^*= l_1'Y$ is chosen to have the largest variance among linear combinations $l_1' l_1=1$, $y_2^*= l_2'Y$ is chosen to have the largest variance subject to $l_2l_2=1$ and the condition that $\Cov(y_2^*,y_1^*)= l_2' \Sigma_{yy}l_1=0$, and so on. It can be easily shown from Result 1 that the $l_i$'s are chosen to be the (normalized) eigenvectors that correspond to the eigenvalues $\lambda_i^2$ of the matrix $\Sigma_{yy}$, os that the normalized eigenvectors satisfy $l_i' \Sigma_{yy}l_i= \lambda_i^2 \equiv \Var(y_i^*)$. Often, the first $r$ ($r<m$) components $y_i^*$, corresponding to the $r$ largest eigenvalues, will contain nearly most of the variation that arises from all $m$ variables. For such cases, in studying variations of $Y$, attention can be directed on these $r$ linear combinations resulting in a reduction in dimension of the variables involved. 
+Let the $m \times 1$ random vector $Y$ have the covariance matrix $\Sigma_{yy}$ with eigenvlaues $\lambda_1^2 \geq \lambda_2^2 \geq \cdots \geq \lambda_m^2 \geq 0$. Consider the linear combinations $y_1^*= l_1' Y, \ldots, Y_m^* = l_m' Y$, normalized so that $l_i' l_i=1$, $i=1, \ldots, m$. These linear combinations have $\Var(y_i^*)= l_i' \Sigma_{yy} l_i$, $i= 1, 2, \ldots, m$, and $\cov(y_i^*,y_j^*)= l_i' \Sigma_{yy} l_j$, $i,j= 1, 2, \ldots, m$. In a principal component analysis, the linear combinations $y_i^*$ are chosen so that they are not correlated but their variances are as large as possible. That is, $y_1^*= l_1' Y$ is chosen to have the largest variance among linear combinations $l_1' l_1= 1$, $y_2^*= l_2' Y$ is chosen to have the largest variance subject to $l_2 l_2=1$ and the condition that $\cov(y_2^*,y_1^*)= l_2' \Sigma_{yy}l_1=0$, and so on. It can be easily shown from Result 1 that the $l_i$'s are chosen to be the (normalized) eigenvectors that correspond to the eigenvalues $\lambda_i^2$ of the matrix $\Sigma_{yy}$, os that the normalized eigenvectors satisfy $l_i' \Sigma_{yy}l_i= \lambda_i^2 \equiv \Var(y_i^*)$. Often, the first $r$ ($r<m$) components $y_i^*$, corresponding to the $r$ largest eigenvalues, will contain nearly most of the variation that arises from all $m$ variables. For such cases, in studying variations of $Y$, attention can be directed on these $r$ linear combinations resulting in a reduction in dimension of the variables involved. 
 
 
 The principal component problem can be represented as a reduced-rank problem, in the sense that a reduced-rank model can be written for this situation as
 	\begin{equation} \label{eqn:ykabyk}
-	Y_k= ABY_k + \epsilon_k
+	Y_k= ABY_k + \epsilon_k,
 	\end{equation}
-with $X_k \equiv Y_k$. From the solutions of Result~\ref{res:2}, by setting $\Gamma=I_m$, we have $A^{(r)}=[V_1,\ldots,V_r]$ and $B^{(r)}=V'$ because $\Sigma_{yx}=\Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $l_i$ in \eqref{eqn:varycovy} are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$ in \eqref{eqn:ykabyk}. If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_k$ appear to be superfluous but the model \eqref{eqn:ykabyk} provides a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \\
+with $X_k \equiv Y_k$. From the solutions of Result~\ref{res:2}, by setting $\Gamma= I_m$, we have $A^{(r)}= [V_1, \ldots, V_r]$ and $B^{(r)}= V'$ because $\Sigma_{yx}= \Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $l_i$ in \eqref{eqn:varycovy}\todo{missing equation reference} are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$ in \eqref{eqn:ykabyk}. If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_k$ appear to be superfluous but the model \eqref{eqn:ykabyk} provides a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \\
 
 
 \noindent \textbf{Canonical Correlation Analysis:} \\
 
 
-\noindent Canonical correlation analysis was introduced by Hotelling~(1935, 1936) as a method of summarizing relationships between two sets of variables. The objective is to find that linear combination of one set of variables which is most highly correlated with any linear combination of a second set of variables. The technique has received attention from theoretical statisticians but because of difficulty in interpretation of the canonical variates, its use is not widespread in applications. By exploring the connection between the reduced-rank regression and canonical correlations, we provide an additional method of interpreting the canonical variates. Because the role of any descriptive tool such as canonical correlations is in better model building, the connection we display below provides an avenue for interpreting and further using the canonical correlations for better model building.
+\noindent Canonical correlation analysis was introduced by Hotelling~(1935, 1936)\todo{missing reference} as a method of summarizing relationships between two sets of variables. The objective is to find that linear combination of one set of variables which is most highly correlated with any linear combination of a second set of variables. The technique has received attention from theoretical statisticians but because of difficulty in interpretation of the canonical variates, its use is not widespread in applications. By exploring the connection between the reduced-rank regression and canonical correlations, we provide an additional method of interpreting the canonical variates. Because the role of any descriptive tool such as canonical correlations is in better model building, the connection we display below provides an avenue for interpreting and further using the canonical correlations for better model building.
 
 
-More formally, in canonical correlation analysis, for random vectors $X$ and $Y$ of dimensions $n$ and $m$, respectively, the purpose is to obtain an $r \times n$ matrix $G$ and an $r \times m$ matrix $H$, so that the $r$-vector variates $\xi=GX$ and $\omega=HY$ will capture as much of the covariances between $X$ and $Y$ as possible. The following result summarizes how this is done. \\
+More formally, in canonical correlation analysis, for random vectors $X$ and $Y$ of dimensions $n$ and $m$, respectively, the purpose is to obtain an $r \times n$ matrix $G$ and an $r \times m$ matrix $H$, so that the $r$-vector variates $\xi= GX$ and $\omega= HY$ will capture as much of the covariances between $X$ and $Y$ as possible. The following result summarizes how this is done.
+
 
 \begin{result}\label{res:4} 
 We assume $\Sigma_{yy}$ is nonsingular. Then the $r \times n$ matrix $G$ and the $r \times m$ matrix $H$, with $H \Sigma_{yy}H'=I_r$, that minimize simultaneously all the eigenvalues of $E[(HY-GX)(HY-GX)']$ are given by,
 	\begin{equation}
-	G=, V_*' \Sigma_{yy}^{-1/2} \Sigma_{yx} \Sigma_{xx}^{-1},\quad H=V_*' \Sigma_{yy}^{-1/2},
+	G= V_*'  \Sigma_{yy}^{-1/2} \Sigma_{yx} \Sigma_{xx}^{-1}, \quad H= V_*'  \Sigma_{yy}^{-1/2},
 	\end{equation}
-where $V_*=[V_1,^*,\ldots,V_r^*]$ and $V_j^*$ is the (normalized) eigenvector corresponding to the $j$th largest eigenvalue $\rho_j^2$ of the matrix
+where $V_*= [V_1^*, \ldots, V_r^*]$ and $V_j^*$ is the (normalized) eigenvector corresponding to the $j$th largest eigenvalue $\rho_j^2$ of the matrix
 	\begin{equation} \label{eqn:eigenlargestmatrix}
-	R_*=\Sigma_{yy}^{-1/2} \Sigma_{yx} \Sigma_{xx}^{-1} \Sigma_{xy} \Sigma_{yy}^{-1/2}.
+	R_*= \Sigma_{yy}^{-1/2} \Sigma_{yx} \Sigma_{xx}^{-1} \Sigma_{xy} \Sigma_{yy}^{-1/2}.
 	\end{equation}
 \end{result}
 
 
-Denoting by $g_j'$ and $h_j'$ the $j$th rows of the matrices $G$ and $H$, respectively, the $j$th pair of canonical variates are defined to be $\xi_j=g_j'X$ and $\omega_j=h_j'Y$, $j=1,2,\ldots,m$ ($m \leq n$). The correlation between $\xi_j$ and $\omega_j$ is the $j$th canonical correlation coefficient and hence, since $\Cov(\xi_j,\omega_j)={V_j^*}' R_*V_j^*=\rho_j^2$, $\Var(\xi_j)={V_j^*}' R_*V_j^*=\rho_j^2$, and $\Var(\omega_j)={V_j^*}' V_j^*=1$, we have $\Corr(\xi_j,\omega_j)=\rho_j$ and the $\rho_j$'s are the canonical correlations between $X$ and $Y$. The canonical variates possess the property that $\xi_1$ and $\omega_1$ have the largest correlation among all possible linear combinations of $X$ and $Y$, $\xi_2$ and $\omega_2$ have the largest possible correlation among all linear combinations of $X$ and $Y$ that are uncorrelated with $\xi_1$ and $\omega_1$ and so on. We shall compare the Result~\ref{res:3} with the resulting estimate of reduced-rank models. Because $\Sigma_{\epsilon\epsilon}=\Sigma_{yy}-\Sigma_{yx}\Sigma_{xx}^{-1}\Sigma_{xy}$, the correspondence with results for the choice $\Gamma=\Sigma_{yy}^{-1}$ is fairly simple. It can be shown that,
+Denoting by $g_j'$ and $h_j'$ the $j$th rows of the matrices $G$ and $H$, respectively, the $j$th pair of canonical variates are defined to be $\xi_j= g_j' X$ and $\omega_j= h_j' Y$, $j= 1, 2, \ldots, m$ ($m \leq n$). The correlation between $\xi_j$ and $\omega_j$ is the $j$th canonical correlation coefficient and hence, since $\cov(\xi_j, \omega_j)= {V_j^*}' R_* V_j^*= \rho_j^2$, $\var(\xi_j)= {V_j^*}' R_* V_j^*= \rho_j^2$, and $\var(\omega_j) ={V_j^*}' V_j^*= 1$, we have $\corr(\xi_j, \omega_j)= \rho_j$ and the $\rho_j$'s are the canonical correlations between $X$ and $Y$. The canonical variates possess the property that $\xi_1$ and $\omega_1$ have the largest correlation among all possible linear combinations of $X$ and $Y$, $\xi_2$ and $\omega_2$ have the largest possible correlation among all linear combinations of $X$ and $Y$ that are uncorrelated with $\xi_1$ and $\omega_1$ and so on. We shall compare the Result~\ref{res:3} with the resulting estimate of reduced-rank models. Because $\Sigma_{\epsilon\epsilon}= \Sigma_{yy} - \Sigma_{yx} \Sigma_{xx}^{-1} \Sigma_{xy}$, the correspondence with results for the choice $\Gamma= \Sigma_{yy}^{-1}$ is fairly simple. It can be shown that,
 	\begin{equation} \label{eqn:rhojsqlambj}
-	\rho_j^2=\lambda_j^2/(1+\lambda_j^2).
+	\rho_j^2=\lambda_j^2/(1+\lambda_j^2)
 	\end{equation}
-and $G$ and $H$ matrices can be obtained from the rescaled versions of $\hat{V}$, used in Result 3. 
+and $G$ and $H$ matrices can be obtained from the rescaled versions of $\hat{V}$, used in Result~\ref{res:3}.
 
 
 
+% Multiple Time Series Modeling
 \section{Multiple Time Series Modeling}
 
 
-Multiple time series analysis is concerned with modeling and estimation of dynamic relationships among m related time series $y_{1t},\ldots,y_{mt}$, based on observations on these series over $T$ equally spaced time points $t=1,...,T$, and also between these series and potential exogenous time series variables $x_{1t},\ldots,x_{nt}$, observed over the same time period. We shall explore the use of these techniques in statistical arbitrage in leveraging multiple markets in Chapter's~\ref{ch:stat_ts} \& \ref{ch:amp}. We first introduce a general model for multiple time series modeling, but will specialize to vector autoregressive (VAR) models for more detailed investigation. As some concepts are similar to those of the univariate models discussed in Section~\ref{sec:modelingthemean}, the presentation will be brief.
+Multiple time series analysis is concerned with modeling and estimation of dynamic relationships among m related time series $y_{1t}, \ldots, y_{mt}$, based on observations on these series over $T$ equally spaced time points $t=1,...,T$, and also between these series and potential exogenous time series variables $x_{1t}, \ldots, x_{nt}$, observed over the same time period. We shall explore the use of these techniques in statistical arbitrage in leveraging multiple markets in Chapter's~\ref{ch:stat_ts}~\&~\ref{ch:amp}. We first introduce a general model for multiple time series modeling, but will specialize to vector autoregressive (VAR) models for more detailed investigation. As some concepts are similar to those of the univariate models discussed in Section~\ref{sec:modelingthemean}, the presentation will be brief.
 
 
-Let $Y_t=(y_{1t},\ldots, y_{mt})'$ be an $m \times 1$ multiple time series vector of response variables and let $X_t=(x_{1t}, \ldots, x_{nt})'$ be an $n \times 1$ vector of input or predictor time series variables. Let $\epsilon_t$ denote an $m \times 1$ white noise vector of errors, independently distributed over time with $E(\epsilon_t)=0$ and $\Cov(\epsilon_t)=\Sigma_{\epsilon\epsilon}$, a positive-definite matrix. We consider the multivariate time series model
+Let $Y_t= (y_{1t}, \ldots, y_{mt})'$ be an $m \times 1$ multiple time series vector of response variables and let $X_t=(x_{1t}, \ldots, x_{nt})'$ be an $n \times 1$ vector of input or predictor time series variables. Let $\epsilon_t$ denote an $m \times 1$ white noise vector of errors, independently distributed over time with $E(\epsilon_t)= 0$ and $\cov(\epsilon_t)= \Sigma_{\epsilon\epsilon}$, a positive-definite matrix. We consider the multivariate time series model
 	\begin{equation} \label{eqn:2ytcs}
-	Y_{t} = \sum_{s=0}^{p}C_sX_{t-s}+\epsilon_t 
+	Y_{t} = \sum_{s=0}^{p} C_s X_{t-s} + \epsilon_t,
 	\end{equation}
-where the $C_s \text{ are } m\times n$ matrices of unknown parameters. In the general setting, the `input' vectors $X_t$ could include past (lagged) values of the response series $Y_t$. In the context of trading $Y_t$ could denote the prices of related assets, $X_{t-s}$ could represent the past values of $Y_t$ and the values of volume, volatility, market, industry factors of all related assets, etc. Note that the model \eqref{eqn:2ytcs} can be written in the form of a multivariate regression model. An important issue that arises in the multiple series modeling is as follows: even for moderate values of the dimensions $m$ and $n$, the number of parameters that must be estimated in model \eqref{eqn:2ytcs}, when no constraints are imposed on the matrices $C_s$ can become quite large. Because of the potential complexity of these models, it is often useful to consider dimension reduction procedures such as reduced-rank regression methods described in the last section and more in detail in Reinsel and Velu (1998)~\cite{velurein}. This may also lead to more efficient, interpretable models due to the reduction in the number of unknown parameters. The key quantities that play a role are cross-covariance matrices that relate $X_{t-s}$ to $Y_t$, for various values of `$s$.' 
+where the $C_s \text{ are } m \times n$ matrices of unknown parameters. In the general setting, the `input' vectors $X_t$ could include past (lagged) values of the response series $Y_t$. In the context of trading $Y_t$ could denote the prices of related assets, $X_{t-s}$ could represent the past values of $Y_t$ and the values of volume, volatility, market, industry factors of all related assets, etc. Note that the model \eqref{eqn:2ytcs} can be written in the form of a multivariate regression model. An important issue that arises in the multiple series modeling is as follows: even for moderate values of the dimensions $m$ and $n$, the number of parameters that must be estimated in model \eqref{eqn:2ytcs}, when no constraints are imposed on the matrices $C_s$ can become quite large. Because of the potential complexity of these models, it is often useful to consider dimension reduction procedures such as reduced-rank regression methods described in the last section and more in detail in Reinsel and Velu (1998)~\cite{velurein}. This may also lead to more efficient, interpretable models due to the reduction in the number of unknown parameters. The key quantities that play a role are cross-covariance matrices that relate $X_{t-s}$ to $Y_t$, for various values of `$s$.' 
 
 
 The class of models stated in \eqref{eqn:2ytcs} is rather flexible and provides many options for modeling multivariate time series data. Specifically consider the VAR$(p)$ model,
 	\begin{equation} \label{eqn:ytphi0}
-	Y_{t} = \Phi_0 + \sum_{j=1}^{p}\Phi_jY_{t-j}+\epsilon_t 
+	Y_{t} = \Phi_0 + \sum_{j=1}^{p} \Phi_jY_{t-j} + \epsilon_t 
 	\end{equation}
 with `$p$' lags. As in Section~\ref{sec:modelingthemean}, we can define the mean, variance, and autocovariance functions for stationary series as follows; in addition we have the cross-correlation matrix that captures the leading relationships among all `$m$' series.
 	\begin{equation} \label{eq:meanvarianceauto}
         \begin{split}
-                    \text{Mean:\qquad} & \mu= E(Y_t) \\
-                    \text{Variance:\qquad} & \Gamma(0)= E[(Y_t-\mu)(Y_t-\mu)'] \\
-                    \text{Autocovariance:\qquad} & \Gamma(l)= E[(Y_t-\mu)(Y_{t-l}-\mu)'] \\
-                    \text{Cross-correlation:\qquad} & \rho(l) = D^{-1}\Gamma(l) D^{-1}
+	\text{Mean:\qquad} & \mu= E(Y_t) \\
+	\text{Variance:\qquad} & \Gamma(0)= E[(Y_t - \mu)(Y_t - \mu)'] \\
+	\text{Autocovariance:\qquad} & \Gamma(l)= E[(Y_t - \mu)(Y_{t-l} - \mu)'] \\
+	\text{Cross-correlation:\qquad} & \rho(l) = D^{-1}\Gamma(l) D^{-1}
         \end{split}
         \end{equation}
-Here $D$ is the diagonal matrix consisting of the `$m$' standard deviations, from the square root of diagonal elements of $\Gamma(0)$. It is easy to observe,  $\Gamma(l)= \Gamma(-l)'$ and $\rho(l)=\rho(-l)'$. The linear dependence among all the variables in terms of leads-lags is fully captured by examining $\rho_{ij}(l)$. There are excellent sources to study about modeling multiple time series (see Tsay (2010)~\cite{tsay} and Reinsel (2002)~\cite{2002reinsel}). We focus mainly on the use of vector AR$(p)$ (VAR$(p)$) model in studying the relationships among stocks or markets; we elaborate on VAR($p$) below.
+Here $D$ is the diagonal matrix consisting of the `$m$' standard deviations, from the square root of diagonal elements of $\Gamma(0)$. It is easy to observe,  $\Gamma(l)= \Gamma(-l)'$ and $\rho(l)= \rho(-l)'$. The linear dependence among all the variables in terms of leads-lags is fully captured by examining $\rho_{ij}(l)$. There are excellent sources to study about modeling multiple time series (see Tsay (2010)~\cite{tsay} and Reinsel (2002)~\cite{2002reinsel}). We focus mainly on the use of vector AR$(p)$ (VAR$(p)$) model in studying the relationships among stocks or markets; we elaborate on VAR($p$) below.
 
 
-Using the back-shift operator $B$, the model \eqref{eqn:ytphi0}, VAR$(p)$ can be written as, $ \Phi(B)Y_t=\Phi_0+\epsilon_t$, where $\Phi(B)=I-\Phi_1B-\cdots-\Phi_pB^p$ is a matrix polynomial. It can be shown for the process $Y_t$ to be stationary, the roots of $\left| \Phi(\lambda)-I \right|=0$ should all lie outside the unit circle. If $Y_t$ is stationary, then $\mu=[\Phi(1)]^{-1}\Phi_0$ where $\Phi(1)=I-\Phi_1-\cdots-\Phi_p$. An easy consequence of this form is the result of the Yule-Walker equations, which are useful to identify, $\Phi$'s, the autoregressive coefficients from the moment conditions:
+Using the back-shift operator $B$, the model \eqref{eqn:ytphi0}, VAR$(p)$ can be written as, $ \Phi(B)Y_t= \Phi_0 + \epsilon_t$, where $\Phi(B)= I - \Phi_1 B - \cdots - \Phi_p B^p$ is a matrix polynomial. It can be shown for the process $Y_t$ to be stationary, the roots of $\lvert \Phi(\lambda)-I \rvert= 0$ should all lie outside the unit circle. If $Y_t$ is stationary, then $\mu= [\Phi(1)]^{-1} \Phi_0$ where $\Phi(1)= I - \Phi_1 - \cdots - \Phi_p$. An easy consequence of this form is the result of the Yule-Walker equations, which are useful to identify, $\Phi$'s, the autoregressive coefficients from the moment conditions:
 	\begin{equation} \label{eqn:2gammarho}
 	\begin{split}
 	\Gamma(l)&= \Phi_1 \,\Gamma(l-1) +\cdots + \Phi_p\, \Gamma(l-p) \\
-	\rho(l)&= \Phi_1^* \,\rho(l-1) + \cdots + \Phi_p^* \, \rho(l-p) 
+	\rho(l)&= \Phi_1^* \,\rho(l-1) + \cdots + \Phi_p^* \, \rho(l-p).
 	\end{split}
 	\end{equation}
-Here $\Phi_i^*=D^{-\frac{1}{2}}\Phi_iD^{-\frac{1}{2}}$. A general approach to building a VAR model is to sequentially increase the lag value, `$p$' and check if the added lag is significant. The lag coefficients are estimated with their sample counter-parts and they provide good initial estimates. The VAR($p$) model building at the $i$th stage is fitting the model, $Y_t=\Phi_0+\Phi_1Y_{t-1}+\cdots+\Phi_iY_{t-i}+\epsilon_t$ via least-squares method and estimate the residual covariance matrix via
+Here $\Phi_i^*= D^{-\frac{1}{2}} \Phi_i D^{-\frac{1}{2}}$. A general approach to building a VAR model is to sequentially increase the lag value, `$p$' and check if the added lag is significant. The lag coefficients are estimated with their sample counter-parts and they provide good initial estimates. The VAR($p$) model building at the $i$th stage is fitting the model, $Y_t= \Phi_0 + \Phi_1 Y_{t-1} + \cdots + \Phi_i Y_{t-i} + \epsilon_t$ via least-squares method and estimate the residual covariance matrix via
 	\begin{equation} \label{eqn:2hatsigma}
-	\hat{\Sigma_i} = \left(\frac{1}{T-2i-1} \right) \sum_{t=i+1}^{T}\Hat{\epsilon_t}^{(i)}{{\hat{\epsilon_t}^{(i)^\prime}}}, \qquad i \geq 0
+	\hat{\Sigma_i} = \left( \frac{1}{T-2i-1} \right) \sum_{t=i+1}^{T}\Hat{\epsilon_t}^{(i)}{{\hat{\epsilon_t}^{(i)^\prime}}}, \quad i \geq 0,
 	\end{equation}
-where $ \Hat{\epsilon}_t^{(i)}=Y_t-\Hat{\Phi}_0^{(i)}-\Hat{\Phi}_1^{(i)}Y_{t-1}-...-\Hat{\Phi}_i^{(i)}Y_{t-i}$ are the residuals. The significance of added lag `$i$' is tested with $H_0: \Phi_i=0$ versus $H_a: \Phi_i \neq 0$, using the likelihood-ratio criterion:
+where $ \Hat{\epsilon}_t^{(i)}= Y_t - \Hat{\Phi}_0^{(i)} - \Hat{\Phi}_1^{(i)}Y_{t-1} - \cdots - \Hat{\Phi}_i^{(i)}Y_{t-i}$ are the residuals. The significance of added lag `$i$' is tested with $H_0: \Phi_i= 0$ versus $H_a: \Phi_i \neq 0$, using the likelihood-ratio criterion:
 	\begin{equation} \label{eqn:2mi}
-	M(i)= -(T-m-i-\frac{3}{2}) \ln\left(\frac{\left| \Hat{\Sigma}_i \right|}{\left| \Hat{\Sigma}_{i-1} \right|}\right)
+	M(i)= -(T - m - i - \frac{3}{2}) \ln\left( \frac{\lvert \Hat{\Sigma}_i \rvert}{\lvert \Hat{\Sigma}_{i-1} \rvert}\right).
 	\end{equation}
 This is distributed asymptotically as a Chi-squared distribution with $m^2$ degrees of freedom. Alternatively, the AIC or BIC criteria that penalizes for over parameterization can be used; 
 	\begin{equation} \label{eqn:2aicbic}
 	\begin{split}
-	AIC(i)&= \ln\left(\left| \tilde{\Sigma_i} \right|\right)+\frac{2m^2i}{T} \\
-	BIC(i)&= \ln\left(\left| \tilde{\Sigma_i} \right|\right)+\frac{m^2i \ln(T)}{T}
+	\text{AIC}(i)&= \ln\left(\lvert\tilde{\Sigma_i} \rvert \right)+\frac{2m^2\,i}{T} \\
+	\text{BIC}(i)&= \ln\left( \lvert \tilde{\Sigma_i} \rvert \right)+\frac{m^2\,i \ln(T)}{T}.
 	\end{split}
 	\end{equation}
 Here $\tilde{\Sigma_i}$ is the maximum likelihood estimate of $\Sigma_i$ where the divisor in \eqref{eqn:2hatsigma} is $T$ instead of $T - 2i - 1$.
 
-Two important properties of VAR$(p)$ model models are worth noting and will be used later. First modeling several variables jointly usually results in lower order vector model as the marginal models for the individual variables or a linear combination of variables can result in a higher order of autoregressive moving average terms that may be hard to interpret. \\
+
+Two important properties of VAR$(p)$ model models are worth noting and will be used later. First modeling several variables jointly usually results in lower order vector model as the marginal models for the individual variables or a linear combination of variables can result in a higher order of autoregressive moving average terms that may be hard to interpret.
 
 
 \begin{result} \label{res:5} 
@@ -300,45 +303,45 @@ Identifying the common features among the series have been focused on by several
 	\begin{equation} \label{eqn:2ytcyt}
 	Y_t = CY_{t-1}^*+\epsilon_t,
 	\end{equation}
-where $C=[\Phi_1,\ldots,\Phi_p]$ and $Y_{t-1}^*=(Y_{t-1},Y_{t-2},\ldots,Y_{t-p})'$. Observe that $'C'$ matrix is of dimension $m \times mp$. We impose a condition on $C$ as in Section~\ref{sec:comts}, as $\text{Rank}(C)= r < m$, as with implications observed earlier. Note $B\cdot Y_{t-1}^*$ is the most relevant information from the past $Y_{t-1}^*$ that relates to $Y_t$. The second implication reveals how certain linear combinations, $l_i' \cdot Y_t$ are not related to the past $Y_{t-1}^*$ and can be taken as white noise series. Estimation of $A$, $B$, and $l$'s all follow from the results in Section~\ref{sec:s_dr}. 
+where $C=[\Phi_1, \ldots, \Phi_p]$ and $Y_{t-1}^*= (Y_{t-1}, Y_{t-2}, \ldots, Y_{t-p})'$. Observe that $'C'$ matrix is of dimension $m \times mp$. We impose a condition on $C$ as in Section~\ref{sec:comts}, as $\text{rank}(C)= r < m$, as with implications observed earlier. Note $B \cdot Y_{t-1}^*$ is the most relevant information from the past $Y_{t-1}^*$ that relates to $Y_t$. The second implication reveals how certain linear combinations, $l_i' \cdot Y_t$ are not related to the past $Y_{t-1}^*$ and can be taken as white noise series. Estimation of $A$, $B$, and $l$'s all follow from the results in Section~\ref{sec:s_dr}. 
 
 
-For the stationary vector AR$(p)$ process \{$Y_t$\} above, note the covariance matrix at lag $j$ as defined earlier, $\Gamma (j) = E (Y_{t-j} Y_t^{\prime})$, and set $\Gamma_{*} = [\Gamma (1)^{\prime},\ldots,\Gamma (p)^{\prime}]^{\prime} = E(Y_{t-1}^{*} Y_t^{\prime})$, and $\Gamma_p = E(Y_{t-1}^{*} Y_{t-1}^{* \prime})$ as the $mp \times mp$ matrix which has $\Gamma (i-j)$ in the $(i,j)$th block. Based on a sample $Y_1 ,\ldots, Y_T$, let $\hat{\Gamma}_p=\frac{1}{T}\sum_t Y_{t-1}^{*} Y_{t-1}^{*\prime}$ and $\hat{\Gamma}_{*} = \frac{1}{T}\sum_t Y_{t-1}^{*} Y_t^{\prime}$. Then the (conditional) ML estimates of $A$ and $B$ are given by
+For the stationary vector AR$(p)$ process $\{ Y_t \}$ above, note the covariance matrix at lag $j$ as defined earlier, $\Gamma(j) = E (Y_{t-j} Y_t' )$, and set $\Gamma_* = [\Gamma (1)', \ldots, \Gamma (p)' ]' = E(Y_{t-1}^* Y_t')$, and $\Gamma_p = E(Y_{t-1}^* Y_{t-1}^{*\prime})$ as the $mp \times mp$ matrix which has $\Gamma(i-j)$ in the $(i,j)$th block. Based on a sample $Y_1, \ldots, Y_T$, let $\hat{\Gamma}_p= \frac{1}{T} \sum_t Y_{t-1}^* Y_{t-1}^{*\prime}$ and $\hat{\Gamma}_* = \frac{1}{T} \sum_t Y_{t-1}^* Y_t'$. Then the (conditional) ML estimates of $A$ and $B$ are given by
 	\begin{equation} \label{eqn:2AhatBhat}
 	\begin{split}
-	\hat{A}&= \tilde{\Sigma}_{\epsilon \epsilon}^{1/2} \, [\hat{V}_{1}, \ldots, \hat{V}_{r}] =  \tilde{\Sigma}_{\epsilon \epsilon}^{1/2}\, \hat{V} = [\hat{\alpha}_{1}, \ldots, \hat{\alpha}_{r}], \\
-	\hat{B}&= \hat{V}^{\prime}\, \tilde{\Sigma}_{\epsilon \epsilon}^{-1/2}\, \hat{\Gamma}_{*}^{\prime}\,\hat{\Gamma}_p^{-1} = [\hat{\beta}_{1}, \ldots, \hat{\beta}_{r}]^{\prime},
+	\hat{A}&= \tilde{\Sigma}_{\epsilon\epsilon}^{1/2} \, [\hat{V}_{1}, \ldots, \hat{V}_{r}] =  \tilde{\Sigma}_{\epsilon\epsilon}^{1/2}\, \hat{V} = [\hat{\alpha}_1, \ldots, \hat{\alpha}_r ], \\
+	\hat{B}&= \hat{V}' \, \tilde{\Sigma}_{\epsilon\epsilon}^{-1/2}\, \hat{\Gamma}_* ' \,\hat{\Gamma}_p^{-1} = [\hat{\beta}_1, \ldots, \hat{\beta}_r]' ,
 	\end{split}
 	\end{equation}
-where $\hat{V} = [\hat{V}_1,\ldots,\hat{V}_r]$ and $\hat{V}_j$ is the (normalized) eigenvector of $\tilde{\Sigma}_{\epsilon \epsilon}^{-1/2}\, \hat{\Gamma}_{*}^{\prime} \hat{\Gamma}_p^{-1} \hat{\Gamma}_{*} \, \tilde{\Sigma}_{\epsilon \epsilon}^{-1/2}$ corresponding to the $j$th largest eigenvalue $\hat{\lambda}_j^2$, and $\tilde{\Sigma}_{\epsilon \epsilon} = (1/T) [\bY \bY^{\prime} - \bY \bY_{-1}^{* \prime} (\bY_{-1}^{*} \bY_{-1}^{* \prime})^{-1} \bY_{-1}^{*} \bY^{\prime} ]$.  Here, $\bY = [Y_1,\ldots,Y_T]$ and $\bY_{-1}^{*} = [Y_0^{*},\ldots,Y_{T-1}^{*}]$ are the $m \times T$ and $mp \times T$ data matrices containing the observations on $Y_t$ and $Y_{t-1}^{*}$, respectively, for $t = 1,\ldots, T$. Note the estimates $\hat{A}$ and $\hat{B}$ satisfy the normalizations: $\hat{B} \hat{\Gamma}_p \hat{B}'= \hat{\Lambda}^2$ and $\hat{A}' \tilde{\Sigma}_{\epsilon\epsilon}^{-1} \hat{A}= I_r$. 
+where $\hat{V} = [\hat{V}_1, \ldots, \hat{V}_r]$ and $\hat{V}_j$ is the (normalized) eigenvector of $\tilde{\Sigma}_{\epsilon\epsilon}^{-1/2}\, \hat{\Gamma}_* ' \hat{\Gamma}_p^{-1} \hat{\Gamma}_* \, \tilde{\Sigma}_{\epsilon\epsilon}^{-1/2}$ corresponding to the $j$th largest eigenvalue $\hat{\lambda}_j^2$, and $\tilde{\Sigma}_{\epsilon\epsilon} = (1/T) [\bY \bY' - \bY \bY_{-1}^{*\prime} (\bY_{-1}^* \bY_{-1}^{*\prime} )^{-1} \bY_{-1}^* \bY' ]$.  Here, $\bY = [Y_1, \ldots, Y_T]$ and $\bY_{-1}^* = [Y_0^*, \ldots, Y_{T-1}^*]$ are the $m \times T$ and $mp \times T$ data matrices containing the observations on $Y_t$ and $Y_{t-1}^*$, respectively, for $t = 1,\ldots, T$. Note the estimates $\hat{A}$ and $\hat{B}$ satisfy the normalizations: $\hat{B} \hat{\Gamma}_p \hat{B}'= \hat{\Lambda}^2$ and $\hat{A}' \tilde{\Sigma}_{\epsilon\epsilon}^{-1} \hat{A}= I_r$. 
 
 
-The asymptotic theory holds for the LR testing for the rank of the coefficient matrix $C$ in the reduced rank autoregressive  model. That is, under the null hypothesis $H_0\!:\!\mbox{rank}(C) \leq r$, the LR test statistic ${\mathcal{M}} = [T\!-\!mp+(mp-m-1)/2] \sum_{j = r + 1}^{m} \log (1+\hat{\lambda}_{j}^{2})$ has an asymptotic $\chi_{(m-r)(mp-r)}^{2}$ distribution. It can be shown that $\hat{\lambda}_j^2=\frac{\hat{\rho}_j^2}{1-\hat{\rho}_j^2}$ where $\hat{\rho}_j^2$ are the canonical correlations between $Y_t$ and $Y_{t-1}^*$ and the LR test above can be alternatively stated in terms of the canonical correlations.
+The asymptotic theory holds for the LR testing for the rank of the coefficient matrix $C$ in the reduced rank autoregressive  model. That is, under the null hypothesis $H_0: \text{rank}(C) \leq r$, the LR test statistic ${\mathcal{M}} = [T - mp + (mp - m - 1)/2] \sum_{j= r + 1}^{m} \log(1 + \hat{\lambda}_{j}^{2} )$ has an asymptotic $\chi_{(m-r)(mp-r)}^{2}$ distribution. It can be shown that $\hat{\lambda}_j^2= \hat{\rho}_j^2/(1 - \hat{\rho}_j^2)$, where $\hat{\rho}_j^2$ are the canonical correlations between $Y_t$ and $Y_{t-1}^*$ and the LR test above can be alternatively stated in terms of the canonical correlations.
 
 
-We briefly address an additional issue unique to financial time series analysis.  This is the aspect of nonstationarity of the vector time series process \{$Y_t$\} when a linear combination may result in stationarity. The relation of nonstationarity to the canonical correlation analysis plays a role in testing for the co-integration of multiple series. Thus, in the comovement (in stationary series) and the co-integration analysis (in non-stationary series), the canonical correlations as descriptive tools play an important role.
+We briefly address an additional issue unique to financial time series analysis.  This is the aspect of nonstationarity of the vector time series process $\{Y_t\}$ when a linear combination may result in stationarity. The relation of nonstationarity to the canonical correlation analysis plays a role in testing for the co-integration of multiple series. Thus, in the comovement (in stationary series) and the co-integration analysis (in non-stationary series), the canonical correlations as descriptive tools play an important role.
 
 
-One interesting result in Box and Tiao (1977)~\cite{box77} is the development of the correspondence between nonstationarity in the VAR(1) process, as reflected by the roots of $\mbox{det}\{ I - \Phi(z) \} = 0$ (equivalently, the eigenvalues of $\Phi$) and the (squared) canonical correlations between $Y_t$ and $Y_{t-1}$ in the canonical analysis, as reflected in the eigenvalues of the matrix $R_* = \Gamma (0)^{-1/2}\, \Gamma (1)^{\prime}\, \Gamma (0)^{-1}\, \Gamma (1)\, \Gamma (0)^{-1/2}$. To develop the correspondence more easily, note that we can write the matrix $R_*$ as $R_* = \Gamma (0)^{-1/2}\, \Phi \Gamma (0)\, \Phi^{\prime}\, \Gamma (0)^{-1/2}$, since $\Phi = \Gamma (1)^{\prime} \Gamma (0)^{-1}$. The specific result to be established is that the number of eigenvalues of $\Phi$ approaching the unit circle (the nonstationary boundary) is the same as the number of canonical correlations between $Y_t$ and $Y_{t-1}$ that approach unity.  
+One interesting result in Box and Tiao (1977)~\cite{box77} is the development of the correspondence between nonstationarity in the VAR(1) process, as reflected by the roots of $\det \{ I - \Phi(z) \} = 0$ (equivalently, the eigenvalues of $\Phi$) and the (squared) canonical correlations between $Y_t$ and $Y_{t-1}$ in the canonical analysis, as reflected in the eigenvalues of the matrix $R_* = \Gamma(0)^{-1/2}\, \Gamma(1)' \, \Gamma(0)^{-1}\, \Gamma(1)\, \Gamma(0)^{-1/2}$. To develop the correspondence more easily, note that we can write the matrix $R_*$ as $R_* = \Gamma (0)^{-1/2}\, \Phi \Gamma(0)\, \Phi' \, \Gamma(0)^{-1/2}$, since $\Phi = \Gamma(1)' \Gamma(0)^{-1}$. The specific result to be established is that the number of eigenvalues of $\Phi$ approaching the unit circle (the nonstationary boundary) is the same as the number of canonical correlations between $Y_t$ and $Y_{t-1}$ that approach unity.  
 
 
-The main implication of the result in Box and Tiao (1977)~\cite{box77} is that the existence of $d$ canonical correlations $\rho_j$ close to one in the vector AR(1) process implies that the associated canonical components will be (close to) nonstationary series, and these may reflect the nonstationary trending or dynamic growth behavior in the multivariate system, while the remaining $r = m-d$ canonical variates possess stationary behavior. For testing this, we first note that the vector AR(1) model, $Y_t = \Phi Y_{t-1} + \epsilon_t$, can be expressed in an equivalent form as
+The main implication of the result in Box and Tiao (1977)~\cite{box77} is that the existence of $d$ canonical correlations $\rho_j$ close to one in the vector AR(1) process implies that the associated canonical components will be (close to) nonstationary series, and these may reflect the nonstationary trending or dynamic growth behavior in the multivariate system, while the remaining $r= m - d$ canonical variates possess stationary behavior. For testing this, we first note that the vector AR(1) model, $Y_t = \Phi Y_{t-1} + \epsilon_t$, can be expressed in an equivalent form as
 	\begin{equation} \label{eqn:2Wtequiv}
-	W_t \equiv Y_t - Y_{t-1} = - (I - \Phi ) Y_{t-1} + \epsilon_t , 
+	W_t \equiv Y_t - Y_{t-1} = - (I - \Phi ) Y_{t-1} + \epsilon_t, 
 	\end{equation}
-which is referred to as an error-correction form.  Notice that if $\Phi$ has eigenvalues approaching unity then $I-\Phi$ will have eigenvalues approaching zero (and will be of reduced rank).  The methodology of interest for exploring the number of unit roots in the AR(1) model is motivated by the model from \eqref{eqn:2Wtequiv}, and consists of a canonical correlation analysis between $W_t = Y_t - Y_{t-1}$ and $Y_{t-1}$ ($\equiv X_t$).  Under stationarity of the process $Y_t$, note that the covariance matrix between $W_t$ and $Y_{t-1}$ is equal to $\Sigma_{wx} = - (I- \Phi )\, \Gamma (0)$.  Thus, the squared canonical correlations between $W_t$ and $Y_{t-1}$ are the eigenvalues of
+which is referred to as an error-correction form.  Notice that if $\Phi$ has eigenvalues approaching unity then $I - \Phi$ will have eigenvalues approaching zero (and will be of reduced rank).  The methodology of interest for exploring the number of unit roots in the AR(1) model is motivated by the model from \eqref{eqn:2Wtequiv}, and consists of a canonical correlation analysis between $W_t = Y_t - Y_{t-1}$ and $Y_{t-1}$ ($\equiv X_t$).  Under stationarity of the process $Y_t$, note that the covariance matrix between $W_t$ and $Y_{t-1}$ is equal to $\Sigma_{wx} = - (I - \Phi )\, \Gamma(0)$.  Thus, the squared canonical correlations between $W_t$ and $Y_{t-1}$ are the eigenvalues of
 	\begin{equation} \label{eqn:2doublesigma}
-	\Sigma_{ww}^{-1} \Sigma_{wx} \Sigma_{xx}^{-1} \Sigma_{xw}= \Sigma_{ww}^{-1} (I- \Phi )\, \Gamma (0) \,(I- \Phi )^{\prime} , 
+	\Sigma_{ww}^{-1} \Sigma_{wx} \Sigma_{xx}^{-1} \Sigma_{xw}= \Sigma_{ww}^{-1} ( I - \Phi )\, \Gamma(0) \,(I  - \Phi )', 
 	\end{equation}
-where $\Sigma_{ww} = \mbox{Cov}(W_t) = 2 \Gamma (0) - \Phi \Gamma (0) - \Gamma (0)\Phi^{\prime} = (I- \Phi )\Gamma (0) + \Gamma (0) (I- \Phi)^{\prime}$. We now present the basic result. \\
+where $\Sigma_{ww} = \cov(W_t) = 2 \Gamma(0) - \Phi\, \Gamma (0) - \Gamma(0)\, \Phi' = (I - \Phi )\, \Gamma (0) + \Gamma(0) \,( I - \Phi)'$. We now present the basic result.
 
 
 \begin{result} \label{res:7}
-Suppose $Y_t$ follows the stationary vector AR(1) model, with error-correction form given in \eqref{eqn:2Wtequiv}, where $\Cov(\epsilon_t) = \Sigma_{\epsilon \epsilon}$ is assumed to be positive definite and fixed. The condition that $d \leq m$ of the eigenvalues of $\Sigma_{ww}^{-1} (I- \Phi )\, \Gamma (0) \,(I- \Phi )^{\prime} $ (i.e., squared canonical correlations between $W_t$ and $Y_{t-1}$) tend to zero implies that at least $d$ of the eigenvalues of $\Phi$ approach unity. (For a proof see Reinsel and Velu (1998), p 138-139)~\cite{velurein}
+Suppose $Y_t$ follows the stationary vector AR(1) model, with error-correction form given in \eqref{eqn:2Wtequiv}, where $\cov(\epsilon_t) = \Sigma_{\epsilon\epsilon}$ is assumed to be positive definite and fixed. The condition that $d \leq m$ of the eigenvalues of $\Sigma_{ww}^{-1} (I - \Phi )\, \Gamma (0) \,(I- \Phi )' $ (i.e., squared canonical correlations between $W_t$ and $Y_{t-1}$) tend to zero implies that at least $d$ of the eigenvalues of $\Phi$ approach unity. (For a proof see Reinsel and Velu (1998)~\cite[p. 138--139]{velurein})
 \end{result}
 
 
-Thus for a vector process, $Y_t$, it is possible that each component series $y_{it}$ to be nonstationary with its first difference $(1 - B) y_{it}$ stationary (in which case $y_{it}$ is said to be integrated of order one), but such that certain linear combinations $z_{it} = b_i^{\prime} Y_t $ of $Y_t$ will be stationary. The process $Y_t$ then is said to be \textit{co-integrated} with co-integrating vectors $b_i$ (e.g., Engle and Granger (1987)~\cite{engle1987co}).  A possible interpretation, particularly related to economics, is that the individual components $y_{it}$ share some common nonstationary components or ``common trends'' and, hence, they tend to have certain similar movements in their long-term behavior.  A related interpretation is that the component series $y_{it}$, although they may exhibit nonstationary behavior, satisfy (approximately) a long-run equilibrium relation $b_i^{\prime} Y_t \approx 0$ such that the process $z_{it} = b_i^{\prime} Y_t$, which represents the deviations from the equilibrium, exhibits stable behavior and so is a stationary process. This fact is exploited in `pairs trading' or more broadly in trading multiple stocks and can be very useful also in the context of portfolio rebalancing. 
+Thus for a vector process, $Y_t$, it is possible that each component series $y_{it}$ to be nonstationary with its first difference $(1 - B)\, y_{it}$ stationary (in which case $y_{it}$ is said to be integrated of order one), but such that certain linear combinations $z_{it} = b_i' Y_t $ of $Y_t$ will be stationary. The process $Y_t$ then is said to be \emph{co-integrated} with co-integrating vectors $b_i$ (e.g., Engle and Granger (1987)~\cite{engle1987co}).  A possible interpretation, particularly related to economics, is that the individual components $y_{it}$ share some common nonstationary components or ``common trends'' and, hence, they tend to have certain similar movements in their long-term behavior.  A related interpretation is that the component series $y_{it}$, although they may exhibit nonstationary behavior, satisfy (approximately) a long-run equilibrium relation $b_i' Y_t \approx 0$ such that the process $z_{it} = b_i' Y_t$, which represents the deviations from the equilibrium, exhibits stable behavior and so is a stationary process. This fact is exploited in `pairs trading' or more broadly in trading multiple stocks and can be very useful also in the context of portfolio rebalancing. 
 
 
 The general VAR$(p)$ model, $\Phi(B) Y_t = Y_t - \sum_{j=1}^p \Phi_j Y_{t-j} = \epsilon_t$, can be represented in the  \textit{error-correction form} (Engle and Granger (1987)~\cite{engle1987co}) as $\Phi^* (B) (1\!-\!B) Y_t = - \Phi (1) Y_{t-1} + \epsilon_t$; that is,
