@@ -18,7 +18,7 @@ A portfolio which is composed of individual assets has its risk and return chara
 
 We follow the same conventions as before to denote the return as $r_t= \ln(P_t) - \ln(P_{t-1})$; assume we have `$m$' assets in the portfolio with `$w_i$' denoting the share value invested in asset, `$i$', if $R_t=(P_t-P_{t-1})/P_{t-1}$, the portfolio return is $R_{pt}= \sum_{i=1}^m w_i R_{it}$ and thus $r_t= \ln \left(1+\sum_{i=1}^m w_i R_{it} \right) \simeq \sum_{i=1}^m w_i r_{it}$. If $r_t$ denotes the vector of `$m$' asset returns and with weights stacked up as a vector, $w$, then $r_{pt}= w' r_t$ resulting in $\mu_p= E(r_{pt})= w' \mu$ and $\sigma_p^2= w' \Sigma w$, where $\Sigma$ is the $m \times m$ variance-covariance matrix of $r_t$. If the returns are uncorrelated or negatively correlated, then observe that
 	\begin{equation} \label{eqn:5sigmap}
-	\sigma_p^2= w' \Sigma w \leq \sum_{i=1}^m w_i \Var(r_{it}) \leq \dfrac{v}{m},
+	\sigma_p^2= w' \Sigma w \leq \sum_{i=1}^m w_i \var(r_{it}) \leq \dfrac{v}{m},
 	\end{equation}
 where `$v$' is the maximum of $\var(r_{it})$, clearly indicating that diversification tends to reduce risk. The power of the diversification can be seen clearly if we assume the covariance matrix, $\Sigma$, has all variances equal and if all off-diagonal covariance elements are the same. Then, $\sigma_p^2= \frac{1}{n} \cdot \sigma^2 + \frac{n-1}{n} \cdot \rho \cdot \sigma^2$. Observe that if $\rho= 0$, $\sigma_p^2 \to 0$ as $n \to \infty$ and if $\rho= 1$, $\sigma_p^2= \sigma^2$ that results in no benefit. When $\rho < 0$ as shown in \eqref{eqn:5sigmap}, the portfolio variance is less due to diversification. But it should be noted that we cannot completely eliminate portfolio risk when the correlations among the assets are positive. Observe that $\sigma_p^2= \frac{1}{m^2} \sum_{i=1}^m \sigma_i^2 + \frac{1}{m^2} \sum_{i \neq j} \sigma_{ij} \leq \frac{\sigma_{\text{max}}^2}{m} + \frac{m-1}{m} \cdot A \to A$ as $m \to \infty$. Some amount of risk will remain if the portfolio consists of assets that move with the market. \\
 
@@ -165,7 +165,7 @@ where $M_f=I_T - f'(ff')^{-1}f$ is a $T \times T$ idempotent matrix ($M_f * M_f=
 where $\overline{f}= \frac{1}{T} \sum_{t=1}^T f_t$, $\hat{\Omega}= \frac{1}{T} \sum_{t=1}^T (f_t - \overline{f})(f_t - \overline{f})'$ and $\hat{\Sigma}$ is the residual covariance matrix. Recall that the known factors could be macroeconomic variables or the financial variables such as Fama and French factors discussed in Section~\ref{s:mod_port_theory}.
 
 
-The key tool for estimation of unknown factors is Principal Component Analysis (PCA). For a brief discussion on PCA, refer back to Chapter~\ref{ch:ch_mvts}. The main difference between Factor Analysis (FA) and PCA is that the former is meant to capture the joint covariances among the returns, $r_t$ whereas PCA's focus is on capturing the sum of variances or volatilities of $r_t$. Assume that $\Var(r_t)= \Sigma_{rr}$, $m \times m$ covariance matrix. Now transform the returns by $Pr_t$ where $P$ is orthogonal, $P'P=I_m$ and $P\Sigma_{rr}P'= \Lambda$, where $\Lambda$ is the diagonal matrix. Note the transformed returns, $Z_t= Pr_t$ has $\var(Z_t)= \Lambda$ and thus uncorrelated. The goal is to recover much of the total variance $\sum_{i=1}^m \sigma_i^2$ with a few linear combinations of $r_t$. \\
+The key tool for estimation of unknown factors is Principal Component Analysis (PCA). For a brief discussion on PCA, refer back to Chapter~\ref{ch:ch_mvts}. The main difference between Factor Analysis (FA) and PCA is that the former is meant to capture the joint covariances among the returns, $r_t$ whereas PCA's focus is on capturing the sum of variances or volatilities of $r_t$. Assume that $\var(r_t)= \Sigma_{rr}$, $m \times m$ covariance matrix. Now transform the returns by $Pr_t$ where $P$ is orthogonal, $P'P=I_m$ and $P\Sigma_{rr}P'= \Lambda$, where $\Lambda$ is the diagonal matrix. Note the transformed returns, $Z_t= Pr_t$ has $\var(Z_t)= \Lambda$ and thus uncorrelated. The goal is to recover much of the total variance $\sum_{i=1}^m \sigma_i^2$ with a few linear combinations of $r_t$. \\
 
 
 \noindent\textbf{Result. } The solution to $\max_w w' \Sigma w \ni w'w=1$ is obtained from solving $\Sigma w= \lambda w$. Thus `$w$' is the eigenvector that corresponds to the largest eigenvalue of $\Sigma$ obtained from $\lvert \Sigma - \lambda I\rvert=0$ where $|\cdot|$ denotes the determinant of the matrix; note $\tr(\Sigma)= \sum_{i=1}^m \sigma_i^2 = \sum_{i=1}^m \lambda_i$ and the values of `$\lambda_i$' are disproportional such that we can approximate $\tr(\Sigma) \sim \sum_{i=1}^r \lambda_i$, where `$r$' is much less than `$m$'. \\
@@ -391,7 +391,7 @@ Minimizing the following risk function,
 	\end{equation}
 we arrive at `$\alpha$' as
 	\begin{equation}\label{eqn:bigalpha}
-	\alpha^*= \dfrac{\sum_i \sum_{j} \left[ \Var(s_{ij}) - \cov(s_{ij}^0, s_{ij}) \right]}{\sum_i \sum_j \left[ \var(s_{ij}^0 - s_{ij}) + (\phi_{ij} - \sigma_{ij})^2 \right]},
+	\alpha^*= \dfrac{\sum_i \sum_{j} \left[ \var(s_{ij}) - \cov(s_{ij}^0, s_{ij}) \right]}{\sum_i \sum_j \left[ \var(s_{ij}^0 - s_{ij}) + (\phi_{ij} - \sigma_{ij})^2 \right]},
 	\end{equation}
 where $\phi_{ij}= E[\alpha s_{ij}^0 + (1 - \alpha) s_{ij}]$. It is further shown that
 	\begin{equation}\label{eqn:alphastarsim}
@@ -643,7 +643,7 @@ where $\alpha$ is a $m \times 1$ vector and $B$ is the $m \times k$ matrix of fa
 	\end{equation}
 Because `$w$' is random, note
 	\begin{equation} \label{eqn:portreturnrandom}
-	E(r_{pt})= E(\alpha_p) + E(\beta_p' f_t)= \alpha' E(w)+ \Cov(\beta_p,f_t) + E(\beta_p') E(f_t).
+	E(r_{pt})= E(\alpha_p) + E(\beta_p' f_t)= \alpha' E(w)+ \cov(\beta_p,f_t) + E(\beta_p') E(f_t).
 	\end{equation}
 Note the first term is the result of asset choice, the second term is the result of the factor model theory and the last term reflects the risk premia. \\
 

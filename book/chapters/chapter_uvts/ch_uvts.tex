@@ -147,9 +147,9 @@ Because the means, variances, and covariances are useful summary descriptions of
 	\begin{equation} \label{eqn:texteqn}
 	\begin{split}
 	\text{mean, } \mu(t)&= E(Y_t) \\
-	\text{variance, } \sigma^2(t)&= \Var(Y_t)= E[(Y_t - \mu(t))^2] \\
-	\text{autocovariance, } \gamma(t,s)&= \Cov(Y_t,Y_s)= E[(Y_t-\mu(t))(Y_s - \mu(s))] \\
-	\text{autocorrelation, } \rho(t,s)&= \Corr(Y_t,Y_s)= \dfrac{\gamma(t,s)}{\sigma(t)\sigma(s)}
+	\text{variance, } \sigma^2(t)&= \var(Y_t)= E[(Y_t - \mu(t))^2] \\
+	\text{autocovariance, } \gamma(t,s)&= \cov(Y_t,Y_s)= E[(Y_t-\mu(t))(Y_s - \mu(s))] \\
+	\text{autocorrelation, } \rho(t,s)&= \corr(Y_t,Y_s)= \dfrac{\gamma(t,s)}{\sigma(t)\sigma(s)}
 	\end{split}
 	\end{equation}
 It is not possible to estimate the unknown parameters (means, variances, and covariances) from a single realization of $T$ observations. In addition, such generality in the specification of the mean and covariance structure is not of much use for the prediction of future observations of the process. Hence we must impose some additional structure on the joint distribution of the process in order to substantially reduce the number of unknown parameters. The concept of stationarity of a process serves as a realistic assumption for many types of time series. Stationarity is motivated by the fact that for many time series in practice, segments of the series at different points in time behave similarly. \\
@@ -254,7 +254,7 @@ where $\delta$ is a constant.  By successive substitutions in the above relation
 	\[
 	Y_t = \delta \, t + \sum_{j=1}^t \epsilon_j = \delta \, t + \epsilon_{t} + \epsilon_{t-1} + \cdots + \epsilon_{1}, \qquad t= 1, 2, \ldots .
 	\]
-Hence we see that $E(Y_t)= \delta t$ and $\var(Y_t)= \Var(\sum_{j=1}^t \epsilon_j)= \sum_{j=1}^t \var(\epsilon_j)= t \, \sigma^2$, so that the process $\{ Y_t \}$ is not stationary and exhibits change in both mean and variance.  Moreover, for any $s > 0$, we find that
+Hence we see that $E(Y_t)= \delta t$ and $\var(Y_t)= \var(\sum_{j=1}^t \epsilon_j)= \sum_{j=1}^t \var(\epsilon_j)= t \, \sigma^2$, so that the process $\{ Y_t \}$ is not stationary and exhibits change in both mean and variance.  Moreover, for any $s > 0$, we find that
 	\[
 	\cov(Y_t,Y_{t+s})= \cov \left( \sum_{j=1}^t \epsilon_j, \sum_{i=1}^{t+s} \epsilon_i \right)= \sum_{j=1}^t \var(\epsilon_j) = t \, \sigma^2 ,
 	\]
@@ -288,7 +288,7 @@ We now briefly discuss a few properties of the sampling distributions of the abo
 	\begin{equation} \label{eqn:var}
         \var(\overline{Y})= \frac{\gamma(0)}{T} \left[ 1 + 2 \sum_{u=1}^{T-1} \frac{T - u}{T} \rho(u) \right].
         \end{equation}
-Hence if $\rho(u) \rightarrow 0$ as $u \rightarrow \infty$, then so that $\Var\left(\overline{Y}\right) \rightarrow 0$ as $T \rightarrow \infty$. Under some mild conditions it can also be shown that $\overline{Y}$ is asymptotically normally distributed as $T \rightarrow \infty$.
+Hence if $\rho(u) \rightarrow 0$ as $u \rightarrow \infty$, then so that $\var\left(\overline{Y}\right) \rightarrow 0$ as $T \rightarrow \infty$. Under some mild conditions it can also be shown that $\overline{Y}$ is asymptotically normally distributed as $T \rightarrow \infty$.
 
 
 The sampling properties of the sample ACF $r(s)$ are quite complicated and exact results are not available except in a few special cases. We indicate one result from Anderson and Walker (1964)~\cite{anderwalk} based on large sample theory. Under linearity of the time series, the joint distribution of $\big(T^{1/2} (r(1) - \rho(1) ), \ldots, T^{1/2} (r(k) - \rho(k) ) \big)$, $k$ fixed, tends to follow a multivariate normal $N(0, W)$ distribution as $T \to \infty$, where $W$ is a $k \times k$ matrix with $(i,j)$th element, $w_{ij}$, given by
@@ -686,7 +686,7 @@ For moderately large sample size $T$, both conditional least squares estimation 
 	\]
 
 
-Now for large sample size $T$, much of the classical linear regression sampling theory can be applied to the estimation in the AR($p$) situation. Thus, for the LS estimator and for the Yule-Walker estimator (which are asymptotically equivalent), it can be proven that the distribution of $\sqrt{T}\,(\hat{\phi} - \phi)$ converges as $T \to \infty$ to the multivariate normal distribution $N(0,\sigma^2\,\Gamma_p^{-1})$, a multivariate normal with mean 0 and covariance matrix $\sigma^2\,\Gamma_p^{-1}$, where $\Gamma_p \equiv \gamma(0)P_p$, where $P_p$ is defined in \eqref{eqn:matrix}. Thus, for large $T$, we can use the approximation that $\hat{\phi}$ is distributed as $N(\phi,(\sigma^2/T)\,\Gamma_p^{-1})$. For a simple example, in the AR(1) case, the LS or Yule-Walker estimator $\hat{\phi} = r(1) = \hat{\rho}(1)$ has an approximate normal distribution with mean $\phi = \rho(1)$ and variance $Var(\hat{\phi}) = (\sigma^2/T)[\gamma(0)]^{-1} = (1/T)(\sigma^2/\gamma(0)) = (1/T)(1 - \phi^2)$, since $\gamma(0) = \sigma^2/(1 - \phi^2)$ for an AR(1) process, and $\Var(\hat{\phi})$ is estimated by $(1 - \hat{\phi}^2\hspace{0.01cm})/T$.
+Now for large sample size $T$, much of the classical linear regression sampling theory can be applied to the estimation in the AR($p$) situation. Thus, for the LS estimator and for the Yule-Walker estimator (which are asymptotically equivalent), it can be proven that the distribution of $\sqrt{T}\,(\hat{\phi} - \phi)$ converges as $T \to \infty$ to the multivariate normal distribution $N(0,\sigma^2\,\Gamma_p^{-1})$, a multivariate normal with mean 0 and covariance matrix $\sigma^2\,\Gamma_p^{-1}$, where $\Gamma_p \equiv \gamma(0)P_p$, where $P_p$ is defined in \eqref{eqn:matrix}. Thus, for large $T$, we can use the approximation that $\hat{\phi}$ is distributed as $N(\phi,(\sigma^2/T)\,\Gamma_p^{-1})$. For a simple example, in the AR(1) case, the LS or Yule-Walker estimator $\hat{\phi} = r(1) = \hat{\rho}(1)$ has an approximate normal distribution with mean $\phi = \rho(1)$ and variance $\var(\hat{\phi}) = (\sigma^2/T)[\gamma(0)]^{-1} = (1/T)(\sigma^2/\gamma(0)) = (1/T)(1 - \phi^2)$, since $\gamma(0) = \sigma^2/(1 - \phi^2)$ for an AR(1) process, and $\var(\hat{\phi})$ is estimated by $(1 - \hat{\phi}^2\hspace{0.01cm})/T$.
 
 
 The maximum likelihood estimation is based on the augmented conditions likelihood function, augmented with the distribution of the initial values $Y_1, \ldots, Y_p$. The procedure is quite cumbersome, but with large sample, $T$, the distribution of initial values does not make much of a difference in the estimation of the unknown parameters. Maximum likelihood and least squares estimation are much more computationally difficult for a mixed ARMA($p,q$) model, $Y_t - \sum_{i=1}^p \phi_i Y_{t-i} = \delta + \varepsilon_t - \sum_{i=1}^q\theta_i\varepsilon_{t-i}$, than for a pure AR($p$) model because the log-likelihood and the sum of squares are more complicated (non-quadratic) functions of the unknown parameters $\phi_1,\ldots,\phi_p,\theta_1,\ldots,\theta_q, \delta$, and $\sigma^2$. We will be brief on this topic.
@@ -707,7 +707,7 @@ We briefly present results for two most applicable models in finance.
 
 
 \begin{ex}[MA(1) Model)]
-Let $Y_t = \varepsilon_t - \theta\varepsilon_{t-1}$, write $Z_t = -\partial\varepsilon_t/\partial\theta$ that satisfies the relation $\partial\varepsilon_t/\partial\theta = \varepsilon_t + \theta\partial\varepsilon_{t-1}/\partial\theta$, or $Z_t = \theta Z_{t-1} - \varepsilon_t, t = 1,2,\ldots,T$. This can be computed recursively from the starting values $\varepsilon_0^o = 0, Z_0 = 0$ and the $\varepsilon_t^o$. Then we have $\hat{\theta} = \theta_0 + \sum_{t=1}^T\overline{Z}_t\overline{\varepsilon}_t^o/\sum_{t=1}^T\overline{Z}_t^2$, with $\Var(\hat{\theta}) = \hat{\sigma}^2/\sum_{t=1}^T\overline{Z}_t^2$. Note that in theory, the stochastic process $\{Z_t\}$ follows an AR(1) model, $(1 - \theta B)Z_t = -\varepsilon_{t-1}$, so $V = E(Z_t^2) = \sigma^2/(1 - \theta^2)$, and we have $\Var(\hat{\theta}) = (\sigma^2/T)V^{-1} = (1 - \theta^2)/T$. \xqed
+Let $Y_t = \varepsilon_t - \theta\varepsilon_{t-1}$, write $Z_t = -\partial\varepsilon_t/\partial\theta$ that satisfies the relation $\partial\varepsilon_t/\partial\theta = \varepsilon_t + \theta\partial\varepsilon_{t-1}/\partial\theta$, or $Z_t = \theta Z_{t-1} - \varepsilon_t, t = 1,2,\ldots,T$. This can be computed recursively from the starting values $\varepsilon_0^o = 0, Z_0 = 0$ and the $\varepsilon_t^o$. Then we have $\hat{\theta} = \theta_0 + \sum_{t=1}^T\overline{Z}_t\overline{\varepsilon}_t^o/\sum_{t=1}^T\overline{Z}_t^2$, with $\var(\hat{\theta}) = \hat{\sigma}^2/\sum_{t=1}^T\overline{Z}_t^2$. Note that in theory, the stochastic process $\{Z_t\}$ follows an AR(1) model, $(1 - \theta B)Z_t = -\varepsilon_{t-1}$, so $V = E(Z_t^2) = \sigma^2/(1 - \theta^2)$, and we have $\var(\hat{\theta}) = (\sigma^2/T)V^{-1} = (1 - \theta^2)/T$. \xqed
 \end{ex}
 
 
@@ -759,7 +759,7 @@ Consider for the simple AR(1) model $Y_t = \phi Y_{t-1} + \varepsilon_t$, $t = 1
 	\begin{equation} \label{eqn:futurereffirst}
 	\hat{\phi} = \dfrac{\sum_{t=2}^T Y_{t-1}Y_t}{\sum_{t=2}^T Y_{t-1}^2} = \phi + \dfrac{\sum_{t=2}^T Y_{t-1}\varepsilon_t}{\sum_{t=2}^T Y_{t-1}^2}.
 	\end{equation}
-If the process is stationary, $\lvert \phi \rvert< 1$, $\{ Y_t \}$ can be written as $Y_t = \sum_{i=0}^\infty \phi^i \varepsilon_{t-i}$ with variance $\Var(Y_t) = \gamma(0) = \sigma^2/(1-\phi^2)$ which is constant. Hence, $T^{1/2}(\hat{\phi} - \phi) = T^{-1/2}\sum_{t=2}^T Y_{t-1}\varepsilon_t/T^{-1}\sum_{t=2}^TY_{t-1}^2$ has an approximate normal distribution with zero mean and variance $(1 - \phi^2)$, because $T^{-1/2}\sum_{t=2}^T Y_{t-1} \varepsilon_t \sim N(0,\sigma^2 \gamma(0))$ and $T^{-1} \sum_{t=2}^T Y_{t-1}^2 \xrightarrow{P} \gamma(0)$ as $T \to \infty$. However, when $\phi = 1$, so $Y_t = \sum_{j=0}^{t-1}\varepsilon_{t-j} + Y_0$, with $\var(Y_t) = E(Y_t^2) = t \sigma^2$, it can be shown that $T(\hat{\phi} - 1) = T^{-1} \sum_{t=2}^T Y_{t-1} \varepsilon_t/T^{-2} \sum_{t=2}^T Y_{t-1}^2 = O_p(1)$, the estimator $\hat{\phi}$ approaches its true value $\phi = 1$ with increasing sample size $T$ at a faster rate than in the stationary case. Both the numerator and the denominator of the above expression have nonnormal limiting distributions. 
+If the process is stationary, $\lvert \phi \rvert< 1$, $\{ Y_t \}$ can be written as $Y_t = \sum_{i=0}^\infty \phi^i \varepsilon_{t-i}$ with variance $\var(Y_t) = \gamma(0) = \sigma^2/(1-\phi^2)$ which is constant. Hence, $T^{1/2}(\hat{\phi} - \phi) = T^{-1/2}\sum_{t=2}^T Y_{t-1}\varepsilon_t/T^{-1}\sum_{t=2}^TY_{t-1}^2$ has an approximate normal distribution with zero mean and variance $(1 - \phi^2)$, because $T^{-1/2}\sum_{t=2}^T Y_{t-1} \varepsilon_t \sim N(0,\sigma^2 \gamma(0))$ and $T^{-1} \sum_{t=2}^T Y_{t-1}^2 \xrightarrow{P} \gamma(0)$ as $T \to \infty$. However, when $\phi = 1$, so $Y_t = \sum_{j=0}^{t-1}\varepsilon_{t-j} + Y_0$, with $\var(Y_t) = E(Y_t^2) = t \sigma^2$, it can be shown that $T(\hat{\phi} - 1) = T^{-1} \sum_{t=2}^T Y_{t-1} \varepsilon_t/T^{-2} \sum_{t=2}^T Y_{t-1}^2 = O_p(1)$, the estimator $\hat{\phi}$ approaches its true value $\phi = 1$ with increasing sample size $T$ at a faster rate than in the stationary case. Both the numerator and the denominator of the above expression have nonnormal limiting distributions. 
 
 
 We present the commonly used ``Studentized'' statistic, for testing $H_0: \, \lvert \phi \rvert=1$ vs $H_a: \, \lvert \phi \rvert < 1$,

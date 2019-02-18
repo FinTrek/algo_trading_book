@@ -543,7 +543,7 @@ A recent study by Farago and Hjalmarsson (2018)~\cite{faragohjalm} on using co-i
 	\end{equation}
 where $r_{ft}$ is the risk-free rate and $f_t$ are the factor scores. Now collect the coefficient vector $\hat{\theta}_i' = (\hat{\alpha}_i, \hat{\beta}_i)'$ for $i = 1, 2, \ldots, N$ assets under consideration and form a standardized distance measure,
 	\begin{equation} \label{eq:dijsquaredcov}
-	d_{ij}^2 = \hat{\theta}_i' \Cov^{-1}(\hat{\theta}_i)\hat{\theta}_i
+	d_{ij}^2 = \hat{\theta}_i' \cov^{-1}(\hat{\theta}_i)\hat{\theta}_i
 	\end{equation}
 and select pairs with the smaller distance. This can be expected to result in similar assets after adjusting for the risk factors. Generally the factors tend to vary much more slowly than the excess returns, $r_{it} - r_{ft}$, the distance based on $\hat{\theta}_i$ tends to move slower than short-term price movements. Recent studies confirm that the simple Euclidean distance-based pairing may be inadequate. Do and Faff (2010)~\cite{do2010does} suggest adding two additional metrics: industry homogeneity and the frequency of the historical reversal in the price spread; the measure in \eqref{eq:dijsquaredcov} can accommodate that easily. \\
 
