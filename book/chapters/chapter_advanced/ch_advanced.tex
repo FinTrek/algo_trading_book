@@ -13,11 +13,11 @@ There has been much recent interest in the representation of ARIMA models in the
 
 
 The state-space models were initially developed by control systems engineers to measure a signal contaminated by noise. The signal at time ``$t$'' is taken to be a linear combination of variables, called state variables that form the so called state vector at time, $t$. The key property of the state vector is that it contains the minimum set of information from past and present data but the future behavior of the system is independent of the past value and depends only on the present values. Thus the state vector evolves according to the Markov property. The state equation is stated as,
-	\begin{equation}\label{eqn:2zt}
+	\begin{equation} \label{eqn:2zt}
 	Z_t = \Phi_tZ_{t-1} + a_t
 	\end{equation}
 and observation equation
-	\begin{equation}\label{eqn:2yt}
+	\begin{equation} \label{eqn:2yt}
 	Y_t = H_tZ_t + N_t,
 	\end{equation}
 where it is assumed that $a_t$ and $N_t$ are independent white-noise processes; $a_t$ is a vector white noise with covariance matrix $\Sigma_a$ and $N_t$ has variance $\sigma_N^2$. The matrix $\Phi_t$ in \eqref{eqn:2zt} is an $r \times r$ transition matrix and $H_t$ in \eqref{eqn:2yt} is a $l \times r$ vector; both are allowed to vary in time. In engineering applications, the structure of these matrices are governed by some physical phenomena. 
@@ -581,8 +581,8 @@ The technical trading rules that are to be discussed in Chapter~6 involve a rela
 Machine learning is a growing area of computer science that encompasses other well-established areas such as statistics, computational algorithms, artificial intelligence, control theory, etc.. The focus in machine learning is on developing efficient algorithms for prediction or for classification using large data sets. The efficiency is gauged by validation accuracy. The inferential aspects of statistical theory, such as standard error of the estimates, confidence intervals, etc., are generally not of much concern. Some areas where machine learning methods have led to significant contribution are classification, clustering and multi-dimensional regression. The attractiveness of these methods lie in the fact that they do not need any a priori theory to suggest which relevant variables to consider. Therefore with no prescription of variables, the variable or feature selection becomes an important process in machine learning. The statistical foundations of machine learning methods are generally referred to as statistical learning methods. We provide a brief description of a select few methods in this section. \\
 
 
-\noindent \textbf{Neural Networks:} The neural network is typically represented as follows:
-	\begin{equation}\label{eqn:neural}
+\noindent\textbf{Neural Networks:} The neural network is typically represented as follows:
+	\begin{equation} \label{eqn:neural}
 	\begin{tikzpicture}[baseline=(current  bounding  box.center)]
 	\node(char)[draw,fill=white,shape=rectangle, drop shadow={opacity=.5, xshift=0pt},minimum width=0.7cm, minimum height=0.7cm] at (-4,0) (X) {$\mathbf{X}$};
 	\node(char)[draw,fill=white,shape=rounded rectangle, drop shadow={opacity=.5, xshift=0pt},minimum width=0.7cm, minimum height=0.7cm] at (0,0) (Z) {$\mathbf{Z}$};
@@ -592,25 +592,25 @@ Machine learning is a growing area of computer science that encompasses other we
 	\end{tikzpicture}
 	\end{equation}
 Here, the square boxes contain `$n$' dimensional input or feature vector, $X$ and `$m$' dimensional output vector, $Y$ and the circular box indicates hidden or unknown layer in-between that connects the input to the output. From its structure, neural networks are a two-stage regression or classification model with intermediary layers; $Z$ is generally a non-linear function of $X$. In the ordinary least squares regression model, the goal is to get `$m$' linear combinations of `$X$' that best predicts `$Y$'. Here `$r$' dimensional intermediaries can vary based on the assumption of `hidden' layers, but the `key' is that the output vector, `$Y$', can be a non-linear function of `$X$' via the hidden layers. In its simplest form the neural network model can be written as follows:
-	\begin{equation}\label{eqn:neurallabel}
+	\begin{equation} \label{eqn:neurallabel}
 	\begin{split}
 	z_i&= \sigma(\beta_i'X), \quad i=1,2,\ldots,r \\
 	Y_j&= g_j(Z), \quad j=1,2,\ldots,m
 	\end{split}
 	\end{equation}
 where the function $\sigma(u)=\frac{1}{1+e^{-u}}$ is the sigmoid function. Note that this is the  function used in logistic regression. In the regression set-up, $g_j(Z)=\alpha_j' Z$, but in the $m$-class classification,
-	\begin{equation}\label{eqn:gjzclass}
+	\begin{equation} \label{eqn:gjzclass}
 	g_j(Z)= \dfrac{e^{\alpha_j' Z}}{\displaystyle\sum_{l=1}^m e^{\alpha_j' Z}},
 	\end{equation}
 called the softmax function, is used. In the set-up given in \eqref{eqn:neural}, we assume only one hidden layer, but in practical applications many layers are assumed which leads to non-uniqueness problems. As shown in Hastie, Tibshirani and Friedman (2009)~\cite{hastibf} the neural network problem is closely related to a non-parametric method called projection pursuit regression.
 
 
 To estimate the `$r \times n$' parameters $\beta$'s and `$m \times r$' parameters of $\alpha$'s, the criterion in the regression setting is the usual sum of squares,
-	\begin{equation}\label{eqn:bigwtheta}
+	\begin{equation} \label{eqn:bigwtheta}
 	W(\theta)= \sum_{l=1}^n \sum_{k=1}^m \big(y_{ik} - f_k(x_i)\big)^2 = \sum_{i=1}^m W_i(\theta)
 	\end{equation}
 and in the classification setting the criterion is, 
-	\begin{equation}\label{eqn:bigwtheta2}
+	\begin{equation} \label{eqn:bigwtheta2}
 	W(\theta)= - \sum_{i=1}^n \sum_{k=1}^m y_{ik} \ln f_k(x_i),
 	\end{equation}
 which is also termed as a measure of deviance. The method to estimate the unknown parameters, `$\theta$' is a gradient descent, also called as back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
@@ -633,10 +633,10 @@ where `$\lambda$' is a positive tuning parameter.
 \end{enumerate}
 
 
-\noindent \textbf{Reinforcement Learning:} The set of techniques covered in this area is quite broad and generally refers to learning from interaction to achieve a goal. The learner is called an `agent' who learns from interacting with `environment' through trial and error. The learning is assumed to progress through `rewards.' More formally, the environment is in a state, $s_t \in S$, the set of all possible states; the agent's decision or action, $a_t \in A(s_t)$, the set of actions available in state `$s_t$.' As a consequence, the agent gets a reward $r_{t+1} \in R$ and a new state of the environment, `$s_{t+1}$' emerges. Reinforcement learning methods study how the agent changes the policy, $\Pi_t (s_t,a_t)$ with a goal towards maximizing the reward, a result of the interaction in the long run. For an excellent survey on this topic, refer to Kaelbling, Littman and Moore (1996)~\cite{littmanmoor}. The common assumption is that the state-space is stationary which means that the transition probabilities from one state to another remains constant and so are reward signals. The long-run reward function discounted by interest rate that is optimized by the agent is denoted as, $E\big( \sum_{t=0}^\infty \gamma^t r_t \big)$. Other reward functions such as regret, a measure of the expected decrease in reward gained due to executing an algorithm have been considered in the literature. For a comprehensive treatment of the subject, see Sulton and Barto (2018)~\cite{sultonbarto}. Much of the notes in this section follow from the references cited here. \\
+\noindent\textbf{Reinforcement Learning:} The set of techniques covered in this area is quite broad and generally refers to learning from interaction to achieve a goal. The learner is called an `agent' who learns from interacting with `environment' through trial and error. The learning is assumed to progress through `rewards.' More formally, the environment is in a state, $s_t \in S$, the set of all possible states; the agent's decision or action, $a_t \in A(s_t)$, the set of actions available in state `$s_t$.' As a consequence, the agent gets a reward $r_{t+1} \in R$ and a new state of the environment, `$s_{t+1}$' emerges. Reinforcement learning methods study how the agent changes the policy, $\Pi_t (s_t,a_t)$ with a goal towards maximizing the reward, a result of the interaction in the long run. For an excellent survey on this topic, refer to Kaelbling, Littman and Moore (1996)~\cite{littmanmoor}. The common assumption is that the state-space is stationary which means that the transition probabilities from one state to another remains constant and so are reward signals. The long-run reward function discounted by interest rate that is optimized by the agent is denoted as, $E\big( \sum_{t=0}^\infty \gamma^t r_t \big)$. Other reward functions such as regret, a measure of the expected decrease in reward gained due to executing an algorithm have been considered in the literature. For a comprehensive treatment of the subject, see Sulton and Barto (2018)~\cite{sultonbarto}. Much of the notes in this section follow from the references cited here. \\
 
 
-\noindent \textbf{Markov Assumption:} We assume the sets $S$, $A$ and $R$ are all finite. We assume that any response at `$t+1$' depends on the state one action at `$t$.' More specifically, 
+\noindent\textbf{Markov Assumption:} We assume the sets $S$, $A$ and $R$ are all finite. We assume that any response at `$t+1$' depends on the state one action at `$t$.' More specifically, 
 	\begin{equation} \label{eqn:pstpone}
 	P(s_{t+1}=S', r_{t+1}=r'  \;|\; F_t)= P(s_{t+1}=S', r_{t+1}=r'  \;|\; s_t,a_t),
 	\end{equation}
