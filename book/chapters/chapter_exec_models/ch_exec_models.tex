@@ -202,8 +202,6 @@ New academic work expanding on the framework was released however the solutions 
 	\caption{Almgren \& Chris solution for different ris aversions \label{fig:is}}
 	\end{figure}
 
-
-
 \noindent\textbf{Portfolio IS} \\
 
 One area where the approach took more hold was in the portfolio level space where the risk was actually meaningful and there was a need for a linked execution schedule to avoid a well balanced portfolio from becoming unbalanced and be exposed to market (and other factors) risks. The available implementations provided by brokers are to a large extent still based on the original framework. Very few of them, in the author's opinion, work incredibly well and there are a lot of complexities and shortcomings that still need to be resolved both from the numerical approach and performance (Most implementation leverage QP solvers and to create a flexible implementation for large portfolios that can be optimized in a reasonable time frame requires a lot of tricks and shortcuts) as well as better handling of dark liquidity. \\
@@ -359,29 +357,24 @@ This type of approach obviously becomes increasingly more challenging as one mov
 
 
 % Components of an Execution Strategy
-\section{Components of an Execution Strategy}
+\section{Layers of an Execution Strategy}
 
-Regardless of the underlying implementation the approach of and execution strategy can be decomposed in a set of trading concerns that are well understood and to some extent looked at separately. In this section we review these components one by one and provide high level thoughts around modern approaches.
-
-
+In the previous section we reviewed the basic approaches for Execution strategies. In most cases, regardless of the underlying implementation the approach can be decomposed in a set of trading concerns that are well understood and to some extent can be looked at separately. In this section we review these layers one by one and provide high level thoughts around modern approaches.
 
 % Scheduler
-\subsection{Scheduler}
+\subsection{Scheduling Layer}
 
-In electronic execution, the scheduling layer is often described as the macro trader of the strategy, in charge of decisions spanning the whole order duration such as allocating the parent order quantity through the life of the the order. It answers the question: “how much should I trade in each period?”.
-This component is aware of the overall trading intention: benchmark, total quantity to transact, risk aversion parameters, constraints (maximum POV, limit price), and order duration. Taking the example of a VWAP algorithm, the scheduler is the component in charge of following the prescribed volume curve between the start and end times provided by the user. In a strategy benchmarked to the arrival price, the scheduler performs an optimization between expected market impact and timing risk (Almgren-Chriss Implementation Shortfall framework). To derive the allocation, most schedulers discretize the trading day in more or less granular bins (generally one to five minutes), each considered a distinct trading interval to be handled by the child order placement module.
+This Layer is responsible for actually implementing the particular strategy. Often described as the macro trader of the strategy it is in charge of decisions spanning the whole order duration such as allocating the parent order quantity through the life of the the order. It answers the question: “how much should I trade in each period?”. The scheduler is aware of the overall trading intention, total quantity to transact, strategy parameters, constraints (maximum POV, limit price), and order duration. Taking the example of a VWAP algorithm, the scheduler is the component in charge of following the prescribed volume curve between the start and end times provided by the user. To derive the allocation, most schedulers discretize the trading horizon in more or less granular bins (generally one to five minutes), each considered a distinct trading interval to be handled by the child order placement module.
 
+The scheduler will also need to decide which market phases should the algorithm interact with if not specified by the user. For instance, participating in auctions or not. For illiquid names, call auctions can be a significant source of liquidity so participating in them can limit the need for excessive trading in the continuous session. However, trading too much in the open auction - for example - can create an anchoring effect leading to a more permanent market impact price displacement for the remainder of the continuous session, thereby potentially negatively impacting follow-on executions. As often in electronic trading, there are not always absolute solutions, but trade offs.
 
-The decisions available to the scheduler aim at optimally implementing the end users objectives defined by their stated benchmark. The first decision is which market phases should the algorithm interact with if not specified by the user. For instance, participating in auctions or not. For illiquid names, call auctions can be a significant source of liquidity so participating in them can limit the need for excessive trading in the continuous session. However, trading too much in the open auction - for example - can create an anchoring effect leading to a more permanent market impact price displacement for the remainder of the continuous session, thereby potentially negatively impacting follow-on executions. As often in electronic trading, there are not always absolute solutions, but trade offs.
+The scheduling layer plays an important role in  implementing liquidity sourcing preferences, such as how much to participate in volatile periods of price discovery when spreads are wide (e.g. in the first few minutes after the market open), or allocating volume between lit and dark venues (where one trades certainty of execution for lower price impact). As discussed in Chapter~\ref{chap:ch_trade_data_models}), algorithms are leveraging many normalizing  variables in order to handle the different characteristic of the stock universe both on regular days and special days.  Modern scheduling layers are also responding to realtime feedaback loops from the market and adjust their execution as necessary such front loading the execution if the market is expected to move unfavorably, or back load it in case of expected favorable move or adjust the balance across liquidity sources (lit or dark markets). 
 
-
-The scheduler also plays an important role in  implementing liquidity sourcing preferences, such as how much to participate in volatile periods of price discovery when spreads are wide (e.g. in the first few minutes after the market open), or allocating volume between lit and dark venues (where one trades certainty of execution for lower price impact).
-
-
-Finally, the scheduling layer is also responsible for appropriately handling microstructure features seasonalities. There are well documented intraday volume patterns that can be leveraged to forecast liquidity, volatility and spreads (see Chapter~\ref{chap:ch_trade_data_models}), both on regular days and special days like index rebalances or option expiries. Seasonality can also be witnessed at larger scales: Mondays tend to have more volume, but also more volatility, Asian markets tend to have early morning price action driven by the outcome of the previous market day in the US, etc. All of these can be leveraged by the scheduler to allocate volume more efficiently over time (front load the execution if the market is expected to move unfavorably, or back load it in case of expected favorable move) and across liquidity sources (lit or dark markets). 
+Thus the scheduler's role is to organize, adjust and implement the overal plan of action.
 
 
-It is worth noting that when decomposing execution slippage, the largest contribution can generally be attributed to the scheduling layer, and can range from a few to double digits basis points. Consequently scheduling remains an area of active research for both academia and practitioners.
+
+
 
 
 
