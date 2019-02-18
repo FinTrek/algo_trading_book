@@ -14,13 +14,14 @@ The authors wish they could dedicate a full book (and maybe one day they will) t
 
 
 
+% Data Infrastructure
 \section{Data Infrastructure}
+
 
 As we have seen throughout this book, without data there is no research. It then goes without saying that the most important component of research environment must be data infrastructure. There are two main parts of a typical data infrastructure: Historical Market Data, and Historical Transactional Data. 
 
 
 Additionally as observed from Chapter~\ref{chap:ch_trading_fund}, we should have access to historical reference data as well. While most of the research and analytics will be intra-day and thus less dependent on historical for consistency reference data, it is sometime necessary to look at prices/volumes over multiple days for consistency. This creates an added complexity of potentially having to adjust the data for corporate actions. This is not a simple thing and rarely reference data platform store all history of ticker changes, symbology mapping and various corporate action multipliers that were used to adjust the data. \\
-
 
 
 \noindent\textbf{Historical Ticker Plant:} Market data, just as the case was for the production tech stack can be the most challenging and expensive component of a data infrastructure. Even for  the simplest usecase: consolidated Level I quote and trade data TAQ data from NYSE\footnote{\url{http://www.nyxdata.com/data-products/daily-taq}} at present time charges \$3000 per month of history. It is more than 18~GB per day compressed. Any respectable operation needs at least one to two years so just the simplest setup requires an investment of at least \$75,000 and storage and processing capacity for 8~TB of data. A more serious setup would have Level II data for the top exchanges with costs and sizes several multiples of Level~I data.  
@@ -29,30 +30,32 @@ Additionally as observed from Chapter~\ref{chap:ch_trading_fund}, we should have
 Once collected the data has to be processed, normalized and stored in an infrastructure that allows for analysis and for processing. While theoretically one could store this data in a relational database, realistically this never creates a usable infrastructure and historically only few vendor infrastructures have been successful in this space. Notably KDB from Kx System\footnote{\url{https://kx.com/}} has been the dominant player in the space despite the steep cost and the terse and cryptic `q' language that is a hard to master and thus a very much sought-after skill.\footnote{Some people will argue that q is the reason for kdb success. The jury is out on that} In recent years this space has evolved significantly and there are now powerful open-source contenders like InfluxDB\footnote{\url{https://www.influxdata.com/}} and many others. Others have started exploring distributed systems on top of the Hadoop/Spark ecosystem. KDB continues to maintain its dominance in large scale trading operations but its reign is no longer as certain as it used to be.
 
 
-The best setups also collect and provide, through a similar API, intraday real-time market data. This allows for an extensive analysis and tools to work both historically and intraday. Since it is quite hard to capture with 100\% accuracy the data at all times, more often the intraday data is discarded overnight and replaced with the vendor provided official one that has been processed and adjusted for various erroneous trade events. 
+The best setups also collect and provide, through a similar API, intraday real-time market data. This allows for an extensive analysis and tools to work both historically and intraday. Since it is quite hard to capture with 100\% accuracy the data at all times, more often the intraday data is discarded overnight and replaced with the vendor provided official one that has been processed and adjusted for various erroneous trade events. \\
 
 
-\paragraph{HFT Setup}
+\noindent\emph{HFT Setup} \\
+
 
 Ultra-low latency HFT trading operations usually capture and store the network packets from raw production feeds for all major exchanges, not one but for each data center. This is to be able to train separately the strategy in each data center and to see the market data from other data centers with the actual delays as the strategy goes through production. Data is kept in a non processed compressed format without the leverage of any time series database. The size of this data is staggering, in the order of more than 50~GB compressed per day per data center. \\
-
 
 
 \noindent\textbf{Historical Transactional Data:} This is another complicated and large infrastructure problem. Ideally all OMS order and trading events should be stored in a time series database as they happen and then processed and stored in a consistent data structure. As in Chapter~\ref{chap:ch_tech}, we mentioned the OMS often leverages a bus-based infrastructure. One of the important usecases for that to happen is to have a gateway process that can listen to all these events and insert them into the transactional database.
 
 
-An important need for any execution setup is to to be able to fully reconstruct the life-cycle of an order from its arrival to the inbound gateway, passing through the algo container generating orders for the SOR container to finally create child orders, to be sent to the market via the outbound gateway. Additionally if orders get amended by the clients it is necessary to be able to tie all this together within the order hierarchy. This is quite a subtle and complex data modeling problem. The buildout of a data warehousing solution that allows the researcher easy access is massively important. This is something the authors feel very strongly about since it may cause countless hours of extra work and frustrations, grappling through the limitations for their own infrastructures.
+An important need for any execution setup is to to be able to fully reconstruct the life-cycle of an order from its arrival to the inbound gateway, passing through the algorithm container generating orders for the SOR container to finally create child orders, to be sent to the market via the outbound gateway. Additionally if orders get amended by the clients it is necessary to be able to tie all this together within the order hierarchy. This is quite a subtle and complex data modeling problem. The buildout of a data warehousing solution that allows the researcher easy access is massively important. This is something the authors feel very strongly about since it may cause countless hours of extra work and frustrations, grappling through the limitations for their own infrastructures.
 
 
-With regards to data warehousing infrastructures we can make similar considerations around vendors and solutions that we made in the section on market data. While KDB is still a strong contender for these solutions it is not as dominant as in the market data domain.\footnote{This is somewhat surprising since, as we will see, a lot of the model calibration and TCA environments we will discuss in a future sections require the joining and time alignment of both market data and transactional data (the so called asof and windows joins) that are one of the absolute strengths of KDB} Due to the  complexity of the data modeling part these approaches benefit more from the normalized approaches typical of more standard data warehousing solutions built on relational databases. 
+With regards to data warehousing infrastructures we can make similar considerations around vendors and solutions that we made in the section on market data. While KDB is still a strong contender for these solutions it is not as dominant as in the market data domain.\footnote{This is somewhat surprising since, as we will see, a lot of the model calibration and TCA environments we will discuss in a future sections require the joining and time alignment of both market data and transactional data (the so called asof and windows joins) that are one of the absolute strengths of KDB} Due to the  complexity of the data modeling part these approaches benefit more from the normalized approaches typical of more standard data warehousing solutions built on relational databases. \\
 
 
-\paragraph{HFT Setup}
+\noindent\emph{HFT Setup}
+
 
 As we have seen in Chapter~\ref{chap:ch_tech}, HFT and market-making setups are mostly built in as a single monolithic co-located processes. It is also a relatively simplified setup as trading initiation is completely endogenous to the trading strategy and thus does not have to be tied back to initiating order instructions coming down from the OMS. Typical solutions are more ``low-tech'' that come from processing raw log files and storing the instructions in compressed csv formatted files.
 
 
 
+% Calibration infrastructure
 \section{Calibration infrastructure}
 
 
@@ -60,32 +63,41 @@ From the discussion presented here, it is clear that a respectable trading execu
 
 
 The specific details of a solution for this is very much dependent on the current SDLC and productionization practices within a specific firm. So it would be hard to give more specific advice apart from a few general pointers:
+
 \begin{itemize}
 \item A frequent complication is that many of these processes are usually built within the research environment leveraging the research data setup that is often different from the production installation setup. Ideally when the two setups match and the processes have been created, the code, not the data/analytics are pushed into production and the data is generated there for consumption of production applications.
+
 \item It is better to avoid a calibration of an entire process but opt for a pipeline of independent hierarchical components with intermediary data, available for various subsequent steps in the pipeline. This makes the process much easier to extend and parallelize. 
-\item One would think carefully about segmentation of calibration, meaning when one should have per symbol analytics vs. per group. Different analytics might rely on different groupings. Should this complexity be supported by the production system or should one keep this as part of the calibration process but in the end``explode'' it to each individual symbol is not an easy one to answer. There are pros and cons.
+
+\item One would think carefully about segmentation of calibration, meaning when one should have per symbol analytics vs. per group. Different analytics might rely on different groupings. Should this complexity be supported by the production system or should one keep this as part of the calibration process but in the end ``explode'' it to each individual symbol is not an easy one to answer. There are pros and cons.
+
 \item If possible, it is better to be robust around new issues/IPOs meaning that there should be a process in place that has a forward looking list of upcoming IPOs so that the reference data and at minimum sensible default analytics can be created. This is usually a very hard thing to do and IPOs are a frequent pain-point of this process.
+
 \item It is essential to think very carefully around default values. What happens if a symbol is not present? Because of the high reliance on normalization variables a mismatch between defaults and realized stock behavior could lead to strong under-performance of the algorithms.
-\item Maintain a history of the calibration data so that data can be used for historical simulation
+
+\item Maintain a history of the calibration data so that data can be used for historical simulation.
+
 \item There is generally an over-reliance on using flat files (e.g. csv) to deliver this content. A possible better approach is for the data to be stored into a database with a production tag primary key and the production process (possibly and intermediary process that actually creates flat files for the production environment) that generates these files based on the primary key which is controlled by production support. 
 \end{itemize}
 
 
 
+% Simulation Environment
 \section{Simulation Environment}
+
 
 This is a topic that deserves an extensive discussion but here we will provide only a cursory overview. In Chapter~\ref{chap:ch_tech}, we discussed how a strategy container is usually developed and how the main strategy loop contains most of the decision points on how the trading is done while other parts of the infrastructure keeps the state of the executing order in sync. But even for very simple strategies how do we test that the logic is correct? The most intuitive approach is to build a simulation environment that allows the developer to ensure that all the pieces are working together and the strategy makes the ``right'' decisions based on the current state. 
 
 
 The most effective way to build a simulation environment is to start with the existing strategy container and to stub out its inputs and outputs of so that it can run independently.  The most important layers to replace are:
-\begin{itemize}
-\item Inbound Order Layer: Replace the injection of one or more parent orders reading from a flat file or command line
-\item Reference and Static Data Layers: Replace the access to this data with a csv files
-\item Market Data Layer: Replace the market data, the real-time subscription with a component that injects historical market data from a flat file.
-\item Outbound Layer: Replace the component with a substitute that contains some form of fill model.
-\end{itemize}
+        \begin{itemize}
+        \item Inbound Order Layer: Replace the injection of one or more parent orders reading from a flat file or command line.
+        \item Reference and Static Data Layers: Replace the access to this data with a csv files.
+        \item Market Data Layer: Replace the market data, the real-time subscription with a component that injects historical market data from a flat file.
+        \item Outbound Layer: Replace the component with a substitute that contains some form of fill model.
+        \end{itemize}
 
-The most complex layers of the above list are of course the Market Data and the Outbound layers which we'll discuss later but there is a very important element that needs  be considered as part of the overall architecture of a strategy container in order to be able to support effectively a simulation environment. This element is in real time. \\
+The most complex layers of the above list are of course the Market Data and the Outbound layers which we will discuss later but there is a very important element that needs be considered as part of the overall architecture of a strategy container in order to be able to support effectively a simulation environment. This element is in real time. \\
 
 
 \noindent\textbf{Handling Time for Simulation:} When simulation of a whole-day VWAP order is desired, it is obvious that we may not want to have to wait many hours to find out the result. The simulation should execute faster, ideally as fast as events can be processes (the so called ``bullet time''), so the results can be reviewed. The necessary changes can be made and repeated. The problem is that there are several components, part of the strategy container that leverage actual time, e.g. trading sessions such as opening and closing auctions, order start and end time, etc., and there is usually a liberal use of timers to perform specific tasks such as timeouts, e.g. waiting for acknowledgement from the exchange after submitting an order, and delays, e.g. have the strategy wake up every `$n$' seconds or decide to sleep for a few seconds after a large block fill. Running the strategy simulation in accelerated time while maintaining realistic behavior requires that the time is set as part fo the simulation process and the timers are accelerated in a consistent manner.
@@ -117,6 +129,7 @@ In order for such an approach to avoid devolving into an unrealistic orderbook a
 
 \noindent\textbf{Simulation of Multiple Venue for SOR:} The treatment we have made on simulation can expand to support multiple venues and some of the approaches might be relevant for the more complex scenarios. One would need to incorporate a model for simulating dark liquidity to account for the trading in various dark pools. \\ 
 
+
 \noindent\textnote{Point to Chapter~\ref{chap:ch_trade_data_models} if we add some thoughts around dark pool liquidity models} \\
 
 
@@ -124,16 +137,21 @@ In order for such an approach to avoid devolving into an unrealistic orderbook a
 
 
 
+% TCA Environment
 \section{TCA Environment}
 
 Once research and simulations are done there is only one way to really know how well the new algorithm works: put the strategy in production, use it for trading, and then measure\dots and measure\dots and measure its performance. This is a well architected Transaction Cost Analysis (TCA) infrastructure which becomes critical and possibly where most researchers will end up spending their time. 
 
 
 The shrewd reader could argue that this section would better fit in Chapter~\ref{chap:ch_tech} since it is such an integral part of any large execution operation. We chose instead to make it part of this chapter on research stack for a specific reason. As the authors have seen multiple times, this infrastructure is often built as an independent infrastructure that is not linked with rest of the research environment apart for maybe the data back-ends. We believe this to be a mistake for multiple reasons:
+
 \begin{itemize}
 \item Many of the same analytics created for TCA are needed for general research as well, and bespoke analysis with the difference that the number of analytics and other various parameters are usually much larger and changed more frequently. This implies that researchers end up building out their own infrastructure. This then diverges from the production leading to duplication of efforts, inconsistencies in the analytics and heavy reliance on bespoke, on the desk. Analysis of changes since the production environment always ends up lagging the research one.
+
 \item The focus of standard independent TCA infrastructure is usually to build standard, one-size-fits-all post-trade reports. This ignores the fact that, more and more, clients have specific needs and benchmarks and in some cases their own bespoke post trade attribution frameworks. This fluid state fits poorly into the standard approaches which tend to be too inflexible for any meaningful development effort and thus results in long delays to implement client requested customizations.
+
 \item When evaluating the results of simulations we should ideally use the same post-trade infrastructure that is used for production trades. This is usually very hard, if not impossible, to do if one does not consider both research and production as one interdependent whole.
+
 \item More often than not the resources dedicated to build the TCA infrastructure are the same as the ones used for the overall data and research environments. This, combined with the tendency to put client deliverables always first, leads to usual under-investment of technical resources to build a flexible research and analytics environment which is the cornerstone of any successful operation.
 \end{itemize}
 
@@ -142,12 +160,13 @@ Building a flexible, integrated environment is not an easy task. There are no we
 
 
 Going into the full cumbersome details of such an infrastructure is unfortunately beyond the scope of the brief excursion but we propose a few pointers that have worked well in the past as  guide for the reader who may be involved in building such a solution.
+
 \begin{itemize}
 \item Consider building a layered, componentized approach. Layered because most of the analytics are constructed using simpler lower level analytics. Componentized implies subdividing the TCA process in logical components that can then be assembled into simple daily reports or full fledged quarterly review report. An approach that considers levering a micro-services middleware is growing in popularity in recent years.\footnote{\url{https://en.wikipedia.org/wiki/Microservices}}
 
 \item Limit the number of times you pass through quotes and trades as this step is by far the slowest part of the process.\footnote{Many of the TCA analytics are based on the prevailing quotes and trades at specific times such as the start and the end of the order. This requires what are called  as-of and window joins. The excellent speed at which kdb can perform these joins is one of the main reason for the platform's success.}
 
-\item The ideal setup, rarely achieved in practice, should be able to generate most of the T+0 analytics on the fly as the algorithms complete. This would allow for the post-trade data to be available at the end of the trading day and thus reports can be generated and sent to clients immediately. This is something that clients really appreciate. This requires a strongly-integrated infrastructure that leverages all the same components at runtime as it does after the fact. 
+\item The ideal setup, rarely achieved in practice, should be able to generate most of the $T+0$ analytics on the fly as the algorithms complete. This would allow for the post-trade data to be available at the end of the trading day and thus reports can be generated and sent to clients immediately. This is something that clients really appreciate. This requires a strongly-integrated infrastructure that leverages all the same components at runtime as it does after the fact. 
 
 \item Consider making the TCA development infrastructure as an extension of your research environment that is under continuous integration. This means that building and running regression tests every time something is changed. This will allow for quick turn-around in changes and quick promotion into production. Leverage the same enrichment and post-trade analytics and apply them to the output of any simulation that is run for a specific scenario and store the results separately for each scenario. This will simplify the analysis and comparison of different  parametrization/functionality.
 
@@ -158,6 +177,7 @@ Going into the full cumbersome details of such an infrastructure is unfortunatel
 
  
 
+% Conclusion
 \section{Conclusion}
 
 It has been the authors' experience that rarely enough time is ever spent in building a powerful and flexible research environment that provides quantitative researchers the tools to quickly access and analyze data, create supporting analytics, simulate behavior of algorithms and then to be able to analyze the behavior of the algorithms and generate post trade analytics for their own and their clients' review. Done correctly though, this should become a real engine for innovation and performance and a real competitive advantage in a highly competitive field. We hope this brief but broad review will be useful to help the reader who is involved in such a buildout, the tools needed to point in the right direction.
