@@ -258,11 +258,16 @@ While the electronification of trading first took place in the equity space, rec
 \begin{enumerate}
 \item[\textbf{(a)}] \textbf{Options:} 
 
-Historically, equity options markets have presented unique challenges to the successful deployment of sophisticated algorithmic trading strategies. First, options markets are significantly more fragmented than their equities counterparts, not just in space (i.e. across multiple exchanges) but also in terms of instruments. For one equity instrument representing a company (or for one index), there is a grid of available options over multiple maturities and multiple strike prices, resulting in shallower liquidity and significantly larger amounts of data to process.
+\todo{NOTE: Work in progress, still needs completion}
 
-Similarly to equities, options market data is disseminated in real time by the Options Price Reporting Authority (OPRA) which provides last sale reports and quotations from participant exchanges\footnote{Options participant exchanges in OPRA: BOX Exchange, Cboe exchanges (BZX Options Exchange, C2 Options Exchange, EDGX Options Exchange, Options Exchange), Miami International Securities Exchange, MIAX PEARL, Nasdaq exchanges (BX, GEMX, ISE, MRX, PHLX, The Nasdaq Stock Market), NYSE exchanges (American, Arca).}. OPRA is a national market system plan that governs the process by which options market data are collected from participant exchanges, consolidated, and disseminated. It also publishes other types of information with respect to the trading of options such as the number of options contracts traded, open interest and end of day summaries. 
+Historically, equity options markets have presented unique challenges to the successful deployment of sophisticated algorithmic trading strategies. First, options markets are significantly more fragmented than their equities counterparts, not just in space (i.e. across multiple exchanges) but also in terms of instruments. For one equity instrument representing a company (or for one index), there is a grid of available options over multiple maturities and multiple strike prices.  
 
-One of the key challenges that remains in the options space is the amount of data generated on a daily basis, and the significant bursts that happen when underlying equity markets move sharply and force a rapid adjustment of a miriad of correlated instruments. As an example, the OPRA message rates statistics for the fourth quarter 2018\footnote{Source: \url{https://www.opradata.com/}} were:
+wikipedia def:
+The Options Price Reporting Authority (OPRA) provides, through market data vendors, last sale information and current options quotations from a committee of participant exchanges designated as the Options Price Reporting Authority. OPRA is a national market system plan that governs the process by which options market data are collected from participant exchanges, consolidated, and disseminated.
+
+OPRA disseminates last sale reports and quotes. OPRA also disseminates certain other types of information with respect to the trading of options on the markets of the OPRA Participants, such as the number of options contracts traded, open interest and end of day summaries. \\
+
+message rates: 4Q2018 source \url{https://www.opradata.com/}
 
 Peak Messages Per Second (millions): 19.8
 
@@ -270,11 +275,28 @@ Peak Messages Per 100 Milliseconds (millions): 4.2
 
 Peak Transactions Per Day (billions): 45.9\\
 
-\\
+Options participant exchanges in OPRA; 
+BOX Exchange
+Cboe BZX Options Exchange
+Cboe C2 Options Exchange
+Cboe EDGX Options Exchange
+Cboe Options Exchange
+Miami International Securities Exchange
+MIAX PEARL
+Nasdaq BX
+Nasdaq GEMX
+Nasdaq ISE
+Nasdaq MRX
+Nasdaq PHLX
+The Nasdaq Stock Market
+NYSE American
+NYSE Arca \\
 
 
-Automated options market making strategies were the first ones to be deployed, and we are now witnessing the emergence of execution strategies in the option space, for instance targeting certain volatility levels (instead of price-based benchmarks). Given the natural relationship that exists with the underlying assets, options algorithmic trading strategies also require the implementation of automated delta and gamma hedging execution strategies.
+Automated options market making strategies were the first ones to be deployed, and we are now witnessing the emergence of execution strategies in the option space. for instance targeting certain volatility levels (instead of price-based benchmarks). Given the natural relationship that exists with the underlying assets, options algorithmic trading strategies also require the implementation of automated delta and gamma hedging execution strategies.
 
+
+It is also worth noting that most exchanges now support order types such as spreads making multi-leg strategies easier to implement.
 
 
 \item[\textbf{(b)}] \textbf{Credit Derivatives:} 
@@ -348,13 +370,43 @@ The scheduler will also need to decide which market phases should the algorithm 
 
 The scheduling layer plays an important role in  implementing liquidity sourcing preferences, such as how much to participate in volatile periods of price discovery when spreads are wide (e.g. in the first few minutes after the market open), or allocating volume between lit and dark venues (where one trades certainty of execution for lower price impact). As discussed in Chapter~\ref{chap:ch_trade_data_models}), algorithms are leveraging many normalizing  variables in order to handle the different characteristic of the stock universe both on regular days and special days.  Modern scheduling layers are also responding to realtime feedaback loops from the market and adjust their execution as necessary such front loading the execution if the market is expected to move unfavorably, or back load it in case of expected favorable move or adjust the balance across liquidity sources (lit or dark markets). 
 
-Thus the scheduler's role is to organize, adjust and implement the overal plan of action.
+In summary the scheduler's role is to organize, implement  and adjust the overall plan of action for the strategy and it's clearly the most important component of a trading strategy.
 
+\noindent\textbf{Implementing a Scheduler}: \\
 
+The above description is very high level and does not provide much in the way of approach on how to build a Scheduler in practice. Unfortunately we cannot hope to go into all the intricacies and details of a real world implementation but we'll strive to provide some of the main ideas used in practice and some of the issues faced by practitioners. There is no standard approach to build a Scheduler and this treatment might prove quite simplistic and unsophisticated. But this is one of the approach the authors have used in practice.\\
 
+\noindent\emph{Naive Approach}: 
+We start with the simplest implementation possible and evolve from there. This will help the reader understand the limitations in approaches and how one can deal with them.
+As discussed above a schedule is often represented by a vector of equally spaced discretized bins. We postulate that for each strategy we are able to determine the quantity required for the next bin which for schedule based strategies this is almost always true \footnote{for POV strategy this could be based on the previous bin volume or a forecast of next bin volume}. Each time period we submit to the order placement layer the exact quantity required for the particular bin. We assume that the order placement will ensure completion of the bin quantity by the end of the allotted time. If, for some reasons, the order placement cannot fulfill the request dues to limit price or pov constraints, the scheduler simply ignores it and moves on to the next bin. 
 
+Clearly  this is a quite crude implementation that could lead to severe under-trading and very likely excess impact due to the immediate ``catch up'' at the end of each bin. Less liquid stocks would likely be unable to fulfill the required liquidity within each bin exacerbating the amount of required catch-up. One could normalize the time bin by some multiple of characteristic time which would somewhat harmonize the behavior across the stock universe but it does not address the other significant limitation of this approach.
 
+A slightly more complicated approach would be to allow the order placement layer to engage in a best effort approach trying to fulfill the desired quantity without ``forcing'' a hard catch-up. Any unfilled quantity would simply be added to the next bin. This will limit the excess impact but exacerbate the tendency for the order to fall way behind the desired schedule. Clearly a tradeoff is needed. As an additional drawback to this approach is that in most cases the scheduler will have the bad tendency of being behind schedule most of the times \footnote{for POV order it is possible to be ahead of schedule when using volume forecasts which at time will overestimate the expected bin volume}.\\
 
+\noindent\emph{Trading Bands}: 
+
+A common approach used to address both of the above-mentioned flaws is the introduction of trading bands. These are essentially auxiliary schedules above and below the desired schedule which represent how much behind and ahead the Scheduler is allowed to deviate from the desired target. Figure~\ref{fig:schedule} shows a visual representation of a VWAP schedule with it's trading bands. 
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{chapters/chapter_exec_models/figures/schedule.png} 
+	\caption{Example VWAP schedule with bands \label{fig:schedule}}
+	\end{figure}
+
+Using the trading bands the scheduler will determine if and how much it needs to catch up to the schedule so as not to fall too much behind or in general the risk of catch-up \footnote{It si well known that arbitrary, unconditional, catch-up is one of the significant drags in performance. Additionally many traders are extremely risk adverse and will tend to cancel an order that is too far behind schedule}. The scheduler will then determine how much shortfall it needs to make up and the opportunistic quantitiy it has available since it is allowed to be ahead of schedule. It can then pass this min and max quantity to the order placement so that it can be more nuanced around how to manage the required trading needs. Figure~\ref{sch_details} give a visual representation of the information set available to a general scheduler.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{chapters/chapter_exec_models/figures/schedule_details.png} 
+	\caption{Schedule infromation set \label{fig:sch_details}}
+	\end{figure}
+
+By providing the order placement with a quantity range has the additional benefit that it allows the schedule to be ahead of schedule when conditions are favorable leading to reduced catch-up behavior and thus reduced impact and improved performance.
+
+The distance between the bands and the schedule can be made stock specific allowing to further refine the behavior across the trading universe.  It can also made be client specific as it represents the traders risk aversion from schedule deviation. The wider the bands the less risk of unilateral catch-up but the larger the risk of significant deviation from the desired schedule.\\
+
+\noindent\emph{Opportunistic Deviation}: 
 
 % Order Placement
 \subsection{Order Placement}
