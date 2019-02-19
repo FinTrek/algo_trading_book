@@ -50,7 +50,7 @@ Assume that the utility function is given as,
 	\begin{equation} \label{eqn:utility}
 	u= w' \mu - \frac{\lambda}{2} \,w' \,\Sigma \,w,
 	\end{equation}
-where `$\lambda$' is called the parameter of absolute risk-aversion. The greater the `$\lambda$', the more risk averse the investor is. Usually $2<\lambda<4$. Thus assuming all investors are risk-averse, the objective function is,
+where `$\lambda$' is called the parameter of absolute risk-aversion. The greater the `$\lambda$', the more risk averse the investor is. Usually the range of values chosen for `$\lambda$' varies from two to four. Thus assuming all investors are risk-averse, the objective function is,
 	\begin{equation} \label{eqn:5maxu}
 	\max_w u \enskip \ni \enskip w'1= 1.
 	\end{equation}
@@ -67,7 +67,7 @@ where $\gamma^*= (\lambda - A)/C$. The results can be obtained again using Lagra
 If an investor is fully risk-averse, $\lambda \to \infty$ and the optimal portfolio is the minimum variance portfolio and when $\lambda= A$, the optimum portfolio is the tangency portfolio. Thus, both are special cases of Markowitz strategy. 
 
 
-For realistic situations related to trading we need to consider borrowing and lending at the risk-free rate, `$r_f$'. We assume that in addition to `$m$' risky assets, where investment is made, there is a possibility of putting the funds in the risk-free assets such as treasury bonds or CD's etc. The optimization problem can be stated as,
+For realistic situations related to trading we need to consider borrowing and lending at the risk-free rate, `$r_f$'. We assume that in addition to `$m$' risky assets, where investment is made, there is a possibility of putting the funds in the risk-free assets such as treasury bonds or certificates of deposits, etc.. The optimization problem can be stated as,
 	\begin{equation} \label{eqn:5min2}
 	\min_w w' \Sigma w \ni w' \mu + (1 - w' 1) r_f = \mu^*.
 	\end{equation}
@@ -94,7 +94,7 @@ The CAPM model is empirically tested via \eqref{eqn:5ritrf} with added intercept
 	\begin{equation}\label{eqn:intercept}
 	r_{it} - r_f = \alpha_i + \beta_i (r_{mt} - r_f) + \epsilon_{it}.
 	\end{equation}
-If CAPM holds then $H_0: \alpha_i=0$, $i=1,2,\ldots,m$ should be supported. But empirical evidence does not seem to support $H_0$; various explanations are possible. It is argued that the proxies such as S\&P500 index are not theoretically true market portfolio which should be based on all assets besides equities. Also, a proxy for risk-free rate that is uncorrelated with the returns of the assets and the market is also subject to some debate. It has been shown that other asset related information provide better explanatory power for the cross-sectional variation of the asset returns. This has led to multi-factor models that is discussed next. 
+If CAPM holds then $H_0: \alpha_i=0$, $i=1,2,\ldots,m$ should be supported. But empirical evidence does not seem to support $H_0$; various explanations are possible. It is argued that the proxies such as S\&P500 index are not theoretically true market portfolios. A true market portfolio should be based on all assets besides equities. Also, a proxy for risk-free rate that is uncorrelated with the returns of the assets and the market is also subject to some debate. It has been shown that other asset related information provide better explanatory power for the cross-sectional variation of the asset returns. This has led to multi-factor models that is discussed next. 
 
 
 
@@ -121,7 +121,7 @@ Generally, there are two approaches to empirically model \eqref{eqn:arbrit} and 
 \subsection{Tests Related to CAPM and APT}
 
 
-To test if any particular portfolio is ex ante mean-variance efficient, Gibbons, Ross and Shanker (1989)~\cite{gibbons} provide a multivariate test statistic and study its small sample properties under both null and alternative hypotheses. This follows from the multivariate regression model and the associated test procedures discussed in Chapter~\ref{ch:ch_mvts}. Recall the null hypothesis of interest in CAPM is:
+To test if any particular portfolio is ex ante mean-variance efficient, Gibbons, Ross and Shanken (1989)~\cite{gibbons} provide a multivariate test statistic and study its small sample properties under both null and alternative hypotheses. This follows from the multivariate regression model and the associated test procedures discussed in Chapter~\ref{ch:ch_mvts}. Recall the null hypothesis of interest in CAPM is:
 	\begin{equation}\label{eqn:secnull}
 	H_0: \alpha_i= 0 \quad \forall i= 1, 2, \ldots, m.
 	\end{equation}
@@ -143,7 +143,7 @@ Maximizing $t_a^2$ is therefore equivalent to minimizing $a' \hat{\Sigma}a$ subj
 	\begin{equation} \label{eqn:5a}
 	a= \dfrac{c}{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\alpha}} \cdot \hat{\Sigma}^{-1} \hat{\alpha}
 	\end{equation}
-and thus $t_a^2= T \cdot \frac{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\alpha}}{1+\hat{\theta}_p^2}= \frac{T}{T - m - 1} \cdot m \cdot F$. Thus, the portfolio based on `$a$' can provide information about creating a better model. The portfolio based on `$a$' is termed as an active portfolio and Gibbons et al. show that when this is combined with the `market' portfolio series in ex-post efficient portfolio. To make the comparison between the three portfolios, average returns for all three are set equal which results in the choice of $c= \overline{r}_m \cdot \frac{\hat{\alpha} \hat{\Sigma}^{-1} \hat{\alpha}}{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\gamma}}$ and thus the active portfolio results in 
+and thus $t_a^2= T \cdot \frac{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\alpha}}{1+\hat{\theta}_p^2}= \frac{T}{T - m - 1} \cdot m \cdot F$. Thus, the portfolio based on `$a$' can provide information about creating a better model. The portfolio based on `$a$' is termed as an active portfolio and Gibbons et al. show that when this is combined with the `market' portfolio results in ex-post efficient portfolio. To make the comparison between the three portfolios, average returns for all three are set equal which results in the choice of $c= \overline{r}_m \cdot \frac{\hat{\alpha} \hat{\Sigma}^{-1} \hat{\alpha}}{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\gamma}}$ and thus the active portfolio results in 
 	\begin{equation} \label{eqn:5a2}
 	a= \overline{r}_m \cdot \dfrac{\hat{\Sigma}^{-1} \hat{\alpha}}{\hat{\alpha}' \hat{\Sigma}^{-1} \overline{r}}
 	\end{equation}	
@@ -162,10 +162,10 @@ where $M_f=I_T - f'(ff')^{-1}f$ is a $T \times T$ idempotent matrix ($M_f * M_f=
 	\begin{equation}\label{eqn:bigF}
 	F= \left( \dfrac{T - m - n}{m} \right) (1 + \overline{f}' \hat{\Omega}^{-1} \overline{f})^{-1} \hat{\alpha}' \hat{\Sigma}^{-1} \hat{\alpha} \sim F(m,T - m - n),
 	\end{equation}	
-where $\overline{f}= \frac{1}{T} \sum_{t=1}^T f_t$, $\hat{\Omega}= \frac{1}{T} \sum_{t=1}^T (f_t - \overline{f})(f_t - \overline{f})'$ and $\hat{\Sigma}$ is the residual covariance matrix. Recall that the known factors could be macroeconomic variables or the financial variables such as Fama and French factors discussed in Section~\ref{s:mod_port_theory}.
+where $\overline{f}= \frac{1}{T} \sum_{t=1}^T f_t$, $\hat{\Omega}= \frac{1}{T} \sum_{t=1}^T (f_t - \overline{f})(f_t - \overline{f})'$ and $\hat{\Sigma}$ is the residual covariance matrix. Recall that the known factors could be macroeconomic based or the financial variables such as Fama and French factors discussed in Section~\ref{s:mod_port_theory} or industry related factors. The commercial factor risk models will be briefly discussed in the last section.
 
 
-The key tool for estimation of unknown factors is Principal Component Analysis (PCA). For a brief discussion on PCA, refer back to Chapter~\ref{ch:ch_mvts}. The main difference between Factor Analysis (FA) and PCA is that the former is meant to capture the joint covariances among the returns, $r_t$ whereas PCA's focus is on capturing the sum of variances or volatilities of $r_t$. Assume that $\var(r_t)= \Sigma_{rr}$, $m \times m$ covariance matrix. Now transform the returns by $Pr_t$ where $P$ is orthogonal, $P'P=I_m$ and $P\Sigma_{rr}P'= \Lambda$, where $\Lambda$ is the diagonal matrix. Note the transformed returns, $Z_t= Pr_t$ has $\var(Z_t)= \Lambda$ and thus uncorrelated. The goal is to recover much of the total variance $\sum_{i=1}^m \sigma_i^2$ with a few linear combinations of $r_t$. \\
+The key tool for estimation of unknown factors is Principal Component Analysis (PCA). For a brief discussion on PCA, refer back to Chapter~\ref{ch:ch_mvts}. The main difference between Factor Analysis (FA) and PCA is that the former is meant to capture the joint covariances among the returns, $r_t$ whereas PCA's focus is on capturing the sum of variances or total volatility of $r_t$. Assume that $\var(r_t)= \Sigma_{rr}$, $m \times m$ covariance matrix. Now transform the returns by $Pr_t$ where $P$ is orthogonal, $P'P=I_m$ and $P\Sigma_{rr}P'= \Lambda$, where $\Lambda$ is the diagonal matrix. Note the transformed returns, $Z_t= Pr_t$ has $\var(Z_t)= \Lambda$ and thus uncorrelated. The goal is to recover much of the total variance $\sum_{i=1}^m \sigma_i^2$ with a few linear combinations of $r_t$. \\
 
 
 \noindent\textbf{Result. } The solution to $\max_w w' \Sigma w \ni w'w=1$ is obtained from solving $\Sigma w= \lambda w$. Thus `$w$' is the eigenvector that corresponds to the largest eigenvalue of $\Sigma$ obtained from $\lvert \Sigma - \lambda I\rvert=0$ where $|\cdot|$ denotes the determinant of the matrix; note $\tr(\Sigma)= \sum_{i=1}^m \sigma_i^2 = \sum_{i=1}^m \lambda_i$ and the values of `$\lambda_i$' are disproportional such that we can approximate $\tr(\Sigma) \sim \sum_{i=1}^r \lambda_i$, where `$r$' is much less than `$m$'. \\
@@ -191,7 +191,7 @@ The number of adequate factors can also be verified through the significant `$\l
 \subsection{An Illustrative Example}
 
 
-We consider monthly data from July 1926 to October 2012 on returns from six portfolios that are formed based on the size and book-to-market (BM) ratio. This data is taken from French's data library. The titles follow the naming convention, for example, SML contains small size plus low BM to BGH contains big size with high BM ratio. The data also contains $r_f$, $r_{mt} -  r_f$ and the two factors SMB (small-minus-big size factors) and HML (high-minus-low BM factor).
+We consider monthly data from July 1926 to October 2012 on returns from six portfolios that are formed based on the size and book-to-market (BM) ratio. This data is taken from French's data library. The titles follow the naming convention, for example, SML contains small size plus low BM to BGH contains big size with high BM ratio. The data also contains $r_f$, $r_{mt} -  r_f$ and the two Fame-French factors SMB (small-minus-big size factors) and HML (high-minus-low BM factor).
 
         \begin{figure}[!ht]
 	\centering
@@ -220,7 +220,7 @@ We consider monthly data from July 1926 to October 2012 on returns from six port
         \end{table}
 
 
-The histogram of the portfolio returns is given in Figure~\ref{fig:monreturns}. The descriptive are stated in Table~\ref{tab:descstat}. The returns are generally positively skewed with more sharply peaked than the normal distribution. The Jarque-Bera test (Equation~\ref{eqn:2JB}) rejects the null hypothesis that returns are normally distributed. The efficient frontier with the risk-free rate using the weights in \eqref{eqn:5weff2} along with the portfolios is plotted in Figure~\ref{fig:frontemp}, by setting $\mu^*= \hat{\mu}_m$, the average of the market portfolio. The weights for the assets are $(-1.06, 1.08, 0.40, 0.58, -0.36, -0.32)$ and the share of the risk-free is 0.68. The scatter plot of the actual mean value versus standard deviation of the six portfolios (Figure~\ref{fig:capmarket}) yields the slope of 0.1471 which is larger empirical Sharpe ratio $\left( \frac{\overline{r}_m - r_f}{\hat{\sigma}_m} \right)$, 0.1147. This clearly indicates that the market portfolio is not mean-variance efficient. Note that while three portfolios (BigL, Big2, BigH) lie on the line, two others (SM2 and SMH) lie above the line. This generally implies that it is possible to outperform the empirical Markowitz portfolio. 
+The histogram of the portfolio returns is given in Figure~\ref{fig:monreturns}. The descriptive are stated in Table~\ref{tab:descstat}. The returns are generally positively skewed with more sharply peaked than the normal distribution. The Jarque-Bera test (Equation~\ref{eqn:2JB}) rejects the null hypothesis that returns are normally distributed. The efficient frontier with the risk-free rate using the weights in \eqref{eqn:5weff2} along with the portfolios is plotted in Figure~\ref{fig:frontemp}, by setting $\mu^*= \hat{\mu}_m$, the average of the market portfolio. The weights for the assets are $(-1.06, 1.08, 0.40, 0.58, -0.36, -0.32)$ and the share of the risk-free is 0.68. The scatter plot of the actual mean value versus standard deviation of the six portfolios (Figure~\ref{fig:capmarket}) yields the slope of 0.1471 which has larger empirical Sharpe ratio $\left( \frac{\overline{r}_m - r_f}{\hat{\sigma}_m} \right)$, 0.1147. This clearly indicates that the market portfolio is not mean-variance efficient. Note that while three portfolios (BigL, Big2, BigH) lie on the line, two others (SM2 and SMH) lie above the line. This generally implies that it is possible to outperform the empirical Markowitz portfolio. 
 
         \begin{table}
         \centering
@@ -237,10 +237,10 @@ The histogram of the portfolio returns is given in Figure~\ref{fig:monreturns}. 
         \end{table}
 
 
-The three known factor model \eqref{eqn:arbrit} results are presented in Table~\ref{tab:famafrenchmodel}. There are several conclusions that can be drawn from this table. With the three factors, the variations in the cross-sectional returns are well-captured by these factors. The coefficients of the market factors are closer to unity indicating that the six portfolios are closely aligned with the market index. But the estimates of $\alpha$ do indicate some mixed results. The value of the test statistics in \eqref{eqn:bigF} is 5.54 which is larger than $\chi_6^2 (0.05)= 2.1$ and hence indicating that there should be some consideration to other factors.
+The three known factor model \eqref{eqn:arbrit} results are presented in Table~\ref{tab:famafrenchmodel}. There are several conclusions that can be drawn from this table. With the three factors, the variations in the cross-sectional returns are well-captured by these factors. The coefficients of the market factors are closer to unity indicating that the six portfolios are closely aligned with the market index. But the estimates of $\alpha$ do indicate some mixed results. The value of the test statistics in \eqref{eqn:bigF} is 5.54 which is larger than $\chi_6^2 (0.05)= 2.1$ and hence indicating that there should be some consideration to other factors besides Fama-French factors.
 
 
-To identify the number of factors required to capture the total variance, we perform PCA of the covariance matrix. The Scree plot is given in Figure~\ref{fig:screeplot}. The first component is responsible for 91\% of the total variance and if three components are included we can capture 98\% of the overall variance. The first factor loading is almost proportional to unit vector indicating that it can be interpreted as a market factor. It is easy to show with three factor model, the difference between $\hat{\Sigma}$ and $\hat{B}\hat{B}'+V$ is very small. This sort of parameter reduction will become useful when we deal with large number of assets, a topic that is taken up in Section~\ref{s:stat_under}.
+To identify the number of factors required to capture the total variance, we perform PCA of the covariance matrix. The Scree plot is given in Figure~\ref{fig:screeplot}. The first component is responsible for 91\% of the total variance and if three components are included we can capture up to 98\% of the overall variance. The first factor loading is almost proportional to unit vector indicating that it can be interpreted as a market factor. It is easy to show with three factor model, the difference between $\hat{\Sigma}$ and $\hat{B}\hat{B}'+V$ is very small. This sort of parameter reduction will become useful when we deal with large number of assets, a topic that is taken up in Section~\ref{s:stat_under}.
 
 
         \begin{figure}[!ht]
@@ -268,7 +268,7 @@ As the focus of this book is on trading and investing we want to summarize some 
 \noindent\textbf{One-fund Theorem:} There is a single investment of risky assets such that any efficient portfolio can be constructed as a combination of this fund and the risk-free asset. The optimal one-fund is the market fund which implies that the investor should purchase every stock which is not practical; this has given rise to the so-called index funds. \\
 
 
-\noindent\textbf{Two-fund Theorem:} Two efficient portfolios (funds) can be established so that any efficient can be duplicated; all investor seeking efficient portfolios need only to invest in combinations of these two funds. \\
+\noindent\textbf{Two-fund Theorem:} Two efficient portfolios (funds) can be established so that any other efficient portfolio can be duplicated; all investors seeking efficient portfolios need only to invest in combinations of these two funds. \\
 
 
 \noindent\textbf{No short-selling:} When the weights, $w_i$, are restricted to be positive, typically many of them tend to be zeros, by contrast with short-selling, most of the weights tend to be non-zeros. The resulting concentrated portfolios are more likely to have higher turnover rates. This has implications for the increase in trading costs. \\
@@ -278,7 +278,7 @@ As the focus of this book is on trading and investing we want to summarize some 
 	\begin{equation}\label{eqn:pricing}
 	P=\dfrac{Q}{1 + r_f + \beta(r_m - r_f)}.
 	\end{equation}
-This concept to evaluate a single asset can be extended to jointly evaluating multiple assets as well. \\
+This procedure to evaluate a single asset can be extended to jointly evaluating multiple assets as well. \\
 
 
 \noindent\textbf{Investment Pattern:} The minimum-variance portfolio method is likely to invest into low residual risk and low beta stocks. The CAPM model, \eqref{eqn:5ritrf} written in the vector form leads to
@@ -334,7 +334,7 @@ The following numerical illustration taken from Bruder, Gaussel, Richard and Ron
 If the risk tolerance parameter `$\lambda$' is set at 0.1, then the resulting optimal portfolio has the following weights: $w^*= (0.2349, 0.1957, 0.1878, 0.2844)$. If the standard deviation (volatility) of the second asset increases by 3\%, the weight attached to this asset changes to $-0.1404$ and if the return of the first asset changes from 5\% to 6\%, the optimal weight goes to 0.6319 from 0.2349. The sensitivity of the efficient portfolio weights even to minor perturbations is quite obvious. 
 
 
-This may be due to a number of factors. We have to keep in mind that the performance of the portfolio depends on the future means and covariances of the returns. As seen from the plot of the six portfolio returns, Figure~\ref{fig:monreturns}, the distributions may not follow normal distributions. There are portfolios which are linear combinations of several individual assets and therefore individual assets can even more easily deviate from normality. Secondly, this could be result of curse of dimensionality. When `$m$' the number of assets is fairly large, the number of unknown parameters, $m(m+1)/2$ is also large and to estimate them accurately, it requires to have a fairly large data. An extreme example would be tracking Russell index with 3000~stocks would require estimating 4.5~million covariances. Another aspect that needs to be looked into is regarding the time dependence of the returns. Under efficient market hypothesis, returns are expected to be independent; but as seen in previous chapters that there is some dependence, an anomaly exploited by the algorithms, need to be taken into account in the portfolio construction. We address these issues in this section. 
+This may be due to a number of factors. We have to keep in mind that the performance of the portfolio depends on the future means and covariances of the returns. As seen from the plot of the six portfolio returns, Figure~\ref{fig:monreturns}, the distributions may not follow normal distributions. There are portfolios which are linear combinations of several individual assets and therefore individual assets can even more easily deviate from normality. Secondly, this could be result of curse of dimensionality. When `$m$' the number of assets is fairly large, the number of unknown parameters, $m(m+1)/2$ is also large and to estimate them accurately, it requires to have a fairly large data. An extreme example would be tracking Russell index with 3000~stocks would require estimating 4.5~million covariances. Another aspect that needs to be looked into is regarding the time dependence of the returns. Under efficient market hypothesis, returns are expected to be independent; but as seen in previous chapters that there is some dependence, an anomaly exploited by the trading algorithms, need to be taken into account in the portfolio construction. We address these issues in this section. 
 
 
 It has been shown that because of the large sampling error of the estimates, an equally weighted portfolios can perform closer to the efficient portfolio. Studies have incorporated the estimation risk via Bayesian approach and evaluated the impact of this risk on final choice of the portfolios. The exact distribution of the maximum likelihood estimators of the means and variance is well-known, but the exact distribution of the returns and the volatility of the efficient portfolio is not easy to obtain. Jobson and Korkie (1980)~\cite{jobkor} derive the asymptotic distribution and examine its properties via extensive simulations. The convergence of the sample estimates is shown to depend upon the magnitude of $T$ to $1/A^2$, where $A=1' \Sigma^{-1}\mu$, the sum of weighted averages. Generally if the covariances among the assets are relatively small but the mean returns are large, the estimators tend to perform better. In any case, good estimates of `$\mu$' and `$\Sigma$' are essential for the construction of the efficient portfolio. Michaud (1989)~\cite{michaud} suggests bootstrap methods to repeatedly resample with replacement from the observed sample of returns $(r_1, \ldots, r_m)$ and use the resulting average and the variance as the the bootstrap replications. \\
@@ -347,18 +347,18 @@ It has been shown that because of the large sampling error of the estimates, an 
 Both procedures can be unified as, $\sum_{i=1}^m |w_i|^q \leq w$ for $1 \leq q \leq 2$. As it has been shown that these methods yield estimates that are Bayes estimates with different priors. We will now discuss Bayesian approach. 
 
 
-The Bayesian approach combines the prior distribution and the likelihood to obtain posterior distribution of the unknown parameters. Usually the mode of this distribution is taken as a reasonable estimate. In a influential paper, Black and Litterman (1992)~\cite{blacklit} describe the need for Bayesian approach. The straight solution to \eqref{eqn:5opt} almost always results in large short positions in many assets which would increase the trading costs. If the weights are restricted to be positive the solution results in zero weights for many assets and large weights in the assets with small capitalizations. The results generally are not reasonable mainly due to poor estimate of expected future returns. In practice, investors augment their views using their prior experience and their intuition to forecast the likely returns based on other asset related data. The Bayes Theorem in a natural way combines these two aspects. The details that follow are from Lai, Xin and Chen (2011)~\cite{laixingchen} and we will comment on the practical implementation issues after presenting mathematical results. 
+The Bayesian approach combines the prior distribution of the unknown parameter and the data likelihood to obtain posterior distribution of the parameters. Usually the mode of this distribution is taken as a reasonable estimate. In an influential paper, Black and Litterman (1992)~\cite{blacklit} describe the need for Bayesian approach. The straight solution to \eqref{eqn:5opt} almost always results in large short positions in many assets which would increase the trading costs. If the weights are restricted to be positive the solution results in zero weights for many assets and large weights in the assets with small capitalizations. The results generally are not reasonable mainly due to poor estimate of expected future returns. In practice, investors augment their views using their prior experience and their intuition to forecast the likely returns based on other asset related data. The Bayes Theorem in a natural way combines these two aspects. The details that follow are from Lai, Xin and Chen (2011)~\cite{laixingchen} and we will comment on the practical implementation issues after presenting mathematical results. 
 
 
 The model begins with the following distributions:
 	\begin{equation} \label{eqn:5distributions}
-	r_t \sim N(\mu,\Sigma), \quad \mu \big| \Sigma \sim N(\nu, \Sigma/\kappa) \text{ and } \Sigma \sim IW_m(\psi,n_0),
+	r_t \sim N(\mu,\Sigma), \quad \mu \big| \Sigma \sim N(\nu, \Sigma/\kappa) \text{ and } \Sigma \sim I W_m(\psi,n_0),
 	\end{equation}
 where $I W_m(\psi,n_0)$ is the inverted Wishart with `$n_0$' degrees of freedom with $E(\Sigma)= \psi/(n_0 - m - 1)$ (for details on invented Wishart, see Anderson (1984)~\cite{andersontw2}). These priors are known as conjugate priors as their functional forms closely match the likelihood functional form. When the degree of freedom `$\kappa$' goes to zero, the prior is non-informative. The posterior estimates are:
 	\begin{equation}\label{eqn:5posterior}
 	\begin{split}
 	\hat{\mu}&= \dfrac{\kappa}{T+\kappa} \cdot \nu + \dfrac{T}{T+\kappa} \overline{r} \\
-	\hat{\Sigma}&= \dfrac{\psi}{T+n_0-m-1} + \dfrac{T}{T+n_0-m-1} \cdot \left\{s+ \dfrac{\kappa}{T+\kappa} (\overline{r}-\nu)(\overline{r}-\nu)' \right\},
+	\hat{\Sigma}&= \dfrac{\psi}{T+n_0-m-1} + \dfrac{T}{T+n_0-m-1} \cdot \left\{S + \dfrac{\kappa}{T+\kappa} (\overline{r}-\nu)(\overline{r}-\nu)' \right\},
 	\end{split}
 	\end{equation}
 where $S= \frac{1}{T} \sum_{t=1}^T (r_t - \overline{r})(r_t - \overline{r})'$, the residual covariance matrix. If `$\kappa$' and `$n_0$' are taken to be large, it implies that the investor puts more emphasis on priors. To use \eqref{eqn:5posterior}, the investor has to specify these values. 
@@ -372,7 +372,7 @@ where $w_m$ are the weights on the global market and $\sigma_m^2$ is the varianc
 	\begin{equation} \label{eqn:bleq}
 	\hat{\mu}^{\text{BL}}= (\hat{\Sigma}^{\text{BL}})^{-1} [ (\tau \Sigma)^{-1}\pi + P' \Omega^{-1}q], \quad \hat{\Sigma}^{\text{BL}}= (\tau \Sigma)^{-1} + P' \Omega^{-1}P.
 	\end{equation}
-For various interesting practical applications, see Satchell and Snowcraft (2000)~\cite{snow}. But the requirement for subjective judgements makes it difficult to use Black-Litterman model in asset management practice. 
+For various interesting practical applications, see Satchell and Snowcraft (2000)~\cite{snow}. Although the requirement for subjective judgements may appear to make it difficult to use Black-Litterman model in asset management practice, it is widely used. It is shown that there is improvement in portfolio performance of an informed trader who also learns from market prices over a dogmatic informed trader who solely relies on private information. Even a misspecified model can result in better performance even if private signals are not accurate. Black and Litterman model provides a unified framework.
 
 
 It has been noted in the literature that estimating the expected returns using the past returns fails to account for likely changes in the level of market risk. Merton (1980)~\cite{merton} based on a detailed exploratory study concludes that the investors should recognize that the expected market return in excess of risk free return should be positive and that there is heteroscedasticity in the realized returns. It must be noted that the price series is random walk and therefore with shifting means, the successive differences (essentially the returns) can exhibit different levels of variances. Predicting future returns under the random walk model for price is still an open issue.
@@ -380,7 +380,7 @@ It has been noted in the literature that estimating the expected returns using t
 
 Recent focus has been on the improved estimation of the covariance matrix, $\Sigma$. As the sample covariance matrix with $m(m+1)/2$ elements requires substantially large `$T$' for estimation, alternatives for a structural covariance matrix with fewer parameters are proposed. There are all in the same spirit of shrinkage estimators:
 	\begin{equation} \label{eqn:5HatSigma}
-	\hat{\Sigma}= \alpha s_0 + (1 - \alpha) s,
+	\hat{\Sigma}= \alpha S_0 + (1 - \alpha) S,
 	\end{equation}
 where `$\alpha$' is called a shrinkage constant and `$s_0$' matrix is restricted to have only a few `freer' elements. With the CAPM model that leads to covariance structure, \eqref{eqn:Sigmarr}, the resulting covariance matrix which is the sum of a diagonal matrix and a matrix of rank one, will have only `$2m$' independent elements that need to be estimated. Ledoit and Wolf (2003)~\cite{wolf} describe a procedure to arrive at the estimate of $\alpha$ in \eqref{eqn:5HatSigma}, which we briefly describe below. 
 
@@ -400,7 +400,7 @@ where $\phi_{ij}= E[\alpha s_{ij}^0 + (1 - \alpha) s_{ij}]$. It is further shown
 where $\pi= \sum_i \sum_j \text{Asy} \var(\sqrt{T} s_{ij})$, $\rho= \sum_i \sum_j \text{Asy} \cov(\sqrt{T}\,s_{ij}^0, s_{ij})$ and $\gamma= \sum_i \sum_j (\phi_{ij} - \sigma_{ij})^2$. Note that with CAPM specification which can be taken as a single index model, the `$\gamma$' quantity represents the misspecification of the single index. 
 
 
-Fan, Fan and Lv (2008)~\cite{fansq} consider high dimensional covariance matrix estimation via factor model \eqref{eqn:arbrit}. The multifactor model generally captures well the cross-sectional variations and thus the number of parameters that need to be estimated can be significantly reduced. It is possible that the number of factors `$n$' can grow with the number of assets, `$m$', and the sample period, `$T$'. Comparing $\hat{\Sigma}_{rr}= \hat{B} \hat{\Omega} \hat{B}' + \hat{V}$ in \eqref{eqn:covdouble} with the sample covariance matrix of the returns, `$S$', it is shown that the former performs better if the underlying factor model is true. In calculations that involve the inverse of the covariance matrix, such as the calculation of portfolio weights, factor model based estimates tend to perform better but it does not make a difference in the actual risk calculation $(\hat{w}' \hat{\Sigma} \hat{w})$, which involves the estimate of the covariance matrix. Recent studies have focused on proving bounds on the risk; the calculations are somewhat complicated as they involve estimates of the weight vector as well as the estimates of the covariance matrix. See Fan, Han, Liu and Vickers (2016)~\cite{vickers} and the references therein for additional details.
+Fan, Fan and Lv (2008)~\cite{fansq} consider high dimensional covariance matrix estimation via factor model \eqref{eqn:arbrit}. The multifactor model generally captures well the cross-sectional variations and thus the number of parameters that need to be estimated can be significantly reduced. It is possible that the number of factors `$n$' can grow with the number of assets, `$m$', and the sample period, `$T$'. Comparing $\hat{\Sigma}_{rr}= \hat{B} \hat{\Omega} \hat{B}' + \hat{V}$ in \eqref{eqn:covdouble} with the sample covariance matrix of the returns, `$S$', it is shown that the former performs better if the underlying factor model is true. In calculations that involve the inverse of the covariance matrix, such as the calculation of portfolio weights, factor model based estimates tend to perform better but it does not make a difference in the actual risk calculation $(\hat{w}' \hat{\Sigma} \hat{w})$, which involves the estimate of the covariance matrix. Recent studies have focused on providing bounds on the risk; the calculations are somewhat complicated as they involve estimates of the weight vector as well as the estimates of the covariance matrix. See Fan, Han, Liu and Vickers (2016)~\cite{vickers} and the references therein for additional details.
 
 
 
@@ -455,10 +455,10 @@ The algorithm that is most convenient to solve \eqref{eqn:anotherhatwargmin} is 
 The following wisdom advocated by Rabbi Isaac bar Aha that ``one should always divide his wealth into three parts: a third in land, a third in merchandise and a third ready to hand'', the equal division among the assets has been tested out in the case of equity allocation as well. Although this diversification strategy appears to be na\"ive because it is based on neither any theory nor any data, has done relatively well and has stood out as a folk wisdom. DeMiguel, Garlappi and Uppal (2009)~\cite{demig} compare this na\"ive strategy with other theory-based strategies that were discussed in earlier sections in terms of its performance using various data sets. The summary of their findings is worth noting: ``\dots of the strategies from the optimizing models, there is no single strategy that dominates the $1/N$ strategy in terms of Sharpe ratio. In general, $1/N$ strategy has Sharpe ratios that are higher \dots relative to the constrained policies which in turn have Sharpe ratios that are higher than those for the unconstrained policies.''
 
 
-The na\"ive portfolio has also very low turnover. In addition to keeping na\"ive portfolio as  a benchmark, a practical implication is that the estimation of the moments of asset returns needs improvement using other information based on asset characteristics. \\
+The na\"ive portfolio has also very low turnover. In addition to keeping na\"ive portfolio as  a benchmark, a practical implication is that the estimation of the moments of asset returns needs improvement using information based on other asset characteristics. \\
 
 
-\noindent\textbf{Combination of Strategies:} Tu and Zhou (2011)~\cite{jtu} combine the rules based on Markowitz Theory with the na\"ive strategy to obtain new portfolio rules that can perform uniformly better. The combination can be interpreted as a shrinkage estimator, shrinking toward the na\"ive estimator. The linear combination
+\noindent\textbf{Combination of Strategies:} Tu and Zhou (2011)~\cite{jtu} combine rules based on Markowitz Theory with the na\"ive strategy to obtain new portfolio rules that can perform uniformly better. The combination can be interpreted as a shrinkage estimator, shrinking toward the na\"ive estimator. The linear combination
 	\begin{equation} \label{eqn:lincomb}
 	\hat{w}_c = \delta \hat{w} + (1-\delta) w_N,
 	\end{equation}
@@ -480,7 +480,7 @@ the utility function in \eqref{eqn:utility} is modified to take into account the
 where $\sigma_{\hat{\mu}}^2= (\sigma_s^2+\sigma_u^2)/T$. Two key quantities that play important roles are the level of ambiguity `$\alpha_i$' and the inverse coefficient of variation, $\hat{\mu}/\sigma_{\hat{\mu}}$. Some conclusions from this study are, when ambiguity is present, the investor tends to hold disproportionate (to Markowitz allocation) amount in the familiar assets and the number of assets tends to be smaller.
 
 
-Huberman (2001)~\cite{Hub} provides several instances of investment in the familiar options rather than choices that lead to efficient outcome. Workers generally tend to choose their employer's stock as they probably think that they know about their behavior and may believe they have information that the market does not have. Thus various examples are provided that indicate that although investment in the familiar stocks contradicts the advice to diversify. This adds a dimension to the traditional risk-return formulation that one has to recognize. \\
+Huberman (2001)~\cite{Hub} provides several instances of investment options that investors consider based on their familiarity options rather than choices that lead to efficient outcome. Workers in firms generally tend to choose their employer's stock as they probably think that they know about their behavior and may believe they have information that the market does not have. Thus various examples are provided that indicate that although investment in the familiar stocks contradicts the advice to diversify. This adds a dimension to the traditional risk-return formulation that one has to recognize. \\
 
 
 \noindent\textbf{Large Portfolio Selection with Exposure Constraints:} Several techniques have been discussed in this section to reduce the sensitivity of the optimal portfolio weights to uncertainty in the inputs, such as the mean returns and the covariance matrix of returns. Generally these techniques are not adequate to address the effect of estimation errors that accumulate due to large portfolio size. Jagannathan and Ma (2003)~\cite{jagma} impose no short-sales constraints as well as upper bounds on portfolio weights as commonly imposed by practitioners. The empirical evidence indicates that simply imposing upper bounds does not lead to significant improvement in the out-of-sample performance. For an estimated covariance matrix, $S$, the formulation of the model is as follows:
@@ -533,7 +533,7 @@ The solution reflects the the choice between holdings the risky assets in the fi
 	\begin{equation} \label{eqn:preturnvar}
 	\mu_p= E[r_f+w(\tilde{S})(r_t-r_f)], \quad \sigma_p^2= E[(w(\tilde{S})(r_t - r_f))^2] - (\mu_p - r_f)^2.
 	\end{equation}
-Here $\tilde{S}$ is the observed signal and $w(\tilde{S})$ is a function of that signal that the manager considers at the time of allocation. The minimization criterion leads to the following weight for the risk asset:
+Here $\tilde{S}$ is the observed signal and $w(\tilde{S})$ is a function of that signal that the manager considers at the time of allocation. The minimization criterion leads to the following weight for the risky asset:
 	\begin{equation} \label{eqn:riskyassetweight}
 	w(\tilde{S})= \dfrac{\mu_p - r_f}{C} \left( \dfrac{\mu(\tilde{S}) - r_f}{(\mu(\tilde{S} - r_f)^2 + \sigma^2_\epsilon(\tilde{S})} \right),
 	\end{equation}
@@ -600,9 +600,9 @@ Some practical implementation ideas are discussed in Pachmanova and Fabozzi (201
 	\end{equation}
 and the costs of rebalancing is
 	\begin{equation} \label{eqn:rebalance}
-	C= \sum_{i=1}^m k_i \tau_i
+	C= \sum_{i=1}^m k_i \tau_i.
 	\end{equation}
-Note $w_{0i}= \frac{w_i r_i}{\sum w_i r_i}$ and $\tau_i= \left| \frac{w_i(r_i-r_{0i})}{\sum w_ir_i} \right|$ and thus a key term here is $r_i-r_{0i}$, the difference between the actual and target return for asset `$i$'. Kourtis (2014)~\cite{kourtis} studies the distribution of $\tau$ and $C$ under the na\"ive allocation strategy. Denoting $r^p=\sum w_i r_i$ the portfolio return, the distribution of $\tau_i$ depends on $(r_i-r_{0i})/r^p$, the ratio of excess return to the portfolio return. A general criterion that accounts for the transaction cost is
+Note $w_{0i}= \frac{w_i r_i}{\sum w_i r_i}$ and $\tau_i= \left| \frac{w_i(r_i-r_{0i})}{\sum w_ir_i} \right|$ and thus a key term here is $r_i-r_{0i}$, the difference between the actual and target return for asset `$i$'. Kourtis (2014)~\cite{kourtis} studies the distribution of $\tau$ and $C$ under the na\"ive allocation strategy. Denoting $r_p=\sum w_i r_i$ the portfolio return, the distribution of $\tau_i$ depends on $(r_i-r_{0i})/r_p$, the ratio of excess return to the portfolio return. A general criterion that accounts for the transaction cost is
 	\begin{equation} \label{eqn:transcostaccount}
 	\min_w \delta (w-w_0)' \Omega(w-w_0) + \sum_{i=1}^m k_i E[\tau_i (r_{i,}w)]
 	\end{equation}
@@ -648,7 +648,7 @@ Because `$w$' is random, note
 Note the first term is the result of asset choice, the second term is the result of the factor model theory and the last term reflects the risk premia. \\
 
 
-\noindent\textbf{Choice of Assets:} The screening of candidate assets relies upon assessing the underlying factor for return behavior of a portfolio. Factors are grouped into generally as fundamental factors and macroeconomic factors, although there are other considerations such as if investing in certain assets are considered to be socially responsible, or environmentally safe, etc.. Fundamental factors are related to the asset characteristics and other information such as analysts forecasts and the macroeconomic factors relate to activities in the economy that are likely to be closely associated with the asset behavior. These may be industry factors or sentiment factors. These factors can be standardized and an aggregate score can be used to sort out the assets. Several sorting methodologies are available in the literature. Using the factor scores, sort the stocks and go long on stocks with high scores and go short on stocks with low values. This method is easy to implement and it diversifies away risk of individual stocks. Some disadvantages are that it may be difficult to infer which variables provide unique information and portfolios may pick up different undesirable risks. 
+\noindent\textbf{Choice of Assets:} The screening of candidate assets relies upon assessing the underlying factor for return behavior of a portfolio. Factors are grouped into generally as fundamental factors and macroeconomic factors, although there are other considerations such as if investing in certain assets are considered to be socially responsible, or environmentally safe, etc.. Fundamental factors are related to the asset characteristics and other information such as analysts forecasts and the macroeconomic factors relate to activities in the economy that are likely to be closely associated with the asset behavior. These may be industry factors or sentiment factors. These factors can be standardized and an aggregate score can be used to sort out the assets. Several sorting methodologies are available in the literature. Using the factor scores, sort the stocks and go long on stocks with high scores and go short on stocks with low values. This method is easy to implement and it diversifies away risk of individual stocks. Some disadvantages are that it may be difficult to infer which variables provide unique information and portfolios may pick up different undesirable risks. Some of the commercial risk models used in industry are discussed in the last section.
 
 
 Patton and Timmermann (2010)~\cite{pattim} test for positive relation between ex-ante estimates of CAPM beta and the resulting returns using daily data. Stocks are sorted at the start of each month into deciles on the basis of their betas using prior one year daily data and value-weighted portfolios are formed. Returns for these portfolios are recorded for the following month. If the CAPM holds, one should expect the average returns should increase with the betas, which is empirically confirmed. The authors also examine if the post-ranked betas of portfolios ranked by ex-ante beta estimates are monotonic confirming the predictability of the betas. Sorting the stocks based on their betas and forming decile portfolios, the performance is evaluated in the subsequent month. Specifically from the CAPM model, $r_{it}= \alpha + \beta_i r_{mt} + \epsilon_{it}$ for $i= 1, 2, \ldots, 10$, the following hypothesis, $H_0: \beta_1 \geq \beta_2 \geq \cdots \geq \beta_{10}$ is tested. The estimates range from 1.54 to 0.6 and the hypothesis is confirmed. This approach is extended to two-way sorts; firm size and book-to-market ratio or firm size and momentum. It is concluded that the size effect in average returns is absent among loser stocks. Also momentum effects are stronger for small and medium size forms. \\
@@ -727,4 +727,64 @@ The above is solved via dynamic programming. Various solutions are offered. We s
 \end{enumerate}
 
 
-There are some practical considerations that must be taken into account while implementing the idea proposed here. It is important to develop reasonable predictive models in \eqref{eq:rtplusonecft} and \eqref{eq:deltaftplusonefurther}. The factors `$f_t$' are usually taken to be some functions of past returns. Generally, the multivariate version of \eqref{eq:rtplusonecft} should yield better predictions than the univariate models as observed from the commonality literature.
+There are some practical considerations that must be taken into account while implementing the idea proposed here. It is important to develop reasonable predictive models in \eqref{eq:rtplusonecft} and \eqref{eq:deltaftplusonefurther}. The factors `$f_t$' are usually taken to be some functions of past returns. Generally, the multivariate version of \eqref{eq:rtplusonecft} should yield better predictions than the univariate models as observed from the commonality literature. \\
+
+
+\noindent\textbf{Commercial Risk Models:} Many of the trading outfits have some version of factor models, where exposure to factors is tailored toward individual investors. We briefly discuss Axioma's Robust Risk Model and Barra Equity Model for Long-Term Investors here. As discussed earlier, factors used in multi-factor models can be broadly grouped as:
+
+
+\begin{enumerate}[--]
+\item Industry and country factors
+\item Style factors related to the equity itself
+\item Macroeconomic factors that are closely related to asset's universe
+\item Statistical factors that are observed but cannot be easily interpreted
+\end{enumerate}
+
+
+For international investments, currency factors also can be included as many domestic companies trade in foreign markets as well. Some features of the modeling procedure suggested in Axioma are as follows:
+
+
+\begin{enumerate}[--]
+\item Use robust models to fit \eqref{eqn:5rtalpha} so that the influence of outliers in the model estimation is minimal.
+\item Develop common factor models, common to certain stocks as there may not be any factors unique to an asset.
+\item In the future model, it is possible that the dimension of factor vector, `$f$', if observed factors are considered can be larger than the dimension of the return vector, `$r$', and so it is suggested to use asymptotic PCA which is based on the singular value decomposition of $R'R$ rather than $RR'$, where $R$ is a $m \times T$ returns matrix.
+\item Hybrid solutions where fundamental and statistical factors are combined optimally are suggested. 
+\item Industry that has thinly distributed (measured by Herfinder's Index) firms is usually aggregated with similar industry to get a reasonably reliable estimates.
+\end{enumerate}
+
+
+These notes are taken from Axioma Robust Model Handbook (June 2010).\todo{Citation?} For the description of Barra Model, refer to Bayraktar, Mashtaser, Meng and Radchenko (2015)~\cite{baymasmenrad15}. The model provides factors by investment horizon, short, mid and long horizons. Some distinguishing characteristics of this model are:
+
+
+\begin{enumerate}[--]
+\item Implied volatility adjustment to improve risk forecasts.
+\item Volatility regime adjustment methodology to calculate market volatility levels.
+\item Sixty industry factors based on the Global Industry Classification Standard.
+\item Statistical factors include momentum and reversal indicators. 
+\end{enumerate}
+
+
+Some measures worth noting are: \\
+
+\noindent Historical Beta:
+	\[
+	\begin{split}
+	\beta&= (1-w) \beta_s + w \beta_{\text{ind}} \\
+	w= \dfrac{\sigma(\beta_s)}{\sigma(\beta_s) + \tau \sigma(\beta_{\text{ind}})},
+	\end{split}
+	\]
+where $\beta_s$ is obtained from regressing excess returns on the cap-weighted excess returns, $\beta_{\text{ind}}$ is from regressing excess cap-weighted industry returns on the cap-weighted excess returns and $\tau$ is the tuning parameter. \\
+
+
+\noindent Downside Risk: Consider the returns on a lower quartile, then
+	\[
+	\text{Lower Partial Moment}= \dfrac{1}{\lvert I \rvert} \; \sum_{i \in I} (r_i - r_v)^2.
+	\]
+For other variations of this, refer to the citation. \\
+
+
+\noindent Liquidity: 
+	\[
+	\text{LIQMA}= \dfrac{1}{T} \, \sum_{t=1}^T \dfrac{\lvert r_t \rvert}{v_t/\text{ME}_t},
+	\]
+where $v_t$ is the traded dollar volume and $\text{ME}_t$ is the moment value. 
