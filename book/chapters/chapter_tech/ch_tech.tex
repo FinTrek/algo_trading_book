@@ -9,10 +9,13 @@ There are a broad spectrum of trading infrastructures and operations but none, w
 \section{From client Instruction to Trade Reconciliation}
 
 
-TODO Build an end-to-end diagram
+Figure~\ref{fig:TradingInfraGraph} shows the end to end diagram of a hypothetical trading infrastructure. We can use this diagram to follow the full lifecycle of a client order and the main components of the infrastructure involved. \\
 
-
-Figure~\ref{fig:pexchrate} shows the end to end diagram of a hypothetical trading infrastructure. We can use this diagram to follow the full lifecycle of a client order and the main components of the infrastructure involved. \\
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_tech/figures/TradingInfraGraph.png} 
+	\caption{Sample End-to-End Trading Infrastructure. \label{fig:TradingInfraGraph}}
+	\end{figure}
 
 
 \noindent\textbf{Client Side:} The trader enters an algorithmic order into the Execution Management System (EMS), a specialized trading infrastructure that integrates the internal systems and provides tools for institutional traders to manage day to day trading needs. EMS are most often vendor products with Ez Castle\footnote{\url{https://www.ezesoft.com/}}, Portware\footnote{\url{http://www.portware.com/}} and FlexTrade,\footnote{\url{https://flextrade.com/}} which are some of the most popular options. Many large buy-side trade organizations have more complex needs and often have a homegrown solution.
@@ -67,13 +70,14 @@ Each side is usually separated in a set of Middle office functions that handles 
 % Algorithmic Trading Infrastructure
 \section{Algorithmic Trading Infrastructure}
 
-
-TODO Add a Diagram with the main components
-
-
 This section details a somewhat generic approach for algorithmic trading infrastructure. Different providers have different approaches to this. For instance in some platforms, the core strategy is in one infrastructure but the order routing part is a separate (albeit similar) infrastructure. Others combine the two together, others separate scheduling and order placement/routing components. The below simplified discussion assumes an all-in-one approach.
 
-
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_tech/figures/AlgoInfraGraph.png} 
+	\caption{Sample Algo Trading Infrastructure. \label{fig:AlgoInfraGraph}}
+	\end{figure}
+	
 The core of an Algorithmic Trader infrastructure is a software framework generically called ``Strategy Container.'' This facility sits in-between the low level OMS related functionality and the strategy and provides a set of abstractions and interfaces to simplify the development of a trading algorithm. When a new order event is received from the OMS the strategy container reads and validates the instructions like the name of the strategy and the necessary and additional parameters. If this is a valid new order instruction it usually has to pass through and additional layer of controls to ensure that various variables such as order quantity or limit price are within the required boundaries. Once this validation step is completed the strategy container instantiates the code that encodes the particular strategy, initializes it with the specific parameters. It will also connect the algorithm to the necessary services that the algorithm needs for implementing the strategy. Let us look at some of the main services and related infrastructures. \\
 
 
