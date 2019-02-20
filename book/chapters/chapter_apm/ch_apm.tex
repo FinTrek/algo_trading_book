@@ -191,7 +191,7 @@ The number of adequate factors can also be verified through the significant `$\l
 \subsection{An Illustrative Example}
 
 
-We consider monthly data from July 1926 to October 2012 on returns from six portfolios that are formed based on the size and book-to-market (BM) ratio. This data is taken from French's data library. The titles follow the naming convention, for example, SML contains small size plus low BM to BGH contains big size with high BM ratio. The data also contains $r_f$, $r_{mt} -  r_f$ and the two Fame-French factors SMB (small-minus-big size factors) and HML (high-minus-low BM factor).
+We consider monthly data from July 1926 to October 2012 on returns from six portfolios that are formed based on the size and book-to-market (BM) ratio. This data is taken from French's data library. The titles follow the naming convention, for example, SML contains small size plus low BM to BGH contains big size with high BM ratio. The data also contains $r_f$, $r_{mt} -  r_f$ and the two Fama-French factors SMB (small-minus-big size factors) and HML (high-minus-low BM factor).
 
         \begin{figure}[!ht]
 	\centering
@@ -382,7 +382,7 @@ Recent focus has been on the improved estimation of the covariance matrix, $\Sig
 	\begin{equation} \label{eqn:5HatSigma}
 	\hat{\Sigma}= \alpha S_0 + (1 - \alpha) S,
 	\end{equation}
-where `$\alpha$' is called a shrinkage constant and `$s_0$' matrix is restricted to have only a few `freer' elements. With the CAPM model that leads to covariance structure, \eqref{eqn:Sigmarr}, the resulting covariance matrix which is the sum of a diagonal matrix and a matrix of rank one, will have only `$2m$' independent elements that need to be estimated. Ledoit and Wolf (2003)~\cite{wolf} describe a procedure to arrive at the estimate of $\alpha$ in \eqref{eqn:5HatSigma}, which we briefly describe below. 
+where `$\alpha$' is called a shrinkage constant and `$S_0$' matrix is restricted to have only a few `freer' elements. With the CAPM model that leads to covariance structure, \eqref{eqn:Sigmarr}, the resulting covariance matrix which is the sum of a diagonal matrix and a matrix of rank one, will have only `$2m$' independent elements that need to be estimated. Ledoit and Wolf (2003)~\cite{wolf} describe a procedure to arrive at the estimate of $\alpha$ in \eqref{eqn:5HatSigma}, which we briefly describe below. 
 
 
 Minimizing the following risk function,
@@ -747,7 +747,7 @@ For international investments, currency factors also can be included as many dom
 \begin{enumerate}[--]
 \item Use robust models to fit \eqref{eqn:5rtalpha} so that the influence of outliers in the model estimation is minimal.
 \item Develop common factor models, common to certain stocks as there may not be any factors unique to an asset.
-\item In the future model, it is possible that the dimension of factor vector, `$f$', if observed factors are considered can be larger than the dimension of the return vector, `$r$', and so it is suggested to use asymptotic PCA which is based on the singular value decomposition of $R'R$ rather than $RR'$, where $R$ is a $m \times T$ returns matrix.
+\item In the factor model, it is possible that the dimension of factor vector, `$f$', if observed factors are considered can be larger than the dimension of the return vector, `$r$', and so it is suggested to use asymptotic PCA which is based on the singular value decomposition of $R'R$ rather than $RR'$, where $R$ is a $m \times T$ returns matrix.
 \item Hybrid solutions where fundamental and statistical factors are combined optimally are suggested. 
 \item Industry that has thinly distributed (measured by Herfinder's Index) firms is usually aggregated with similar industry to get a reasonably reliable estimates.
 \end{enumerate}
@@ -764,16 +764,16 @@ These notes are taken from Axioma Robust Model Handbook (June 2010).\todo{Citati
 \end{enumerate}
 
 
-Some measures worth noting are: \\
+Some measures that are worth noting are: \\
 
 \noindent Historical Beta:
 	\[
 	\begin{split}
 	\beta&= (1-w) \beta_s + w \beta_{\text{ind}} \\
-	w= \dfrac{\sigma(\beta_s)}{\sigma(\beta_s) + \tau \sigma(\beta_{\text{ind}})},
+	w&= \dfrac{\sigma(\beta_s)}{\sigma(\beta_s) + \tau \sigma(\beta_{\text{ind}})},
 	\end{split}
 	\]
-where $\beta_s$ is obtained from regressing excess returns on the cap-weighted excess returns, $\beta_{\text{ind}}$ is from regressing excess cap-weighted industry returns on the cap-weighted excess returns and $\tau$ is the tuning parameter. \\
+where `$\beta_s$' is obtained from regressing excess returns on the cap-weighted excess returns, `$\beta_{\text{ind}}$' is from regressing excess cap-weighted industry returns on the cap-weighted excess returns and $\tau$ is the tuning parameter. \\
 
 
 \noindent Downside Risk: Consider the returns on a lower quartile, then
@@ -787,4 +787,4 @@ For other variations of this, refer to the citation. \\
 	\[
 	\text{LIQMA}= \dfrac{1}{T} \, \sum_{t=1}^T \dfrac{\lvert r_t \rvert}{v_t/\text{ME}_t},
 	\]
-where $v_t$ is the traded dollar volume and $\text{ME}_t$ is the moment value. 
+where $v_t$ is the traded dollar volume and $\text{ME}_t$ is the market value. 
