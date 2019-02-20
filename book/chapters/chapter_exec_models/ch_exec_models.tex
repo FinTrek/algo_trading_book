@@ -413,11 +413,28 @@ Using the trading bands the scheduler will determine if and how much it needs to
 	\caption{Schedule infromation set \label{fig:sch_details}}
 	\end{figure}
 
+At the beginning of every time bin the strategy will  asses four main state variables:
+
+\begin{enumerate}
+\item\emph{Target Quantity}: this is where the strategy should be at at time $T_0$ ( point A )
+\item\emph{ Current Quantity}: this is where the strategy is (point B)
+\item\emph{ Next Quantity}: this is where the strategy should be a time $T_1$ (point C)
+\item\emph{ Opportunistic Quantity}: this is where the maximum quantity strategy can be be a time $T_1$ (point D)
+\end{enumerate}
+
+One other important consideration is at what time, if no trading happens will the strategy hit the lower band and thus will need to catch up (point L). The difference between the Target Quantity and the other points provide with the necessary  information for the strategy to decide the instructions to the order placement layer to maximize the chances to executed the required shares to stay on schedule and how much leeway it has to stay behind or can be ahead.
+
 By providing the order placement with a quantity range has the additional benefit that it allows the schedule to be ahead of schedule when conditions are favorable leading to reduced catch-up behavior and thus reduced impact and improved performance.
 
 The distance between the bands and the schedule can be made stock specific allowing to further refine the behavior across the trading universe.  It can also made be client specific as it represents the traders risk aversion from schedule deviation. The wider the bands the less risk of unilateral catch-up but the larger the risk of significant deviation from the desired schedule.\\
 
-\noindent\emph{Opportunistic Deviation}: 
+\noindent\emph{Stateless Approach}: 
+
+An improved approach to this is for the strategy to not use time bins at all but work in a more stateless fashion. The scheduler re-evaluates the same state variables on a continuous basis (every few seconds for example) and adjusts the instructions to the order placement by a small amount each time to refine the trading policy. The schedule can also use several points in the future to provide more term structure to the policy and thus plan better ahead, in particular when the schedule start having significant ``curvature'' for example at the end of the order.
+
+\noindent\emph{Systematic Deviation}:
+A final improvement to this approach we'll briefly discuss is the usage of predictive signals (aka alpha) within the schedule. If one has a prediction on short term price move it can leverage that by making a systematic decision to get ahead or stay behind schedule in order to take advantage of that price information. This has to be done carefully to avoid incurring in any additional market impact or risk of catch-up that will cancel out any possible benefit of this move. The schedule also needs to have a component that will encourage the strategy to get back on schedule if the price prediction subsides. This will avoid the strategy to remain ahead(behind) for longer than necessary incurring in unnecessary schedule risk.
+
 
 % Order Placement
 \subsection{Order Placement}
