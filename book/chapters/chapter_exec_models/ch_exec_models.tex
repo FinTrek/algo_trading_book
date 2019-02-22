@@ -435,12 +435,22 @@ An improved approach to this is for the strategy to not use time bins at all but
 \noindent\emph{Systematic Deviation}:
 A final improvement to this approach we'll briefly discuss is the usage of predictive signals (aka alpha) within the schedule. If one has a prediction on short term price move it can leverage that by making a systematic decision to get ahead or stay behind schedule in order to take advantage of that price information. This has to be done carefully to avoid incurring in any additional market impact or risk of catch-up that will cancel out any possible benefit of this move. The schedule also needs to have a component that will encourage the strategy to get back on schedule if the price prediction subsides. This will avoid the strategy to remain ahead(behind) for longer than necessary incurring in unnecessary schedule risk.
 
-
 % Order Placement
 \subsection{Order Placement}
 
+The order placement layer sits downstream from the scheduling layer and can be seen as the micro trader of the strategy, in charge of decisions spanning the upcoming few seconds or minutes of trading. In general this layer is unaware of the overall trading intention received by the scheduler and it is responsible for implementing locally its decisions. More sophisticated approach might leverage  additional instructions from the scheduler providing a picture on the macro state of the order in  order to nuance the decision making. In any case we can simplify the role of the the micro trader as answering the question: ``at what price should I trade the quantity allocated for the upcoming period in order to complete and obtain the best possible price?.'' 
 
-The order placement layer sits downstream from the scheduling layer and can be seen as the micro trader of the strategy, in charge of decisions spanning the upcoming few seconds or minutes of trading. While it is generally unaware of the overall trading intention received by the scheduler, it is responsible for implementing locally its decisions. As such, the micro trader answers the question, ``at what price should I trade the quantity allocated for the upcoming period in order to complete and obtain the best possible price?.''
+How does one approach this problem? the simplest approach possible would be to send the given quantity as a market order and completely fill it's allocated quantity immediately with essentially no uncertainty in the outcome. A view of the aggregated order-book will provide a very good, conservative (because it does not include the possibility of mid-point hidden orders), expectation of what average price would be achieved. While in certain scenarios this might actually achieve the best price, as a general approach it clearly leaves a lot to be desired. Reasoning on why this is starts giving us some clues on how to evolve the approach.
+
+\begin{itemize}
+\item Depending  on the characteristics of the order and the stock it is trading the size to trade might still be larger that what can be absorbed by the market without ``eating'' into the order-book. This could be simply remedied by decreasing the schedule interval.
+\item Assuming the order is correctly sized the next critique could be that a series of aggressive orders might be perceived by the market as evidence of large liquidity demands in the direction of the order. This information leakage could lead to prices moving in the unfavorable direction increasing the realized impact. There is empirical evidence for this to be true in particular it happens without any concerns with what is happening in the order book and if the pattern is very recognizable like trading at fixed intervals and in the same size. That being said there is also some evidence that impact and information leackage are a function of how many interaction one has with the market. Trading one block aggressively and then staying out of the market for a relatively long amount of time would likely work better than sending many 100 shares orders spaced out over short intervals. 
+\end{itemize}
+
+These decision ultimately boil down to c
+
+The output of the order placement module can be modeled as an array of price levels and associated quantity such as [ [18.85 ; 600], [18.84 ; 400], [18.81 ; 200] ] that is then passed on to the order router for execution or quoting on the market.
+
 
 
 By nature, this component leverages techniques that are very similar to the ones employed by market making strategies, aiming to capture passive liquidity while avoiding adverse selection. The order placement component is also responsible for the decision to cross the spread, either to capture an opportunity, or to attain a desired participation rate if the liquidity sourced on the passive side is not sufficient. Consequently, it relies heavily on microstructure models to take advantage of short-term order book price movements. Among the most commonly used signals for order placement, we can mention:
@@ -459,8 +469,6 @@ By nature, this component leverages techniques that are very similar to the ones
 
 While the examples above are simplistic in nature, the limit order placement module is a component where a lot of quantitative sophistication can be deployed given the complexity and high dimensionality of both the state space and action space. In particular, the state/action nature of the problem makes it well suited to modern techniques like reinforcement learning. 
 
-
-The output of the order placement module can be modeled as an array of price levels and associated quantity such as [ [18.85 ; 600], [18.84 ; 400], [18.81 ; 200] ] that is then passed on to the order router for execution or quoting on the market.
 
 
 
