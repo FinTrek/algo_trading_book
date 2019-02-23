@@ -440,40 +440,43 @@ A final improvement to this approach we'll briefly discuss is the usage of predi
 
 The order placement layer sits downstream from the scheduling layer and can be seen as the micro trader of the strategy, in charge of decisions spanning the upcoming few seconds or minutes of trading. In general this layer is unaware of the overall trading intention received by the scheduler and it is responsible for implementing locally its decisions. More sophisticated approach might leverage  additional instructions from the scheduler providing a picture on the macro state of the order in  order to nuance the decision making. In any case we can simplify the role of the the micro trader as answering the question: ``at what price should I trade the quantity allocated for the upcoming period in order to complete and obtain the best possible price?.'' 
 
-How does one approach this problem? the simplest approach possible would be to send the given quantity as a market order and completely fill it's allocated quantity immediately with essentially no uncertainty in the outcome. A view of the aggregated order-book will provide a very good, conservative (because it does not include the possibility of mid-point hidden orders), expectation of what average price would be achieved. While in certain scenarios this might actually achieve the best price, as a general approach it clearly leaves a lot to be desired. Reasoning on why this is starts giving us some clues on how to evolve the approach.
+How does one approach this problem? Let's follow the historical evolution of Order Placement techniques to explore the various challenges and possible solutions.
+\\
 
-\begin{itemize}
-\item Depending  on the characteristics of the order and the stock it is trading the size to trade might still be larger that what can be absorbed by the market without ``eating'' into the order-book. This could be simply remedied by decreasing the schedule interval.
-\item Assuming the order is correctly sized the next critique could be that a series of aggressive orders might be perceived by the market as evidence of large liquidity demands in the direction of the order. This information leakage could lead to prices moving in the unfavorable direction increasing the realized impact. There is empirical evidence for this to be true in particular it happens without any concerns with what is happening in the order book and if the pattern is very recognizable like trading at fixed intervals and in the same size. That being said there is also some evidence that impact and information leackage are a function of how many interaction one has with the market. Trading one block aggressively and then staying out of the market for a relatively long amount of time would likely work better than sending many 100 shares orders spaced out over short intervals. 
-\end{itemize}
+\noindent\emph{Naive Order Placement}:
+The simplest approach possible would be to send the given quantity as a market order and completely fill it's allocated quantity immediately with essentially no uncertainty in the outcome. A view of the aggregated order-book will provide a very good, conservative (because it does not include the possibility of mid-point hidden orders), expectation of what average price would be achieved. 
 
-These decision ultimately boil down to c
+Depending  on the characteristics of the order and the stock it is trading the size to trade might still be larger that what can be absorbed by the market without ``eating'' into the order-book. This could be simply remedied by decreasing the schedule interval. \\
 
-The output of the order placement module can be modeled as an array of price levels and associated quantity such as [ [18.85 ; 600], [18.84 ; 400], [18.81 ; 200] ] that is then passed on to the order router for execution or quoting on the market.
+The first order placement modules where not that much different than this naive approach. While for highly liquid instruments with tight spread this approach might achieve decent results but has we go down the spectrum of liquidity things start falling apart and one will need to introduce the additional complexity that comes with leveraging non marketable orders.
 
+\noindent\emph{Peg and Cross}: 
+The next step in the evolution of order placement approaches is often termed ``Peg and Cross''. It consists of placing an limit order  for the scheduled quantity at the near side. If the market moves away the order can be repriced (alternatively one can rely on a peg order type to do this) and size updated if necessary. If the order is not fully executed by the time the schedule reaches the catch-up zone an aggressive order is sent to get back on schedule.
 
+Variations of this approach are still the norm in many product implementations across the industry. One advantage of the approach is that if  the order is executed passively on a maker-taker exchange it will earn a rebate which make the overall cost of trading lower. On the downside this technique will consistently be adversely selected with most of the passive executions happening when the price is ``coming through'' and will often be more attractive right after the order is filled.
 
-By nature, this component leverages techniques that are very similar to the ones employed by market making strategies, aiming to capture passive liquidity while avoiding adverse selection. The order placement component is also responsible for the decision to cross the spread, either to capture an opportunity, or to attain a desired participation rate if the liquidity sourced on the passive side is not sufficient. Consequently, it relies heavily on microstructure models to take advantage of short-term order book price movements. Among the most commonly used signals for order placement, we can mention:
+One approach to minimize this adverse selection is to ``layer'' the order book with some of the available quantity so as to capture execution at better price levels when the price comes through. Ideally, if the infrastructure is fast enough and one uses some short term signals like order imbalance to predict when the probability of price drop reaches a critical threshold is to cancel the top order so as to further minimize the adverse selection. This is a common approach of HFTs where they want to be at the top of the book to capture a fill right before the price moves away.\\
 
+A common variant of the Peg and Cross technique is to leverage additional price points, in particular the mod point. As the need for liquidity increases the order placement can either ping the mid of various exchanges or have a quantity hidden at the midpoint to increase the probability of getting filled. 
 
-\begin{itemize}
-\item \textbf{Order book imbalance:} When the displayed quantity in the lit order book is significantly imbalanced between the bid and ask sides, it tends to predict an impending up tick or down tick (e.g. larger quantities at the bid are indicative of excess buyers, likely resulting in an up tick as competition for queue position increases).
+\noindent\emph{Beyond Peg and Cross}: 
 
-\item \textbf{Trade imbalance:} This signal aggregates market executions over a period of time and attributes a sign to each of the trades recorded on the tape (essentially, prints happening above the prevailing midpoint are considered buy-initiated, the ones happening below are considered sell-initiated, and the ones happening at the mid are generally given the same sign as the trade immediately preceding). The ratio between buy and sell initiated trades can also be used as a predictor of the direction of the next order book move.
+More advanced approaches are possible and used in some more advanced implementations. These models are quite proprietary and the authors don't pretend to have seen all of them. We will just give a few additional pointers.
 
-\item \textbf{Weighted midpoint time series:} For names with wider spreads and dense order books, it is possible to construct a time series of the quoted-size weighted average of the bid and ask representing the theoretical fair midpoint price, which is more precise than the effective midpoint only leveraging the quotes, and can be used to infer the trajectory of the order book.
+One direction in which these models evolved is to leverage Reinforcement Learning techniques. This models are notoriously hard to calibrate and require a good order book simulation environment. They are also limited in scope as most simulators require what is called a ``small order'' assumption meaning that the quantity traded does not meaningfully alter the state of the market and thus does not require to inject strong assumption in the simulator on how the market will react. This is definitively an interesting space of research that could lead to valuable breakthroughs in the future.\\
 
-\item \textbf{Trading and cancellation rates:} Using Level~III market data feed, it is possible to track the activity in the order book precisely and track order cancellations. Increases in cancellation rates are indicative of subsequent changes in the order book. 
-\end{itemize}
+Other approaches use more heuristic methods around approaches to liquidity interaction but leverage more nuanced systematic approach to experiment the optimal usage of these different heuristics. There is more focus on speed and low latency alpha  signal utilization to trade aggressively when the price is ready to move away and ``stepping out'' of the way when the market is about to come through.
 
+One particular area for obvious improvement is the tendency for a one-size-fits-all approach to order placement meaning that, apart the usual normalization practices, the approach is uniform across the stock universe. This is an area that clearly can be improved upon, substantially. For example there is a subset of instruments with very volatile and thin order books where posting liquidity does not really add any value and could benefit from a more opportunistic approach. Stocks withe ultra-long queues could use different methods to maintain ``density'' within the order book and canceling orders when no liquidity is needed.
 
-While the examples above are simplistic in nature, the limit order placement module is a component where a lot of quantitative sophistication can be deployed given the complexity and high dimensionality of both the state space and action space. In particular, the state/action nature of the problem makes it well suited to modern techniques like reinforcement learning. 
+Finally low liquidity stocks likely require a complete new approach and will be an area of focus in particular for generally illiquid markets in Europe and APAC and has the investment expands to the lower liquidity instruments.\\
 
-
-
+There is so much more that can be said around this topic but we hope that this brief treatment provides enough meat for the interested reader to explore this exiting space.
 
 % Order Routing
 \subsection{Order Routing}
+The output of the order placement layer can be modeled as an array of price levels and associated quantity such as [ [18.85 ; 600], [18.84 ; 400], [18.81 ; 200] ] that is then passed on to the order router for execution or quoting on the market.
+
 
 The order routing layer sits downstream from the order placement layer and is generally a standalone component - known as the Smart Order Router (SOR) - in charge of the highest frequency decisions (of the order of microseconds to milliseconds). While it is also generally unaware of the overall trading intention received by the scheduler, it is responsible for implementing the decisions of the order placement module. As such, the SOR answers the question ``to which exchange(s) should I route the child order in order to maximize my probability of getting a fill at or better than the desired price?.'' This component is of particular importance in fragmented markets, and might be absent in execution strategies interacted with single markets (EM Equities, Futures, etc.)
 
