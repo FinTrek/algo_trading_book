@@ -203,10 +203,6 @@ New academic work expanding on the framework was released however the solutions 
 	\caption{Almgren \& Chris solution for different ris aversions \label{fig:is}}
 	\end{figure}
 
-\noindent\textbf{Portfolio IS} \\
-
-One area where the approach took more hold was in the portfolio level space where the risk was actually meaningful and there was a need for a linked execution schedule to avoid a well balanced portfolio from becoming unbalanced and be exposed to market (and other factors) risks. The available implementations provided by brokers are to a large extent still based on the original framework. Very few of them, in the author's opinion, work incredibly well and there are a lot of complexities and shortcomings that still need to be resolved both from the numerical approach and performance (Most implementation leverage QP solvers and to create a flexible implementation for large portfolios that can be optimized in a reasonable time frame requires a lot of tricks and shortcuts) as well as better handling of dark liquidity. \\
-
 
 \noindent\textbf{Liquidity Seeking Algos} \\
 
@@ -254,6 +250,7 @@ Asset managers handle large trading lists when they periodically rebalance their
 
 \end{itemize}
 
+(Most implementation leverage QP solvers and to create a flexible implementation for large portfolios that can be optimized in a reasonable time frame requires a lot of tricks and shortcuts)
 
 From a pure trading implementation perspective, all the practical considerations mentioned in Chap 6.7.4 \todo{proper link} apply to portfolio trading algorithms as well, in particular when handling the relative liquidity of the buy and sell sides. The complexity that is quite unique to portfolio trading is the handling of dark liquidity in the trade schedule optimization as it presents both an opportunity and a challenge. Similarly to a single line execution, finding a large block of liquidity in the dark allows to considerably reduce timing risk at a generally cheaper trading cost than would have been incurred in the lit market. That said, in a portfolio algorithm the trader relies on the correlation between names to balance the execution risk in order to slow down trading and minimise impact. So, receiving a large dark execution (or a series of simultaneous dark fills on the same side) at once can reintroduce significant risk by creating an imbalance, leaving the trader exposed to adverse market movements. The algorithm is then left to adjust its positions rapidly and might incur large execution costs to get back to a risk balanced state. This has two practical consequences for developers of portfolio algorithms. 
 
