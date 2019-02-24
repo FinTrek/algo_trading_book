@@ -408,9 +408,9 @@ These two metrics are of particular relevance for execution algorithms and will 
 
 \item  Limit: Specify a maximum (minimum) price at which the trader is willing to buy (sell). If liquidity is available at a better price, the order will execute at that price.
 
-\item  Peg: Specify a price level at which the order should be continuously automatically repriced. For instance, an order pegged to the bid price will be automatically repriced as a higher price limit order each time the market bid price ticks up. This order type is particularly used for midpoint executions in non-displayed markets.
+\item  Peg: Specify a price level at which the order should be continuously automatically repriced. For instance, an order pegged to the bid price will be automatically repriced as a higher price limit order each time the market bid price ticks up. This order type is particularly used for midpoint executions in non-displayed markets. One would think that pegging orders has the additional advantage of improving the queue priority of the order when it is repriced since this process is done directly by the exchange. That turns out not to be true. Managing peg orders is responsibility of a separate component at the exchange and it's interaction speed with the order book is usually slower than that of ultra-low-latency operators.
 
-\item  Iceberg: Limit order with a specified display quantity. In order to prevent information leakage to other market participants, a trader desiring to buy or sell a large quantity at a given price might elect to use an iceberg order with a small display size. For instance, for an order to buy 100,000 shares at \$20 with a display size of 2,000 shares, only 2,000 shares would be displayed in the order book. Once that quantity is executed, the order would automatically reload another 2,000 shares at \$20, and so on until the full quantity is executed.
+\item  Iceberg: Limit order with a specified display quantity. In order to prevent information leakage to other market participants, a trader desiring to buy or sell a large quantity at a given price might elect to use an iceberg order with a small display size. For instance, for an order to buy 100,000 shares at \$20 with a display size of 2,000 shares, only 2,000 shares would be displayed in the order book. Once that quantity is executed, the order would automatically reload another 2,000 shares at \$20, and so on until the full quantity is executed. Note that for iceberg orders only the visible quantity has time priority and once that quantity has been executed the new tip of the iceberg will be placed at the back of the queue
 
 \item  Hidden: While they are available to trade, these orders are not directly visible to other market participants in the central limit order book. 
 
@@ -444,7 +444,7 @@ Finally, it is worth mentioning that some exchanges as well as alternative venue
 
 % The Closing Auction
 \subsection{The Closing Auction} 
-The Closing Auction tends to be the most popular of call auctions for a variety of interesting reasons. First, it is the last opportunity (exception made of off-hours trading) for market participants to transact in a relatively liquid environment before being exposed to the overnight period (when new information accumulates, but trades cannot easily take place). Second, with the increase in passive investment strategies providing investors with replication of a predetermined benchmark index, the closing auction has become a particularly relevant price setting event (most passive funds net asset valued (NAV) is based on close prices of the underlying assets). For such reasons, the closing auction is extremely important to many investors. From an execution standpoint, it is a major liquidity event that needs to be considered carefully.
+The Closing Auction tends to be the most popular of call auctions for a variety of interesting reasons. First, it is the last opportunity (unless one engages in the highly risky practice of off-hours trading) for market participants to transact in a relatively liquid environment before being exposed to the overnight period (when new information accumulates, but trades cannot easily take place). Second, with the increase in passive investment strategies providing investors with replication of a predetermined benchmark index, the closing auction has become a particularly relevant price setting event (most passive funds net asset valued (NAV) is based on close prices of the underlying assets). For such reasons, the closing auction is extremely important to many investors. From an execution standpoint, it is a major liquidity event that needs to be considered carefully.
 
 
 The mechanics of the closing auction are in most part similar to the ones described above for the open auction. The major differences across countries (and sometimes across exchanges within a country) have to do with order submission times. Some countries, such as the U.S., have order submissions start and end before the continuous session is over (see Table~\ref{tab:NASDAQclose} and Table~\ref{tab:NYSEclose}); while some other markets have two non-overlapping continuous and close order submission sessions.
@@ -498,7 +498,7 @@ The mechanics of the closing auction are in most part similar to the ones descri
 	\end{table}	
 
 
-One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary e-Quote orders (known as ``d-Quote'' orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since there is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. \\
+One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary electronic quote orders (known as ``d-Quote'' orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since there is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. \\
 
 
 \noindent\textbf{Why is the Close such an important time of the day?:} A large number of Quant and CTA funds are building their investment strategies using daily returns, essentially using the closing price as a reference price for their investment decisions. Once their backtesting is built on closing price data, they aim at obtaining an execution price equal to---or better than---that closing price when implementing their strategies. 
@@ -506,16 +506,19 @@ One specificity of the NYSE is the presence of floor brokers operating in an age
 
 It also represents a liquidity opportunity for active and passive investors to exchange large amounts of shares. As index constituents get updated on a regular basis (additions, deletions, weight increase/decrease), passive investors need to update their holdings to reflect the optimal composition of the benchmark that they track and, in order to minimize the tracking error risk, that update needs to happen as close as possible to the actual update of the underlying benchmark. Consequently, most passive indexers tend to rebalance their portfolios on the same day the underlying index constituents are updated, using the closing auction as a reference price, and resulting in significant flows at the close auction. Consequently, active investors looking to build a significant position (or unwinding one) can use these index events as a way to transact a large amount of shares with low market impact at the close by being liquidity providers to passive indexers.  
 
+% Taxonomy of Data for Algorithmic Trading Research
+\section{Taxonomy of Data used in Algorithmic Trading }
 
+To run a successful trading operation in particular for it's more research oriented aspects requires availability of lot of different data sets. Data availability, storage, management, cleaning are some of the most important aspect of a functioning trading business and the core of any research environment. The amount of data and the complexity of maintaining the ``Data Lake'' can be daunting and very few  excel at this aspect.
 
-% Data to Model Trading
-\section{Data to Model Trading}
+In this section we'll review the most important data sets and their role in AT research.
 
+\begin{comment}
 Historical market data available to researchers and practitioners alike but varied in degrees of granularity over time. From daily trade data (closing price and volume), to tick-by-tick trade and quote data (also known as TAQ data), to full message data, the progression in granularity not only reflects the focus in intraday trading complexity but also opens up the way for more advanced strategies. 
 
 
-Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The level II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available level III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime. \\
-
+Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The level II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available level III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime.\footnote{Level III data has been available for years to firm subscribing and storing the raw binary exchange format (pcap) and the re-building the orderbook sequentially from there for their research. It is still the main method used for HFT research. One recently this data became available historically to a broader subset of users and researchers} \\
+\end{comment}
 
 
 % Reference Data
@@ -526,6 +529,12 @@ different categories of reference data.
 
 
 \begin{itemize}
+\item \textbf{Trading Universe:}
+
+The first problem for both the correct functioning of a trading operation is knowing what instruments you will be required to trade on a particular day. The trading universe is an ever evolving entity that changes daily to incorporate new IPOs, listings, de-listings, etc. To be able to just trade a new instruments there are several pieces of information that one is required to have in multiple systems. Market Data needs to be available, and some staict data needs to be set or guessed to work with existing controls, parameters for the various analytics need to be available or sensibly defaulted.
+
+For research, in particular quantitative strategies, knowing when a particular stock no longer trades is important to avoid issues like survivor bias.
+ 
 \item \textbf{Symbology Mapping:} ISIN, SEDOL, RIC, Bloomberg Tickers, \dots
 
 Quantitative strategies often leverage data from a variety of sources. Different providers key their data with different instrument identifiers depending on asset class or regional conventions, or sometime use their own proprietary identifiers (e.g. Reuters Identification Code---RIC, Bloomberg Ticker), therefore making symbology mapping the first step in any data merging exercise. Such data is not static, one of the symbols can change on a given day and others remain unchanged for some time, complicating historical data merges.
@@ -566,7 +575,7 @@ Mergers \& Acquisitions and Spin-offs are also regular events in the lifecycle o
 Stocks quotation can be suspended as a cooling mechanism (often at the request of the underlying company) to prevent excess price volatility when significant information is about to be released to the market. Depending on the situation, the suspension can be temporary and intraday, or can last for extended periods of time if the market place allows it.\footnote{For instance, it was the case for a large number of companies in China in 2016.} Suspensions result in gaps in time series and are worth keeping track of, as they can impact strategies in backtesting (inability to enter or exit a position, uncertainty in the pricing of composite assets if a given stock has a significant weight in ETFs or Indexes). Some markets will also suspend trading if the price swings more than a predefined amount (limit up / limit down situations) for either a period of time or for the remainder of the trading session.
 
 
-\item \textbf{Static Data:} country, sector, primary exchange, currency and quote factor.
+\item \textbf{Static Data:} Country, sector, primary exchange, currency and quote factor.
 
 
 Pure static data is also relevant for the development of quantitative trading strategies. In particular, country, currency and sector are useful to group instruments based on their fundamental similarities. A well known example is the usage of sectors to group stocks in order to create pairs trading strategies. It is worth mentioning that there exist different types of sector classifications (e.g. GICS\textsuperscript\textregistered from S\&P, ICB\textsuperscript\textregistered from FTSE) offering several levels of granularity,\footnote{The Global Industry Classification Standard (GICS\textsuperscript\textregistered) structure consists of 11 sectors, 24 industry groups, 68 industries and 157 sub-industries. An example of this hierarchical structure would be: Industrials / Capital Goods / Machinery / Agricultural \& Farm Machinery.} and that different classifications might be better suited to different asset classes or countries. The constituents of the Japanese index TOPIX, for instance, are classified into 33 sectors that are thought to better reflect the fundamental structure of the Japanese economy and the existence of large diversified conglomerates. 
@@ -658,122 +667,12 @@ While the points mentioned above represent a non-exhaustive list of the referenc
 
 
 
-% Fundamental Data
-\subsection{Fundamental Data}
 
-A very large number of quantitative investment strategies are still based on fundamental data, and consequently countless research papers are available to the interested reader describing examples of usages. Here we will only describe the main classes of existing fundamental data:
-
-
-\begin{itemize}
-\item \textbf{Key ratios:} EPS (Earnings Per Share), P/E (Price-to-Earning), P/B (Price-to-Book Value), \dots These metrics represent a normalized view of the financials of companies allowing for easier cross-sectional comparisons and ranking over time.
-
-
-\item \textbf{Analyst recommendations:} Research analysts at Sell Side institutions spend a great deal of resources analyzing companies they cover in order to provide investment recommendations (usually in the form of a Buy/Hold/Sell rating accompanied by a price target). While individual recommendations might prove noisy, the aggregate values across a large number of institutions can be interpreted as a market consensus for the valuation of a given stock, and material changes in consensus can have a direct impact on price.
-
-
-\item \textbf{Earnings data:} Similarly research analysts also provide quarterly earning estimates that can be used as an indication of the performance of a stock before the actual value gets published by the company. Here, too, consensus values tend to play a larger role, in particular when the difference between the forecast consensus and the realized value is large (known as earning surprise), as the stock might then experience outsized returns in the following days. Thus, collecting analysts' forecasts as well as realized values can be a valuable source of information in the design of strategies.
-
-
-\item \textbf{Holders:} In some markets, large institutional investors are required to disclose their holdings on a regular basis. For instance, in the U.S., institutional investment manager with over \$100 million in assets must report quarterly their holdings to the SEC using Form 13F. The forms are then publicly available via the SEC's EDGAR database. Additionally, shareholders might be required to disclose their holdings once they pass certain ownership thresholds\footnote{In the U.S., Form 13D must be filed with the SEC within 10 days by anyone who acquires beneficial ownership of more than 5\% of any class of publicly traded securities in a public company}. Sudden changes in such ownership might indicate changes in sentiment by sophisticated investor and can have a significant impact on stock performance.
-
-
-\item \textbf{Insiders Purchase/Sale:} In some markets, companies directors are required by law to disclose their holdings of the company stock as well as any increase or decrease of such holdings\footnote{In the U.S., officers and directors of publicly traded companies are required to disclose their initial holdings in the company by filing Form 3 with the SEC, as well as Form 4 within 2 days of any subsequent changes. The forms are then publicly available via the SEC's EDGAR database}. This is thought to be an indicator of future stock price moves from the group of people who has access to the best possible information about the company and the current environment in which it evolves.
-
-
-\item \textbf{Credit Ratings:} Most companies issue both stocks and bonds to finance their operations. Bonds credit ratings and their changes over time provide additional insight into the health of a company and are worth leveraging. In particular, credit downgrades resulting in higher funding costs in the future generally have a negative impact on equity prices.
-
-
-\item \textbf{And much, much more:} Recent years have seen the emergence of a wide variety of alternative data sets that are available to researchers and practitioners alike\footnote{For instance, \url{www.orbitalinsight.com} offers daily retail traffic analytics, derived from satellite imagery analysis monitoring over 260,000 parking lots, as well as estimates of oil inventories through satellite monitoring of oil storage facilities.}. While impossible to make a comprehensive list of all the ones that are available, they can generally be classified based on their characteristics: frequency of publication, structured or unstructured, and velocity of dissemination. The value of such data depends on the objectives and resources of the user (natural language processing or image recognition for unstructured data require significant time and efforts), but also---and maybe more importantly---on the uniqueness of the dataset. The more investors get access to it, the harder it becomes to extract meaningful alpha from it.
-\end{itemize}
-
-
-
-% Daily Statistics
-\subsection{Daily Statistics}
-On top of fundamental data, quantitative trading strategies (in particular shorter term and intraday ones) often make use of market statistics. While strategies of higher frequency leverage more and more granular data, day level aggregated statistics are a good place to start when building a strategy. Here we give a list of the most common ones used by practitioners and researchers alike.
-
-
-The first group represents the overall trading activity in the instrument: 
-
-\begin{itemize}
-\item \textbf{Open, High, Low, Close (OHLC) and Previous Close Price:} The OHLC provides a good indication of the trading activity as well as the intraday volatility experienced by the instrument. The distance traveled between the lowest and highest point of the day usually gives a better indication of market sentiment than the simple close-to-close return. Keeping the previous close value as part of the same time series is also a good way to improve computation efficiency by not having make an additional database query to compute intraday return and overnight gap. The previous close needs, however, to be properly adjusted for corporate actions and dividends. 
-
-
-\item \textbf{Last trade before close (Price/Size/Time):} It is useful in determining how much the close price might have jumped in the final moments of trading, and consequently, how stable a reference value it might be for the next day.
-
-
-\item \textbf{Volume:} It is another valuable source of trading activity indication, in particular when the level jumps from longer term average. It is also worth collecting the breakdown between lit and dark volume, in particular for execution strategies.
-
-
-\item \textbf{Auctions volume:} Depending on the exchange, there can be multiple auctions in a day (Open, Close, Morning Close and Afternoon Open - for markets with a lunch break -, as well as adhoc liquidity or intraday auctions). Owing to their liquidity aggregation nature, they often time can be considered as a valuable price discovery event when significant volume prints.
-
-
-\item \textbf{VWAP:} Similar to the OHLC, the intraday VWAP price gives a good indication of the trading activity on the day. It is not uncommon to build trading strategies using VWAP time series instead of just close-to-close prices. The main advantage being that VWAP prices represent a value over the course of the whole day and, as such, for larger orders are easier to achieve through algorithmic execution than a single print.
-
-
-\item \textbf{Short Interest / days-to-cover / utilization:} This dataset is a good proxy for investors positioning. The short pressure might be an indication of upcoming short term moves: a large short interest usually indicates a bearish view from institutional investors. Similarly, the utilization level of available securities to borrow (in order to short) gives an indication of how much room is left for further shorting (when securities become ``Hard to Borrow'', the cost of shorting becomes significantly higher requiring short seller to have strong enough beliefs in the price direction in the short term. Finally, days-to-cover data is also valuable to assess the magnitude of a potential short squeeze. If short sellers need to unwind their positions, how much volume does this represent as a fraction of available daily liquidity. The larger the value, the larger the potential sudden upswing on heavily shorted securities.
-
-
-\item \textbf{Futures data:} Futures markets provide additional insight into the activity of large investors through open interest data that can be useful to develop alpha strategies. Additionally, financial futures offer arbitrage opportunities if their basis exhibits mispricing compared to one's dividend estimates. As such, recording the basis of futures contracts is worthwhile even for strategies that don't particularly target futures.
-
-
-\item \textbf{Index-level data:} This is also a valuable dataset to collect as a source of relative measures for instrument specific features (Index OHLC, Volatility, \dots). In particular for dispersion strategies, normalized features help identify individual instruments from their benchmark. 
-
-
-\item \textbf{Options data:} The derivatives market is a good source of information about the positioning of traders (through open interest and Greeks such as Gamma and Vega) as well as how the broader market is pricing an instrument (through implied volatility for instance).
-
-
-\item \textbf{Asset Class Specific:} There is a wealth of cross-asset information available when building strategies, in particular in Fixed Income, FX, and Credit. Among the basic ones, we would note:
-        \begin{itemize}
-        \item Yield / benchmark rates (repo, 2y, 10y, 30y)
-        \item CDS Spreads
-        \item US Dollar Index
-        \end{itemize}
-\end{itemize}
-
-
-The second group of daily data represents granular intraday microstructure activity and is mostly of interest to intraday or execution trading strategies:
-        \begin{itemize}
-        \item \textbf{Number of trades:} A proxy for the activity level of an instrument, and how continuous it is (instruments with a low number of trades are harder to execute and can be more volatile). 
-        
-        \item \textbf{Number and frequency of quote updates:} Similar proxy for the activity level.
-        
-        \item \textbf{Top of book size:} A proxy for liquidity of the instrument (larger top of book size make it possible to trade larger order size quasi immediately if needed).
-        
-        \item \textbf{Depth of book (price and size):} Similar proxy for liquidity.
-        
-        \item \textbf{Spread size (average, median, time weighted average):} This provides a proxy for cost of trading. A parametrized distribution of spread size can be used to identify cheap or expensive intraday trading opportunities.
-        
-        \item \textbf{Trade size (average, median):} Similar to spread size, trade sizes and their distribution are useful to identify intraday liquidity opportunities when looking at the volume available in the order book.
-        
-        \item \textbf{Ticking time (average, median):} The ticking time and its distribution is a representation of how often one should expect changes in the order book first level. This is particularly helpful for execution algorithms for which the frequency of updates (adding/canceling child orders, reevaluating decisions, etc.) should be commensurate with the characteristics of the traded instrument.
-        
-        These daily level distribution of microstructure variable can be used as start of day estimates in trading algorithms and be updated intraday as additional data flows in through bayesian update.
-        \end{itemize}
-
-
-Finally, the last group of daily data can be derived from the previous two groups through aggregation but is usually stored pre-computed in order to save time during the research phase (e.g. X-day trailing data), or to be used as normalizing values (e.g. size as a percentage of ADV, spread in relation to long-term average, \dots). Some common examples would be:
-        \begin{itemize}
-        \item $X$-day Average Daily Volume (ADV) / Average auction volume
-        \item $X$-day volatility (Close-to-close, Open-to-close, etc.)
-        \item Beta w.r.t. index or sector (plain beta, or asymmetric up-days/down-days beta)
-        \item Correlation matrix
-        \end{itemize}
-As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.).
-
-
-
-% Bin Data
-\subsection{Bin Data} 
-The first natural extension to daily data sets is a discretization of the day into bins ranging from a few seconds to 30 minutes. The features collected are comparable to the ones relevant for daily datasets (period volume, open, high, low, close, VWAP, spread, etc.), but computed at higher frequency. It is worth mentioning that minute bar data actually underpins the vast majority of microstructure models used in the electronic execution space. Volume and spread profiles, for instance, are rarely built with a granularity finer than one minute to prevent introducing excess noise due to market friction.
-
-
-These minute bar datasets are also quite popular for the backtesting of low-to-medium frequency trading strategies targeting intraday alpha (short duration market neutral long-short baskets, momentum and mean-reversion strategies). The main benefit they provide is a significant dimension reduction compared to raw market data (390 rows per stock per day in the U.S. compared to hundreds of thousands or millions for raw data), which allows researchers to perform rapid and efficient backtesting as they search for alpha. However, increasing data frequency from daily data to intraday minute bars also present challenges. In particular, relationships that appears to be stable using close-to-close values become much noisier as granularity increases and signals become harder to extract (e.g., drop in correlation between assets, pricing inefficiency moves due to sudden liquidity demand, etc.). Similarly, less liquid assets with a low trade frequency might not have any trading activity for shorter durations, resulting in empty bins that need to be handled carefully when modeling, or requiring the creation of variable bin sizes.
 
 
 
 % Raw Market Data
-\subsection{Raw Market Data} 
+\subsection{Market Data} 
 While historically a large swath of modeling was carried out on daily data or minute bar datasets, the past fifteen years have seen a significant rise in the usage raw market data in an attempt to extract as much information as possible, and act on it before the opportunity (or market inefficiency) dissipates.
 
 
@@ -850,7 +749,119 @@ Once modeled, these behaviors can, in turn, be employed to design more sophistic
         \end{itemize}
 
 
-As illustrated by the diversity and granularity of information available to traders, markets mechanics have grown ever more complex over time, and a great deal of peculiarities (in particular at the reference data level) need to be accounted for in order to design robust and well performing strategies. The proverbial devil is in the details when in comes to quantitative trading but while it might be tempting to go straight to the most granular source of data, in practice---with the exception of truly high frequency strategies---most practitioners build their algorithmic trading strategies relying essentially on binned data. This simplifies the data collection and handling processes and also greatly reduces the dimension of the datasets so one can focus more on modeling rather than data wrangling. Most of the models and techniques described in subsequent chapters a suited to daily or binned data.
+As illustrated by the diversity and granularity of information available to traders, markets mechanics have grown ever more complex over time, and a great deal of peculiarities (in particular at the reference data level) need to be accounted for in order to design robust and well performing strategies. The proverbial devil is in the details when in comes to quantitative trading but while it might be tempting to go straight to the most granular source of data, in practice---with the exception of truly high frequency strategies---most practitioners build their algorithmic trading strategies relying essentially on binned data. This simplifies the data collection and handling processes and also greatly reduces the dimension of the datasets so one can focus more on modeling rather than data wrangling. Most of the models and techniques described in subsequent chapters are suited to daily or binned data.
+
+% Market Data Derived Statistics
+\subsection{Market Data Derived Statistics}
+
+Most Quantitative strategies even the higher frequency that leverage more and more granular data,leverage derived statistics both at the daily level and binned data. Here we give a list of the most common ones used by practitioners and researchers alike.\\
+
+
+\noindent\textbf{Daily Statistics}\\
+The first group represents the overall trading activity in the instrument: 
+
+\begin{itemize}
+\item \emph{High, Low, Close (OHLC) and Previous Close Price:} The OHLC provides a good indication of the trading activity as well as the intraday volatility experienced by the instrument. The distance traveled between the lowest and highest point of the day usually gives a better indication of market sentiment than the simple close-to-close return. Keeping the previous close value as part of the same time series is also a good way to improve computation efficiency by not having make an additional database query to compute intraday return and overnight gap. The previous close needs, however, to be properly adjusted for corporate actions and dividends. 
+
+
+\item \emph{Last trade before close (Price/Size/Time):} It is useful in determining how much the close price might have jumped in the final moments of trading, and consequently, how stable a reference value it might be for the next day.
+
+
+\item \emph{Volume:} It is another valuable source of trading activity indication, in particular when the level jumps from longer term average. It is also worth collecting the breakdown between lit and dark volume, in particular for execution strategies.
+
+
+\item \emph{Auctions volume:} Depending on the exchange, there can be multiple auctions in a day (Open, Close, Morning Close and Afternoon Open - for markets with a lunch break -, as well as adhoc liquidity or intraday auctions). Owing to their liquidity aggregation nature, they often time can be considered as a valuable price discovery event when significant volume prints.
+
+
+\item \emph{VWAP:} Similar to the OHLC, the intraday VWAP price gives a good indication of the trading activity on the day. It is not uncommon to build trading strategies using VWAP time series instead of just close-to-close prices. The main advantage being that VWAP prices represent a value over the course of the whole day and, as such, for larger orders are easier to achieve through algorithmic execution than a single print.
+
+
+\item \emph{Short Interest / days-to-cover / utilization:} This dataset is a good proxy for investors positioning. The short pressure might be an indication of upcoming short term moves: a large short interest usually indicates a bearish view from institutional investors. Similarly, the utilization level of available securities to borrow (in order to short) gives an indication of how much room is left for further shorting (when securities become ``Hard to Borrow'', the cost of shorting becomes significantly higher requiring short seller to have strong enough beliefs in the price direction in the short term. Finally, days-to-cover data is also valuable to assess the magnitude of a potential short squeeze. If short sellers need to unwind their positions, how much volume does this represent as a fraction of available daily liquidity. The larger the value, the larger the potential sudden upswing on heavily shorted securities.
+
+
+\item \emph{Futures data:} Futures markets provide additional insight into the activity of large investors through open interest data that can be useful to develop alpha strategies. Additionally, financial futures offer arbitrage opportunities if their basis exhibits mispricing compared to one's dividend estimates. As such, recording the basis of futures contracts is worthwhile even for strategies that don't particularly target futures.
+
+
+\item \emph{Index-level data:} This is also a valuable dataset to collect as a source of relative measures for instrument specific features (Index OHLC, Volatility, \dots). In particular for dispersion strategies, normalized features help identify individual instruments from their benchmark. 
+
+
+\item \emph{Options data:} The derivatives market is a good source of information about the positioning of traders (through open interest and Greeks such as Gamma and Vega) as well as how the broader market is pricing an instrument (through implied volatility for instance).
+
+
+\item \emph{Asset Class Specific:} There is a wealth of cross-asset information available when building strategies, in particular in Fixed Income, FX, and Credit. Among the basic ones, we would note:
+        \begin{itemize}
+        \item Yield / benchmark rates (repo, 2y, 10y, 30y)
+        \item CDS Spreads
+        \item US Dollar Index
+        \end{itemize}
+\end{itemize}
+
+
+The second group of daily data represents granular intraday microstructure activity and is mostly of interest to intraday or execution trading strategies:
+        \begin{itemize}
+        \item \emph{Number of trades:} A proxy for the activity level of an instrument, and how continuous it is (instruments with a low number of trades are harder to execute and can be more volatile). 
+        
+        \item \emph{Number and frequency of quote updates:} Similar proxy for the activity level.
+        
+        \item \emph{Top of book size:} A proxy for liquidity of the instrument (larger top of book size make it possible to trade larger order size quasi immediately if needed).
+        
+        \item \emph{Depth of book (price and size):} Similar proxy for liquidity.
+        
+        \item \emph{Spread size (average, median, time weighted average):} This provides a proxy for cost of trading. A parametrized distribution of spread size can be used to identify cheap or expensive intraday trading opportunities.
+        
+        \item \emph{Trade size (average, median):} Similar to spread size, trade sizes and their distribution are useful to identify intraday liquidity opportunities when looking at the volume available in the order book.
+        
+        \item \emph{Ticking time (average, median):} The ticking time and its distribution is a representation of how often one should expect changes in the order book first level. This is particularly helpful for execution algorithms for which the frequency of updates (adding/canceling child orders, reevaluating decisions, etc.) should be commensurate with the characteristics of the traded instrument.
+        
+        These daily level distribution of microstructure variable can be used as start of day estimates in trading algorithms and be updated intraday as additional data flows in through bayesian update.
+        \end{itemize}
+
+
+Finally, the last group of daily data can be derived from the previous two groups through aggregation but is usually stored pre-computed in order to save time during the research phase (e.g. X-day trailing data), or to be used as normalizing values (e.g. size as a percentage of ADV, spread in relation to long-term average, \dots). Some common examples would be:
+        \begin{itemize}
+        \item $X$-day Average Daily Volume (ADV) / Average auction volume
+        \item $X$-day volatility (Close-to-close, Open-to-close, etc.)
+        \item Beta w.r.t. index or sector (plain beta, or asymmetric up-days/down-days beta)
+        \item Correlation matrix
+        \end{itemize}
+As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.).\\
+
+\noindent\textbf{Binned Data}\\
+
+The first natural extension to daily data sets is a discretization of the day into bins ranging from a few seconds to 30 minutes. The features collected are comparable to the ones relevant for daily datasets (period volume, open, high, low, close, VWAP, spread, etc.), but computed at higher frequency. It is worth mentioning that minute bar data actually underpins the vast majority of microstructure models used in the electronic execution space. Volume and spread profiles, for instance, are rarely built with a granularity finer than one minute to prevent introducing excess noise due to market friction.
+
+
+These minute bar datasets are also quite popular for the backtesting of low-to-medium frequency trading strategies targeting intraday alpha (short duration market neutral long-short baskets, momentum and mean-reversion strategies). The main benefit they provide is a significant dimension reduction compared to raw market data (390 rows per stock per day in the U.S. compared to hundreds of thousands or millions for raw data), which allows researchers to perform rapid and efficient backtesting as they search for alpha. However, increasing data frequency from daily data to intraday minute bars also present challenges. In particular, relationships that appears to be stable using close-to-close values become much noisier as granularity increases and signals become harder to extract (e.g., drop in correlation between assets, pricing inefficiency moves due to sudden liquidity demand, etc.). Similarly, less liquid assets with a low trade frequency might not have any trading activity for shorter durations, resulting in empty bins that need to be handled carefully when modeling, or requiring the creation of variable bin sizes.
+
+
+% Fundamental Data
+\subsection{Fundamental Data and other Datasets}
+
+A very large number of quantitative investment strategies are still based on fundamental data, and consequently countless research papers are available to the interested reader describing examples of usages. Here we will only describe the main classes of existing fundamental data:
+
+
+\begin{itemize}
+\item \textbf{Key ratios:} EPS (Earnings Per Share), P/E (Price-to-Earning), P/B (Price-to-Book Value), \dots These metrics represent a normalized view of the financials of companies allowing for easier cross-sectional comparisons and ranking over time.
+
+
+\item \textbf{Analyst recommendations:} Research analysts at Sell Side institutions spend a great deal of resources analyzing companies they cover in order to provide investment recommendations (usually in the form of a Buy/Hold/Sell rating accompanied by a price target). While individual recommendations might prove noisy, the aggregate values across a large number of institutions can be interpreted as a market consensus for the valuation of a given stock, and material changes in consensus can have a direct impact on price.
+
+
+\item \textbf{Earnings data:} Similarly research analysts also provide quarterly earning estimates that can be used as an indication of the performance of a stock before the actual value gets published by the company. Here, too, consensus values tend to play a larger role, in particular when the difference between the forecast consensus and the realized value is large (known as earning surprise), as the stock might then experience outsized returns in the following days. Thus, collecting analysts' forecasts as well as realized values can be a valuable source of information in the design of strategies.
+
+
+\item \textbf{Holders:} In some markets, large institutional investors are required to disclose their holdings on a regular basis. For instance, in the U.S., institutional investment manager with over \$100 million in assets must report quarterly their holdings to the SEC using Form 13F. The forms are then publicly available via the SEC's EDGAR database. Additionally, shareholders might be required to disclose their holdings once they pass certain ownership thresholds\footnote{In the U.S., Form 13D must be filed with the SEC within 10 days by anyone who acquires beneficial ownership of more than 5\% of any class of publicly traded securities in a public company}. Sudden changes in such ownership might indicate changes in sentiment by sophisticated investor and can have a significant impact on stock performance.
+
+
+\item \textbf{Insiders Purchase/Sale:} In some markets, companies directors are required by law to disclose their holdings of the company stock as well as any increase or decrease of such holdings\footnote{In the U.S., officers and directors of publicly traded companies are required to disclose their initial holdings in the company by filing Form 3 with the SEC, as well as Form 4 within 2 days of any subsequent changes. The forms are then publicly available via the SEC's EDGAR database}. This is thought to be an indicator of future stock price moves from the group of people who has access to the best possible information about the company and the current environment in which it evolves.
+
+
+\item \textbf{Credit Ratings:} Most companies issue both stocks and bonds to finance their operations. Bonds credit ratings and their changes over time provide additional insight into the health of a company and are worth leveraging. In particular, credit downgrades resulting in higher funding costs in the future generally have a negative impact on equity prices.
+
+
+\item \textbf{And much, much more:} Recent years have seen the emergence of a wide variety of alternative data sets that are available to researchers and practitioners alike\footnote{For instance, \url{www.orbitalinsight.com} offers daily retail traffic analytics, derived from satellite imagery analysis monitoring over 260,000 parking lots, as well as estimates of oil inventories through satellite monitoring of oil storage facilities.}. While impossible to make a comprehensive list of all the ones that are available, they can generally be classified based on their characteristics: frequency of publication, structured or unstructured, and velocity of dissemination. The value of such data depends on the objectives and resources of the user (natural language processing or image recognition for unstructured data require significant time and efforts), but also---and maybe more importantly---on the uniqueness of the dataset. The more investors get access to it, the harder it becomes to extract meaningful alpha from it.
+\end{itemize}
+
 
 
 
@@ -868,9 +879,12 @@ As illustrated by the diversity and granularity of information available to trad
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
+\todo{The below paragraph is orphan. We talk about it a little in the exec strategy section and here is way premature to discuss. Shall we remove?}
 
 In order to develop an execution strategy achieving the objective(s) prescribed by the given benchmark(s), the execution problem can be modeled as a multi-step Markov decision process. However, the dimensionality of the problem explodes rapidly given the quasi infinite size of the state space (to represent the market), the large number of steps (even simplifying to 1s resolution, it results in over 20,000 steps for U.S. equities - compared, for instance, to an average of only 40 moves per chess game\footnote{Chessgames database: www.chessgames.com/chessstats.html}) and also the large size of the action space. To address this complexity, most execution algorithms decompose the problem into different timeframe decisions such as scheduling, placement and routing. 
 
+
+\todo{This is a valuable section but I think it would need work to really organize a systematic review of market microstructure academic literature. Fit more in Raja's court. If we don't have time I would be for dropping it}
 \section{Market Microstructure: Academic Perspective}
 \subsection{Liquidity and Market Making}
 
