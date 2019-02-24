@@ -274,50 +274,17 @@ While the electronification of trading first took place in the equity space, rec
 \begin{enumerate}
 \item[\textbf{(a)}] \textbf{Options:} 
 
-\todo{NOTE: Work in progress, still needs completion}
-
 Historically, equity options markets have presented unique challenges to the successful deployment of sophisticated algorithmic trading strategies. First, options markets are significantly more fragmented than their equities counterparts, not just in space (i.e. across multiple exchanges) but also in terms of instruments. For one equity instrument representing a company (or for one index), there is a grid of available options over multiple maturities and multiple strike prices.  
 
-<<<<<<< HEAD
-wikipedia def:
-The Options Price Reporting Authority (OPRA) provides, through market data vendors, last sale information and current options quotations from a committee of participant exchanges designated as the Options Price Reporting Authority. OPRA is a national market system plan that governs the process by which options market data are collected from participant exchanges, consolidated, and disseminated.
-
-OPRA disseminates last sale reports and quotes. OPRA also disseminates certain other types of information with respect to the trading of options on the markets of the OPRA Participants, such as the number of options contracts traded, open interest and end of day summaries. \\
-
-message rates: 4Q2018 source \url{https://www.opradata.com/}
-=======
 Similarly to equities, options market data is disseminated in real time by the Options Price Reporting Authority (OPRA) which provides last sale reports and quotations from participant exchanges.\footnote{Options participant exchanges in OPRA: BOX Exchange, Cboe exchanges (BZX Options Exchange, C2 Options Exchange, EDGX Options Exchange, Options Exchange), Miami International Securities Exchange, MIAX PEARL, Nasdaq exchanges (BX, GEMX, ISE, MRX, PHLX, The Nasdaq Stock Market), NYSE exchanges (American, Arca).} OPRA is a national market system plan that governs the process by which options market data are collected from participant exchanges, consolidated, and disseminated. It also publishes other types of information with respect to the trading of options such as the number of options contracts traded, open interest and end of day summaries. 
 
 One of the key challenges that remains in the options space is the amount of data generated on a daily basis, and the significant bursts that happen when underlying equity markets move sharply and force a rapid adjustment of a miriad of correlated instruments. As an example, the OPRA message rates statistics for the fourth quarter 2018\footnote{Source: \url{https://www.opradata.com/}} were: \\
->>>>>>> b5f427540533244044931b717b6d53994ce3f126
 
 Peak Messages Per Second (millions): 19.8
 
 Peak Messages Per 100 Milliseconds (millions): 4.2
 
-<<<<<<< HEAD
-Peak Transactions Per Day (billions): 45.9\\
-
-Options participant exchanges in OPRA; 
-BOX Exchange
-Cboe BZX Options Exchange
-Cboe C2 Options Exchange
-Cboe EDGX Options Exchange
-Cboe Options Exchange
-Miami International Securities Exchange
-MIAX PEARL
-Nasdaq BX
-Nasdaq GEMX
-Nasdaq ISE
-Nasdaq MRX
-Nasdaq PHLX
-The Nasdaq Stock Market
-NYSE American
-NYSE Arca \\
-
-=======
 Peak Transactions Per Day (billions): 45.9 \\
->>>>>>> b5f427540533244044931b717b6d53994ce3f126
 
 Automated options market making strategies were the first ones to be deployed, and we are now witnessing the emergence of execution strategies in the option space. for instance targeting certain volatility levels (instead of price-based benchmarks). Given the natural relationship that exists with the underlying assets, options algorithmic trading strategies also require the implementation of automated delta and gamma hedging execution strategies.
 
