@@ -130,7 +130,7 @@ The square-root formula as stated in \eqref{eqn:spreadcost} refers only to the s
 	\begin{equation} \label{eqn:ptalpha}
 	p_t - p_0 = \alpha \cdot \left( {\frac{t}{T}} \right)^{2/3},
 	\end{equation}
-where $T$ is the duration for the execution of the parent-order. Immediately after completion of a parent-order, the price begins to revert. Models used in industry are mostly functions of the determinants identified above in Equations~\ref{eqn:spreadcost} and \ref{eqn:ptalpha}.
+where $T$ is the duration for the execution of the parent-order. Immediately after completion of a parent-order, the price begins to revert. Models used in industry are mostly functions of the determinants identified above in Equations~\eqref{eqn:spreadcost} and \eqref{eqn:ptalpha}.
 
 
 The shrewd reader will notice immediately that something is amiss. We have discussed that MI and thus TCs are highly dependent on the approach used for trading but the standard model does not seem to incorporate anything that accounts for the type of trading strategy. One important reason for this has to do with data availability. To calibrate such a model, we need data that will allow us to calibrate the average effect of the use of a different strategy to trade the same amount of stock over the same amount of time. \todo{To Be Discussed}
@@ -200,7 +200,7 @@ Independent of the market microstructure responsible for MI, two central concern
 Numerous stylized MI models offer some insights into possible shapes of the permanent and temporary impact functions. Some of these models focus only on the permanent impact, while some models also attempt to capture the effect of temporary impact. \\
 
 
-\noindent \textbf{Equilibrium Permanent Impact Models:} Models of one class, including Kyle's (1985)~\cite{kyle1985} and Hubberman and Stanzl's (2004)~\cite{huberstan}, rest on the efficient market hypothesis positing that all available information gets imbounded in prices. These models use a time-independent framework to establish an equilibrium price after a trade is executed. This means that trades are assumed to have only a permanent price impact (Huberman and Stanzl (2004)~\cite[p.1260]{huberstan}).
+\noindent \textbf{Equilibrium Permanent Impact Models:} Models of one class, including Kyle's (1985)~\cite{kyle1985} and Hubberman and Stanzl's (2004)~\cite{huberstan}, rest on the efficient market hypothesis positing that all available information gets impounded in prices. These models use a time-independent framework to establish an equilibrium price after a trade is executed. This means that trades are assumed to have only a permanent price impact (Huberman and Stanzl (2004)~\cite[p.1260]{huberstan}).
 
 
 Under these settings, Huberman and Stanzl (2004)~\cite{huberstan} show that, if no quasi-arbitrage possibilities exist (to ensure viable markets), the permanent impact must be linear in the trade quantity and is symmetric between buys and sells. Linearity in trade size has been established by Kyle (1985)~\cite{kyle1985} as well. In fact, Huberman and Stanzl (2004)~\cite{huberstan} add that ``Nonlinear, time-dependent price-update functions may assume ``chaotic'' shapes without giving rise to price manipulation. Only when additional assumptions are made on the shapes of these functions does the analysis become meaningful.''
@@ -343,7 +343,11 @@ At the higher frequency levels other determinants to consider are:
 	\end{itemize}
 
 
-\noindent\textbf{Select Empirical Studies:} While there is some discussion about the theoretical models for market impact, published studies based on large scale data are somewhat rare especially when it comes to models useful for pre-trade cost estimation, Almgren et al (2005)~\cite{athl} took US stock trade orders processed by Citigroup for Dec 2001 to June 2003 and estimated a model of the market impact as given in Table~\ref{tab:costimpact}. For two select stocks, IBM and DB, the power law model for market impact are estimated. The temporary impact is defined as $\widetilde{p}_k - p_{k-1}$, for $k$th execution. The model depends on relative size, inverse turnover ratio, which is the number of the shares outstanding to average daily volume and the volatility.
+
+% Select Empirical Studies
+\subsection{Select Empirical Studies}
+
+While there is some discussion about the theoretical models for market impact, published studies based on large scale data are somewhat rare especially when it comes to models useful for pre-trade cost estimation, Almgren et al (2005)~\cite{athl} took US stock trade orders processed by Citigroup for Dec 2001 to June 2003 and estimated a model of the market impact as given in Table~\ref{tab:costimpact}. For two select stocks, IBM and DB, the power law model for market impact are estimated. The temporary impact is defined as $\widetilde{p}_k - p_{k-1}$, for $k$th execution. The model depends on relative size, inverse turnover ratio, which is the number of the shares outstanding to average daily volume and the volatility.
 
 
 While the square root formula in \eqref{eqn:spreadcost} is quite robust and holds even beyond equity markets, recent empirical studies confirm the need for more general power law functions; the quotient of RS varies depending on other factors that get included in the model (refer to the estimates in Table~\ref{tab:costimpact} for RS). Zarinelli, Treccani, Farmer and Lillo (2015)~\cite{zar} show that logarithmic functional form fits the data better for the large order data that they consider. 
