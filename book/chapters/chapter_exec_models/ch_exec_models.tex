@@ -682,14 +682,14 @@ Various extensions of the basic model \eqref{eqn:bigpk} are considered by Almgre
 	
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/opt_traj.png}
+	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/opt_traj1.png}
 	\caption{Optimal Trajectories for two securities; ($A: \lambda= 2 \times 10^{-6}$; $B: \lambda=0$; $C= -5 \times 10^{-8}$; $B$ is the na\"ive strategy). \label{fig:7first}}
 	\end{figure}
 	\begin{figure}[!ht] 
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/temp2.png}
+	\includegraphics[width=\textwidth]{chapters/chapter_exec_models/figures/opt_traj2.png}
 	\caption{Projected Execution Schedules \label{fig:7second}}
-	\end{figure} \todo{nonscanned version?}
+	\end{figure}
  
 
 Some questions remain: what is the link between market impact and the dynamics of limit order book, is the impact function linear empirically, etc.. The effect of a short term drift in prices and the serial correlation in the errors which is observed in high frequency etc can be incorporated easily in the model \eqref{eqn:morepk}. Lorenz and Almgren (2011)~\cite{lovenz2011} provide a Bayesian approach to the optimization problem. While the methodology yields elegant solutions, empirical use of these results require a close monitoring of order book dynamics as the changes in demand and supply sides can be quite rapid. The general behavior of this adaptive strategy is aggressive; it depends on the prediction of short term price change; generally, if price goes up sell faster. 
