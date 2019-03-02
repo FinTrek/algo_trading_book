@@ -375,9 +375,9 @@ and $\rho(s)= 0$ for $s > q$. The prominent feature of the ACF of an MA($q$) pro
 \begin{ex}[Moving Average Model of Order 1 (MA(1))] \label{ex:movingorder1}
 The simplest example of a moving average process is that of order one, MA(1), given by
 	\[
-	Y_t = \mu + \epsilon_t - \theta \epsilon_{t-1}= \mu + (1 - \theta B) \epsilon_t.
+	Y_t = \mu + \epsilon_t - \theta \epsilon_{t-1}= \mu + (1 - \theta B)\, \epsilon_t.
 	 \]
-Its autocovariances are $\gamma(0)= \sigma^2 (1 + \theta^2)$, $\gamma(1)= -\theta\, \sigma^2$, and $\gamma(s)= 0$ for $s > 1$, and hence the ACF is $\rho(1)= -\theta / (1+\theta^2)$, $\rho(s)= 0$, $s > 1$. It is easy to show that the largest possible value of $\left| \rho(1) \right|= \left| \theta \right| / (1+\theta^2)$ for an  MA(1) process is $\rho(1)= \pm 0.5$ which occurs when $\theta = \pm 1$. This illustrates that in general there are further restrictions on the autocorrelation function $\rho(s)$ of an MA($q$)  process in addition to $\rho(s)= 0$, $s > q$. \xqed
+Its autocovariances are $\gamma(0)= \sigma^2 (1 + \theta^2), \gamma(1)= -\theta\, \sigma^2$, and $\gamma(s)= 0$ for $s > 1$, and hence the ACF is $\rho(1)= -\theta / (1+\theta^2), \rho(s)= 0, s > 1$. It is easy to show that the largest possible value of $\left| \rho(1) \right|= \left| \theta \right| / (1+\theta^2)$ for an  MA(1) process is $\rho(1)= \pm 0.5$ which occurs when $\theta = \pm 1$. This illustrates that in general there are further restrictions on the autocorrelation function $\rho(s)$ of an MA($q$)  process in addition to $\rho(s)= 0, s > q$~.~\xqed
 \end{ex}
     
 
@@ -582,17 +582,17 @@ The sample ACF and PACF of the stationary series are then compared against featu
 \end{enumerate}
 
 
-Although the sample autocorrelation and partial autocorrelation functions are very useful in model identification, in some cases involving mixed ARMA models where they will not provide unambiguous results. There has been considerable interest in developing additional tools for use at the model identification stage. Interested readers can refer to standard texts in time series for more in-depth discussion such as Shumway and Stoffer (2011)~\cite{shumway2011arima}. \\
+Although the sample autocorrelation and partial autocorrelation functions are very useful in model identification, in some cases involving mixed ARMA models where they will not provide unambiguous results. There has been considerable interest in developing additional tools for use at the model identification stage. Interested readers can refer to standard texts in time series for more in-depth discussion such as Shumway and Stoffer (2011)~\cite{shumway2011arima}.
 
 
-\noindent\emph{Use of model selection criteria}. Another approach to model selection is the use of information criteria such as AIC proposed by Akaike (1974)~\cite{akaike74} or the BIC of Schwarz (1978)~\cite{sch78}. In the implementation of this approach, a range of potential models is estimated and for each, a criterion such as AIC or BIC (normalized by sample size $T$), given by
+One approach to selecting among competing models is the use of information criteria such as AIC proposed by Akaike (1974)~\cite{akaike74} or the BIC of Schwarz (1978)~\cite{sch78}. They are
 	\begin{equation} \label{eqn:aicbic}
 	\begin{split}
 	\text{AIC}_{p,q}&= \log \hat{\sigma}_\varepsilon^2 + n^* \left( \dfrac{2}{T} \right) \\
-	\text{BIC}_{p,q}&=\log\hat{\sigma}_\varepsilon^2 + n^* \left( \dfrac{\log T}{T} \right)
+	\text{BIC}_{p,q}&=\log\hat{\sigma}_\varepsilon^2 + n^* \left( \dfrac{\log T}{T} \right),
 	\end{split}
 	\end{equation}
-is evaluated, where $\hat{\sigma}_\varepsilon^2$ is the estimated model error variance, and $n^*= p + q + 1$ denote the number of parameters estimated in the model, including the constant term. In the above criteria, the first term essentially corresponds to minus $2/T$ times the log of the maximized likelihood, while the second term is a ``penalty factor'' for inclusion of additional parameters in the model. In the information criteria approach, models which yield a minimum value for the criterion are to be preferred, as these criteria penalize for overfitting. \\
+where $\hat{\sigma}_\varepsilon^2$ is the estimated model error variance, and $n^*= p + q + 1$ denote the number of parameters estimated in the model, including the constant term. The first term in the above equation is essentially corresponds to minus $2/T$ times the log of the maximized likelihood, while the second term acts as a ``penalty factor'' for the additional parameters used in the model. In this approach, models which yield a minimum value for the criterion are to be preferred, as these criteria penalize for overfitting. \\
 
 
 {\noindent\bfseries\large Estimation of Model Parameters} \\

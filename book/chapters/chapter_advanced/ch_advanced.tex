@@ -159,7 +159,7 @@ The basic model has been extended in the literature to cover multiple regimes an
 where $\epsilon_t$'s are independent $\sim N(0,\sigma_{s_t}^2)$. Using the data on excess S\&P 500 returns, FX returns, etc., it is identified that there are volatility regimes, but no level shifts.
 
 
-Hamilton (1990)~\cite{90ham} proposes using EM (Expectation-Maximization) algorithm (Dempster, Laird and Rubin (1977)~\cite{dempster}) to obtain the maximum likelihood estimate, instead of recursive filter approach (see Hamilton (1989)~\cite{89ham}) to optimize the loglihood of \eqref{eqn:predden}, updated with $y_t$. Note by Bayes' Theorem
+Hamilton (1990)~\cite{90ham} proposes using EM (Expectation-Maximization) algorithm (Dempster, Laird and Rubin (1977)~\cite{dempster}) to obtain the maximum likelihood estimate, instead of recursive filter approach (see Hamilton (1989)~\cite{89ham}) to optimize the log-likelihood of \eqref{eqn:predden}, updated with $y_t$. Note by Bayes' Theorem
 	\begin{equation} \label{eqn:bayes}
 	\prob(s_t= j \;|\; F_t) = \dfrac{\prob(s_t= j \;|\; F_{t-1}) \, f(y_t\;|\; s_t=j, F_{t-1})}{f(y_t \;|\; F_{t-1})}
 	\end{equation}
@@ -286,13 +286,13 @@ To illustrate, recall Figure~\ref{fig:tradeactline}, on trading activities in Se
 	\centering	
 	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/Sec2-10Fig6.png}
 	\caption{Empirical Survivor Function and Serial Correlation plots. \label{fig:survivor}}
-	\end{figure}\todo{Nonscanned versions of the image?}
+	\end{figure}
 	
 	\begin{figure}[!ht]
 	\centering
 	 \includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/Sec2-10Fig7.png}
-	\caption{Autocorrelation Function for duration. \label{fig:duration}}
-	\end{figure} \todo{Nonscanned version of image?}
+	\caption{Autocorrelation Function for duration (with 5\% significance limits for the autocorrelations). \label{fig:duration}}
+	\end{figure}
  
  The baseline distribution for the durations is exponential resulting from Poisson arrivals for a specified interval that assume a constant rate. It is suggested to plot $\log(1 - \frac{i}{n_0+1})$ against $d_{(i)}$, where $d_{(i)}$ results from the ordered durations, $d_{(1)} \leq d_{(2)} \leq \cdots \leq d_{(n_0)}$ calculated between successive $n_0 + 1$ occurrences. Departures from linearity would indicate that the exponential distribution may not hold. In addition it is also suggested to plot $d_{i+1}$ against $d_i$ to check on the dependance of durations. Cox and Lewis (1966)~\cite[p.14]{cox1966} state that, ``It is not clear how correlation in such data should be measured and tested; in particular it is not obvious that the ordinary correlation coefficient will be the most suitable measure with such data.'' Engle and Russell (1998)~\cite{engle1998} show how the dependence in the duration data can be explicitly modeled in the context of high frequency transaction data. We illustrate this with the trading data for Microsoft (MSFT) for the month of January in the year 2013. This graph (Figure~\ref{fig:survivor}) clearly indicates that the durations do not follow an exponential distribution and do exhibit some dependence. This is confirmed by the autocorrelation function for durations (Figure~\ref{fig:duration}).
 
@@ -504,7 +504,7 @@ The estimator suggested in Yang and Zhang~\cite{yangzhang2000} takes the form,
 	\begin{equation} \label{eqn:yang2000}
 	V_{\text{YZ}}= V_0 + k V_c + (1-k)V_{\text{RS}}
 	\end{equation}
-where $V_0= \frac{1}{n-1} \sum_{i=1}^n (o_i - \overline{o})^2$ and $V_c= \frac{1}{n-1} \sum_{i=1}^n (c_i - \overline{c})^2$, with the optimal choise of $k= \frac{0.34}{1.34 + (n+1)(n-1)}$. \\
+where $V_0= \frac{1}{n-1} \sum_{i=1}^n (o_i - \overline{o})^2$ and $V_c= \frac{1}{n-1} \sum_{i=1}^n (c_i - \overline{c})^2$, with the optimal choice of $k= \frac{0.34}{1.34 + (n+1)(n-1)}$. \\
 
 
 \noindent\textbf{Applications:} It is well-known the standard stochastic volatility models used in finance are difficult to estimate due to their non-Gaussian nature. The proxies, the absolute or squared returns, because of the measurement errors tend to be somewhat inefficient. Alizadeh, Brandt and Diebold (2002)~\cite{diebold} argue that range as a proxy for volatility is superior as it is relatively free of the two problems associated with other measures. In the estimator \eqref{eqn:compositeest}, the second term which is essentially range-based is bound to be always positive. It can also be shown that the standard deviation of the log range is nearly one-fourth the standard deviation of the log absolute return. The range is also more robust to microstructure effects mostly due to bid-ask bounce compared to popular realized volatility measure \eqref{eqn:2RV}. Martens and Dijk (2007)~\cite{dijk} define realized range over an interval of time as,
