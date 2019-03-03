@@ -131,12 +131,35 @@ In the next section, we will summarize studies that use the information provided
 
 
 We have reviewed studies that have clearly documented the influence of news on stock market behavior. In this section, we will outline first the key methodologies used in relating the data on the inflow of news to key characteristics of stock trading and the stock performance indicators. A simple framework that we will follow is from Gloss-Klussmann and Hautsch (2011)~\cite{klub} and is depicted in Figure~\ref{fig:intervals}:
-
-	\begin{figure*}[!ht]
+	
+	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=4in]{chapters/chapter_news_an/figures/ch4sec4intervals.png} 
-	\caption{News Interval.\label{fig:intervals}}
-	\end{figure*}
+	\begin{tikzpicture}
+	\draw[very thick,->] (0,0) -- (10,0);
+	\node at (11,0) {\textbf{Time}};
+	\node at (0.5,-0.3) {$\cdots$};
+	\node at (9.5,-0.3) {$\cdots$};
+	\foreach \i in {1,...,9}
+	{	
+		\draw[very thick] (\i,-0.2) -- (\i,0.2);
+		};
+	\foreach \i in {-4,...,3}
+	{
+	
+		\node at (\i+5.5,-0.3) {$\mathbf{I_{\i}}$};
+		}
+	\node at (11,-1) {\textbf{Stock}};
+	\node at (11,-1.4) {\textbf{Characteristics}};
+	\foreach \i in {-4,...,3}
+	{
+	
+		\node at (\i+5.5,-1) {$\mathbf{y_{\i}}$};
+		}
+	\draw[very thick,->] (5.5,0.2) -- (5.5,1);
+	\node at (5.5,1.2) {\textbf{News Interval}};
+	\end{tikzpicture}
+	\caption{News Intervals.\label{fig:intervals}}
+	\end{figure}
 
 The news arrival can generally be modeled as a point process but to remove any noisy friction in the data, both in the newsfront and in the stock price movement, it may be advisable to aggregate the information in short intervals. The stock characteristics can include the change in the price as well as volume, volatility, etc. during the interval. In addition to time aggregation, we also need to consider aggregation over different variables or dimensions of sentiment as in Baker and Wurgler (2006)~\cite{baker2006investor}. We describe these in two contexts below. \\
 
@@ -337,7 +360,7 @@ The sentiment data also can be used to predict the nature of earnings report. Th
 that adjusts for the baseline activities, here $B_{u_t}$ denotes the number of bullish tweets and $B_{e_t}$ denotes the number of bearish tweets. Defining the intraday return, $R_t= \ln(s_t^{\text{close}}) - \ln(s_t^{\text{open}})$, where $s_t$ refers to the stock price on a given time unit. Then forming, $y_t=(I_t^N,I_t^{TW},R_t)'$, VAR model that was discussed in Chapter 2 is used to identify the lead-lag relationships; here $I_t^N$ is the index for the news sentiment, such as Google search volume for relevant keywords and $I_t^{TW}$ refers to the index based on Twitter data. The VAR model provides a neat framework to consider other information such as market volume, market volatility, etc. that can be easily incorporated. 
 
 
-Thomson Reuters MarkerPsych Indices (TRMI): The TRMI are also based on news and social media that produce three key types of indicators: Emotional indicators, Macroeconomic metrics and the so called Buzz metrics. These are updated on a minute basis and covers various economic entities. The indices cover over fifty items and they are scored from $-1$ to 1 or from zero to 1. 
+Thomson Reuters MarkerPsych Indices (TRMI): The TRMI are also based on news and social media that produce three key types of indicators: Emotional indicators, Macroeconomic metrics and the so-called Buzz metrics. These are updated on a minute basis and covers various economic entities. The indices cover over fifty items and they are scored from $-1$ to 1 or from zero to 1. 
 
 
 We want to conclude this section by noting some recent research that further demonstrates the use of sentiment data in trading. First Constantinos, Donkas and Subrahmanyam (2013)~\cite{contdonksub13} establish a link between sentiment and momentum. The news diffuses through the actions of various `newswatchers' and creates momentum, which was attributed to mainly past price movements. Reactive trading gets corrected when momentum positions are reversed as the difference between fundamental information and the news becomes apparent. It is argued that those who follow news closely will under-react if the information contradicts their sentiment. This means that bad news among loser stocks will diffuse slowly where sentiment is optimistic. The sentiment measure that is used is the widely recognized conference Board's Consumer Confidence index. The central hypothesis that sentiment impacts momentum via cognitive dissonance is generally supported by the empirical analysis.

@@ -12,7 +12,7 @@ In this chapter, we want to discuss some advanced methods that are applicable in
 There has been much recent interest in the representation of ARIMA models in the state-space form, for purpose of forecasting, as well as for model specification and maximum likelihood estimation of parameters. This approach helps to update more easily the model coefficients as and when new data arrives. 
 
 
-The state-space models were initially developed by control systems engineers to measure a signal contaminated by noise. The signal at time ``$t$'' is taken to be a linear combination of variables, called state variables that form the so called state vector at time, $t$. The key property of the state vector is that it contains the minimum set of information from past and present data but the future behavior of the system is independent of the past value and depends only on the present values. Thus the state vector evolves according to the Markov property. The state equation is stated as,
+The state-space models were initially developed by control systems engineers to measure a signal contaminated by noise. The signal at time ``$t$'' is taken to be a linear combination of variables, called state variables that form the so-called state vector at time, $t$. The key property of the state vector is that it contains the minimum set of information from past and present data but the future behavior of the system is independent of the past value and depends only on the present values. Thus the state vector evolves according to the Markov property. The state equation is stated as,
 	\begin{equation} \label{eqn:2zt}
 	Z_t = \Phi_tZ_{t-1} + a_t
 	\end{equation}
@@ -313,7 +313,7 @@ There has been a great deal of interest in studying market microstructure to bet
 	\caption{Exchange hours. \label{fig:exchhours}}
 	\end{figure}
 
-High-frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price or quote etc. that may be associated with `$t_i$.' The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange are open. Standard econometric techniques are for data in discrete time intervals. Aggregating the high-frequency data to some fixed time interval will not capture the advantages of having access to detailed time-stamped transaction data. Even for some heavily traded stocks, if the intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
+high frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price or quote etc. that may be associated with `$t_i$.' The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange are open. Standard econometric techniques are for data in discrete time intervals. Aggregating the high frequency data to some fixed time interval will not capture the advantages of having access to detailed time-stamped transaction data. Even for some heavily traded stocks, if the intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
 
 
 \begin{itemize}
@@ -402,8 +402,8 @@ where $s_i$ is the size of the $i$th price change measured in ticks; other relev
 
 
 
-% Models for Multiple Assets: High-Frequency Context
-\subsection{Models for Multiple Assets: High-Frequency Context}
+% Models for Multiple Assets: high frequency Context
+\subsection{Models for Multiple Assets: high frequency Context}
 
 
 There is a considerable interest in extending the univariate duration models to multiple stocks or to multiple types of arrival processes. Because investment managers generally consider a portfolio of stocks rather than a single one, it is important for them to follow the transaction processes of several stocks simultaneously. Because of non-synchronous trading relating two stocks with different trading intensities on a common time scale is somewhat difficult. Engle and Lunde (2003)~\cite{englelunde} establish the following model for a bivariate point process for trades and quotes:
@@ -432,11 +432,11 @@ The estimation of the parameters are done through quasi maximum likelihood. Usin
 \section{Realized Volatility and Econometric Models}
 
 
-Estimating the volatility using the high-frequency data has received a great deal of attention lately. In the low frequency (daily) level some estimators based on select prices were presented in Chapter~3. Intra-day dynamics of volatility is of interest to traders and that is not fully captured by the stock price indicators sampled during the day. If higher frequency data are used to estimate volatility of lower frequency data, it is important to know the model for the return at the lower frequency. To illustrate this, we consider data observed at two time scales; although they are somewhat at low frequency level, the concept can be easily extended to high-frequency context. If $r_{t,i}$ is the $i$th day return in $t$th month, the $t$th month return assuming there `n' trading days, $r_t^m = \sum_{i=1}^n r_{t,i}$. Note that $\sigma_m^2 = \var(r_t^m \;|\; F_{t-1}) = \sum_{i=1}^n \var(r_{t,i} \;|\; F_{t-1}) + 2 \sum_{i<j} \cov(r_{t,i}, r_{t,j} \;|\; F_{t-1})$. If $r_{t,i}$ is white noise sequence, then
+Estimating the volatility using the high frequency data has received a great deal of attention lately. In the low frequency (daily) level some estimators based on select prices were presented in Chapter~3. Intra-day dynamics of volatility is of interest to traders and that is not fully captured by the stock price indicators sampled during the day. If higher frequency data are used to estimate volatility of lower frequency data, it is important to know the model for the return at the lower frequency. To illustrate this, we consider data observed at two time scales; although they are somewhat at low frequency level, the concept can be easily extended to high frequency context. If $r_{t,i}$ is the $i$th day return in $t$th month, the $t$th month return assuming there `n' trading days, $r_t^m = \sum_{i=1}^n r_{t,i}$. Note that $\sigma_m^2 = \var(r_t^m \;|\; F_{t-1}) = \sum_{i=1}^n \var(r_{t,i} \;|\; F_{t-1}) + 2 \sum_{i<j} \cov(r_{t,i}, r_{t,j} \;|\; F_{t-1})$. If $r_{t,i}$ is white noise sequence, then
 	\begin{equation}\label{eqn:2hatsigmasq}
 	\hat{\sigma}_m^2 = \frac{n}{n-1} \sum_{i=1}^n (r_{t,i} - \overline{r}_t)^2.
 	\end{equation}
-But we had observed that in the high frequency data, returns do exhibit some serial correlation and so adjusting \eqref{eqn:2hatsigmasq} for serial correlation is important to get a more accurate estimate of volatility. A simpler estimate of $\sigma_m^2$ is the so called realized volatility ($\text{RV}_t$)
+But we had observed that in the high frequency data, returns do exhibit some serial correlation and so adjusting \eqref{eqn:2hatsigmasq} for serial correlation is important to get a more accurate estimate of volatility. A simpler estimate of $\sigma_m^2$ is the so-called realized volatility ($\text{RV}_t$)
 	\begin{equation} \label{eqn:2RV}
 	\text{RV}_t = \sum_{i=1}^n r_{t,i}^2.
 	\end{equation}
@@ -469,7 +469,7 @@ For the estimation of efficient price variance, we need to consider an  optimal 
 \section{Analysis of Time Aggregated Data \label{s:analysis_tad}}
 
 
-The commonly available data from public sources such as Yahoo Finance that are easily accessible to investors provide select price information, High, Low, Open and Close prices along with the total transaction volume in a trading day. The usual estimate of volatility is based on closing prices, but having this additional price (bars) data can help to get a better estimate of volatility. As shown in the last section, using high-frequency data leads to estimators that need to be corrected for market frictions. But using the daily price bars data may not be helpful to make entry/exit decisions as they are to be made in real time; so as a compromise, many trading outfits construct price bars data from the high-frequency point process data for a shorter time intervals such as 5--30~minutes. This has the effect of smoothing the noise due to market friction but also results in data in discrete time units and so the traditional discrete time series methods discussed in Chapter 3 and Chapter 4 can be effectively employed. 
+The commonly available data from public sources such as Yahoo Finance that are easily accessible to investors provide select price information, High, Low, Open and Close prices along with the total transaction volume in a trading day. The usual estimate of volatility is based on closing prices, but having this additional price (bars) data can help to get a better estimate of volatility. As shown in the last section, using high frequency data leads to estimators that need to be corrected for market frictions. But using the daily price bars data may not be helpful to make entry/exit decisions as they are to be made in real time; so as a compromise, many trading outfits construct price bars data from the high frequency point process data for a shorter time intervals such as 5--30~minutes. This has the effect of smoothing the noise due to market friction but also results in data in discrete time units and so the traditional discrete time series methods discussed in Chapter 3 and Chapter 4 can be effectively employed. 
 
 
 The price as assumed earlier is to follow a random walk model. Therefore, price changes (thus returns) over a time interval are distributed with mean zero and variance that is proportional to the length of the interval. Assuming that the prices follow continuous sample paths although the trading is closed for a certain duration and when trading is open, the actual transactions occur at discrete points in time. Treating the trading day as represented in a unit interval $[0,1]$ with $[0,f]$ representing the `market close' time and $[f,1]$ as `open' time, it is shown that an estimator of volatility
@@ -567,7 +567,7 @@ The sample versions are assuming `$N$' trading days in a month:
 where $\hat{s}_t$ refers to two day estimates. These estimates tend to perform well in terms of both cross-sectional correlates and time series correlations. They also seem to have some predictive power. 
 
 
-There are two main reasons for the exposition of price bar data to capture the essential aspects of market movement. The price bar data in discrete time intervals is easier to analyze; it can also smooth out the market frictions. By the choice of time intervals, it can closely approximate the high-frequency data. But how the entry/exit decisions are made and their accuracy based on price bar data needs further investigation. 
+There are two main reasons for the exposition of price bar data to capture the essential aspects of market movement. The price bar data in discrete time intervals is easier to analyze; it can also smooth out the market frictions. By the choice of time intervals, it can closely approximate the high frequency data. But how the entry/exit decisions are made and their accuracy based on price bar data needs further investigation. 
 
 
 
@@ -613,7 +613,7 @@ and in the classification setting the criterion is,
 	\begin{equation} \label{eqn:bigwtheta2}
 	W(\theta)= - \sum_{i=1}^n \sum_{k=1}^m y_{ik} \ln f_k(x_i),
 	\end{equation}
-which is also termed as a measure of deviance. The method to estimate the unknown parameters, `$\theta$' is a gradient descent, also called as back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
+which is also termed as a measure of deviance. The method to estimate the unknown parameters, `$\theta$' is a gradient descent, also-called as back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
 	\begin{equation} \label{eqn:rby1it}
 	\hat{\theta}^{(r+1)}= \hat{\theta}^{(r)} - \gamma_r \sum_{i=1}^n \dfrac{\delta W_i(\theta)}{\delta \theta},
 	\end{equation}
