@@ -12,7 +12,6 @@
 	indentfirst,
 	listings,
 	mleftright,
-	multicol,
 	multirow,
 	placeins,
 	stix,
@@ -76,7 +75,6 @@
 % Commands
 % ------------------------
 
-% To Redo
 \newcommand{\Tau}{\mathcal{T}}
 \newcommand{\bm}[1]{\mbox{\boldmath{$#1$}}}
 \newcommand{\bX}{\bm{X}}
@@ -92,7 +90,7 @@
 \DeclareMathOperator{\tbvec}{Vec}
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\rank}{rank}
-\DeclareMathOperator{\prob}{Prob}
+\DeclareMathOperator{\Prob}{Prob}
 \newcommand{\xqed}{\hfill \lower-0.3ex\hbox{$\triangleleft$}}
 
 
@@ -161,6 +159,15 @@
 
 \makeindex
 
+
+% ------------------------
+% Exercises
+% ------------------------
+\newcounter{problem}
+\newcommand{\prob}{
+\stepcounter{problem} %
+\noindent \theproblem. }
+\counterwithin*{problem}{chapter}
 
 
 % ------------------------
