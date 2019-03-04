@@ -1,5 +1,5 @@
 % !TEX root = ../../book.tex
-\chapter{Advanced Topics \label{ch:ch_advanced}}
+\chapter{Advanced Topics\label{ch:ch_advanced}}
 
 In this chapter, we want to discuss some advanced methods that are applicable in the context of trading. The mechanics of actual trading (entry/exit) decisions call for trading the market movements in real time and the tools provided in this chapter would be quite useful to better track and understand the market changes. This chapter is broadly divided into two main areas; the first covers topics which are extensions of models discussed in Chapter 2 in the low frequency context. Although the state-space modeling is discussed in the context of ARIMA, its scope is much wider. We also outline the established methodology for studying regime switching, but indicate the areas of further research where predicting ahead when the regime shift is likely to occur using signals form the past is of great interest. This is followed by a discussion on using volume information to study the price volatility. With the increased exploitation of price behavior data, it has become necessary to look for additional signals. We present a theoretical model that shows that there is correlation between volume traded and volatility when there is information flow. The second area of this chapter focuses on the models from point processes to study the higher frequency data. Here our approach has been to provide an intuitive discussion of main tools; as readers will realize, the trade data is quite noisy and there is a great deal of scope to do research especially in non-parametric empirical modeling of arrivals and cancellations in the limit order market. 
 
@@ -7,7 +7,6 @@ In this chapter, we want to discuss some advanced methods that are applicable in
 
 % State-Space Modeling
 \section{State-Space Modeling} 
-
 
 There has been much recent interest in the representation of ARIMA models in the state-space form, for purpose of forecasting, as well as for model specification and maximum likelihood estimation of parameters. This approach helps to update more easily the model coefficients as and when new data arrives. 
 
@@ -61,7 +60,7 @@ where $K_t= V_{t \;|\; t-1} H_t'[H_t V_{t \;|\; t-1} H_t' + \sigma_N^2]^{-1}$ wi
 In \eqref{eqn:2hatz}, the quantity $\varepsilon_{t \;|\; t-1}= Y_t - H_t \hat{Z}_{t \;|\; t-1} \equiv Y_t - \hat{Y}_{t \;|\; t-1}$ at time $t$ is the new information provided by the measurement $Y_t$. This was not available from the previous observed (finite) history of the system. The factor $K_t$ is termed as the ``Kalman gain'' matrix. The filtering procedure in \eqref{eqn:2hatz} has the recursive ``updating'' form, and these equations represent the minimum mean square error predictor property. For example, note that $E[Z_t \,|\,Y_t,\ldots,Y_1]= E[Z_t \,|\,Y_{t-1},\cdots,Y_1] + E[Z_t \,|\, Y_t - \hat{Y}_{t \;|\; t-1}]$, since $\varepsilon_{t \;|\; t-1} = Y_t - \hat{Y}_{t \;|\; t-1}$ is independent of $Y_{t-1}, \ldots, Y_1$. From \eqref{eqn:2hatz}, observe that the estimate of $Z_t$ equals the prediction of $Z_t$ from observations through time $t-1$ updated by the factor $K_t$ times the innovation $\varepsilon_{t|t-1}$. The quantity $K_t$ can be taken as the regression coefficients of $Z_t$ on the innovation $\varepsilon_{t|t-1}$, with $\var(\varepsilon_{t\;|\; t-1}) = H_t V_{t\;|\; t-1} H_t' + \sigma_N^2$ and $\cov(Z_t,\varepsilon_{t\;|\; t-1})= V_{t \;|\; t-1} H_t'$ following directly from \eqref{eqn:2thirdzt} since $\varepsilon_{t\;|\; t-1} = H_t (Z_t - \hat{Z}_{t \;|\; t-1}) + N_t$. Thus, the general \emph{updating relation} is $\hat{Z}_{t\;|\;t} = \hat{Z}_{t\;|\; t-1} + \cov(Z_t,\varepsilon_{t\;|\; t-1}) \{ \var(\varepsilon_{t\;|\; t-1}) \}^{-1} \varepsilon_{t\;|\; t-1}$, where $\varepsilon_{t \;|\; t-1} = Y_t - \hat{Y}_{t\;|\; t-1}$, and the relation in $V_t$ is the usual updating of the error covariance matrix to account for the new information available from the innovation $\varepsilon_{t\;|\; t-1}$, while the \emph{prediction relations} \eqref{eqn:2hatz} follow directly from \eqref{eqn:2secondzt}. Forecasts of future state values are available as $\hat{Z}_{t+l\;|\;t} = \Phi_{t+l} \hat{Z}_{t+l-1\;|\;t}$ for $l = 1,2,\ldots$. The covariance matrix of the forecast errors can be generated recursively through $V_{t+l\;|\;t} = \Phi_{t+l}V_{t+l-1\;|\;t} \Phi_{t+l}' + \Sigma_a$. Finally, forecasts of future observations $Y_{t+l}$ are then available as $\hat{Y}_{t+l\;|\;t} = H_{t+l} \hat{Z}_{t+l\;|\;t}$, since $Y_{t+l\;|\;t} = H_{t+l} Z_{t+l} + N_{t+l}$, with forecast error variance $v_{t+l\;|\;t} = E[(Y_{t+l} - \hat{Y}_{t+l\;|\;t})^2] = H_{t+l} V_{t+l\;|\;t} H_{t+l}' + \sigma_N^2$.
 
 
-Note for ARIMA models with $Y_t = HZ_t$ and $H = [1,0,\ldots,0]$, this Kalman filtering procedure provides an alternate way to obtain finite sample forecasts, based on data $Y_t,Y_{t-1}, \cdots, Y_1$, for future values in the ARIMA process, subject to specification of appropriate initial conditions to use in the terms in \eqref{eqn:2hatz}. For stationary $Y_t$ with $E(Y_t)= 0$, the appropriate initial values are $\hat{Z}_{0 \;|\;0} = 0$, a vector of zeros, and $V_{0 \;|\;0} = \cov(Z_0) \equiv V_*$, the covariance matrix of $Z_0$. Specifically, because the state vector $Z_t$ follows the stationary vector AR(1) model $Z_t = \Phi Z_{t-1} + \psi \varepsilon_t$, its covariance matrix $V_*= \cov(Z_t)$ satisfies $V_*= \Phi V_* \Phi' + \sigma_{\varepsilon}^2 \Psi \Psi'$, which can be readily solved for $V_*$. For nonstationary ARIMA processes, additional assumptions need to be specified. The ``steady-state'' values of the Kalman filtering procedure $l$-step ahead forecasts $\hat{Y}_{t+l\;|\;t}$ and their forecast error variances $v_{t+l\;|\;t}$ will be identical to the expressions given previously, $\hat{Y}_t(l)$ and $\sigma^2(l) = \sigma^2 (1 + \sum_{i=1}^{i-1}\psi_{i}^2 )$. In particular, for the ARIMA process in state-space form, we can obtain the exact (finite sample) one-step ahead forecasts $\hat{Y}_{t-1}(1) = E[Y_t\;|\;Y_{t-1},\ldots,Y_1] = H \hat{Z}_{t \;|\; t-1}$, and their error variances $v_{t\;|\;t-1} = H V_{t\;|\;t-1} H'$, conveniently through the Kalman filtering equation (\ref{eqn:2hatz}). 
+Note for ARIMA models with $Y_t = HZ_t$ and $H = [1,0,\ldots,0]$, this Kalman filtering procedure provides an alternate way to obtain finite sample forecasts, based on data $Y_t,Y_{t-1}, \cdots, Y_1$, for future values in the ARIMA process, subject to specification of appropriate initial conditions to use in the terms in \eqref{eqn:2hatz}. For stationary $Y_t$ with $E(Y_t)= 0$, the appropriate initial values are $\hat{Z}_{0 \;|\;0} = 0$, a vector of zeros, and $V_{0 \;|\;0} = \cov(Z_0) \equiv V_*$, the covariance matrix of $Z_0$. Specifically, because the state vector $Z_t$ follows the stationary vector AR(1) model $Z_t = \Phi Z_{t-1} + \psi \varepsilon_t$, its covariance matrix $V_*= \cov(Z_t)$ satisfies $V_*= \Phi V_* \Phi' + \sigma_{\varepsilon}^2 \Psi \Psi'$, which can be readily solved for $V_*$. For nonstationary ARIMA processes, additional assumptions need to be specified. The ``steady-state'' values of the Kalman filtering procedure $l$-step ahead forecasts $\hat{Y}_{t+l\;|\;t}$ and their forecast error variances $v_{t+l\;|\;t}$ will be identical to the expressions given previously, $\hat{Y}_t(l)$ and $\sigma^2(l) = \sigma^2 (1 + \sum_{i=1}^{i-1}\psi_{i}^2 )$. In particular, for the ARIMA process in state-space form, we can obtain the exact (finite sample) one-step ahead forecasts $\hat{Y}_{t-1}(1) = E[Y_t\;|\;Y_{t-1},\ldots,Y_1] = H \hat{Z}_{t \;|\; t-1}$, and their error variances $v_{t\;|\;t-1} = H V_{t\;|\;t-1} H'$, conveniently through the Kalman filtering equation \eqref{eqn:2hatz}. 
 
 
 An alternative set-up, alternative to \eqref{eqn:2thirdzt} and \eqref{eqn:2hatz} is to assume that the deviations in the observation and transition equations are related. With the observation equation stated in \eqref{eqn:2yt}, the transition equation is modified as 
@@ -84,7 +83,7 @@ The slope in a local linear trend is a random walk. Specifically,
 	\end{split}
 	\end{equation}
 Here the trend is composed of level `$\mu_t$' and slope `$\delta_t$'. The slope `$\delta_t$' when written as 
-	\begin{equation}\label{eqn:slopewritten}
+	\begin{equation} \label{eqn:slopewritten}
 	\delta_t= D+ e(\delta_{t-1} - D)+ \eta_{1t}
 	\end{equation}
 in AR(1) form is sometimes known as generalized local linear trend. These models can be written in the form of \eqref{eqn:2secondzt} and \eqref{eqn:2thirdzt}; the updating process given in \eqref{eqn:2hatz} can be used to accommodate a wide range of models. \xqed
@@ -119,22 +118,22 @@ It has been long noted in finance that there are two kinds of recurrences in sto
 
 
 Consider the model,
-	\begin{equation}\label{eqn:modelham}
+	\begin{equation} \label{eqn:modelham}
 	y_t = \mu_{s_t} + \epsilon_t, \quad s_t= 1, 2,
 	\end{equation} 
 where $y_t$ is the observed variable, such as asset return and $s_t$ represents two distinct regimes and $\epsilon_t$'s are i.i.d. $\sim N(0,\sigma^2)$. Let $\{ F_{t-1} \}$ be the information set available as of `$t-1$'. The transition between the regimes is taken to be Markovian,
-	\begin{equation}\label{eqn:markprob}
+	\begin{equation} \label{eqn:markprob}
 	\text{Prob}(s_t= j \;|\; s_{t-1}= i, F_{t-1}) = p_{ij}, \quad i,j= 1, 2;
 	\end{equation}
 thus, leading to an AR(1) model for $\mu_{s_t}$ as
-	\begin{equation}\label{eqn:must}
+	\begin{equation} \label{eqn:must}
 	\mu_{s_t} = \phi_0 + \phi_1 \mu_{s_{t-1}} + a_t,
 	\end{equation}
 where $a_t$ by definition can take four possible values depending upon $s_t$ and $s_{t-1}$. Here $\phi_0= p_{21} \mu_1 + p_{12} \mu_2$ and $\phi_1= p_{11} - p_{21}$. Note the model for $y_t$ in (\ref{eqn:modelham}) is the sum of an AR(1) process and white noise, then from Result~2 in Chapter~3, $y_t \sim$ ARMA(1,1); but because of discrete nature of `$a_t$', (\ref{eqn:modelham}) is a non-linear process. Note that the unknown parameters are $(\mu_1, \mu_2, \sigma,p_{11}, p_{22})'= \lambda$ and they can be estimated via maximum likelihood as follows: note $y_t \;|\; (s_t= j, F_{t-1}) \sim N(\mu_j,\sigma^2)$. The predictive density of $y_t$ is given as a finite mixture model,
 	\begin{equation}\label{eqn:predden}
 	f(y_t \;|\; F_{t-1})= \sum_{i=1}^2 \text{Prob}(s_t= i \;|\; F_{t-1}) \, f(y_t \;|\; s_t= i, F_{t-1})
 	\end{equation}
-and estimate of $\lambda$ is obtained by maximizing the likelihood function $L(\lambda)= \sum_{t=1}^T \log f(y_t \;|\; F_{t-1}, \lambda)$. Two useful quantities are: \\
+and estimate of $\lambda$ is obtained by maximizing the likelihood function $L(\lambda)= \sum_{t=1}^T \log f(y_t \;|\; F_{t-1}, \lambda)$. Two useful quantities are: \twomedskip
 
 
 \noindent Predicted regime: 
@@ -226,7 +225,7 @@ where $Z_{1t}$ and $Z_{2t}$ are standard normal variables and $Z_{1t},  Z_{2t}$,
 	\end{split}
 	\end{equation}
 is positive due to the variance in $I_t$. If there is no new information or if there is no variation in the mixing variable, $\var(I_t)= 0$ and thus the relationship vanishes. The theory of arrival rates suggest a
-Poisson distribution and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in \eqref{eqn:2rtVt} are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their main findings: \\
+Poisson distribution and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in \eqref{eqn:2rtVt} are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their main findings: \twomedskip
 
 
 \noindent\textbf{Stylized Facts 5 (Volume--Volatility Relationship):} 
@@ -244,7 +243,7 @@ These findings can be easily confirmed using the S\&P 500 data presented in Figu
 
 Andersen (1996)~\cite{andersen} modifies the model \eqref{eqn:2rtVt} by integrating the microstructure
 setting of Glosten and Milgrom (1985)~\cite{glostenmilgrom} with the stochastic volatility, that is built on weaker conditions on the information arrival process. While the first equation in \eqref{eqn:2rtVt} remains the same, the volume $V_t$ has informed and noise components, $V_t = IV_t + NV_t$. Noise trading component, $NV_t$ is taken as a time homogeneous Poisson process, $P_0(m_0)$. Therefore, the systematic variation in trading is mainly due to informed volume. Then $IV_t \;|\; I_t \sim \text{Poisson}(I_t \mu)$ and thus
-	\begin{equation}\label{eqn:2VtIt}
+	\begin{equation} \label{eqn:2VtIt}
 	V_t \;|\; I_t \sim \text{Poisson}(m_0 + I_t m_1)
 	\end{equation}
 It is easy to see $\cov(r_t^2,V_t) = \sigma^2 m_1 \var(I_t) > 0$ under this setting as well. These models clearly indicate that the intraday return volatility and volume processes jointly contain some predictable elements.
@@ -255,7 +254,7 @@ There are other studies that focus on the trading volume and returns relationshi
 
 Gervais, Kaniel, and Mingelgrin (2001)~\cite{gervais2001high} investigate the role of trading activity in providing information about future prices. It is shown that periods of extremely high (low) volume tend to be followed by positive (negative) excess returns. The formation period for identifying extreme trading volume is a day or a week, but the effect lasts at least twenty days and holds across all stock sizes. To test if this information can be used profitably, the authors construct a trading strategy, by sending buy (sell) limit orders at the existing bid (ask) price, at the end of the formation period. If the orders are not taken, they are converted into market orders at the closing. The strategy is shown to result in profits, in particular with the small-medium firm stocks, after adjusting for the transaction costs. The model used for the empirical framework is the vector autoregressive model discussed in Chapter~4, with an addition of a set of exogenous control variables:
 
-	\begin{equation}\label{eqn:2Ytphi}
+	\begin{equation} \label{eqn:2Ytphi}
 	Y_t = \Phi_0 + \sum_{j=1}^p \Phi_j Y_{t-j} + \sum_{l=1}^L B_l X_{t-l} + \epsilon_t.
 	\end{equation}
 
@@ -309,8 +308,34 @@ There has been a great deal of interest in studying market microstructure to bet
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/33d1.jpg}
-	\caption{Exchange hours. \label{fig:exchhours}}
+	\begin{tikzpicture}
+	\draw[very thick] (0,0) -- (10,0);
+	
+	\draw[very thick] (0,-0.3) -- (0,0.3);
+	\draw[very thick] (10,-0.3) -- (10,0.3);
+	
+	\draw[very thick] (1,-0.3) -- (1,0.3);
+	\draw[very thick] (2,-0.3) -- (2,0.3);
+	\draw[very thick] (5,-0.3) -- (5,0.3);
+	
+	\node at (1,-0.7) {$t_1$};
+	\node at (2,-0.7) {$t_2$};
+	\node at (5,-0.7) {$t_3$};
+	
+	\node at (1,-1.2) {$y_1$};
+	\node at (2,-1.2) {$y_2$};
+	\node at (5,-1.2) {$y_3$};
+	
+	\node at (0,-0.7) {9:30~a.m.};
+	\node at (10,-0.7) {4:00~p.m.};
+	
+	\foreach \i in {1,...,5}
+	{
+	\draw[fill=black] (2.5+\i/3,-0.95) circle (0.2mm);
+	};
+		
+	\end{tikzpicture}
+	\caption{Exchange hours.\label{fig:exchhours}}
 	\end{figure}
 
 high frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price or quote etc. that may be associated with `$t_i$.' The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange are open. Standard econometric techniques are for data in discrete time intervals. Aggregating the high frequency data to some fixed time interval will not capture the advantages of having access to detailed time-stamped transaction data. Even for some heavily traded stocks, if the intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
@@ -364,10 +389,10 @@ inducing the negative autocorrelation of lag 1 in the return due to the carry ov
 	\begin{equation} \label{eqn:2lowrt}
 	r_t=a_t - \theta a_{t-1}.
 	\end{equation}
-The value of `$\theta$' generally tends to be small, but nevertheless significant. \\
+The value of `$\theta$' generally tends to be small, but nevertheless significant. \twomedskip
 
 
-\noindent \textit{Commonly used duration models:} The timing aspect of transaction was discussed in Easley and O'Hara (1992)~\cite{easley1992} and a rigorous set of tools was developed by Engle and Russell (1998)~\cite{engle1998}, as an alternative to fixed interval analysis. Treating the ticks as random variables that follow a point process, the intensity of transactions in an interval of length, $\Delta$, is defined as
+\noindent \emph{Commonly used duration models:} The timing aspect of transaction was discussed in Easley and O'Hara (1992)~\cite{easley1992} and a rigorous set of tools was developed by Engle and Russell (1998)~\cite{engle1998}, as an alternative to fixed interval analysis. Treating the ticks as random variables that follow a point process, the intensity of transactions in an interval of length, $\Delta$, is defined as
 	\begin{equation} \label{eqn:2lambda}
 	\lambda(t)= \lim_{\Delta \to 0} \frac{E[N(t+\Delta) - N(t) \;|\; F_t]}{\Delta},
 	\end{equation}
@@ -391,7 +416,7 @@ An alternative more direct ARMA type model for log durations is suggested by Ghy
         \begin{equation} \label{eqn:21lnd}
         	\ln{(d_i)} = \omega + \sum_{j=1}^p \alpha_j \ln{(d_{t-j})} + \sum_{j=1}^v \beta_j \varepsilon_{i-j} + \varepsilon_i
         \end{equation}
-and $\varepsilon_i = \sqrt{h_i^v} u_i, h_i^v = \omega^v + \sum_{j=1}^{p^v} \alpha_j^v \varepsilon_{i-j}^2 + \sum_{j=1}^{q^v} \beta_j^v h_{i-j}^v$, where $u_i \sim N(0,1)$ i.i.d.; here the conditional mean and variance of durations are assumed to be separable. The duration volatility that is modeled using the second equation in \eqref{eqn:2dipsi} is interpreted as `liquidity' risk. \\
+and $\varepsilon_i = \sqrt{h_i^v} u_i, h_i^v = \omega^v + \sum_{j=1}^{p^v} \alpha_j^v \varepsilon_{i-j}^2 + \sum_{j=1}^{q^v} \beta_j^v h_{i-j}^v$, where $u_i \sim N(0,1)$ i.i.d.; here the conditional mean and variance of durations are assumed to be separable. The duration volatility that is modeled using the second equation in \eqref{eqn:2dipsi} is interpreted as `liquidity' risk. \twomedskip
 
 
 \noindent \textbf{Other Duration Related Models:} So far the discussion has been around modeling the durations, but the information set, $F_t$ has information on `marks', the information associated with the past ticks, such as the number of units transacted, price etc. McCulloch and Tsay (2001)~\cite{mccullochtsay07} suggest the following model:
@@ -409,8 +434,39 @@ where $s_i$ is the size of the $i$th price change measured in ticks; other relev
 There is a considerable interest in extending the univariate duration models to multiple stocks or to multiple types of arrival processes. Because investment managers generally consider a portfolio of stocks rather than a single one, it is important for them to follow the transaction processes of several stocks simultaneously. Because of non-synchronous trading relating two stocks with different trading intensities on a common time scale is somewhat difficult. Engle and Lunde (2003)~\cite{englelunde} establish the following model for a bivariate point process for trades and quotes:
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/33d3.jpg}
-	\caption{Trades and Quotes. \label{fig:tradeactdoubline}}
+	\begin{tikzpicture}
+	\draw[very thick] (0,0) -- (10,0);
+	\draw[very thick] (0,-2) -- (10,-2);
+	
+	\node at (-0.8,0) {\textbf{Trade}};
+	\draw[very thick] (0,-0.3) -- (0,0.3);
+	\draw[very thick] (1,-0.3) -- (1,0.3);
+	\draw[very thick] (2,-0.3) -- (2,0.3);
+	\draw[very thick] (5,-0.3) -- (5,0.3);
+	\draw[very thick] (10,-0.3) -- (10,0.3);
+	\node at (0,-0.7) {$0$};
+	\node at (1,-0.7) {$t_1$};
+	\node at (2,-0.7) {$t_2$};
+	\node at (5,-0.7) {$t_i$};
+	\node at (10,-0.7) {$T$};
+
+	\foreach \i in {1,...,5}
+	{
+	\draw[fill=black] (2.5+\i/3,-0.6) circle (0.2mm);
+	};
+	
+	\node at (-0.8,-2) {\textbf{Quote}};
+	\draw[very thick] (0,-2.3) -- (0,-1.7);
+	\draw[very thick] (1.5,-2.3) -- (1.5,-1.7);
+	\draw[very thick] (5,-2.3) -- (5,-1.7);
+	\draw[very thick] (10,-2.3) -- (10,-1.7);
+	\node at (0,-2.7) {$0$};
+	\node at (1.5,-2.7) {$t_1^{\text{fw}}$};
+	\node at (5,-2.7) {$t_i^{\text{fw}}$};
+	\node at (10,-2.7) {$T$};
+		
+	\end{tikzpicture}
+	\caption{Trades and Quotes.\label{fig:tradeactdoubline}}
 	\end{figure}
 Define $x_i = t_i - t_{i-1}$ as trade duration and $y_i = t_i^{f_w} - t_{i-1}^{f_w}$ as the forward quote duration; our goal is to model $(x_i,y_i)$ as a bivariate duration process but the underlying timings as can be noted are not synchronized. Thus define, if $y_i > x_i$, then
 	\begin{equation} \label{eqn:anothertildey}
@@ -421,7 +477,7 @@ where $d_i$ is indicator variable, $d_i = I_{\{y_i>x_i\}}$. Model $(x_i,\widetil
 	p(x_i,\widetilde{y}_i \;|\; F_{i-1}, \omega) = g(x_i \;|\; F_{i-1}, \omega_1) f(\widetilde{y}_i \;|\; x_i, F_{i-1}, \omega_2).
 	\end{equation}
 The first term is the trade density and the second term is the quote density. The $\psi_i$ terms as in \eqref{eqn:2dipsi} are modeled as EACD, $\psi_i= f(\psi_{i-1}, x_{i-1}, z_{i-1})$ and quote density is also modeled as EACD after adjusting for censoring:
-	\begin{equation}\label{eqn:2fdot}
+	\begin{equation} \label{eqn:2fdot}
 	f(y_i \;|\; \cdot) = [h(y_i \;|\; \cdot)]^{1 - d_i} \times S(x_i \;|\; \cdot)^{d_i}.
 	\end{equation}
 The estimation of the parameters are done through quasi maximum likelihood. Using data for eight stocks, Engle and Lund (2003)~\cite{englelunde} observe that high trade arrival rates, large volume per trade, wide bid-ask spreads, all predict more rapid price revisions. The model given in Engle and Lund (2003)~\cite{englelunde} can be conceptually applied to any two point processes. Extending this concept to more than two processes could be of interest to the traders who may want to monitor the trading exchanges simultaneously. But modeling this type of data as can be seen is quite tedious. 
@@ -473,11 +529,11 @@ The commonly available data from public sources such as Yahoo Finance that are e
 
 
 The price as assumed earlier is to follow a random walk model. Therefore, price changes (thus returns) over a time interval are distributed with mean zero and variance that is proportional to the length of the interval. Assuming that the prices follow continuous sample paths although the trading is closed for a certain duration and when trading is open, the actual transactions occur at discrete points in time. Treating the trading day as represented in a unit interval $[0,1]$ with $[0,f]$ representing the `market close' time and $[f,1]$ as `open' time, it is shown that an estimator of volatility
-	\begin{equation}\label{eqn:estvol}
+	\begin{equation} \label{eqn:estvol}
 	\hat{\sigma}_1^2= \dfrac{(O_1 - C_0)^2}{2f} + \dfrac{(C_1 - O_1)^2}{2(1-f)},
 	\end{equation}
 has efficiency two compared to the usual estimator, $\hat{\sigma}^2_0=(C_1 - C_0)^2$ based on the closing prices of two successive trading days. This suggests clearly the inclusion of additional data point, such as opening price is quite informative. Garman and Klass~\cite{klass1980} suggest these and other estimators which are superior to the classical estimator of volatility $\hat{\sigma}^2_0$. It is argued that the high and low prices contain information regarding the volatility during the trading period and a composite estimator that is proposed,
-	\begin{equation}\label{eqn:compositeest}
+	\begin{equation} \label{eqn:compositeest}
 	\hat{\sigma}_2^2= a\,\dfrac{(O_1 - C_0)^2}{f} + (1-a)\, \dfrac{(H_1 - L_1)^2}{(1-f) \ln 2}
 	\end{equation}
 with optimal choice of `$a$'$=0.17$ yields even higher efficiency.
@@ -504,7 +560,7 @@ The estimator suggested in Yang and Zhang~\cite{yangzhang2000} takes the form,
 	\begin{equation} \label{eqn:yang2000}
 	V_{\text{YZ}}= V_0 + k V_c + (1-k)V_{\text{RS}}
 	\end{equation}
-where $V_0= \frac{1}{n-1} \sum_{i=1}^n (o_i - \overline{o})^2$ and $V_c= \frac{1}{n-1} \sum_{i=1}^n (c_i - \overline{c})^2$, with the optimal choice of $k= \frac{0.34}{1.34 + (n+1)(n-1)}$. \\
+where $V_0= \frac{1}{n-1} \sum_{i=1}^n (o_i - \overline{o})^2$ and $V_c= \frac{1}{n-1} \sum_{i=1}^n (c_i - \overline{c})^2$, with the optimal choice of $k= \frac{0.34}{1.34 + (n+1)(n-1)}$. \twomedskip
 
 
 \noindent\textbf{Applications:} It is well-known the standard stochastic volatility models used in finance are difficult to estimate due to their non-Gaussian nature. The proxies, the absolute or squared returns, because of the measurement errors tend to be somewhat inefficient. Alizadeh, Brandt and Diebold (2002)~\cite{diebold} argue that range as a proxy for volatility is superior as it is relatively free of the two problems associated with other measures. In the estimator \eqref{eqn:compositeest}, the second term which is essentially range-based is bound to be always positive. It can also be shown that the standard deviation of the log range is nearly one-fourth the standard deviation of the log absolute return. The range is also more robust to microstructure effects mostly due to bid-ask bounce compared to popular realized volatility measure \eqref{eqn:2RV}. Martens and Dijk (2007)~\cite{dijk} define realized range over an interval of time as,
@@ -529,15 +585,15 @@ Assume that the true or actual price follows a diffusion process. Actual price d
 	\end{split}
 	\end{equation}
 where $\alpha=\ln\left( \frac{1+s/2}{1-s/2} \right)$ is taken to be fixed. Taking expectations on both sides, we have
-	\begin{equation}\label{eqn:expsides}
+	\begin{equation} \label{eqn:expsides}
 	E\left[ \ln^2 \left( \dfrac{H_t^0}{L_t^0} \right) \right]= K_1\sigma^2 + 2\alpha K_2 \sigma + \alpha^2,
 	\end{equation}
 where $K_1= 4\ln 2= E\left( \ln^2 \left( \dfrac{H_t^A}{L_t^A} \right) \right)$ and $K_2= \sqrt{\frac{8}{\pi}}= E\left( \ln\left(\frac{H_t^A}{L_t^A} \right) \right)$. Taking expectations over two days, if we let $\beta= E\left[ \sum_{j=0}^1 \ln^2 \left( \frac{H_{t+j}^0}{L_{t+j}^0} \right) \right]$ results in 
-	\begin{equation}\label{eqn:betaresult}
+	\begin{equation} \label{eqn:betaresult}
 	\beta= 2K_1 \sigma^2 + 4K_2 \alpha \sigma + \alpha^2,
 	\end{equation}
 which has two unknowns `$\alpha$' and `$\sigma$' to solve. If we let $\gamma= \ln^2 \left( \frac{H_{t,t+1}^0}{L_{t,t+1}^0} \right)$, where the subscripts $(t,t+1)$ indicates that the values are computed over a two day period `$t$' and `$t+1$'. This leads to
-	\begin{equation}\label{eqn:resultsin}
+	\begin{equation} \label{eqn:resultsin}
 	\gamma= 2K_1\sigma^2 + 2\sqrt{2} K_2\alpha \sigma + \alpha^2.
 	\end{equation}
 Both \eqref{eqn:betaresult} and \eqref{eqn:resultsin} are two quadratic equations in `$\alpha$' and `$\sigma$' that can be iteratively solved. The explicit solutions are given in Corwin and Schultz (2012)~\cite{schultz12} and are as follows:
@@ -578,7 +634,7 @@ There are two main reasons for the exposition of price bar data to capture the e
 The technical trading rules that are to be discussed in Chapter~6 involve a relatively small information set to carry out prediction. It treats each of the `$n$' time series of asset returns as autonomous. As pointed out by Malkiel (2012)~\cite{malkiel}, these rules can be easily implemented by most market participants if such opportunities should emerge, and market efficiency would rule them out as winning strategies. More powerful prediction methods using a very large set of potential predictors and yet capable of avoiding overfitting are needed to take advantage of transient opportunities. We gave a overview of recent advances in high-dimensional regression in Chapter~4. The classification techniques can also be formulated with high-dimensional feature vector. In machine learning and in computer science the focus is to handle rapidly different types of data (including text). The literature in this field is vast but we mention only tools that are deemed to be relevant to trading. 
 
 
-Machine learning is a growing area of computer science that encompasses other well-established areas such as statistics, computational algorithms, artificial intelligence, control theory, etc.. The focus in machine learning is on developing efficient algorithms for prediction or for classification using large data sets. The efficiency is gauged by validation accuracy. The inferential aspects of statistical theory, such as standard error of the estimates, confidence intervals, etc., are generally not of much concern. Some areas where machine learning methods have led to significant contribution are classification, clustering and multi-dimensional regression. The attractiveness of these methods lie in the fact that they do not need any a priori theory to suggest which relevant variables to consider. Therefore with no prescription of variables, the variable or feature selection becomes an important process in machine learning. The statistical foundations of machine learning methods are generally referred to as statistical learning methods. We provide a brief description of a select few methods in this section. \\
+Machine learning is a growing area of computer science that encompasses other well-established areas such as statistics, computational algorithms, artificial intelligence, control theory, etc.. The focus in machine learning is on developing efficient algorithms for prediction or for classification using large data sets. The efficiency is gauged by validation accuracy. The inferential aspects of statistical theory, such as standard error of the estimates, confidence intervals, etc., are generally not of much concern. Some areas where machine learning methods have led to significant contribution are classification, clustering and multi-dimensional regression. The attractiveness of these methods lie in the fact that they do not need any a priori theory to suggest which relevant variables to consider. Therefore with no prescription of variables, the variable or feature selection becomes an important process in machine learning. The statistical foundations of machine learning methods are generally referred to as statistical learning methods. We provide a brief description of a select few methods in this section. \twomedskip
 
 
 \noindent\textbf{Neural Networks:} The neural network is typically represented as follows:
@@ -633,7 +689,7 @@ where `$\lambda$' is a positive tuning parameter.
 \end{enumerate}
 
 
-\noindent\textbf{Reinforcement Learning:} The set of techniques covered in this area is quite broad and generally refers to learning from interaction to achieve a goal. The learner is called an `agent' who learns from interacting with `environment' through trial and error. The learning is assumed to progress through `rewards.' More formally, the environment is in a state, $s_t \in S$, the set of all possible states; the agent's decision or action, $a_t \in A(s_t)$, the set of actions available in state `$s_t$.' As a consequence, the agent gets a reward $r_{t+1} \in R$ and a new state of the environment, `$s_{t+1}$' emerges. Reinforcement learning methods study how the agent changes the policy, $\Pi_t (s_t,a_t)$ with a goal towards maximizing the reward, a result of the interaction in the long run. For an excellent survey on this topic, refer to Kaelbling, Littman and Moore (1996)~\cite{littmanmoor}. The common assumption is that the state-space is stationary which means that the transition probabilities from one state to another remains constant and so are reward signals. The long-run reward function discounted by interest rate that is optimized by the agent is denoted as, $E\big( \sum_{t=0}^\infty \gamma^t r_t \big)$. Other reward functions such as regret, a measure of the expected decrease in reward gained due to executing an algorithm have been considered in the literature. For a comprehensive treatment of the subject, see Sulton and Barto (2018)~\cite{sultonbarto}. Much of the notes in this section follow from the references cited here. \\
+\noindent\textbf{Reinforcement Learning:} The set of techniques covered in this area is quite broad and generally refers to learning from interaction to achieve a goal. The learner is called an `agent' who learns from interacting with `environment' through trial and error. The learning is assumed to progress through `rewards.' More formally, the environment is in a state, $s_t \in S$, the set of all possible states; the agent's decision or action, $a_t \in A(s_t)$, the set of actions available in state `$s_t$.' As a consequence, the agent gets a reward $r_{t+1} \in R$ and a new state of the environment, `$s_{t+1}$' emerges. Reinforcement learning methods study how the agent changes the policy, $\Pi_t (s_t,a_t)$ with a goal towards maximizing the reward, a result of the interaction in the long run. For an excellent survey on this topic, refer to Kaelbling, Littman and Moore (1996)~\cite{littmanmoor}. The common assumption is that the state-space is stationary which means that the transition probabilities from one state to another remains constant and so are reward signals. The long-run reward function discounted by interest rate that is optimized by the agent is denoted as, $E\big( \sum_{t=0}^\infty \gamma^t r_t \big)$. Other reward functions such as regret, a measure of the expected decrease in reward gained due to executing an algorithm have been considered in the literature. For a comprehensive treatment of the subject, see Sulton and Barto (2018)~\cite{sultonbarto}. Much of the notes in this section follow from the references cited here. \twomedskip
 
 
 \noindent\textbf{Markov Assumption:} We assume the sets $S$, $A$ and $R$ are all finite. We assume that any response at `$t+1$' depends on the state one action at `$t$.' More specifically, 
@@ -695,7 +751,7 @@ The dataset consists of (CSV) file that contains the entire trading session, inc
 \end{table}
 
 
-For the analysis of Problems 1--3, we consider the data for CISCO. \\
+For the analysis of Problems 1--3, we consider the data for CISCO. \twomedskip
 
 
 % Problem
@@ -706,7 +762,7 @@ For the analysis of Problems 1--3, we consider the data for CISCO. \\
         \item Consider the bivariate time series ($x_t$, $y_t$). How does $y_t$ vary with $x_t$? Are there intraday periodic patterns in ($x_t$, $y_t$)?
         \item Plot the durations of the transaction times for Mondays and Fridays. Is there any difference in the patterns?
         \item Fit GARCH models for the durations and interpret the coefficients.
-        \item Is there any particular exchange that offers better price? \\
+        \item Is there any particular exchange that offers better price? \twomedskip
         \end{enumerate}
 
 
@@ -716,7 +772,7 @@ For the analysis of Problems 1--3, we consider the data for CISCO. \\
         \item Is there a diurnal pattern in the adjusted duration series?
         \item Build EACD and WACD models for the adjusted duration and compare them. Now aggregate the data over the 5-minute intervals; Let $r_t$ be the return and $V_t$ is the volume of transactions in the $t$th interval.
         \item Is there any relationship between the volume $V_t$ and volatility $r_t^2$ . If there is develop a model that will capture the dependence of volatility on volume. Let $\overline{p}_t$ be the average price in the $t$th 5-minute
-        interval. \\
+        interval. \twomedskip
         \end{enumerate}
 
 
@@ -724,5 +780,5 @@ For the analysis of Problems 1--3, we consider the data for CISCO. \\
 \prob Use the CISCO execution data only; aggregate at various time intervals: 1~min, 2~min, \dots, 15~min. For these levels record
         \begin{enumerate}[(a)]
         \item Average price, VWAP, realized volatility and aggregate volume.
-        \item By relating the returns and volatility estimates based on average price to realized volatility, identify the optimal duration for aggregation that will cancel out the market friction but pick up the true information. (You may want to refer to Bandi and Russell (2006)~\cite{bandi}). \\
+        \item By relating the returns and volatility estimates based on average price to realized volatility, identify the optimal duration for aggregation that will cancel out the market friction but pick up the true information. (You may want to refer to Bandi and Russell (2006)~\cite{bandi}). \twomedskip
         \end{enumerate}

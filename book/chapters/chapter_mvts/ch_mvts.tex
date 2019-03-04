@@ -1,5 +1,5 @@
 % !TEX root = ../../book.tex
-\chapter{Multivariate Time Series Models \label{ch:ch_mvts}}
+\chapter{Multivariate Time Series Models\label{ch:ch_mvts}}
 
 The methods developed in this chapter are natural extensions of the methods presented in Chapter~\ref{ch:ch_uvts} in the multivariate setting. But the underlying data is of large dimension and hence they present some unique challenges. These include unwieldy estimation problems as well as making meaningful interpretation of the estimates. But these methods are essential to address portfolio construction and issues related to trading multiple stocks. We want to present some basic tools in multivariate regression and tools for dimension-reduction, which provide a foundation for modeling multiple time series. Although multivariate ARMA models are well-studied in the literature, the focus has been on the multivariate (vector) autoregressive (VAR) models which falls neatly in the framework of multivariate regression with necessary constraints on the regression coefficient matrices that can account for stationarity. Thus a good understanding of multivariate regression will lay a solid foundation for studying VAR models.
 
@@ -47,7 +47,7 @@ The maximum likelihood estimate of `$C$' under the normality assumption yields t
 	\end{equation}
 
 
-\noindent\textbf{Inference Properties:} \\
+\noindent\textbf{Inference Properties:} \twomedskip
 
 
 First, $\tilde{C}$ is an unbiased estimator of $C$, $E(\tilde{C})= C$ and $\cov(\tilde{C}_{(i)}, \tilde{C}_{(j)})= \sigma_{ij} (\mathbf{X}\mathbf{X}')^{-1}$ for $i,j= 1,\ldots, m$, where $\sigma_{ij}$ denotes the $(i,j)$th element of the covariance matrix $\Sigma_{\epsilon\epsilon}$, since $\cov(\mathbf{Y}_{(i)}, \mathbf{Y}_{(i)})= \sigma_{ij} I_T$. The distributional properties of $\tilde{C}$ follow easily from multivariate normality of the error terms $\epsilon_t$. Specifically, we consider the distribution of $\tvec(\tilde{C}')$, where the ``vec'' operation transforms an $m \times n$ matrix into an $mn$-dimensional column vector by stacking the columns of the matrix below each other. 
@@ -87,10 +87,10 @@ where the two terms on the right are orthogonal. We thus readily find that
 and $U= 1/\lvert I + S^{-1}H \rvert$ so that the LR test can be based on the eigenvalues of $S^{-1}H$.
 
 
-The nonzero eigenvalues of the $m \times m$ matrix $S^{-1} H$ are the same as those of the $m_1 \times m_1$ matrix $S_*^{-1} H_*$, where $S_*= FSF'$ and $H_* = FHF' = F \tilde{C} (XX') \tilde{C}' F'$, so that $U^{-1} = \lvert I + S_*^{-1} H_* \rvert= \prod_{i=1}^{m_1} (1 + \hat{\lambda}_i^2 )$, where the $\hat{\lambda}_i^2$ are the eigenvalues of $S_*^{-1} H_*$. Analogous to \eqref{eqn:mathcal}, the test statistic used is $\mathcal{M}= -[T - n + \frac{1}{2}(n - m_1 - 1)]\log(U)$ which has an approximate $\chi_{nm_1}^2$ distribution under $H_0$. Somewhat more accurate approximation of the null distribution of $\log(U)$ is available based on the $F$-distribution, and in some cases (notably $m_1= 1$ or 2) exact $F$-distribution results for $U$ are available (see Anderson (1984)~\cite[Chap. 8]{andersontw2}). However, for most of the applications the large sample $\chi_{nm_1}^2$ approximation for the distribution of the LR statistic $\mathcal{M}$ is normally used. \\
+The nonzero eigenvalues of the $m \times m$ matrix $S^{-1} H$ are the same as those of the $m_1 \times m_1$ matrix $S_*^{-1} H_*$, where $S_*= FSF'$ and $H_* = FHF' = F \tilde{C} (XX') \tilde{C}' F'$, so that $U^{-1} = \lvert I + S_*^{-1} H_* \rvert= \prod_{i=1}^{m_1} (1 + \hat{\lambda}_i^2 )$, where the $\hat{\lambda}_i^2$ are the eigenvalues of $S_*^{-1} H_*$. Analogous to \eqref{eqn:mathcal}, the test statistic used is $\mathcal{M}= -[T - n + \frac{1}{2}(n - m_1 - 1)]\log(U)$ which has an approximate $\chi_{nm_1}^2$ distribution under $H_0$. Somewhat more accurate approximation of the null distribution of $\log(U)$ is available based on the $F$-distribution, and in some cases (notably $m_1= 1$ or 2) exact $F$-distribution results for $U$ are available (see Anderson (1984)~\cite[Chap. 8]{andersontw2}). However, for most of the applications the large sample $\chi_{nm_1}^2$ approximation for the distribution of the LR statistic $\mathcal{M}$ is normally used. \twomedskip
 
 
-\noindent \textbf{Prediction:} \\
+\noindent \textbf{Prediction:} \twomedskip
 
 
 Another problem of interest in regard to the multivariate linear regression model \eqref{eqn:5lmyk} is confidence regions for the mean responses corresponding to a fixed value $X_0$ of the predictor variables. The mean vector of responses at $X_0$ is $CX_0$ and its estimate is $\tilde{C}X_0$. Under the assumption of normality of the $\epsilon_k$, it follows that
@@ -164,7 +164,7 @@ Let $S$ be a matrix of order $m \times n$ and of rank $m$. The Euclidean norm, $
 \end{result}
 
 
-\noindent\textbf{Remark (Singular Value Decomposition).} The positive square roots of the eigenvalues of $SS'$ are referred to as the singular values of the matrix $S$. In general, an $m \times n$ matrix $S$, of rank $s$, can be expressed in a \emph{singular value decomposition} as $S= V \Lambda U'$, where $\Lambda= \diag(\lambda_1, \ldots, \lambda_s)$ with $\lambda_1^2 \geq \cdots \geq \lambda_s^2 > 0$ being the nonzero eigenvalues of $SS'$, $V= [V_1, \ldots, V_s]$ is an $m \times s$ matrix such that $V' V= I_s$, and $U= [U_1, \ldots, U_s]$ is $n \times s$ such that $U'U= I_s$. The columns $V_i$ are the normalized eigenvectors of $SS'$ corresponding to the $\lambda_i^2$, and $U_i= \frac{1}{\lambda_i}S'V_i$, $i=1, \ldots, s$. \\
+\noindent\textbf{Remark (Singular Value Decomposition).} The positive square roots of the eigenvalues of $SS'$ are referred to as the singular values of the matrix $S$. In general, an $m \times n$ matrix $S$, of rank $s$, can be expressed in a \emph{singular value decomposition} as $S= V \Lambda U'$, where $\Lambda= \diag(\lambda_1, \ldots, \lambda_s)$ with $\lambda_1^2 \geq \cdots \geq \lambda_s^2 > 0$ being the nonzero eigenvalues of $SS'$, $V= [V_1, \ldots, V_s]$ is an $m \times s$ matrix such that $V' V= I_s$, and $U= [U_1, \ldots, U_s]$ is $n \times s$ such that $U'U= I_s$. The columns $V_i$ are the normalized eigenvectors of $SS'$ corresponding to the $\lambda_i^2$, and $U_i= \frac{1}{\lambda_i}S'V_i$, $i=1, \ldots, s$. \twomedskip
 
 
 The ML estimation of model \eqref{eqn:ykabxk}, assuming the $\epsilon_k$ are independent and identically distributed (iid), following a multivariate normal distribution with mean 0 and covariance matrix $\Sigma_{\epsilon\epsilon}$, the solution is given as 
@@ -174,13 +174,13 @@ The ML estimation of model \eqref{eqn:ykabxk}, assuming the $\epsilon_k$ are ind
 where $\hat{\Sigma}_{yx}= (1/T) \mathbf{Y} \mathbf{X}'$, $\hat{\Sigma}_{xx}= (1/T) \mathbf{X} \mathbf{X}'$, and $\hat{V}_j$ is the eigenvector that corresponds to the $j$th largest eigenvalue $\hat{\lambda}_j^2$ of $\Gamma^{1/2} \hat{\Sigma}_{yx} \hat{\Sigma}_{xx}^{-1} \hat{\Sigma}_{xy}\Gamma^{1/2}$, with the choice $\Gamma= \tilde{\Sigma}_{\epsilon\epsilon}^{-1}$. The solution is based on the singular value decomposition of the standardized regression coefficient matrix $\tilde{\Sigma}_{\epsilon\epsilon}^{-1/2} \tilde{C} \hat{\Sigma}_{xx}^{1/2}$, where $\tilde{C}$ is the least-square estimate of full-rank $C$. The estimates of the constraints, $l_j$'s are obtained from the smallest $(m-r)$ eigenvalues of the same matrix and scaled as, $\hat{l}_j' = \hat{V}_j' \, \Gamma^{1/2}$. 
 
 
-It should be mentioned, perhaps, that estimation results are sensitive to the choice of scaling of the response variables $Y_k$, and in applications it is often suggested that the component variables $y_{ik}$ be standardized to have unit variances before applying the LS procedure. \\
+It should be mentioned, perhaps, that estimation results are sensitive to the choice of scaling of the response variables $Y_k$, and in applications it is often suggested that the component variables $y_{ik}$ be standardized to have unit variances before applying the LS procedure. \twomedskip
 
 
-\begin{center} \textbf{Relation to Other Dimension-Reduction Methods} \end{center} \vspace{0.5cm}
+\begin{center} \textbf{Relation to Other Dimension-Reduction Methods} \end{center} \twomedskip
 
 
-\noindent\textbf{Principal Component Analysis (PCA)} \\
+\noindent\textbf{Principal Component Analysis (PCA)} \twomedskip
 
 
 \noindent Principal component analysis, originally developed by Hotelling (1933)~\cite{hotelling33}, is concerned with explaining the covariance structure of a large number of variables through a small number of linear combinations of the original variables. Although the two objectives of the PCA data reduction and interpretation which coincide with the objectives of the reduced-rank regression, a major difference is that the principal components are descriptive tools that do not usually rest on any modeling or distributional assumptions. 
@@ -193,10 +193,10 @@ The principal component problem can be represented as a reduced-rank problem, in
 	\begin{equation} \label{eqn:ykabyk}
 	Y_k= ABY_k + \epsilon_k,
 	\end{equation}
-with $X_k \equiv Y_k$. From the solutions of Result~\ref{res:2}, by setting $\Gamma= I_m$, we have $A^{(r)}= [V_1, \ldots, V_r]$ and $B^{(r)}= V'$ because $\Sigma_{yx}= \Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $l_i$ in PCAß are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$ in \eqref{eqn:ykabyk}. If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_k$ appear to be superfluous but the model \eqref{eqn:ykabyk} provides a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \\
+with $X_k \equiv Y_k$. From the solutions of Result~\ref{res:2}, by setting $\Gamma= I_m$, we have $A^{(r)}= [V_1, \ldots, V_r]$ and $B^{(r)}= V'$ because $\Sigma_{yx}= \Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $l_i$ in PCAß are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$ in \eqref{eqn:ykabyk}. If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_k$ appear to be superfluous but the model \eqref{eqn:ykabyk} provides a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \twomedskip
 
 
-\noindent \textbf{Canonical Correlation Analysis:} \\
+\noindent \textbf{Canonical Correlation Analysis:} \twomedskip
 
 
 \noindent Canonical correlation analysis was introduced by Hotelling~(1935, 1936)~\cite{hotelling35,hotelling36} as a method of summarizing relationships between two sets of variables. The objective is to find that linear combination of one set of variables which is most highly correlated with any linear combination of a second set of variables. The technique has received attention from theoretical statisticians but because of difficulty in interpretation of the canonical variates, its use is not widespread in applications. By exploring the connection between the reduced-rank regression and canonical correlations, we provide an additional method of interpreting the canonical variates. Because the role of any descriptive tool such as canonical correlations is in better model building, the connection we display below provides an avenue for interpreting and further using the canonical correlations for better model building.
@@ -379,10 +379,10 @@ Within the context of model \eqref{eqn:2WtABY}, it is necessary to specify or de
 where the $\hat{\rho}_i$ are the $d = m - r$ smallest sample partial canonical correlations between $W_t = Y_t - Y_{t-1}$ and $Y_{t-1}$, given $W_{t-1} ,\ldots, W_{t-p+1}$. The limiting distribution for the likelihood ratio statistic does not take standard form and has been derived by Johansen (1988)~\cite{johansen1988statistical}, and by Reinsel and Ahn (1992)~\cite{reinsel1992vector}. The asymptotic distribution of the likelihood ratio test statistic under $H_0$ depends only on the number of unit roots, $d$, and not on any other parameters or on the order $p$ of the VAR model.
 
 
-Critical values of the asymptotic distribution of \eqref{eqn:2negT} have been obtained by simulation by Johansen (1988)~\cite{johansen1988statistical} and Reinsel and Ahn (1992)~\cite{reinsel1992vector} and can be used in the test of $H_0$. It is known that inclusion of a constant term in the estimation of the nonstationary AR model affects the limiting distribution of the estimators and test statistics. Testing for this and other model variations can be found elsewhere in the literature (see Johansen (1991)~\cite{johansen1991estimation}, Engle and Granger (1987)~\cite{engle1987co}, etc.). \\
+Critical values of the asymptotic distribution of \eqref{eqn:2negT} have been obtained by simulation by Johansen (1988)~\cite{johansen1988statistical} and Reinsel and Ahn (1992)~\cite{reinsel1992vector} and can be used in the test of $H_0$. It is known that inclusion of a constant term in the estimation of the nonstationary AR model affects the limiting distribution of the estimators and test statistics. Testing for this and other model variations can be found elsewhere in the literature (see Johansen (1991)~\cite{johansen1991estimation}, Engle and Granger (1987)~\cite{engle1987co}, etc.). \twomedskip
 
 
-\noindent \textbf{Co-movement and Commonality; Further Discussion:} \\
+\noindent \textbf{Co-movement and Commonality; Further Discussion:} \twomedskip
 
 
 Economic time series share some common characteristics such as a trends, seasonality and serial correlations. The existence of common elements is identified through the indicators of comovement. Series that have common stochastic trends can be identified through reduced-rank regression methods as discussed in this section. Centoni and Cubadda (2011)~\cite{centoni} provide a survey of models used in this area. From a modeling point of view, the parsimonious structure that results from the comovement can be stated as

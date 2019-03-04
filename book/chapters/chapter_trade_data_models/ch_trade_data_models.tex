@@ -1,7 +1,7 @@
 % !TEX root = ../../book.tex
 \chapter{Modeling Trade Data \label{chap:ch_trade_data_models}}
 
-Many articles and books have appeared on the topic of modeling trade data. There is a wealth of information out there and our goal in this chapter is to review modeling approach commonly practiced in the industry. As in the rest of this book our effort is to provide context on the the role these models play in practice, the challenges and considerations that are involved in dealing with trade data, day in and day out, and then provide the quantitative foundation the reader needs to progress further. This chapter follows the same pattern as used in other parts of this book. We start with a practitioner's view of the subject, what approaches are used  and why and discuss some intuitive ideas on how to tackle these problem. We look at the need and importance of normalization analytics and their role in execution algorithms. We will go into some details on the most important analytics and ideas on common modeling approaches. We then turn to a review of common microstructure signal that are widely used in HFT and execution as foundation for more advance alpha signals. We then provide a more in-depth quantitative treatment on some of the sophisticated models discussed in applied and academic research areas. \\
+Many articles and books have appeared on the topic of modeling trade data. There is a wealth of information out there and our goal in this chapter is to review modeling approach commonly practiced in the industry. As in the rest of this book our effort is to provide context on the the role these models play in practice, the challenges and considerations that are involved in dealing with trade data, day in and day out, and then provide the quantitative foundation the reader needs to progress further. This chapter follows the same pattern as used in other parts of this book. We start with a practitioner's view of the subject, what approaches are used  and why and discuss some intuitive ideas on how to tackle these problem. We look at the need and importance of normalization analytics and their role in execution algorithms. We will go into some details on the most important analytics and ideas on common modeling approaches. We then turn to a review of common microstructure signal that are widely used in HFT and execution as foundation for more advance alpha signals. We then provide a more in-depth quantitative treatment on some of the sophisticated models discussed in applied and academic research areas. \twomedskip
 
 
 \noindent\textbf{On Data Preparation:} Before we delve into detail, it's important to discuss an area, often completely disregarded when creating production quality analytics---the data preparation. This step is clearly important in any modeling but for trading this is of particular interest. Trading is a highly behavioral process and as such it's patterns have strong seasonal component due to financial events and specific moments of the corporate life-cycle. During these periods often called ``special days'' the behavior of the stock have strong variation from regular days and should be excluded when general analytics are created and special days analytics should be created separately. Examples of special days include: Futures and Options expiration days, FOMC announcements, earnings announcements, etc.. While this appears to be a simple process, in practice maintaining special day calendar can be a source of some manual labor. It has to be observed, sometimes it is not the quantitative aspects that end up being the hardest problem to solve.
@@ -131,7 +131,7 @@ Incorporating intraday seasonality is a critical component of any execution stra
 Of particular importance is the Volume Distribution (or daily profile) as it is used to create a VWAP strategy. For such a strategy, the volume profile is directly used in the execution schedule; it actually very much is the trading schedule. This will ensure that the strategy trades proportionally; a larger slice of the order at times when more volume is expected to trade thus reducing the risk of trading at prices away from the period VWAP.
 
 
-Volume distribution during the course of a day is most invariably shaped like a flattened U (often called the Volume Smile). Volatility and spread distributions are both shaped vaguely exponential. Volume is generally clustered around the opening auction(s) and the first several minutes after the market opens. This makes intuitive sense as the market is re-opening after a trading halt and all new information accrued overnight needs to be incorporated in the trading decisions. Spread and Volatility are also large during this period signifying the increased uncertainty around the stock valuation. After this period of heightened activity,  trading normally settles in and volume flattens out only to pick up again in the period before closing as mutual funds and other investment firms often use the closing price to determine the stock net asset value (NAV) used for creation/redemption and thus prefer trading around the closing auction to minimize the risk of large negative deviations, while still striving to minimize price impact.\footnote{In this section with ignore the fact that certain markets have lunch breaks. This clearly complicates but does not change the overall picture or approach and it's a relatively trivial extension to the treatment of profiles}. With the recent strong push away from active investing into passive instruments, in particular such as ETFs, the shape of the volume profiles has become increasingly back-loaded. As of the time of this writing the last hour of trading often accounts for 25-30\% of the whole day's volume. The Volume Smile is turning into a Volume Smirk! Volatility and spread also have a maximum at the open to account for the uncertainty around the market reaction to  overnight news. As soon as price discovery takes place their values quickly settle and gradually decay to minimum usually at the end of the day.\\
+Volume distribution during the course of a day is most invariably shaped like a flattened U (often called the Volume Smile). Volatility and spread distributions are both shaped vaguely exponential. Volume is generally clustered around the opening auction(s) and the first several minutes after the market opens. This makes intuitive sense as the market is re-opening after a trading halt and all new information accrued overnight needs to be incorporated in the trading decisions. Spread and Volatility are also large during this period signifying the increased uncertainty around the stock valuation. After this period of heightened activity,  trading normally settles in and volume flattens out only to pick up again in the period before closing as mutual funds and other investment firms often use the closing price to determine the stock net asset value (NAV) used for creation/redemption and thus prefer trading around the closing auction to minimize the risk of large negative deviations, while still striving to minimize price impact.\footnote{In this section with ignore the fact that certain markets have lunch breaks. This clearly complicates but does not change the overall picture or approach and it's a relatively trivial extension to the treatment of profiles} With the recent strong push away from active investing into passive instruments, in particular such as ETFs, the shape of the volume profiles has become increasingly back-loaded. As of the time of this writing the last hour of trading often accounts for 25-30\% of the whole day's volume. The Volume Smile is turning into a Volume Smirk! Volatility and spread also have a maximum at the open to account for the uncertainty around the market reaction to  overnight news. As soon as price discovery takes place their values quickly settle and gradually decay to minimum usually at the end of the day. \twomedskip
 
 \begin{figure}[!ht]
 		\centering
@@ -143,27 +143,27 @@ Having accurate profiles is of critical importance in execution and in the next 
 
 
 
-\noindent\textbf{Building Intraday Profiles:} Building stable profiles presents some non-trivial challenges at multiple levels. These are both logistic related and data and modeling related. It is a trade off between availability of data and cost to build and maintain a database. We provide some valuable pointers in building the profiles. This treatment is primarily focused on intraday volume models. Similar approaches can be extended to other variables with strong intraday seasonality. \\
+\noindent\textbf{Building Intraday Profiles:} Building stable profiles presents some non-trivial challenges at multiple levels. These are both logistic related and data and modeling related. It is a trade off between availability of data and cost to build and maintain a database. We provide some valuable pointers in building the profiles. This treatment is primarily focused on intraday volume models. Similar approaches can be extended to other variables with strong intraday seasonality. \twomedskip
 
 
-\noindent\textbf{Modeling Approaches} \\
+\noindent\textbf{Modeling Approaches} \twomedskip
 
-As a supervised learning model, intraday seasonality is definitively not trivial to model and until relatively recently these problems have received relatively little coverage and the proposed models are generally complicated and take a lot of effort to create and maintain. While more sophisticated approaches are now being developed the most common approach is to use a discrete piece-wise linear profile with uniform time bins and creating a baseline model by using a form of per-bin averaging over a variable length of history. With that as a starting point some additional processing is done to improve the predictive performance of the profiles as discussed below. For the reader interested in more quantitative approaches one can start with Bialkowski et all (2006)~\cite{bidafol} and Kawakatsu and Hiroyuki (2017)~\cite{kawhiro}. \\
+As a supervised learning model, intraday seasonality is definitively not trivial to model and until relatively recently these problems have received relatively little coverage and the proposed models are generally complicated and take a lot of effort to create and maintain. While more sophisticated approaches are now being developed the most common approach is to use a discrete piece-wise linear profile with uniform time bins and creating a baseline model by using a form of per-bin averaging over a variable length of history. With that as a starting point some additional processing is done to improve the predictive performance of the profiles as discussed below. For the reader interested in more quantitative approaches one can start with Bialkowski et all (2006)~\cite{bidafol} and Kawakatsu and Hiroyuki (2017)~\cite{kawhiro}. \twomedskip
 
 
-\noindent\textbf{Number of Bins:} As previously mentioned the most common approach for developing profiles is to use a discrete, piece-wise linear profile. The decision on the number bins is a trade-off between required precision and granularity during the most active periods of the day and lack of stability due to sparsity of data/change in each bin. One minute bin is the most common choice in the industry. \\
+\noindent\textbf{Number of Bins:} As previously mentioned the most common approach for developing profiles is to use a discrete, piece-wise linear profile. The decision on the number bins is a trade-off between required precision and granularity during the most active periods of the day and lack of stability due to sparsity of data/change in each bin. One minute bin is the most common choice in the industry. \twomedskip
 
 
 \noindent\textbf{Per Stock Profiles vs. Clustered Profiles:} One of the key decisions to be made is whether to create a profile for each individual stock in the universe or use some sort of group profiles. With a universe of several trading instruments it might be impractical to build and maintain stable individual profiles. The stability of the profiles is important in order for their use to be effective. Overly illiquid and slowly moving stocks are usually not good candidates for single stock profiles. 
 
 
-A common approach is to use a statistical clustering approach using a distance measure based on trading characteristics and running a model selection approach to identify the number of clusters that provides good separation. Given that the market has many thousand instruments to deal with, large number of clusters, eight to nine hundred of them, is not uncommon. The result of this approach is that the most liquid and active instruments will likely end up in their own cluster while lower liquidity stocks will form their own clusters. \\
+A common approach is to use a statistical clustering approach using a distance measure based on trading characteristics and running a model selection approach to identify the number of clusters that provides good separation. Given that the market has many thousand instruments to deal with, large number of clusters, eight to nine hundred of them, is not uncommon. The result of this approach is that the most liquid and active instruments will likely end up in their own cluster while lower liquidity stocks will form their own clusters. \twomedskip
 
 
-\noindent\textbf{Length of History:} Another open question is the length of history that should be used. The more data is used, the more stable the profiles are however unless great care is given to various seasonal effects and continued changes in market microstructure, there is the risk for the profile not incorporating more recent shifts. This is a particular concern now as the explosion of ETF trading has been consistently shifting more and more volume toward the close. The length of history can be used as a hyper-parameter to be trained on a per-cluster basis. \\
+\noindent\textbf{Length of History:} Another open question is the length of history that should be used. The more data is used, the more stable the profiles are however unless great care is given to various seasonal effects and continued changes in market microstructure, there is the risk for the profile not incorporating more recent shifts. This is a particular concern now as the explosion of ETF trading has been consistently shifting more and more volume toward the close. The length of history can be used as a hyper-parameter to be trained on a per-cluster basis. \twomedskip
 
 
-\noindent\textbf{Volume Profile Smoothing:} Intraday volume profiles tend to be extremely noisy and require smoothing to be effective. Without smoothing the volume profile performs worse than a completely flat profiles. Care must be taken to avoid smoothing over real discontinuities (e.g. there is a predictable spike in volume in European profiles when the US market opens). These spikes usually are preceded by a period of reduced trading activity, as the traders wait for the event. Smoothing these spikes will have the effect of spreading the spikes over previous bins and thus reducing the precision of the profile. One common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and then bring the spike back. It has been observed that this approach improves the overall predictability of the profile. As far as smoothing algorithms there are a lot of choices available. Kernel smoothing methods discussed in Chapter~\ref{ch:ch_uvts} have been proven effective. However, care must be given at the boundaries (beginning and end) of the profile. \\
+\noindent\textbf{Volume Profile Smoothing:} Intraday volume profiles tend to be extremely noisy and require smoothing to be effective. Without smoothing the volume profile performs worse than a completely flat profiles. Care must be taken to avoid smoothing over real discontinuities (e.g. there is a predictable spike in volume in European profiles when the US market opens). These spikes usually are preceded by a period of reduced trading activity, as the traders wait for the event. Smoothing these spikes will have the effect of spreading the spikes over previous bins and thus reducing the precision of the profile. One common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and then bring the spike back. It has been observed that this approach improves the overall predictability of the profile. As far as smoothing algorithms there are a lot of choices available. Kernel smoothing methods discussed in Chapter~\ref{ch:ch_uvts} have been proven effective. However, care must be given at the boundaries (beginning and end) of the profile. \twomedskip
 
 
 \noindent\textbf{Special Days:} Special days present additional challenges due to limited data (e.g triple witching occurs only four times a year). So using larger clusters (one cluster as a limit) is often the only option. One way to handle this would be to use these separately calibrated profiles across all special-day clusters. However this would lose the granularity of the regular day clustering. In order to maintain some of the  regular cluster level characteristics a common approach is to use a ``difference'' profile created by a normalized per-bin ratio between and average regular day profile and the special day profile. This captures the special day systematic shift that can then be multiplied back to the cluster profile essentially mixing the two components. While in most cases this has proven effective we would recommend out of sample testing at the cluster level to see in which profile this is effective. 
@@ -222,30 +222,31 @@ As mentioned, the current trend towards passive investments and ETF has driven t
 
 
 
+% Microstructure Signals
 \section{Microstructure Signals }
 
-Although the focus of the book is somewhat on alpha signals, no coverage of the subject would be close to complete without an introduction on the topic of microstructure signals. The subject is quite useful and not much is published in academic literature because any successful research in the space can be instantly utilized in practice and thus is not publicly available. Here we just give a brief overview of common signals considered in practice as a starting point for the interested researcher/practitioner. \\
+Although the focus of the book is somewhat on alpha signals, no coverage of the subject would be close to complete without an introduction on the topic of microstructure signals. The subject is quite useful and not much is published in academic literature because any successful research in the space can be instantly utilized in practice and thus is not publicly available. Here we just give a brief overview of common signals considered in practice as a starting point for the interested researcher/practitioner. \twomedskip
 
 
 \noindent\textbf{Mid-Price:} This is taken to represent `fair' price in the market. With $p^b$ is the highest bid price and $p^a$ is the lowest ask price, mid-price is
 	\begin{equation} \label{eqn:mpapbover2}
 	M= \dfrac{p^a + p^b}{2}.
 	\end{equation}
-This changes relatively infrequently and so it is taken to a relatively low frequency signal. \\
+This changes relatively infrequently and so it is taken to a relatively low frequency signal. \twomedskip
 
 
 \noindent\textbf{Quote Imbalance:} Arguably the most used predictive microstructure signal by practitioners is the quote imbalance.  The simplest measure of quote imbalance can be defined as: 
 	\begin{equation}\label{eq:q_imb}
 		\text{qimb} = \frac{bs - as}{as + bs}
 	\end{equation}
-where `$bs$' is the bid side quote and `$a$' is the ask side quote. The intuition behind why quote imbalance is predictive of the next quote movement is simple: if more buyers enter the market before crossing the spread they are likely to post at the best bid. The more quotes pile up, it is more unlikely that they will find a seller and eventually a buyer might will run out of patience and cross the spread. If the opposite size is small (i.e. the quote imbalance is heavily slanted toward the buy side) it is likely the trade will clear the price level leading to a price move. \\
+where `$bs$' is the bid side quote and `$a$' is the ask side quote. The intuition behind why quote imbalance is predictive of the next quote movement is simple: if more buyers enter the market before crossing the spread they are likely to post at the best bid. The more quotes pile up, it is more unlikely that they will find a seller and eventually a buyer might will run out of patience and cross the spread. If the opposite size is small (i.e. the quote imbalance is heavily slanted toward the buy side) it is likely the trade will clear the price level leading to a price move. \twomedskip
 
 
 \noindent\textbf{Book Imbalance:} More sophisticated measures of the imbalance consider not only the inside quote but the size distribution over the entire book. A simple version can be stated as a weighted average across multiple levels:
 	\begin{equation}\label{eq:microprc}
 		obimb = \frac{1}{k}\sum_{i=0}^k w_i (bs_i-  as_i),
 	\end{equation}
-where $w_i$ would be a function of the distance of the $i$ price point (possibly normalized by the quote volatility) and $k$ is some appropriate depth of the book. Most academic studies set $k=5$ or 10 on either side of the order book. \\
+where $w_i$ would be a function of the distance of the $i$ price point (possibly normalized by the quote volatility) and $k$ is some appropriate depth of the book. Most academic studies set $k=5$ or 10 on either side of the order book. \twomedskip
 
 
 \noindent\textbf{Weighted Mid-Price:} A common simple approach to incorporate quote imbalance in a 'fair' price is to consider the quote adjusted mid point. This is defined as
@@ -268,7 +269,7 @@ One can easily devise other measures of microprices that incorporate order book 
 	\begin{equation} \label{eqn:pmicro}
 	p^\text{micro}= M + g(w,S),
 	\end{equation}
-where $S$ is the spread, $S= P^a - P^b$ and the function `$g$' is applied on the imbalance and the spread to move from mid-price to fair price. The function `$g$' is estimated from past order book data and is calibrated toward efficient price. It is verified that $P^\text{micro}$ is a better predictor of future price. \\
+where $S$ is the spread, $S= P^a - P^b$ and the function `$g$' is applied on the imbalance and the spread to move from mid-price to fair price. The function `$g$' is estimated from past order book data and is calibrated toward efficient price. It is verified that $P^\text{micro}$ is a better predictor of future price. \twomedskip
 
 
 For every trading transaction there is always one side that is the initiator of the trade, and in general the counterpart that runs out of patience that decides to pay the spread. This may be due to trading by an informed trader or by trader who has some urgency to trade. In either case an imbalance between the amount of buyer-initiated volume versus seller initiated volume would likely be instructive. While this metric is simple to use, the challenge is to categorize a trade as buyer or seller initiated. For most practitioners who do not have access to Level III data and only has data on quotes and trades this is not trivial as there is a limited amount of research around the efficacy of various algorithms. For Level III data, this information is available for lit venues. However, this is not the case for dark venues where the trade classification of large blocks could be quite valuable.
@@ -284,6 +285,7 @@ As noted in Chakraborty et al. (2012)~\cite{chakrabarty2012short}, for short sal
 
 
 
+% Limit Order Book (LOB): Studying Its Dynamics
 \section{Limit Order Book (LOB): Studying Its Dynamics}
 
 Before we formally present the models, we want to provide a review of how the analysis of LOB data has been approached. Biais, Hillion and Spatt (1995)~\cite{spalt} study the trading activity in Paris Bourse (a fully automated limit order market), the dynamics of order flow and how the order flow varies with the state of the order book and marketplace events relevant to the asset. It is found that the conditional probability of a limit order placement is larger when the bid-ask spread is larger and when the order book is not deep. If a market order has been placed the chance that the next order posted provides liquidity is generally higher. The placement of orders also follows a pattern with new orders coming in the morning when the price discovery occurs and cancellations and large orders occur in the evenings. The durations between trades do indicate that the intensity of trade varies during the course of a day. The main tool used in these calculations is contingency table which provides both marginal and conditional probabilities. With the operation of multiple exchanges, the calculation of these probabilities has become quite complex. 
@@ -327,16 +329,16 @@ Figure~\ref{fig:presentshape} presents the shape of the limit order book.
 	\end{figure}
 
 
-\noindent \textbf{Slope of LOB:} To begin with we can consider the slope of the order book both on the demand side and on the supply side using the quotes on both sides various depths (see Figure~\ref{fig:presentshape}). This provides information on order book imbalance that can be helpful for the trader to decide on the optimal time to enter or to exit the market (see Figure~\ref{fig:presentshape}). It is observed from Figure~\ref{fig:presentshape} that the bid-ask spread is at least twice the difference between quotes at successive depths. Thus the slope of the book is steeper closer to the best quotes. \\
+\noindent \textbf{Slope of LOB:} To begin with we can consider the slope of the order book both on the demand side and on the supply side using the quotes on both sides various depths (see Figure~\ref{fig:presentshape}). This provides information on order book imbalance that can be helpful for the trader to decide on the optimal time to enter or to exit the market (see Figure~\ref{fig:presentshape}). It is observed from Figure~\ref{fig:presentshape} that the bid-ask spread is at least twice the difference between quotes at successive depths. Thus the slope of the book is steeper closer to the best quotes. \twomedskip
 
 
 \noindent\textbf{Order Flow:} The orders can be characterized as buyer or seller initiated and how aggressive they are. The aggressiveness is quantified by the size of the order. Most of the orders are small indicating that they could be part of a large parent order. Both placement and cancellation of orders seem to decrease away from the best quotes. As the intra-day trading pattern follows typical diurnal pattern, both the depth and order flow must be adjusted for the time of the day. Some observations (stylized facts) worth noting are:
 \begin{enumerate}[--]
-\item Large (small) trades on one side of the market tend to be followed by large (small) trades on the same side. The same thing could be said about the new limit orders and cancellations as well. It is speculated that this may be due to traders reacting similarly to the same events or due to parent order splitting and automatic placement of child orders. \\
+\item Large (small) trades on one side of the market tend to be followed by large (small) trades on the same side. The same thing could be said about the new limit orders and cancellations as well. It is speculated that this may be due to traders reacting similarly to the same events or due to parent order splitting and automatic placement of child orders. \twomedskip
 
-\item Cancellations on the buy side of the book are more frequent after market buy orders and the same for sell orders. This may be due to the fact that the large sell orders tend to convey negative information about the stock while the large buy orders convey positive information. Cancelations may also occur because of placement of some market orders are intended to probe the presence of any hidden orders. \\
+\item Cancellations on the buy side of the book are more frequent after market buy orders and the same for sell orders. This may be due to the fact that the large sell orders tend to convey negative information about the stock while the large buy orders convey positive information. Cancelations may also occur because of placement of some market orders are intended to probe the presence of any hidden orders. \twomedskip
 
-\item Conditioning on the state of the book by size of bid-ask spread and the depth, it is observed that trades are more frequent when the spread is tight but the new orders inside the quotes are more frequent when the spread is large. The changes in spread are mainly due to liquidity shocks. \\
+\item Conditioning on the state of the book by size of bid-ask spread and the depth, it is observed that trades are more frequent when the spread is tight but the new orders inside the quotes are more frequent when the spread is large. The changes in spread are mainly due to liquidity shocks. \twomedskip
 
 \item Frequency of trades tends to be clustered because competing traders who monitor the market closely are likely to place the orders when they read the market in their favor. It is observed that the trading activity is more intense with the information flow. Also observed are the following stylized facts: when the spread is large after liquidity shocks, traders place their orders quickly to take advantage of time priority. Thus the spread reverses back to original level. The expected time interval is generally lower after large trades than after other trades whether the spread is large or not.
 \end{enumerate}
@@ -349,12 +351,12 @@ Thus the study by Biasis et al. (1995)~\cite{spalt} provides a set of concrete m
 
 
 \noindent\textbf{Review of Early Models:} We begin with one of the earlier models to appear in the econometric literature (Lo, MacKinlay and Zhang (2002)~\cite{maczhang}); they used the data from Investment Technology Group (ITG) that contained time stamped information on each limit order from submission to cancellation or execution. With three possible paths for each submitted order, the associated (a) time-to-cancellation/modification, (b) time-to-first fill and (c) time-to-completion are tracked and models are developed for each path on both sides of the order. Because ITG largely deals with the institutional investors, the results apply only to a limited segment of the traders. The modeling approach is to get the execution times as the first-passage time to the limit price assuming that price follows a geometric Brownian model with a drift:
-	\begin{equation}\label{eqn:dp(t)}
+	\begin{equation} \label{eqn:dp(t)}
 	dP(t)= \alpha \cdot P(t) \; dt + \sigma \cdot P(t) \; dW(t),
 	\end{equation}
 where $W(t)$ is a standard Brownian motion. A buy limit order with a price `$P_l$' is executed in the time interval $[t_0,t_0+t]$ only if $P_{\text{min}} \leq P_l$ and the probability is
-	\begin{equation}\label{eqn:expprob}
-	\small P_r(P_{\text{min}} \leq P_l \;|\; P(t_0)=P_0)= 1- \left(1 - \left(\dfrac{P_l}{P_0}\right)^{2\mu/\sigma^2}\right) \Phi\left[\dfrac{\ln(P_0/P_l) + \mu t}{\sigma \sqrt{t}}\right],
+	\begin{equation} \label{eqn:expprob}
+	\scalebox{0.95}{$P_r(P_{\text{min}} \leq P_l \;|\; P(t_0)=P_0)= 1- \left(1 - \left(\dfrac{P_l}{P_0} \right)^{2\mu/\sigma^2} \right) \Phi\left[ \dfrac{\ln(P_0/P_l) + \mu t}{\sigma \sqrt{t}} \right]$},
 	\end{equation}
 where $\mu=\alpha - \frac{1}{2} \sigma^2$ and $\Phi(\cdot)$ is the cumulative distribution function of the standard normal. 
 
@@ -385,7 +387,7 @@ The following variables are used as explanatory variables:
         \item Measures of market depth.
         \item Measures that reflect change in trading activities. 
         \end{enumerate}
-It is shown that this model does fare better than FPT model to capture the execution times. But an important limitation is ``\dots censoring as a result of prices moving away from the limit price would be a violation of the underlying assumption since prices at the time of censoring are not included in $X_i$.'' We show in our analysis of Level III data, a key determinant for cancellation of an order is that price moving away from the limit price that the trader has desired. \\
+It is shown that this model does fare better than FPT model to capture the execution times. But an important limitation is ``\dots censoring as a result of prices moving away from the limit price would be a violation of the underlying assumption since prices at the time of censoring are not included in $X_i$.'' We show in our analysis of Level III data, a key determinant for cancellation of an order is that price moving away from the limit price that the trader has desired. \twomedskip
 
 
 \noindent \textbf{Other Early Models:} There are a number of studies that have looked into order book dynamics using models that arise from Theory of Point Processes. Bouchard, Mezard and Polters (2002)~\cite{bouchardmezard} investigate the interaction between order flow and liquidity; it is observed that the distribution of incoming limit order prices follow a power law around the current price and the overall shape of the book in terms of volume on both sides is rather systematic. Smith, Farmer, Gillemot and Krishnamunthy (2003)~\cite{smithfarm} and Farmer, Gillemot, Lillo, Mike and Sen (2004)~\cite{farmermikesen} study how the order flow influences price formation; the price impact of market orders is a function of touch price depth and spread size. 
@@ -394,11 +396,11 @@ It is shown that this model does fare better than FPT model to capture the execu
 To have a more complete and realistic picture of how the LOB evolves, we must consider `hidden liquidity.' Almost all exchanges allow traders to hide all or portions of their orders. The so-called, ``iceberg order'' is split into several smaller parts and is queued along with the other orders, but only the displayed quantity is visible and is part of the market depth. When the order reaches the front of the queue only the displayed is executed. Several reports could be as high as 26\%. In the models discussed below, we will not address the hidden liquidity issue, which will be taken up in a later section.
 
 
-Modeling of LOB dynamics has drawn on ideas from economics, physics, statistics and psychology. The approach taken in economics literature is to focus on the behavior of the traders and the dynamics is modeled as sequential games (Rosu (2009)~\cite{irosu09}). Others, such as researchers from physics, have treated order flows as random and statistical mechanics techniques are used to study the dynamics. Other studies, such as Parlour and Seppi (2008)~\cite{parseppi} and Bouchaud et al. (2009)~\cite{bouchaud2009} are useful references for studies that come from economics point of view. We will review some models that are of recent origin. \\
+Modeling of LOB dynamics has drawn on ideas from economics, physics, statistics and psychology. The approach taken in economics literature is to focus on the behavior of the traders and the dynamics is modeled as sequential games (Rosu (2009)~\cite{irosu09}). Others, such as researchers from physics, have treated order flows as random and statistical mechanics techniques are used to study the dynamics. Other studies, such as Parlour and Seppi (2008)~\cite{parseppi} and Bouchaud et al. (2009)~\cite{bouchaud2009} are useful references for studies that come from economics point of view. We will review some models that are of recent origin. \twomedskip
 
 
 
-\noindent\textbf{Recent Models:} Our coverage here is not complete as we discuss only select models. In our choice, we mainly went by empirically verified models. \\
+\noindent\textbf{Recent Models:} Our coverage here is not complete as we discuss only select models. In our choice, we mainly went by empirically verified models. \twomedskip
 
 
 \noindent\textbf{Cont, Stoikov and Talreja (2010)~\cite{contstoi}}: In this model of the limit order book, the number of limit orders at each price level in the book is taken to be a continuous-time Markov chain. The evolution of the order book through market orders, limit orders and cancellations is represented as a counting process. The model replicates the evolution of the events using independent Poisson processes. The study views LOB as a system of queues subject to order book events whose occurrences are modeled as a multidimensional point process. Before we state the specific questions and the models implications, we define certain useful quantities. 
@@ -407,17 +409,25 @@ Modeling of LOB dynamics has drawn on ideas from economics, physics, statistics 
 It is taken that the price grid as $P(n)=\{1,2,\ldots,n\}$ multiples of a price tick. The number of outstanding orders in the book $|X_t^i|$ at price $i$, collectively, $X_t \equiv (X_t^1,\ldots,X_t^n)$ is taken to be continuous-time Markov chain; if $X_t^i<0$, then there are $-X_t^i$ bid orders at price `$i$' and if $X_t^i>0$, then there are $X_t^i$ ask orders at price $i$. Now we have,
 	\begin{equation}\label{eqn:bestmidspread}
 	\begin{split}
-	\text{Best Ask Price: }& p_A(t)=\inf\{i \colon X_t^i>0\} \\
-	\text{Best Bid Price: }& p_B(t)=\sup\{i \colon X_t^i<0\} \\
-	\text{Mid Price: }& p_M(t)=(p_A(t)+p_B(t))/2 \\
-	\text{Spread: }& p_S(t)=p_A(t)-p_B(t)
+	\text{Best Ask Price: }& p_A(t)= \inf\{i \colon X_t^i > 0 \} \\
+	\text{Best Bid Price: }& p_B(t)= \sup\{i \colon X_t^i < 0 \} \\
+	\text{Mid Price: }& p_M(t)= (p_A(t) + p_B(t))/2 \\
+	\text{Spread: }& p_S(t)= p_A(t) - p_B(t)
 	\end{split}
 	\end{equation}
 The depth of the order book is stated relative to best bid and best ask on either side of the book. This way the model can be applied to order book for any equity that is subject to changing, best bid and best ask. Define
 	\begin{flalign} \label{eqn:qaqb}
-	&& Q_i^B(t)&= \begin{cases} X_{p_A(t)-i}(t), & 0<i<p_A(t) \\ 0, & p_A(t) \leq i <n \end{cases} && \notag \\
+	&& Q_i^B(t)&= 
+	\begin{cases} 
+	X_{p_A(t)-i}(t), & 0< i <p_A(t) \\ 
+	0, & p_A(t) \leq i < n 
+	\end{cases} && \notag \\
 	\text{and} && \phantom{x} & \phantom{x} && \\
-	&& Q_i^A(t)&= \begin{cases} X_{p_B(t)-i}(t), & 0<i<n-p_B(t) \\ 0, & n-p_B(t) \leq i <n \end{cases} && \notag
+	&& Q_i^A(t)&= 
+	\begin{cases} 
+	X_{p_B(t)-i}(t), & 0< i < n-p_B(t) \\ 
+	0, & n-p_B(t) \leq i < n 
+	\end{cases} && \notag
 	\end{flalign}
 Thus, $Q_i^B(t)$ and $Q_i^A(t)$ denote the number of buy orders at a distance `$i$' from ask and the number of sell orders at a distance `$i$' from bid, respectively. This representation highlights the shape (or depth) of the book relative to the best quotes on either side as in Figure~\ref{fig:presentshape}.
 
@@ -488,7 +498,7 @@ The model was evaluated using data sets from Tokyo Stock Exchange. The model is 
 The use of Poisson processes to model the flows of limit orders, market orders and cancellations makes this method analytically tractable. The model captures the steady-state shape of the order book (although there may be other distributions that may fit better besides Poisson, see Figure~\ref{fig:intertimefig}) but it may not be useful for predicting short-term behavior that may be more relevant for the traders. The assumption of Poisson process results in that the intensity of arrivals and cancellations that does not depend on the state of the order book which is somewhat unrealistic given the feedback loop relationship between the behavior of the market participants and the history of the order book. Recent works show that the memory-less property is not empirically valid. Orders tend to be clustered due to dependencies between liquidity taking and liquidity providing orders and also due to algorithmic execution of parent order that is split into numerous child orders. Also, the assumption that all orders are of the same size is also too simplistic. 
 
 
-Models based on marked point process are proposed when the mark represents order types, price, size etc.. The joint modeling assumes that the order flow is self-exciting, i.e. new orders or cancellations occur in an orderly point processes with an intensity function that depends on the history of the limit order book. These models are somewhat difficult to estimate and do not fully capture the empirical results such as volatility clustering etc.. \\
+Models based on marked point process are proposed when the mark represents order types, price, size etc.. The joint modeling assumes that the order flow is self-exciting, i.e. new orders or cancellations occur in an orderly point processes with an intensity function that depends on the history of the limit order book. These models are somewhat difficult to estimate and do not fully capture the empirical results such as volatility clustering etc.. \twomedskip
 
 
 \noindent\textbf{Queue-Reactive Model:} Most of the market participants consider their target price with reference to market price, which depends on the order flows and the resulting changes in the state of the LOB. Huang, Lehalle and Rosenbaum (2015)~\cite{hlehros} study the LOB dynamics via a Markov queuing model when the market price remains constant and how the market price changes. The change in market price can occur when the execution occurs at the best price or a new order appears within the spread. This dual split of the model is termed as `queue-reactive model.' In the framework considered, three specific scenarios, where bid and ask sides are independent, independent except for the first two positions, on either side and where cross dependence between bid queue and ask queue is possible.
@@ -505,7 +515,7 @@ We will not delve into extensive details here, but briefly indicate the main gis
 \end{enumerate}
 
 
-In the case of dependency where bid side and ask side are correlated to each other, the above observations include the consideration of queue sites on the other side as well. In a paper with similar ideas, Abergel and Jedidi (2013)~\cite{aberjed} present a model that captures a stylized description of order book with the assumption of independent Poissonian arrival times. They also show that the price process converges to a Brownian motion. \\
+In the case of dependency where bid side and ask side are correlated to each other, the above observations include the consideration of queue sites on the other side as well. In a paper with similar ideas, Abergel and Jedidi (2013)~\cite{aberjed} present a model that captures a stylized description of order book with the assumption of independent Poissonian arrival times. They also show that the price process converges to a Brownian motion. \twomedskip
 
 
 
@@ -532,7 +542,7 @@ Hawkes (2018)~\cite{hawkes18} provides a review of these processes in financial 
 	\text{Mutually Exciting Process: }& \lambda_{i,t}= \mu_i + \sum_{j=1}^D \sum_{T_{j:r}<t} \gamma_{ij} (t- T_{j:r}).
 	\end{split}
 	\end{equation}
-Here `$\xi_i$' are marks such as `volume' and `$D$' is the different types of events with their own point processes. \\
+Here `$\xi_i$' are marks such as `volume' and `$D$' is the different types of events with their own point processes. \twomedskip
 
 
 \noindent\textbf{Models for Volatility Clustering:} The features of volatility clustering and the significant autocorrelations in durations between order arrivals and significant cross-correlation of arrival rates across various event types are better captured by multi-dimensional Hawkes process. For a given $M$-dimensional point process, let $N_t=(N_t^1,\ldots,N_t^M)$ denote the associated counting process and the Hawkes process is characterized by intensities, $\lambda^m(t), m=1,\ldots,M$ as
@@ -583,7 +593,7 @@ More generally in the `$M$' dimensional multivariate case,
 	&+ \int_{t_{i-1}^m}^{t_i^m} \sum_{n=1}^M \sum_{t_{i-1}^m<t^n<s} \alpha^{mn} e^{-\beta^{mn}(s-t^n)} \; ds
 	\end{split}
 	\]
-will follow exponential distribution. The $\Lambda^m(t_{i-1}^m,t_i^m)$ are known as compensators and can be verified empirically if they follow exponential distribution. \\
+will follow exponential distribution. The $\Lambda^m(t_{i-1}^m,t_i^m)$ are known as compensators and can be verified empirically if they follow exponential distribution. \twomedskip
 
 
 \noindent\textbf{Application of a Hawkes process:} We want to illustrate the model with an application. We first look at the statistical properties of the data and then look at the results of fitting one and two dimensional Hawkes processes to it. Our findings show that a two dimensional model based on Hawkes processes performs considerably better than a model based on two independent Poisson Processes. This provides strong evidence of the fact that the two key features of Hawkes processes (path dependency of the order flow and the possibility of modeling the interaction between the dimensions) are capable of capturing and replicating some of the key features of the empirical data. Moreover, there is evidence of significant and asymmetric interplay between the buy and the sell sides for the Limit Orders and evidence of limited interplay between the two sides when it comes to Market Orders. Finally, a study of the statistical properties of the orders showed a complex of alternating symmetric and asymmetric behavior of the LOB. 
@@ -670,7 +680,7 @@ With two more trading days (3rd and 9th of September 2013) data available, we ar
 	\end{figure}
 
 
-A second interesting difference was in the amount of volume on the two sides of the book (Figure~\ref{fig:losubcanfreq}). Across the three days there was a significant volume imbalance with considerably more volume on the sell side than on the buy side but the amount of imbalance between the two sides changes significantly across the three days. Overall there is no explanation as to why there would be such a strong volume imbalance in favor of the sell side other than some kind of temporary anomaly. These findings seem to point out the fact that the shape and behavior of the LOB change dramatically across different days and that, in order to capture a more general/average behavior of the book, many more days of data are required. \\
+A second interesting difference was in the amount of volume on the two sides of the book (Figure~\ref{fig:losubcanfreq}). Across the three days there was a significant volume imbalance with considerably more volume on the sell side than on the buy side but the amount of imbalance between the two sides changes significantly across the three days. Overall there is no explanation as to why there would be such a strong volume imbalance in favor of the sell side other than some kind of temporary anomaly. These findings seem to point out the fact that the shape and behavior of the LOB change dramatically across different days and that, in order to capture a more general/average behavior of the book, many more days of data are required. \twomedskip
 	\begin{figure}[!ht]
    	\centering
    	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/freqsubmit.png} 
@@ -826,6 +836,7 @@ Also, an important limitation of the bi-dimensional Hawkes Process model is that
 
 
 
+% Models for Hidden Liquidity
 \section{Models for Hidden Liquidity}
 
 Investors have the option to place limit orders that are not visible to other traders but they are observable to exchange officials. These are called `hidden' or `iceberg' orders. The invisible order retains price but not time priority. It is possible to place a fraction of order visible but the rest hidden. When a visible portion gets executed, another fraction of the hidden order becomes visible. In NYSE, an order improving the quotes can be fully hidden. The posting of hidden orders is a second stage decision by the traders after choosing between market and limit orders. The risk of placing limit orders has been discussed earlier and an important element of that is the transparency or exposure risk that can signal to market participants the motive of the trader. This may result in other traders engaging in front-running strategies in anticipation of certain market movements. It is also speculated that orders are hidden when there is increased participation of informed traders and to minimize price impact when the execution probability is fairly high. 
@@ -942,6 +953,7 @@ This information along with depth information in Table~\ref{tab:transmatrix} ind
 
 
 
+% Modeling LOB: Some Concluding Thoughts
 \section{Modeling LOB: Some Concluding Thoughts}
 
 With the availability of voluminous high frequency data, there is as we saw in this chapter a considerable literature to understand the market microstructure issues. The time-stamped data on each and every activity provides both opportunities and challenges. The challenge is in sorting out the signal from the noise. It gets even more complicated when we want to account for the activities over the time scale. The so-called Epps effect (Epps (1979)~\cite{epps79}) clearly shows how the aggregation of data over time can change the inference. The predictive value of a price change does not last much more than an hour. For efficient entry into the market, the trader may want to avail the short term correlations. In a thorough study on order book dynamics, Hall and Hautsch (2006)~\cite{hallhautsch06} formula the key questions as the following hypotheses:
@@ -962,7 +974,3 @@ With the availability of voluminous high frequency data, there is as we saw in t
 	\item The higher the bid-ask spread, the lower the aggressiveness in market trading and the higher the aggressiveness in limit order trading. 
 	\end{enumerate}
 It is empirically demonstrated that it is important to take into account the state of the order book to better understand the submission and cancellation behaviors. It is also clear based on the INET data analysis provided earlier, Hawkes process does better, but there is a lot of room to improve on the models.
-
-
-%\section{Supplements and Problems} 
-%TODO

@@ -51,9 +51,9 @@ For this reason early practitioners started using benchmarks meant to measure ho
 This approach, while sensible, had some unintended consequences that we are still facing today to an extent. Early users and sellers of these algorithms started equating the benchmark and the strategy used to achieve it as the actual ultimate objective of the strategy. These strategies should not be used if a trader has an IS benchmark, which arguably every trader ultimately has. Our claim is that all these strategies are in some sense IS strategies that, when no better information around price direction/dynamics exist. Still, the focus is on minimizing impact by managing the realized trading rate which, as we know, is the best understood driver of market impact.
 
 
-Let us review the basic benchmarks and related strategies. \\
+Let us review the basic benchmarks and related strategies. \twomedskip
 
-\noindent\textbf{TWAP} \\
+\noindent\textbf{TWAP} \twomedskip
 
 
 The Trade (Time) Weighted Average Price (TWAP) is the simplest of all the benchmarks and is simply the simple average price of `$N$' trades over the time horizon when the parent order is traded.
@@ -66,7 +66,7 @@ While conceptually simple, this benchmark compares the execution price with the 
 It is hard to argue that there is anything optimal in this approach but lacking any other information and knowledge about the behavior of price and volume it would be one of the only alternative when completing the order is a requirement. We will see below an arguably better approach (VWAP) if order completion is not required. 
 
 
-While very simple TWAP is still used in particular in some less developed markets, it is also used by some systematic quantitative strategy where the joint trading schedule of a long-short portfolio is optimized as part of the investment strategy and then each individual short term slice (5--15~m) is sent to a TWAP algorithm. This will help maintain the dollar neutrality of the portfolio. \\
+While very simple TWAP is still used in particular in some less developed markets, it is also used by some systematic quantitative strategy where the joint trading schedule of a long-short portfolio is optimized as part of the investment strategy and then each individual short term slice (5--15~m) is sent to a TWAP algorithm. This will help maintain the dollar neutrality of the portfolio. \twomedskip
 
         \begin{figure}[!ht]
         \centering
@@ -75,7 +75,7 @@ While very simple TWAP is still used in particular in some less developed market
         \end{figure}
 
 
-\noindent\textbf{VWAP} \\
+\noindent\textbf{VWAP} \twomedskip
 
 
 The Volume Weighted Average Price (VWAP) is the next simplest benchmark that is commonly used. Simply weigh every trade by the normalized trade size.
@@ -91,7 +91,7 @@ The VWAP strategy, in order to achieve its goal, takes advantage of the relative
 The VWAP strategy is conceptually superior to TWAP as a market impact reduction approach since by trading more (less) when more  (less) volume is expected to trade it does a better job ad minimizing the realized trading rate. That being said if the volume profile is extremely noisy or unpredictable because of special circumstances trading VWAP might actually be inferior to TWAP since the error in our volume profile prediction might cause the strategy to achieve a higher trading rate than the simpler strategy. This will emphasize the need for good volume forecasts for various discrete time units.
 
 
-There is an argument to be made that, reiterating the lack of any price dynamic/prediction information, VWAP is the best approach to trade an order when the order needs to complete. For this reason the strategy is still one of the most used strategy by quantitatively driven funds in which the investment strategy correctly sizes the order to minimize overall impact. Generally, while in recent years the popularity of VWAP has decreased in favor of the more flashy ``Liquidity Seeking'' strategies, it is still one of the most used strategy in the market. We will discuss Liquidity Seeking strategies in a later section. \\
+There is an argument to be made that, reiterating the lack of any price dynamic/prediction information, VWAP is the best approach to trade an order when the order needs to complete. For this reason the strategy is still one of the most used strategy by quantitatively driven funds in which the investment strategy correctly sizes the order to minimize overall impact. Generally, while in recent years the popularity of VWAP has decreased in favor of the more flashy ``Liquidity Seeking'' strategies, it is still one of the most used strategy in the market. We will discuss Liquidity Seeking strategies in a later section. \twomedskip
 
 
         \begin{figure}[!ht]
@@ -101,7 +101,7 @@ There is an argument to be made that, reiterating the lack of any price dynamic/
         \end{figure}
 
 
-\noindent\textbf{Inline with Volume, a.k.a. POV} \\
+\noindent\textbf{Inline with Volume, a.k.a. POV} \twomedskip
 
 
 The previous paragraph hinted that one of the limitation of VWAP (and TWAP) as a market impact controlling tool is that they do not take into consideration the high degree of volatility in the daily volume. If, in a particular day, the actual volume is significantly less than expected volume over the time horizon (due to lack of activity or large distortion in the volume profile) the VWAP strategy will just trade at a higher rate than envisioned by the trader leading to a higher total cost. Conversely, if a trader who is trading a multiday order is too conservative and in that day there is a lot more volume than expected, the trader might trade a smaller portion of the order than the market would have been able to absorb from the same expected impact cost.
@@ -122,7 +122,7 @@ If completing the order is an absolute hard necessity, arguably, there is little
 Because of these drawbacks and complexities Inline strategies have somewhat lost their popularity and the more flexible Liquidity Seeking approaches  have more or less taken their place.
 
 
-The POV benchmark does not provide a way to measure effectiveness of the strategy as an impact prevention approach in particular because of the issues discussed above. The PWP $X$ (Participation Weighted Price at $X$\% of the market) price is used as a measure of execution quality for the inline benchmark. It represents the price one would have obtained had they traded $X$\% of the market volume until completion of the order (in practice, the VWAP of the period from order start until ($1/X \times$ Order Size) has traded in the market). \\
+The POV benchmark does not provide a way to measure effectiveness of the strategy as an impact prevention approach in particular because of the issues discussed above. The PWP $X$ (Participation Weighted Price at $X$\% of the market) price is used as a measure of execution quality for the inline benchmark. It represents the price one would have obtained had they traded $X$\% of the market volume until completion of the order (in practice, the VWAP of the period from order start until ($1/X \times$ Order Size) has traded in the market). \twomedskip
 
 	\begin{figure}[!ht]
 	\centering
@@ -131,13 +131,13 @@ The POV benchmark does not provide a way to measure effectiveness of the strateg
 	\end{figure}
 
 
-\noindent\textbf{Target Close} \\
+\noindent\textbf{Target Close} \twomedskip
 
 
 Most quantitative strategies leverage time series data based on closing prices. As a result, some favor this price point as a benchmark for the execution strategies. This is also the case for passive indexers whose fund tracking error is computed based on closing prices. This clearly places a particular importance to the closing price and thus the desire to minimizing the risk form large negative deviation from that price.
 
 
-The Target Close strategy was devised to handle this use case. It is important to understand that in general even Target Close is an IS strategy in the sense that it is, after all, the elusive best price possible. If it was not and the ultimate price was unimportant the strategy would be simple: place the whole order as a MOC\todo{Expand} into the closing auction no matter how big. The closing price could be negatively affected by the excess imbalance but the order WILL achieve the closing price. So the actual objective is still to get the best price but doing it while avoiding too large of a gamble. If no expectation on price direction is available then the only way to minimize that risk is to trade as close to the closing auction as possible. Most strategies attempt to forecast the amount of volume into the close and size the MOC order accordingly to limit the chance of an adverse impact to the closing price and then trade the rest in the latter part of the continuous phase accelerating the trading rate toward the close. \\
+The Target Close strategy was devised to handle this use case. It is important to understand that in general even Target Close is an IS strategy in the sense that it is, after all, the elusive best price possible. If it was not and the ultimate price was unimportant the strategy would be simple: place the whole order as a MOC\todo{Expand} into the closing auction no matter how big. The closing price could be negatively affected by the excess imbalance but the order WILL achieve the closing price. So the actual objective is still to get the best price but doing it while avoiding too large of a gamble. If no expectation on price direction is available then the only way to minimize that risk is to trade as close to the closing auction as possible. Most strategies attempt to forecast the amount of volume into the close and size the MOC order accordingly to limit the chance of an adverse impact to the closing price and then trade the rest in the latter part of the continuous phase accelerating the trading rate toward the close. \twomedskip
 
 
 	\begin{figure}[!ht]
@@ -173,10 +173,10 @@ There are different variations of this benchmark, most notably the previous day'
 \subsection{Evolution of Execution Strategies}
 
 
-The last section described the main approach used by the original Algorithms that still account for most of the trading flow going through execution algorithms around the globe. These were also the  first strategies to be created. They are conceptually simple but overall are quite effective. While over time they evolved in sophistication with better analytics, order placement, and more nuanced handling of the schedule, the approach to the strategies have been mainly in improving small quantitative sophistication. As the business evolved, practitioners were looking for better approaches, something that would have some quantitative underpinning that would move beyond the naive methods of the first algorithms. We briefly look at how these efforts that are evolved and the drivers behind this evolution. \\
+The last section described the main approach used by the original Algorithms that still account for most of the trading flow going through execution algorithms around the globe. These were also the  first strategies to be created. They are conceptually simple but overall are quite effective. While over time they evolved in sophistication with better analytics, order placement, and more nuanced handling of the schedule, the approach to the strategies have been mainly in improving small quantitative sophistication. As the business evolved, practitioners were looking for better approaches, something that would have some quantitative underpinning that would move beyond the naive methods of the first algorithms. We briefly look at how these efforts that are evolved and the drivers behind this evolution. \twomedskip
 
 
-\noindent\textbf{Implementations Shortfall} \\
+\noindent\textbf{Implementations Shortfall} \twomedskip
 
 
 At the turn of the century things changed with the seminal paper from Almgren and Chriss (2000)~\cite{alm2000} that proposed an approach to ``optimal execution.'' Finally, a more quantitative treatment of the subject, the approach was based on a variational  mean-variance optimization framework similar in spirit with the Markowitz optimal portfolio allocation setup.
@@ -201,7 +201,7 @@ Some buys-side quants were also skeptical. They correctly argue that the IS sche
 Execution quant struggled to adapt the IS framework to incorporate the feedback. The restrictive mathematical framework made it complex and awkward to evolve. Several providers kept the ideas but abandoned the original formulation, others tried to incorporate some more dynamic approaches by moving to a stochastic control framework. Others still kept the original formulation fixed and bolted on a set of heuristics.
 
 
-New academic work expanding on the framework is now available; however, the solutions can appear to be non-intuitive such as the optimal trading approach is to trade a large portion of the order at the beginning and the end of the time horizon with only moderate trading in the middle. These new results were largely not adapted by practitioners as they are considered to be somewhat unrealistic. While the debate is still ongoing and there are a few IS implementations that follow the original framework the whole approach is slowly falling out of favor in favor of a more dynamic set of algorithms. \\
+New academic work expanding on the framework is now available; however, the solutions can appear to be non-intuitive such as the optimal trading approach is to trade a large portion of the order at the beginning and the end of the time horizon with only moderate trading in the middle. These new results were largely not adapted by practitioners as they are considered to be somewhat unrealistic. While the debate is still ongoing and there are a few IS implementations that follow the original framework the whole approach is slowly falling out of favor in favor of a more dynamic set of algorithms. \twomedskip
 
 	\begin{figure}[!ht]
 	\centering
@@ -211,7 +211,7 @@ New academic work expanding on the framework is now available; however, the solu
 
 
 
-\noindent\textbf{Liquidity Seeking Algorithmss} \\
+\noindent\textbf{Liquidity Seeking Algorithms} \twomedskip
 
 
 The next evolution of algorithms, broadly named Liquidity Seeking, are to some extent an alternative to schedule based approaches that had dominated up until then. This came as a recognition that often the latter approaches have to make sub-optimal decisions in order to purely maintain a schedule and these decisions have significant impact on the performance of a strategy. By abandoning the schedule for a completely dynamic approach it is hoped that the excess impact due to ``schedule catch-up'' behavior would be reduced.
@@ -227,128 +227,6 @@ In the last few years, trading style innovation in the execution space has somew
 
 
 Competition is as fierce as ever due to recent regulatory changes driven by Europe's MIFID~II regulation. However, the focus has mostly be on improving the various underlying components, looking for more sophisticated approaches that can further squeeze out performance from existing strategies. To some extent, sophisticated traders have started to move away from strategies and towards more abstract objectives and constrains allowing brokers to pick the best approach to achieve them then engage with the algorithm providers with unprecedented openness in their effort to truly minimize the overall trading costs. The benchmarks have not changed and can be still as confusing and elusive; however, relative performance is easy to measure thus at least workable. This new freedom to experiment and single-mindedness focus on performance is leading to a renewed energy and innovations that could signal a new ``Golden Age'' of electronic trading.
-
-
-
-% Execution Algorithms for Multiple Assets
-\subsection{Execution Algorithms for Multiple Assets}
-
-The execution of trading entry-exit decisions can be made using the methods described in the earlier section for individual assets. Most investors hold multiple assets in their portfolios and evaluate their investments as a whole rather than in individual assets. In Section~\ref{sec:port_trad_strat}, we discussed the trading strategies with the focus on rebalancing the portfolios. The criteria used were in the traditional framework of mean-variance efficiency with some constraints on the transaction costs. When it comes to execution, the criteria as noticed from earlier sections is on execution costs and the market impact. We will briefly outline some models presented in the literature for the execution of multiple-security portfolios.
-
-
-Only recently there are efforts made to better understand and model the cross-impact of trading an asset on trading of related assets. If a trader is liquidating simultaneously multiple assets as part of the rebalancing effort, we should expect some cross-impact. In the low frequency setting this is studied under `commonality' or `co-movement' as discussion in Chapter~\ref{ch:ch_mvts}. In the high frequency setting, the problem is harder to study due to short-term market frictions.
-
-
-The first form of multi asset execution we encountered was pairs strategies executing one side of a trade in proportion to the executions received on the other side. A natural extension of it is multi-leg algorithms where each side has multiple lines to be transacted over a certain horizon.
-
-
-The implementation shortfall framework described previously relies on impact and risk dynamics of a single asset but can easily be extended to multiple assets. While the only real way to reduce risk in a single stock setup is to trade faster, in a portfolio scenario it is possible to control risk by exploiting the correlation structure across stocks. Portfolio algorithms aim to solve the execution dilemma (lowering impact cost at the expense of increasing timing risk exposure or vice versa) faced by traders of large baskets by offering two compelling sets of solutions:
-
-        \begin{itemize}
-        \item At comparable cost: reduce the risk by neutralizing market or factor exposures. 
-        \item At comparable risk: reduce the cost by allowing slower trading than a list of individual IS strategies.
-        \end{itemize}
-
-
-Asset managers handle large trading lists when they periodically rebalance their holdings to tailor their exposure, or when they have inflows or outflows requiring to trade a sleeve of the portfolio. While this can present implementation challenges (such as managing cash neutrality between buys and sells across multiple markets), it also offers an opportunity for more efficient execution if the basket is traded in a coordinated fashion rather than as a list of independent single lines. Based on the trader view of what might be driving the short term risk of the portfolio during the execution window and their risk aversion, the trading schedules can be optimized along different risk-mitigating dimensions:
-
-        \begin{itemize}
-        \item Minimizing Country / Sector exposure
-        \item Minimizing Factors exposure
-        \item Minimizing Beta/Delta exposure
-        \end{itemize}
-
-(Most implementation leverage QP solvers and to create a flexible implementation for large portfolios that can be optimized in a reasonable time frame requires a lot of tricks and shortcuts)
-
-
-From a pure trading implementation perspective, all the practical considerations mentioned in Chapter~\ref{s:pract_consid} apply to portfolio trading algorithms as well, in particular when handling the relative liquidity of the buy and sell sides. The complexity that is quite unique to portfolio trading is the handling of dark liquidity in the trade schedule optimization as it presents both an opportunity and a challenge. Similarly to a single line execution, finding a large block of liquidity in the dark allows to considerably reduce timing risk at a generally cheaper trading cost than would have been incurred in the lit market. That said, in a portfolio algorithm the trader relies on the correlation between names to balance the execution risk in order to slow down trading and minimize impact. So, receiving a large dark execution (or a series of simultaneous dark fills on the same side) at once can reintroduce significant risk by creating an imbalance, leaving the trader exposed to adverse market movements. The algorithm is then left to adjust its positions rapidly and might incur large execution costs to get back to a risk balanced state. This has two practical consequences for developers of portfolio algorithms. 
-
-
-First, the names and quantities exposed to dark pools must be carefully selected to reflect the trade off between cost reduction at the single line level, risk reduction at the portfolio level, and potential cost incurred to return to a risk balanced portfolio. The scenarios encountered are as diverse as one can imagine and make the formulation of the problem harder once dark allocations are incorporated. To put things in perspective, we consider the two practical stylized examples as follow:
-
-
-\begin{itemize}
-\item A basket with a single position with a large percentage of ADV (i.e. large expected market impact) and small positions in liquid names (i.e. low expected market impact): in this scenario, the large percentage ADV order is the constraining factor in the execution speed of the whole portfolio, if that name can be traded as a block in the dark, it would allow the rest of the basket to trade faster (i.e. reducing exposure to timing risk) at little additional cost. --> posting dark as much as possible
-\item A basket with a few names with a larger marginal contribution to risk (MCR)---but of not overly large notional sizes---and positions in liquid and illiquid names: in this scenario, executing the large MCR names would result in a better outcome only if the names paired off with them on the other side of the basket from a risk perspective are liquid enough to be executed rapidly at low cost. One possible way of assessing how much to post in the dark is to constrain the notional exposure with the available notional on the liquid names on the other side. That notional exposure can then be allocated among the large MCR names either naively (equal split or in descending order of MCR) or applying a more sophisticated approach (for instance an allocation as a function of the MCR and the conditional probability of fill given the size allocated).
-\end{itemize}
-
-
-Second, when the portfolio incurs a sudden change in risk profile---whether due a dark fill or an abrupt market move in one direction---a reoptimization is necessary to return to a risk balanced position and to determine the new optimal trading schedules. This reoptimization can have different characteristics than the one that was performed at the beginning of the trade. Depending on the level of risk already exited up to that point in time, the trader as the ability to consider the temporary increase in risk as either something that needs to be reduced immediately in the next available trading bins, even if it generates larger trading costs, or something that can be reduced gradually in order to mitigate transaction costs. The optimal answer here also depends on the liquidity of the names still available to trade on the other side of the imbalance.
-
-
-
-% Extending the Algorithms to Other Asset Classes
-\subsection{Extending the Algorithms to Other Asset Classes}
-
-While the electronification of trading first took place in the equity space, recent years have seen a significant growth of electronic trading and market making in the fixed income world, opening new opportunities to quantitative trading strategies. We give a brief overview of the characteristics of some of these products. 
-
-
-\begin{enumerate}
-\item[\textbf{(a)}] \textbf{Options:} Historically, equity options markets have presented unique challenges to the successful deployment of sophisticated algorithmic trading strategies. First, options markets are significantly more fragmented than their equities counterparts, not just in space (i.e. across multiple exchanges) but also in terms of instruments. For one equity instrument representing a company (or for one index), there is a grid of available options over multiple maturities and multiple strike prices. Similarly to equities, options market data is disseminated in real time by the Options Price Reporting Authority (OPRA) which provides last sale reports and quotations from participant exchanges.\footnote{Options participant exchanges in OPRA: BOX Exchange, Cboe exchanges (BZX Options Exchange, C2 Options Exchange, EDGX Options Exchange, Options Exchange), Miami International Securities Exchange, MIAX PEARL, Nasdaq exchanges (BX, GEMX, ISE, MRX, PHLX, The Nasdaq Stock Market), NYSE exchanges (American, Arca).} OPRA is a national market system plan that governs the process by which options market data are collected from participant exchanges, consolidated, and disseminated. It also publishes other types of information with respect to the trading of options such as the number of options contracts traded, open interest and end of day summaries. 
-
-
-One of the key challenges that remains in the options space is the amount of data generated on a daily basis, and the significant bursts that can happen when underlying equity markets move sharply and force a rapid adjustment of a myriad of correlated instruments. As an example, the OPRA message rates statistics\footnote{Source: \url{https://www.opradata.com/}} for the fourth quarter 2018 were: \\
-
-Peak Messages Per Second (millions): 19.8.
-
-Peak Messages Per 100 Milliseconds (millions): 4.2.
-
-Peak Transactions Per Day (billions): 45.9. \\
-
-
-Automated options market making strategies were the first ones to be deployed, and we are now witnessing the emergence of execution strategies in the option space. For instance, targeting certain volatility levels (instead of price-based benchmarks). Given the natural relationship that exists with the underlying assets, options algorithmic trading strategies also require the implementation of automated delta and gamma hedging execution strategies.
-
-
-It is also worth noting that most exchanges now support order types such as spreads making multi-leg strategies easier to implement.
-
-
-\item[\textbf{(b)}] \textbf{Credit Derivatives:} When an entity, whether private or public, borrows money, the lender or debt holder bears some default risk until maturity. There is always a risk that the entity will not be able to repay the debt in full or per the agreed terms (coupons, maturity, \dots). Credit derivatives allow debt holders to hedge all or part of that risk, as well as speculators to express their views on the creditworthiness of various entities. 
-
-
-A credit default swap (CDS) is a derivative contract allowing to buy or sell protection on a single reference entity. The protection buyer pays a fixed, running or upfront, a premium in return for the right to receive a payment should the reference entity suffer a credit event. Depending on the CDS contract, an eligible credit event might correspond to a payment default on the debt, a restructuring or a simple credit downgrade of the reference entity. In return for the premium, the writer of the CDS agrees to pay to the buyer (1 -- recovery rate) times the notional of the contract upon the realization of an eligible credit event. Here, the recovery rate represents the fraction of the face value of the debt that can be recovered following a credit event.
-
-
-By entering a default swap, the buyer is essentially purchasing an insurance against the risk of default of a borrower. However, that insurance being paid by the CDS issuer bears counter-party risk (the ability of the issuer to pay the agreed amount in the event of a credit event affecting the borrower). Consequently, the valuation of a CDS depends, among other factors, on the default probability of the borrowing entity over the life of the contract, on the default probability of issuing counter-party, as well as the correlation between them.
-
-
-The estimated CDS notional outstanding stands above \$10~trillions, after having peaked at about \$62~trillions at the end of 2007 (International Swaps and Derivatives Association (ISDA)), and north of 1~million trades are recorded per week. In the aftermath of the Global Financial Crisis of 2008, trading liquidity shifted from single name CDS toward CDS Indices, which are essentially baskets of single name CDS. Roughly half of the outstanding notionals originates from single reference entity contracts, while most of the other half emanates from credit indices (roughly 130,000~trades per week in 2016).
-
-
-Over-the-counter (OTC) derivatives markets are considered dealer markets, as they tend to be traded through a network of private dealers who stand ready to provide liquidity in various instruments while maintaining a relatively neutral net risk exposure. This, traditionally, is conducted one-on-one, off exchanges. However, the introduction of the Dodd-Frank Act of 2010 brought significant transformation to the U.S. swap markets by mandating central clearing for standardized over-the-counter derivatives such as swaps, as well as forcing their execution on a swap execution facility (SEF).\footnote{In Europe, the MiFID II directive adopted by the EU in 2014, with applicability on January 3rd, 2018, also introduces obligations for sufficiently liquid standardized derivatives contracts to be traded only on regulated platforms such as OTFs: Organized Trading Platform.}
-
-
-The term `swap execution facility' defines a registered ``trading platform in which multiple participants have the ability to execute or trade swaps by accepting bids and offers made by multiple participants'' (Dodd-Frank Act, Section 733). Among the stated goals of mandating swaps execution on SEFs are: promoting pre-trade transparency in the swaps market as well as facilitating the real-time publication of trading information such as price and volume to enhance price discovery. As such, the Dodd-Frank Act addressed for swap markets the three main challenges that had historically prevented a significant electronification of trading in fixed income markets: lack of standardized instruments, lack of centralized trading platforms and lack of available transaction data.
-
-
-SEFs usually offer multiple trading protocols giving investors the flexibility to choose the most appropriate trading style for their needs. Existing trading protocols center around either an Order Book-like approach where all market participants have the ability to execute available bids or offers from multiple participants as well as leave their own limit orders; or a Request-For-Quote (RFQ)-like approach where participants request a single or two-sided market from multiple dealers during a real-time auction.
-
-
-A variety of credit Indices are fairly liquid and trading on SEFs, in particular U.S. indices (CDX(c)) and European indices (iTraxx(c)). The CDX indices are further broken out by the type of debt covered such as Investment Grade (IG) and High Yield (HY) for the most liquid ones. Due to their liquidity, both CDX IG and CDX HY are examples of credit indices that lend themselves well to electronic market making activities.
-
-
-However, the CDS Index market presents a certain number of idiosyncrasies compared to equity markets when it comes to market making. While there is an order book available to all participants, most of the volume still gets transacted via RFQ mechanism for which market makers are not always allowed to see the quotes. Consequently, market makers only have partial information regarding the true position of the market when time comes to decide where to place their own orders. Using a a mixture of historical trades and partial real-time information, market makers can reconstruct a theoretical mid price of the market. They can set then the bid and ask quotes at an appropriate distance from that mid price, accounting for the trade-off between their desire to obtain a fill and the risk associated with maintaining their inventory. 
-
-
-\item[\textbf{(c)}] \textbf{Corporate Bonds:} The corporate bond market is also an OTC market where market participants only have access to limited information prior to placing a trade. The major market participants are pension funds and insurance companies which tend have longer investment horizons, hedge funds which tend to have more tactical trading allocations, and corporate treasury departments whose objectives and horizons can span a wide spectrum.
-
-
-Compared to other assets, it is also interesting to note that most of the secondary market transactions happen in the first few months following issuance, and after that a significant portion of the amount of bonds issued is held to maturity. Similarly to other fixed income products, the key challenges for secondary trading of bonds and the electronification of its secondary market have historically been lack of centralized market place, lack of harmonized instrument characteristics and lack of transaction data.
-
-
-The corporate bonds secondary market remains dominated by one-to-one privately negotiated trades, but electronic platforms allow transacting via similar execution protocols as what traders can use for CDSs: limit order book type of executions as well as request-for-quotes (RFQ) on platforms such as Tradeweb, Bloomberg, MarketAccess among others.
-
-
-In the U.S., for instance, under FINRA Rule~6730, Broker-dealer FINRA member firms have the obligation to report transactions in TRACE-eligible securities to the TRACE\footnote{Trade Reporting And Compliance Engine} database as early as practically possible, but no later than within 15~minutes of the Time of Execution. FINRA Rule~6710 defines TRACE-eligible securities as USD denominated debt securities (whether issued by a U.S or foreign private issuer), and USD denominated debt issued or guaranteed by an Agency or Government-Sponsored Enterprise. Foreign sovereign, U.S. Treasuries and money market instruments are specifically excluded from the eligible list. The TRACE database then disseminates price, size,\footnote{The actual size disseminated back to the market is capped to prevent excessive information leakage: for investment-grade corporate bonds and agency debt securities, for any trade greater than \$5~million, the par value is displayed as \$5~MM$+$; for non-investment grade corporate bond, the displayed quantity is capped to \$1~million par value} time stamp and direction of the trade to the public. While the rules require reporting in no more than 15~minutes, most reporting and public dissemination now happens within seconds or minutes of execution (with the exception of overnight trades being batch-reported the next morning), giving participants some transparency about the current market levels.
-
-
-The combination of existing venues allowing for click-to-trade or RFQ protocols and trade events information facilitated the expansion of electronic trading for corporate bonds as well. A fifth to a quarter of the investment grade market is now transacted electronically, while on the high yield side, roughly 10\% of the market is traded through RFQs.
-
-
-Similarly to credit indices, the first challenge for dealers in corporate bond electronic market making is to infer the value of the current ``fair mid'' for the market following each transaction. Given the relatively infrequent updates observations even for bonds that are considered liquid, quantitative techniques employed tend to vary from the ones used in markets with higher frequency data available such as equities. Practitioners rely much more, for instance, on probabilistic state-space models to estimate unobservable state variable.
-
-
-This type of approach obviously becomes increasingly more challenging as one moves down the liquidity spectrum. It is not uncommon for illiquid bonds to not trade for months, in which case assessing a fair mid price cannot solely rely on prior transactions. Among possible solutions, modelers can use bonds of other maturities from the same issuers, or bonds from correlated issuers or comparable investment grades. Additionally, more liquid credit derivatives are also a potential sources of information that can be leveraged for better valuations.
-\end{enumerate}
 
 
 
@@ -371,13 +249,13 @@ The scheduler will also need to decide which market phases should the algorithm 
 The scheduling layer plays an important role in  implementing liquidity sourcing preferences, such as how much to participate in volatile periods of price discovery when spreads are wide (e.g. in the first few minutes after the market open), or allocating volume between lit and dark venues (where one trades certainty of execution for lower price impact). As discussed in Chapter~\ref{chap:ch_trade_data_models}, algorithms are leveraging many normalizing  variables in order to handle the different characteristic of the stock universe both on regular days and special days.  Modern scheduling layers are also responding to realtime feedaback loops from the market and adjust their execution as necessary such front loading the execution if the market is expected to move unfavorably, or back load it in case of expected favorable move or adjust the balance across liquidity sources (lit or dark markets). 
 
 
-In summary the scheduler's role is to organize, implement and adjust the overall plan of action for the strategy and it is clearly the most important component of a trading strategy. \\
+In summary the scheduler's role is to organize, implement and adjust the overall plan of action for the strategy and it is clearly the most important component of a trading strategy. \twomedskip
 
 
-\noindent\textbf{Implementing a Scheduler}: \\
+\noindent\textbf{Implementing a Scheduler:} \twomedskip
 
 
-The above description is very high level and does not provide much in the way of approach on how to build a Scheduler in practice. Unfortunately we cannot hope to go into all the intricacies and details of a real world implementation but we will strive to provide some main ideas used in practice and some issues faced by practitioners. There is no standard approach to build a Scheduler and this treatment might prove quite simplistic and unsophisticated. But this is one approach the authors have used in practice. \\
+The above description is very high level and does not provide much in the way of approach on how to build a Scheduler in practice. Unfortunately we cannot hope to go into all the intricacies and details of a real world implementation but we will strive to provide some main ideas used in practice and some issues faced by practitioners. There is no standard approach to build a Scheduler and this treatment might prove quite simplistic and unsophisticated. But this is one approach the authors have used in practice. \twomedskip
 
 
 \noindent\emph{Na\"ive Approach:} We start with the simplest implementation possible and evolve from there. This will also help the reader understand the limitations in the approaches and how one can deal with them. As discussed above a schedule is often represented by a vector of equally spaced discretized bins. We postulate that for each strategy we are able to determine the quantity required for the next bin which for schedule based strategies this is almost always true.\footnote{For POV strategy, this could be based on the previous bin volume or a forecast of next bin volume.} Each time period we submit to the order placement layer the exact quantity required for the particular bin. We assume that the order placement will ensure completion of the bin quantity by the end of the allotted time. If, for some reason, the order placement cannot fulfill the request dues to limit price or POV constraints, the scheduler simply ignores it and moves on to the next bin. 
@@ -386,7 +264,7 @@ The above description is very high level and does not provide much in the way of
 Clearly, this is a quite crude implementation that could lead to severe under-trading and is very likely to result in excess impact due to the immediate ``catch up'' at the end of each bin. Less liquid stocks would likely be unable to fulfill the required liquidity within each bin exacerbating the amount of required catch-up. One could normalize the time bin by some multiple of characteristic time which would somewhat harmonize the behavior across the stock universe but it may not address the other significant limitation of this approach.
 
 
-A slightly more complicated approach would be to allow the order placement layer to engage in a best effort approach trying to fulfill the desired quantity without ``forcing'' a hard catch-up. Any unfilled quantity would simply be added to the next bin. This will limit the excess impact but exacerbate the tendency for the order to fall way behind the desired schedule. Clearly a tradeoff is needed. As an additional drawback to this approach is that in most cases the scheduler will have the undesirable tendency of being behind schedule most of the times.\footnote{for POV order it is possible to be ahead of schedule when using volume forecasts which at time will overestimate the expected bin volume.} \\
+A slightly more complicated approach would be to allow the order placement layer to engage in a best effort approach trying to fulfill the desired quantity without ``forcing'' a hard catch-up. Any unfilled quantity would simply be added to the next bin. This will limit the excess impact but exacerbate the tendency for the order to fall way behind the desired schedule. Clearly a tradeoff is needed. As an additional drawback to this approach is that in most cases the scheduler will have the undesirable tendency of being behind schedule most of the times.\footnote{for POV order it is possible to be ahead of schedule when using volume forecasts which at time will overestimate the expected bin volume.} \twomedskip
 
 
 \noindent\emph{Trading Bands:} A common approach used to address the above-mentioned drawbacks is via the introduction of trading bands. These are essentially auxiliary schedules above and below the desired schedule which represent how much behind and ahead the scheduler is allowed to deviate from the desired target. Figure~\ref{fig:schedule} shows a visual representation of a VWAP schedule with its trading bands. 
@@ -426,10 +304,10 @@ One other important consideration is at what time, if no trading happens will th
 By providing the order placement with a quantity range has the additional benefit that it allows the execution to be ahead of schedule when conditions are favorable leading to reduced catch-up behavior and thus resulting in reduced impact and improved performance.
 
 
-The distance between the bands and the schedule can be made more stock specific allowing to further refine the behavior across the trading universe. It can also made to be client specific as it represents the traders risk aversion from schedule deviation. The wider the bands the less risk of unilateral catch-up but the larger the risk of significant deviation from the desired schedule. \\
+The distance between the bands and the schedule can be made more stock specific allowing to further refine the behavior across the trading universe. It can also made to be client specific as it represents the traders risk aversion from schedule deviation. The wider the bands the less risk of unilateral catch-up but the larger the risk of significant deviation from the desired schedule. \twomedskip
 
 
-\noindent\emph{Stateless Approach}: An improved approach to this is for the strategy to not use time bins at all but work in a more stateless fashion. The scheduler re-evaluates the same state variables on a continuous basis (every few seconds for example) and adjusts the instructions to the order placement by a small amount each time to refine the trading policy. The schedule can also use several points in the future to provide more term structure to the policy and thus plan better ahead, in particular when the schedule start having significant ``curvature'' for example at the end of the order. \\
+\noindent\emph{Stateless Approach}: An improved approach to this is for the strategy to not use time bins at all but work in a more stateless fashion. The scheduler re-evaluates the same state variables on a continuous basis (every few seconds for example) and adjusts the instructions to the order placement by a small amount each time to refine the trading policy. The schedule can also use several points in the future to provide more term structure to the policy and thus plan better ahead, in particular when the schedule start having significant ``curvature'' for example at the end of the order. \twomedskip
 
 
 \noindent\emph{Systematic Deviation}: A final improvement to this approach, we will briefly discuss is the usage of predictive signals (aka alpha) within the schedule. If one has a prediction on short term price move it can leverage that by making a systematic decision to get ahead or stay behind schedule in order to take advantage of that price information. This has to be done carefully to avoid incurring in any additional market impact or risk of catch-up that will cancel out any possible benefit of this move. The schedule also needs to have a component that will encourage the strategy to get back on schedule if the price prediction subsides. This will avoid the strategy to remain ahead(behind) for longer than necessary incurring in unnecessary schedule risk.
@@ -442,7 +320,7 @@ The distance between the bands and the schedule can be made more stock specific 
 The order placement layer sits downstream from the scheduling layer and can be seen as the micro trader of the strategy. It is in charge of decisions spanning the upcoming few seconds or minutes of trading. In general this layer is unaware of the overall trading intention received by the scheduler and it is responsible for implementing locally its decisions. More sophisticated approach might leverage  additional instructions from the scheduler providing a picture on the macro state of the order in  order to nuance the decision making. In any case we can simplify the role of the the micro trader as answering the question: ``at what price should I trade the quantity allocated for the upcoming period in order to complete and obtain the best possible price?.'' 
 
 
-How does one approach this problem? Let us follow the historical evolution of Order Placement techniques to explore the various challenges and possible solutions. \\
+How does one approach this problem? Let us follow the historical evolution of Order Placement techniques to explore the various challenges and possible solutions. \twomedskip
 
 
 \noindent\emph{Na\"ive Order Placement}: The simplest approach possible would be to send the given quantity as a market order and completely fill its allocated quantity immediately with essentially no uncertainty in the outcome. A view of the aggregated order-book will provide a very good, conservative (because it does not include the possibility of mid-point hidden orders), expectation of what average price would be achieved. 
@@ -451,7 +329,7 @@ How does one approach this problem? Let us follow the historical evolution of Or
 Depending  on the characteristics of the order and the stock it is trading the size to trade might still be larger that what can be absorbed by the market without ``eating'' into the order-book. This could be simply remedied by decreasing the schedule interval.
 
 
-The first order placement modules where not that much different than this naive approach. While for highly liquid instruments with tight spread this approach might achieve decent results but has we go down the spectrum of liquidity things start falling apart and one will need to introduce the additional complexity that comes with leveraging non marketable orders. \\
+The first order placement modules where not that much different than this naive approach. While for highly liquid instruments with tight spread this approach might achieve decent results but has we go down the spectrum of liquidity things start falling apart and one will need to introduce the additional complexity that comes with leveraging non marketable orders. \twomedskip
 
 
 \noindent\emph{Peg and Cross:} The next step in the evolution of order placement approaches is often termed ``Peg and Cross''. It consists of placing a limit order  for the scheduled quantity at the near side. If the market moves away the order can be repriced (alternatively one can rely on a peg order type to do this) and size updated if necessary. If the order is not fully executed by the time the schedule reaches the catch-up zone an aggressive order is sent to get back on schedule.
@@ -463,7 +341,7 @@ Variations of this approach are still the norm in many product implementations a
 One approach to minimize this adverse selection is to ``layer'' the order book with some of the available quantity so as to capture execution at better price levels when the price comes through. Ideally, if the infrastructure is fast enough and one uses some short term signals like order imbalance to predict when the probability of price drop reaches a critical threshold is to cancel the top order so as to further minimize the adverse selection. This is a common approach of HFTs where they want to be at the top of the book to capture a fill right before the price moves away.
 
 
-A common variant of the Peg and Cross technique is to leverage additional price points, in particular the mod point. As the need for liquidity increases the order placement can either ping the mid of various exchanges or have a quantity hidden at the midpoint to increase the probability of getting filled. \\
+A common variant of the Peg and Cross technique is to leverage additional price points, in particular the mod point. As the need for liquidity increases the order placement can either ping the mid of various exchanges or have a quantity hidden at the midpoint to increase the probability of getting filled. \twomedskip
 
 
 \noindent\emph{Beyond Peg and Cross:} More advanced approaches are possible and used in some more advanced implementations. These models are quite proprietary and the authors don't pretend to have seen all of them. We will just give a few additional pointers.
@@ -548,7 +426,7 @@ The primary goal of most of the execution algorithms is to minimize the transact
 
 The execution algorithms are generally evaluated through some benchmark prices. Some key quantities are:
 	\begin{enumerate}[--]
-	\item Arrival price, that is the market mid-quote at the start of parent order execution at $t=0$, $p_0$.
+	\item Arrival price, that is the market mid-quote at the start of parent order execution at $t= 0$, $p_0$.
 	\item Volume weighted average market price over the period of execution, $t \in (0,T)$, $p_{\text{VWAP}}= \sum_{i=1}^N v_ip_i/v$ (Equation~\ref{eq:vwapstet}). \\ \\
 	If the parent order of size, $X$ is split into `$n$' child orders with size, $x_k$, $k=1,\ldots,n$, then
 	\item Volume weighted average price of the parent order's execution, $p_{\text{exec}}= \sum_{i=1}^n x_ip_i/X$. 
@@ -604,7 +482,7 @@ with constraints $x_t \geq 0$ and $\sum_{t=1}^n x_t = X$. Here the quantities $M
 	\begin{equation} \label{eq:optimal_result_xt}
 	x_t^*= X E\left(\dfrac{v_t}{v}\right), \enskip\enskip t=1,\ldots,n.
 	\end{equation}
-From the above discussion, it is clear that forecasting both the intra-day distribution of periodic volume, $v_t$, and the total volume for the day, $v$, is essential for achieving optimal results. The optimal result in \eqref{eq:optimal_result_xt} can be obtained also with slippage as defined in the previous section. \\
+From the above discussion, it is clear that forecasting both the intra-day distribution of periodic volume, $v_t$, and the total volume for the day, $v$, is essential for achieving optimal results. The optimal result in \eqref{eq:optimal_result_xt} can be obtained also with slippage as defined in the previous section. \twomedskip
 
 
 \noindent\textbf{Bertsimas and Lo Model:} The basis of the model discussed here is that trading affects not only the current prices but also the price dynamics that affect the future trading costs. Thus the problem involves dynamic optimization but the solution turns out to be static. Assume that an investor wants to sell a parent order of $X$-shares in $(0,T)$, where $T$ is arbitrary, and let $x_k$ be the number of shares sold (child orders) with the realized price, $\widetilde{p}_k$. The cost of trading, also know as slippage is
@@ -717,7 +595,7 @@ Various extensions of the basic model \eqref{eqn:bigpk} are considered by Almgre
 Some questions remain: what is the link between market impact and the dynamics of limit order book, is the impact function linear empirically, etc.. The effect of a short term drift in prices and the serial correlation in the errors which is observed in high frequency etc can be incorporated easily in the model \eqref{eqn:morepk}. Lorenz and Almgren (2011)~\cite{lovenz2011} provide a Bayesian approach to the optimization problem. While the methodology yields elegant solutions, empirical use of these results require a close monitoring of order book dynamics as the changes in demand and supply sides can be quite rapid. The general behavior of this adaptive strategy is aggressive; it depends on the prediction of short term price change; generally, if price goes up the tendency is to sell faster. 
 
 
-The above mean-variance formulation of execution cost is combined with the traditional mean-variance portfolio optimization in Engle and Ferstenberg (2007)~\cite{engle2007} and Engle, Ferstenberg and Russell (2012)~\cite{engle2012}. We will discuss this in the context of portfolio rebalancing and the need for minimizing the transaction costs associated with all trades. While the above methods can be taken as first generation methods that are purely based on slippage, more recent work focus on adding other constraints such as incorporating the market VWAP and simultaneously determining the limit and market orders to achieve optimal results. \\
+The above mean-variance formulation of execution cost is combined with the traditional mean-variance portfolio optimization in Engle and Ferstenberg (2007)~\cite{engle2007} and Engle, Ferstenberg and Russell (2012)~\cite{engle2012}. We will discuss this in the context of portfolio rebalancing and the need for minimizing the transaction costs associated with all trades. While the above methods can be taken as first generation methods that are purely based on slippage, more recent work focus on adding other constraints such as incorporating the market VWAP and simultaneously determining the limit and market orders to achieve optimal results. \twomedskip
 
 
 \noindent\textbf{Obizhaeva and Wang Model:} The models discussed in the previous sections assume price impact function that is not sensitive to liquidity dynamics. Obizhaeva and Wang (2013)~\cite{obizhaeva} develop a model that accounts for the dynamic properties of supply and demand as represented in the limit order book. The model captures `resilience'; that is, how the current trade affects the state of the future limit order book. The resulting strategy consists of a large trade initially aimed at moving the order book away from its steady state followed by a number of small trades that will utilize the inflow from new liquidity providers. The speed at which the book replenishes itself is an important part of execution cost. The level of resilience depends on the level of hidden liquidity in the market. The price impact model considered here takes into account the dynamics of the limit order book.
@@ -760,7 +638,7 @@ Some comments are worth noting. Note the solution given in \eqref{eqn:orders} do
 and it is shown to be smaller than the cost incurred if the strategy of constant rate trading is followed. 
 
 
-Obizhaeva and Wang (2013)~\cite{obizhaeva} consider the extension of the optimization criterion in \eqref{eqn:min} to include the risk aversion as well, as in Almgren and Chriss (2000)~\cite{alm2000}. Interested readers should refer to Section~8 of their paper. For a practical implementation of these methods, it is necessary to consider the trading that happens in multiple exchanges and how the replenishment patterns can differ over different exchanges where `liquidity' and the fee structure have become major considerations for the order flow. \\
+Obizhaeva and Wang (2013)~\cite{obizhaeva} consider the extension of the optimization criterion in \eqref{eqn:min} to include the risk aversion as well, as in Almgren and Chriss (2000)~\cite{alm2000}. Interested readers should refer to Section~8 of their paper. For a practical implementation of these methods, it is necessary to consider the trading that happens in multiple exchanges and how the replenishment patterns can differ over different exchanges where `liquidity' and the fee structure have become major considerations for the order flow. \twomedskip
 
 
 \noindent\textbf{Easley, De Prado and O'Hara Model:} In the models described so far in this section, it is assumed that the number of child orders `$n$' and the execution horizon, `$T$', are decided exogenously. Also the impact of a trade is modeled through the modified random walk model for the price with additional terms reflecting the permanent or temporary impact (Equations \ref{eqn:pk7}, \ref{eqn:bigpk} and \ref{eqn:pdouble}). The process of how price impact arises due to friction in the liquidity access is an important part of market microstructure theory and this needs to be taken into account in determining the optimal execution. For example, a buyer in a seller's market can incur a lower cost of trading than a seller in a similar market. Obizhaeva and Wang model is based on the arrival dynamics to the order book. 
@@ -810,8 +688,8 @@ The key quantities in determining the OEH are the order imbalance and the trade 
 
 
 
-% Multiple Exchanges:  Smart Order Routing Algorithm
-\subsection{Multiple Exchanges:  Smart Order Routing Algorithm}
+% Multiple Exchanges: Smart Order Routing Algorithm
+\section{Multiple Exchanges: Smart Order Routing Algorithm}
 
 
 In the USA there are over ten lit venues and close to forty dark venues and thus equity markets are highly fragmented. Each venue functions as an electronic limit order book of its own, where orders are prioritized first based on their prices and then at a given price level, according to their time of arrival. Exchanges publish information for each security in real-time and the information can change rapidly due to cancellations. The exchanges may differ with respect to best bid and offer price levels, the market depth at various prices etc. The exchanges also differ in their fee structures. Under the maker-taker pricing, exchanges offer rebates to liquidity providers and charge fees to takers of liquidity. These fees can range from $-\$0.001$ to \$0.0030. Because the typical bid-ask spread is \$0.01, the fees and rebates are a fairly significant fraction of the trading costs. Thus market participants must decide where child orders should be sent. It may be expensive to route to all the exchanges and by not routing to the right venue, it is possible to miss liquidity and hence incur greater market impact. At any point in time, the highest bid and the lowest offer among all exchanges comprise the National Best Bid and Offer (NBBO). Most traders use the smart order routing algorithms with goal to buy or sell the maximum number of shares in the shortest possible time with the least market impact possible. But a key issue is that many of the lit venues have hidden orders (12--45\%). How to estimate the size of the hidden orders and how to make routing decisions in the presence of hidden orders has been a focus of some recent research studies.
@@ -894,8 +772,128 @@ While many of these quantities can be estimated using past transactions, the lim
 
 
 
+% Execution Algorithms for Multiple Assets
+\section{Execution Algorithms for Multiple Assets}
+
+The execution of trading entry-exit decisions can be made using the methods described in the earlier section for individual assets. Most investors hold multiple assets in their portfolios and evaluate their investments as a whole rather than in individual assets. In Section~\ref{sec:port_trad_strat}, we discussed the trading strategies with the focus on rebalancing the portfolios. The criteria used were in the traditional framework of mean-variance efficiency with some constraints on the transaction costs. When it comes to execution, the criteria as noticed from earlier sections is on execution costs and the market impact. We will briefly outline some models presented in the literature for the execution of multiple-security portfolios.
+
+
+Only recently there are efforts made to better understand and model the cross-impact of trading an asset on trading of related assets. If a trader is liquidating simultaneously multiple assets as part of the rebalancing effort, we should expect some cross-impact. In the low frequency setting this is studied under `commonality' or `co-movement' as discussion in Chapter~\ref{ch:ch_mvts}. In the high frequency setting, the problem is harder to study due to short-term market frictions. A recent study by Schneider and Lillo (2019)~\cite{schnlillo19} extends the framework of Gatheral (2019)\todo{Missing reference} to multiple stocks where trading in one asset can impact the price of other assets. (More to follow.) 
+
+
+The first form of multi asset execution we encountered was pairs strategies executing one side of a trade in proportion to the executions received on the other side. A natural extension of it is multi-leg algorithms where each side has multiple lines to be transacted over a certain horizon.
+
+
+The implementation shortfall framework described previously relies on impact and risk dynamics of a single asset but can easily be extended to multiple assets. While the only real way to reduce risk in a single stock setup is to trade faster, in a portfolio scenario it is possible to control risk by exploiting the correlation structure across stocks. Portfolio algorithms aim to solve the execution dilemma (lowering impact cost at the expense of increasing timing risk exposure or vice versa) faced by traders of large baskets by offering two compelling sets of solutions:
+
+        \begin{itemize}
+        \item At comparable cost: reduce the risk by neutralizing market or factor exposures. 
+        \item At comparable risk: reduce the cost by allowing slower trading than a list of individual IS strategies.
+        \end{itemize}
+
+
+Asset managers handle large trading lists when they periodically rebalance their holdings to tailor their exposure, or when they have inflows or outflows requiring to trade a sleeve of the portfolio. While this can present implementation challenges (such as managing cash neutrality between buys and sells across multiple markets), it also offers an opportunity for more efficient execution if the basket is traded in a coordinated fashion rather than as a list of independent single lines. Based on the trader view of what might be driving the short term risk of the portfolio during the execution window and their risk aversion, the trading schedules can be optimized along different risk-mitigating dimensions:
+
+        \begin{itemize}
+        \item Minimizing Country / Sector exposure
+        \item Minimizing Factors exposure
+        \item Minimizing Beta/Delta exposure
+        \end{itemize}
+
+(Most implementation leverage QP solvers and to create a flexible implementation for large portfolios that can be optimized in a reasonable time frame requires a lot of tricks and shortcuts)
+
+
+From a pure trading implementation perspective, all the practical considerations mentioned in Chapter~\ref{s:pract_consid} apply to portfolio trading algorithms as well, in particular when handling the relative liquidity of the buy and sell sides. The complexity that is quite unique to portfolio trading is the handling of dark liquidity in the trade schedule optimization as it presents both an opportunity and a challenge. Similarly to a single line execution, finding a large block of liquidity in the dark allows to considerably reduce timing risk at a generally cheaper trading cost than would have been incurred in the lit market. That said, in a portfolio algorithm the trader relies on the correlation between names to balance the execution risk in order to slow down trading and minimize impact. So, receiving a large dark execution (or a series of simultaneous dark fills on the same side) at once can reintroduce significant risk by creating an imbalance, leaving the trader exposed to adverse market movements. The algorithm is then left to adjust its positions rapidly and might incur large execution costs to get back to a risk balanced state. This has two practical consequences for developers of portfolio algorithms. 
+
+
+First, the names and quantities exposed to dark pools must be carefully selected to reflect the trade off between cost reduction at the single line level, risk reduction at the portfolio level, and potential cost incurred to return to a risk balanced portfolio. The scenarios encountered are as diverse as one can imagine and make the formulation of the problem harder once dark allocations are incorporated. To put things in perspective, we consider the two practical stylized examples as follow:
+
+
+\begin{itemize}
+\item A basket with a single position with a large percentage of ADV (i.e. large expected market impact) and small positions in liquid names (i.e. low expected market impact): in this scenario, the large percentage ADV order is the constraining factor in the execution speed of the whole portfolio, if that name can be traded as a block in the dark, it would allow the rest of the basket to trade faster (i.e. reducing exposure to timing risk) at little additional cost. --> posting dark as much as possible
+\item A basket with a few names with a larger marginal contribution to risk (MCR)---but of not overly large notional sizes---and positions in liquid and illiquid names: in this scenario, executing the large MCR names would result in a better outcome only if the names paired off with them on the other side of the basket from a risk perspective are liquid enough to be executed rapidly at low cost. One possible way of assessing how much to post in the dark is to constrain the notional exposure with the available notional on the liquid names on the other side. That notional exposure can then be allocated among the large MCR names either naively (equal split or in descending order of MCR) or applying a more sophisticated approach (for instance an allocation as a function of the MCR and the conditional probability of fill given the size allocated).
+\end{itemize}
+
+
+Second, when the portfolio incurs a sudden change in risk profile---whether due a dark fill or an abrupt market move in one direction---a reoptimization is necessary to return to a risk balanced position and to determine the new optimal trading schedules. This reoptimization can have different characteristics than the one that was performed at the beginning of the trade. Depending on the level of risk already exited up to that point in time, the trader as the ability to consider the temporary increase in risk as either something that needs to be reduced immediately in the next available trading bins, even if it generates larger trading costs, or something that can be reduced gradually in order to mitigate transaction costs. The optimal answer here also depends on the liquidity of the names still available to trade on the other side of the imbalance.
+
+
+
+% Extending the Algorithms to Other Asset Classes
+\section{Extending the Algorithms to Other Asset Classes}
+
+While the electronification of trading first took place in the equity space, recent years have seen a significant growth of electronic trading and market making in the fixed income world, opening new opportunities to quantitative trading strategies. We give a brief overview of the characteristics of some of these products. \twomedskip
+
+
+\noindent\textbf{(a)} \textbf{Options:} Historically, equity options markets have presented unique challenges to the successful deployment of sophisticated algorithmic trading strategies. First, options markets are significantly more fragmented than their equities counterparts, not just in space (i.e. across multiple exchanges) but also in terms of instruments. For one equity instrument representing a company (or for one index), there is a grid of available options over multiple maturities and multiple strike prices. Similarly to equities, options market data is disseminated in real time by the Options Price Reporting Authority (OPRA) which provides last sale reports and quotations from participant exchanges.\footnote{Options participant exchanges in OPRA: BOX Exchange, Cboe exchanges (BZX Options Exchange, C2 Options Exchange, EDGX Options Exchange, Options Exchange), Miami International Securities Exchange, MIAX PEARL, Nasdaq exchanges (BX, GEMX, ISE, MRX, PHLX, The Nasdaq Stock Market), NYSE exchanges (American, Arca).} OPRA is a national market system plan that governs the process by which options market data are collected from participant exchanges, consolidated, and disseminated. It also publishes other types of information with respect to the trading of options such as the number of options contracts traded, open interest and end of day summaries. 
+
+
+One of the key challenges that remains in the options space is the amount of data generated on a daily basis, and the significant bursts that can happen when underlying equity markets move sharply and force a rapid adjustment of a myriad of correlated instruments. As an example, the OPRA message rates statistics\footnote{Source: \url{https://www.opradata.com/}} for the fourth quarter 2018 were: \twomedskip
+
+\noindent Peak Messages Per Second (millions): 19.8.
+
+\noindent Peak Messages Per 100 Milliseconds (millions): 4.2.
+
+\noindent Peak Transactions Per Day (billions): 45.9. \twomedskip
+
+
+Automated options market making strategies were the first ones to be deployed, and we are now witnessing the emergence of execution strategies in the option space. For instance, targeting certain volatility levels (instead of price-based benchmarks). Given the natural relationship that exists with the underlying assets, options algorithmic trading strategies also require the implementation of automated delta and gamma hedging execution strategies.
+
+
+It is also worth noting that most exchanges now support order types such as spreads making multi-leg strategies easier to implement. \twomedskip
+
+
+\noindent\textbf{(b)} \textbf{Credit Derivatives:} When an entity, whether private or public, borrows money, the lender or debt holder bears some default risk until maturity. There is always a risk that the entity will not be able to repay the debt in full or per the agreed terms (coupons, maturity, \dots). Credit derivatives allow debt holders to hedge all or part of that risk, as well as speculators to express their views on the creditworthiness of various entities. 
+
+
+A credit default swap (CDS) is a derivative contract allowing to buy or sell protection on a single reference entity. The protection buyer pays a fixed, running or upfront, a premium in return for the right to receive a payment should the reference entity suffer a credit event. Depending on the CDS contract, an eligible credit event might correspond to a payment default on the debt, a restructuring or a simple credit downgrade of the reference entity. In return for the premium, the writer of the CDS agrees to pay to the buyer (1---recovery rate) times the notional of the contract upon the realization of an eligible credit event. Here, the recovery rate represents the fraction of the face value of the debt that can be recovered following a credit event.
+
+
+By entering a default swap, the buyer is essentially purchasing an insurance against the risk of default of a borrower. However, that insurance being paid by the CDS issuer bears counter-party risk (the ability of the issuer to pay the agreed amount in the event of a credit event affecting the borrower). Consequently, the valuation of a CDS depends, among other factors, on the default probability of the borrowing entity over the life of the contract, on the default probability of issuing counter-party, as well as the correlation between them.
+
+
+The estimated CDS notional outstanding stands above \$10~trillions, after having peaked at about \$62~trillions at the end of 2007 (International Swaps and Derivatives Association (ISDA)), and north of 1~million trades are recorded per week. In the aftermath of the Global Financial Crisis of 2008, trading liquidity shifted from single name CDS toward CDS Indices, which are essentially baskets of single name CDS. Roughly half of the outstanding notionals originates from single reference entity contracts, while most of the other half emanates from credit indices (roughly 130,000~trades per week in 2016).
+
+
+Over-the-counter (OTC) derivatives markets are considered dealer markets, as they tend to be traded through a network of private dealers who stand ready to provide liquidity in various instruments while maintaining a relatively neutral net risk exposure. This, traditionally, is conducted one-on-one, off exchanges. However, the introduction of the Dodd-Frank Act of 2010 brought significant transformation to the U.S. swap markets by mandating central clearing for standardized over-the-counter derivatives such as swaps, as well as forcing their execution on a swap execution facility (SEF).\footnote{In Europe, the MiFID II directive adopted by the EU in 2014, with applicability on January 3rd, 2018, also introduces obligations for sufficiently liquid standardized derivatives contracts to be traded only on regulated platforms such as OTFs: Organized Trading Platform.}
+
+
+The term `swap execution facility' defines a registered ``trading platform in which multiple participants have the ability to execute or trade swaps by accepting bids and offers made by multiple participants'' (Dodd-Frank Act, Section 733). Among the stated goals of mandating swaps execution on SEFs are: promoting pre-trade transparency in the swaps market as well as facilitating the real-time publication of trading information such as price and volume to enhance price discovery. As such, the Dodd-Frank Act addressed for swap markets the three main challenges that had historically prevented a significant electronification of trading in fixed income markets: lack of standardized instruments, lack of centralized trading platforms and lack of available transaction data.
+
+
+SEFs usually offer multiple trading protocols giving investors the flexibility to choose the most appropriate trading style for their needs. Existing trading protocols center around either an Order Book-like approach where all market participants have the ability to execute available bids or offers from multiple participants as well as leave their own limit orders; or a Request-For-Quote (RFQ)-like approach where participants request a single or two-sided market from multiple dealers during a real-time auction.
+
+
+A variety of credit Indices are fairly liquid and trading on SEFs, in particular U.S. indices (CDX(c)) and European indices (iTraxx(c)). The CDX indices are further broken out by the type of debt covered such as Investment Grade (IG) and High Yield (HY) for the most liquid ones. Due to their liquidity, both CDX IG and CDX HY are examples of credit indices that lend themselves well to electronic market making activities.
+
+
+However, the CDS Index market presents a certain number of idiosyncrasies compared to equity markets when it comes to market making. While there is an order book available to all participants, most of the volume still gets transacted via RFQ mechanism for which market makers are not always allowed to see the quotes. Consequently, market makers only have partial information regarding the true position of the market when time comes to decide where to place their own orders. Using a a mixture of historical trades and partial real-time information, market makers can reconstruct a theoretical mid price of the market. They can set then the bid and ask quotes at an appropriate distance from that mid price, accounting for the trade-off between their desire to obtain a fill and the risk associated with maintaining their inventory. \twomedskip
+
+
+\noindent\textbf{(c)} \textbf{Corporate Bonds:} The corporate bond market is also an OTC market where market participants only have access to limited information prior to placing a trade. The major market participants are pension funds and insurance companies which tend have longer investment horizons, hedge funds which tend to have more tactical trading allocations, and corporate treasury departments whose objectives and horizons can span a wide spectrum.
+
+
+Compared to other assets, it is also interesting to note that most of the secondary market transactions happen in the first few months following issuance, and after that a significant portion of the amount of bonds issued is held to maturity. Similarly to other fixed income products, the key challenges for secondary trading of bonds and the electronification of its secondary market have historically been lack of centralized market place, lack of harmonized instrument characteristics and lack of transaction data.
+
+
+The corporate bonds secondary market remains dominated by one-to-one privately negotiated trades, but electronic platforms allow transacting via similar execution protocols as what traders can use for CDSs: limit order book type of executions as well as request-for-quotes (RFQ) on platforms such as Tradeweb, Bloomberg, MarketAccess among others.
+
+
+In the U.S., for instance, under FINRA Rule~6730, Broker-dealer FINRA member firms have the obligation to report transactions in TRACE-eligible securities to the TRACE\footnote{Trade Reporting And Compliance Engine} database as early as practically possible, but no later than within 15~minutes of the Time of Execution. FINRA Rule~6710 defines TRACE-eligible securities as USD denominated debt securities (whether issued by a U.S or foreign private issuer), and USD denominated debt issued or guaranteed by an Agency or Government-Sponsored Enterprise. Foreign sovereign, U.S. Treasuries and money market instruments are specifically excluded from the eligible list. The TRACE database then disseminates price, size,\footnote{The actual size disseminated back to the market is capped to prevent excessive information leakage: for investment-grade corporate bonds and agency debt securities, for any trade greater than \$5~million, the par value is displayed as \$5~MM$+$; for non-investment grade corporate bond, the displayed quantity is capped to \$1~million par value} time stamp and direction of the trade to the public. While the rules require reporting in no more than 15~minutes, most reporting and public dissemination now happens within seconds or minutes of execution (with the exception of overnight trades being batch-reported the next morning), giving participants some transparency about the current market levels.
+
+
+The combination of existing venues allowing for click-to-trade or RFQ protocols and trade events information facilitated the expansion of electronic trading for corporate bonds as well. A fifth to a quarter of the investment grade market is now transacted electronically, while on the high yield side, roughly 10\% of the market is traded through RFQs.
+
+
+Similarly to credit indices, the first challenge for dealers in corporate bond electronic market making is to infer the value of the current ``fair mid'' for the market following each transaction. Given the relatively infrequent updates observations even for bonds that are considered liquid, quantitative techniques employed tend to vary from the ones used in markets with higher frequency data available such as equities. Practitioners rely much more, for instance, on probabilistic state-space models to estimate unobservable state variable.
+
+
+This type of approach obviously becomes increasingly more challenging as one moves down the liquidity spectrum. It is not uncommon for illiquid bonds to not trade for months, in which case assessing a fair mid price cannot solely rely on prior transactions. Among possible solutions, modelers can use bonds of other maturities from the same issuers, or bonds from correlated issuers or comparable investment grades. Additionally, more liquid credit derivatives are also a potential sources of information that can be leveraged for better valuations.
+
+
 
 \noindent\emph{Stochastic Adaptive Control Approach to Optimal Execution}
 \noindent\emph{Reinforcement Learning}
+% The Future of Execution Strategies
 \section{The Future of Execution Strategies}
 \subsection{Algorithmic Trading Next Frontiers}
