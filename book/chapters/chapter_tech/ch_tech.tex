@@ -58,7 +58,7 @@ Let us finally turn to the main topic. In executing, broker middle and back offi
         \end{itemize}
 
 
-The two sides (Mraket and Client ) are usually separated in a set of Middle office functions that handles the booking and allocations and the confirms with the client/exchanges and a back office that manages issues around settlement. The back office also handles the regulatory burden of  managing the trade reporting process to the TRF/ACT and the OATS process that sends to FINRA, the full life-cycle of the order. As the reader can now appreciate, the role of this function is absolutely critical to the correct functioning of a trading operation. The middle and back-office teams are truly the unsung heroes of this endeavor. Without them, what we do would not matter one single bit.
+The two sides (Market and Client ) are usually separated in a set of Middle office functions that handles the booking and allocations and the confirms with the client/exchanges and a back office that manages issues around settlement. The back office also handles the regulatory burden of  managing the trade reporting process to the TRF/ACT and the OATS process that sends to FINRA, the full life-cycle of the order. As the reader can now appreciate, the role of this function is absolutely critical to the correct functioning of a trading operation. The middle and back-office teams are truly the unsung heroes of this endeavor. Without them, what we do would not matter one single bit.
 
 % Algorithmic Trading Infrastructure
 \section{Algorithmic Trading Infrastructure}
@@ -86,12 +86,19 @@ The core of an Algorithmic Trader infrastructure is a software framework generic
 \noindent\textbf{Outbound Order Interface:} Now back to the discussion of the core services. The last core set of abstractions has to do with managing outbound child orders. This facility provides the strategy with the state of all outstanding child orders and ability to create, cancel and amend them in an asynchronous way and manage any exceptions like for example, canceling an order that has just executed on exchange but the fill event has not yet reached the OMS. \\
 
 
-\noindent\textbf{Main Strategy Loop:} \todo{Add a diagram of the main loop, with state cache, etc?}
+\noindent\textbf{Main Strategy Loop:} 
 
+We come to the \emph{core of the core} of the whole infrastructure. While there are many ways to write a trading strategy a pattern has emerged over the years that can be described as somewhat of a standard approach. It is sometimes referred to as the Main Strategy Loop\footnote{Some practitioners for example believe that the right conceptual framework for a strategy is that of a State Machine: Based on what event just happen there is a ``state transition'' in the next state and writing a strategy is essentially to model and implement these state transitions. Conceptually elegant, in practice this approach is extremely hard to pull off as there are a lot of side effects and co-dependencies that makes it hard to cleanly decompose}, as described in Figure~\ref{fig:TradingInfraGraph}. 
 
-We come to the \emph{core of the core} of the whole infrastructure. While there are many ways to write a trading strategy a pattern has emerged over the years that can be described as somewhat of a standard approach. It is sometimes referred to as the Main Strategy Loop.\footnote{Some practitioners for example believe that the right conceptual framework for a strategy is that of a State Machine: Based on what event just happen there is a ``state transition'' in the next state and writing a strategy is essentially to model and implement these state transitions. Conceptually elegant, in practice this approach is extremely hard to pull off as there are a lot of side effects and co-dependencies that makes it hard to cleanly decompose} While the strategy container interacts with other working threads, and ensures that the state is always kept up to date, th core of the strategy flow is encoded in one stateless function. This function is called on either a timer, any major event such as quote change/trade/execution, etc., or even on a tight loop. It  then sequentially executes three separate stages:
+	\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{chapters/chapter_tech/figures/MainLoop.png} 
+	\caption{Sample Main Strategy Loop. \label{fig:MainLoop}}
+	\end{figure}
+	
+While the strategy container interacts with other working threads, and ensures that the state is always kept up to date, the core of the strategy flow is encoded in one stateless function. This function is called on either a timer, any major event such as quote change/trade/execution, etc., or even on a tight loop. It  then sequentially executes three separate stages:
         \begin{enumerate}
-        \item\emph{Discovery:} Understand where the strategy is at any point in time by recovering the state from the state cache with all the information it needs. How many shares have been traded, and how many, based on the target strategy, should be traded and where should the traders stand in the near future. 
+        \item\emph{Processing:} Understand where the strategy is at any point in time by recovering the state from the state cache with all the information it needs. How many shares have been traded, and how many, based on the target strategy, should be traded and where should the traders stand in the near future. 
         \item\emph{Evaluation:} Based on the full information set and the current state of the outstanding child orders in the market, determine which orders to cancel, which to amend, and which to submit.
         \item\emph{Implementation:} Send these instructions to the Outbound Order Interface. In some cases Step 2 just calculates the correct exposure it wants in the market and it is the role of the implementation step to optimally decide if and how this should be implemented by either submitting additional orders or amending the existing ones, etc.
         \end{enumerate}
