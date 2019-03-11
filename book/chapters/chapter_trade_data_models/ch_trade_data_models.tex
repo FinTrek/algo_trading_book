@@ -75,7 +75,7 @@ In figure~\ref{fig:char_time} We show a simple example of characteristic times f
 Time scale normalization is a 'horizontal' normalization (in a price chart the $x$-axis is time) and for an effective normalized approach we also need a 'vertical' normalization i.e. in price space. For instance if we decide to layer the order book as a way to control adverse selection, the order should be spaced in such a way that it exhibits consistent behavior across different stocks. Placing the orders the same distance for all stocks would cause volatile stock to always execute at multiple levels and for stable stocks, the layering would be useless as the deeper orders would rarely get executed. A commonly used normalizing variable is mid-quote volatility in ticks, estimated as the average number of ticks the mid quote moves in a certain time period stated in terms characteristic time. 
 
 
-It must be noted that the characteristics of microstructure noise in mid-quote prices are somewhat different from actual transaction prices. It is argued that mid-quotes are less impacted by bid-ask bounce than the transaction prices and is probably closer to the underlying `efficient' price. The local discrepancies between the observed and the efficient price may be due delays in acquiring and processing of the relevant information.Anderson, Archakov, Cebiroglu and Hautch (2017)~\cite{archcebha17} postulate are elegant model extending Roll's model~\ref{eqn:2plowstar}. Taking `$p_t$' as the log quote-midpoint, the model for price dynamics is stated as:
+It must be noted that the characteristics of microstructure noise in mid-quote prices are somewhat different from actual transaction prices. It is argued that mid-quotes are less impacted by bid-ask bounce than the transaction prices and is probably closer to the underlying `efficient' price. The local discrepancies between the observed and the efficient price may be due delays in acquiring and processing of the relevant information. Andersen, Archakov, Cebiroglu and Hautch (2017)~\cite{archcebha17} postulate are elegant model extending Roll's model~\ref{eqn:2plowstar}. Taking `$p_t$' as the log quote-midpoint, the model for price dynamics is stated as:
 	\begin{equation}\label{eqn:pricedynam}	
 	\begin{split}
 	p_t&= p_{t-1} - \alpha (p_{t-1} - p_{t-1}^*) + a_t \\
@@ -85,12 +85,12 @@ It must be noted that the characteristics of microstructure noise in mid-quote p
 where `$p_t^*$' is the efficient price. Note the first equation, when $\alpha=1$ is the same as Roll's model if `$p_t$' is taken to be the transaction price. In this formulation, $\mu_t= p_t - p_t^*$ is taken to be the mispricing component. From \eqref{eqn:pricedynam}, note that the return variance, because $r_t= -\alpha \mu_{t-1} + a_t$,
 	
 	\begin{equation}
-	Var(r_t)= \dfrac{2-\alpha}{2 \sigma_a^2 + \alpha \sigma_{\epsilon^2}},
+	\var(r_t)= \dfrac{2\sigma_a^2 + \alpha \sigma_\epsilon^2}{2 - \alpha},
 	\end{equation}
 	
 which is the mid-quote volatility. If $\lambda= \sigma_a^2/\sigma_\epsilon^2$ denotes the noise to signal ratio,
 	\begin{equation} \label{eqn:signalrationoise}
-	Var(r_t)= \sigma_\epsilon^2  \dfrac{2\lambda + \alpha}{2-\alpha},
+	\var(r_t)= \sigma_\epsilon^2\;  \dfrac{2\lambda + \alpha}{2-\alpha},
 	\end{equation}
 which can be used to isolate the information content in the mid-quote volatility. 
 
