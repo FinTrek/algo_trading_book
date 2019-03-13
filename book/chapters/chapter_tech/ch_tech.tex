@@ -228,13 +228,13 @@ In today's low latency trading landscape, the speed of the matching engine is al
 The matching logic, however remains relatively simple and---in its more basic form---similar to what happens on exchanges. In the next section we will provide some examples of specificities, but at its core, in its simplest form the matching engine of an ATS or Dark Pool would adhere to the following logic for midpoint orders:
 
 
-\noindent Buy order defined by: BUY\textsubscript{price}, BUY\textsubscript{size} \twomedskip
-\noindent Sell order defined by: SELL\textsubscript{price}, SELL\textsubscript{size}  \twomedskip
+\noindent Buy order defined by: BUY\textsubscript{price}, BUY\textsubscript{size} \\
+\noindent Sell order defined by: SELL\textsubscript{price}, SELL\textsubscript{size}  \\
 \noindent Prevailing midpoint defined as: MID \twomedskip
 
-\noindent If BUY\textsubscript{price} $\geq$ MID: \twomedskip
-\indent If SELL\textsubscript{price} $\leq$ MID: \twomedskip
-\indent\indent Executed order quantity $= \min(\text{SELL}_{\text{size}}, \text{BUY}_{\text{size}})$ \twomedskip
+\noindent If BUY\textsubscript{price} $\geq$ MID: \\
+\indent If SELL\textsubscript{price} $\leq$ MID: \\
+\indent\indent Executed order quantity $= \min(\text{SELL}_{\text{size}}, \text{BUY}_{\text{size}})$ \\
 \indent\indent Executed order price = MID \twomedskip
 
 
