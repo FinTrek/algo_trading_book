@@ -724,3 +724,47 @@ For the five exchange rate series, the computational details are presented in Ta
 	[5,] & $-0.468$ & $-0.180$ & $-0.142$ & 0.455 & 0.601 \\
 	\end{tabular}
 	\end{table}
+
+
+
+% Exercises
+\section{Exercises}
+
+
+% Problem
+\prob
+\begin{itemize}
+\item The file {\tt d\_15stocks.csv} and {\tt m\_15stocks.csv} contain daily and monthly stock returns data for 15 stocks from Jan 11, 2000 to Mar 31, 2013.
+\item The file {\tt d\_indexes.csv} and {\tt m\_indexes.csv} contain daily and monthly returns data for the volume-weighted and equal-weighted S\&P500 market indices (VWRETD and EWRETD, respectively) from Jan 11, 2000 to Mar 31, 2013.
+\end{itemize}
+
+Using daily and monthly returns data for 15 individual stocks from {\tt d\_15stocks.csv} and {\tt m\_15stocks.csv}, and the equal-weighted and value-weighted CRSP market indexes (EWRETD and VWRETD, respectively) from {\tt d\_indexes.csv} and {\tt m\_indexes.csv}, perform the following statistical analyses using R. For the subsample analyses, split the available observations into equal-sized subsamples.
+
+\begin{enumerate}[(a)]
+\item Compute the sample mean $\hat\mu$, standard deviation $\hat{\sigma}$, and first-order autocorrelation coefficient $\hat{\rho}(1)$ for daily simple returns over the entire sample period for the 15 stocks and two indexes. Split the sample into 4 equal subperiods and compute the same statistics in each subperiod---are they stable over time?
+\item Plot histograms of daily simple returns for VWRETD and EWRETD over the entire sample period. Plot another histogram of the normal distribution with mean and variance equal to the sample mean and variance of the returns plotted in the first histograms. Do daily simple returns look approximately normal? Which looks closer to normal: VWRETD or EWRETD?
+\item Using daily simple returns for the sample period, construct 99\% confidence intervals for $\hat{\mu}$ for VWRETD and EWRETD, and the 15 individual stock return series. Divide the sample into 4 equal subperiods and construct 99\% confidence intervals in each of the four subperiods for the 17 series---do they shift a great deal?
+\item Compute the skewness, kurtosis, and studentized range of daily simple returns of VWRETD, EWRETD, and the 15 individual stocks over the entire sample period, and in each of the 4 equal subperiods. Which of the skewness, kurtosis, and studentized range estimates are statistically different from the skewness, kurtosis, and studentized range of a normal random variable at the 5\% level? For these 17 series, perform the same calculations using monthly data. What do you conclude about the normality of these return series, and why? \twomedskip
+\end{enumerate}
+
+
+% Problem
+\prob For the data in Exercise~1, carry out the following:
+
+\begin{enumerate}[(a)]
+\item Perform a PCA on the 15-stock returns. Using the eigenvalues of the $\hat{\Sigma}$ matrix, identify the number of factors.
+\item Compute the covariance between the returns and the factors and comment. \twomedskip
+\end{enumerate}
+
+
+% Problem
+\prob Consider the weekly exchange rate data used in Hu and Tsay (2014)~\cite{hutsay14}: British Bound ($y_{1t}$), Norwegian Kroner ($y_{2t}$), Swedish Kroner ($y_{3t}$), Swiss Franc ($y_{4t}$), Canadian Dollar ($y_{5t}$), Singapore Dollar ($y_{6t}$) and Australian Dollar ($y_{7t}$) against US Dollar from March 22, 2000 to October 26, 2011.
+
+\begin{enumerate}[(a)]
+\item Test if the exchange rates are stationary individually via Dickey-Fuller test.
+\item Test for co-integration using the likelihood-ratio test given in \eqref{eqn:2negT}. Assume that the order of the VAR model as, $p= 2$.
+\item Compute the log returns: $r_t= \ln(Y_t) - \ln(Y_{t-1})$; Fit Var(5) model for the returns and extract the residuals. 
+\item Using the residuals from (c), compute the $\Gamma_k$ matrix in \eqref{eqn:cumkurt} for $k= 5, 10, 20$ and obtain the $M$-matrix in \eqref{eqn:obtainM}.
+\item Plot $MY_t$ and comment on the linear combination that has low volatility. 
+\item Check (a)--(e) for various regimes; note 2008--2009 is noted for its volatility. 
+\end{enumerate}

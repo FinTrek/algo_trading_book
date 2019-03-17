@@ -592,9 +592,9 @@ One approach to selecting among competing models is the use of information crite
 	\text{BIC}_{p,q}&=\log\hat{\sigma}_\varepsilon^2 + n^* \left( \dfrac{\log T}{T} \right),
 	\end{split}
 	\end{equation}
-where $\hat{\sigma}_\varepsilon^2$ is the estimated model error variance, and $n^*= p + q + 1$ denote the number of parameters estimated in the model, including the constant term. The first term in the above equation is essentially corresponds to minus $2/T$ times the log of the maximized likelihood, while the second term acts as a ``penalty factor'' for the additional parameters used in the model. In this approach, models which yield a minimum value for the criterion are to be preferred, as these criteria penalize for overfitting. \twomedskip
-
-
+where $\hat{\sigma}_\varepsilon^2$ is the estimated model error variance, and $n^*= p + q + 1$ denote the number of parameters estimated in the model, including the constant term. The first term in the above equations results from the maximized likelihood and can be made smaller with more parameters, while the second term acts as a ``penalty factor'' for the parameters used in the model. In this approach, models which yield a minimum value for the criterion are to be preferred, as these criteria penalize for overfitting. \twomedskip
+   
+                                      
 {\noindent\bfseries\large Estimation of Model Parameters} \twomedskip
 
 \noindent \textbf{Method of Moments} \twomedskip
@@ -1121,3 +1121,105 @@ The Lagrange Multiplier test with $q=5$ also gives $R^2= 0.065$, that $T \cdot R
 
 
 Among the conditional heteroscedasticity models ARCH/GARCH that were discussed in the last section, GARCH is simple to use and also results in more parsimonious modeling. Therefore, we present only the estimated GARCH model here. For exchange rate data, the estimated GARCH model is $\hat{\sigma}_t^2 = 2.61 \times 10^{-7} + 0.037r_{t-1}^2 + 0.95\hat{\sigma}_{t-1}^2$. Observe that the coefficients $r_{t-1}^2$ and $\hat{\sigma}_{t-1}^2$ add up to unity approximately and thus indicating the volatility is best modeled through IGARCH, which seems to hold generally for many asset volatilities.
+
+
+
+% Exercises
+\section{Exercises}
+
+
+% Problem
+\prob Consider the exchange rate daily data from December 4, 2006 to November 5, 2010 (Rupee versus Dollar, Pound and Euro), Rates.csv.
+
+\begin{enumerate}[(a)]
+\item Compute the sample average, standard deviation and the first order autocorrelation of daily returns over the entire sample period.  Test if the mean and the first order autocorrelation are significantly different from zero using the tests proposed in Section~\ref{}. 
+\item Plot histograms of the returns over the entire sample period; Does the distribution look normal?  Test it through Jarque-Bera test in \eqref{eqn:2JB}.
+\item Aggregate the data at the weekly level; do (a) and (b) on the aggregated data. Compare the result with the result for the daily level. \twomedskip
+\end{enumerate}
+
+
+% Problem
+\prob For the returns of all three time series in Problem~1,  construct\dots
+
+\begin{enumerate}[(a)]
+\item ARMA models for the returns; identify the model structure via ACF and PACF.
+\item  GARCH models for the squared returns; compare the model coefficients for the three series.  Comment on the difference, if any.
+\item Is there a co-movement among the three exchange-rate series? To make the plots on a comparable scale, convert the starting points of the series unity. Does the co-movement vary over different time regimes? (Back up your claim with solid analysis.) Identify the transition states and speculate how you can exploit this for trading decisions. \twomedskip
+\end{enumerate}
+
+
+% Problem
+\prob Exchange Rates: The file \texttt{Exchange Rates.csv} contains exchange rates between US dollar and twenty-five major currencies. The daily data spans from Jan 3, 2000 to April 10, 2012. Use this data to perform the following tasks: after computing the returns, $r_t=\log(p_t)-\log(p_{t-1})$ for each series.
+
+\begin{enumerate}[(a)]
+\item Plot histograms of the returns and test if the distributions are normal, via Q--Q plots.
+\item Compute the auto-correlation function and identify which lags are significant. What is the tentative ARMA model?
+\item Is there any ARCH effect? Why?
+\item Fit GARCH(1,1,) and IGARCH(1,1) models using both normal and t-distributions for the innovations. Which volatility model appears to be the best? \twomedskip
+\end{enumerate}
+
+
+ % Problem
+\prob Exchange rates: Consider the original series, $p_t$, for the duration starting June 11, 2003.
+ Answer the following after dividing each series by $p_1$, so that the starting points are the same.
+ 
+\begin{enumerate}[(a)]
+\item Identify for each series, if there are any regime changes. Test if these changes are statistically significant.
+\item Identify how many clusters are there and if the membership changes under different regimes.
+\item Do the series move together? Provide some intuitive tests (more formal tests will be covered in Chapter~\ref{}). 
+\item Compare the results in (c) with (b). What is the connection between clustering and co-movement? Briefly discuss. \twomedskip
+\end{enumerate}
+
+
+% Problem
+\prob Consider daily price of Apple stock from January 2, 2015 to January 2, 2018. The data can be obtained from Yahoo Finance and have 7 columns (namely, Date, Open, High, Low, Close, Volume, Adj Close). We focus on the adjusted closing price in the last column.
+
+\begin{enumerate}[(a)]
+\item Compute the daily log returns. Is there any serial correlation in the daily log returns? Use the test for white noise as outlined in the text. 
+\item Consider the pivot based on the pivot based on the average of high and low price and the pivot based on the average of high, low and close prices. Compute the returns based on the pivot log prices and test for serial correlation. Compare this result with the finding in (a). 
+\item Consider the log price series of AAPL stock. Is the log price series unit-root non-stationary? Perform a unit-root (Dickey-Fuller) test to answer the question and present your conclusion. \twomedskip
+\end{enumerate}
+
+
+% Problem
+\prob Consider daily price of Apple stock again.
+\begin{enumerate}[(a)]
+\item Compute various measures of variance computed from the entries of the price bars. Comment on their correlation with log volume. 
+\item Use the ARIMA modeling to come up with a parsimonious model for log volume. Comment on the model accuracy by setting aside a validation data set. \twomedskip
+\end{enumerate}
+
+
+% Problem
+\prob The \textit{Roll} model for trade prices discussed in the text can be more specifically stated as,
+	\[
+	\begin{split}
+	p_t^*&= p_{t-1} + \epsilon_t, \;\;\;\;\; \epsilon_t \sim N(0,\sigma^2) \\
+	\text{and } p_t&= p_t^* + c s_t, \;\;\;\;\; \text{where }s_t \in \{+1,-1\}
+	\end{split}
+	\]
+Here $p_t^*$ is the ``true'' value of a security and $p_t$ is the observed trade price, which differ because of the bid-offer spread: $c$ is the half-spread and $s_t$ is the direction of the $t$th trade. $s_t$ and $\epsilon$ are serially independent and independent of each other.
+\begin{enumerate}[(a)]
+\item Calculate the serial correlation of the observed prices $p_t$. Construct an MA(1) model with the same autocorrelation structure. Of the two such models, take the invertible one. 
+\item For the invertible model, construct the associated AR model. 
+\item Use the model to show how to estimate the bid-ask spread and apply the results on the Apple data used in Problems 5 and 6. \twomedskip
+\end{enumerate}
+
+
+% Problem
+\prob Consider the level III data for the ticker, ``BIOF'' for a single day. The data description follows the similar details as given in Table~\ref{tab:CISCO}. This exercises consists of two parts; in the first part, we want to construct the limit order book and the second part we want to study the effect of time aggregation. 
+
+\begin{enumerate}[(a)]
+\item At any point in time, a limit-order book contains a number of buy and sell orders.
+	\begin{enumerate}[(i)]
+	\item Develop a program that can visually present a limit order book. Present the order book diagram as of 11:00~A.M. for the first tern positions on both sides.
+	\item Aggregate demand and supply are represented as step functions of shares accumulated at each price level. The height of step `$i$' on the demand side is the price side is the price difference between $(i-1)$th and $i$th best price. The height of the first step is the mid price; the length of a step, `$i$', on the demand side is the total number of shares across all orders until $i$th price. Similarly, the supply side can be constructed. Normalize a step height by the cumulative length from the first step to tenth step. Present the aggregate curve as of 11:00~a.m.. 
+	\item Using the aggregate graph give in (ii), suggest measures for the order book imbalance---which is a key determinant in some entry/exit algorithms in the high-frequency setting.
+	\end{enumerate}
+
+\item Aggregate the data to a 2-minute interval, summarizing the number of transactions, volume weighted average price and average duration between transactions. Also, produce the price bars (open, close, low and high and volume) for each interval.
+	\begin{enumerate}[(i)]
+	\item Briefly discuss how you would quantify the loss of information due to aggregation.
+	\item Calculate the variance of the returns based on the aggregated VWAP and compare it with the variance based on all observations.
+	\item From Exercise~7, it follows that the true price is measured with error, which is due to market friction. The aggregation done above may cancel out the friction and may reflect the true price. Alternatively, one can sample the price every two minutes and compute the variance in the returns. How does this compare to VWAP based descriptives?
+	\end{enumerate}
+\end{enumerate}
