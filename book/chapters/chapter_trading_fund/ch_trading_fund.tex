@@ -174,20 +174,26 @@ In order to fully understand a large part of this book one requires at least a b
 % How Double Auction Markets Work
 \subsection{How Double Auction Markets Work}
 
-The most common approach used by modern trading exchanges can be termed as an electronic, time/price priority, continuous double auction trading system. The term double auction refers to the nature of the markets where, unlike a common auction with one auctioneer and many potential buyers, there are multiple buyers and multiple sellers. These buyers and sellers interact with the exchange by sending electronic instructions through a networking protocol. There are three basic instructions: Insert, Cancel, and Amend, with Insert initiating a new order, Cancel removing an existing order from the market and Amend modifying some of the parameters of the existing order. New orders require the use a specific ``order type''  with associated parameters to embed the trader full intent. Accounting for limit and market orders, there are eight types of events, four on either side, that can alter the state of the order book:
+The most common approach used by modern trading exchanges can be termed as an electronic, time/price priority, continuous double auction trading system. The term double auction refers to the nature of the markets where, unlike a common auction with one auctioneer and many potential buyers, there are multiple buyers and multiple sellers. These buyers and sellers interact with the exchange by sending electronic instructions, via a network protocol to a specialized infrastructure mad up of software and hardware the goes by the term: Matching Engine. This component has two main sub-systems: the Limit Order Book and the Matching Algorithm.
+
+\noindent\textbf{Limit Order Book (LOB):}
+The Limit Order Book it's a complex data structure that stores all non-executed orders with associated instructions in an efficient way so that is extremely quickly to insert/update/delete elements and then being able to quickly sort them and retrieve aggregated information. For an active stock the LOB can be updated and queried tens of thousands times every second so must be highly efficient and handle a high degree of concurrency to ensure that the state is always correct.  The LOB actually keeps two copies of the core data structure one for Buy orders and one for Sell orders. This structure is the core abstraction for all electronic exchanges so it's very important to understand it in detail. \twomedskip
+
+The LOB support three basic instructions: Insert, Cancel, and Amend, with Insert initiating a new order, Cancel removing an existing order from the market and Amend modifying some of the parameters of the existing order. New orders require the use a specific ``order type''  with associated parameters to embed the trader full intent. We'll review order types in more details later but to get a feeling of how markets operate we can start with the two main ones: The Limit Order and the Market Order. The main difference between the two order types is that a Limit Order has a price associated to it while a market order doesn't. 
+
+Accounting for limit and market orders, there are eight types of events, four on either side, that can alter the state of the order book:
 	\begin{itemize}
 	\item Limit order submission: A limit order is added to the queue at the specified price level.
 	\item Limit order cancellation: An outstanding limit order is expired or canceled and therefore is removed from the LOB.
 	\item Limit order amendment: An outstanding limit order is amended by the original sender (e.g. decrease in size).
-	\item Marketable order submission: Outstanding limit orders at the best price and up to the demanded liquidity price level (in case of pure market order) or up to the limit price (for marketable limit order) are executed against the incoming order and thus removed from the book.
+	\item Execution: The submission of market or marketable limit orders (orders whose price is able to be matched with one ore more orders on the far side) from the other side is matched with existing orders and thus removed from the book.
 	\end{itemize}
 
-The matching of limit and market orders is handled by the exchange component called the matching engine which is responsible for continuously comparing both sides of the order book, processing orders entries, amendments and cancellations, and handling executions with as little latency as possible. This double auction process happens in a continuous fashion between the opening of the market and the closing, in a phase commonly referred to as continuous trading.
+\noindent\textbf{Matching Algorithm:}
+This software component is responsible to intercept the various events to determine if any buy and sell orders can be matched in an execution and if multiple orders could be matched which order should be chosen. The time/price priority discussed above is implemented in the matching engine where orders that can be matched will be sorted first by price and if orders are at the same price sorted by time of arrival. As we will see in later chapters this is only one of the algorithms available and it's by far the most common. \twomedskip
 
-In most markets, the continuous trading session is complemented by a series of auctions designed to aggregate liquidity. The trading day generally starts with an open auction, then followed by the main continuous session, and ends with a closing auction. Some markets like Japan also have a lunch break which might be preceded by a morning closing auction and followed by an afternoon opening auction. We will now discuss these main market phases in chronological order.
-
-
-
+The matching algorithm operates on a continuous basis through the trading day during the so called continuous trading session. In order to maintain an orderly beginning and end of the day the continous session is usually complemented by a series of auctions designed to aggregate liquidity. The trading day generally starts with an open auction, then followed by the main continuous session, and ends with a closing auction. Some markets like Japan also have a lunch break which might be preceded by a morning closing auction and followed by an afternoon opening auction. We will now discuss these main market phases in chronological order.\twomedskip
+	
 % The Open Auction
 \subsection{The Open Auction} 
 The Open Auction is only one type of call auctions that are commonly held on exchanges. The term ``call auction'' explains the liquidity aggregating nature of this event. Market participants are `called' to submit their quotes to the market place, at a consistent time, in order to determine a matching price that will maximize the amount of shares that can be transacted. To facilitate timely and orderly cross, auctions have strict order submission rules, including prescribed timing for entries (see Table~\ref{tab:NASDAQopen}) and information dissemination to prevent wild price fluctuations and ensure the process of efficient price discovery.
@@ -213,7 +219,6 @@ Most exchanges publish order imbalance that exists among orders on the opening o
         \item  Imbalance Shares: The number of opening or closing shares that would remain unexecuted at the current reference price. 
         \item  Imbalance Side: The side of the imbalance: B $=$ buy-side imbalance; S $=$ sell-side imbalance; N $=$ no imbalance; O $=$ no marketable on-open or on-close orders.
         \end{itemize}
-
 
 In a double auction setup, the existence of multiple buyers and sellers requires employing a matching algorithm to determine the actual opening price which we will illustrate with a practical example. Table~\ref{tab:openAuct} gives an example of order book submissions for a hypothetical stock, where orders are ranked based on their arrival time. Different exchanges around the world apply slightly different mechanisms to their auctions, but generally the following rules apply to match supply and demand:
         \begin{itemize}
@@ -371,7 +376,7 @@ The list of buy orders executed during the auction is shown in Table~\ref{tab:op
 	\end{table}	
 
 
-As market participants with better information are more likely to be participating in the open auction with more aggressive orders in order to extract liquidity (and, as such, setting the price), the price discovery mechanism is often considered to be quite volatile and more suited for short-term alpha investors. Similarly, the period immediately following the open auction also tends to be much more volatile than the rest of the day. As a result of which, most markets experience wider spreads while market makers try to protect themselves against information asymmetry by quoting wider bid and offers. The increased volatility and wider spreads might discourage certain investors from participating in the market at the open auction and in the period immediately following the open. While this appears to be reasonable from a price risk perspective, it is worth mentioning that for a lot of less liquid stocks (in particular small and mid cap stocks), the open auction can be a significant liquidity aggregation point that even surpasses the close auction. In Australia for instance, the bottom 50\% less liquid stocks have more volume traded in the open auction than in the close auction. Similarly in Japan, the less liquid stocks see more volume traded in the open auction, but also in the afternoon open auction that follows the market lunch break.
+As market participants with better information are more likely to be participating in the open auction with more aggressive orders in order to extract liquidity (and, as such, setting the price), the price discovery mechanism is often considered to be quite volatile and more suited for short-term alpha investors. Similarly, the period immediately following the open auction also tends to be much more volatile than the rest of the day. As a result of which, most markets experience wider spreads while market makers try to protect themselves against information asymmetry by quoting wider bid and offers. The increased volatility and wider spreads might discourage certain investors from participating in the market at the open auction and in the period immediately following the open. While this appears to be reasonable from a price risk perspective, it is worth mentioning that for a lot of less liquid stocks (in particular small and mid cap stocks), the open auction can be a significant liquidity aggregation point that even surpasses the close auction. In Australia for instance, the bottom 50\% less liquid stocks have more volume traded in the open auction than in the close auction. Similarly in Japan, the less liquid stocks see more volume traded in the open auction, but also in the afternoon open auction that follows the market lunch break. \twomedskip
 
 
 From a pure execution standpoint, though, the usage of the open auction has to be considered carefully. While this represents a liquidity opportunity, the first print of the day can also have a significant anchoring effect on the stock price for the remainder of the day. So, participating in the open should be considered in light of the liquidity demand of the order: orders that are small enough can likely do without participating in the open auction and the period that continues immediately following, while large orders try to extract significant liquidity from the market might benefit from participating in the open auction. The market intraday momentum study by Gao, Hen, Li and Zhou (2018)~\cite{ghliz} demonstrates how the first half-hour return on the market as measured from the previous day's market close predicts the last half hour return.
@@ -381,7 +386,8 @@ From a pure execution standpoint, though, the usage of the open auction has to b
 % Continuous Trading
 \subsection{Continuous Trading} 
 
-This refers to the market phase between the auctions. During this market session  the state of the order book changes quite rapidly due to the multi-agent nature of financial markets and the prevalence of high frequency trading. Consequently, it is quite important to understand the dynamic of the LOB before implementing trading strategies. There exists quite a diversity of order types that are mostly relevant to the continuous trading session, but the two most basic ones are: Limit Orders and Market Orders, which we will spend some time describing in more details.
+This refers to the market phase between the auctions. During this market session  the state of the order book changes quite rapidly due to the multi-agent nature of financial markets and the prevalence of high frequency trading. Consequently, it is quite important to understand the dynamic of the LOB before implementing trading strategies. There exists quite a diversity of order types that are mostly relevant to the continuous trading session, but the two most basic ones are: Limit Orders and Market Orders, which we will spend some time describing in more details. \twomedskip
+
 
 A limit order has an associated side (Buy or Sell), a quantity and a price which represent the highest (lowest) price the trader is willing to buy (sell). Once a limit order is received by the exchange it is inserted in a data structure called a Limit Order Book (LOB) which contain two sub-structures, one per side. Orders are inserted in this structure in price priority, higher prices for buys, lower prices for sells, and for orders at the same price the orders are stored in the order in which they were received. That is what is meant by price/time priority.\footnote{Note: Not all exchanges are matching orders following a Price/Time priority algorithm; a key characteristic of the Futures market, for instance, is the existence of pro-rata markets for some fixed income contracts where passive child orders receive fill from aggressive orders based on their size as a fraction of the total passive posted quantity.} If the price of a newly arrived order overlaps with the best price available on the opposite side, the order is executed either fully or up to the available quantity on the other side. These orders are said to be ``matched'' and again this matching happens in price and time priority meaning that the better prices (higher for buys, lower for sells) are executed first and orders that arrived beforehand at that price level are executed first. 
 
@@ -445,7 +451,11 @@ These two metrics are of particular relevance for execution algorithms and will 
 
 \item  d-Quote: Special order type on the NYSE mainly used during the close auction period.
 
+<<<<<<< HEAD
+\item  Funari: Special order type on the Tokyo Stock Exchange which allows limit orders placed in the book during the continuous session to automatically enter the closing auction as market orders. \twomedskip
+=======
 \item  Funari: Special order type on the Tokyo Stock Exchange which allows limit orders placed in the book during the continuous session to automatically enter the closing auction as market orders. 
+>>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 \end{itemize} 
 
 
@@ -455,7 +465,11 @@ As described above, there exist a wide variety of orders types offered by differ
 \noindent\textbf{Validity of Instructions:} In addition to conditions on price, it is possible to add conditions on the life duration of the order known as Time-in-Force (TIF). The most common types of TIF instructions include Day orders which are valid for the full duration of the trading session, Extended Day orders which allow trading in extended hours, and Good-Till-Cancel (GTC) orders which will be placed again on the exchange the next day with similar instructions if they were not fully filled. More sophisticated market participants aiming at achieving greater control over their executions tend to also favor Immediate-or-Cancel (IOC) and Fill-or-Kill (FOK) Time-in-Force instructions. An IOC order will get immediately canceled back to the sender after reaching the matching engine if it does not get an immediate fill, and in case of a partial fill, the unfilled portion will be canceled, thus preventing it from creating a new price level in the order book. In a Fill-or-Kill scenario, the order gets either filled in its entirety or does not get filled at all. This instruction is particularly popular with high frequency market makers and arbitrageurs for which partial fills might result in unwanted legging risk as discussed in Chapter~\ref{ch:stat_ts} on pairs trading.
 
 
+<<<<<<< HEAD
+Finally, it is worth mentioning that some exchanges as well as alternative venues offer the ability of specifying minimum fill sizes whereby a limit order which might be eligible for a fill due to an incoming order at the same price level only receives a fill if the incoming order is larger than a pre-specified number of shares or notional value. This type of instruction is used by market participants as a way of minimizing the number of small fills which carry the risk of excessive information dissemination, in particular in dark pools where they can be used to detect the presence of larger limit orders that would otherwise not be visible to market participants.  
+=======
 Finally, it is worth mentioning that some exchanges as well as alternative venues offer the ability of specifying minimum fill sizes whereby a limit order which might be eligible for a fill due to an incoming order at the same price level only receives a fill if the incoming order is larger than a pre-specified number of shares or notional value. This type of instruction is used by market participants as a way of minimizing the number of small fills which carry the risk of excessive information dissemination, in particular in dark pools where they can be used to detect the presence of larger limit orders that would otherwise not be visible to market participants. 
+>>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 
 
 
@@ -515,7 +529,11 @@ The mechanics of the closing auction are in most part similar to the ones descri
 	\end{table}	
 
 
+<<<<<<< HEAD
+One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary electronic quote orders (known as ``d-Quote'' orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since there is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. \twomedskip
+=======
 One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary electronic quote orders (known as ``d-Quote'' orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since there is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. 
+>>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 
 
 
@@ -534,7 +552,11 @@ In this section, we will review the most important data sets and their role in A
 Historical market data available to researchers and practitioners alike but varied in degrees of granularity over time. From daily trade data (closing price and volume), to tick-by-tick trade and quote data (also known as TAQ data), to full message data, the progression in granularity not only reflects the focus in intraday trading complexity but also opens up the way for more advanced strategies. 
 
 
+<<<<<<< HEAD
+Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The level II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available level III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime.\footnote{Level III data has been available for years to firm subscribing and storing the raw binary exchange format (pcap) and the re-building the orderbook sequentially from there for their research. It is still the main method used for HFT research. One recently this data became available historically to a broader subset of users and researchers} \twomedskip
+=======
 Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The level II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available level III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime.\footnote{Level III data has been available for years to firm subscribing and storing the raw binary exchange format (pcap) and the re-building the orderbook sequentially from there for their research. It is still the main method used for HFT research. One recently this data became available historically to a broader subset of users and researchers.}
+>>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 \end{comment}
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -683,7 +705,10 @@ In order to be leveraged in quantitative strategies, one needs to maintain a var
 
 
 While the points mentioned above represent a non-exhaustive list of the reference data available to build a quantitative research platform, they highlight the challenges that need to be taken into account when designing and implementing algorithmic trading strategies. Once in place, a proper set of reference data will allow the quantitative trader to systematically harness the actual content of the types of data described later on without being caught off-guard by the minutiae of trading.
+<<<<<<< HEAD
+=======
 
+>>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 
 
 % Raw Market Data
@@ -691,7 +716,11 @@ While the points mentioned above represent a non-exhaustive list of the referenc
 While historically a large swath of modeling was carried out on daily data or minute bar datasets, the past fifteen years have seen a significant rise in the usage raw market data in an attempt to extract as much information as possible, and act on it before the opportunity (or market inefficiency) dissipates.
 
 
+<<<<<<< HEAD
+Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as ``direct feeds'') or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level I, Level II or Level III market data.\twomedskip
+=======
 Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as ``direct feeds'') or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level I, Level II or Level III market data. \twomedskip
+>>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 
 
 \noindent\textbf{Level I data: Trade and BBO Quotes:} Level I market data is the most basic form of tick-by-tick data. Historically, the level I data feed would only refer to trade information (Price, Size, Time of each trade reported to the tape) but has grown over time into a term generally accepted to mean both trades and top of book quotes. While the trade feed updates with each trade printed on the tape, the quote feed tends to update much more frequently each time liquidity is added to or removed from the top of book (a rough estimate in liquid markets is the quotes present more updates than the trades by about an order of magnitude). 
@@ -771,11 +800,18 @@ As illustrated by the diversity and granularity of information available to trad
 % Market Data Derived Statistics
 \subsection{Market Data Derived Statistics}
 
+<<<<<<< HEAD
+Most Quantitative strategies even the higher frequency that leverage more and more granular data,leverage derived statistics both at the daily level and binned data. Here we give a list of the most common ones used by practitioners and researchers alike.\twomedskip
+
+
+\noindent\textbf{Daily Statistics}\twomedskip
+=======
 Most Quantitative strategies even the higher frequency that leverage more and more granular data, leverage derived statistics both at the daily level and binned data. Here we give a list of the most common ones used by practitioners and researchers alike. \twomedskip
 
 
 \noindent\textbf{Daily Statistics} \twomedskip
 
+>>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 The first group represents the overall trading activity in the instrument: 
 
 \begin{itemize}
@@ -842,11 +878,17 @@ Finally, the last group of daily data can be derived from the previous two group
         \item Beta w.r.t. index or sector (plain beta, or asymmetric up-days/down-days beta)
         \item Correlation matrix
         \end{itemize}
+<<<<<<< HEAD
+As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.).\twomedskip
+
+\noindent\textbf{Binned Data}\twomedskip
+=======
 As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.). \twomedskip
 
 
 \noindent\textbf{Binned Data} \twomedskip
 
+>>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 
 The first natural extension to daily data sets is a discretization of the day into bins ranging from a few seconds to 30 minutes. The features collected are comparable to the ones relevant for daily datasets (period volume, open, high, low, close, VWAP, spread, etc.), but computed at higher frequency. It is worth mentioning that minute bar data actually underpins the vast majority of microstructure models used in the electronic execution space. Volume and spread profiles, for instance, are rarely built with a granularity finer than one minute to prevent introducing excess noise due to market friction.
 
@@ -888,11 +930,6 @@ A very large number of quantitative investment strategies are still based on fun
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
-
-\todo{The below paragraph is orphan. We talk about it a little in the exec strategy section and here is way premature to discuss. Shall we remove?}
-
-In order to develop an execution strategy achieving the objective(s) prescribed by the given benchmark(s), the execution problem can be modeled as a multi-step Markov decision process. However, the dimensionality of the problem explodes rapidly given the quasi infinite size of the state space (to represent the market), the large number of steps (even simplifying to 1s resolution, it results in over 20,000 steps for U.S. equities - compared, for instance, to an average of only 40 moves per chess game\footnote{Chessgames database: www.chessgames.com/chessstats.html}) and also the large size of the action space. To address this complexity, most execution algorithms decompose the problem into different timeframe decisions such as scheduling, placement and routing. 
-
 
 \todo{This is a valuable section but I think it would need work to really organize a systematic review of market microstructure academic literature. Fit more in Raja's court. If we don't have time I would be for dropping it}
 
