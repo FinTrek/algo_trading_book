@@ -117,15 +117,15 @@ While the above rules are easy to implement and one may observe that they do not
 
 \noindent\fbox{%
     \parbox{\textwidth}{%
-	\textbf{Bollinger Rule: If }$\mathbf{P_{t} > P_{t}^+ = \hat{P}_{t}^{(m)} + 2\hat{\sigma}_{t}^{(m)}}$\textbf{, the upper band, then sell; buy if } $\mathbf{P_{t} < P^- = \hat{P}_{t}^{(m)} - 2\hat{\sigma}_{t}^{(m)}}$ \textbf{, the lower band, then buy; No action is taken in-between.}
+	\textbf{Bollinger Rule: If }$\mathbf{P_{t} > P_{t}^+ = \hat{P}_{t}^{(m)} + 2\hat{\sigma}_{t}^{(m)}}$\textbf{, the upper band, then sell; if } $\mathbf{P_{t} < P^- = \hat{P}_{t}^{(m)} - 2\hat{\sigma}_{t}^{(m)}}$ \textbf{, the lower band, then buy; No action is taken in-between.}
     }%
 } \twomedskip
 
 
-Broadly the key quantities such as moving average, weighted (exponentially or otherwise) average, etc. correspond to the running-mean smoother discussed in Lai and Xing (2009)~\cite[Section 7.2.1]{lai1}. Instead of the running-mean, some technical rules use the running maximum (i.e. $\max\limits_{0 \leq i \leq m} P_{t-i}$) or the running minimum (i. e $\min\limits_{0 \leq i \leq m} P_{t-i}$) in the above rules. \twomedskip
+Broadly the key quantities such as moving average, weighted (exponentially or otherwise) average, etc. correspond to the running-mean smoother discussed in Lai and Xing (2009)~\cite[Section 7.2.1]{lai1}. Instead of the running-mean, some technical rules use the running maximum (i.e. $\max\limits_{0 \leq i \leq m} P_{t-i}$) or the running minimum (i.e., $\min\limits_{0 \leq i \leq m} P_{t-i}$) in the above rules. \twomedskip
 
 
-\noindent\textbf{Moving Average Oscillator:} The use of the technical rules by the foreign exchange professionals is well documented (See Menkhoff and Taylor (2007)~\cite{MalTay}). The so-called moving average oscillator rule requires computing two moving averages of short and long time spans. Let $\overline{P}_{t}^{(m)}$ and $\overline{P}_{t}^{(n)}$ be the short and long averages, where $m< n$. The rule would signal a break in trend when the longer moving average is crossed by a shorter moving average (or spot rate). The upward trend is signaled when short moving average intersect from below the long average. Conversely a downward break in trend is signaled if the crossing occurs from above. Precisely the rule is: \twomedskip
+\noindent\textbf{Moving Average Oscillator:} The use of the technical rules by the foreign exchange professionals is well documented (See Menkhoff and Taylor (2007)~\cite{MalTay}). The so-called moving average oscillator rule requires computing two moving averages of short and long time spans. Let $\overline{P}_{t}^{(m)}$ and $\overline{P}_{t}^{(n)}$ be the short and long averages, where $m< n$. The rule would signal a break in trend when the longer moving average is crossed by a shorter moving average (or spot rate). The upward trend is signaled when short moving average intersects from below the long average. Conversely, a downward break in trend is signaled if the crossing occurs from above. Precisely the rule is: \twomedskip
 
 
 \noindent\fbox{%
@@ -205,7 +205,7 @@ To automate the detection of charting patterns, first the pattern is defined in 
 and the local extremes are identified through sign changes in $\hat{m}_{h}(\tau)$.
 
 
-To test if the kernel regression yields better prediction, LMW(2000)~\cite{LoMWang} compare the unconditioned distribution of returns to the conditioned distribution, conditioned on the existence of a pattern. These comparisons are made through a goodness-of-fit test such as Kolmogrov-Smirnov test. It  is generally found that the Kernel regression method yields somewhat better predictions. Jegadeesh (2000)~\cite{Jeqa} in his discussion of LMW(2000)~\cite{LoMWang} questions if the chartists' belief that selected patterns of the past tend to repeat as there is a great deal of noted subjectivity in the interpretation of charts. It is further noted that the practitioners tend to use the visual patterns in conjunction with other information such as macro level events that exert large influence compared to stock specific moves, to time their trades.
+To test if the kernel regression yields better prediction, LMW(2000)~\cite{LoMWang} compare the unconditioned distribution of returns to the conditioned distribution, conditioned on the existence of a pattern. These comparisons are made through a goodness-of-fit test such as Kolmogorov-Smirnov test. It  is generally found that the Kernel regression method yields somewhat better predictions. Jegadeesh (2000)~\cite{Jeqa} in his discussion of LMW(2000)~\cite{LoMWang} questions if the chartists' belief that selected patterns of the past tend to repeat as there is a great deal of noted subjectivity in the interpretation of charts. It is further noted that the practitioners tend to use the visual patterns in conjunction with other information such as macro level events that exert large influence compared to stock specific moves, to time their trades.
 
 
 
@@ -217,7 +217,7 @@ The rules that were discussed in previous sections are mostly trend following an
 	\begin{equation} \label{eqn:3sgn}
 	r_t = c + \lvert r_t - c\rvert \sgn (r_t - c)= c + \lvert r_t - c \rvert (2\cdot I(r_t  > c) - 1),
 	\end{equation}
-where $I(r_t > c)$ is an indicator function. The values of $c$ are determined by the user; it could be a multiple of the standard deviation of `$r_{t}$' or it could represent the transaction cost or the risk free rate. This model is conceptually similar to Rydberg and Shephard (2003)~\cite{Ryd} and potential usefulness of the decomposition is also mentioned in Anatoleyev and Gerko (2005)~\cite{Ananto1}.
+where $I(r_t > c)$ is an indicator function. The values of $c$ are determined by the user; it could be a multiple of the standard deviation of `$r_{t}$' or it could represent the transaction cost or the risk free rate. This model is conceptually similar to Rydberg and Shephard (2003)~\cite{Ryd} and potential usefulness of the decomposition is also mentioned in Anatolyev and Gerko (2005)~\cite{Ananto1}.
 
 
 An advantage of the decomposition can be illustrated as follows. Assume for convenience, $c = 0$. From the model for $|r_t|$ and $I(r_t > 0)$, write $E_{t-1}(\left|r_{t}\right|) = \alpha_{\left|r\right|} + \beta_{\left| r \right|}\text{RV}_{t-1}$ and $\text{Pr}_{t-1}(r_t >0) = \alpha_{\left| I \right|} + \beta_{\left| I \right|}\text{RV}_{t-1}$, where RV denotes the realized volatility resulting in 
@@ -335,15 +335,16 @@ where $\hat{f}_{t+j}$ is the observed performance measure for period `$t+j$', ba
 	\begin{equation} \label{eqn:fktj}
 	f_{k,t+j}= \ln(1+r_{t+j} s_k) - \ln(1+r_{t+j} s_0),
 	\end{equation}
-where $r_{t+j}$ is the return, $s_k$ and $s_0$ are signal functions for the $k^{th}$ trading rule and the baseline or benchmark rule, that can take three positions: long, short and neutral, taking values 1, $-1$, and zero, respectively. The signal functions are of course based on data and information available as of '$t$'. The proposed test assumes the null hypothesis that the best technical rule does no better than the benchmark rule:
+where $r_{t+j}$ is the return, $s_k$ and $s_0$ are signal functions for the $k$th trading rule and the baseline or benchmark rule, that can take three positions: long, short and neutral, taking values 1, $-1$, and zero, respectively. The signal functions are of course based on data and information available as of '$t$'. The proposed test assumes the null hypothesis that the best technical rule does no better than the benchmark rule:
 	\begin{equation} \label{eqn:H0}
 	H_0: \max_{k=1,\ldots,l} E(f_k) \leq 0.
 	\end{equation}
 Rejection of $H_0$ would establish that the best technical rule is superior to the benchmark rule. Hypothesis similar to \eqref{eqn:H0} can be formulated for the Sharpe ratio as well which will be a measure of risk-adjusted return. The $p$-values for $H_0$ are obtained through Bootstrap resampling procedures, to construct the following statistics:
 If there are `$B$' bootstrapped values of $\overline{f}_k$ denoted by $\overline{f}_{k,i}^*, i=1,2,\ldots,B$ construct the following statistics:
 	\begin{equation} \label{eqn:linev}
-	\overline{v}_l = \max_{k=1,\ldots,l} \{\sqrt{n}\;\overline{f}_k\}
+	\overline{v}_l = \max_{k=1,\ldots,l} \{ \overline{f}_k \sqrt{n} \}
 	\end{equation}
+	%
 	\begin{equation} \label{eqn:linevli}
 	\overline{v}_{l,i} = \max_{k=1,\ldots,l} \{\sqrt{n}\,(\overline{f}_{k,i}^* - \overline{f}_k) \}.
 	\end{equation}
@@ -355,7 +356,7 @@ The number of trading rules, $l=7846$, considered by Sullivan et al (1999)~\cite
 
 Two main drawbacks of the above test are: one the test is conservative and may lose power when poor performing models are included in the universe of the tests; second the test does not identify other significant models other than the best performing model. Hsu, Hsu and Kuan (2010)~\cite{hsukuan2010} propose a stepwise modification of the `superior predictive ability (SPA)' test suggested in Hansen (2005)~\cite{hansen2005} and the modification is suggested in Romano and Wolf (2005)~\cite{romano2005}. The modified method works as follows; the test statistic is
 	\begin{equation} \label{eqn:SPA}
-	\text{SPA}_l = \max\left(\max_{k=1,\ldots,l} \left( \sqrt{n f_k}, 0 \right) \right).
+	\text{SPA}_l = \max\left(\max_{k=1,\ldots,l} ( \overline{f_k} \sqrt{n}, 0 ) \right).
 	\end{equation}
 By resampling, the critical values of $\text{SPA}_l$ are determined. Now
 
@@ -371,20 +372,19 @@ By resampling, the critical values of $\text{SPA}_l$ are determined. Now
 The hypotheses stated in \eqref{eqn:H0} are joint hypotheses and hence the tests are judged by Family Wise Error Rate (FWE) which is the probability of rejecting at least one correct null hypothesis. Hsu et al. (2010)~\cite{hsukuan2010} consider two types of technical rules, filter and moving-average based, for several market indices and the ETFs. There are multiple rules that result in significant increase in mean return and in terms of Sharpe Ratio.
 
 
-Bajgrowicz and Scaillet (2012)~\cite{bajgrowicz2012technical} use the concept of false discovery rate (FDR) to reach a negative conclusion as in Ready (2002)~\cite{ready}. The FDR is studied in detail in the context of mutual fund performance by Barras, Scaillet and Wermers (2010)~\cite{barras2010false}. The methodology that we discussed last indicates if a rule outperforms a benchmark after accounting for data snooping and it does not provide any information on the other strategies. But in reality investors gather signals from multiple rules and these rules are not conceptually or empirically independent. The FDR approach by allowing for a certain number of false discoveries, accounts for the dependency and also provides an array of high performing rules. Bajgrowicz and Scaillet (2012)~\cite{bajgrowicz2012technical} address also the issue of persistence of these rules associating a realistic transaction cost with each trade signal. Their main finding based on the analysis of Dow Jones Industrial Average daily data (1897--1996) is that `we are not able to select rules whose performance is persistent and not cancelled by transaction costs.' They conclude: ``\dots investors should be wary of the common technical indicators present in any investment website\dots'', but acknowledge, ``\dots our results say little about the existence of profitable trading strategies in other markets, using different frequencies or more sophisticated rules.''
+Bajgrowicz and Scaillet (2012)~\cite{bajgrowicz2012technical} use the concept of false discovery rate (FDR) to reach a negative conclusion as in Ready (2002)~\cite{ready}. The FDR is studied in detail in the context of mutual fund performance by Barras, Scaillet and Wermers (2010)~\cite{barras2010false}. The methodology that we discussed last indicates if a rule outperforms a benchmark after accounting for data snooping and it does not provide any information on the other strategies. But in reality investors gather signals from multiple rules and these rules are not conceptually or empirically independent. The FDR approach by allowing for a certain number of false discoveries, accounts for the dependency and also provides an array of high performing rules. Bajgrowicz and Scaillet (2012)~\cite{bajgrowicz2012technical} address also the issue of persistence of these rules associating a realistic transaction cost with each trading signal. Their main finding based on the analysis of Dow Jones Industrial Average daily data (1897--1996) is that `we are not able to select rules whose performance is persistent and not cancelled by transaction costs.' They conclude: ``\dots investors should be wary of the common technical indicators present in any investment website\dots'', but acknowledge, ``\dots our results say little about the existence of profitable trading strategies in other markets, using different frequencies or more sophisticated rules.''
 
 
 
 % Pairs Trading
 \section{Pairs Trading}
 
-
 Pairs trading is a market neutral trading strategy that enables traders to make profits from theoretically any market conditions. It was pioneered by a group of quants at Morgan Stanley led by Gerry Bamberger and Nunzio Tartaglia. Statistical Arbitrage (StatArb) pairs trading, first identifies pairs of similar securities whose prices tend to move together and thus uncovers arbitrage opportunities if there is a divergence in prices. If their prices differ markedly, one may be overvalued, the other undervalued or both situations may occur together. Taking a short position on the relatively overvalued security and a long position on the undervalued security will result in profit when the mispricing corrects itself in the future. The magnitude of the spread between the two securities indicates the extent of mispricing and the range of potential profit. This type of trading is sometimes called noise trading as it is not correlated to any changes in the fundamental values of the assets. A pairs trading strategy which assumes the fundamental values of the two stocks are similar can provide a measure of the magnitude of noise traders risk.
 
 
 To illustrate, we consider the so-called ``Siamese twins'' stocks: Royal Dutch/Shell and Unilever NV/PLC. Prior to 2005, Royal Dutch and Shell were jointly held by two holding companies. Royal Dutch which was domiciled in the Netherlands had an interest of 60\% of the group and Shell based in the United Kingdom had a 40\% interest. When the unification occurred it was agreed to divide the aggregate dividends, 60:40. If the law of one price holds, the theoretical parity ratio expressed in a common currency is,
 	\[
-	\text{Theoretical Parity}= \frac{0.6 (\text{ outstanding Shell Shares })}{0.4 (\text{ outstanding Royal Dutch Shares })}.
+	\text{Theoretical Parity}= \frac{0.6 \,(\text{ outstanding Shell Shares })}{0.4 \,(\text{ outstanding Royal Dutch Shares })}.
 	\]
 Scruggs (2007)~\cite{scruggs} defines mispricing as simply being the deviation of the actual price ratio from the theoretical parity. Figure~\ref{fig:3royal} plots the deviation from the theoretical parity which is taken to be 1.67. Scruggs (2007)~\cite{scruggs} also discusses another pair. Unilever NV and Unilever PLC are the twin parent companies of the Unilever group and to operate as a single company, they are governed by an equalization agreement, ``one NV ordinary share equals to 1.67 ordinary shares of PLC''. Thus, the theoretical parity is fixed at 1.67:1. Figure~\ref{fig:3nvplc} plots the deviation from this parity. The deviation could be as high as 27\% in this case, which happens in February of 1999. Both pairs clearly indicate the opportunities to exploit the divergence in the stock prices. Froot and Dabora (1999)~\cite{froot1999stock} also studied the two pairs of stocks but their focus was on relating the changes in stock prices to the location of trade; the movements are more aligned with the movements of the markets where they are most actively traded.
 
@@ -403,10 +403,8 @@ Scruggs (2007)~\cite{scruggs} defines mispricing as simply being the deviation o
 The first step in developing a pairs trading strategy is selecting two or more stocks that are closer to each other. Two examples discussed here are natural-pairs as the parent company is the same and they can be called as twins. Finding such natural twins is hard in practice. As substitutes generally mature companies with long trading histories and that have similar exposure to macro factors are considered as candidates for forming pairs; usually they tend to be from the same industry. We will discuss in detail how pairs can be formed later. First we present some formal procedures for implementing the pairs trading strategy.
 
 
-
 % Distance-Based Algorithms
 \subsection{Distance-Based Algorithms}
-
 
 Gatev, Goetzmann and Rouwenhorst (2006)~\cite{ggr} suggest using the distance based algorithm on normalized prices to identify the periods when the prices diverge. The normalization factor is a total cumulative returns index of the stock over the pairs formation period. Pairs are formed by computing the Euclidean distance between any two stocks and by selecting the pairs that are closer. A simple pairs trading algorithm is stated below, as illustration: \twomedskip
 
@@ -430,10 +428,8 @@ $\text{St.Dev PD}_{i,j,m} = \sqrt{\dfrac{1}{T_m - 1} \left(\sum_{i=1}^{T_m}[(p_t
 Gatev et al. (2006)~\cite{ggr} study the risk and return characteristics, using daily data from 1962 to 2002, of pairs trading for stocks from various sectors. The general finding is that pairs trading is profitable in every broad sector category. In relating the excess returns to the risk factors, market, SMB, HML, momentum and reversal, it is found that the exposures are not large enough to explain the average returns of pairs trading. Thus they conclude, ``\dots pairs trading is fundamentally different from simple contrarian strategies based on reversion.''
 
 
-
 % Co-Integration
 \subsection{Co-Integration}
-
 
 There is some evidence that prices are co-integrated (for a discussion on co-integration, see Chapter~\ref{ch:ch_mvts}) for the U.S. Stock market (see Bossaerts(1988)~\cite{bossaerts1988common}). If the price vector, $p_t$ is co-integrated with co-integrating rank, $r$ which imply that there are `$r$' linear combinations of $p_t$ that are weakly dependent; thus these assets can be taken as somewhat redundant and any deviation of their price from the linear combination of the other assets prices is temporary and can be expected to revert. Writing the pairs trading concept in a model form (co-integrated VAR) has several advantages. It allows us to extend pairs to triplets etc. and also the model can accommodate incorporating other factors such as other relevant indices.
 
@@ -442,7 +438,7 @@ A model based co-integration approach to pairs trading is elegantly presented in
 
 
 With the error-correlation form of the bivariate series (follows from \eqref{eqn:2Wtequiv} in Chapter~\ref{ch:ch_mvts}),
-	\begin{equation}\label{eqn:errorbivar}
+	\begin{equation} \label{eqn:errorbivar}
 	\begin{bmatrix}
 	p_{1t} - p_{1t-1} \\
 	p_{2t} - p_{2t-1}
@@ -467,7 +463,7 @@ Based on the above discussion the following strategy can be followed. \twomedski
 \begin{minipage}{0.9\textwidth}
 Let $\eta$ be the trading cost and $\Delta$ be the target deviation of $w_t$ from $\mu_w$ and assume $\eta < 2\Delta$.
 \begin{itemize}
-\item Buy a share of stock 1 and $\gamma$ shares of stock 2 at time t if $w_t = \mu_w - \Delta$
+\item Buy a share of stock 1 and sell $\gamma$ shares of stock 2 at time t if $w_t = \mu_w - \Delta$
 
 \item Unwind at time `$t+i$' $(i>0)$ if $w_{t+i} = \mu_w + \Delta$
 \end{itemize}
@@ -507,7 +503,6 @@ If $u_t$ is stationary, it would imply the two prices $p_{1t}$ and $p_{2t}$ are 
 
 To illustrate the pairs trading strategy, we consider the Royal Dutch/Shell data. The daily data is from January 3, 1989 to December 31, 2003. The rescaled (with starting point to be the same for better visual comparison) plot is given in Figure~\ref{fig:rds}; the series are broadly aligned as expected but the gap between them at different time points is also quite evident. Let $p_{1t}$ denote the log price of Royal Dutch and let $p_{2t}$ denote the log price of Shell. Results can be summarized as follows:
 
-
 \begin{enumerate}[--]
 \item $\hat{p}_{1t}= -0.061^* + 1.025^* p_{2t}$, $R^2=0.988$, Durbin-Watson (DW) statistic is $0.024$ which indicates that the errors are not independent. (Recall from Chapter~\ref{chap:ch_trading_fund}, DW$\sim$2 for independent errors.)
 
@@ -534,10 +529,8 @@ To illustrate opportunities in pairs trading in real time, we consider the daily
 A recent study by Farago and Hjalmarsson (2018)~\cite{faragohjalm} on using co-integration method to identify pairs for trading and evaluate the strategy using Sharpe ratio. Writing the return process as $r_t= \mu + u_t$ and $u_t$-process capturing the autocorrelation in the returns, the price process $\beta_t$ is decomposed into a deterministic trending component (equivalent to a drift), a non-stationary martingale component and a transitory noise component. The co-integration process generally elimination both the trending and martingale components and thus leaving the convergence of the pairs to mainly transitory component. The co-integration of any two stocks in the market which implies long-run relationships is not likely to occur.
 
 
-
 % Some General Comments
 \subsection{Some General Comments}
-
 
 \noindent\textbf{Finding Pairs:} An alternative approach is to use fundamentals of the firms to select two stocks that have similar risk factor exposures. Based on Asset Pricing Theory (APT) model,
 	\begin{equation}
@@ -556,10 +549,8 @@ and select pairs with the smaller distance. This can be expected to result in si
 Although pairs trading has been used extensively by traders, it also has its limits. In a recent study, Engelberg, Gao, Jagannathan (2009)~\cite{engelberg2009anatomy} demonstrate that the opportunities for medium frequency pairs trading are not many and profits opportunities might vanish within a few days (see Figure~\ref{fig:pairsprofit}). Scruggs (2007)~\cite{scruggs} attributes the demise of Long-Term Capital Management to the hedge fund overconfidence in the strategy and their undue bet sizes compared to other market participants.
 
 
-
 % Practical Considerations
 \subsection{Practical Considerations \label{s:pract_consid}}
-
 
 After identifying a potential pairs strategy via co-integration testing for instance, traders need to pay particular attention to the expected profitability of the strategy once real-life trading frictions have been taken into consideration. In practice, a significant portion of potential pairs trading strategies experience negative P\&L in production due to large execution slippage, whether originating from aggressive hedging at trade initiation, or position closing out.
 
@@ -567,7 +558,7 @@ After identifying a potential pairs strategy via co-integration testing for inst
 When back testing a pairs strategy, one of the immediate cost that might render the strategy unprofitable is the spread cost. In other words, how much will it cost to extract liquidity when the signal triggers, in particular if the signal is too short-lived to allow for sourcing liquidity passively via limit order book posting. For intraday pairs trading it is also valuable to analyze if there is any asymmetry of cost between the initiation trade and the unwind trade. Often time, it is not uncommon to witness significantly higher exit costs once the market has normalized following a short-lived entry trade opportunity. 
 
 
-The individual instrument's microstructure also plays an important role in the strategy profitability. For instance long queue names  (instruments for which the top of book liquidity is large in comparison to daily volume)  are harder to trade because the time it takes for an order to reach the top of the queue and trade passively is generally larger than the time that is acceptable for the strategy to mitigate its legging risk.\footnote{legging risk can be defined as the risk of not being able to fill timely a particular leg of a pair strategy at the required price} As a result, most of the executions on the leg that displays a long queue will end up having to pay the full spread to be executed. 
+The individual instrument's microstructure also plays an important role in the strategy profitability. For instance long queue names  (instruments for which the top of book liquidity is large in comparison to daily volume)  are harder to trade because the time it takes for an order to reach the top of the queue and trade passively is generally larger than the time that is acceptable for the strategy to mitigate its legging risk.\footnote{Legging risk can be defined as the risk of not being able to fill timely a particular leg of a pair strategy at the required price.} As a result, most of the executions on the leg that displays a long queue will end up having to pay the full spread to be executed. 
 
 
 As an example, when computing the spread ratio between two instruments using the market midpoint, one might be led to believe that the ratio is currently above $2\sigma$ of its distribution, warranting to initiate a trade. However, when considering the size of the spread and amount of the quoted volume on the passive side at the top of the book, it is not impossible that the realized ratio when crossing the spread is only a $0.5\sigma$ event, while getting a passive execution when quoting at the end of a long queue would represent a $5\sigma$ event that one shouldn't expect to realistically happen. These anecdotal examples give an idea of what practitioners should pay particular attention to when designing their strategies. Below, we mention a non-exhaustive list of implementation challenges also worth considering:
@@ -624,7 +615,7 @@ The three terms in \eqref{eqn:3epi} precisely identify three sources why positiv
 \end{itemize}
 
 
-The finance literature is replete with empirical verifications of the momentum strategy. However, the analytical decomposition in \eqref{eqn:3epi} is not informative about the economic sources of momentum. Why the momentum strategy works has been attributed to various theories. The literature argues that firm-specific returns drive momentum. Firm-specific returns can be persistent because investors under-react to firm-specific news or stock returns covary strongly due to a common influence of a macro factor. Lewellan (2002)~\cite{lew2002} shows that the Size and B/M portfolios also exhibit strong momentum; as these portfolios are well-diversified, their returns reflect systematic risk and therefore macroeconomic factors must be responsible for the momentum. Hvidkjaer (2006)~\cite{hvid2006} suggests that momentum could be partly driven by the behavior of small traders who under-react initially, followed by delayed reaction to buying and selling pressures. The trading pressure tend to translate into price pressures that affect the trading behavior of the small traders.
+The finance literature is replete with empirical verifications of the momentum strategy. However, the analytical decomposition in \eqref{eqn:3epi} is not informative about the economic sources of momentum. Why the momentum strategy works has been attributed to various theories. The literature argues that firm-specific returns drive momentum. Firm-specific returns can be persistent because investors under-react to firm-specific news or stock returns covary strongly due to a common influence of a macro factor. Lewellan (2002)~\cite{lew2002} shows that the Size and B/M portfolios also exhibit strong momentum; as these portfolios are well-diversified, their returns reflect systematic risk and therefore macroeconomic factors must be responsible for the momentum. Hvidkjaer (2006)~\cite{hvid2006} suggests that momentum could be partly driven by the behavior of small traders who under-react initially, followed by delayed reaction to buying and selling pressures. The trading pressure tends to translate into price pressures that affect the trading behavior of the small traders.
 
 
 Although cross-sectional momentum is widely documented, among the three components in \eqref{eqn:3epi}, time series momentum as represented by the first term tends to dominate for every liquid instrument in a study of fifty-eight instruments spread over a variety of asset classes, equity index, currency, commodity and bond futures. Moskowitz, Ooi and Pedersen (2012)~\cite{mos2012} show that the autocovariance term, $\tr(\Omega)/N$ is the dominant factor, particularly in foreign exchange and equity markets. To make meaningful comparison across asset classes, the excess returns are scaled by their ex-ante volatilities and the following models are estimated for predicting price continuation and reversal:
@@ -682,7 +673,6 @@ The classical momentum studies described above tend to focus on stratifying the 
 % Multiple Indicators and Boosting Methods
 \section{Multiple Indicators and Boosting Methods \label{sec:multindboostmeth}}
 
-
 In developing models that capture the main features of the data, it must be noted that there are no unique models. Thus they yield different forecasts. It is well-known in the forecasting literature that a combined forecast generally does perform overall better than the individual forecasts. If there are `$T$' models and thus `$T$' forecasts, $\hat{f}_1,\ldots, \hat{f}_T$, how do we combine them to get a single forecast? Because these are all based on the same data, the estimates are likely to be correlated, resulting in a covariance matrix, $\hat{\Sigma}_f$. Three estimates that are proposed in the literature are:
 
 	\begin{table}[!ht]
@@ -700,7 +690,7 @@ In developing models that capture the main features of the data, it must be note
 \noindent \textbf{Ensemble Learning} \twomedskip
 
 
-As mentioned, the idea of combining multiple forecasts (classifiers) into a single one is a longstanding goal of many decision-makers. This is especially important when methods that are successful at different regimes are complementary. There are two types of ensemble methods, bagging and boosting that we discuss here. Suppose the goal is to determine if we want to enter the market or not based on the information available at that time. It is somewhat easier to come up with simple rules but is harder to find a rule that has high accuracy. Under boosting, we study how to combine the simple rules uniformly into a `stronger' rule. It is suggested to focus on examples that are hardest to forecast by simple rules and take a weighted majority of these rules to come up with a stronger rule.
+As mentioned, the idea of combining multiple forecasts (classifiers) into a single one is a longstanding goal of many decision-makers. This is especially important when methods that are successful in different regimes are complementary. There are two types of ensemble methods, bagging and boosting that we discuss here. Suppose the goal is to determine if we want to enter the market or not based on the information available at that time. It is somewhat easier to come up with simple rules but is harder to find a rule that has high accuracy. Under boosting, we study how to combine the simple rules uniformly into a `stronger' rule. It is suggested to focus on examples that are hardest to forecast by simple rules and take a weighted majority of these rules to come up with a stronger rule.
 
 
 To motivate, we will assume that we want to determine whether the price of an asset will go up or down. Under the random walk model, the error in guessing randomly is 0.5. But any rule should result in an error less than 0.5. We begin with a training set, $S=\{ (x_i,y_i), i=1,2, \ldots n\}$ where $x_i$ is the information and $y_i$ is a binary variable that indicates whether to enter the market or not. Assume that there are `$T$' rules, $h_t(x)$ are the classifiers and $D_t$ is the distribution over the training set with the error,
@@ -711,7 +701,6 @@ The rule $h_t$ is supposed to have error $\text{err}_{D_t}(h_t)$ with respect to
 
 
 \noindent The boosting algorithm works as follows:
-
 
         \begin{table*}[!ht]
         \begin{tabular}{r l r}
@@ -742,12 +731,11 @@ The gradient boosting method introduced by Breiman (1999)~\cite{breiman1999predi
 % Evaluation of Strategies: Various Measures
 \section{Evaluation of Strategies: Various Measures}
 
-
 It is important to develop measures to evaluate the trading strategies. The standard measures stem from the capital asset pricing model:
 	\begin{equation}
 	r_{t} - r_f = \alpha + \beta (r_{mt} - r_f) + \varepsilon_{t},
 	\end{equation}
-where $r_t$ is the return on the asset and $r_f$ is the return from a risk-free asset; the slope coefficient, $\beta$ measures the riskiness of the asset and $'\alpha'$ denotes the excess return. Thus a strategy can be simply evaluated by: 
+where $r_t$ is the return on the asset and $r_f$ is the return from a risk-free asset; the slope coefficient, $\beta$ measures the riskiness of the asset and `$\alpha$' denotes the excess return. Thus a strategy can be simply evaluated by: 
 
 \begin{enumerate}[--]
 \item \textbf{Excess return: }$\alpha$ with positive values indicating better performance. \twomedskip
@@ -786,7 +774,6 @@ The standard reporting of backtesting results beyond the above measures include:
 % Extraneous Signals: Trading Volume, Volatility, etc.
 \section{Extraneous Signals: Trading Volume, Volatility, etc.}
 
-
 The trading algorithms that are presented in this chapter thus far focus on the price and return behavior of an equity. In pairs trading, we considered the behavior of price-return of a related equity to decide when to buy one and sell the other. But there is information as noted in Section~\ref{s:model_volvol_rel} from the volume of trading. The model discussed there relates the volume to volatility. If there is no variation in the information flow about an equity, there should not be any correlation between volume traded and the return volatility. If the correlation exists we could indirectly infer that there is information and we may want to exploit that for trading. There is a vast literature in finance studying the relationship between trading volume and serial correlation in returns. We briefly review some select studies and provide an illustrative example with some possible algorithms. 
 
 
@@ -800,7 +787,7 @@ Campbell, Grossman and Wang (1993)~\cite{campbellgross} also explore the relatio
 For stocks associated with more speculative trading (larger bid-ask spreads), $\beta_2$ is expected to be positive. The model can be extended to add a market proxy ($r_{mt}$). Note the first order autocorrelation that we expect to hold different signs under different volume-return scenario are captured by `$\beta_1$' coefficient. The model's predictions are tested for NYSE and AMEX stocks and the results are supportive of the predictions. 
 
 
-Gervais, Kaniel and Mingelgrin (2001)~\cite{germing} show that stocks with unusually large trading activity over periods tends to experience large returns over the subsequent periods. It is argued that higher trading activity creates higher visibility and in turn creates subsequent demand for that stock. This approach where contrarian or momentum is characterized by trend in volume is also studied by Conrad, Hameed and Niden (1994)~\cite{conniden} and Lee and Swaminathan (2000)~\cite{lee2000}. Assume that the change in trading activity is measured by
+Gervais, Kaniel and Mingelgrin (2001)~\cite{germing} show that stocks with unusually large trading activity over periods tend to experience large returns over the subsequent periods. It is argued that higher trading activity creates higher visibility and in turn creates subsequent demand for that stock. This approach where contrarian or momentum is characterized by trend in volume is also studied by Conrad, Hameed and Niden (1994)~\cite{conniden} and Lee and Swaminathan (2000)~\cite{lee2000}. Assume that the change in trading activity is measured by
 	\begin{equation} \label{eqn:uit3}
 	u_{it}= (V_{it} - V_{it-1}) / V_{it-1}
 	\end{equation}   
@@ -834,10 +821,8 @@ Chordia, Roll and Subrahmanyam (2002)~\cite{chorroll} extend this and provide a 
 These stylized facts would be useful for spotting anomalies and hence for devising appropriate trading strategies. 
 
 
-
 % Filter Rules based on return and volume
 \subsection{Filter Rules based on return and volume}
-
 
 The rules that were discussed in Section~\ref{s:trading_rules_tad} can all be modified to include volume as a weighing factor for the returns. That would involve tracking both the price and volume changes over time; it gets particularly cumbersome to track the volume that should be appropriately normalized for the time of the day. Therefore the rules focus on defining and tracking the changes in the two quantities individually and combine them with necessary thresholds. Cooper (1999)~\cite{cooper} suggests four strategies based on weekly returns and another four strategies that incorporate the return (thus price) and the volume information. First the return rules are for weeks `$t-1$' and `$t-2$': \twomedskip
 
@@ -917,10 +902,8 @@ Using the data for the large cap stocks, Cooper (1999)~\cite{cooper} examines th
 	\end{enumerate}
 
 
-
 % An illustrative example
 \subsection{An illustrative example \label{sec:illus_ex}}
-
 
 The methodology discussed in the last section on price-based and volume-based filters on low frequency data can be extended to high frequency data. The key issue with the volume data is to come up with proper standardization to identify abnormal level of activity in terms of volume traded in a high frequency setting. The intra-day seasonality and the overall increase or decrease in inter-day volumes need to be tracked carefully to fully exploit the deviations. We highlight the practical issues involved using 30-min price-based data for Treasury yields from June 8, 2006 to August 29, 2013. This can be taken as medium-frequency data and the price bars contrast of high, low, open and close prices along with the volume traded during the interval. Because of the aggregated nature of the data, the traditional time series methods can be used to study the trend in price and volume series. Daily data is just a snapshot at 4~p.m. and the total volume for the day is the sum of all 30-min volumes since the previous day.
 
@@ -933,13 +916,13 @@ similar to a measure defined for the daily data in Section~\ref{s:analysis_tad}.
 
         \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter_stat_ts/figures/treasury.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/treasury.png}
         \caption{Treasury Yields: Price and Volume Plot \label{fig:treasuryyields}}
         \end{figure}
         
         \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter_stat_ts/figures/avgvol.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/avgvol.png}
         \caption{Plot of average volume. \label{fig:averagevolume}}
         \end{figure}
 
@@ -947,7 +930,7 @@ The plot of price and volume data is given in Figure~\ref{fig:treasuryyields}. T
 	\begin{equation} \label{eqn:dynamic}
 	V_{tm}= \eta_t \cdot \phi_m \cdot \mu_{t.m} \cdot \epsilon_{t.m},
 	\end{equation}
-where $\eta_t$ is a daily component, $\phi_m$ is the periodic component and $\mu_{t.m}$, an intra-daily dynamic, non-periodic component. The periodic component $\phi_m$ modeled as a Fourier (sine/cosine) function; the daily component is modeled as a function of past values of a daily volumes and the same is true with $\mu_{t.m}$; they are modeled as a function of $\mu_{t.m-1}$ and $V_{t.m-1}$. From the structure of the model \eqref{eqn:dynamic}, it is obvious that the multiplication components can be modeled additively through log transformations.
+where $\eta_t$ is a daily component, $\phi_m$ is the periodic component and $\mu_{t.m}$, an intra-daily dynamic, non-periodic component. The periodic component $\phi_m$ modeled as a Fourier (sine/cosine) function; the daily component is modeled as a function of past values of daily volumes and the same is true with $\mu_{t.m}$; they are modeled as a function of $\mu_{t.m-1}$ and $V_{t.m-1}$. From the structure of the model \eqref{eqn:dynamic}, it is obvious that the multiplication components can be modeled additively through log transformations.
 
 
 We suggest a model somewhat similar to \eqref{eqn:dynamic} but more directly related to models discussed in Chapter~\ref{ch:ch_uvts}. Before we state the results recall the main findings from past empirical studies:
@@ -966,19 +949,19 @@ Our approach to modeling is stated as follows:
 
         \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter_stat_ts/figures/logvol.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/logvol.png}
         \caption{Autocorrelation function for log volume. \label{fig:logvolumeauto}}
         \end{figure}
         
         \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter_stat_ts/figures/resi.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/resi.png}
         \caption{Partial autocorrelation function for RESI (with 5\% significance limits for the partial autocorrelations) \label{fig:partresi}}
         \end{figure}
         
         \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter_stat_ts/figures/dailyvol.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/dailyvol.png}
         \caption{Plot of daily volume. \label{fig:dailyvol}}
         \end{figure}
 
@@ -1006,7 +989,7 @@ These methods obviously require the use of time series programs and as an altern
 		\end{enumerate}
 	Now we have two forecasts of daily volume $\hat{v}_{t+1}$ and $\hat{v}_{t+1}$.
 	\end{itemize}
-We want to relate the volume to volatility using the measure in \eqref{eqn:hatsigmasq}. Figure~\ref{fig:30min}, based on the plot of \eqref{eqn:longhat} indicates that there are clustering effects. From the partial autocorrelation function given in Figure~\ref{fig:funvol}, there is some memory in the variance and can be modeled via GARCH. Here our goal is to show how volume and volatility are likely to be related. The simple cross-correlation function, Figure~\ref{fig:ccresi}, shows how they are closely related; here the intra-day periodicity in the residuals in volume and volatility is shown. Again in the spirit of intuitive approach to model the volatility, we suggest obtaining volatility forecasts as:
+We want to relate the volume to volatility using the measure in \eqref{eqn:hatsigmasq}. Figure~\ref{fig:30min}, based on the plot of Figure~\ref{fig:dailyvol} indicates that there are clustering effects. From the partial autocorrelation function given in Figure~\ref{fig:funvol}, there is some memory in the variance and can be modeled via GARCH. Here our goal is to show how volume and volatility are likely to be related. The simple cross-correlation function, Figure~\ref{fig:ccresi}, shows how they are closely related; here the intra-day periodicity in the residuals in volume and volatility is shown. Again in the spirit of intuitive approach to model the volatility, we suggest obtaining volatility forecasts as:
 	\[
 	\begin{cases}
 	\hat{\sigma}_{t+1}^2 = \text{ weighted average of } \sigma_t^2, \sigma_{t-1}^2, \ldots, \sigma_{t-22}^2 & \\
@@ -1017,32 +1000,32 @@ The following algorithm that combines the price, volume and volatility is sugges
 	\begin{itemize}
 	\item Enter if \\
 	(a) price-based rules favours and if \\
-	(b) $\sigma_{t+1\cdot m}^2< \hat{\sigma}_{t+1\cdot m}^2$, realized volatility $<$ predicted volatility) and if \\
+	(b) $\sigma_{t+1\cdot m}^2< \hat{\sigma}_{t+1\cdot m}^2$, (realized volatility $<$ predicted volatility) and if \\
 	(c) $\sum_{i=1}^m v_{t+1} < \sum_{i=1}^m \hat{v}_{t+1}$, cumulative actual volume $<$ cumulative predicted volume. 
 	\item Exit if either (a) or (b) or (c) is not true. 
 	\end{itemize}
 	
-        \begin{figure}[H]
+        \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.75\textwidth]{chapters/chapter_stat_ts/figures/logdaily.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/logdaily.png}
         \caption{Partial autocorrelation function for log daily volume (with 5\% significance limits for the partial autocorrelation). \label{fig:logdailyvolume}}
         \end{figure}
         
-        \begin{figure}[H]
+        \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.75\textwidth]{chapters/chapter_stat_ts/figures/30min.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/30min.png}
         \caption{Plot of 30-min volatility. \label{fig:30min}}
         \end{figure}
         
-        \begin{figure}[H]
+        \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.75\textwidth]{chapters/chapter_stat_ts/figures/funvol.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/funvol.png}
         \caption{Partial autocorrelation function for volatility (with 5\% significance limits for the partial autocorrelations). \label{fig:funvol}}
         \end{figure}
         
-        \begin{figure}[H]
+        \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.75\textwidth]{chapters/chapter_stat_ts/figures/resivol.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/resivol.png}
         \caption{Cross correlation function for RESI, volatility. \label{fig:ccresi}}
         \end{figure}
 
@@ -1050,7 +1033,6 @@ The following algorithm that combines the price, volume and volatility is sugges
 
 % Trading in Multiple Markets
 \section{Trading in Multiple Markets}
-
 
 There has been a great deal of interest in studying the performance of cross-listed stocks in several markets, that operate in overlapping or in non-overlapping hours during a day. Both in NYSE and in NASDAQ the listing of non-US firms has increased over time. The general motivation behind cross-listings is to manage the capital raising cost. Some unique features of trading these stocks include the trading hours and restrictions on moving capital from one market to other, and time needed to set up money transfer arrangements that are usually handled through an issuing investment bank. But our focus here is to study the imperfect pricing that may arise from cross-listed markets and see how trading opportunities in these markets can be exploited. More broadly it is of interest to study the information flow from one market to other.
 
@@ -1097,7 +1079,7 @@ Denoting the ADR returns as $r_{At} = \ln(P_{A,t}) - \ln(P_{A,t-1})$ and the hom
 	\begin{equation} \label{eqn:closeprice}
 	r_{A-H.t}= \alpha + \sum_{i= -1}^1 \beta_i^{\text{US}} r_{M,t+i}^\text{US} + \sum_{i= -1}^1 \beta_i^\text{H} r_{M,t+i}^\text{US} + \sum_{i= -1}^1 \beta_i^{Fx} r_{fx.t+i} + a_t.
 	\end{equation}
-How $r_{A-H.t}= r_{A.t} - r_{H.t}$, $r_M$'s are market indices and $r_{fx}$ is the currency return. Using the standard deviation of the residuals, `$a_t$', as a idiosyncratic risk proxy in the model \eqref{eqn:closeprice} results from Gagnon and Karolyi (2010)~\cite{gagkar} indicate `the presence of important sources of excess comovement of arbitrage returns with market index and currency returns.' \twomedskip
+How $r_{A-H.t}= r_{A.t} - r_{H.t}$, $r_M$'s are market indices and $r_{fx}$ is the currency return. Using the standard deviation of the residuals, `$a_t$', as an idiosyncratic risk proxy in the model \eqref{eqn:closeprice} results from Gagnon and Karolyi (2010)~\cite{gagkar} indicate `the presence of important sources of excess comovement of arbitrage returns with market index and currency returns.' \twomedskip
 
 
 
@@ -1147,7 +1129,7 @@ which is the VAR(1) model with no simultaneous dependence in $Y_t$. But observe 
 
 
 It can be shown that $\Phi_1= \Phi_{01}^{-1} \Phi_{11}$ is the sum of `$m$' rank one matrices. Again, the identification of the elements of $\Phi_{01}$ and $\Phi_{11}$ from $\Phi_1$ is fairly straightforward. The number of elements in $\Phi_{01}$ and the number in $\Phi_{11}$ add up to $m^2$, the number of elements in $\Phi_1$. Also observe that the model \eqref{eqn:formtake} can be still written as VAR(1) model, in $\Phi_{01} Y_t$,
-	\begin{equation}\label{eqn:var1phimod}
+	\begin{equation} \label{eqn:var1phimod}
 	\Phi_{01} Y_t = \Phi_{11} \Phi_{01}^{-1} ( \Phi_{01} Y_{t-1}) + a_t
 	\end{equation}
 for a known $\Phi_{01}$.
@@ -1169,7 +1151,7 @@ The last aspect is studied here.
 
         \begin{figure}[!ht]
         \centering
-        \includegraphics[width=0.8\textwidth]{chapters/chapter_stat_ts/figures/cpver.png}
+        \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/cpver.png}
         \caption{Plot of closing prices, volumes and exchange rates. \label{fig:cpver}}
         \end{figure}
 
@@ -1446,5 +1428,5 @@ for developing macro strategies and 30~min data for micro strategies.
       \item price and volume information and
       \item price, volume and volatility information
       \end{enumerate}
-         \item Demonstrate that volume and volatility add value to the enter/exist strategies. \twomedskip
+         \item Demonstrate that volume and volatility add value to the enter/exit strategies. \twomedskip
    \end{enumerate}
