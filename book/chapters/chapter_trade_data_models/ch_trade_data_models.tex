@@ -39,11 +39,11 @@ Assume a trader needs to execute an order for one million shares of XYZ. If this
 	\end{figure}
 
 
-For Amazon stock, how volatile resume the data is from Figure~\ref{fig:daily_volume}. The volume is strongly autocorrelated with periodic predictable spikes for special days and unpredictable `surprises' that depend on the day's information flow. As a baseline metric, the 64 days' mean or median daily volume is probably the most commonly used metric in the industry as the time horizon covers a full quarterly earning cycle and thus it is viewed as incorporating all the seasonal effects of the daily volume. See the graphs (Figure~\ref{fig:adv}) below. Notice how the two measures differ. The median is more stable and smooth while the average is more reactive to changes. Which one to use depends on the application. The prediction of ADV plays an important role in order execution strategies. 
+For Amazon stock, how volatile resume the data is from Figure~\ref{fig:daily_volume}. The volume is strongly autocorrelated with periodic predictable spikes for special days and unpredictable `surprises' that depend on the day's information flow. As a baseline metric, the 64 days' mean or median daily volume is probably the most commonly used metric in the industry as the time horizon covers a full quarterly earning cycle and thus it is viewed as incorporating all the seasonal effects of the daily volume. See the graphs (Figure~\ref{fig:amazon_adv}) below. Notice how the two measures differ. The median is more stable and smooth while the average is more reactive to changes. Which one to use depends on the application. The prediction of ADV plays an important role in order execution strategies. 
 	\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{chapters/chapter_trade_data_models/figures/adv.png} 
-	\caption{Amazon ADV based on Rolling Stats. \label{fig:adv}}
+	\caption{Amazon ADV based on Rolling Stats. \label{fig:amazon_adv}}
 	\end{figure}
 
 
