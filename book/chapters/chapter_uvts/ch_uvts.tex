@@ -69,7 +69,7 @@ The typical Level~III data for CISCO on a single day in 2011 is given below in T
 	$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ 
    	\end{tabular}
 	\begin{minipage}[t]{1\textwidth}
-	\small{*Time-stamp is the time since midnight; Event: B: submission of LO on Buy side; S: submission of LO on sell side; T: full execution of a LO; F: full execution of a LO; E: partial execution of a LO; D: full cancellation of a LO; C: partial cancellation of a LO; Exchange: Q-NASDAQ; J-EDGE-A; Z-BATS-Z; K-EDGE-K; P-ARCA; etc}
+	\small{*Time-stamp is the time since midnight; Event: B: submission of LO on Buy side; S: submission of LO on Sell side; T: Full execution of a hidden LO; F: full execution of a visible LO; E: partial execution of a LO; D: full cancellation of a LO; C: partial cancellation of a LO; Exchange: Q-NASDAQ; J-EDGE-A; Z-BATS-Z; K-EDGE-K; P-ARCA; etc}
 	\end{minipage}
 	\end{table}
 
@@ -94,7 +94,6 @@ It is possible that for infrequently traded stocks, some time intervals may not 
 % Trading Decisions as Short-Term Forecast Decisions
 \section{Trading Decisions as Short-Term Forecast Decisions \label{sec:trad_dec_stfd}} 
 
-
 Most trading decisions generally involve the following considerations
         \begin{itemize}
         \item How much to trade?
@@ -116,7 +115,7 @@ Let $p_{it}= \ln P_{it}$ denote the price of the $i$th asset at time $t$ and let
         \end{itemize}
         \item[C.] Fair Value: $E(p_{t+1}\,|\,p_{t},p_{t-1},\ldots,y_{t},y_{t-1},\ldots,f_t,f_{t-1},\ldots)$
         \begin{itemize}
-        \item[$\bullet$] Predicting the price using all relevant quantities. The factors normally include market and Farma-French factors. Many of these factors are at a more macro level than the time scale considered for the price prediction, but nevertheless could be useful, as explained in Chapter~\ref{ch:ch_mvts}.
+        \item[$\bullet$] Predicting the price using all relevant quantities. The factors normally include market and Fama-French factors. Many of these factors are at a more macro level than the time scale considered for the price prediction, but nevertheless could be useful, as explained in Chapter~\ref{ch:ch_mvts}.
         \end{itemize}
         \end{itemize}
 \noindent Thus the price (or alternatively, return) and volatility (or squared return) prediction can be formulated as a time series prediction problem and the common tools such as autocorrelations and partial autocorrelations can be used to build autoregressive and ARCH models that are shown to have some predictive power. 
@@ -340,7 +339,7 @@ where $\psi(B) = \psi_0 + \psi_1 \, B + \psi_2 \, B^2 + \cdots$ is referred to a
 	\begin{equation} \label{eqn:covyt}
 	\gamma(s)= \cov(Y_t, Y_{t+s})= \sigma^2_{\epsilon} \sum_{j=0}^{\infty} \psi_j \psi_{j+s},
 	\end{equation}      
-because $\gamma_\epsilon(s) = \sigma^2_\epsilon$ if $s=0$ and $\gamma_\epsilon(s) = 0$ if $s \neq 0$, so that $\gamma_\epsilon(j - k + s) = 0$ when $k \neq j = s$.
+because $\gamma_\epsilon(s) = \sigma^2_\epsilon$ if $s=0$ and $\gamma_\epsilon(s) = 0$ if $s \neq 0$, so that $\gamma_\epsilon(j - k + s) = 0$ when $k \neq j + s$.
 	
 
 An important result called Wold's Theorem indicates the generality of the class of linear processes in stationary theory, that every purely non-deterministic stationary process may be expressed in an infinite moving average representation as in \eqref{eqn:yt}, although the $\epsilon_t$ need not be independent but merely uncorrelated.	
@@ -360,7 +359,7 @@ where the $\epsilon_t$ are independent with mean 0 and variance $\sigma^2$. Usin
 	\begin{equation*}
          Y_t= \mu + \theta(B) \, \epsilon_t,	
 	\end{equation*}
-where $\theta(B) = 1 - \sum_{j=1}^q \theta_j B^j$.  An MA($q$)  process is always stationary, by Theorem~\ref{thm:wold}, because $\sum_{j=0}^{\infty} \lvert \psi_j \rvert= 1 + \sum_{j=1}^q \lvert \theta_j \rvert$ is always finite. The mean of the process is $\mu = E(Y_t)$, and the autocovariance function is (from \eqref{eqn:covyt})
+where $\theta(B) = 1 - \sum_{j=1}^q \theta_j B^j$.  An MA($q$)  process is always stationary, by Wold's Theorem~\ref{thm:wold}, because $\sum_{j=0}^{\infty} \lvert \psi_j \rvert= 1 + \sum_{j=1}^q \lvert \theta_j \rvert$ is always finite. The mean of the process is $\mu = E(Y_t)$, and the autocovariance function is (from \eqref{eqn:covyt})
 	\begin{equation*}
             \gamma(s)= \cov (Y_t, Y_{t+s})= \sigma^2 \sum_{j=0}^{q-s} \theta_j \theta_{j+s}, \quad s = 0, 1, 2, \ldots, q,	
 	\end{equation*}
@@ -978,7 +977,7 @@ Assuming that $\omega_1 < 1$ ($\omega_0$ and $\omega_1 \geq 0$ is always assumed
 or in the form of deviation from the unconditional variance as $h_t - \sigma^2= \omega_1 (\varepsilon_{t-1}^2 - \sigma^2)$. So the conditional variance will be above the unconditional variance whenever $\varepsilon_{t-1}^2$ exceeds its unconditional variance $\sigma^2$. If $\varepsilon_t$ were conditionally normally distributed, given the past, the fourth unconditional moment $E(\varepsilon_t^4)$ will exceed $3 \sigma^4$ (the value in the normal distribution), so that the marginal distribution of $\varepsilon_t$ will exhibit fatter tails that the normal distribution. Conditional variances of multi-step ahead forecast errors can also be established to depend on the past squared errors. 
 
 
-These basic results indicated that the properties of the ARCH(1) model also tend to hold for the higher order ARCH$(q)$ models. A basic impact of the ARCH errors in a process is in assessment of the accuracy of forecast, since the forecast errors will have conditional variances (given the past) that depend on the past. This allows for formation of correct and more informative (conditional) prediction intervals that would be obtained under the usual assumption that conditional error variances were constant independent of the past.
+These basic results indicated that the properties of the ARCH(1) model also tend to hold for the higher order ARCH$(q)$ models. A basic impact of the ARCH errors in a process is an assessment of the accuracy of forecast, since the forecast errors will have conditional variances (given the past) that depend on the past. This allows for formation of correct and more informative (conditional) prediction intervals that would be obtained under the usual assumption that conditional error variances were constant independent of the past.
 
 
 Now consider briefly the popular GARCH(1,1) model, $h_t = E(\varepsilon_t^2 \;|\; \varepsilon_{t-1}, \ldots) = \omega_0 + \omega_1\varepsilon_{t-1}^2 + \beta_1h_{t-1}$. Similar to the result for the ARCH(1) model, assuming that $\omega_1 + \beta_1 < 1$, it is readily shown that the unconditional variance of $\varepsilon_t$ is equal to $\sigma^2 = \var(\varepsilon_t) = \omega_0/[1 - (\omega_1 + \beta_1)]$. Let $v_t = \varepsilon_t^2 - h_t$, so that the random variables $v_t$ have zero mean, and they are serially uncorrelated since
@@ -1002,7 +1001,7 @@ As there are other excellent sources to learn about ARCH and GARCH models (see T
 	\begin{equation} \label{eqn:2eptsq}
 	\varepsilon_t^2 = \alpha_0 + \alpha_1 \varepsilon_{t-1}^2 + \cdots + \alpha_q \varepsilon_{t-q}^2 + a_t,
 	\end{equation}
-where $a_t$ is white noise series; note that $\{ a_t \}$ does not need to follow a normal distribution. The usual $F$-test used in regression can be applied here; Let $R^2$ be the coefficient of determination that result from \eqref{eqn:2eptsq} when $\hat{\varepsilon}_t$'s are used; then
+where $a_t$ is white noise series; note that $\{ a_t \}$ does not need to follow a normal distribution. The usual $F$-test used in regression can be applied here; Let $R^2$ be the coefficient of determination that results from \eqref{eqn:2eptsq} when $\hat{\varepsilon}_t$'s are used; then
 	\begin{equation} \label{eqn:2F}
 	F = \frac{R^2/q}{(1 - R^2)/(T - 2q - 1)} \sim \chi^2/q.
 	\end{equation}
@@ -1023,7 +1022,7 @@ If $h_t$ is proxied by $\varepsilon_t^2$, the above model leads to $\varepsilon_
 where $w_1$ can be taken as a discount factor. \twomedskip
 
 
-\noindent\textbf{Prediction Performance of GARCH:} The predictive power of GARCH based on ex-post forecast evaluation criteria tend to suggest that the model provides poor forecasts, although the in-sample parameter estimates turn out to be highly significant. As Andersen and Bollerslev (1998)~\cite{andersen1998} note, in the model \eqref{eqn:2ept}, the latent volatility, $h_t$, evolves over time. The approach to evaluate the performance of the model for $h_t$ via $\hat{\varepsilon}_t^2$ is not appropriate. While $\hat{\varepsilon}_t^2$ provides an unbiased estimate of $h_t$, it is a noisy measurement due to idiosyncratic error terms associated with it; these error terms maybe due to the result of compounding frictions in the trading process. This will be further clarified when we discuss the analysis of high frequency data. \twomedskip
+\noindent\textbf{Prediction Performance of GARCH:} The predictive power of GARCH based on ex-post forecast evaluation criteria tend to suggest that the model provides poor forecasts, although the in-sample parameter estimates turn out to be highly significant. As Andersen and Bollerslev (1998)~\cite{andersen1998} note, in the model \eqref{eqn:2ept}, the latent volatility, $h_t$, evolves over time. The approach to evaluate the performance of the model for $h_t$ via $\hat{\varepsilon}_t^2$ is not appropriate. While $\hat{\varepsilon}_t^2$ provides an unbiased estimate of $h_t$, it is a noisy measurement due to idiosyncratic error terms associated with it; these error terms may be due to the result of compounding frictions in the trading process. This will be further clarified when we discuss the analysis of high frequency data. \twomedskip
 
 
 \noindent \textbf{Time--Varying ARCH Processes (tvARCH):} The underlying assumptions of ARCH models is stationarity and with changing pace of economic conditions, the assumption of stationarity is not appropriate for modeling financial returns over long intervals. We may obtain a better fit by relaxing the assumption of stationarity. Dahlhaus and Subba Rao (2006)~\cite{dahlhaus2006} generalize the ARCH model with time-varying parameters:

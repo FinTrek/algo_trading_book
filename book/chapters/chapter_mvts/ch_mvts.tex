@@ -50,7 +50,7 @@ The maximum likelihood estimate of `$C$' under the normality assumption yields t
 \noindent\textbf{Inference Properties:} \twomedskip
 
 
-First, $\tilde{C}$ is an unbiased estimator of $C$, $E(\tilde{C})= C$ and $\cov(\tilde{C}_{(i)}, \tilde{C}_{(j)})= \sigma_{ij} (\mathbf{X}\mathbf{X}')^{-1}$ for $i,j= 1,\ldots, m$, where $\sigma_{ij}$ denotes the $(i,j)$th element of the covariance matrix $\Sigma_{\epsilon\epsilon}$, since $\cov(\mathbf{Y}_{(i)}, \mathbf{Y}_{(i)})= \sigma_{ij} I_T$. The distributional properties of $\tilde{C}$ follow easily from multivariate normality of the error terms $\epsilon_t$. Specifically, we consider the distribution of $\tvec(\tilde{C}')$, where the ``vec'' operation transforms an $m \times n$ matrix into an $mn$-dimensional column vector by stacking the columns of the matrix below each other. 
+First, $\tilde{C}$ is an unbiased estimator of $C$, $E(\tilde{C})= C$ and $\cov(\tilde{C}_{(i)}, \tilde{C}_{(j)})= \sigma_{ij} (\mathbf{X}\mathbf{X}')^{-1}$ for $i,j= 1,\ldots, m$, where $\sigma_{ij}$ denotes the $(i,j)$th element of the covariance matrix $\Sigma_{\epsilon\epsilon}$, since $\cov(\mathbf{Y}_{(i)}, \mathbf{Y}_{(j)})= \sigma_{ij} I_T$. The distributional properties of $\tilde{C}$ follow easily from multivariate normality of the error terms $\epsilon_t$. Specifically, we consider the distribution of $\tvec(\tilde{C}')$, where the ``vec'' operation transforms an $m \times n$ matrix into an $mn$-dimensional column vector by stacking the columns of the matrix below each other. 
 
 
 \setcounter{result}{0}
@@ -62,7 +62,7 @@ For the model \eqref{eqn:5lmyk} under the normality assumption on the $\epsilon_
 Note, in particular, that this result implies that the $j$th row of $\tilde{C}$, $\tilde{C}_{(j)}'$, which is the vector of least squares estimates of regression coefficients for the $j$th response variable, has the distribution $\tilde{C}_{(j)} \sim N(C_{(j)}, \sigma_{jj}( \mathbf{X} \mathbf{X}')^{-1} )$. The inference on the elements of the matrix $C$ can be made using the result in \eqref{eqn:distlsq}. In practice, because $\Sigma_{\epsilon\epsilon}$ is unknown, a reasonable estimator such as the unbiased estimator in \eqref{eqn:5unbiased} is substituted for the covariance matrix in \eqref{eqn:distlsq}.
 
 
-We shall indicate the likelihood ratio procedure for testing simple linear hypotheses regarding the regression coefficient matrix. Suppose $\mathbf{X}$ is partitioned as $\mathbf{X}= [\mathbf{X}_1', \mathbf{X}_2']$ and corresponding $C= [C_1, C_2]$, so that the model \eqref{eqn:rewrite} is written as $\mathbf{Y}= C_1 \mathbf{X}_1 + C_2 \mathbf{X}_2 + \mathbf{\epsilon}$, where $C_1$ is $m \times n_1$ and $C_2$ is $m \times n_2$ with $n_1 + n_2= n$. Suppose we want to test the null hypothesis $H_0: C_2= 0$ against the alternative $C_2 \neq 0$. The null hypothesis implies that the predictor variables $\mathbf{X}_2$ do not have any (additional) influence on the response variables $\mathbf{Y}$, given the impact of the variables $\mathbf{X}_1$. Essentially, this involves running two sets of regressions: one with all predictors ($\mathbf{X}$) and the one with the subset of the predictors ($\mathbf{X}_1$). The LR test statistic is $\lambda= U^{T/2}$, where $U= \lvert S\rvert / \lvert S_1 \rvert$, $S= (\mathbf{Y} - \tilde{C} \mathbf{X} )(\ mathbf{Y} - \tilde{C} \mathbf{X} )'$ and $S_1= (\mathbf{Y}-\tilde{C}_1 \mathbf{X}_1 )( \mathbf{Y} - \tilde{C}_1 \mathbf{X}_1 )'$. The matrix $S$ is the residual sum of squares matrix from fitting of the full model, while $S_1$ is the residual sum of squares matrix obtained from fitting the reduced model with $C_2=0$ and $\tilde{C}_1= \mathbf{Y} \mathbf{X}_1' (\mathbf{X}_1 \mathbf{X}_1')^{-1}$. It has been shown (see Anderson (1984)~\cite[Chap. 8]{andersontw2}) that for moderate and large sample size $T$, the test statistic 
+We shall indicate the likelihood ratio procedure for testing simple linear hypotheses regarding the regression coefficient matrix. Suppose $\mathbf{X}$ is partitioned as $\mathbf{X}= [\mathbf{X}_1', \mathbf{X}_2']$ and corresponding $C= [C_1, C_2]$, so that the model \eqref{eqn:rewrite} is written as $\mathbf{Y}= C_1 \mathbf{X}_1 + C_2 \mathbf{X}_2 + \mathbf{\epsilon}$, where $C_1$ is $m \times n_1$ and $C_2$ is $m \times n_2$ with $n_1 + n_2= n$. Suppose we want to test the null hypothesis $H_0: C_2= 0$ against the alternative $C_2 \neq 0$. The null hypothesis implies that the predictor variables $\mathbf{X}_2$ do not have any (additional) influence on the response variables $\mathbf{Y}$, given the impact of the variables $\mathbf{X}_1$. Essentially, this involves running two sets of regressions: one with all predictors ($\mathbf{X}$) and the one with the subset of the predictors ($\mathbf{X}_1$). The LR test statistic is $\lambda= U^{T/2}$, where $U= \lvert S\rvert / \lvert S_1 \rvert$, $S= (\mathbf{Y} - \tilde{C} \mathbf{X} )(\mathbf{Y} - \tilde{C} \mathbf{X} )'$ and $S_1= (\mathbf{Y}-\tilde{C}_1 \mathbf{X}_1 )( \mathbf{Y} - \tilde{C}_1 \mathbf{X}_1 )'$. The matrix $S$ is the residual sum of squares matrix from fitting of the full model, while $S_1$ is the residual sum of squares matrix obtained from fitting the reduced model with $C_2=0$ and $\tilde{C}_1= \mathbf{Y} \mathbf{X}_1' (\mathbf{X}_1 \mathbf{X}_1')^{-1}$. It has been shown (see Anderson (1984)~\cite[Chap. 8]{andersontw2}) that for moderate and large sample size $T$, the test statistic 
 	\begin{equation} \label{eqn:mathcal}
 	\mathcal{M}= -[T - n + (n_2 - m - 1)/2] \log(U)
 	\end{equation}
@@ -121,7 +121,6 @@ The application of Hotelling's $T^2$ in the context of testing related to CAPM m
 % Dimension-Reduction via Reduced-Rank Regression
 \section{Dimension-Reduction via Reduced-Rank Regression \label{sec:s_dr}}
 
-
 In many practical situations, there is a need to reduce the dimensions of the variables and hence for succinct interpretation. A common approach with only one set of variables say, $Y$ or $X$, is to use Principal Components Analysis (PCA), which focuses on finding the linear combination that captures the most variance. Here doing PCA's on $Y$ and on $X$ and then relating them via regression is not optimal. We approach the problem through the assumption of lower rank of the matrix $C$ in model \eqref{eqn:5lmyk}. More formally, in the model $Y_k= CX_k + \epsilon_k$ we assume that with $m < n$,
 	\begin{equation} \label{eqn:rankC}
 	\text{rank}(C)= r \leq \min(m,n)= m.
@@ -177,7 +176,7 @@ where $\hat{\Sigma}_{yx}= (1/T) \mathbf{Y} \mathbf{X}'$, $\hat{\Sigma}_{xx}= (1/
 It should be mentioned, perhaps, that estimation results are sensitive to the choice of scaling of the response variables $Y_k$, and in applications it is often suggested that the component variables $y_{ik}$ be standardized to have unit variances before applying the LS procedure. \twomedskip
 
 
-\begin{center} \textbf{Relation to Other Dimension-Reduction Methods} \end{center} \twomedskip
+\noindent \textbf{Relation to Other Dimension-Reduction Methods} \twomedskip
 
 
 \noindent\textbf{Principal Component Analysis (PCA)} \twomedskip
@@ -186,7 +185,7 @@ It should be mentioned, perhaps, that estimation results are sensitive to the ch
 \noindent Principal component analysis, originally developed by Hotelling (1933)~\cite{hotelling33}, is concerned with explaining the covariance structure of a large number of variables through a small number of linear combinations of the original variables. Although the two objectives of the PCA data reduction and interpretation which coincide with the objectives of the reduced-rank regression, a major difference is that the principal components are descriptive tools that do not usually rest on any modeling or distributional assumptions. 
 
 
-Let the $m \times 1$ random vector $Y$ have the covariance matrix $\Sigma_{yy}$ with eigenvlaues $\lambda_1^2 \geq \lambda_2^2 \geq \cdots \geq \lambda_m^2 \geq 0$. Consider the linear combinations $y_1^*= l_1' Y, \ldots, Y_m^* = l_m' Y$, normalized so that $l_i' l_i=1$, $i=1, \ldots, m$. These linear combinations have $\var(y_i^*)= l_i' \Sigma_{yy} l_i$, $i= 1, 2, \ldots, m$, and $\cov(y_i^*,y_j^*)= l_i' \Sigma_{yy} l_j$, $i,j= 1, 2, \ldots, m$. In a principal component analysis, the linear combinations $y_i^*$ are chosen so that they are not correlated but their variances are as large as possible. That is, $y_1^*= l_1' Y$ is chosen to have the largest variance among linear combinations $l_1' l_1= 1$, $y_2^*= l_2' Y$ is chosen to have the largest variance subject to $l_2 l_2=1$ and the condition that $\cov(y_2^*,y_1^*)= l_2' \Sigma_{yy}l_1=0$, and so on. It can be easily shown from Result 1 that the $l_i$'s are chosen to be the (normalized) eigenvectors that correspond to the eigenvalues $\lambda_i^2$ of the matrix $\Sigma_{yy}$, os that the normalized eigenvectors satisfy $l_i' \Sigma_{yy}l_i= \lambda_i^2 \equiv \var(y_i^*)$. Often, the first $r$ ($r<m$) components $y_i^*$, corresponding to the $r$ largest eigenvalues, will contain nearly most of the variation that arises from all $m$ variables. For such cases, in studying variations of $Y$, attention can be directed on these $r$ linear combinations resulting in a reduction in dimension of the variables involved. 
+Let the $m \times 1$ random vector $Y$ have the covariance matrix $\Sigma_{yy}$ with eigenvlaues $\lambda_1^2 \geq \lambda_2^2 \geq \cdots \geq \lambda_m^2 \geq 0$. Consider the linear combinations $y_1^*= l_1' Y, \ldots, Y_m^* = l_m' Y$, normalized so that $l_i' l_i=1$, $i=1, \ldots, m$. These linear combinations have $\var(y_i^*)= l_i' \Sigma_{yy} l_i$, $i= 1, 2, \ldots, m$, and $\cov(y_i^*,y_j^*)= l_i' \Sigma_{yy} l_j$, $i,j= 1, 2, \ldots, m$. In a principal component analysis, the linear combinations $y_i^*$ are chosen so that they are not correlated but their variances are as large as possible. That is, $y_1^*= l_1' Y$ is chosen to have the largest variance among linear combinations $l_1' l_1= 1$, $y_2^*= l_2' Y$ is chosen to have the largest variance subject to $l_2 l_2=1$ and the condition that $\cov(y_2^*,y_1^*)= l_2' \Sigma_{yy}l_1=0$, and so on. It can be easily shown from Result 1 that the $l_i$'s are chosen to be the (normalized) eigenvectors that correspond to the eigenvalues $\lambda_i^2$ of the matrix $\Sigma_{yy}$, so that the normalized eigenvectors satisfy $l_i' \Sigma_{yy}l_i= \lambda_i^2 \equiv \var(y_i^*)$. Often, the first $r$ ($r<m$) components $y_i^*$, corresponding to the $r$ largest eigenvalues, will contain nearly most of the variation that arises from all $m$ variables. For such cases, in studying variations of $Y$, attention can be directed on these $r$ linear combinations resulting in a reduction in dimension of the variables involved. 
 
 
 The principal component problem can be represented as a reduced-rank problem, in the sense that a reduced-rank model can be written for this situation as
@@ -280,11 +279,17 @@ This is distributed asymptotically as a Chi-squared distribution with $m^2$ degr
 Here $\tilde{\Sigma_i}$ is the maximum likelihood estimate of $\Sigma_i$ where the divisor in \eqref{eqn:2hatsigma} is $T$ instead of $T - 2i - 1$.
 
 
-Two important properties of VAR$(p)$ model models are worth noting and will be used later. First modeling several variables jointly usually results in lower order vector model as the marginal models for the individual variables or a linear combination of variables can result in a higher order of autoregressive moving average terms that may be hard to interpret.
+Two important properties of VAR$(p)$ models are worth noting and will be used later. 
+
+
+First, modeling several variables jointly usually results in lower order vector model as the marginal models for the individual variables or a linear combination of variables can result in a higher order of autoregressive moving average terms that may be hard to interpret.
 
 
 \begin{result} \label{res:5} 
-If $Y_t$ is a $m$-dimensional series following VAR$(p)$, the components of $Y_t$ follow ARMA with maximal orders $[mp,(m-1)p]$. Second in many practical situations a certain linear combination of $Y_t$ is important to study, particularly in dimension reduction aspect whether using the principal components or canonical variables. The result indicates that a linear combination can still exhibit time series dependence. 
+If $Y_t$ is a $m$-dimensional series following VAR$(p)$, the components of $Y_t$ follow ARMA with maximal orders $[mp,(m-1)p]$. 
+
+
+Second in many practical situations, a certain linear combination of $Y_t$ is important to study, particularly in dimension reduction aspect whether using the principal components or canonical variables. The result indicates that a linear combination can still exhibit time series dependence. 
 \end{result}
 
 
@@ -385,7 +390,7 @@ Critical values of the asymptotic distribution of \eqref{eqn:2negT} have been ob
 \noindent \textbf{Co-movement and Commonality; Further Discussion:} \twomedskip
 
 
-Economic time series share some common characteristics such as a trends, seasonality and serial correlations. The existence of common elements is identified through the indicators of comovement. Series that have common stochastic trends can be identified through reduced-rank regression methods as discussed in this section. Centoni and Cubadda (2011)~\cite{centoni} provide a survey of models used in this area. From a modeling point of view, the parsimonious structure that results from the comovement can be stated as
+Economic time series share some common characteristics such as trends, seasonality and serial correlations. The existence of common elements is identified through the indicators of comovement. Series that have common stochastic trends can be identified through reduced-rank regression methods as discussed in this section. Centoni and Cubadda (2011)~\cite{centoni} provide a survey of models used in this area. From a modeling point of view, the parsimonious structure that results from the comovement can be stated as
 	\begin{equation} \label{eqn:discyt}
 	Y_t= Cf_t + a_t,
 	\end{equation}  
@@ -465,7 +470,7 @@ where $\mu_t=CX_t$ and $\epsilon_t \sim N(0,\Sigma_{\epsilon\epsilon})$. As $\Si
 where $H_t$ is the conditional variance-covariance matrix.
 
 
-There are two versions of model formulation of the elements of the $H_t$-matrix. Note this $m \times m$ matrix, because of symmetry, has only $[m \times (m+1)]/2$ distinct elements. Writing $h_t= \text{Vech}(H_t)$ that stacks these distinct elements as a vector, the $\text{Vec}(1,1)$ model (similar to Garch(1,1) in the univariate case) is defined as:
+There are two versions of model formulation of the elements of the $H_t$-matrix. Note this $m \times m$ matrix, because of symmetry, has only $[m \times (m+1)]/2$ distinct elements. Writing $h_t= \text{Vech}(H_t)$ that stacks these distinct elements as a vector, the $\text{Vec}(1,1)$ model (similar to GARCH(1,1) in the univariate case) is defined as:
 	\begin{equation} \label{eqn:vecmodel}
 	h_t= c + A \eta_{t-1} + G h_{t-1},
 	\end{equation}
@@ -531,7 +536,7 @@ Some general observations can be confirmed as follows:
 	\end{itemize}
 
 
-In this report we want to study the co-integrating relationships, if any in the rates and explore if there are any commonality in the volatilities.
+In this report, we want to study the co-integrating relationships, if any in the rates and explore if there are any commonalities in the volatilities.
 
 	\begin{figure}[!ht]
 	\centering
@@ -758,7 +763,7 @@ Using daily and monthly returns data for 15 individual stocks from {\tt d\_15sto
 
 
 % Problem
-\prob Consider the weekly exchange rate data used in Hu and Tsay (2014)~\cite{hutsay14}: British pound ($y_{1t}$), Norwegian Kroner ($y_{2t}$), Swedish Kroner ($y_{3t}$), Swiss Franc ($y_{4t}$), Canadian Dollar ($y_{5t}$), Singapore Dollar ($y_{6t}$) and Australian Dollar ($y_{7t}$) against US Dollar from March 22, 2000 to October 26, 2011.
+\prob Consider the weekly exchange rate data used in Hu and Tsay (2014)~\cite{hutsay14}: British Pound ($y_{1t}$), Norwegian Kroner ($y_{2t}$), Swedish Kroner ($y_{3t}$), Swiss Franc ($y_{4t}$), Canadian Dollar ($y_{5t}$), Singapore Dollar ($y_{6t}$) and Australian Dollar ($y_{7t}$) against US Dollar from March 22, 2000 to October 26, 2011.
 
 \begin{enumerate}[(a)]
 \item Test if the exchange rates are stationary individually via Dickey-Fuller test.
