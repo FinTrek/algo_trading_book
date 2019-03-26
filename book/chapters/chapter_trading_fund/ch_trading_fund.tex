@@ -449,27 +449,14 @@ These two metrics are of particular relevance for execution algorithms and will 
 
 \item  d-Quote: Special order type on the NYSE mainly used during the close auction period.
 
-<<<<<<< HEAD
 \item  Funari: Special order type on the Tokyo Stock Exchange which allows limit orders placed in the book during the continuous session to automatically enter the closing auction as market orders. \twomedskip
-=======
-\item  Funari: Special order type on the Tokyo Stock Exchange which allows limit orders placed in the book during the continuous session to automatically enter the closing auction as market orders. 
->>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
-\end{itemize} 
-
 
 As described above, there exist a wide variety of orders types offered by different exchanges to facilitate certain types of trading activities. Two additional common order types used to automate interactions with the LOB are stop-limit orders and trailing-stop orders. The former type is typically used to trade a security at a specified limit price once it traded through a given stop price. If the stock declines in value and trades below or at the stop price, the order will become a limit order rather than a market order. Trailing-stop orders follow a similar objective but the stop price trails the best bid or ask by a certain percentage. These order types are primarily used by traders as a protection against sudden adverse market moves. \twomedskip
 
 
 \noindent\textbf{Validity of Instructions:} In addition to conditions on price, it is possible to add conditions on the life duration of the order known as Time-in-Force (TIF). The most common types of TIF instructions include Day orders which are valid for the full duration of the trading session, Extended Day orders which allow trading in extended hours, and Good-Till-Cancel (GTC) orders which will be placed again on the exchange the next day with similar instructions if they were not fully filled. More sophisticated market participants aiming at achieving greater control over their executions tend to also favor Immediate-or-Cancel (IOC) and Fill-or-Kill (FOK) Time-in-Force instructions. An IOC order will get immediately canceled back to the sender after reaching the matching engine if it does not get an immediate fill, and in case of a partial fill, the unfilled portion will be canceled, thus preventing it from creating a new price level in the order book. In a Fill-or-Kill scenario, the order gets either filled in its entirety or does not get filled at all. This instruction is particularly popular with high frequency market makers and arbitrageurs for which partial fills might result in unwanted legging risk as discussed in Chapter~\ref{ch:stat_ts} on pairs trading.
 
-
-<<<<<<< HEAD
 Finally, it is worth mentioning that some exchanges as well as alternative venues offer the ability of specifying minimum fill sizes whereby a limit order which might be eligible for a fill due to an incoming order at the same price level only receives a fill if the incoming order is larger than a pre-specified number of shares or notional value. This type of instruction is used by market participants as a way of minimizing the number of small fills which carry the risk of excessive information dissemination, in particular in dark pools where they can be used to detect the presence of larger limit orders that would otherwise not be visible to market participants.  
-=======
-Finally, it is worth mentioning that some exchanges as well as alternative venues offer the ability of specifying minimum fill sizes whereby a limit order which might be eligible for a fill due to an incoming order at the same price level only receives a fill if the incoming order is larger than a pre-specified number of shares or notional value. This type of instruction is used by market participants as a way of minimizing the number of small fills which carry the risk of excessive information dissemination, in particular in dark pools where they can be used to detect the presence of larger limit orders that would otherwise not be visible to market participants. 
->>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
-
-
 
 % The Closing Auction
 \subsection{The Closing Auction} 
@@ -526,13 +513,7 @@ The mechanics of the closing auction are in most part similar to the ones descri
 	\end{minipage}   
 	\end{table}	
 
-
-<<<<<<< HEAD
 One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary electronic quote orders (known as ``d-Quote'' orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since there is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. \twomedskip
-=======
-One specificity of the NYSE is the presence of floor brokers operating in an agency capacity for their customers. They play a particular role during the close auction thanks to their ability to handle discretionary electronic quote orders (known as ``d-Quote'' orders) that offer more flexibility than traditional MOC and LOC orders. The main advantage of d-Quote orders is their ability to bypass the 3:45 pm cutoff and be submitted or canceled until 3:59:50 pm. This allows large institutional investors to remain in control of their orders almost until the end of the continuous session by delaying the decision of how much to allocate to the auction. They can therefore react to larger volume opportunities based on the published imbalance, but also minimize their own information leakage by not being part of the early published imbalance while there is still significant time in the continuous session for other participants to drive the price away.  Since there is no restriction on the side of d-Quote orders submission, it is possible to see the total imbalance sign flip once the d-Quotes are added to the publication at 3:55 pm, creating opportunities for other market participants to adjust their own close trading via d-Quotes or change their positioning in the continuous session. 
->>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
-
 
 
 % Taxonomy of Data for Algorithmic Trading Research
@@ -549,12 +530,8 @@ In this section, we will review the most important data sets and their role in A
 \begin{comment}
 Historical market data available to researchers and practitioners alike but varied in degrees of granularity over time. From daily trade data (closing price and volume), to tick-by-tick trade and quote data (also known as TAQ data), to full message data, the progression in granularity not only reflects the focus in intraday trading complexity but also opens up the way for more advanced strategies. 
 
-
-<<<<<<< HEAD
 Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The level II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available level III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime.\footnote{Level III data has been available for years to firm subscribing and storing the raw binary exchange format (pcap) and the re-building the orderbook sequentially from there for their research. It is still the main method used for HFT research. One recently this data became available historically to a broader subset of users and researchers} \twomedskip
-=======
-Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The level II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available level III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime.\footnote{Level III data has been available for years to firm subscribing and storing the raw binary exchange format (pcap) and the re-building the orderbook sequentially from there for their research. It is still the main method used for HFT research. One recently this data became available historically to a broader subset of users and researchers.}
->>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
+
 \end{comment}
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -705,23 +682,12 @@ In order to be leveraged in quantitative strategies, one needs to maintain a var
 
 
 While the points mentioned above represent a non-exhaustive list of the reference data available to build a quantitative research platform, they highlight the challenges that need to be taken into account when designing and implementing algorithmic trading strategies. Once in place, a proper set of reference data will allow the quantitative trader to systematically harness the actual content of the types of data described later on without being caught off-guard by the minutiae of trading.
-<<<<<<< HEAD
-=======
-
->>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
-
 
 % Raw Market Data
 \subsection{Market Data} 
 While historically a large swath of modeling was carried out on daily data or minute bar datasets, the past fifteen years have seen a significant rise in the usage raw market data in an attempt to extract as much information as possible, and act on it before the opportunity (or market inefficiency) dissipates.
 
-
-<<<<<<< HEAD
 Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as ``direct feeds'') or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level I, Level II or Level III market data.\twomedskip
-=======
-Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as ``direct feeds'') or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level I, Level II or Level III market data. \twomedskip
->>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
-
 
 \noindent\textbf{Level I data: Trade and BBO Quotes:} Level I market data is the most basic form of tick-by-tick data. Historically, the level I data feed would only refer to trade information (Price, Size, Time of each trade reported to the tape) but has grown over time into a term generally accepted to mean both trades and top of book quotes. While the trade feed updates with each trade printed on the tape, the quote feed tends to update much more frequently each time liquidity is added to or removed from the top of book (a rough estimate in liquid markets is the quotes present more updates than the trades by about an order of magnitude). 
 
@@ -800,18 +766,11 @@ As illustrated by the diversity and granularity of information available to trad
 % Market Data Derived Statistics
 \subsection{Market Data Derived Statistics}
 
-<<<<<<< HEAD
 Most Quantitative strategies even the higher frequency that leverage more and more granular data,leverage derived statistics both at the daily level and binned data. Here we give a list of the most common ones used by practitioners and researchers alike.\twomedskip
 
 
 \noindent\textbf{Daily Statistics}\twomedskip
-=======
-Most Quantitative strategies even the higher frequency that leverage more and more granular data, leverage derived statistics both at the daily level and binned data. Here we give a list of the most common ones used by practitioners and researchers alike. \twomedskip
 
-
-\noindent\textbf{Daily Statistics} \twomedskip
-
->>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 The first group represents the overall trading activity in the instrument: 
 
 \begin{itemize}
@@ -878,17 +837,10 @@ Finally, the last group of daily data can be derived from the previous two group
         \item Beta w.r.t. index or sector (plain beta, or asymmetric up-days/down-days beta)
         \item Correlation matrix
         \end{itemize}
-<<<<<<< HEAD
+
 As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.).\twomedskip
 
 \noindent\textbf{Binned Data}\twomedskip
-=======
-As a reminder to the reader, aggregated data need to fully support the peculiarities described in the Reference Data section (for instance: the existence of special or event days which, if included, can significantly skew intraday distribution of values; mishandling of market asynchronicity resulting in inaccurate sensitivities computations such as beta or correlation, etc.). \twomedskip
-
-
-\noindent\textbf{Binned Data} \twomedskip
-
->>>>>>> fb413030238b1019fc2ee7b59c4473c97ad4f6f2
 
 The first natural extension to daily data sets is a discretization of the day into bins ranging from a few seconds to 30 minutes. The features collected are comparable to the ones relevant for daily datasets (period volume, open, high, low, close, VWAP, spread, etc.), but computed at higher frequency. It is worth mentioning that minute bar data actually underpins the vast majority of microstructure models used in the electronic execution space. Volume and spread profiles, for instance, are rarely built with a granularity finer than one minute to prevent introducing excess noise due to market friction.
 
