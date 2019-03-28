@@ -795,9 +795,9 @@ The analytical solution minimizing $V(X,\xi)$ is not easily tractable due to dim
 	\item $\mathbf{X_n=X_{n-1} - \gamma_N g(x_{n-1}, \xi^n)}$
 	\item \textbf{End; }$\mathbf{X_N^* = \frac{1}{N} \sum_{n=1}^N X_n}$
 	\end{enumerate}
-The step size, \small
+The step size, 
 	\begin{equation} \label{eqn:7gammaN}
-	 \gamma_N = \sqrt{k} S \left( N(h+f+\theta+\lambda_u +\lambda_0)^2 _ t + N \sum_{k=1}^K (h+r_k+\theta+\lambda_u+\lambda_0)^2 \right)^{-1/2} 
+	\scalebox{0.93}{$\gamma_N = \sqrt{k} S \left( N(h+f+\theta+\lambda_u +\lambda_0)^2 _ t + N \sum_{k=1}^K (h+r_k+\theta+\lambda_u+\lambda_0)^2 \right)^{-1/2}$}
 	\end{equation}
 can be seen as a function of all the costs associated with the execution of the order.
 
@@ -908,7 +908,7 @@ The order book changes (reflecting demand/supply sides) can be captured by
 where $d_{i,n}^a= a_{i,n} - a_{i,n}^\infty$ and $d_{i,n}^b= b_{i,n}^\infty - b_{i,n}$ are termed as displacements. 
 
 
-For the optimization description, we will set up the above quantities without the $i$th subscript. With the matrix $\Lambda= ((\lambda_{i,j}), e^{-\rho^k \tau})= \text{Diag}(e^{-\rho_i^k})$, $Q^k= \text{Diag}\big( \frac{1}{2q_i^k} \big)$, $\delta_a= (I_2;0)$, $\delta_b= (0, -I_2)$, $k^a= 2Q^a \delta_a' - \Lambda \delta'$ and $k^b= 2Q^b \delta_b' + \Lambda \delta'$, we have
+For the optimization description, we will set up the above quantities without the $i$th subscript. With the matrix $\Lambda= ((\lambda_{i,j})), e^{-\rho^k \tau}= \text{Diag}(e^{-\rho_i^k})$, $Q^k= \text{Diag}\big( \frac{1}{2q_i^k} \big)$, $\delta_a= (I_2;0)$, $\delta_b= (0, -I_2)$, $k^a= 2Q^a \delta_a' - \Lambda \delta'$ and $k^b= 2Q^b \delta_b' + \Lambda \delta'$, we have
 	\begin{equation}
 	\begin{split}
 	a_n&= u_n + \frac{1}{2}s + \Lambda(z_0 - z_n) + d_n^a \\
@@ -928,15 +928,15 @@ The manager's profit function can be written as,
 	\begin{equation}
 	\pi_n= x_n^- \,' (b_n - Q^b x_n^-) - x_n^+\,' (a_n + Q^a x_n^+).
 	\end{equation}
-Observe that the cumulative wealth equation up to the $n$th trade $W_n= \sum_{i=0}^n \pi_i= W_{n-1} + \pi_n$. The state of the system is given as $y_n'= (1', z_n', d_n')'$. Now the dynamics can be aggregated as,
+Observe that the cumulative wealth equation up to the $n$th trade is $W_n= \sum_{i=0}^n \pi_i= W_{n-1} + \pi_n$. The state of the system is given as $y_n'= (1', z_n', d_n')'$. Now the dynamics can be aggregated as,
 	\begin{equation}
-	y_{n+1} = A Y_n + B X_n,
+	y_{n+1} = A y_n + B x_n,
 	\end{equation}
-where $A= \text{diag}(I_s, e^{-\rho^a \tau}, e^{-\rho^b \tau})$ and $B= (0, -\delta, e^{-\rho^a\tau} k^a, e^{-\rho^n\tau} k^b)'$. Thus, the manager's dynamic optimization problem can be stated as
+where $A= \text{diag}(I_{m+1}, e^{-\rho^a \tau}, e^{-\rho^b \tau})$ and $B= (0, -\delta, e^{-\rho^a\tau} k^a, e^{-\rho^n\tau} k^b)'$. Thus, the manager's dynamic optimization problem can be stated as
 	\begin{equation}
 	\max_{x_n \geq 0} E_n(J_{n+1}) \quad \ni \quad \delta' x_N= z_N, J_{N+1}= e^{-aW_N}
 	\end{equation}
-with state dynamics $W_{n+1}= W_n - (u_{n+1}' + z_0' \Lambda \delta' + y_{n+1}'N) x_{n+1} - x_{n+1}' Q x_{n+1}$, $y_{n+1}= Ay_n + Bx_n$ and $u_{n+1}= u_n + \epsilon_{n+1}$. For methods to solve this problem, refer to the paper. 
+with state dynamics $W_{n+1}= W_n - (u_{n+1}' \delta' + z_0' \Lambda \delta' + y_{n+1}'N) x_{n+1} - x_{n+1}' Q x_{n+1}$, $y_{n+1}= Ay_n + Bx_n$ and $u_{n+1}= u_n + \epsilon_{n+1}$. For methods to solve this problem, refer to the paper. 
 
 
 Now we want to simplify the optimization problem for the two assets case and derive some explicit expressions. As one can observe the link between two assets come in the off-diagonal elements of the `$\Lambda$' matrix. It will be of some use to compare the usefulness of these elements in estimating the total market impact of the two assets. 

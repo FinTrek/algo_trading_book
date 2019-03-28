@@ -485,7 +485,7 @@ One way to simplify the structure for $H_t$ is to assume that $H_t$ is based on 
 	\begin{equation} \label{eqn:factorH}
 	H_t= \Omega + \sum_{k=1}^K w_k w_k' f_{k,t},
 	\end{equation}
-where $\Omega$ is a positive definite matrix, $w_k$'s are vectors of factor weights and $f_{k,t}$'s are the factors. The factors are then allowed to follow Garch(1,1) structure:
+where $\Omega$ is a positive definite matrix, $w_k$'s are vectors of factor weights and $f_{k,t}$'s are the factors. The factors are then allowed to follow GARCH(1,1) structure:
 	\begin{equation} \label{eqn:garchfactor}
 	f_{k,t}= a_k + \alpha_k \left( \beta_k' \epsilon_{t-1} \right)^2 + \gamma_k f_{k,t-1},
 	\end{equation}
