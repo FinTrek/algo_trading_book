@@ -169,6 +169,7 @@ But even with the dizzying complexity, market structure is a fascinating ecosyst
 
 In order to fully understand a large part of this book one requires at least a basic understanding of the mechanics of how trading actually takes place. This process is somewhat complicated and full of technical details and terminology. In this section, we will strive to provide a brief but fairly complete overview of the fundamentals which should suffice for our purposes. For a more complete and thorough treatment we refer the readers to the existing literature, most notably Harris (2003)~\cite{harris03trade}.
 
+
 % How Double Auction Markets Work
 \subsection{How Double Auction Markets Work}
 
@@ -449,7 +450,9 @@ These two metrics are of particular relevance for execution algorithms and will 
 
 \item  d-Quote: Special order type on the NYSE mainly used during the close auction period.
 
-\item  Funari: Special order type on the Tokyo Stock Exchange which allows limit orders placed in the book during the continuous session to automatically enter the closing auction as market orders. \twomedskip
+\item  Funari: Special order type on the Tokyo Stock Exchange which allows limit orders placed in the book during the continuous session to automatically enter the closing auction as market orders. 
+\end{itemize}
+
 
 As described above, there exist a wide variety of orders types offered by different exchanges to facilitate certain types of trading activities. Two additional common order types used to automate interactions with the LOB are stop-limit orders and trailing-stop orders. The former type is typically used to trade a security at a specified limit price once it traded through a given stop price. If the stock declines in value and trades below or at the stop price, the order will become a limit order rather than a market order. Trailing-stop orders follow a similar objective but the stop price trails the best bid or ask by a certain percentage. These order types are primarily used by traders as a protection against sudden adverse market moves. \twomedskip
 
@@ -683,11 +686,14 @@ In order to be leveraged in quantitative strategies, one needs to maintain a var
 
 While the points mentioned above represent a non-exhaustive list of the reference data available to build a quantitative research platform, they highlight the challenges that need to be taken into account when designing and implementing algorithmic trading strategies. Once in place, a proper set of reference data will allow the quantitative trader to systematically harness the actual content of the types of data described later on without being caught off-guard by the minutiae of trading.
 
+
 % Raw Market Data
-\subsection{Market Data} 
+\subsection{Market Data \label{subsec:marketdata} }
+
 While historically a large swath of modeling was carried out on daily data or minute bar datasets, the past fifteen years have seen a significant rise in the usage raw market data in an attempt to extract as much information as possible, and act on it before the opportunity (or market inefficiency) dissipates.
 
 Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as ``direct feeds'') or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level I, Level II or Level III market data.\twomedskip
+
 
 \noindent\textbf{Level I data: Trade and BBO Quotes:} Level I market data is the most basic form of tick-by-tick data. Historically, the level I data feed would only refer to trade information (Price, Size, Time of each trade reported to the tape) but has grown over time into a term generally accepted to mean both trades and top of book quotes. While the trade feed updates with each trade printed on the tape, the quote feed tends to update much more frequently each time liquidity is added to or removed from the top of book (a rough estimate in liquid markets is the quotes present more updates than the trades by about an order of magnitude). 
 

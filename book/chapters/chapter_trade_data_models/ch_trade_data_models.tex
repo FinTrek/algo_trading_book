@@ -140,7 +140,7 @@ Volume distribution during the course of a day is most invariably shaped like a 
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/amzn_profile.png} 
+	\includegraphics[width=\textwidth]{chapters/chapter_trade_data_models/figures/amzn_profile.png} 
 	\caption{Amazon Profile, Cumulative Profiles and Smoothing Details. \label{fig:adv}}
 	\end{figure}
 
@@ -878,7 +878,7 @@ It is concluded that the decision to hide and the order aggressiveness on the op
 Using the data from Spanish Stock Exchange, Pardo and Pascual (2012)~\cite{pardopas} study the market reaction to the presence of hidden orders discovered during the trading process. The high frequency data reveals that traders in the opposite side become aggressive once they detect the hidden volume, but the price impact of hidden volume is purely temporary. It is not clear what the relevant information context is in the hidden orders.
 
 
-To illustrate the presence of hidden orders, we consider the Level~III data whose description is given in Section\todo{Missing Section Reference} (Table~\ref{tab:level3data}). With this, we can construct the order book in real time (Figure~\ref{fig:limbk1}). For modeling some key elements considered are:
+To illustrate the presence of hidden orders, we consider the Level~III data whose description is given in Section~\ref{subsec:marketdata} (Table~\ref{tab:level3data}). With this, we can construct the order book in real time (Figure~\ref{fig:limbk1}). For modeling some key elements considered are:
         \begin{enumerate}[--]
         \item The depth (in number of shares) at that price level after the order is submitted.
         \item The depth (in number of shares) at that price level before the order was submitted.

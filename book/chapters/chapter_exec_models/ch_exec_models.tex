@@ -113,7 +113,7 @@ If completing the order is an absolute hard necessity, arguably, there is little
 
 \item Even when a volume forecast is used there is still a lot of error in the estimates and any shortfall needs to be correctly managed and possibly smoothed over multiple periods to avoid excessive impact.
 
-\item The POV benchmark is extremely noisy in particular at the beginning of the order due to the granularity of trading. This can lead to no trading at the beginning until enough volume is traded and then immediately chasing that volume aggressively because the strategy immediately we are likely to fall behind the target volume.
+\item The POV benchmark is extremely noisy in particular at the beginning of the order due to the granularity of trading. This can lead to no trading at the beginning until enough volume is traded and then immediately chasing that volume aggressively, we are likely to fall behind the target volume.
 \end{itemize}
 
 
@@ -450,7 +450,6 @@ Similarly to the top level trading algorithm, the end users evaluate the perform
 
 % Review of academic treatment of Execution Strategies
 \section{Mathematical Description of Execution Models}
-
 
 As discussed in the last sections, while algorithmic trading techniques are useful in both low and high frequency settings, their importance has become more pronounced in the age of electronic trading because of the speed in execution and the necessity for efficient matching of demand and supply sides in the limit order book. Added to this is that modern equity markets where order submission and cancellations are automated and are also highly fragmented with dozens of exchanges and about forty alternative trading systems where investors can choose to trade. The trading algorithms also differ over various types of market participants, but all of them have common objectives, that is to optimize dynamically where, how often and at what price to trade. The algorithms have small reaction times to changing liquidity and price. Typically, to summarize the execution has been broadly classified into the following layers.
 	\begin{itemize}
@@ -867,7 +866,80 @@ First, the names and quantities exposed to dark pools must be carefully selected
 Second, when the portfolio incurs a sudden change in risk profile---whether due a dark fill or an abrupt market move in one direction---a reoptimization is necessary to return to a risk balanced position and to determine the new optimal trading schedules. This reoptimization can have different characteristics than the one that was performed at the beginning of the trade. Depending on the level of risk already exited up to that point in time, the trader as the ability to consider the temporary increase in risk as either something that needs to be reduced immediately in the next available trading bins, even if it generates larger trading costs, or something that can be reduced gradually in order to mitigate transaction costs. The optimal answer here also depends on the liquidity of the names still available to trade on the other side of the imbalance. \twomedskip
 
 
-\noindent\textbf{Cross-Impact:} Only recently there are efforts made to better understand and model the cross-impact of trading an asset on trading of related assets. As mentioned earlier, if a trader is liquidating simultaneously multiple assets as part of the rebalancing effort, one should expect some cross-impact. In the low frequency setting when the focus is not necessarily on `execution' but on `trading', this is studied under `commodity' or `co-movement' as discussed in Chapter~\ref{ch:ch_mvts}, where the correlated changes are generally attributed to a general market factor that drives all the stocks. See Hasbrouck and Seppi (2001)~\cite{seppi2001}. In the high frequency setting, the problem is harder to investigate because of short-term market frictions. Almgren and Chriss (2000)~\cite{alm2000} discuss the extension of their execution algorithm to multiple assets, but this approach has not been followed up for a while. A recent study by Schneider and Lillo (2019)~\cite{schnlillo19} extends the single-stock framework of Gatheral (2010)~\cite{gatheral} to multiple stocks, but the formulation is in a continuous time framework. 
+\noindent\textbf{Cross-Impact:} Only recently there are efforts made to better understand and model the cross-impact of trading an asset on trading of related assets. As mentioned earlier, if a trader is liquidating simultaneously multiple assets as part of the rebalancing effort, one should expect some cross-impact. In the low frequency setting when the focus is not necessarily on `execution' but on `trading', this is studied under `commodity' or `co-movement' as discussed in Chapter~\ref{ch:ch_mvts}, where the correlated changes are generally attributed to a general market factor that drives all the stocks. See Hasbrouck and Seppi (2001)~\cite{seppi2001}. In the high frequency setting, the problem is harder to investigate because of short-term market frictions. Almgren and Chriss (2000)~\cite{alm2000} discuss the extension of their execution algorithm to multiple assets, but this approach has not been followed up for a while. A recent study by Schneider and Lillo (2019)~\cite{schnlillo19} extends the single-stock framework of Gatheral (2010)~\cite{gatheral} to multiple stocks, but the formulation is in a continuous time framework. \twomedskip
+
+
+\noindent\textbf{Cross-Impact (Continued):} As we followed a generally discrete time modeling approach in this book, we will present the results in that form, although a continuous-time presentation has its own elegance. The works cited earlier in the single asset case, Almgren and Chriss (2000)~\cite{alm2000} and Engle and Ferstenberg (2007)~\cite{engle2007} consider multi-asset execution problems without cross-impact. A recent paper by Tsoukalas, Wang and Gresecke (2019)~\cite{}\todo{missing reference} provides details of dynamic portfolio execution and here we present only the essential summary. The set-up here is similar to Almgren and Chriss described in Section~\ref{subsec:almchrmodel}.
+
+
+The execution window, $[0,1]$ is divided in `$N$' intervals indexed by $n \in \{0,1,\ldots,N\}$ with $\tau=\frac{1}{N}$, the period length. Let there be `$m$' assets and the `$m$' dimensional buy and sell vectors of order sizes are denoted $x_n^+$ and $x_n^-$ and the aggregate vector as $x_n= \begin{bmatrix} x_n^+ \\ x_n^- \end{bmatrix}$. The net trade is thus given by $\delta' x_n = x_n^+ - x_n^-$, where $\delta'= [I_m, -I_n]$. If we assume that we begin with the total net trades to be traded as $z_0$, then
+	\begin{equation}
+	z_n = z_{n-1} - \delta' x_{n01} \quad\text{ and }\quad z_n= \delta' x_n.
+	\end{equation}
+If is assumed that the vector of bid and ask prices, $u_n$, follows a random walk,
+	\begin{equation}
+	u_n= u_{n-1} + \epsilon_n
+	\end{equation}
+with $E(\epsilon \epsilon_n')= \tau \Sigma$, where $\Sigma$ is a positive definite covariance matrix. Thus, the best ask and the best bid can be expressed as,
+	\begin{equation}
+	a_{i,n} = u_{i,n} + \frac{1}{2} \, s_i, \enskip b_{i,n} = u_{i,n} - \frac{1}{2}\, s_i.
+	\end{equation}
+
+
+Recall that the temporary impact is instantaneous and the permanent impact is cumulative. If $x_{in}^+$ denotes `buy' shares and $x_{in}^-$ denotes `sell' shares, the ask and bid prices changes are given as
+	\begin{equation}
+	a_{i,n}^*= a_{i,n} + \dfrac{x_{i,n}^+}{q_i^a}, \enskip b_{in}^*= b_{i,n} - \dfrac{x_{i,n}^-}{q_i^b}.
+	\end{equation}
+The permanent price impact is denoted by
+	\begin{equation} \label{eq:vinuinlabsig}
+	v_{i,n}= u_{i,n} + \lambda_{ii} \sum_{k=0}^n (x_{i,k-1}^+ - x_{i,k-1}^-),
+	\end{equation}
+which can be taken as the steady-state mid-price. 
+
+
+It is also assumed that the orders are on both sides replenished exponentially. While the above setup deals with a single asset, the idea of cross-impact models is the focus here; how a trade in one asset can impact the trade of another asset by shifting its demand or supply. We will present results for only two assets here, but the extension to multiple assets is rather straightforward. The equation \eqref{eq:vinuinlabsig} is modified as,
+	\begin{equation}
+	v_{i,n}= u_{i,n} + \sum_{j=1}^2 \lambda_{ij} \sum_{k=1}^n (x_{j,k-1}^+ - x_{j,k-1}^-), \quad i=1,2.
+	\end{equation}
+The order book changes (reflecting demand/supply sides) can be captured by
+	\begin{equation}
+	d_{i,n+1}^k = e^{-\rho_i^k \tau} \left( d_{i,n}^k + \left[ \dfrac{x_{i,n}^\pm}{q_i^k} \mp \sum_{j=1,2} \lambda_{ij} (x_{j,n}^+ - x_{j,n}^-) \right] \right), \quad k=a,b,
+	\end{equation}
+where $d_{i,n}^a= a_{i,n} - a_{i,n}^\infty$ and $d_{i,n}^b= b_{i,n}^\infty - b_{i,n}$ are termed as displacements. 
+
+
+For the optimization description, we will set up the above quantities without the $i$th subscript. With the matrix $\Lambda= ((\lambda_{i,j}), e^{-\rho^k \tau})= \text{Diag}(e^{-\rho_i^k})$, $Q^k= \text{Diag}\big( \frac{1}{2q_i^k} \big)$, $\delta_a= (I_2;0)$, $\delta_b= (0, -I_2)$, $k^a= 2Q^a \delta_a' - \Lambda \delta'$ and $k^b= 2Q^b \delta_b' + \Lambda \delta'$, we have
+	\begin{equation}
+	\begin{split}
+	a_n&= u_n + \frac{1}{2}s + \Lambda(z_0 - z_n) + d_n^a \\
+	b_n&= u_n - \frac{1}{2}s + \Lambda(z_0 - z_n) - d_n^b 
+	\end{split}
+	\end{equation}
+and
+	\begin{equation}
+	\begin{split}
+	d_n^a&= e^{-\rho^a \tau} (d_{n-1}^a + k^a x_{n-1}) \\
+	d_n^b&= e^{-\rho^b \tau} (d_{n-1}^b + k^b x_{n-1}).
+	\end{split}
+	\end{equation}
+
+
+The manager's profit function can be written as,
+	\begin{equation}
+	\pi_n= x_n^- \,' (b_n - Q^b x_n^-) - x_n^+\,' (a_n + Q^a x_n^+).
+	\end{equation}
+Observe that the cumulative wealth equation up to the $n$th trade $W_n= \sum_{i=0}^n \pi_i= W_{n-1} + \pi_n$. The state of the system is given as $y_n'= (1', z_n', d_n')'$. Now the dynamics can be aggregated as,
+	\begin{equation}
+	y_{n+1} = A Y_n + B X_n,
+	\end{equation}
+where $A= \text{diag}(I_s, e^{-\rho^a \tau}, e^{-\rho^b \tau})$ and $B= (0, -\delta, e^{-\rho^a\tau} k^a, e^{-\rho^n\tau} k^b)'$. Thus, the manager's dynamic optimization problem can be stated as
+	\begin{equation}
+	\max_{x_n \geq 0} E_n(J_{n+1}) \quad \ni \quad \delta' x_N= z_N, J_{N+1}= e^{-aW_N}
+	\end{equation}
+with state dynamics $W_{n+1}= W_n - (u_{n+1}' + z_0' \Lambda \delta' + y_{n+1}'N) x_{n+1} - x_{n+1}' Q x_{n+1}$, $y_{n+1}= Ay_n + Bx_n$ and $u_{n+1}= u_n + \epsilon_{n+1}$. For methods to solve this problem, refer to the paper. 
+
+
+Now we want to simplify the optimization problem for the two assets case and derive some explicit expressions. As one can observe the link between two assets come in the off-diagonal elements of the `$\Lambda$' matrix. It will be of some use to compare the usefulness of these elements in estimating the total market impact of the two assets. 
 
 
 
@@ -925,7 +997,7 @@ However, the CDS Index market presents a certain number of idiosyncrasies compar
 \noindent\textbf{(c)} \textbf{Corporate Bonds:} The corporate bond market is also an OTC market where market participants only have access to limited information prior to placing a trade. The major market participants are pension funds and insurance companies which tend to have longer investment horizons, hedge funds which tend to have more tactical trading allocations, and corporate treasury departments whose objectives and horizons can span a wide spectrum.
 
 
-Compared to other assets, it is also interesting to note that most of the secondary market transactions happen in the first few months following issuance, and after that a significant portion of the amount of bonds issued is held to maturity. Similarly to other fixed income products, the key challenges for secondary trading of bonds and the electronification of its secondary markets have historically been lack of centralized market place, lack of harmonized instrument characteristics and lack of transaction data.
+Compared to other assets, it is also interesting to note that most of the secondary market transactions happen in the first few months following issuance, and after that a significant portion of the amount of bonds issued is held to maturity. Similarly to other fixed income products, the key challenges for secondary trading of bonds and the electronification of its secondary markets historically have been a lack of centralized market place, lack of harmonized instrument characteristics and lack of transaction data.
 
 
 The corporate bonds secondary market remains dominated by one-to-one privately negotiated trades, but electronic platforms allow transacting via similar execution protocols as what traders can use for CDSs: limit order book type of executions as well as request-for-quotes (RFQ) on platforms such as Tradeweb, Bloomberg, MarketAccess among others.
