@@ -782,7 +782,6 @@ where $v_t$ is the traded dollar volume and $\text{ME}_t$ is the market value.
 % Exercises
 \section{Exercises}
 
-
 % Problem 
 \prob Using the historical log returns of the following tickers: CME, GS, ICE, LM, MS, for the year 2014 (Exercise 7.7.1.csv), estimate their means $\mu_i$ and covariance matrix $\Sigma$; let $R$ be the median of the $\mu_i$'s. 
 	\begin{enumerate}[(a)]
@@ -854,7 +853,7 @@ Finally, the last 4 columns of the data set contain the Fama-French factors them
 \prob Portfolio Rebalancing: Consider the 10 stocks in file from Exercise 3: Divide the duration of the data into four time intervals.
     \begin{enumerate}[(a)]
     \item At the end of each interval, compute the optimal portfolio weights using the risk-aversion formulation; choose $2 \leq \lambda \leq 4$ (evaluate at $\lambda = 2, 3 \text{ and } 4$). Comment on how the portfolio weights have changed and why.
-    \item For each interval, construct factor models; sort the stocks based on the first factor. Follow 130/30 strategy and evaluate the allocation procedure. \twomedskip
+    \item For each interval, construct factor models; sort the stocks based on the first factor. Follow 130/30 (short up to 30\% of the portfolio value and use the resulting funds to take long positions on the better forming stocks) strategy and evaluate the allocation procedure. \twomedskip
     \end{enumerate}
     
     
@@ -894,7 +893,7 @@ Finally, the last 4 columns of the data set contain the Fama-French factors them
 %Problem 
 \prob Consider again the data in the file \path{FF_Data_ForGRStest.csv}. Consider the returns on 25 size sorted portfolios along with the risk free rate and Fama-French factors. The monthly data spans from 1926 to 2012. We will use the data from 1926 to 2000 to construct a portfolio and the data from 2001 to 2012 to evaluate the portfolio. 
 	\begin{enumerate}[(a)]
-	\item Compute the mean $\hat{\mu}$ and sample convariance matrix, $\hat{\Sigma}$ of the log returns.
+	\item Compute the mean $\hat{\mu}$ and sample covariance matrix, $\hat{\Sigma}$ of the log returns.
 	\item Compute the shrinkage estimate $\hat{\Sigma}^*$ of the covariance matrix, under one factor model.
 	\item Estimate the optimal portfolio weights, both with and without short selling under the regular estimate of $\Sigma$ and as well as under the shrinkage estimate. Also consider equal weighted portfolio and the portfolio weighted by the inverse of variances. Compute the optimal weights for all combinations and discuss them.
 	\item Evaluate the different weighting schemes in terms of their performance during the validation period, 2001--2012. Summarize your findings and offer some intuitive explanations. \twomedskip
