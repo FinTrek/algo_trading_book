@@ -1,7 +1,7 @@
 % !TEX root = ../../book.tex
 \chapter{Advanced Topics\label{ch:ch_advanced}}
 
-In this chapter, we want to discuss some advanced methods that are applicable in the context of trading. The mechanics of actual trading (entry/exit) decisions call for trading the market movements in real time and the tools provided in this chapter would be quite useful to better track and understand the market changes. This chapter is broadly divided into two main areas; the first covers topics which are extensions of models discussed in Chapter~\ref{ch:ch_uvts} in the low frequency context. Although the state-space modeling is discussed in the context of ARIMA, its scope is much wider. We also outline the established methodology for studying regime switching, but indicate the areas of further research where predicting ahead when the regime shift is likely to occur using signals from the past is of great interest. This is followed by a discussion on using volume information to study the price volatility. With the increased exploitation of price behavior data, it has become necessary to look for additional signals. We present a theoretical model that shows that there is correlation between volume traded and volatility when there is information flow. The second area of this chapter focuses on the models from point processes to study the higher frequency data. Here our approach has been to provide an intuitive discussion of main tools; as readers will realize, the trade data is quite noisy and there is a great deal of scope to do research especially in non-parametric empirical modeling of arrivals and cancellations in the limit order market. 
+In this chapter, we want to discuss some advanced methods that are applicable in the context of trading. The mechanics of actual trading (entry/exit) decisions call for trading the market movements in real time and the tools provided in this chapter would be quite useful to better track and understand the market changes. This chapter is broadly divided into two main areas; the first area covers topics which are extensions of models discussed in Chapter~\ref{ch:ch_uvts} in the low frequency context. Although the state-space modeling is discussed in the context of ARIMA, its scope is much wider. We also outline the established methodology for studying regime switching, but indicate the topics of further research where predicting ahead when the regime shift is likely to occur using signals from the past is of great interest. This is followed by a discussion on using volume information to study the price volatility. With the increased exploitation of price behavior data, it has become necessary to look for additional signals. We present a theoretical model that shows that there is correlation between volume traded and volatility when there is information flow. The second area of this chapter focuses on the models from point processes to study the higher frequency data. Here our approach has been to provide an intuitive discussion of main tools; as readers will realize, the trade data is quite noisy due to market friction, The formal parametric models do not perform well. Thuss there is a great deal of scope to do research in non-parametric empirical modeling of arrivals and cancellations in the limit order market. 
 
 
 
@@ -91,18 +91,18 @@ in AR(1) form is sometimes known as generalized local linear trend. These models
 
 
 \begin{ex}[Price Discovery in Multiple Markets]
-Menkveld, Koopman and Lucas (2007)~\cite{menkkoop} study the price discovery process for stocks that are cross-listed in two different markets via state-space models. The question if the trading location matters more than business location is of intent to finance researchers. Consider a stock traded in Amsterdam and in NY exchanges. Because of the time difference, there is only an hour of overlap in trading. Ignoring this aspect, write the two-dimensional price vector as
+Menkveld, Koopman and Lucas (2007)~\cite{menkkoop} study the price discovery process for stocks that are cross-listed in two different markets via state-space models. The question if the trading location matters more than business location is of interest to finance researchers. Consider a stock traded in Amsterdam and in NY exchanges. Because of the time difference, there is only an hour of overlap in trading. Ignoring this aspect, write the two-dimensional price vector as
 	\begin{equation}
 	\begin{split}
 	p_t&= \mu_t + e_T \\
 	&=\mu_t + \theta(\mu_t - \mu_{t-1}) + e_t
 	\end{split}
 	\end{equation}
-as the observational equation and the state equation is
+as the observational equation with delayed price reaction and the state equation is
 	\begin{equation}
 	\mu_t= \mu_{t-1} + \xi_t.
 	\end{equation}
-The above can be written in the form of \eqref{eqn:2secondzt} and \eqref{eqn:2thirdzt} with appropriate choice of `$\Phi$' and `$H$' matrices. The main advantage of state-space models is that they accommodate the possibility of slowly varying parameters over time, which is more realistic in modeling the real world data. \xqed
+Here $\epsilon_t$ can represent a more general covariance structure such as the factor model where a common factor that can influence both prices could be easily accommodated. The above can be written in the form of \eqref{eqn:2secondzt} and \eqref{eqn:2thirdzt} with appropriate choice of `$\Phi$' and `$H$' matrices. For details see Section~2.4 of Menkveld et al. (2007)\cite{menkkoop}. The main advantage of state-space models is that they accommodate the possibility of slowly varying parameters over time, which is more realistic in modeling the real world data. \xqed
 \end{ex}
 
 

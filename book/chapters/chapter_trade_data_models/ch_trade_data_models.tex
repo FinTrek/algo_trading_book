@@ -278,7 +278,7 @@ One can easily devise other measures of microprices that incorporate order book 
 	\begin{equation} \label{eqn:pmicro}
 	p^\text{micro}= M + g(w,S),
 	\end{equation}
-where $S$ is the spread, $S= P^a - P^b$ and the function `$g$' is applied on the imbalance and the spread to move from mid-price to fair price. The function `$g$' is estimated from past order book data and is calibrated toward efficient price. It is verified that $P^\text{micro}$ is a better predictor of future price. 
+where $S$ is the spread, $S= P^a - P^b$ and the function `$g$' is applied on the imbalance and the spread to move from mid-price to fair price. The function `$g$' is estimated from past order book data and is calibrated toward efficient price. It is verified that $P^\text{micro}$ is a better predictor of future price. \twomedskip
 
 \noindent\textbf{Trade Imbalance:}
 For every trading transaction there is always one side that is the initiator of the trade, and in general the counterpart that runs out of patience that decides to pay the spread. This may be due to trading by an informed trader or by trader who has some urgency to trade. In either case an imbalance between the amount of buyer-initiated volume versus seller initiated volume would likely be instructive. While this metric is simple to use, the challenge is to categorize a trade as buyer or seller initiated. For most practitioners who do not have access to Level III data and only has data on quotes and trades this is not trivial as there is a limited amount of research around the efficacy of various algorithms. For Level III data, this information is available for lit venues. However, this is not the case for dark venues where the trade classification of large blocks could be quite valuable.
