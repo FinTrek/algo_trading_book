@@ -125,10 +125,6 @@ Predicting stock market behavior has been studied extensively starting in the ea
 
 
 
-% Time Series Models for Aggregated Data
-\section{Time Series Models for Aggregated Data: Modeling the Mean \label{sec:modelingthemean}}
-
-
 % Stochastic Processes
 \section{Stochastic Processes: Some Properties}
 
@@ -253,28 +249,25 @@ Of course, a more general class of models is obtained by supposing that a nonsta
 \section{Some Descriptive Tools and their Properties} 
 
 
-Suppose we have a sample realization of $T$ observations $Y_1, Y_2, \ldots, Y_T$ from a stationary process $\{Y_t\}$. We are naturally interested in obtaining estimates of $\mu$, $\gamma(s)$, and $\rho(s)$ from the sample data.
-
-
-First, a natural estimator of $\mu$ is the sample mean $\overline{Y}= (1/T) \sum_{t=1}^T Y_t$. The most common estimator used for $\gamma(s)$ is the sample autocovariance function defined by
+Suppose we have a sample realization of $T$ observations $Y_1, Y_2, \ldots, Y_T$ from a stationary process $\{Y_t\}$. We are naturally interested in obtaining estimates of $\mu$, $\gamma(s)$, and $\rho(s)$ from the sample data. First, a natural estimator of $\mu$ is the sample mean $\overline{Y}= (1/T) \sum_{t=1}^T Y_t$. The most common estimator used for $\gamma(s)$ is the sample autocovariance function defined by
 	\[
 	\hat{\gamma}(s)= \frac{1}{T} \sum_{t=1}^{T-s} \, \left(Y_{t}-\overline{Y}\right) \left(Y_{t+s}-\overline{Y}\right), \quad s=0, 1, \ldots.
 	\]
 Usually one only computes $\hat{\gamma}(s)$ for lags $s$ much smaller than $T$, say, $0 \leq s \leq T/4$, since $\hat{\gamma}(s)$ for large lags are typically not very informative or of much interest. Note that $\hat{\gamma}(s)$ has the form of an ordinary sample covariance between the pairs of variables $(Y_t, Y_{t+s})$, except for the use of the common sample mean $\overline{Y}$ for both variables and the divisor $T$ in place of $T-s$.  Note also that $\hat{\gamma}(0) = T^{-1}\sum_{t=1}^T (Y_t-\overline{Y})^2$ represents the sample variance of the data.  The estimator of $\rho(s)$ follows directly from $\hat{\gamma}(s)$ and is given by
 	\begin{equation} \label{eqn:hatrho}
-         \hat{\rho}(s)= \frac{\hat{\gamma}(s)}{\hat{\gamma}(0)}= \gamma(s)= \frac{\sum_{t=1}^{T-s} \left(Y_{t}-\overline{Y}\right) \left(Y_{t+s}-\overline{Y}\right)}{\sum_{t=1}^T(Y_t-\overline{Y})^2} , \quad s= 0, 1, \ldots,
+         \hat{\rho}(s)= \frac{\hat{\gamma}(s)}{\hat{\gamma}(0)}= r(s)= \frac{\sum_{t=1}^{T-s} \left(Y_{t}-\overline{Y}\right) \left(Y_{t+s}-\overline{Y}\right)}{\sum_{t=1}^T(Y_t-\overline{Y})^2} , \quad s= 0, 1, \ldots,
 	\end{equation}
 which is called the sample ACF.  
 
 
 We now briefly discuss a few properties of the sampling distributions of the above estimators, with particular emphasis on the sample ACF $r(s)$.  The mean of $\overline{Y}$ is easily seen to be $E(\overline{Y})= (1/T) \sum_{t=1}^T E(Y_t) = \mu$, so that $\overline{Y}$ is an unbiased estimator of $\mu$.  The variance of $\overline{Y}$ is
 	\begin{equation} \label{eqn:var}
-        \var(\overline{Y})= \frac{\gamma(0)}{T} \left[ 1 + 2 \sum_{u=1}^{T-1} \frac{T - u}{T} \rho(u) \right].
+        \var(\overline{Y})= \frac{\gamma(0)}{T} \left[ 1 + 2 \sum_{u=1}^{T-1} \left(\dfrac{T - u}{T}\right)\, \rho(u) \right].
         \end{equation}
 Note that the variance of $\overline{Y}$ needs to account for the autocorrelations. 
 
 
-The sampling properties of the sample ACF $r(s)$ are quite complicated and exact results are not available except in a few special cases. [See Anderson and Walker (1964)~\cite{anderwalk}.] In the white noise case where the $Y_t$ are independent r.v.'s, we then have $\rho(s)= 0$ for all $s \neq 0$ it can be shown that $E(r(s)) \approx 0$, $\var(r(s)) \approx T-s)/T^2$, and $\cov(r(s), r(u)) \approx 0$. Hence we can use these results to check for ``non-randomness'' of a series of comparing the sample values $r(s)$ at various lags $s=1, \ldots, k$ with the approximate 95\% limits $\pm \, 2 \sqrt{(T-s)/T^2} \approx 2 / \sqrt{T}$ for the normal distribution to see whether the $r(s)$ generally fall within these limits. We will use this test repeatedly on the residuals as a diagnostic tool for model adequacy. 
+The sampling properties of the sample ACF $r(s)$ are quite complicated and exact results are not available except in a few special cases. [See Anderson and Walker (1964)~\cite{anderwalk}.] In the white noise case where the $Y_t$ are independent r.v.'s, we then have $\rho(s)= 0$ for all $s \neq 0$ it can be shown that $E(r(s)) \approx 0$, $\var(r(s)) \approx (T-s)/T^2$, and $\cov(r(s), r(u)) \approx 0$. Hence we can use these results to check for ``non-randomness'' of a series of comparing the sample values $r(s)$ at various lags $s=1, \ldots, k$ with the approximate 95\% limits $\pm \, 2 \sqrt{(T-s)/T^2} \approx 2 / \sqrt{T}$ for the normal distribution to see whether the $r(s)$ generally fall within these limits. We will use this test repeatedly on the residuals as a diagnostic tool for model adequacy. 
 
 
 In the second case, suppose it is assumed that the theoretical ACF satisfies $\rho(s) = 0$ for all $|s| > q$.  Then for any $s > q$,
@@ -295,7 +288,11 @@ and in particular $\var(r(1)) \approx \frac{1}{T} (1 - \phi^2)$.
 The plot of ACF for a white noise sequence for a large number of lags may have a few isolated lags lie outside the limits, $\pm \frac{2}{\sqrt{T}}$. But characteristic behavior of nonstationary series is that the sample ACF values $r(s)$ are slow to ``dampen out'' as the lag $s$ increases. We will use these facts repeatedly in our analysis. 
 
 
-In this section, we present a broad overview of the time series models for data aggregated over discrete time intervals. This data as mentioned in Section~\ref{sec:tradesandquotes} is called price bars and the methodologies discussed in Section~\ref{sec:modelingthemean} here apply to any aggregated data for fixed time unit of aggregation that is of equal length. As a close substitute for the high frequency data, data aggregated over short time intervals such as two or five minutes can be used. \twomedskip
+
+% Time Series Models for Aggregated Data:  Modeling the Mean
+\section{Time Series Models for Aggregated Data:  Modeling the Mean \label{sec:model_mean}}
+
+In this section, we present a broad overview of the time series models for data aggregated over discrete time intervals. This data as mentioned in Section~\ref{sec:tradesandquotes} is called price bars and the methodologies discussed in this chapter apply to any aggregated data for fixed time unit of aggregation that is of equal length. As a close substitute for the high frequency data, data aggregated over short time intervals such as two or five minutes can be used. \twomedskip
 
 
 \noindent\textbf{Linear Models for Stationary Time Series} \twomedskip
@@ -305,10 +302,7 @@ A stochastic process $\{ Y_t \}$ will be called a \emph{linear process} if it ca
 	\begin{equation} \label{eqn:yt}
           Y_t = \mu + \sum_{j=0}^{\infty}  \psi_j \epsilon_{t-j},
 	\end{equation}
-where the $\epsilon_t$ are independent with 0 mean and variance $\sigma^2_{\epsilon}$, and $\sum_{j=0}^{-\infty} \lvert \psi_j \rvert < \infty$. This process may also be referred to as an infinite moving average process.
-
-
-With the backward shift operator $B$, defined by the property that $B^j Y_t = Y_{t-j}$, model~\eqref{eqn:yt} may be expressed as
+where the $\epsilon_t$ are independent with 0 mean and variance $\sigma^2_{\epsilon}$, and $\sum_{j=0}^{-\infty} \lvert \psi_j \rvert < \infty$. This process may also be referred to as an infinite moving average process. With the backward shift operator $B$, defined by the property that $B^j Y_t = Y_{t-j}$, model~\eqref{eqn:yt} may be expressed as
 	\[
 	Y_t = \mu + \sum_{j=0}^{\infty} \psi_j B^j \epsilon_t = \mu + \psi(B) \epsilon_t,
 	\]
@@ -521,7 +515,7 @@ These types of models have potential applications in studying aggregate market b
 % Key Steps for Model Building
 \section{Key Steps for Model Building \label{sec:key_step}}
 
-In previous sections, theoretical linear models for stochastic processes and properties implied by these models were discussed. We now consider the problem of identifying appropriate models and fitting them to time series data. The following four steps advocated by George B. highlight the basic stages in the proposed model building and testing procedure:
+In previous sections, theoretical linear models for stochastic processes and properties implied by these models were discussed. We now consider the problem of identifying appropriate models and fitting them to time series data. The following four steps advocated by George Box highlight the basic stages in the proposed model building and testing procedure:
 
 \begin{enumerate}
 \item Model Specification or Identification---specify or identify specific models to be entertained as appropriate, based on preliminary examination of certain statistical features, such as features of the sample ACF and PACF for time series data.
@@ -543,11 +537,13 @@ If the estimated model is assessed as being adequate, it can then be used for fo
 Given the time series data $Y_1, \ldots, Y_T$, basic time series  plotting of the series is a fundamental step in the initial model building, along with other data plots that might seem informative. We will then consider the sample ACF and PACF of the original series $Y_t$, and of certain transformed series, such as first and possibly second differences, seasonal differences, logarithms or other instantaneous transformation of the original series, residuals from regression to remove deterministic seasonal component or linear trend, and so on. That is, if the original time series appears to be nonstationary we consider differencing or using residuals from regression methods, of the original series which will yield a \emph{stationary} series. More formal procedures to `test' for certain (unit-root) type nonstationarity can also be considered, and will be discussed later in the context of estimation for AR models.  While dealing with financial time series the following considerations are usually made: for example, $r_t= \text{return} = \ln(P_t) - \ln(P_{t-1})$, where $P_t$ is the price of the stock, the differencing of the log price is naturally considered and for volume $V_t$, because of its size is usually logged $\text{v}_t= \ln(V_t)$ to avoid heteroscedasticity.
 
 
-The sample ACF and PACF of the stationary series are then compared against features of the theoretical ACFs and PACFs of various types of ARMA models to find an appropriate model for the observed series on the basis of close correspondence in features between sample and theoretical correlation functions. Of course, the sample ACF values that are defined in \eqref{eqn:hatrho} are only \emph{estimates}, and hence are subject to sampling errors. Thus, we must recognize that the sample ACF of an observed series will never correspond in all exact details to an underlying theoretical ACF, and we need to look for correspondence in broad features. To properly interpret the sample ACF $[\hat{\rho}(j)]$, we will use the sampling properties of the estimates $\hat{\rho}(j)$. In particular, under the assumption that $\rho(j) = 0$ for all $j  > q$, we have $E[\hat{\rho}(j)]= 0$ and $\text{St.Dev.}[\hat{\rho}(j)]= \frac{1}{\sqrt{T}}[1 + 2 \sum_{i=1}^q \hat{\rho}(i)^2]^{1/2}$ for $j > q$ and the $\hat{\rho}(j)$ are approximately normally distributed, for moderate and large $T$, a result given in \eqref{eqn:wij}. Similarly, it is known that if the process $\{Y_t\}$ is an AR of order $p$, then the estimated PACFs for lags $p + 1$ and higher are approximately independently and normally distributed, with $E[\hat{\phi}_{kk}] = 0$ and $\text{St.Dev.}[\hat{\phi}_{kk}] = 1/\sqrt{T}$ for $k > p$. These facts may be used to assess whether the last coefficient in an estimated AR model is essentially zero. We summarize some general patterns of the sample ACF and PACF, which might be useful in the initial model identification step. 
+The sample ACF and PACF of the stationary series are then compared against features of the theoretical ACFs and PACFs of various types of ARMA models to find an appropriate model for the observed series on the basis of close correspondence in features between sample and theoretical correlation functions. Of course, the sample ACF values that are defined in \eqref{eqn:hatrho} are only \emph{estimates}, and hence are subject to sampling errors. Thus, we must recognize that the sample ACF of an observed series will never correspond in all exact details to an underlying theoretical ACF, and we need to look for correspondence in broad features. To properly interpret the sample ACF $[\hat{\rho}(j)]$, we will use the sampling properties of the estimates $\hat{\rho}(j)$. In particular, under the assumption that $\rho(j) = 0$ for all $j  > q$, we have $E[\hat{\rho}(j)]= 0$ and $\text{St.Dev.}[\hat{\rho}(j)]= \frac{1}{\sqrt{T}}[1 + 2 \sum_{i=1}^q \hat{\rho}(i)^2]^{1/2}$ for $j > q$ and the $\hat{\rho}(j)$ are approximately normally distributed, for moderate and large $T$, a result given in \eqref{eqn:varrs}. Similarly, it is known that if the process $\{Y_t\}$ is an AR of order $p$, then the estimated PACFs for lags $p + 1$ and higher are approximately independently and normally distributed, with $E[\hat{\phi}_{kk}] = 0$ and $\text{St.Dev.}[\hat{\phi}_{kk}] = 1/\sqrt{T}$ for $k > p$. These facts may be used to assess whether the last coefficient in an estimated AR model is essentially zero. We summarize some general patterns of the sample ACF and PACF, which might be useful in the initial model identification step. 
 
 
 \begin{enumerate}
-\item[\textbf{1.}] The sample ACF $[\hat{\rho}(j)]$ of a typical stationary process should dampen out sufficiently fast. The general behavior of the (stationary) MA$(q)$, AR$(p)$, and ARMA$(p,q)$ processes is: 
+\item[\textbf{1.}] The sample ACF of a unit-root nonstationary process will not generally dampen out sufficiently fast as the lag increases.
+
+\item[\textbf{2.}] The sample ACF $[\hat{\rho}(j)]$ of a typical stationary process should dampen out sufficiently fast. The general behavior of the (stationary) MA$(q)$, AR$(p)$, and ARMA$(p,q)$ processes is: 
 
 \begin{itemize}
 \item MA$(q)$ process has ACF $[\rho(j)]$ that will `cut off' after $q$ lags; that is, $\rho(j) = 0$ for $j > q$. For example, the MA(1) process has $\rho(j)= 0$ for $j > 1$.
@@ -557,14 +553,17 @@ The sample ACF and PACF of the stationary series are then compared against featu
 \item ARMA$(p,q)$ process has ACF $[\rho(j)]$ which can have an irregular pattern for the first $q$ lags and then similar behavior to a corresponding AR$(p)$ process for lags greater than $q$. For example, the ARMA(1,1) has $\rho(j) = \phi \rho(j-1)$, or $\rho(j)= \phi^{j-1} \rho(1)$, for $j \geq 2$, which is similar behavior to the AR(1) after lag 1.
 \end{itemize}
 
-\item[\textbf{2.}] The sample PACF $\hat{\phi}_{kk}$ is useful to identify the order $p$ of a finite order AR$(p)$ process, because for an AR$(p)$ process the theoretical PACF $\phi_{kk}$ `cuts off' after lag $p$; that is, $\phi_{kk}= 0$ for all $k>p$. For the sample PACF $\hat{\phi}_{kk}$ of an AR$(p)$, we have $E[\hat{\phi}_{kk}]= 0$ and $\text{St.Dev.}[\hat{\phi}_{kk}]=1 / \sqrt{T}$, for $k > p$. 
-\end{enumerate}
+\item[\textbf{3.}] The sample PACF $\hat{\phi}_{kk}$ is useful to identify the order $p$ of a finite order AR$(p)$ process, because for an AR$(p)$ process the theoretical PACF $\phi_{kk}$ `cuts off' after lag $p$; that is, $\phi_{kk}= 0$ for all $k>p$. For the sample PACF $\hat{\phi}_{kk}$ of an AR$(p)$, we have $E[\hat{\phi}_{kk}]= 0$ and $\text{St.Dev.}[\hat{\phi}_{kk}]=1 / \sqrt{T}$, for $k > p$. 
+\end{enumerate} \twomedskip
+
+
+Although the sample autocorrelation and partial autocorrelation functions are very useful in model identification, in some cases involving mixed ARMA models where they will not provide unambiguous results. There has been considerable interest in developing additional tools for use at the model identification stage. Interested readers can refer to standard texts in time series for more in-depth discussion such as Shumway and Stoffer (2011)~\cite{shumway2011arima}. \twomedskip
 
                                       
 {\noindent\bfseries\large Estimation of Model Parameters} \twomedskip
 
 
-As there are excellent sources available on this topic, our discussion will be quite brief.
+As there are excellent sources available on this topic, our discussion will be quite brief. \twomedskip
 
 
 \noindent \textbf{Method of Moments} \twomedskip
@@ -573,11 +572,11 @@ As there are excellent sources available on this topic, our discussion will be q
 Preliminary (initial) estimates of the parameters \eqref{eqn:phiBdy} in the model may be obtained by the \textit{method of moments} procedure, which is based on the sample ACF $\hat{\rho}(j), j= 1, \ldots,  p+q$. The method of moments estimates have the appeal of being relatively easy to compute, but are not statistically efficient (except for a pure AR); they can usefully serve as initial values to obtain more efficient estimates.
 
 
-Assuming that $W_t= (1 - B)^d\, Y_t$ follows an ARMA$(p,q)$ model, we know that the ACF $\rho(j)$ of $W_t$ satisfies the ``generalized'' Yule-Walker equations in \eqref{eqn:rhos2}. Hence we can obtain initial estimates for the AR parameters $\phi_1, \ldots, \phi_p$ by solving the sample version of these equations for $j= q+1,\ldots, q+p$,
+Assuming that $W_t= (1 - B)^d\, Y_t$ follows an ARMA$(p,q)$ model, we know that the ACF $\rho(j)$ of $W_t$ satisfies the ``generalized'' Yule-Walker equations in \eqref{eqn:rjequation}. Hence we can obtain initial estimates for the AR parameters $\phi_1, \ldots, \phi_p$ by solving the sample version of these equations for $j= q+1,\ldots, q+p$,
 	\begin{equation} \label{eqn:rhohatsum}
 	\hat{\rho}(j) - \sum_{i=1}^p \hat{\phi}_i \hat{\rho}(j-i) = 0, \quad j= q+1, \ldots, q+p.
 	\end{equation}
-Note that these equations could also be useful in identifying the orders $(p,q)$ of an ARMA model. Since the mean $\mu_w = E(W_t)$ of the stationary process $W_t$ in \eqref{eqn:phiB} is $\mu_w = \delta/(1 - \phi_1 - \cdots - \phi_p)$, we estimate $\mu_w$ by sample mean $\hat{\mu}_w = \overline{W}$ and hence the constant term $\delta$ by $\hat{\delta}_0 = (1 - \hat{\phi}_1 - \cdots - \hat{\phi}_p)\, \hat{\mu}_w$.
+Note that these equations could also be useful in identifying the orders $(p,q)$ of an ARMA model. Since the mean $\mu_w = E(W_t)$ of the stationary process $W_t$ in \eqref{eqn:phiBdy} is $\mu_w = \delta/(1 - \phi_1 - \cdots - \phi_p)$, we estimate $\mu_w$ by sample mean $\hat{\mu}_w = \overline{W}$ and hence the constant term $\delta$ by $\hat{\delta}_0 = (1 - \hat{\phi}_1 - \cdots - \hat{\phi}_p)\, \hat{\mu}_w$.
 
 
 Initial estimates of the MA parameters could then be based on the autocovariances of the `derived' MA(q) process, $W_t^* = \phi(B) W_t = \theta_0 + \theta(B) \varepsilon_t$. The autocovariances of $W_t^*$ are related to those of $W_t$ by
@@ -642,10 +641,10 @@ Higher order AR($p$) processes may also be estimated by conditional least square
 For moderately large sample size $T$, both conditional least squares estimation (``regression'' methods) and Yule-Walker estimation will give approximately the same estimated values of $\phi_1, \ldots, \phi_p$. This is because the sample sums of squares and cross-products that are involved in both estimation methods differ only by ``end-effects'' involving the treatment of the first and/or last few observations in the series. Generally, LS estimators are preferred over YW estimators since they tend to have better ``finite-sample'' properties, especially for AR models that are nearly nonstationary (i.e., have roots of $\phi(B)$ close to the unit circle). For inferences on the AR coefficients, it is observed that $\sqrt{T}\,(\hat{\phi} - \phi)$ converges as $T \to \infty$ to the multivariate normal distribution $N(0,\sigma^2\,\Gamma_p^{-1})$, a multivariate normal with mean 0 and covariance matrix $\sigma^2\,\Gamma_p^{-1}$, where $\Gamma_p \equiv \gamma(0)P_p$, where $P_p$ is defined in \eqref{eqn:matrix}. Thus, for large $T$, we can use the approximation that $\hat{\phi}$ is distributed as $N(\phi,(\sigma^2/T)\,\Gamma_p^{-1})$. For a simple example, in the AR(1) case, the LS or Yule-Walker estimator $\hat{\phi} = r(1) = \hat{\rho}(1)$ has an approximate normal distribution with mean $\phi = \rho(1)$ and variance $\var(\hat{\phi}) = (\sigma^2/T)[\gamma(0)]^{-1} = (1/T)(\sigma^2/\gamma(0)) = (1/T)(1 - \phi^2)$, since $\gamma(0) = \sigma^2/(1 - \phi^2)$ for an AR(1) process, and $\var(\hat{\phi})$ is estimated by $(1 - \hat{\phi}^2)/T$.
 
 
-The maximum likelihood estimation is based on the augmented conditions likelihood function, augmented with the distribution of the initial values $Y_1, \ldots, Y_p$. The procedure is quite cumbersome, but with large sample, $T$, the distribution of initial values does not make much of a difference in the estimation of the unknown parameters. Maximum likelihood and least squares estimation are much more computationally difficult for a mixed ARMA($p,q$) model than for a pure AR($p$) model because the log-likelihood and the sum of squares are more complicated (non-quadratic) functions of the unknown parameters. Interested readers can refer to standard textbooks in this area, but with financial data which tend to be fairly long, the discussion presented here will suffice. We will be brief on this topic.
+The maximum likelihood estimation is based on the augmented conditions likelihood function, augmented with the distribution of the initial values $Y_1, \ldots, Y_p$. The procedure is quite cumbersome, but with large sample, $T$, the distribution of initial values does not make much of a difference in the estimation of the unknown parameters. Maximum likelihood and least squares estimation are much more computationally difficult for a mixed ARMA($p,q$) model than for a pure AR($p$) model because the log-likelihood and the sum of squares are more complicated (non-quadratic) functions of the unknown parameters. Interested readers can refer to standard textbooks in this area, but with financial data which tend to be fairly long, the discussion presented here will suffice. \twomedskip
 
 
-Although the sample autocorrelation and partial autocorrelation functions are very useful in model identification, in some cases involving mixed ARMA models where they will not provide unambiguous results. There has been considerable interest in developing additional tools for use at the model identification stage. Interested readers can refer to standard texts in time series for more in-depth discussion such as Shumway and Stoffer (2011)~\cite{shumway2011arima}.
+\noindent\textbf{Model Selection Criteria} \twomedskip
 
 
 One approach to selecting among competing models is the use of information criteria such as AIC proposed by Akaike (1974)~\cite{akaike74} or the BIC of Schwarz (1978)~\cite{sch78}. They are
