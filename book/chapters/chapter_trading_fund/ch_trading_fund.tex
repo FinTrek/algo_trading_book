@@ -4,35 +4,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{comment}
-\section{Max old stuffs temporary reinstated for my ease of use...}
-
-% Algorithmic Trading: Some Basic Elements
-\subsection{Algorithmic Trading: Some Basic Elements}
-
-As such, algorithmic trading can be described as a broader field combining several areas such as mathematical modeling, computer science and statistical analysis. Quantitative strategies, such as the ones detailed in the subsequent chapters, call for robust and methodical research, a good understanding of economics fundamentals, while the amount of data available and the complexity of reproducing realistic trading conditions require a reliable and fast infrastructure for backtesting and calibrating models.
-
-
-More simply, the practitioner working on developing quantitative algorithmic strategies goes through the following steps:
-
-\begin{itemize}
-\item \textbf{Data collection:} As mentioned previously, there is no dearth of available data. That said, the researcher needs to put particular emphasis on understanding the data structure as well as the methodology used to collect it (Which data feed is used? At what point is the data time stamped? What is the impact on recording the market performance of when there are activity bursts? How to order in the correct sequence, data coming from different origins or different asset classes in the correct time scale? etc.). High frequency data tends to be noisy, and one of the significant challenges faced in practice is to devise appropriate mechanisms to clean-up possibly corrupted data, to handle missing data, to tag outliers so that they can be isolated from the general modeling and to study how to use them for modeling extreme scenarios that may arise in the future. Failure to properly correct for errors in the data inevitably will lead to misspecified trading strategies that will not perform as expected.
-
-
-\item \textbf{Modeling:} The core of the subsequent chapters will cover in detail the models commonly used in existing quantitative strategies. These models cover the diverse nature of the trading data.  Particular attention should be paid to the underlying assumptions of the model (characteristics of the distribution, independence, stationarity, etc.), as well as the robustness and stability of the calibration under model deviations. While violation of model assumptions is one of the most common pitfalls encountered in practice, model misspecification (whether due to missing variables or inclusion of wrong variables) can also lead to significant bias (see Rao (1973)~\cite{rao1973}). 
-
-
-\item \textbf{Backtesting:} Once the strategy is designed, the next step involves backtesting it, both on in and out of sample data. The objective is to determine the behavior and profitability of the strategy over time in order to fine tune the calibrated parameters. Backtesting can be carried out with different objectives, from simply maximizing returns to maximizing risk-adjusted returns metrics such as Sharpe ratio or Sortino ratio. However, a key factor in successful and realistic backtesting depends on the assumptions of the model. Among the relevant issues to consider for execution: the fill probability (for passive orders), the models for market impact that determines the actual transactions and the scalability of the strategy all require particular attention. Additionally, for high frequency strategies, the backtesting should account for bursts of market events and latency effects. Finally, while the goal of backtesting is to find the optimal model, the most common pitfall encountered by practitioners is overfitting with a large set of parameters that simply introduce noise rather than capturing the signal (see Easley, Lopez de Prado and O'Hara (2014)~\cite{easley}).  
-
-
-\item \textbf{Execution:} The final step involves deploying the strategy in production and continually monitoring its performance to determine if there is a need for potential adjustments. The field of Transaction Cost Analysis is relevant to both developers of algorithmic trading strategies and users of strategies developed by third parties such as sell-side brokers. We give some initial thoughts on this topic in the remainder of the chapter.
-\end{itemize}
-
-\end{comment}
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-
-
 
 \section{A Brief History of Stock Trading}
 
@@ -143,25 +114,25 @@ In order to fully understand a large part of this book one requires at least a b
 % How Double Auction Markets Work
 \subsection{How Double Auction Markets Work}
 
-The most common approach used by modern trading exchanges can be termed as an electronic, time/price priority, continuous double auction trading system. The term double auction refers to the nature of the markets where, unlike a common auction with one auctioneer and many potential buyers, there are multiple buyers and multiple sellers. These buyers and sellers interact with the exchange by sending electronic instructions, via a network protocol to a specialized infrastructure mad up of software and hardware the goes by the term: Matching Engine. This component has two main sub-systems: the Limit Order Book and the Matching Algorithm.
+The most common approach used by modern trading exchanges can be termed as an electronic, time/price priority, continuous double auction trading system. The term double auction refers to the nature of the markets where, unlike a common auction with one auctioneer and many potential buyers, there are multiple buyers and multiple sellers. These buyers and sellers interact with the exchange by sending electronic instructions, via a network protocol to a specialized software and hardware infrastructure that goes by the term: Matching Engine. This component has two main sub-systems: the Limit Order Book and the Matching Algorithm.
 
-\noindent\textbf{Limit Order Book (LOB):}
-The Limit Order Book it's a complex data structure that stores all non-executed orders with associated instructions in an efficient way so that is extremely quickly to insert/update/delete elements and then being able to quickly sort them and retrieve aggregated information. For an active stock the LOB can be updated and queried tens of thousands times every second so must be highly efficient and handle a high degree of concurrency to ensure that the state is always correct.  The LOB actually keeps two copies of the core data structure one for Buy orders and one for Sell orders. This structure is the core abstraction for all electronic exchanges so it's very important to understand it in detail. \twomedskip
+\noindent\textbf{Limit Order Book:}
+The Limit Order Book (LOB) it's a complex data structure that stores all non-executed orders with associated instructions. It is highly specialized so as to be extremely quick to insert/update/delete order and then able to sort them and retrieve aggregated information. For an active stock the LOB can be updated and queried tens of thousands times every second so must be highly efficient and handle a high degree of concurrency to ensure that the state is always correct.  The LOB is actually made up of two copies of the core data structure, one for Buy orders and one for Sell orders often referred to the two ``sides'' of the order book. This structure is the core abstraction for all electronic exchanges so it's very important to understand it in detail. \twomedskip
 
-The LOB support three basic instructions: Insert, Cancel, and Amend, with Insert initiating a new order, Cancel removing an existing order from the market and Amend modifying some of the parameters of the existing order. New orders require to use a specific ``order type''  with associated parameters to embed the trader full intent. We'll review order types in more details later but to get a feeling of how markets operate we can start with the two main ones: The Limit Order and the Market Order. The main difference between the two order types is that a Limit Order has a price associated to it while a market order doesn't. 
+The LOB support three basic instructions: Insert, Cancel, and Amend, with Insert initiating a new order, Cancel removing an existing order from the market and Amend modifying some of the parameters of the existing order. New orders require to use a specific ``order type''  and associated parameters necessary to fully encapsulate the trader. We'll review order types in more details later but to get a feeling of how markets operate we can start with the two main ones: The Limit Order and the Market Order. The main difference between the two order types is that a limit order has a price associated to it while a market order doesn't. 
 
-Accounting for limit and market orders, there are eight types of events, four on either side, that can alter the state of the order book:
+Accounting for limit and market orders, there are eight events, four on either side, that can alter the state of the order book:
 	\begin{itemize}
 	\item Limit order submission: A limit order is added to the queue at the specified price level.
 	\item Limit order cancellation: An outstanding limit order is expired or canceled and therefore is removed from the Limit Order Book (LOB).
 	\item Limit order amendment: An outstanding limit order is amended by the original sender (e.g. decrease in size).
-	\item Execution: The submission of market or marketable limit orders (orders whose price is able to be matched with one ore more orders on the far side) from the other side is matched with existing orders and thus removed from the book.
+	\item Execution: Buy and sell orders at appropriate prices are paired by the matching algorithm (explained below) into a binding transaction and are removed from the LOB
 	\end{itemize}
 
 \noindent\textbf{Matching Algorithm:}
-This software component is responsible to intercept the various events to determine if any buy and sell orders can be matched in an execution and if multiple orders could be matched which order should be chosen. The time/price priority discussed above is implemented in the matching engine where orders that can be matched will be sorted first by price and if orders are at the same price sorted by time of arrival. As we will see in later chapters this is only one of the algorithms available and it's by far the most common. \twomedskip
+This software component is responsible of intercepting the various events to determine if any buy and sell orders can be matched in an execution.When multiple orders can be paired the algorithm uses the so called price/time priority meaning that first the order with the most competitive prices are matched and when prices are equal the order that arrived before a chosen. As we will see in later chapters this is only one of the possible algorithms used in practice but it's by far the most common. We will go into more details in the next sections.\twomedskip
 
-The matching algorithm operates on a continuous basis through the trading day during the so called continuous trading session. In order to maintain an orderly beginning and end of the day the continous session is usually complemented by a series of auctions designed to aggregate liquidity. The trading day generally starts with an open auction, then followed by the main continuous session, and ends with a closing auction. Some markets like Japan also have a lunch break which might be preceded by a morning closing auction and followed by an afternoon opening auction. We will now discuss these main market phases in chronological order.\twomedskip
+The matching algorithm operates on a continuous basis through the trading day during the so called continuous trading session. In order to ensure  an orderly beginning and end of the day the continuous session is usually complemented by a couple of discrete auctions. The trading day generally starts with an open auction, then followed by the main continuous session, and ends with a closing auction. Some markets like Japan also have a lunch break which might be preceded by a morning closing auction and followed by an afternoon opening auction. We will now discuss these main market phases in chronological order.\twomedskip
 	
 % The Open Auction
 \subsection{The Open Auction} 
