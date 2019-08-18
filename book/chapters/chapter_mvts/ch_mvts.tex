@@ -15,7 +15,7 @@ We begin with the general multivariate linear regression model,
 	\begin{equation} \label{eqn:5lmyk}
 	Y_t = C X_t + \epsilon_t,
 	\end{equation}
-where $Y_t= (Y_{1t}, \ldots,Y_{mk})'$ is an $m \times 1$ vector of responsive variables and $X_t= (X_{1t}, \ldots, X_{nt})'$ is an $n \times 1$ vector of predictors, $C$ is an $m \times n$ coefficient matrix and $\epsilon_t= (\epsilon_{it}, \ldots, \epsilon_{mt})'$ is the $m \times 1$ vector of random errors. In the cross-sectional modeling of asset returns, the popular model introduced by Fama and French (2015)~\cite{fama2015}, falls into this regression set-up. The response vector has the returns on `$m$' stocks and the predictor set contains the Fama-French factors. If we restrict the first component of $X_t$, $X_{it}= 1$, the model in \eqref{eqn:5lmyk} can include the means of the variables in $Y_t$. We assume $E(\epsilon_t)= 0$ and $\cov(\epsilon_t)= \Sigma_{\epsilon \epsilon}$ is a $m \times m$ positive definite covariance matrix. The errors are independent over `$t$', the time index. Thus if we arrange the data and error as matrices,
+where $Y_t= (Y_{1t}, \ldots,Y_{mk})'$ is an $m \times 1$ vector of responsive variables and $X_t= (X_{1t}, \ldots, X_{nt})'$ is an $n \times 1$ vector of predictors, $C$ is an $m \times n$ coefficient matrix and $\epsilon_t= (\epsilon_{it}, \ldots, \epsilon_{mt})'$ is the $m \times 1$ vector of random errors. In the cross-sectional modeling of asset returns, the popular model introduced by Fama and French (2015)~\cite{fama2015}, falls into this regression set-up. The response vector has the returns on `$m$' stocks and the predictor set contains the Fama-French factors. If we restrict the first component of $X_t$, $X_{1t}= 1$, the model in \eqref{eqn:5lmyk} can include the means of the variables in $Y_t$. We assume $E(\epsilon_t)= 0$ and $\cov(\epsilon_t)= \Sigma_{\epsilon \epsilon}$ is a $m \times m$ positive definite covariance matrix. The errors are independent over `$t$', the time index. Thus if we arrange the data and error as matrices,
 	\begin{equation} \label{eqn:5yyt}
 	Y= [Y_1,\ldots,Y_T], \enskip X=[X_1,\ldots,X_T] \text{ and } \epsilon= [\epsilon_1, \ldots,\epsilon_T],
 	\end{equation}
@@ -23,7 +23,7 @@ and if $e=\text{vec}(\epsilon')$,
 	\begin{equation} \label{eqn:5Ee0}
 	E(e)=0, \quad \cov(e)= \Sigma_{\epsilon \epsilon} \otimes I_T,
 	\end{equation}
-where the symbol $\otimes$ signifies the Kronecker's product.\footnote{The Kronecker product of two matrices is defined as $A \otimes B= \begin{pmatrix} a_{11} B & \cdots & a_{1m} B \\ \vdots & \ddots & \vdots \\ a_{m1} B & \cdots & a_{mm} \end{pmatrix}$, where $A= \begin{pmatrix} a_{11} & \cdots & a_{1m} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mm}B \end{pmatrix}$.} 
+where the symbol $\otimes$ signifies the Kronecker's product.\footnote{The Kronecker product of two matrices is defined as $A \otimes B= \begin{pmatrix} a_{11} B & \cdots & a_{1m} B \\ \vdots & \ddots & \vdots \\ a_{m1} B & \cdots & a_{mm}B \end{pmatrix}$, where $A= \begin{pmatrix} a_{11} & \cdots & a_{1m} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mm} \end{pmatrix}$.} 
 
 
 The unknown parameters in model \eqref{eqn:5lmyk} are the ($mn$) elements of the regression coefficient matrix $C$ and ($m(m+1)/2$) elements of the error covariance matrix $\Sigma_{\epsilon \epsilon}$. These can be estimated by the method of maximum likelihood under the assumption of normality of the $\epsilon_t$ which is equivalent to least squares estimation. Note we can rewrite the model \eqref{eqn:5lmyk} in terms of the data matrices $\mathbf{Y}$ and $\mathbf{X}$ as
@@ -124,7 +124,7 @@ The second implication that is somewhat complementary to \eqref{eqn:lprimeC} is 
 	\end{equation}
 where $A$ is of dimension $m \times r$ and $B$ is of dimension $r \times n$, but both have rank $r$. The model \eqref{eqn:5lmyk} can then be written as
 	\begin{equation} \label{eqn:ykabxk}
-	Y_k= A(BX_k) + \epsilon_k, \quad k= 1, 2, \ldots, T,
+	Y_t= A(BX_t) + \epsilon_t, \quad t= 1, 2, \ldots, T,
 	\end{equation}
 where $BX_t$ is of reduced dimension with only $r$ components. A practical use of \eqref{eqn:ykabxk} is that the $r$ linear combinations of the predictor variables $X_t$ are sufficient to model the variation in the response variables $Y_t$ and there may not be a need for all $n$ linear combinations or otherwise for all $n$ variables, as would be the case when no single predictor variable can be discarded from the full-rank analysis. Hence, there is a gain in simplicity and interpretation through the reduced-rank regression modeling, although from a practitioner point of view one would still need to have measurements on all $n$ predictor variables. But some recent developments on `sparsity' address this issue where the elements of $A$ and $B$ are further shrunk to zeros. This will be discussed briefly later.
 
@@ -315,11 +315,11 @@ Economic time series share some common characteristics such as trends, seasonali
 where $f_t$ is a lower dimensional common feature vector so that a linear combination of $Y_t$, $l' Y_t$ can be independent of this feature. Observe that this implies $l'C=0$, which is the result of `$C$' being a lower rank matrix. The $f_t$-vector can either be constructed from the past values of $Y_t$-which is the focal view of comovement or can be constructed from exogenous variables, sat $X_t$, which is the basis of many studies on commonality in finance literature. We briefly summarize the two aspects here. 
 
 
-The comovement relationships among non-stationary series that result from cointegration are known as long-run equilibrium relationships. Relationships that result from stationary series are known as short-run equilibrium relationships. The cointegrating relationships resulting \eqref{eqn:2WtABY} are given by $\hat{Q}$ that leads to $\hat{Q}' \hat{A}=0$. A generalization of this concept relates to serial correlation common feature; to define this, write VAP($p$) model in its error correction form as
-	\begin{equation} \label{eqn:2Wtequiv}
+The comovement relationships among non-stationary series that result from cointegration are known as long-run equilibrium relationships. Relationships that result from stationary series are known as short-run equilibrium relationships. The cointegrating relationships resulting \eqref{eqn:2Wtequiv} are given by $\hat{Q}$ that leads to $\hat{Q}' \hat{A}=0$. A generalization of this concept relates to serial correlation common feature; to define this, write VAP($p$) model in its error correction form as
+	\begin{equation} \label{eqn:2WteqAD}
 	W_t=  \begin{bmatrix} A & D \end{bmatrix} \; \begin{bmatrix} BY_{t-1} \\ W_{t-1}^* \end{bmatrix} + \epsilon_t.
 	\end{equation}
-Here $W_{t-1}^*= [W_{t-1}', \ldots, W_{t-p+1}']'$, with $W_{t-i}= Y_{t-i} - Y_{t-i+1}$. The combination that is free of serial correlation is $\hat{Q} W_t= Q' \epsilon_t$ which implies that $Q_1' \,[A \;\; D] \sim 0$; from the results given in Section~\ref{sec:s_dr}, it easily follows that the linear combination can be constructed from canonical vectors associated with the smallest canonical correlation between $Y_t$ and its past lags.
+Here $W_{t-1}^*= [W_{t-1}', \ldots, W_{t-p+1}']'$, with $W_{t-i}= Y_{t-i} - Y_{t-i+1}$. The combination that is free of serial correlation is $\hat{Q} W_t= Q' \epsilon_t$ which implies that $Q' \,[A \;\; D] \sim 0$; from the results given in Section~\ref{sec:s_dr}, it easily follows that the linear combination can be constructed from canonical vectors associated with the smallest canonical correlation between $Y_t$ and its past lags.
 
 
 
