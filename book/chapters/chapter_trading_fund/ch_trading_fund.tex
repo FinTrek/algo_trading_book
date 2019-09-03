@@ -4,35 +4,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{comment}
-\section{Max old stuffs temporary reinstated for my ease of use...}
-
-% Algorithmic Trading: Some Basic Elements
-\subsection{Algorithmic Trading: Some Basic Elements}
-
-As such, algorithmic trading can be described as a broader field combining several areas such as mathematical modeling, computer science and statistical analysis. Quantitative strategies, such as the ones detailed in the subsequent chapters, call for robust and methodical research, a good understanding of economics fundamentals, while the amount of data available and the complexity of reproducing realistic trading conditions require a reliable and fast infrastructure for backtesting and calibrating models.
-
-
-More simply, the practitioner working on developing quantitative algorithmic strategies goes through the following steps:
-
-\begin{itemize}
-\item \textbf{Data collection:} As mentioned previously, there is no dearth of available data. That said, the researcher needs to put particular emphasis on understanding the data structure as well as the methodology used to collect it (Which data feed is used? At what point is the data time stamped? What is the impact on recording the market performance of when there are activity bursts? How to order in the correct sequence, data coming from different origins or different asset classes in the correct time scale? etc.). High frequency data tends to be noisy, and one of the significant challenges faced in practice is to devise appropriate mechanisms to clean-up possibly corrupted data, to handle missing data, to tag outliers so that they can be isolated from the general modeling and to study how to use them for modeling extreme scenarios that may arise in the future. Failure to properly correct for errors in the data inevitably will lead to misspecified trading strategies that will not perform as expected.
-
-
-\item \textbf{Modeling:} The core of the subsequent chapters will cover in detail the models commonly used in existing quantitative strategies. These models cover the diverse nature of the trading data.  Particular attention should be paid to the underlying assumptions of the model (characteristics of the distribution, independence, stationarity, etc.), as well as the robustness and stability of the calibration under model deviations. While violation of model assumptions is one of the most common pitfalls encountered in practice, model misspecification (whether due to missing variables or inclusion of wrong variables) can also lead to significant bias (see Rao (1973)~\cite{rao1973}). 
-
-
-\item \textbf{Backtesting:} Once the strategy is designed, the next step involves backtesting it, both on in and out of sample data. The objective is to determine the behavior and profitability of the strategy over time in order to fine tune the calibrated parameters. Backtesting can be carried out with different objectives, from simply maximizing returns to maximizing risk-adjusted returns metrics such as Sharpe ratio or Sortino ratio. However, a key factor in successful and realistic backtesting depends on the assumptions of the model. Among the relevant issues to consider for execution: the fill probability (for passive orders), the models for market impact that determines the actual transactions and the scalability of the strategy all require particular attention. Additionally, for high frequency strategies, the backtesting should account for bursts of market events and latency effects. Finally, while the goal of backtesting is to find the optimal model, the most common pitfall encountered by practitioners is overfitting with a large set of parameters that simply introduce noise rather than capturing the signal (see Easley, Lopez de Prado and O'Hara (2014)~\cite{easley}).  
-
-
-\item \textbf{Execution:} The final step involves deploying the strategy in production and continually monitoring its performance to determine if there is a need for potential adjustments. The field of Transaction Cost Analysis is relevant to both developers of algorithmic trading strategies and users of strategies developed by third parties such as sell-side brokers. We give some initial thoughts on this topic in the remainder of the chapter.
-\end{itemize}
-
-\end{comment}
-%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%
-
-
 
 \section{A Brief History of Stock Trading}
 
@@ -94,9 +65,9 @@ With the context acquired in the previous section, we can now jump into a few br
 
 Now that we know who the players are, we briefly review various approaches they use to access liquidity. \twomedskip
 
-\noindent\textbf{Exchanges:} This is the default approach to trading and still accounts for about 60--70\% of all activity. This is where an investor will go for immediacy and a more certain outcome. Because the full order-book of an exchange is public and arrivals/cancellations are all published, the trader knows almost exactly what liquidity is available and can plan accordingly. This, unfortunately, comes at a cost as the same information is known by all other participants especially (due to their often technological advantages) the ones whose strategies are looking for patterns of large directional trades. A trader that needs to buy or sell in size will need to be very careful on how much information their trades disseminate or they may pay dearly. The whole field of Algorithmic Execution evolved as an effort to trade large position while minimizing market impact and information leakage.
+\noindent\textbf{Exchanges:} This is the default approach to trading and still accounts for about 60--70\% of all activity. This is where an investor will go for immediacy and a more certain outcome. Because the full order-book of an exchange is public and arrivals/cancellations are all published, the trader knows almost exactly what liquidity is available and can plan accordingly. This, unfortunately, comes at a cost as the same information is known by all other participants especially (due to their often technological advantages) the ones whose strategies are looking for patterns of large directional trades. A trader that needs to buy or sell in size will need to be very careful on how much information their trades disseminate or they may pay dearly. The whole field of Algorithmic Execution has evolved as an effort to trade large position while minimizing market impact and information leakage.
 
-Apart from leakage concerns interacting with exchanges is arguably the most basic approach to trading. But is it straightforward? At the time of this writing, a US equity trader can buy or sell stocks in 14 registered exchanges.\footnote{\url{https://www.sec.gov/fast-answers/divisionsmarketregmrexchangesshtml.html}} As mentioned before when discussing RegNMS, these exchanges are all ``protected'' meaning that liquidity at the best price cannot be ignored, and an exchange will need to reroute to other exchanges where price is better (charging a fee for the honor). Smart Order Routers have evolved to manage this complexity.
+Apart from leakage concerns, interacting with exchanges is arguably the most basic approach to trading. But is it straightforward? At the time of this writing, a US equity trader can buy or sell stocks in 14 registered exchanges.\footnote{\url{https://www.sec.gov/fast-answers/divisionsmarketregmrexchangesshtml.html}} As mentioned before when discussing RegNMS, these exchanges are all ``protected'' meaning that liquidity at the best price cannot be ignored, and an exchange will need to reroute to other exchanges where price is better (charging a fee for the honor). Smart Order Routers have evolved to manage this complexity.
 
 Recent years have seen a consolidation of these exchanges in the hands of three main players: NYSE, NASDAQ and CBOE/BATS. Here is a list of venue operated by each:
         \begin{itemize}
