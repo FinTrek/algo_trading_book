@@ -1,10 +1,5 @@
 % !TEX root = ../../book.tex
-\chapter{Trading Fundamentals \label{chap:ch_trading_fund}}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\chapter{Trading Fundamentals\label{chap:ch_trading_fund}}
 \section{A Brief History of Stock Trading}
 
 \noindent\textbf{Why We Trade:} Companies need capital to operate and expand their businesses. To raise capital, they can either borrow money then pay it back over time with interest, or they can sell a stake (equity) in the company to an investor. As part owner of the company, the investor would then receive a portion of the profits in the form of dividends. Equity and Debt, being scarce resources, have additional intrinsic value that change over time; their prices are influenced by factors related to the performance of the company, existing market conditions and in particular, the future outlook of the company, the sector, and the economy as a whole. For instance, if interest rates charged to borrow capital change, this would affect the value of existing debt since its returns would be compared to the returns of similar products/companies that offer higher/lower rates of return. When we discuss trading in this book we refer to the act of buying and selling debt or equity (as well as other types of instruments) of various companies and institutions among investors who have different views of their intrinsic value.
@@ -401,6 +396,7 @@ As described above, there exist a wide variety of orders types offered by differ
 \noindent\textbf{Validity of Instructions:} In addition to conditions on price, it is possible to add conditions on the life duration of the order known as Time-in-Force (TIF). The most common types of TIF instructions include Day orders which are valid for the full duration of the trading session, Extended Day orders which allow trading in extended hours, and Good-Till-Cancel (GTC) orders which will be placed again on the exchange the next day with similar instructions if they were not fully filled. More sophisticated market participants aiming at achieving greater control over their executions tend to also favor Immediate-or-Cancel (IOC) and Fill-or-Kill (FOK) Time-in-Force instructions. An IOC order will get immediately canceled back to the sender after reaching the matching engine if it does not get an immediate fill, and in case of a partial fill, the unfilled portion will be canceled, thus preventing it from creating a new price level in the order book. In a Fill-or-Kill scenario, the order gets either filled in its entirety or does not get filled at all. This instruction is particularly popular with high frequency market makers and arbitrageurs for which partial fills might result in unwanted legging risk as discussed in Chapter~\ref{ch:stat_ts} on pairs trading.
 
 Finally, it is worth mentioning that some exchanges as well as alternative venues offer the ability of specifying minimum fill sizes whereby a limit order which might be eligible for a fill due to an incoming order at the same price level only receives a fill if the incoming order is larger than a pre-specified number of shares or notional value. This type of instruction is used by market participants as a way of minimizing the number of small fills which carry the risk of excessive information dissemination, in particular in dark pools where they can be used to detect the presence of larger limit orders that would otherwise not be visible to market participants.  
+
 
 % The Closing Auction
 \subsection{The Closing Auction} 

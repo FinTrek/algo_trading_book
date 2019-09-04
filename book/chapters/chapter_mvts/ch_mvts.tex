@@ -192,7 +192,7 @@ and $G$ and $H$ matrices can be obtained from the rescaled versions of $\hat{V}$
 
 
 % Multiple Time Series Modeling
-\section{Multiple Time Series Modeling}
+\section{Multiple Time Series Modeling \label{sec:mutimserimod}}
 
 
 Multiple time series analysis is concerned with modeling and estimation of dynamic relationships among `$m$' related time series $y_{1t}, \ldots, y_{mt}$, based on observations over $T$ equally spaced time points $t= 1, \ldots, T$, and also between these series and potential exogenous time series variables $x_{1t}, \ldots, x_{nt}$, observed over the same time period. We shall explore the use of these techniques in leveraging statistical arbitrage in multiple markets in Chapter's~\ref{ch:stat_ts}~\&~\ref{ch:amp}. We first introduce a general model for multiple time series modeling, but will specialize to vector autoregressive (VAR) models for more detailed investigation. As some concepts are similar to those of the univariate models discussed in Chapter~\ref{ch:ch_uvts}, the presentation will be brief.
@@ -249,7 +249,7 @@ This is distributed asymptotically as a Chi-squared distribution with $m^2$ degr
 Here $\tilde{\Sigma_i}$ is the maximum likelihood estimate of $\Sigma_i$ where the divisor in \eqref{eqn:2hatsigma} is $T$ instead of $T - 2i - 1$.
 
 
-An important property of VAR$(p)$ models is worth noting and will be used later. First, modeling several variables jointly usually results in lower order vector model as the marginal models for the individual variables or a linear combination of variables can result in a higher order of autoregressive moving average terms that may be hard to interpret. In some practical situations, a certain linear combination of $Y_t$ may be of interest to study, particularly in dimension reduction aspect whether using the principal components or canonical variables. The result below indicates that a linear combination, constructed with reference to time dependence can still exhibit time series dependence. 
+An important property of VAR$(p)$ models is worth noting and will be used later. First, modeling several variables jointly usually results in lower order vector model as the marginal models for the individual variables or a linear combination of variables can result in a higher order of autoregressive moving average terms that may be hard to interpret. In some practical situations, a certain linear combination of $Y_t$ may be of interest to study, particularly in dimension reduction aspect whether using the principal components or canonical variables. The result below indicates that a linear combination, constructed without reference to time dependence can still exhibit time series dependence. 
 
 
 \begin{result} \label{res:6} 
