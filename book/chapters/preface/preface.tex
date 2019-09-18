@@ -1,0 +1,100 @@
+% !TEX root = ../../book.tex
+\begin{center} {\large\bfseries Preface} \end{center}
+
+
+Algorithms have been around since the day trading has started. But they have gained importance with the advent of computers and the automation of trading. Efficiency in execution has taken center stage and with that, speed and instantaneous processing of asset related information have become important. In this book, we will focus on the methodology rooted in financial theory and demonstrate how relevant data---both in the high frequency and in the low frequency---can be meaningfully analyzed. The intention is to bring both the academics and the practitioners together. We strive to achieve what George Box (first author's teacher) once said: \par
+        \begin{center}
+        \begin{minipage}[t]{0.7\textwidth}
+        	\raggedright
+          	{\itshape``One important idea is that science is a means whereby learning is achieved, not by mere theoretical speculation on the one hand, nor by the undirected accumulation of practical facts on the other, but rather by a motivated iteration between theory and practice.''}
+        \end{minipage} 
+        \end{center}
+
+We hope that we provide a framework for relevant inquiries on this topic. To quote Judea Pearl, \par
+        \begin{center}
+        \begin{minipage}[t]{0.7\textwidth}
+        	\raggedright
+          	{\itshape``You cannot answer a question that you cannot ask, and you cannot ask a question that you have no words for.''}
+        \end{minipage} 
+        \end{center}
+The emphasis of this book, the readers will notice, is on data analysis with guidance from appropriate models. As C.R. Rao (the first author's teacher) has aptly observed:
+	\begin{enumerate}
+	\item[] All knowledge is, in final analysis, history.
+	\item[] All Sciences are, in the abstract, mathematics.
+	\item[] All judgements are, in the rationale, statistics.
+	\end{enumerate}
+
+
+The ideas for this book were planted ten years ago. The first author, Raja Velu, was visiting the Statistics Department at Stanford at the invitation of Professor T.W. Anderson and has offered courses in time series. Professor Tze-Leung Lai, who was in charge of the Financial Mathematics program, suggested initiating a course on Algorithmic Trading. This course was developed by the first author and the other authors, Daniel Nehren and Maxence Hardy, offered lectures to bring the practitioner's view to the classroom. This book in large part is the result of that interaction. We want to gratefully acknowledge the opportunity given by the Stanford's Statistics department and by Professors Lai and Anderson. 
+
+
+We owe personal debt to many people for their invaluable comments and intellectual contribution to many sources from which the material for this book is drawn. The critical reviews by Professors Guofu Zhou and Ruey Tsay at various stages of writing are gratefully acknowledged. Colleagues from Syracuse University, Jan Ondrich, Ravi Shukla, David Weinbaum, Lai Xu and Suhasini Subba Rao from Texas A\&M, all read through various versions of this book. Their comments have helped to improve its content and its presentation. Students who took the course at Stanford and National University of Singapore and the teaching assistants were instrumental in shaping the structure of the book. On the intellectual side, we have drawn materials from the classic books by Tsay (2010); Box, Jenkins, Reinsel, Ljung (2015) on the methodology. Campbell, Lo and Mackinlay (1996) on finance; Friedman, Hastie and Tibshirani (2009) on statistical learning. In the tone and substance at times, we could not say better than what is already said in these classics and so the readers may notice some similarities.
+
+
+We have relied heavily on the able assistance of Caleb McWhorter, who has put the book together with all the demands of his own graduate work. We want to thank our doctoral students, Kris Herman and Zhaoque Zhou (Chosen) for their help at various stages of the book. The joint work with them was useful to draw upon for content. As the focus of this book is on the use of real data, we relied upon several sources for help. We want to thank Professor Ravi Jagannathan for sharing his thoughts and data on pairs trading in Chapter~\ref{ch:stat_ts} and Kris Herman, whose notes on the Hawkes process are used in Chapter~\ref{chap:ch_trade_data_models}. The sentiment data used in Chapter~\ref{chap:ch_news_an} was provided by iSentium and thanks to Gautham Sastri. We also owe a great deal of debt to Scott Morris, William Dougan and Peter Layton at Blackthorne Inc, whose willingness to help on a short notice, whether it is related to data or trading strategies. We want to also acknowledge editorial help from Claire Harshberber and Alyson Nehren. 
+
+
+Generous support was provided by Whitman School of Management and the Department of Finance for the production of the book. Raja Velu would like to thank former Dean Kenneth Kavajecz and Professors Ravi Shukla and Peter Koveos who serve(d) as department chairs for their encouragement and support.
+
+
+Finally, no words will suffice for the love and support of our families. \vspace{3\baselineskip}
+
+
+\noindent Raja Velu \par
+\noindent Maxence Hardy \par
+\noindent Daniel Nehren
+
+
+
+\newpage
+
+
+
+{\noindent\Large\bfseries About the Authors} \vspace{1cm}
+
+
+{\noindent\large\itshape Raja Velu} \medskip
+
+\noindent Raja Velu is a Professor of Finance and Analytics in the Whitman School of Management at Syracuse University. He obtained his Ph.D. in Business/Statistics at the University of Wisconsin-Madison in 1983. He served as a marketing faculty at the University of Wisconsin-Whitewater from 1984 to 1998 before moving to Syracuse University. He was a Technical Architect at Yahoo! and was a visiting scientist at IBM-Almaden, Microsoft Research, Google and JPMC. He has also held visiting positions at Stanford's Statistics Department from 2005 to 2016 and was a visiting faculty at Indian School of Business, National University of Singapore and Singapore Management University. His current research includes Modeling Big Chronological Data. He has published in leading journals such as Biometrika, Journal of Econometrics and Journal of Financial and Quantitative Analysis. \bigskip
+
+
+{\noindent\large\itshape Maxence Hardy} \medskip
+
+\noindent Maxence Hardy is an Executive Director and the Head of eTrading Quantitative Research for Equities and Futures at J.P.Morgan, based in New York. Mr. Hardy is responsible for the development of the algorithmic trading strategies and models underpinning the agency electronic execution products for the Equities and Futures divisions globally. Prior to this role, he was the Asia Pacific Head of eTrading and Systematic Trading Quantitative Research for three years, as well as Asia Pacific Head of Product for agency electronic trading, based in Hong Kong. Mr. Hardy joined J.P.Morgan in 2010 from Societe Generale where he was part of the algo team developing execution solutions for Program Trading. Mr. Hardy holds a master's degree in quantitative finance from the University Paris IX Dauphine in France. \bigskip
+
+
+{\noindent\large\itshape Daniel Nehren} \medskip
+
+\noindent Daniel Nehren is a Managing Director and the Head of Statistical Modelling and Development for Equities at Barclays. Based in New York, Mr. Nehren is responsible for the development of algorithmic trading product and model-based business logic for the Equities division globally. Mr. Nehren joined Barclays in 2018 from Citadel, where he was the head of Equity Execution. Mr. Nehren has over 16 years experience in the financial industry with a focus on global equity markets. Prior to Citadel, Mr. Nehren held roles at J.P. Morgan as the Global Head of Linear Quantitative Research, Deutsche Bank as the Director and Co-Head of Delta One Quantitative Products and Goldman Sachs as the Executive Director of Equity Strategy. Mr. Nehren holds a doctorate in electrical engineering from Politecnico Di Milano in Italy.
+
+
+
+\newpage
+
+
+
+Dedicated to\dots \vspace{0.5cm}
+
+
+\begin{minipage}[t]{0.8\textwidth}
+	\raggedright
+		Yasodha, without her endless support, this is not possible. \par
+  	\raggedleft
+  	R.V.
+\end{minipage} \vspace{1cm}
+
+
+\begin{minipage}[t]{0.8\textwidth}
+	\raggedright
+		Melissa, for her patience every step of the way, and her never ending support. \par
+  	\raggedleft
+  	M.H.
+\end{minipage} \vspace{1cm}
+
+
+\begin{minipage}[t]{0.8\textwidth}
+	\raggedright
+		Alyson, the muse, the patient partner, the inspiration for this work and the next. And the box is still not full. \par
+  	\raggedleft
+  	D.N.
+\end{minipage} 

@@ -1,0 +1,205 @@
+\documentclass[krantz1,ChapterTOCs]{krantz}
+\usepackage{
+	amsmath,
+	amssymb,
+	amsthm,
+	chngcntr,
+	comment,
+	enumerate,
+	etoolbox,
+	float,
+	graphicx,
+	indentfirst,
+	listings,
+	mleftright,
+	multirow,
+	placeins,
+	stix,
+	subfig,
+	threeparttable,
+	totcount
+}
+\usepackage{fix-cm}
+\usepackage[figuresright]{rotating}
+\usepackage[toc,page]{appendix}
+\usepackage[autostyle]{csquotes}
+\usepackage[obeyspaces,spaces]{url}
+\hyphenation{con-sti-tu-tion-al}
+\frenchspacing
+\tolerance=5000
+\setlength{\footnotesep}{0.7cm}
+%\usepackage{fixltx2e}
+%\usepackage{makeidx}
+
+
+% ------------------------
+%  Font
+% ------------------------
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+
+% ------------------------
+% Tikz & PGF
+% ------------------------
+\usepackage{pgfplots}
+\usepackage{epstopdf}
+\usepgfplotslibrary{fillbetween}
+\usepackage{tikz}
+\usetikzlibrary{shapes.misc,shadows,arrows,decorations.pathmorphing,patterns}
+\pgfplotsset{compat=newest}
+
+
+% ------------------------
+% Comments (Remove Later)
+% ------------------------
+\usepackage{color}
+\usepackage{todonotes}
+\newcommand{\textnote}[1]{\textcolor{blue}{#1}}
+\newcommand{\btodo}[1]{\todo[color=white]{\textcolor{blue}{#1}}}
+\newcommand{\fancytodo}[1]{\todo[color=white,fancyline]{\textcolor{blue}{#1}}}
+
+
+% ------------------------
+% Commands
+% ------------------------
+\newcommand{\twomedskip}{\medskip\medskip}
+
+\newcommand{\Tau}{\mathcal{T}}
+\newcommand{\bm}[1]{\mbox{\boldmath{$#1$}}}
+\newcommand{\bX}{\bm{X}}
+\newcommand{\bY}{\bm{Y}}
+\newcommand{\bZ}{\bm{Z}}
+
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\cov}{Cov}
+\DeclareMathOperator{\corr}{Corr}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\tvec}{vec}
+\DeclareMathOperator{\tbvec}{Vec}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Prob}{Prob}
+\newcommand{\xqed}{\hfill \lower-0.3ex\hbox{$\triangleleft$}}
+
+
+% ------------------------
+% Definitions, Theorems, Etc.
+% ------------------------
+\newtheoremstyle{custom}%   	% Name
+  {}%                                     	% Space above
+  {}%                                     	% Space below
+  {}%                                     	% Body font
+  {}%                                     	% Indent amount
+  {\bfseries}%                            	% Theorem head font
+  {.}%                                    	% Punctuation after theorem head
+  { }%                                    	% Space after theorem head, ' ', or \newline
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}% 
+  
+\theoremstyle{plain}  
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{lem}{Lemma}[section]
+\newtheorem{cor}{Corollary}[section]
+
+\theoremstyle{custom}
+\newtheorem{ex}{Example}
+\numberwithin{ex}{chapter}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{result}{Result}[chapter]
+\counterwithout{result}{chapter}
+\newtheorem{dfn}{Definition}
+
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}[section] 
+\numberwithin{equation}{chapter}
+
+
+% ------------------------
+% Exercises
+% ------------------------
+\newcounter{problem}
+\newcommand{\prob}{
+\stepcounter{problem} %
+\noindent \theproblem. }
+\counterwithin*{problem}{chapter}
+
+
+% ------------------------
+% Table Counter
+% ------------------------
+\counterwithin{table}{chapter}
+\counterwithin{figure}{chapter}
+
+
+% ------------------------
+% Document
+% ------------------------
+
+\include{frontmatter/preamble} 
+\begin{document}
+\frontmatter
+\title{Algorithmic Trading and Quantitative Strategies \\ \vspace{3cm}  (Version: \today)} %This is a placeholder titlepage, it will not be final.
+
+\author{\scalebox{1.5}{ Raja Velu\footnote{Department of Finance \hfill \newline \indent \indent Whitman School of Management \hfill \newline \indent \indent Syracuse University}, Maxence Hardy\footnote{Linear Quantitative Research \hfill \newline \indent \indent J.P. Morgan} and Daniel Nehren\footnote{Statistical Modeling \& Development \hfill \newline \indent \indent Barclays}}}
+
+
+\include{chapters/title/title}
+\include{chapters/preface/preface}
+
+
+\cleardoublepage
+\setcounter{part}{-1}
+\setcounter{page}{7} % previous pages will be reserved for frontmatter to be added in later.
+\tableofcontents
+\raggedbottom
+
+
+%%%%%%%%%%%%%%%%
+% To be removed
+\listoftodos[Todo and Focus List]
+\newcommand{\zeropartnum}[1]{
+	\ifcase\value{#1}\relax 0\else%
+	\Roman{#1}\fi}% 
+	\renewcommand{\thepart}{\zeropartnum{part}
+}
+%%%%%%%%%%%%%%%%
+
+\setcounter{part}{-1}
+
+\mainmatter
+
+\part{Context: Introduction and Overview}
+\include{chapters/parts/part_zero/part_zero}
+\include{chapters/chapter_intro/ch_intro}
+\include{chapters/chapter_trading_fund/ch_trading_fund}
+
+\part{Foundations: Basic Models and Empirics}
+\include{chapters/parts/part_one/part_one}
+\include{chapters/chapter_uvts/ch_uvts}
+\include{chapters/chapter_mvts/ch_mvts}
+\include{chapters/chapter_advanced/ch_advanced}
+
+\part{Trading Algorithms}
+\include{chapters/parts/part_two/part_two}
+\include{chapters/chapter_stat_ts/ch_stat_ts}
+\include{chapters/chapter_apm/ch_apm}
+\include{chapters/chapter_news_an/ch_news_an}
+
+\part{Execution Algorithms}
+\include{chapters/parts/part_three/part_three}
+\include{chapters/chapter_trade_data_models/ch_trade_data_models}
+\include{chapters/chapter_mi_models/ch_mi_models}
+\include{chapters/chapter_exec_models/ch_exec_models}
+
+\part{Technology Considerations}
+\include{chapters/parts/part_four/part_four}
+\include{chapters/chapter_tech/ch_tech}
+\include{chapters/chapter_tech_res/ch_tech_res}
+%\include{chapters/chapter_rm_reg/ch_rm_reg}
+%\include{chapters/appendix/appendix}
+\include{chapters/index/index}
+\bibliographystyle{plain}
+\bibliography{bibtex}
+\include{chapters/back/back}
+\end{document}
