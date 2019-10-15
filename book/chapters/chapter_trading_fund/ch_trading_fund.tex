@@ -839,7 +839,54 @@ A very large number of quantitative investment strategies are still based on fun
 
 
 % Market Microstructure: Academic Perspective
-\section{Market Microstructure: Academic Perspective}
+\section{Market Microstructure: Economic Fundamentals of Trading}
+
+We provide a brief review of market microstructures, an aptly termed phrase about market making and inventory costs, first and then delve into some key operational concepts. We draw upon some key review papers by Madhavan (2000)~\cite{madhavan2000}, Biais, Glosten and Spatt (2005)~\cite{bgs05} and O'Hara (2015)~\cite{ohara15hfmm}. It is the area of finance that studies how the demand and supply of equity are dealt via actual transactions. The core idea is that efficient market hypothesis that the equity price impounds all the information about the equity may not hold due to market frictions. Algorithmic trading essentially exploits the speed with which investors acquire the information and how they use it along with the market frictions that arise mainly due to demand-supply imbalances. Madhavan (2000)~\cite{madhavan2000} provides a framework from an informational economics viewpoint. 
+
+
+\begin{enumerate}[--]
+\item Price formation and price discovery: How the price impound information over time and how the determinants of trading costs vary?
+
+\item Market Design: How the trading rates can affect the price formation? 
+
+The early focus was on the role of so-called market makers who are professional traders willing to buy or sell equities on demand. Thus they provide liquidity and facilitate the trading done uninterrupted although the demand and supply can arise at irregular intervals. They are active on both sides of the market with bid-ask spread as the return for their role. The spread may be adjusted in response to changes in their inventories. Market makers play an active role in price setting; their primary goal is to maximize the inventory turnover, if they are heavily invested in one side of the market. Thus their deals may at times depart from rational theories. Models developed to study their behavior use stochastic dynamic programming assuming that each deal is based on an auction and with a large number of trading deals, the trading becomes a continuous double-auction process. The prices on both sides of the market are set to optimize the net revenue adjusted for idle inventory costs. The studies on the variability of the bid-ask spread indicate that the volume of trading, riskiness of the asset, price and firm size could be important determinants. Spreads are wider for riskier assets and higher volume stocks have lower spreads.
+
+
+The deviation from fundamental values of a stock can arise from asymmetric information or from strategic behavior of investors and the intermediaries. The rules that govern them can influence the frictions and transaction costs arising from the trading process. The revenues of agents supplying liquidity depend on order handling costs, adverse selection costs and inventory costs. 
+
+
+Market design generally refers to a set of rules that all players have to follow in the trading process. These include all the protocols about the choice of tick size, program trading, circuit breakers, degree of anonymity and the transparency of the information to the market participants. The markets can differ in degree of transparency, continuity of trading, etc. Circuit breakers can halt trading in the event of large price swings. Some early research on the market  designs lead to following broad conclusions.
+
+\item Centralized trading via one market with results in more efficient prices with smaller bid-ask spread. Even if many markets exist, the primary markets (such as NYSE, NASDAQ) are the sources of most price discovery.
+
+\item Theoretical models suggest that multilateral trading system such as single-price call auctions are efficient in processing diverse information. Yet, there is a demand for continuous trading instead of periodic trading and thus the evolution of continuous, automated limit order book markets. 
+
+\item Discreteness and Decentralization of tick size have allowed investors to compare prices quickly when the tick size was changed from fractions to decimals. The decimalization was easier to use if an equity is traded in both US and foreign markets.
+
+\item Transparency which is broadly classified into pre-trade and post-trade is a complex subject. It has been noted that the transparency via the discussion of limited depth information of the order book has led to wider bid-ask spread and thus a decrease in liquidity. It is possible that limit order traders are less willing to submit orders in a transparent system as these orders reveal their intent and possibly their inventory levels. Post-trade transparency refers to dissemination of trading data to the public at different time lags.   
+\end{enumerate}
+
+
+All the above discussion needs to be revisited in the high frequency trading (HFT) world. How the traders trade, how the liquidity and price discovery are approached are different now. It is not that only speed matters. The HFT has to be strategic as many HFT players and others are involved with the changing market designs. Exchanges now use new pricing models and designs to maximize their revenue steam. Two important regulatory changes that has led to growth in HFT are: U.S. Regulation Alternative Trading Systems (Reg ATS) in 2000 that allowed entry of non-exchange competitors and Regulation National Market System (Reg NMS) in 2007 that led to market fragmentation but linked via rules on trade priority and access to the market via certain rules. Thus without a central trading place, traders have to search multiple venues to get the best deal and HFT helps a great deal in this regard. These HFTs differ in terms of latency, in placing the order, and trading strategies. The traders want to be at the front of the queue to make use of an attractive order whenever it arrives subject to the exchange's matching engine algorithms. Recent studies indicate that the routing decisions are influenced by the size of the rebates, the exchanges offer. 
+
+
+O'Hara (2015)~\cite{ohara15hfmm} presents issues related to microstructure in the context of the HFT world. While the basic tenet that traders may use private information or learn from market data such as orders, trade size, volume, duration between successive trades, etc., has remained the same, the trading is now mostly automated to follow some rules. These rules are based on partly prior information and partly on changing market conditions, read through order flows. With the high spread, adverse selection has taken a different role. Some traders may have access to market data milliseconds before others can see it and this may allow them to make short term price predictions. This would expand the pool of informed traders. Here are some topics for research in microstructure:
+
+
+\begin{enumerate}[--]
+\item With a parent order sliced into several child orders that are sent to market for execution during the course of trading, it is difficult to discern who is the informal trades. Informed traders use sophisticated dynamic algorithms to interact with the market. Retail (uninformed) trades usually cross the spread.
+
+\item More work needs to be done to under trading intensity in short intervals. Order imbalance is empirically shown to be not related to price levels. 
+
+\item Informed traders may increasingly make use of hidden orders. How these orders enter and exit the markets require further studies. 
+
+\item Traders respond to changing market conditions via revising their quoted prices. The quote volatility can provide a valuable information about the perceived uncertainty in the market.
+\end{enumerate}
+
+
+Although the HFT has resulted in more efficient markets, with lower bid-ask spreads, the data related to trade sequences, patterns of cancellations across the fragmented markets require new tools for analysis and useful inference. In this review, we do not present any models explicitly and these will be covered throughout this book. Now keeping in line with the practical perspectives of this book, we highlight some key concepts.
+
+
 \subsection{Liquidity and Market Making}
 
 \begin{enumerate}
@@ -856,7 +903,10 @@ Properly describing ``liquidity'' often proves to be elusive as there is no comm
 In other words, Black defines a liquid market as a continuous market having the characteristics of relatively tight spread, with enough depth on each side of the limit order book to accommodate instantaneous trading of small orders, and is resilient enough to allow large orders to be traded slowly without significant impact on the price of the asset. This general definition remains particularly well suited to today's modern electronic markets and can be used by practitioners to assess the difference in liquidity between various markets when choosing where to deploy a strategy. \twomedskip
 
 
-\item[\textbf{b)}] \textbf{Different styles of market participants: liquidity takers and liquidity providers:} Liquid financial markets carry their primary economic function by facilitating savings and investment flows as well as allowing investors to exchange securities in the secondary markets. Economic models of financial markets attempt to classify market participants into different categories. These can be broadly delineated as: \twomedskip
+\item[\textbf{b)}] \textbf{Model for Market Friction:} We begin with a model to accommodate the friction in stock price ($P_t$). If $p_t^*$ is the (log) true value of the asset which can vary over time due to expected cash flows or due to variation in the discount rate. Given the publicly available information and the assumption of market efficiency, we have: $p_t= p_t^* + a_t$ and $p_t^*= p_{t-1}^* + \epsilon_t$. Therefore the observed return, $r_t= p_t - p_{t-1}= u_t + (a_t - a_{t-1})$ can exhibit some (negative) serial correlation, mainly a result of friction. The friction, `$a_t$' can be a function of number of factors such as inventory costs, risk aversion, bid-ask spread, etc. When $a_t= c s_t$, where $s_t$ is the direction of the trade and `$c$' is the half-spread, the model is called Roll model. This can explain the stickiness in returns in some cases.  
+
+
+\item[\textbf{c)}] \textbf{Different styles of market participants: liquidity takers and liquidity providers:} Liquid financial markets carry their primary economic function by facilitating savings and investment flows as well as allowing investors to exchange securities in the secondary markets. Economic models of financial markets attempt to classify market participants into different categories. These can be broadly delineated as: \twomedskip
 
 \textbf{Informed Traders,} making trading decisions based on superior information that is not yet fully reflected in the asset price. That knowledge can be derived from either fundamental analysis or information not directly available nor known to other market participants. \twomedskip
 
@@ -869,7 +919,7 @@ In other words, Black defines a liquid market as a continuous market having the 
 Generalizing these concepts, market participants and trading strategies can be separated between liquidity providing and liquidity seeking. The former being essentially the domain of market makers whose level of activity, proxied by market depth, is proportional to the amount of noise trading and inversely proportional to the amount of informed trading (Kyle (1985)~\cite{kyle1985}). The latter being the domain of the variety of algorithmic trading users, described before (mutual funds, hedge funds, asset managers, etc.). Given the key role played by market makers in the liquidity of electronic markets, they have been the subject of a large corpus of academic research focusing on their activities. \twomedskip
 
 
-\item[\textbf{c)}] \textbf{The objectives of the modern Market Maker:}
+\item[\textbf{d)}] \textbf{The objectives of the modern Market Maker:}
 In present days, market making can broadly be separated into two main categories based on the trading characteristics. The first one is the provision of large liquidity---known as blocks---to institutional investors, and has traditionally been in the realm of sell-side brokers acting as intermediaries and maintaining significant inventories. Such market makers usually transact through a non-continuous, negotiated, process based on their current inventory, as well as their assessment of the risk involved in liquidation of the position in the future. Larger or more volatile positions generally tend to come at a higher cost, reflecting the increased risk for the intermediary. But they provide the end investor with a certain price and an immediate execution bearing no timing risk that is associated with execution over time. These transactions, because they involve negotiations between two parties, still mostly happen in a manual fashion or over the phone and then get reported to an appropriate exchange for public dissemination.
 
 The second category of market making involves the provision of quasi-continuous, immediately accessible quotes on an electronic venue. With the advent of electronic trading described in the previous section, market makers originally seated on the exchange floors have progressively been replaced by electronic liquidity providers (ELP). The ELPs leverage fast technology to disseminate timely quotes across multiple exchanges and develop automated quantitative strategies to manage their inventory and the associated risk. As such, most ELPs can be classified as high frequency traders. They derive their profits from three main sources: from liquidity rebates on exchanges that offer maker-taker fee structure, from spread earned when successfully buying on the bid and selling on the offer, and from short-term price move favorable to their inventory. 
@@ -877,7 +927,7 @@ The second category of market making involves the provision of quasi-continuous,
 Hendershott, Brogaard and Riordan (2014)~\cite{hendershott2014} find that HFT activity tends to be concentrated in large liquid stocks and postulate that this can be attributed to a combination of larger profit opportunities emanating from trades happening more often, and from easier risk management due to larger liquidity that allows for easier exit of unfavorable positions at a reasonable cost. \twomedskip
 
 
-\item[\textbf{d)}] \textbf{Risk management:} In the existing literature on informed trading, it is observed that liquidity supplying risk-neutral market makers are adversely selected by informed traders suddenly moving prices against them. For example, a market maker buy quote tends to be executed when large sellers are pushing the price down, resulting in even lower prices in the near term. This significant potential asymmetry of information at any point in time emphasizes the need for market makers to employ robust risk management techniques, particularly in the domain of inventory risk. For a market maker, risk management is generally accomplished by first adjusting market quotes upward or downward to increase the arrival rate of sellers or buyers and similarly adjusting the inventory in the desired direction. If biasing the quotes does not result in a successful inventory adjustment, the market makers generally employ limit orders to cross the spread.
+\item[\textbf{e)}] \textbf{Risk management:} In the existing literature on informed trading, it is observed that liquidity supplying risk-neutral market makers are adversely selected by informed traders suddenly moving prices against them. For example, a market maker buy quote tends to be executed when large sellers are pushing the price down, resulting in even lower prices in the near term. This significant potential asymmetry of information at any point in time emphasizes the need for market makers to employ robust risk management techniques, particularly in the domain of inventory risk. For a market maker, risk management is generally accomplished by first adjusting market quotes upward or downward to increase the arrival rate of sellers or buyers and similarly adjusting the inventory in the desired direction. If biasing the quotes does not result in a successful inventory adjustment, the market makers generally employ limit orders to cross the spread.
 \end{enumerate}
 
 
