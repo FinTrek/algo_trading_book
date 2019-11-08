@@ -2,10 +2,53 @@
 \chapter{Statistical Trading Strategies and Back-Testing\label{ch:stat_ts}}
 \section{Introduction to Trading Strategies: Origin and History}
 
-\noindent\textbf{Statistical arbitrage opportunity and strategies:} Trading strategies are central to the notion of statistical arbitrage. Strategies that claim to have better performance than the market date back to the inception of trading in finance. This area under the name of `technical analysis' is based on using past prices and other stock and market-related statistics to make investment decisions. The ideas date back to a Japanese speculator, Munehira Homma, who made a fortune in the rice market using techniques called candlestick patterns. The famous Dow Theory is based on the assertion that the market in certain phases can be predictable. Thus, there is a history of studies that empirically conclude that the behavior of stock prices appear to contradict efficient market hypothesis. Broadly, there are two types of strategies, one the momentum strategy that  advocates buying well-performing stocks and selling poor-performing stocks (see Jegadeesh and Titman (1993)~\cite{JeTit}) and the other, contrarian or reversal strategy that advocates buying past losers and selling past winners. The average excess return of some strategies relative to an `alpha' in a standard capital asset pricing model is shown to be around 12\%. Other strategies, known as value strategies suggest buying value and selling glamour stocks (see Lakonishok et al. (1994)~\cite{Lako}). They use other company fundamental data such as price earnings ratios, dividends, book-to-market values, cash flows and sales growth. A measure of value is the ratio of book value or earnings to market price.
+\noindent\textbf{Statistical arbitrage opportunity and strategies:} Trading strategies are central to the notion of statistical arbitrage. Strategies that claim to have better performance than the market date back to the inception of trading in finance. This area under the name of `technical analysis' is based on using past prices and other stock and market-related information to make investment decisions. The ideas date back to a Japanese speculator, Munehira Homma, who made a fortune in the rice market using techniques called candlestick patterns. The famous Dow Theory is based on the assertion that the market in certain phases can be predictable. Thus, there is a history of studies that empirically conclude that the behavior of stock prices appear to contradict efficient market hypothesis. Broadly, there are two types of strategies, one the momentum strategy that  advocates buying well-performing stocks and selling poor-performing stocks (see Jegadeesh and Titman (1993)~\cite{JeTit}) and the other, contrarian or reversal strategy that advocates buying past losers and selling past winners. The average excess return of some strategies relative to an `alpha' in a standard capital asset pricing model is shown to be around 12\%. Other strategies, known as value strategies suggest buying value stocks and selling glamour stocks (see Lakonishok et al. (1994)~\cite{Lako}). They use the company fundamental data such as price earnings ratios, dividends, book-to-market values, cash flows and sales growth as indicators of value. One such measure of value is the ratio of book value or earnings to market price.
 
 
-Hogan, Jarrow, Teo and Warachka (2004)~\cite{Hogan} define `a statistical arbitrage as a long horizon trading opportunity that generates a riskless profit. Four conditions that are to be met are: it is a self-financing strategy with a zero initial cost, in the limit has positive expected discounted profits, a probability of a loss converging to zero and a time-averaged variance converging to zero; the last condition implies that an arbitrage opportunity eventually produces riskless profit. Citing anomalies to reject  market efficiency has been criticized on the ground that such tests depend upon a specified model for equilibrium returns. Hogan et al. (2004)~\cite{Hogan} argue that statistical arbitrage can be defined without any reference to an equilibrium model and rejects market efficiency. They provide a statistical test to determine if a trading strategy constitutes statistical arbitrage based on short horizon incremental profits. Some issues that arise in developing and testing strategies are: handling the transaction costs both direct, such as brokerage fee, and indirect due to the entry/exit to the market; cross-validation to avoid over-fitting; no guaranteed performance in different market settings. In this chapter, we will cover some of these trading strategies and finally we will return to the proposed statistical test.
+Hogan, Jarrow, Teo and Warachka (2004)~\cite{Hogan} define `a statistical arbitrage as a long horizon trading opportunity that generates a riskless profit.' Four conditions that are to be met are: it is a self-financing strategy with a zero initial cost, in the limit has positive expected discounted profits, a probability of a loss converging to zero and a time-averaged variance converging to zero; the last condition implies that an arbitrage opportunity eventually produces riskless profit. Citing anomalies to reject  market efficiency has been criticized on the ground that such tests depend upon a specified model for equilibrium returns. Hogan et al. (2004)~\cite{Hogan} argue that statistical arbitrage can be defined without any reference to an equilibrium model and rejects market efficiency. They provide a statistical test to determine if a trading strategy constitutes statistical arbitrage based on short horizon incremental profits. Some issues that arise in developing and testing strategies are: handling the transaction costs both direct costs, such as brokerage fee, and indirect costs due to the entry/exit to the market; cross-validation to avoid over-fitting; no guaranteed performance in different market settings. In this chapter, we will cover some of these trading strategies, propose the evaluation criteria and provide the details of these algorithms. In practice, no single algorithm works well all the time. So it is important to develop a state of algorithms and we cover many of them here.
+
+
+
+% Evaluation of Strategies: Various Measures
+\section{Evaluation of Strategies: Various Measures}
+
+In this section, we want to lay out how the trading strategies are evaluated. These measures are different from measures used for evaluating execution strategies, which will be taken up in Part~III. Here the focus is on benchmarks that are considered in the industry and they provide a range of dimensions that need to be looked at when a strategy is failing. The standard measures stem from the capital asset pricing model:
+	\begin{equation}
+	r_{t} - r_f = \alpha + \beta (r_{mt} - r_f) + \varepsilon_{t},
+	\end{equation}
+where $r_t$ is the return on the asset and $r_f$ is the return from a risk-free asset; the slope coefficient, $\beta$ measures the riskiness of the asset and `$\alpha$' denotes the excess return. Also $\overline{r}$ and $s$ be the average and standard deviation of the returns over the evaluation period. Some measures are:
+
+\begin{enumerate}[--]
+\item \textbf{Excess return: }$\alpha$ with positive values indicating better performance, as it reflects risk adjusted return. \twomedskip
+
+\noindent More popular measures are: \twomedskip
+
+\item \textbf{Sharpe Ratio: } $\dfrac{E(r_{t}) - r_f}{\sigma}$: This measure is standardized by the volatility of the asset. This is the widely used benchmark measure. \twomedskip
+
+\item \textbf{Treynor Ratio: } $\dfrac{E(r_{t}) - r_f}{\left|\beta \right|}$: This measure is alternate to Sharpe ratio where the excess return is standardized by market risk. \twomedskip
+
+\noindent with appropriate sample estimates substituted here. A modified version of excess return is known as, \twomedskip
+
+\item \textbf{Information Ratio: } $\dfrac{\alpha}{\sigma(\varepsilon_{t})}$: This is a modified version of excess return.
+\end{enumerate}
+
+
+While the above ratios take a long-term view of the investments, two others that are used in industry focus on the execution aspects of the strategies: 
+
+
+\begin{enumerate}[--]
+\item \textbf{Sortino Ratio: } $\dfrac{E(r_{t}) - r_{\text{target}}}{DR(r_{t})}$, \twomedskip
+
+\noindent where $r_{\text{target}}$ is the target rate chosen by the investor and DR($r_t$) denotes the downside volatility or the draw down. The target can be $r_t$ or the average market return or return of the competition. Another measure is, \twomedskip
+
+\item \textbf{Calmar Ratio: } $\dfrac{\text{Annualized Compound Rate of Return}}{\left| \text{ Maximum Drawdown }\right|}$ \twomedskip
+\end{enumerate}
+
+
+The attention to drawdown is important because there is no guarantee that a strategy chosen through simple back-testing will work in the future. The last two ratios combine both the idea of maximizing the return (numerator part) and the idea of minimizing the loss (denominator part). The drawdown numbers are essentially determined by the traders based on their own experience and their risk tolerance. There are some studies that focus on the statistical properties of their criteria (see Bertrand and Protopopescu (2010)~\cite{bertrand} on the information ratio and A. Lo (2002)~\cite{awlo} on the Sharpe ratio). Another measure is to simply compare the strategy's returns to the returns from buy and hold.
+
+
+The standard reporting of backtesting results beyond the above measures include: number of winning and losing trades, largest winning and losing trades, net slippage, total commissions along with annualized versions of the above ratios. The so-called equity curve which is the cumulative return graph along with the buy and hold graph can clearly indicate the effectiveness of the strategies to be discussed in the next sections. 
 
 
 
@@ -16,7 +59,7 @@ Hogan, Jarrow, Teo and Warachka (2004)~\cite{Hogan} define `a statistical arbitr
 Trading Rules that are broadly labeled under technical analysis involve the prediction of future short-term price movements from an inductive analysis of past movements using either quantitative techniques, such as moving averages or qualitative methods such as pattern recognition from visual inspection of a time-series plot of the asset price data or a combination of both via semi-parametric procedures such as kernel smoothing. In foreign exchange market, as Menkhoff and Taylor (2002)~\cite{MalTay} observe the widespread use of these techniques is puzzling, ``since technical analysis eschews scrutiny of economic fundamentals and relies on information on past exchange rate movements that, according to the weakest notion of market efficiency, should already be embedded in the current exchange rate, making its use either unprofitable or implying that any positive returns that are generated are accompanied by an unacceptable risk exposure.'' In general there are economic fundamentals that can explain long term movements, there is still no fundamental-based exchange rate model that is capable of forecasting short-term movements.
 
 
-Technical analysis (also known as Chartist analysis) is a set of techniques for obtaining forecasts based on past history of prices along with the history of trading volumes. Clearly for the technical analysis to be useful, price movements should follow some regular, recurring patterns and these patterns must hold for long enough periods to sustain the transaction costs and false signals so that the investment results in a profit. What constitutes a useful forecast from an investor point of view could be if the past history of prices can be used to increase expected gains. But as Fama and Blume (1966)~\cite{famablume} point out, ``In a random walk market, with either zero or positive drift, no mechanical trading rule applied to an individual security would consistently outperform a policy of simply buying and holding the security''. The past movements could be useful only when there is some degree of dependence in successive price changes. The serial correlation measures may not capture the complex dependence that may exist. In what follows we briefly describe some commonly used trading rules and comment on their noted performance.
+Technical analysis (also known as Chartist analysis) is a set of techniques for obtaining forecasts based on past history of price and volume patterns. Clearly for the technical analysis to be useful, price movements should follow some regular, recurring patterns and these patterns must hold for long enough periods to sustain the transaction costs and false signals so that the investment, results in a profit. What constitutes a useful forecast from an investor point of view could be, if the past history of prices can be used to increase expected gains. But as Fama and Blume (1966)~\cite{famablume} point out, ``In a random walk market, with either zero or positive drift, no mechanical trading rule applied to an individual security would consistently outperform a policy of simply buying and holding the security''. The past movements could be useful only when there is some degree of dependence in successive price changes. The serial correlation measures may not capture the complex dependence that may exist. In what follows we briefly describe some commonly used trading rules and comment on their noted performance.
 
 
 
@@ -37,24 +80,16 @@ Alexander (1961, 1964)~\cite{alexander61,alexander64} studied the filter techniq
 The general logic behind this rule is that if the price moved up $x$\%, it is likely to move up more than $x$\% further before it moves down by $x$\%; Thus the random walk model is not likely to be upheld by the data. As observed by Mandelbrot (1963)~\cite{mandelbrot}, because of the price jumps that occur at the time of transaction, the purchase price and sale price will not exactly match as required by the rule.
 
 
-The initial application of this rule on daily data for S\&P industrials showed that the trading rules with 5, 6 and 8\%. filters generated larger gross profits than the buy and hold strategy. This study did not account for the transaction cost. But a later study that incorporated a commission of 2\% for each round-trip, only the larger filter  $\sim$ 46\% rule beat the buy and hold strategy and all the other filters adjusting for the transaction costs did not perform better than simply buying and holding.
+The initial application of this rule on daily data for S\&P industrials showed that the trading rules with 5\%, 6\% and 8\%. filters generated larger gross profits than the buy and hold strategy. This study did not account for the transaction cost. But a later study that incorporated a commission of 2\% for each round-trip, showed only the larger filter  $\sim$ 46\% rule beat the buy and hold strategy and all the other filters adjusting for the transaction costs did not perform any better than simply buy and hold  strategy. 
 
 
-Fama and Blume (1966)~\cite{famablume} after applying Alexander's filter technique for each of the individual security in Dow Jones Industrial Average for the daily data during a five year period, 1957--1962, concluded, ``When commissions are taken into account, the larger profits under the filter technique are those of the brokers. When commissions are omitted, the returns from the filter techniques are, of course, greatly improved but are still not as large as the returns from simply buying and holding.'' It is argued that under random walk model, the average return on long positions should be approximately equal to the buy and hold average returns. This may not be true if the drift occurs at the time of entry or exit; the filter rule can be stated under RW Model as follows; let the return, $r_{t} = \ln{P_{t}} - \ln{P_{t-1}} = \mu_{t} + a_{t}$, when $a_{t} \sim$ N(0,$\sigma_{a}^2$) and `$\mu_{t}$' is the random drift term and $\sigma_{a}^2$ is the volatility; as for the filter rule, enter if $r_{t} > r$ and suppose this occurs at time $t_{0}$. If the drift term is approximately picked up at time `$t_{0}$', so that $\mu_{t} = 0$, for $t < t_{0}$ but $\mu_{t} = \mu > 0$ for $t \geq t_{0}$, the returns from the filter should fare better. The lasting of the drift is to be carefully monitored and using the exit strategy when $r_{t} < r$ will guarantee any undue losses.
+Fama and Blume (1966)~\cite{famablume} after applying Alexander's filter technique for each of the individual security in Dow Jones Industrial Average for the daily data during a five year period, 1957--1962, concluded, ``When commissions are taken into account, the larger profits under the filter technique are those of the brokers. When commissions are omitted, the returns from the filter techniques are, of course, greatly improved but are still not as large as the returns from simply buying and holding.'' It is argued that under random walk (RW) model, the average return on long positions should be approximately equal to the buy and hold average returns. This may not be true if the drift occurs at the time of entry or at the time of exit; the filter rule can be stated under RW model as follows; let the return, $r_{t} = \ln{P_{t}} - \ln{P_{t-1}} = \mu_{t} + a_{t}$, when $a_{t} \sim$ N(0,$\sigma_{a}^2$) and `$\mu_{t}$' is the random drift term and $\sigma_{a}^2$ is the volatility; as per the filter rule, enter if $r_{t} > r$ and suppose this occurs at time $t_{0}$. If the drift term is approximately picked up at time `$t_{0}$', so that $\mu_{t} = 0$, for $t < t_{0}$ but $\mu_{t} = \mu > 0$ for $t \geq t_{0}$, the returns from the filter should fare better. The lasting of the drift is to be carefully monitored and using the exit strategy when $r_{t} < r$ will guarantee any undue losses.
 
 
-When the filters are small it has been observed that there is evidence of positive dependence in returns and it may be useful to predict only short term dependence. This may signal opportunities for more frequent transactions but the cost of transactions as mentioned earlier can eat away the profits.
+When the time intervals are small it has been observed that there is evidence of positive dependence in returns and it may be useful to predict only short term dependence. This may signal opportunities for more frequent transactions but the cost of transactions can erode the profits.
 
 
-Sweeney (1988)~\cite{sweet} develops a test for risk-adjusted filters profits. The stocks considered in Fama and Blume (1966)~\cite{famablume} that are ``winners'' in one period tend to persist as winners in later periods as well. Thus focusing only on winners rather than entire set of stocks gives better results. Assume that the investor uses the filters rule each day to decide to enter or exit based solely as past information. Consider the span of $N$ days and with a filter strategy, the asset is held on $N_{\text{in}}$ days and is not held on $N_{\text{out}}$ days. At the end of $N$ days, the filter's performance is evaluated. The average excess rate of buy and hold is
-	\[
-	\overline{R}_{\text{BH}}=\dfrac{1}{N} \sum_{i=1}^N \, (r_t - r_f ),
-	\]
-where $r_t$ is the stock's rate of return in period `$t$' and $r_f$ is the risk free rate. Assume that `$f$' is the proportion of days, the asset is not held; then the average excess rate of the filter is
-	\[
-	\overline{R}_{F}=\dfrac{1-f}{N_{\text{in}}} \sum_{t \in I} (r_t - r_f).
-	\]
-Assume that under any of the asset pricing models (CAPM, APT etc.) expected excess rate of return equals a constant risk premium, $\text{PR}_{j}$. Note $E(\overline{R}_{\text{BH}}) = \text{PR}$ and $E(\overline{R}_{F}) = (1 - f)\,\text{PR}$; Use the adjusted statistic
+Sweeney (1988)~\cite{sweet} develops a test for profits when risk-adjusted filters are used. The stocks considered in Fama and Blume (1966)~\cite{famablume} that are ``winners'' in one period tend to persist as winners in later periods as well. Thus focusing only on winners rather than entire set of stocks gives better results. Assume that the investor uses the filter rule each day to decide to enter or exit based solely as past information. Consider the span of $N$ days and with a filter strategy, that the asset is held on $N_{\text{in}}$ days and is not held on $N_{\text{out}}$ days. At the end of $N$ days, the filter's performance is evaluated. The average excess rate of buy and hold is $\overline{R}_{\text{BH}}=\dfrac{1}{N} \sum_{i=1}^N \, (r_t - r_f )$. Assume that `$f$' is the proportion of days, the asset is not held; then the average excess rate of the filter is, $\overline{R}_{F}=\dfrac{1-f}{N_{\text{in}}} \sum_{t \in I} (r_t - r_f)$. Assume that under CAPM, expected excess rate of return equals a constant risk premium, $\text{PR}_{j}$. Further, that $E(\overline{R}_{\text{BH}}) = \text{PR}$ and $E(\overline{R}_{F}) = (1 - f)\,\text{PR}$; Use the adjusted statistic
 	\begin{equation} \label{eqn:xbarfirst}
 	x= \overline{R}_{F} - (1 - f)\, \overline{R}_{\text{BH}}
 	\end{equation}
@@ -65,22 +100,18 @@ to judge the filter rule; observe $E(x) = 0$ and $\sigma_{x} = \sigma[\frac{f(1-
 where $\overline{R}_{fI} = \frac{1}{N_{\text{in}}} \sum_{t \in I}(r_t - r_F)$; Note $E(X) = 0$ and $\sigma_{x} = \sigma_{X}$.
 
 
-The main advantage of $X$ is that it measures profits for each day in the duration of `$N$' days and $x$ measures profits per day for those days when the stock is held. The above results hold for the case of time varying risk premia as well; Suppose
-	\[
-	R_f - r_f = \text{PR} + a_t,
-	\]
-where $a_t$ is stochastic; thus
+The main advantage of $X$ is that it measures profits for each day in the duration of `$N$' days and $x$ measures profits per day for those days when the stock is held. The above results hold for the case of time varying risk premia as well; Suppose $R_f - r_f = \text{PR} + a_t$, where $a_t$ is stochastic; thus
 	\begin{equation} \label{eqn:anotherxeq}
 	x = \dfrac{1}{N_{in}} \sum_{t \in I} a_t - \dfrac{1}{N} \sum_{t=1}^N a_t + (\overline{\text{PR}}_{N_{in} }+\overline{\text{PR}}_N ).
 	\end{equation}
 If the investor has no insight into changes in risk premia, then $E(\overline{\text{PR}}_{N_{\text{in}}} - \overline{\text{PR}}_{N}) = 0$; If the investor has no insight about the stochastic, $a_t$, the filter rule may be forecasting the risk premia.
 
 
-It has been pointed out that Fama and Blume measure is biased against finding successful filter rules. The statistics $X$ and $x$ are meant for long strategies where the investor has the funds in the risk free asset when not holding. If we define,
+It has been pointed out that Fama and Blume measure is biased against finding successful filter rules. The statistics $X$ and $x$ are meant for long strategies where the investor has the funds in the risk free asset when not holding. If we define the difference in cumulative excess returns between days investors holds and does not hold,
 	\[
 	\overline{R}_{F'} = \dfrac{1}{N} \left( \sum_{t\in I} (r_t - r_f) - \sum_{t \in O} (r_t - r_f) \right)
 	\]
-and $E(\overline{R}_{{F}'} - \overline{R}_{\text{BH}}) = (1 - 2f) \text{PR} - \text{PR} = -2f \text{PR}$, a proportion of constant risk premium, thus resulting in a bias.
+and it is shown that $E(\overline{R}_{{F}'} - \overline{R}_{\text{BH}}) = (1 - 2f) \text{PR} - \text{PR} = -2f \text{PR}$, a proportion of constant risk premium, thus resulting in a bias.
 
 
 
@@ -88,16 +119,13 @@ and $E(\overline{R}_{{F}'} - \overline{R}_{\text{BH}}) = (1 - 2f) \text{PR} - \t
 \subsection{Moving Average Variants and Oscillators}
 
 
-The moving average trading rules are generally based on comparing the current price with a form of current moving average. Consider the prices, $P_t, P_{t-1}, \ldots, P_{t-m+1}$ with a moving window of width `$m$'. Various versions of moving average are available in the literature and their relative merits depend on the pattern of time series data:
+The moving average trading rules are generally based on comparing the current price with a form of moving average of past price. Consider the prices, $P_t, P_{t-1}, \ldots, P_{t-m+1}$ with a moving window of width `$m$'. Various versions of moving average are available in the literature and their relative merits depend on the price patterns:
 	\begin{flalign}\label{eqn:multi}
-	&& &\text{(SMA)} && \notag \\
-	&& &\text{Simple Moving Average: } \overline{P}_t^{(m)}= \dfrac{1}{m} \sum_{i=0}^{m-1} P_{t-i} && \notag \\
-	&& &\text{(EWA)} && \notag \\
-	&& &\text{Exponentially Weighted Average: } \overline{P}_t^{(m)} = \left(\dfrac{1}{\sum_{i=0}^{m-1} \lambda^{i+1}} \right) \sum_{i=0}^{m-1} \lambda^{i+1} P_{t-i} && \\
-	&& &\text{(BWA)} &&  \notag \\
-	&& &\text{Bollinger Weighted Moving Average: }  \hat{P}_t^{(m)}= \left(\dfrac{1}{\sum_{i=1}^m i}\right) \sum_{i=0}^{m-1} (m-i) P_{t-i} && \notag
+	&& &\text{Simple Moving Average (SMA): } \overline{P}_t^{(m)}= \dfrac{1}{m} \sum_{i=0}^{m-1} P_{t-i} && \notag \\
+	&& &\text{Exponentially Weighted Average (EWA): } \overline{P}_t^{(m)} = \left(\dfrac{1}{\sum_{i=0}^{m-1} \lambda^{i+1}} \right) \sum_{i=0}^{m-1} \lambda^{i+1} P_{t-i} && \\
+	&& &\text{Bollinger Weighted Moving Average (BWMA): }  \hat{P}_t^{(m)}= \left(\dfrac{1}{\sum_{i=1}^m i}\right) \sum_{i=0}^{m-1} (m-i) P_{t-i} && \notag
 	\end{flalign}
-Note that $0 < \lambda < 1$. The indicators of the above kind will tend to be profitable in markets that exhibit definite trends and so they are generally known as ``trend-following'' or some times, called as ``momentum'' indicators. Some simple rules that are normally used in practice are: \twomedskip
+Note that the smoothing constant, `$\lambda$', must be between zero and one. The rules based on indicators of the above kind will tend to be profitable in markets that exhibit definite trends and so they are generally known as ``trend-following'' or some times, called as ``momentum'' indicators. Some simple rules that are used in practice are: \twomedskip
 
 
 \noindent\fbox{%
@@ -109,23 +137,23 @@ Note that $0 < \lambda < 1$. The indicators of the above kind will tend to be pr
 } \twomedskip
 
 
-The two types of potential strategies are broadly known as ``Reversed'' vs ``Momentum'' and they differ mainly on when the entry is carried out. The contrarian in a way looks for local minimum to enter the market and the momentum follower looks for a local maximum to enter.
+The two types of potential strategies are broadly known as ``Reversal'' vs ``Momentum'' and they differ mainly on when the entry is carried out. The contrarian or reversal, in a way, looks for local minimum to enter the market and the momentum follower looks for a local maximum to enter.
 
 
-While the above rules are easy to implement and one may observe that they do not take into account the variance or the volatility of the price (return) process. The widely used Bollinger band, conceptually similar to monitoring the quality of a manufacturing process, is based on the weighted moving average and the variance. Define the standard deviation as, $\hat{\sigma}_{t}^{(m)} = \{ \frac{1}{m-1} \sum_{i=0}^{m-1} (P_{t-i} - \overline{P}_{t}^{(m)})^2 \}^{1/2}$ and the rule can be stated as follows: \twomedskip
+While the above rules are easy to implement and one may observe that they do not take into account the variance or the volatility of the price (return) process. The widely used Bollinger band, conceptually similar to monitoring the quality of a manufacturing process, is based on a weighted moving average and the variance. Define the standard deviation as, $\hat{\sigma}_{t}^{(m)} = \{ \frac{1}{m-1} \sum_{i=0}^{m-1} (P_{t-i} - \overline{P}_{t}^{(m)})^2 \}^{1/2}$ and the rule can be stated as follows: \twomedskip
 
 
 \noindent\fbox{%
     \parbox{\textwidth}{%
-	\textbf{Bollinger Rule: If }$\mathbf{P_{t} > P_{t}^+ = \hat{P}_{t}^{(m)} + 2\hat{\sigma}_{t}^{(m)}}$\textbf{, the upper band, then sell; if } $\mathbf{P_{t} < P^- = \hat{P}_{t}^{(m)} - 2\hat{\sigma}_{t}^{(m)}}$ \textbf{, the lower band, then buy; No action is taken in-between.}
+	\textbf{BWMA Rule: If }$\mathbf{P_{t} > P_{t}^+ = \hat{P}_{t}^{(m)} + 2\hat{\sigma}_{t}^{(m)}}$\textbf{, the upper band, then sell; if } $\mathbf{P_{t} < P^- = \hat{P}_{t}^{(m)} - 2\hat{\sigma}_{t}^{(m)}}$ \textbf{, the lower band, then buy; No action is taken in-between.}
     }%
 } \twomedskip
 
 
-Broadly the key quantities such as moving average, weighted (exponentially or otherwise) average, etc. correspond to the running-mean smoother discussed in Lai and Xing (2009)~\cite[Section 7.2.1]{lai1}. Instead of the running-mean, some technical rules use the running maximum (i.e. $\max\limits_{0 \leq i \leq m} P_{t-i}$) or the running minimum (i.e., $\min\limits_{0 \leq i \leq m} P_{t-i}$) in the above rules. \twomedskip
+Broadly the key quantities such as moving average, weighted (exponentially or otherwise) average, etc. correspond to the running-mean smoother discussed in Lai and Xing (2009)~\cite[Section 7.2.1]{lai1}. Instead of the running-mean, some technical rules use the running maximum (i.e. $\max\limits_{0 \leq i \leq m} P_{t-i}$) or the running minimum (i.e., $\min\limits_{0 \leq i \leq m} P_{t-i}$) in the above rules. Properties of these rules can be easily investigated. \twomedskip
 
 
-\noindent\textbf{Moving Average Oscillator:} The use of the technical rules by the foreign exchange professionals is well documented (See Menkhoff and Taylor (2007)~\cite{MalTay}). The so-called moving average oscillator rule requires computing two moving averages of short and long time spans. Let $\overline{P}_{t}^{(m)}$ and $\overline{P}_{t}^{(n)}$ be the short and long averages, where $m< n$. The rule would signal a break in trend when the longer moving average is crossed by a shorter moving average (or spot rate). The upward trend is signaled when short moving average intersects from below the long average. Conversely, a downward break in trend is signaled if the crossing occurs from above. Precisely the rule is: \twomedskip
+\noindent\textbf{Moving Average Oscillator:} The so-called moving average oscillator rule requires computing two moving averages of short and long time spans. Let $\overline{P}_{t}^{(m)}$ and $\overline{P}_{t}^{(n)}$ be the short and long averages, where $m< n$. The rule would signal a break in trend when the longer moving average is crossed by a shorter moving average (or for example spot rate). The upward trend is signaled when short moving average intersects from below the long average. Conversely, a downward break in trend is signaled if the crossing occurs from above. Precisely the rule is: \twomedskip
 
 
 \noindent\fbox{%
@@ -139,7 +167,7 @@ Broadly the key quantities such as moving average, weighted (exponentially or ot
 } \twomedskip
 
 
-\noindent\textbf{RSI Oscillator:} Another oscillator that is designed to measure the strength of price movement in a particular direction is the relative strength indicator (RSI). The logic being that if the changes in price are too rapid in one direction, a correction in the opposite direction is likely to follow and occur soon. Thus these types of rules are called `reversal' or `overbought/oversold' indicators. To define RSI, let $U_{t} = \sum_{i=1}^m I(P_{t-i} - P_{t-i-1} > 0)\,\lvert P_{t-i} - P_{t-i-1} \rvert$ and $D_{t} = \sum_{i=1}^m I_{t} (P_{t-i} - P_{t-i-1} < 0)\,\lvert S_{t-i} - S_{t-i-1}\rvert$ where $I(\cdot)$ is an indicator function. Thus $U_t$ and $D_t$ aggregate the positive and negative side of the price changes. Now let $\text{RS}_{t} = \frac {U_{t}}{D_{t}}$, and can be taken as a measure of odds ratio, and define
+\noindent\textbf{RSI Oscillator:} Another oscillator that is designed to measure the strength of price movement in a particular direction is the relative strength indicator (RSI). The logic being that if the changes in price are too rapid in one direction, a correction in the opposite direction is likely to follow and may occur soon. Thus these types of rules are called `reversal' or `overbought/oversold' indicators. To define RSI, let $U_{t} = \sum_{i=1}^m I(P_{t-i} - P_{t-i-1} > 0)\,\lvert P_{t-i} - P_{t-i-1} \rvert$ and $D_{t} = \sum_{i=1}^m I_{t} (P_{t-i} - P_{t-i-1} < 0)\,\lvert S_{t-i} - S_{t-i-1}\rvert$ where $I(\cdot)$ is an indicator function. Thus $U_t$ and $D_t$ aggregate the positive and negative side of the price changes. Now define $\text{RS}_{t} = \frac {U_{t}}{D_{t}}$, which can be taken as a measure of odds ratio, and define
 	\begin{equation} \label{eqn:rsi}
 	\text{RSI}_{t} = 100 \times \frac{U_{t}}{U_{t} + D_{t}} = 100 - 100 \left( \dfrac{1}{1 + \text{RS}_t} \right).
 	\end{equation}
@@ -161,8 +189,7 @@ These rules that appear to be somewhat ad hoc can all be related back to the ran
 	\begin{equation} \label{eqn:anotherpt}
 	p_t = \mu + p_{t-1} + a_t,
 	\end{equation}
-where $a_t \sim \text{N}(0,\sigma^2)$, $\sigma^2$ is the volatility of the stock and note the return, $r_t= p_t - p_{t-1}$; thus, $r_t \sim \text{N}(\mu,\sigma^2)$. If there is any autocorrelation in `$r_t$', and if $\overline{r}_n$ is the average based on the last `$n$' observations, then $\overline{r}_n \sim \text{N}\left(\mu,\sum_{\mid h \mid < n}\left(1-\frac{\mid h \mid}{n}\right)\frac{\gamma(h)}{n}\right)$, where $\gamma(h)$ is the autocovariance function of lag `$h$', with $\gamma(0)=\sigma^2$. When $\gamma(h)=0 \text{ for } h > 0$, that P($\overline{r}_n > 0)= \text{P}(\overline{a}_n > -\mu)= \text{P}\left( \frac{\overline{a}_n}{\sigma} > \frac{-\mu}{\sigma} \right)= 1 - \Phi\left( -\frac{\mu}{\sigma} \right)$, where $\Phi$ is the c.d.f. of the standard normal distribution. Thus we can evaluate $RS_t$ by the odds ratio, $(1 - \Phi(-\frac{\mu}{\sigma}))/(\Phi(-\frac{\mu}{\sigma}))$. In fact the reversal rule stated above implies for $RSI_t$ to be greater than 70, $\text{RS}_t > 2.33$. All the rules stated in this section can be written in the form of the c.d.f. of the underlying distribution of the return. This model-based interpretation of the rules can help us in accommodating other factors such as volume more formally in the model and their value added in the strategy performance. 
-
+where $a_t \sim \text{N}(0,\sigma^2)$, $\sigma^2$ is the volatility of the stock and note the return, $r_t= p_t - p_{t-1}$; thus, $r_t \sim \text{N}(\mu,\sigma^2)$. If there is any autocorrelation in `$r_t$', and if $\overline{r}_n$ is the average based on the last `$n$' observations, then $\overline{r}_n \sim \text{N}\left(\mu,\sum_{\mid h \mid < n}\left(1-\frac{\mid h \mid}{n}\right)\frac{\gamma(h)}{n}\right)$, where $\gamma(h)$ is the autocovariance function of lag `$h$', with $\gamma(0)=\sigma^2$. When $\gamma(h)=0 \text{ for } h > 0$, that P($\overline{r}_n > 0)= \text{P}(\overline{a}_n > -\mu)= \text{P}\left( \frac{\overline{a}_n}{\sigma} > \frac{-\mu}{\sigma} \right)= 1 - \Phi\left( -\frac{\mu}{\sigma} \right)$, where $\Phi$ is the c.d.f. of the standard normal distribution. Thus we can evaluate $\text{RS}_t$ by the odds ratio, $(1 - \Phi(-\frac{\mu}{\sigma}))/(\Phi(-\frac{\mu}{\sigma}))$. In fact the reversal rule stated above implies, for $\text{RSI}_t$ to be greater than 70, the odd ration, $\text{RS}_t > 2.33$. All the rules stated in this section can be written in the form of the c.d.f. of the underlying distribution of the return. This model-based interpretation of the rules can help us in accommodating other factors such as volume more formally in the model and evaluate their value added to the strategy performance. While there are many studies that show that these technical rules perform well in practice, more formal studies are called for in this area. The use of the technical rules by the foreign exchange professionals is well documented (see Menkhoff and Taylor (2007)~\cite{MalTay}).
 
 
 % Patterns Discovery via Non-Parametric Smoothing Methods
@@ -667,107 +694,6 @@ In the equity markets, it is argued that momentum strategies are successful beca
 
 
 The classical momentum studies described above tend to focus on stratifying the stocks in ten deciles based on the past average returns. Han, Yang and Zhou (2013)~\cite{hanyangzhou} suggest sorting based on volatility which reflects the information uncertainty. Other sorting criteria may include credit rating, distance to default, etc.. After sorting by volatilities, the decile portfolios are formed. The strategy then is to use the moving average based rule (see Section~\ref{s:trading_rules_tad}) as follows: if the price is above the moving average, buy or continue to hold or else invest in a risk-free asset. The performance of this strategy is then compared with buy and hold method. It is shown that this strategy results in positive returns and generally these returns increase with the volatility. If the returns are further adjusted for market risk (CAPM) and Fama-French factors, the average returns are greater and increase with the volatility levels. Two items of note here: as the returns are adjusted for the risk factors, they are likely to result in fewer trading opportunities as these models become more restrictive; if results are not adjusted for transaction costs and buying and selling a portfolio of stocks can be expensive and so the results may be too optimistic.  
-
-
-
-% Multiple Indicators and Boosting Methods
-\section{Multiple Indicators and Boosting Methods \label{sec:multindboostmeth}}
-
-In developing models that capture the main features of the data, it must be noted that there are no unique models. Thus they yield different forecasts. It is well-known in the forecasting literature that a combined forecast generally does perform overall better than the individual forecasts. If there are `$T$' models and thus `$T$' forecasts, $\hat{f}_1,\ldots, \hat{f}_T$, how do we combine them to get a single forecast? Because these are all based on the same data, the estimates are likely to be correlated, resulting in a covariance matrix, $\hat{\Sigma}_f$. Three estimates that are proposed in the literature are:
-
-	\begin{table}[!ht]
-	\caption{Three proposed estimates}
-	\begin{tabular}{l l r}
-	\textbf{Weighted Estimator 1: \hskip 1mm} & $\hat{f}_{w_1}=\hat{f}' \hat{\Sigma}_f^{-1} \hat{f}$ \\
-	\textbf{Weighted Estimator 2: \hskip 1mm} & $\hat{f}_{w_2} = \hat{f}' (\text{diag}\hat{\Sigma}_f)^{-1} \hat{f}$ \\
-	\textbf{Simple Average Estimator: \hskip 1mm} & $\sum_{i=1}^T \frac{\hat{f}_i}{T}$ 
-	 \end{tabular}
-	 \end{table}
-
-\noindent Due to the uncertainty in the estimation of $\Sigma_f$, especially in regime changes that may result in large estimation error, the simple average estimator is sometimes advocated. In the context of modeling the asset prices the elements of $\Sigma_f$ represent how well the methods do in forecasting. In order to use the above weighted estimators we need to keep track of the performance of the individual forecasting methods and in principle, the methods that yield inferior forecasts would get less weight. But a question about the span of their performance, whether to use more recent versus past data, remains open. \twomedskip
-
-
-\noindent \textbf{Ensemble Learning} \twomedskip
-
-
-As mentioned, the idea of combining multiple forecasts (classifiers) into a single one is a longstanding goal of many decision-makers. This is especially important when methods that are successful in different regimes are complementary. There are two types of ensemble methods, bagging and boosting that we discuss here. Suppose the goal is to determine if we want to enter the market or not based on the information available at that time. It is somewhat easier to come up with simple rules but is harder to find a rule that has high accuracy. Under boosting, we study how to combine the simple rules uniformly into a `stronger' rule. It is suggested to focus on examples that are hardest to forecast by simple rules and take a weighted majority of these rules to come up with a stronger rule.
-
-
-To motivate, we will assume that we want to determine whether the price of an asset will go up or down. Under the random walk model, the error in guessing randomly is 0.5. But any rule should result in an error less than 0.5. We begin with a training set, $S=\{ (x_i,y_i), i=1,2, \ldots n\}$ where $x_i$ is the information and $y_i$ is a binary variable that indicates whether to enter the market or not. Assume that there are `$T$' rules, $h_t(x)$ are the classifiers and $D_t$ is the distribution over the training set with the error,
-	\begin{equation}
-	\text{err}_D(h)=Pr_{(x,y) \sim D}(h(x) \neq y).
-	\end{equation}
-The rule $h_t$ is supposed to have error $\text{err}_{D_t}(h_t)$ with respect to `$D_t$'. \twomedskip
-
-
-\noindent The boosting algorithm works as follows:
-
-        \begin{table*}[!ht]
-        \begin{tabular}{r l r}
-        \textbf{Initialize:} & $D_t(i)=\frac{1}{n}$ for all $i$  \\
-        \textbf{Iterate:} & $D_{t+1}(i)=\frac{D_t(i)}{z_t} \cdot \text{exp}[-\alpha_t y_i h_t(x_i)]$, \\
-        & where $\alpha_t=\frac{1}{2}\text{ln} \left( \frac{1-\text{err}_{D_t}(h_t)}{\text{err}_{D_t}(h_t)} \right), z_t=$ normalizing constant \\
-        \textbf{Stopping Time:} & Stop when the error in (1) on a validation data set does \\
-        & not improve \\
-        \textbf{Final Rule:} & $\text{Sign}(\sum_{t=1}^T \alpha_t h_t(x))$  \\
-        \end{tabular}
-        \end{table*}
- 
- 
- It is possible that overfitting can happen with boosting; its performance clearly depends upon how well the two decisions (enter or not enter) are clearly separated based on the past data. The use of kernels can improve local separability. It is also important to optimally extract features, $x$, that can be discriminating between the two options for $y$. The main advantage of ensembles of different rules is that it is not likely that all rules will make the same error. The algorithm described above is known as, ``adaptive boosting algorithm (AdBoost)'' is by Freund and Schapire (1995, 1996,1997)~\cite{freund1995decision,freund1996experiments,freund1997decision} and it automatically ``adapts'' to the data at hand. If $t^{th}$ classifier $h_t(x)$ is parameterized and the overall predictor takes the form
-	\begin{equation}
-	h(x)=\text{Sign} \left( \sum_{t=1}^T \alpha_t \text{Sign}(w^{(t)}x+b^{(t)}) \right)
-	\end{equation}
-is a two-layer neural network with `$T$' hidden units. One can see the identical underlying nature of the structure between neural network and boosting algorithm.
-
-
-The idea of bagging comes from training the rules on multiple data sets that supposedly have similar structure. The multiple data sets are obtained by bootstrap  resampling. The bootstrap data sets are not likely to be too similar. For the data on asset prices, which are represented by an AR(1) model with the coefficient close to one, the asymptotic distribution of the sample estimate of the coefficient is non-normal. So the bootstrap samples are also useful to construct the appropriate sampling variance. The bootstrap samples are created by resampling the innovations or empirical residuals. From the single data set, $S$ we create `$M$' bootstrapped samples, $S_1, \ldots, S_M$ with each set containing `$n$' samples. Then apply the boosting method on all these samples and average them. As noted in the literature, bagging tends to reduce variance and thus it provides an alternative to regularization, see Breiman (1996)~\cite{breiman1996bagging}.
-
-
-The gradient boosting method introduced by Breiman (1999)~\cite{breiman1999prediction} and generalized by Friedman et al. (2000)~\cite{friedman2000additive} and Friedman (2001)~\cite{friedman2001greedy} further improves on the ADA boost. The method starts by fitting an additive model (ensemble), $\sum_t \alpha_t h_t (x)$ in a forward stage-wise manner. In each stage, a weak learner is introduced to compensate for the shortcomings of existing weak learners. In gradient boosting, gradients are used to identify the shortcomings and in the regression context, these are residuals. Now the training set, $S^*=\{ (x_i, y_i-h(x_i)) , i =1,\ldots,n \}$ is treated like, $S$, with residuals playing the role of the data. The optimization occurs by moving in the opposite direction of the gradient of the function.
-
-
-
-% Evaluation of Strategies: Various Measures
-\section{Evaluation of Strategies: Various Measures}
-
-It is important to develop measures to evaluate the trading strategies. The standard measures stem from the capital asset pricing model:
-	\begin{equation}
-	r_{t} - r_f = \alpha + \beta (r_{mt} - r_f) + \varepsilon_{t},
-	\end{equation}
-where $r_t$ is the return on the asset and $r_f$ is the return from a risk-free asset; the slope coefficient, $\beta$ measures the riskiness of the asset and `$\alpha$' denotes the excess return. Thus a strategy can be simply evaluated by: 
-
-\begin{enumerate}[--]
-\item \textbf{Excess return: }$\alpha$ with positive values indicating better performance. \twomedskip
-
-\noindent More popular measures are: \twomedskip
-
-\item \textbf{Sharpe Ratio: } $\dfrac{E(r_{t}) - r_f}{\sigma}$: Standardized by the volatility of the asset. \twomedskip
-
-\item \textbf{Treynor Ratio: } $\dfrac{E(r_{t}) - r_f}{\left|\beta \right|}$: Standardized by market risk. \twomedskip
-
-\noindent with appropriate sample estimates substituted here. A modified version of excess return is known as, \twomedskip
-
-\item \textbf{Information Ratio: } $\dfrac{\alpha}{\sigma(\varepsilon_{t})}$: Standardized $\alpha$
-\end{enumerate}
-
-
-While the above ratios take a long-term view of the investments, two others that are used in industry focus on the execution aspects of the strategies: 
-
-
-\begin{enumerate}[--]
-\item \textbf{Sortino Ratio: } $\dfrac{E(r_{t}) - r_{\text{target}}}{DR(r_{t})}$, \twomedskip
-
-\noindent where $r_{\text{target}}$ is the target rate chosen by the investor and DR($r_t$) denotes the downside volatility or the draw down. Another measure is, \twomedskip
-
-\item \textbf{Calmar Ratio: } $\dfrac{\text{Annualized Compound Rate of Return}}{\left| \text{ Maximum Drawdown }\right|}$ \twomedskip
-\end{enumerate}
-
-
-The attention to drawdown is important because there is no guarantee that a strategy chosen through simple back-testing will work in the future. The last two ratios combine both the idea of maximizing the return and the idea of minimizing the loss. The drawdown numbers are essentially determined by the traders based on their own experience and their risk tolerance. There are some studies that focus on the statistical properties of their criteria (see Bertrand and Protopopescu (2010)~\cite{bertrand} on the information ratio and A. Lo (2002)~\cite{awlo} on the Sharpe ratio). Another measure is to simply compare the strategy's returns to the returns from buy and hold.
-
-
-The standard reporting of backtesting results beyond the above measures include: number of winning and losing trades, largest winning and losing trades, net slippage, total commissions along with annualized versions of the above ratios. The so-called equity curve which is the cumulative return graph along with the buy and hold graph can clearly indicate the effectiveness of the strategies. 
 
 
 

@@ -593,7 +593,10 @@ The technical trading rules that are to be discussed in Chapter~6 involve a rela
 Machine learning is a growing area of computer science that encompasses other well-established areas such as statistics, computational algorithms, artificial intelligence, control theory, etc.. The focus in machine learning is on developing efficient algorithms for prediction or for classification using large data sets. The efficiency is gauged by predictive validation accuracy. The inferential aspects of statistical theory, such as standard error of the estimates, confidence intervals, etc., are generally not of much concern. Some areas where machine learning methods have led to significant contribution are classification, clustering and multi-dimensional regression. The attractiveness of these methods lies in the fact that they do not need any a priori theory to suggest which relevant variables to consider. Therefore with no prescription of variables, the variable or feature selection becomes an important process in machine learning. The statistical foundations of machine learning methods are also alternatively referred to as statistical learning methods. We provide a brief description of a select few methods in this section. \twomedskip
 
 
-\noindent\textbf{Neural Networks:} This is one of the main methods of machine learning where a performance of a task is learnt by analyzing training examples that have been hand-labeled in advance. The neural network in its simplest form can be represented as follows:
+% Neural Networks
+\subsection{Neural Networks}
+
+This is one of the main methods of machine learning where a performance of a task is learnt by analyzing training examples that have been hand-labeled in advance. The neural network in its simplest form can be represented as follows:
 
 	\begin{equation} \label{eqn:neural}
 	\begin{tikzpicture}[baseline=(current  bounding  box.center)]
@@ -634,7 +637,7 @@ which is also termed as a measure of deviance. The method to estimate the unknow
 where $\gamma_r$ is called the learning rate. Details on the choice of the learning rate are discussed in Hastie et al. (2009)~\cite{hastibf}. 
 
 
-A more general form of neural net is given in Figure~\ref{fig:neural_net} below. Some practical issues with observing in fitting these models are given below. Because these models are over-parametrized, the optimization in \eqref{eqn:rby1it} can be a nonconvex function.
+A more general form of neural net is given in Figure~\ref{fig:neural_net} below. The number of layers are to be determined conceptually or empirically. Some practical issues with observing in fitting these models are given below. Because these models are over-parametrized, the optimization in \eqref{eqn:rby1it} can be a nonconvex function.
 
 
 	\begin{figure}[!ht]
@@ -658,7 +661,10 @@ where `$\lambda$' is a positive tuning parameter.
 \end{enumerate}
 
 
-\noindent\textbf{Reinforcement Learning:} The set of techniques covered in this area is quite broad and generally refers to learning from interaction to achieve a goal. The learner is called an `agent' who learns from interacting with `environment' through trial and error. The learning is assumed to progress through `rewards.' More formally, the environment is in a state, $s_t \in S$, the set of all possible states; the agent's decision or action, $a_t \in A(s_t)$, the set of actions available in state `$s_t$.' As a consequence, the agent gets a reward $r_{t+1} \in R$ and a new state of the environment, `$s_{t+1}$' emerges. Reinforcement learning methods study how the agent changes the policy, $\Pi_t (s_t,a_t)$ with a goal towards maximizing the reward, a result of the interaction in the long run. For an excellent survey on this topic, refer to Kaelbling, Littman and Moore (1996)~\cite{littmanmoor}. The common assumption is that the state-space is stationary which means that the transition probabilities from one state to another remains constant and so are reward signals. The long-run reward function discounted by interest rate that is optimized by the agent is denoted as, $E\big( \sum_{t=0}^\infty \gamma^t r_t \big)$. Other reward functions such as regret, a measure of the expected decrease in reward gained due to executing an algorithm have been considered in the literature. For a comprehensive treatment of the subject, see Sulton and Barto (2018)~\cite{sultonbarto}. Much of the notes in this section follow from the references cited here. \twomedskip
+% Reinforcement Learning
+\subsection{Reinforcement Learning}
+
+The set of techniques covered in this area is quite broad and generally refers to learning from interaction to achieve a goal. The learner is called an `agent' who learns from interacting with `environment' through trial and error. The learning is assumed to progress through `rewards.' More formally, the environment is in a state, $s_t \in S$, the set of all possible states; the agent's decision or action, $a_t \in A(s_t)$, the set of actions available in state `$s_t$.' As a consequence, the agent gets a reward $r_{t+1} \in R$ and a new state of the environment, `$s_{t+1}$' emerges. Reinforcement learning methods study how the agent changes the policy, $\Pi_t (s_t,a_t)$ with a goal towards maximizing the reward, a result of the interaction in the long run. For an excellent survey on this topic, refer to Kaelbling, Littman and Moore (1996)~\cite{littmanmoor}. The common assumption is that the state-space is stationary which means that the transition probabilities from one state to another remains constant and so are reward signals. The long-run reward function discounted by interest rate that is optimized by the agent is denoted as, $E\big( \sum_{t=0}^\infty \gamma^t r_t \big)$. Other reward functions such as regret, a measure of the expected decrease in reward gained due to executing an algorithm have been considered in the literature. For a comprehensive treatment of the subject, see Sulton and Barto (2018)~\cite{sultonbarto}. Much of the notes in this section follow from the references cited here. \twomedskip
 
 
 \noindent Markov Assumption: We assume the sets $S$, $A$ and $R$ are all finite. We assume that any response at `$t+1$' depends on the state one action at `$t$.' More specifically, 
@@ -688,6 +694,64 @@ Similarly, the optimal action-value function can be written as
 
 
 The methods to solve the above can be heuristic and computational. Exact solutions are possible only under idealized conditions. A common approach to solve the above is to use dynamic programming. The uniqueness and existence of $V^\Pi$ are possible when $\gamma < 1$; it is guaranteed that eventual termination will result from all states under the policy, $\Pi$. 
+
+
+
+% Multiple Indicators and Boosting Methods
+\subsection{Multiple Indicators and Boosting Methods \label{sec:multindboostmeth}}
+
+In developing models that capture the main features of the data, it must be noted that there are no unique models. Thus they yield different forecasts. It is well-known in the forecasting literature that a combined forecast generally does perform overall better than the individual forecasts. If there are `$T$' models and thus `$T$' forecasts, $\hat{f}_1,\ldots, \hat{f}_T$, how do we combine them to get a single forecast? Because these are all based on the same data, the estimates are likely to be correlated, resulting in a covariance matrix, $\hat{\Sigma}_f$. Three estimates that are proposed in the literature are:
+
+	\begin{table}[!ht]
+	\caption{Three proposed estimates}
+	\begin{tabular}{l l r}
+	\textbf{Weighted Estimator 1: \hskip 1mm} & $\hat{f}_{w_1}=\hat{f}' \hat{\Sigma}_f^{-1} \hat{f}$ \\
+	\textbf{Weighted Estimator 2: \hskip 1mm} & $\hat{f}_{w_2} = \hat{f}' (\text{diag}\hat{\Sigma}_f)^{-1} \hat{f}$ \\
+	\textbf{Simple Average Estimator: \hskip 1mm} & $\sum_{i=1}^T \frac{\hat{f}_i}{T}$ 
+	 \end{tabular}
+	 \end{table}
+
+\noindent Due to the uncertainty in the estimation of $\Sigma_f$, especially in regime changes that may result in large estimation error, the simple average estimator is sometimes advocated. In the context of modeling the asset prices the elements of $\Sigma_f$ represent how well the methods do in forecasting. In order to use the above weighted estimators we need to keep track of the performance of the individual forecasting methods and in principle, the methods that yield inferior forecasts would get less weight. But a question about the span of their performance, whether to use more recent versus past data, remains open. \twomedskip
+
+
+\noindent \textbf{Ensemble Learning} \twomedskip
+
+
+As mentioned, the idea of combining multiple forecasts (classifiers) into a single one is a longstanding goal of many decision-makers. This is especially important when methods that are successful in different regimes are complementary. There are two types of ensemble methods, bagging and boosting that we discuss here. Suppose the goal is to determine if we want to enter the market or not based on the information available at that time. It is somewhat easier to come up with simple rules but is harder to find a rule that has high accuracy. Under boosting, we study how to combine the simple rules uniformly into a `stronger' rule. It is suggested to focus on examples that are hardest to forecast by simple rules and take a weighted majority of these rules to come up with a stronger rule.
+
+
+To motivate, we will assume that we want to determine whether the price of an asset will go up or down. Under the random walk model, the error in guessing randomly is 0.5. But any rule should result in an error less than 0.5. We begin with a training set, $S=\{ (x_i,y_i), i=1,2, \ldots n\}$ where $x_i$ is the information and $y_i$ is a binary variable that indicates whether to enter the market or not. Assume that there are `$T$' rules, $h_t(x)$ are the classifiers and $D_t$ is the distribution over the training set with the error,
+	\begin{equation}
+	\text{err}_D(h)=Pr_{(x,y) \sim D}(h(x) \neq y).
+	\end{equation}
+The rule $h_t$ is supposed to have error $\text{err}_{D_t}(h_t)$ with respect to `$D_t$'. \twomedskip
+
+
+\noindent The boosting algorithm works as follows:
+
+        \begin{table*}[!ht]
+        \begin{tabular}{r l r}
+        \textbf{Initialize:} & $D_t(i)=\frac{1}{n}$ for all $i$  \\
+        \textbf{Iterate:} & $D_{t+1}(i)=\frac{D_t(i)}{z_t} \cdot \text{exp}[-\alpha_t y_i h_t(x_i)]$, \\
+        & where $\alpha_t=\frac{1}{2}\text{ln} \left( \frac{1-\text{err}_{D_t}(h_t)}{\text{err}_{D_t}(h_t)} \right), z_t=$ normalizing constant \\
+        \textbf{Stopping Time:} & Stop when the error in (1) on a validation data set does \\
+        & not improve \\
+        \textbf{Final Rule:} & $\text{Sign}(\sum_{t=1}^T \alpha_t h_t(x))$  \\
+        \end{tabular}
+        \end{table*}
+ 
+ 
+ It is possible that overfitting can happen with boosting; its performance clearly depends upon how well the two decisions (enter or not enter) are clearly separated based on the past data. The use of kernels can improve local separability. It is also important to optimally extract features, $x$, that can be discriminating between the two options for $y$. The main advantage of ensembles of different rules is that it is not likely that all rules will make the same error. The algorithm described above is known as, ``adaptive boosting algorithm (AdBoost)'' is by Freund and Schapire (1995, 1996,1997)~\cite{freund1995decision,freund1996experiments,freund1997decision} and it automatically ``adapts'' to the data at hand. If $t^{th}$ classifier $h_t(x)$ is parameterized and the overall predictor takes the form
+	\begin{equation}
+	h(x)=\text{Sign} \left( \sum_{t=1}^T \alpha_t \text{Sign}(w^{(t)}x+b^{(t)}) \right)
+	\end{equation}
+is a two-layer neural network with `$T$' hidden units. One can see the identical underlying nature of the structure between neural network and boosting algorithm.
+
+
+The idea of bagging comes from training the rules on multiple data sets that supposedly have similar structure. The multiple data sets are obtained by bootstrap  resampling. The bootstrap data sets are not likely to be too similar. For the data on asset prices, which are represented by an AR(1) model with the coefficient close to one, the asymptotic distribution of the sample estimate of the coefficient is non-normal. So the bootstrap samples are also useful to construct the appropriate sampling variance. The bootstrap samples are created by resampling the innovations or empirical residuals. From the single data set, $S$ we create `$M$' bootstrapped samples, $S_1, \ldots, S_M$ with each set containing `$n$' samples. Then apply the boosting method on all these samples and average them. As noted in the literature, bagging tends to reduce variance and thus it provides an alternative to regularization, see Breiman (1996)~\cite{breiman1996bagging}.
+
+
+The gradient boosting method introduced by Breiman (1999)~\cite{breiman1999prediction} and generalized by Friedman et al. (2000)~\cite{friedman2000additive} and Friedman (2001)~\cite{friedman2001greedy} further improves on the ADA boost. The method starts by fitting an additive model (ensemble), $\sum_t \alpha_t h_t (x)$ in a forward stage-wise manner. In each stage, a weak learner is introduced to compensate for the shortcomings of existing weak learners. In gradient boosting, gradients are used to identify the shortcomings and in the regression context, these are residuals. Now the training set, $S^*=\{ (x_i, y_i-h(x_i)) , i =1,\ldots,n \}$ is treated like, $S$, with residuals playing the role of the data. The optimization occurs by moving in the opposite direction of the gradient of the function.
 
 
 
