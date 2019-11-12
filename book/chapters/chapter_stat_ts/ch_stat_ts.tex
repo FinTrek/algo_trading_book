@@ -5,29 +5,25 @@
 \noindent\textbf{Statistical arbitrage opportunity and strategies:} Trading strategies are central to the notion of statistical arbitrage. Strategies that claim to have better performance than the market date back to the inception of trading in finance. This area under the name of `technical analysis' is based on using past prices and other stock and market-related information to make investment decisions. The ideas date back to a Japanese speculator, Munehira Homma, who made a fortune in the rice market using techniques called candlestick patterns. The famous Dow Theory is based on the assertion that the market in certain phases can be predictable. Thus, there is a history of studies that empirically conclude that the behavior of stock prices appear to contradict efficient market hypothesis. Broadly, there are two types of strategies, one the momentum strategy that  advocates buying well-performing stocks and selling poor-performing stocks (see Jegadeesh and Titman (1993)~\cite{JeTit}) and the other, contrarian or reversal strategy that advocates buying past losers and selling past winners. The average excess return of some strategies relative to an `alpha' in a standard capital asset pricing model is shown to be around 12\%. Other strategies, known as value strategies suggest buying value stocks and selling glamour stocks (see Lakonishok et al. (1994)~\cite{Lako}). They use the company fundamental data such as price earnings ratios, dividends, book-to-market values, cash flows and sales growth as indicators of value. One such measure of value is the ratio of book value or earnings to market price.
 
 
-Hogan, Jarrow, Teo and Warachka (2004)~\cite{Hogan} define `a statistical arbitrage as a long horizon trading opportunity that generates a riskless profit.' Four conditions that are to be met are: it is a self-financing strategy with a zero initial cost, in the limit has positive expected discounted profits, a probability of a loss converging to zero and a time-averaged variance converging to zero; the last condition implies that an arbitrage opportunity eventually produces riskless profit. Citing anomalies to reject  market efficiency has been criticized on the ground that such tests depend upon a specified model for equilibrium returns. Hogan et al. (2004)~\cite{Hogan} argue that statistical arbitrage can be defined without any reference to an equilibrium model and rejects market efficiency. They provide a statistical test to determine if a trading strategy constitutes statistical arbitrage based on short horizon incremental profits. Some issues that arise in developing and testing strategies are: handling the transaction costs both direct costs, such as brokerage fee, and indirect costs due to the entry/exit to the market; cross-validation to avoid over-fitting; no guaranteed performance in different market settings. In this chapter, we will cover some of these trading strategies, propose the evaluation criteria and provide the details of these algorithms. In practice, no single algorithm works well all the time. So it is important to develop a state of algorithms and we cover many of them here.
+Hogan, Jarrow, Teo and Warachka (2004)~\cite{Hogan} define `a statistical arbitrage as a long horizon trading opportunity that generates a riskless profit.' Four conditions that are to be met are: it is a self-financing strategy with a zero initial cost, in the limit has positive expected discounted profits, a probability of a loss converging to zero and a time-averaged variance converging to zero; the last condition implies that an arbitrage opportunity eventually produces riskless profit. Citing anomalies to reject  market efficiency has been criticized on the ground that such tests depend upon a specified model for equilibrium returns. Hogan et al. (2004)~\cite{Hogan} argue that statistical arbitrage can be defined without any reference to an equilibrium model and rejects market efficiency. They provide a statistical test to determine if a trading strategy constitutes statistical arbitrage based on short horizon incremental profits. Some issues that arise in developing and testing strategies are: handling the transaction costs both direct costs, such as brokerage fee, and indirect costs due to the entry/exit to the market; cross-validation to avoid over-fitting; no guaranteed performance in different market settings. In this chapter, we will cover some of these trading strategies, propose the evaluation criteria and provide the details of these algorithms. In practice, no single algorithm works well all the time. So it is important to develop a suite of algorithms and we cover some of them here.
 
 
 
 % Evaluation of Strategies: Various Measures
-\section{Evaluation of Strategies: Various Measures}
+\section{Evaluation of Strategies: Various Measures\label{sec:various_measures}}
 
 In this section, we want to lay out how the trading strategies are evaluated. These measures are different from measures used for evaluating execution strategies, which will be taken up in Part~III. Here the focus is on benchmarks that are considered in the industry and they provide a range of dimensions that need to be looked at when a strategy is failing. The standard measures stem from the capital asset pricing model:
-	\begin{equation}
+	\begin{equation} \label{eqn:rt_minus_rf_is}
 	r_{t} - r_f = \alpha + \beta (r_{mt} - r_f) + \varepsilon_{t},
 	\end{equation}
 where $r_t$ is the return on the asset and $r_f$ is the return from a risk-free asset; the slope coefficient, $\beta$ measures the riskiness of the asset and `$\alpha$' denotes the excess return. Also $\overline{r}$ and $s$ be the average and standard deviation of the returns over the evaluation period. Some measures are:
 
 \begin{enumerate}[--]
-\item \textbf{Excess return: }$\alpha$ with positive values indicating better performance, as it reflects risk adjusted return. \twomedskip
-
-\noindent More popular measures are: \twomedskip
+\item \textbf{Excess return }$\alpha$: Positive value indicating better performance, as it reflects risk adjusted return. \twomedskip
 
 \item \textbf{Sharpe Ratio: } $\dfrac{E(r_{t}) - r_f}{\sigma}$: This measure is standardized by the volatility of the asset. This is the widely used benchmark measure. \twomedskip
 
 \item \textbf{Treynor Ratio: } $\dfrac{E(r_{t}) - r_f}{\left|\beta \right|}$: This measure is alternate to Sharpe ratio where the excess return is standardized by market risk. \twomedskip
-
-\noindent with appropriate sample estimates substituted here. A modified version of excess return is known as, \twomedskip
 
 \item \textbf{Information Ratio: } $\dfrac{\alpha}{\sigma(\varepsilon_{t})}$: This is a modified version of excess return.
 \end{enumerate}
@@ -39,7 +35,7 @@ While the above ratios take a long-term view of the investments, two others that
 \begin{enumerate}[--]
 \item \textbf{Sortino Ratio: } $\dfrac{E(r_{t}) - r_{\text{target}}}{DR(r_{t})}$, \twomedskip
 
-\noindent where $r_{\text{target}}$ is the target rate chosen by the investor and DR($r_t$) denotes the downside volatility or the draw down. The target can be $r_t$ or the average market return or return of the competition. Another measure is, \twomedskip
+\noindent where $r_{\text{target}}$ is the target rate chosen by the investor and DR($r_t$) denotes the downside volatility or the draw down. The target can be $r_t$ or the average market return or return of the competitors. Another measure is, \twomedskip
 
 \item \textbf{Calmar Ratio: } $\dfrac{\text{Annualized Compound Rate of Return}}{\left| \text{ Maximum Drawdown }\right|}$ \twomedskip
 \end{enumerate}
@@ -56,7 +52,7 @@ The standard reporting of backtesting results beyond the above measures include:
 \section{Trading Rules for Time Aggregated Data \label{s:trading_rules_tad}}
 
 
-Trading Rules that are broadly labeled under technical analysis involve the prediction of future short-term price movements from an inductive analysis of past movements using either quantitative techniques, such as moving averages or qualitative methods such as pattern recognition from visual inspection of a time-series plot of the asset price data or a combination of both via semi-parametric procedures such as kernel smoothing. In foreign exchange market, as Menkhoff and Taylor (2002)~\cite{MalTay} observe the widespread use of these techniques is puzzling, ``since technical analysis eschews scrutiny of economic fundamentals and relies on information on past exchange rate movements that, according to the weakest notion of market efficiency, should already be embedded in the current exchange rate, making its use either unprofitable or implying that any positive returns that are generated are accompanied by an unacceptable risk exposure.'' In general there are economic fundamentals that can explain long term movements, there is still no fundamental-based exchange rate model that is capable of forecasting short-term movements.
+Trading Rules that are broadly labeled under technical analysis, involve the prediction of future short-term price movements from an inductive analysis of past movements using either quantitative techniques, such as moving averages or qualitative methods such as pattern recognition from visual inspection of a time-series plot of the asset price data or a combination of both via semi-parametric procedures such as kernel smoothing. In foreign exchange market, as Menkhoff and Taylor (2002)~\cite{MalTay} observe the widespread use of these techniques is puzzling, ``since technical analysis eschews scrutiny of economic fundamentals and relies on information on past exchange rate movements that, according to the weakest notion of market efficiency, should already be embedded in the current exchange rate, making its use either unprofitable or implying that any positive returns that are generated are accompanied by an unacceptable risk exposure.'' In general there are economic fundamentals that can explain long term movements, there is still no fundamental-based exchange rate model that is capable of forecasting short-term movements.
 
 
 Technical analysis (also known as Chartist analysis) is a set of techniques for obtaining forecasts based on past history of price and volume patterns. Clearly for the technical analysis to be useful, price movements should follow some regular, recurring patterns and these patterns must hold for long enough periods to sustain the transaction costs and false signals so that the investment, results in a profit. What constitutes a useful forecast from an investor point of view could be, if the past history of prices can be used to increase expected gains. But as Fama and Blume (1966)~\cite{famablume} point out, ``In a random walk market, with either zero or positive drift, no mechanical trading rule applied to an individual security would consistently outperform a policy of simply buying and holding the security''. The past movements could be useful only when there is some degree of dependence in successive price changes. The serial correlation measures may not capture the complex dependence that may exist. In what follows we briefly describe some commonly used trading rules and comment on their noted performance.
@@ -80,16 +76,16 @@ Alexander (1961, 1964)~\cite{alexander61,alexander64} studied the filter techniq
 The general logic behind this rule is that if the price moved up $x$\%, it is likely to move up more than $x$\% further before it moves down by $x$\%; Thus the random walk model is not likely to be upheld by the data. As observed by Mandelbrot (1963)~\cite{mandelbrot}, because of the price jumps that occur at the time of transaction, the purchase price and sale price will not exactly match as required by the rule.
 
 
-The initial application of this rule on daily data for S\&P industrials showed that the trading rules with 5\%, 6\% and 8\%. filters generated larger gross profits than the buy and hold strategy. This study did not account for the transaction cost. But a later study that incorporated a commission of 2\% for each round-trip, showed only the larger filter  $\sim$ 46\% rule beat the buy and hold strategy and all the other filters adjusting for the transaction costs did not perform any better than simply buy and hold  strategy. 
+The initial application of this rule on daily data for S\&P industrials showed that the trading rules with 5\%, 6\% and 8\%. filters generated larger gross profits than the buy and hold strategy. This study did not account for the transaction cost. But a later study that incorporated a commission of 2\% for each round-trip, showed only the larger filter  $\sim$ 46\% rule beat the buy and hold strategy and all the other filters adjusting for the transaction costs did not perform any better than simple buy and hold  strategy. 
 
 
 Fama and Blume (1966)~\cite{famablume} after applying Alexander's filter technique for each of the individual security in Dow Jones Industrial Average for the daily data during a five year period, 1957--1962, concluded, ``When commissions are taken into account, the larger profits under the filter technique are those of the brokers. When commissions are omitted, the returns from the filter techniques are, of course, greatly improved but are still not as large as the returns from simply buying and holding.'' It is argued that under random walk (RW) model, the average return on long positions should be approximately equal to the buy and hold average returns. This may not be true if the drift occurs at the time of entry or at the time of exit; the filter rule can be stated under RW model as follows; let the return, $r_{t} = \ln{P_{t}} - \ln{P_{t-1}} = \mu_{t} + a_{t}$, when $a_{t} \sim$ N(0,$\sigma_{a}^2$) and `$\mu_{t}$' is the random drift term and $\sigma_{a}^2$ is the volatility; as per the filter rule, enter if $r_{t} > r$ and suppose this occurs at time $t_{0}$. If the drift term is approximately picked up at time `$t_{0}$', so that $\mu_{t} = 0$, for $t < t_{0}$ but $\mu_{t} = \mu > 0$ for $t \geq t_{0}$, the returns from the filter should fare better. The lasting of the drift is to be carefully monitored and using the exit strategy when $r_{t} < r$ will guarantee any undue losses.
 
 
-When the time intervals are small it has been observed that there is evidence of positive dependence in returns and it may be useful to predict only short term dependence. This may signal opportunities for more frequent transactions but the cost of transactions can erode the profits.
+When the time intervals are small it has been observed that there is evidence of positive dependence in returns and that may be useful to predict short term dependence. This may signal opportunities for more frequent transactions but the cost of transactions can erode the profits. \twomedskip
 
 
-Sweeney (1988)~\cite{sweet} develops a test for profits when risk-adjusted filters are used. The stocks considered in Fama and Blume (1966)~\cite{famablume} that are ``winners'' in one period tend to persist as winners in later periods as well. Thus focusing only on winners rather than entire set of stocks gives better results. Assume that the investor uses the filter rule each day to decide to enter or exit based solely as past information. Consider the span of $N$ days and with a filter strategy, that the asset is held on $N_{\text{in}}$ days and is not held on $N_{\text{out}}$ days. At the end of $N$ days, the filter's performance is evaluated. The average excess rate of buy and hold is $\overline{R}_{\text{BH}}=\dfrac{1}{N} \sum_{i=1}^N \, (r_t - r_f )$. Assume that `$f$' is the proportion of days, the asset is not held; then the average excess rate of the filter is, $\overline{R}_{F}=\dfrac{1-f}{N_{\text{in}}} \sum_{t \in I} (r_t - r_f)$. Assume that under CAPM, expected excess rate of return equals a constant risk premium, $\text{PR}_{j}$. Further, that $E(\overline{R}_{\text{BH}}) = \text{PR}$ and $E(\overline{R}_{F}) = (1 - f)\,\text{PR}$; Use the adjusted statistic
+\noindent \textbf{Risk-adjusted Filter:} Sweeney (1988)~\cite{sweet} develops a test for profits when risk-adjusted filters are used. The stocks considered in Fama and Blume (1966)~\cite{famablume} that are ``winners'' in one period tend to persist as winners in later periods as well. Thus focusing only on winners rather than entire set of stocks gives better results. Assume that the investor uses the filter rule each day to decide to enter or exit based solely as past information. Consider the span of $N$ days and with a filter strategy, that the asset is held on $N_{\text{in}}$ days and is not held on $N_{\text{out}}$ days. At the end of $N$ days, the filter's performance is evaluated. The average excess rate of buy and hold is $\overline{R}_{\text{BH}}=\dfrac{1}{N} \sum_{i=1}^N \, (r_t - r_f )$. Assume that `$f$' is the proportion of days, the asset is not held; then the average excess rate of the filter is, $\overline{R}_{F}=\dfrac{1-f}{N_{\text{in}}} \sum_{t \in I} (r_t - r_f)$. Assume that under CAPM, expected excess rate of return equals a constant risk premium, $\text{PR}_{j}$. Further, that $E(\overline{R}_{\text{BH}}) = \text{PR}$ and $E(\overline{R}_{F}) = (1 - f)\,\text{PR}$; Use the adjusted statistic
 	\begin{equation} \label{eqn:xbarfirst}
 	x= \overline{R}_{F} - (1 - f)\, \overline{R}_{\text{BH}}
 	\end{equation}
@@ -97,7 +93,7 @@ to judge the filter rule; observe $E(x) = 0$ and $\sigma_{x} = \sigma[\frac{f(1-
 	\begin{equation} \label{eqn:bigxbar}
 	X = \overline{R}_{FI} - \overline{R}_{BH}
 	\end{equation}
-where $\overline{R}_{fI} = \frac{1}{N_{\text{in}}} \sum_{t \in I}(r_t - r_F)$; Note $E(X) = 0$ and $\sigma_{x} = \sigma_{X}$.
+where $\overline{R}_{fI} = \frac{1}{N_{\text{in}}} \sum_{t \in I}(r_t - r_F)$. Further, note that $E(X) = 0$ and $\sigma_{x} = \sigma_{X}$.
 
 
 The main advantage of $X$ is that it measures profits for each day in the duration of `$N$' days and $x$ measures profits per day for those days when the stock is held. The above results hold for the case of time varying risk premia as well; Suppose $R_f - r_f = \text{PR} + a_t$, where $a_t$ is stochastic; thus
@@ -107,10 +103,10 @@ The main advantage of $X$ is that it measures profits for each day in the durati
 If the investor has no insight into changes in risk premia, then $E(\overline{\text{PR}}_{N_{\text{in}}} - \overline{\text{PR}}_{N}) = 0$; If the investor has no insight about the stochastic, $a_t$, the filter rule may be forecasting the risk premia.
 
 
-It has been pointed out that Fama and Blume measure is biased against finding successful filter rules. The statistics $X$ and $x$ are meant for long strategies where the investor has the funds in the risk free asset when not holding. If we define the difference in cumulative excess returns between days investors holds and does not hold,
-	\[
+It has been pointed out that Fama and Blume measure is biased against finding successful filter rules. The statistics $X$ and $x$ are meant for long strategies where the investor has the funds in the risk free asset when not holding. If we define the difference in cumulative excess returns between days investor holds and does not hold,
+	\begin{equation} \label{eqn:rfprime}
 	\overline{R}_{F'} = \dfrac{1}{N} \left( \sum_{t\in I} (r_t - r_f) - \sum_{t \in O} (r_t - r_f) \right)
-	\]
+	\end{equation}
 and it is shown that $E(\overline{R}_{{F}'} - \overline{R}_{\text{BH}}) = (1 - 2f) \text{PR} - \text{PR} = -2f \text{PR}$, a proportion of constant risk premium, thus resulting in a bias.
 
 
@@ -119,13 +115,13 @@ and it is shown that $E(\overline{R}_{{F}'} - \overline{R}_{\text{BH}}) = (1 - 2
 \subsection{Moving Average Variants and Oscillators}
 
 
-The moving average trading rules are generally based on comparing the current price with a form of moving average of past price. Consider the prices, $P_t, P_{t-1}, \ldots, P_{t-m+1}$ with a moving window of width `$m$'. Various versions of moving average are available in the literature and their relative merits depend on the price patterns:
+The moving average trading rules are generally based on comparing the current price with a form of moving average of past prices. Consider the prices, $P_t, P_{t-1}, \ldots, P_{t-m+1}$ with a moving window of width `$m$'. Various versions of moving average are available in the literature and their relative merits depend on the price patterns:
 	\begin{flalign}\label{eqn:multi}
-	&& &\text{Simple Moving Average (SMA): } \overline{P}_t^{(m)}= \dfrac{1}{m} \sum_{i=0}^{m-1} P_{t-i} && \notag \\
-	&& &\text{Exponentially Weighted Average (EWA): } \overline{P}_t^{(m)} = \left(\dfrac{1}{\sum_{i=0}^{m-1} \lambda^{i+1}} \right) \sum_{i=0}^{m-1} \lambda^{i+1} P_{t-i} && \\
-	&& &\text{Bollinger Weighted Moving Average (BWMA): }  \hat{P}_t^{(m)}= \left(\dfrac{1}{\sum_{i=1}^m i}\right) \sum_{i=0}^{m-1} (m-i) P_{t-i} && \notag
+	&\text{{\small Simple Moving Average (SMA): }} \overline{P}_t^{(m)}= \dfrac{1}{m} \sum_{i=0}^{m-1} P_{t-i} \notag \\
+	&\text{{\small Exponentially Weighted Average (EWA): }} \overline{P}_t^{(m)} = \left(\dfrac{1}{\sum_{i=0}^{m-1} \lambda^{i+1}} \right) \sum_{i=0}^{m-1} \lambda^{i+1} P_{t-i} \\
+	&\text{{\small Bollinger Weighted Moving Average (BWMA): }}  \hat{P}_t^{(m)}= \left(\dfrac{1}{\sum_{i=1}^m i}\right) \sum_{i=0}^{m-1} (m-i) P_{t-i} \notag
 	\end{flalign}
-Note that the smoothing constant, `$\lambda$', must be between zero and one. The rules based on indicators of the above kind will tend to be profitable in markets that exhibit definite trends and so they are generally known as ``trend-following'' or some times, called as ``momentum'' indicators. Some simple rules that are used in practice are: \twomedskip
+Note that the smoothing constant, `$\lambda$', must be between zero and one. The rules based on indicators of the above kind tend to be profitable in markets that exhibit definite trends and so they are generally known as ``trend-following'' or some times, called as ``momentum'' indicators. Some simple rules that are used in practice are: \twomedskip
 
 
 \noindent\fbox{%
@@ -167,7 +163,7 @@ Broadly the key quantities such as moving average, weighted (exponentially or ot
 } \twomedskip
 
 
-\noindent\textbf{RSI Oscillator:} Another oscillator that is designed to measure the strength of price movement in a particular direction is the relative strength indicator (RSI). The logic being that if the changes in price are too rapid in one direction, a correction in the opposite direction is likely to follow and may occur soon. Thus these types of rules are called `reversal' or `overbought/oversold' indicators. To define RSI, let $U_{t} = \sum_{i=1}^m I(P_{t-i} - P_{t-i-1} > 0)\,\lvert P_{t-i} - P_{t-i-1} \rvert$ and $D_{t} = \sum_{i=1}^m I_{t} (P_{t-i} - P_{t-i-1} < 0)\,\lvert S_{t-i} - S_{t-i-1}\rvert$ where $I(\cdot)$ is an indicator function. Thus $U_t$ and $D_t$ aggregate the positive and negative side of the price changes. Now define $\text{RS}_{t} = \frac {U_{t}}{D_{t}}$, which can be taken as a measure of odds ratio, and define
+\noindent\textbf{RSI Oscillator:} Another oscillator that is designed to measure the strength of price movement in a particular direction is the relative strength indicator (RSI). The logic being that if the changes in price are too rapid in one direction, a correction in the opposite direction is likely to follow and may occur soon. Thus, these types of rules are called `reversal' or `overbought/oversold' indicators. To define RSI, let $U_{t} = \sum_{i=1}^m I(P_{t-i} - P_{t-i-1} > 0)\,\lvert P_{t-i} - P_{t-i-1} \rvert$ and $D_{t} = \sum_{i=1}^m I_{t} (P_{t-i} - P_{t-i-1} < 0)\,\lvert S_{t-i} - S_{t-i-1}\rvert$ where $I(\cdot)$ is an indicator function. Thus $U_t$ and $D_t$ aggregate the positive and negative side of the price changes. Now define $\text{RS}_{t} = \frac {U_{t}}{D_{t}}$, which can be taken as a measure of odds ratio, and define
 	\begin{equation} \label{eqn:rsi}
 	\text{RSI}_{t} = 100 \times \frac{U_{t}}{U_{t} + D_{t}} = 100 - 100 \left( \dfrac{1}{1 + \text{RS}_t} \right).
 	\end{equation}
@@ -189,21 +185,22 @@ These rules that appear to be somewhat ad hoc can all be related back to the ran
 	\begin{equation} \label{eqn:anotherpt}
 	p_t = \mu + p_{t-1} + a_t,
 	\end{equation}
-where $a_t \sim \text{N}(0,\sigma^2)$, $\sigma^2$ is the volatility of the stock and note the return, $r_t= p_t - p_{t-1}$; thus, $r_t \sim \text{N}(\mu,\sigma^2)$. If there is any autocorrelation in `$r_t$', and if $\overline{r}_n$ is the average based on the last `$n$' observations, then $\overline{r}_n \sim \text{N}\left(\mu,\sum_{\mid h \mid < n}\left(1-\frac{\mid h \mid}{n}\right)\frac{\gamma(h)}{n}\right)$, where $\gamma(h)$ is the autocovariance function of lag `$h$', with $\gamma(0)=\sigma^2$. When $\gamma(h)=0 \text{ for } h > 0$, that P($\overline{r}_n > 0)= \text{P}(\overline{a}_n > -\mu)= \text{P}\left( \frac{\overline{a}_n}{\sigma} > \frac{-\mu}{\sigma} \right)= 1 - \Phi\left( -\frac{\mu}{\sigma} \right)$, where $\Phi$ is the c.d.f. of the standard normal distribution. Thus we can evaluate $\text{RS}_t$ by the odds ratio, $(1 - \Phi(-\frac{\mu}{\sigma}))/(\Phi(-\frac{\mu}{\sigma}))$. In fact the reversal rule stated above implies, for $\text{RSI}_t$ to be greater than 70, the odd ration, $\text{RS}_t > 2.33$. All the rules stated in this section can be written in the form of the c.d.f. of the underlying distribution of the return. This model-based interpretation of the rules can help us in accommodating other factors such as volume more formally in the model and evaluate their value added to the strategy performance. While there are many studies that show that these technical rules perform well in practice, more formal studies are called for in this area. The use of the technical rules by the foreign exchange professionals is well documented (see Menkhoff and Taylor (2007)~\cite{MalTay}).
+where $a_t \sim \text{N}(0,\sigma^2)$, $\sigma^2$ is the volatility of the stock and note the return, $r_t= p_t - p_{t-1}$; thus, $r_t \sim \text{N}(\mu,\sigma^2)$. If there is any autocorrelation in `$r_t$', and if $\overline{r}_n$ is the average based on the last `$n$' observations, then $\overline{r}_n \sim \text{N}\left(\mu,\sum_{\mid h \mid < n}\left(1-\frac{\mid h \mid}{n}\right)\frac{\gamma(h)}{n}\right)$, where $\gamma(h)$ is the autocovariance function of lag `$h$', with $\gamma(0)=\sigma^2$. When $\gamma(h)=0 \text{ for } h > 0$, that P($\overline{r}_n > 0)= \text{P}(\overline{a}_n > -\mu)= \text{P}\left( \frac{\overline{a}_n}{\sigma} > \frac{-\mu}{\sigma} \right)= 1 - \Phi\left( -\frac{\mu}{\sigma} \right)$, where $\Phi$ is the c.d.f. of the standard normal distribution. Thus we can evaluate $\text{RS}_t$ by the odds ratio, $(1 - \Phi(-\frac{\mu}{\sigma}))/(\Phi(-\frac{\mu}{\sigma}))$. In fact the reversal rule stated above implies, for $\text{RSI}_t$ to be greater than 70, the odds ratio, $\text{RS}_t > 2.33$. All the rules stated in this section can be written in the form of the c.d.f. of the underlying distribution of the return. This model-based interpretation of the rules can help us in accommodating other factors such as volume more formally in the model and evaluate their value added to the strategy performance. While there are many areas where technical rules are shown to perform well, the use of the technical rules by the foreign exchange market is well documented (see Menkhoff and Taylor (2007)~\cite{MalTay}).
+
 
 
 % Patterns Discovery via Non-Parametric Smoothing Methods
 \section{Patterns Discovery via Non-Parametric Smoothing Methods}
 
 
-Charting has been a part of financial practice for many decades; but because of its highly subjective nature of interpretation of geometric shapes in price series, reading charts is ``often in the eyes of the beholder''. Lo, Mamaysky and Wang (LMW) (2000)~\cite{LoMWang} propose a systematic approach to pattern recognition using nonparametric kernel regression. The general goal of this analysis is to identify regularities in the price series by extracting nonlinear patterns. The smoothing estimators that can extract the signal by averaging out the noise are ideally suited for this task.	
+Charting prices has been a part of financial practice for many decades; but because of its highly subjective nature of interpretation of geometric shapes, reading charts is ``often in the eyes of the beholder''. Lo, Mamaysky and Wang (LMW) (2000)~\cite{LoMWang} propose a systematic approach to pattern recognition using nonparametric kernel regression. The general goal of this analysis is to identify regularities in the price series by extracting nonlinear patterns. The smoothing estimators that can extract the signal by averaging out the noise are ideally suited for this task.	
 
 
-Assume that prices follow,
+Assume that price follows,
 	\begin{equation} \label{eqn:4pt}
 	P_{t} = m(x_{t}) + a_{t},
 	\end{equation}
-where $m(x_{t})$ is an arbitrary function of the state variable, $X_{t}$. For most practical purposes, assume $X_{t}= t$ as the data is typically chronological. Kernel regression, orthogonal series expansion, projection pursuit, neural networks are all examples of smoothing methods that are applied to estimate $\hat{m}(x_{t})$;
+where $m(x_{t})$ is an arbitrary function of the state variable, $x_{t}$. For most practical purposes, assume $x_{t}= t$ as the data is typically chronological. Kernel regression, orthogonal series expansion, projection pursuit, neural networks are all examples of smoothing methods that are applied to estimate $\hat{m}(x_{t})$;
 	\begin{equation} \label{eqn:4mx}
 	\hat{m}(x) = \frac{1}{T} \sum_{t=1}^Tw_{t}(x)P_{t},
 	\end{equation}
@@ -214,7 +211,7 @@ where the weights $\{w_{t}(x)\}$ are large for those $P_{t}$'s paired with $x_{t
 where $K(x)$ is a probability density function and is also-called as `Kernel', and $\hat{m}_{h}(x)$ is called Nadaraya-Watson kernel estimator. A popular density is that of a standard normal distribution, $K(t)=\frac{e^{-t^2/2}}{\sqrt{2\pi}}$.
 
 
-Selecting the appropriate bandwidth, `$h$' is important as a small `$h$' may not smooth much and a large `$h$' may result in too smooth a graph. The choice of `$h$' is made through cross-validation, by minimizing
+Selecting an appropriate bandwidth, `$h$' is important as a small `$h$' may not smooth much and a large `$h$' may result in too smooth a graph. The choice of `$h$' is made through cross-validation, by minimizing
 	\begin{equation} \label{eqn:cvh}
 	\text{CV}(h) = \frac{1}{T}\sum_{t=1}^T (P_{t} - \hat{m}_{h}(t))^2,
 	\end{equation}
@@ -232,7 +229,7 @@ To automate the detection of charting patterns, first the pattern is defined in 
 and the local extremes are identified through sign changes in $\hat{m}_{h}(\tau)$.
 
 
-To test if the kernel regression yields better prediction, LMW(2000)~\cite{LoMWang} compare the unconditioned distribution of returns to the conditioned distribution, conditioned on the existence of a pattern. These comparisons are made through a goodness-of-fit test such as Kolmogorov-Smirnov test. It  is generally found that the Kernel regression method yields somewhat better predictions. Jegadeesh (2000)~\cite{Jeqa} in his discussion of LMW(2000)~\cite{LoMWang} questions if the chartists' belief that selected patterns of the past tend to repeat as there is a great deal of noted subjectivity in the interpretation of charts. It is further noted that the practitioners tend to use the visual patterns in conjunction with other information such as macro level events that exert large influence compared to stock specific moves, to time their trades.
+To test if the kernel regression yields better prediction, LMW(2000)~\cite{LoMWang} compare the unconditioned distribution of returns to the conditioned distribution, conditioned on the existence of a pattern. These comparisons are made through a goodness-of-fit test such as Kolmogorov-Smirnov test. It  is generally found that the Kernel regression method yields somewhat better predictions. Jegadeesh (2000)~\cite{Jeqa} in his discussion of LMW(2000)~\cite{LoMWang} questions if the chartists' belief, that selected patterns of the past tend to repeat, as there is a great deal of noted subjectivity in the interpretation of charts. It is further noted that the practitioners tend to use the visual patterns in conjunction with other information such as macro level events that exert large influence compared to stock specific moves, to time their trades.
 
 
 
@@ -240,35 +237,35 @@ To test if the kernel regression yields better prediction, LMW(2000)~\cite{LoMWa
 \section{A Decomposition Algorithm \label{s:decomp_alg}}
 
 
-The rules that were discussed in previous sections are mostly trend following and use the past price or returns data. The predictability of returns generally tends to be weak consistent with efficient market theory. But the direction of change and volatility of returns tend to exhibit somewhat stronger dependence over time. Anatolyev and Gospodinov (2010)~\cite{Ananto2} exploit this and decompose the returns into a product of sign and absolute value components whose joint distribution is obtained through a model for absolute value of the return and a binary choice model for direction of the return and a copula for their interaction. Precisely the returns, `$r_{t}$', is written as
+The rules that were discussed in previous sections can be termed as mostly trend following because they use the past behavior of price or returns data to study the future behavior. The predictability of returns generally tends to be weak consistent with the efficient market theory. But the direction of change and volatility of returns tend to exhibit somewhat stronger dependence over time. Anatolyev and Gospodinov (2010)~\cite{Ananto2} exploit this and decompose the return into a product of sign and absolute value components. Their joint distribution is obtained through a continuous variable model for absolute value of the return and a binary choice model, for direction of the return and a copula for their interaction. Precisely the returns, `$r_{t}$', is written as
 	\begin{equation} \label{eqn:3sgn}
 	r_t = c + \lvert r_t - c\rvert \sgn (r_t - c)= c + \lvert r_t - c \rvert (2\cdot I(r_t  > c) - 1),
 	\end{equation}
-where $I(r_t > c)$ is an indicator function. The values of $c$ are determined by the user; it could be a multiple of the standard deviation of `$r_{t}$' or it could represent the transaction cost or the risk free rate. This model is conceptually similar to Rydberg and Shephard (2003)~\cite{Ryd} and potential usefulness of the decomposition is also mentioned in Anatolyev and Gerko (2005)~\cite{Ananto1}.
+where $I(r_t > c)$ is an indicator function. The values of $c$ are determined by the user; it could be a multiple of the standard deviation of `$r_{t}$' or it could represent the transaction cost or the risk free rate or any other benchmark of interest. This formulation is conceptually similar to Rydberg and Shephard (2003)~\cite{Ryd} and potential usefulness of the decomposition is also mentioned in Anatolyev and Gerko (2005)~\cite{Ananto1}.
 
 
-An advantage of the decomposition can be illustrated as follows. Assume for convenience, $c = 0$. From the model for $|r_t|$ and $I(r_t > 0)$, write $E_{t-1}(\left|r_{t}\right|) = \alpha_{\left|r\right|} + \beta_{\left| r \right|}\text{RV}_{t-1}$ and $\text{Pr}_{t-1}(r_t >0) = \alpha_{\left| I \right|} + \beta_{\left| I \right|}\text{RV}_{t-1}$, where RV denotes the realized volatility resulting in 
-	\[
+An advantage of the decomposition can be illustrated as follows. Assume for convenience, $c = 0$. From the model for $|r_t|$ and $I(r_t > 0)$, write $E_{t-1}(\left|r_{t}\right|) = \alpha_{\left|r\right|} + \beta_{\left| r \right|}\text{RV}_{t-1}$ and $\text{Pr}_{t-1}(r_t >0) = \alpha_{\left| I \right|} + \beta_{\left| I \right|}\text{RV}_{t-1}$, where RV denotes the realized volatility. This results in
+	\begin{equation} \label{eqn:etmoneis}
 	E_{t-1}(r_t)= -E_{t-1}(\left| r_t \right|) + 2E_{t-1}(\left| r_{t} \right| \cdot I(r_{t} > 0))= \alpha_{r} + \beta_{r} \text{RV}_{t-1} + \sigma_{r} \text{RV}_{t-1}^2.
-	\]
+	\end{equation}
 
 
-Thus, the decomposition in \eqref{eqn:3sgn} leads to accommodating non-linearity and the model can be expanded to include other asset related variables. Hence any dynamic modeling that captures the hidden non-linearities is likely to improve the prediction of $r_{t}$. With the random walk model for price, $r_t$ is taken to be white noise, but the above formulation helps to capture any time dependence. We describe below some useful formulations.
+Thus, the decomposition in \eqref{eqn:3sgn} leads to accommodating non-linearity and the model in \eqref{eqn:etmoneis} can be expanded to include other asset related variables as well. Hence any dynamic modeling that captures the hidden non-linearities is likely to improve the prediction of $r_{t}$. Even when the random walk model for price return, $r_t$ is white noise, but the above formulation helps to capture some time dependence. We describe below other useful formulations.
 
 
 The marginal distributions of the absolute value and sign terms are modeled as follows.
 	\begin{equation} \label{eqn:psieta}
 	\lvert r_{t} - c \rvert = \psi_{t} \eta_{t},
 	\end{equation}
-where $\eta_{t}$ is Weibull distribution and
+where $\eta_{t}$ is Weibull distribution \eqref{eqn:wei_gam} and
 	\begin{equation} \label{eqn:lnspi}
 	\ln{\psi_{t}} = w_{v} + \beta_{v} \ln{\psi_{t-1}} + r_{v} \ln\lvert r_{t-1} - c \rvert + \rho_{v} I(r_{t-1}>c) + x'_{t-1} \delta_{v}.
 	\end{equation}
-Note the above specification is the same as the autoregressive conditional duration (ACD) model discussed in Chapter~\ref{ch:ch_advanced}. The $x_{t}$'s  are macroeconomic predictors that may have an effect on volatility dynamics. The specification of the indicator variable is done as follows: The indicator variable $I(r_{t} > c)$ is assumed to follow Bernoulli($p_{t})$, where $p_{t} = \text{logit}(\theta_{t})$, where 
+Note the above specification is the same as the autoregressive conditional duration (ACD) model discussed in Chapter~\ref{ch:ch_advanced}. The $x_{t}$'s  are macroeconomic predictors that may have an effect on volatility dynamics. The specification of the indicator variable is done as follows: $I(r_{t} > c)$ is assumed to follow Bernoulli($p_{t})$, where $p_{t} = \text{logit}(\theta_{t})$, where 
 	\begin{equation}\label{eqn:3thetat}
 	\theta_{t} = w_{d} + \phi_{d}I (r_{t-1}>c) + y_{t-1}'\delta_{d},
 	\end{equation}
-where the $y_{t}$'s can, besides the macro economic variables, include the realized variance, $\text{RV}_{t} = \sum_{s=1}^{m} r^2_{t,s}$, bipower variation, $\text{BPV}_{t} = \frac{\pi}{2} \cdot \frac{m}{m-1} \cdot \sum_{s=1}^{m-1} \lvert r_{t,s}\rvert\, \lvert r_{t,s+1}\rvert$ and the realized third and fourth moments representing skewness and kurtosis measures, $\text{RS}_{t} = \sum_{s=1}^m r_{t,s}^3$ and $\text{RK}_{t} = \sum_{s=1}^{m} r_{t,s}^4$.
+where the $y_{t}$'s can, besides the macro economic variables, include the realized variance, $\text{RV}_{t} = \sum_{s=1}^{m} r^2_{t,s}$, bipower variation, $\text{BPV}_{t} = \frac{\pi}{2} \cdot \frac{m}{m-1} \cdot \sum_{s=1}^{m-1} \lvert r_{t,s}\rvert\, \lvert r_{t,s+1}\rvert$ and the realized third and fourth moments of returns representing skewness and kurtosis measures, $\text{RS}_{t} = \sum_{s=1}^m r_{t,s}^3$ and $\text{RK}_{t} = \sum_{s=1}^{m} r_{t,s}^4$.
 
 
 With the marginals specified as above with the corresponding, c.d.f.'s $F(\cdot$), the joint density is given as
@@ -278,29 +275,17 @@ With the marginals specified as above with the corresponding, c.d.f.'s $F(\cdot$
 where $c(w_1, w_2)$ is a Copula, a bivariate c.d.f.. For a general discussion on Copulas, refer to Lai and Xing (2008)~\cite[Section 12.3.3]{lai1}.
 
 
-In the trading context, the value of a strategy to buy or sell depends on how good the short term prediction of $r_{t}$ is. Note that the conditional mean can be expressed as,
-	\[
-	E_{t-1}(r_t) = c - E_{t-1}(\left| r_t - c \right|) + 2 E_{t-1}(\left| r_t - c \right| I(r_t - c)).
-	\]
-Hence,
-	\begin{equation} \label{eqn:hatrt}
-	\hat{r}_{t} = c - \hat{\psi}_{t} + 2 \hat{\varepsilon}_t,
-	\end{equation}
-where $\varepsilon_t$ is the expected value of the cross product (second) term in $E_{t-1}(r_t)$. If the cross-product terms are conditionally independent, $\varepsilon_t = \psi_t p_t$ and thus
-	\begin{equation} \label{eqn:hatrt2}
-	\hat{r}_t = c + (2\hat{p}_t - 1)\hat{\psi}_t
-	\end{equation}
-Thus, the prediction of $r_{t}$ includes both the directional and volatility predictions.
+In the trading context, the value of a strategy to buy or sell depends on how good the short term prediction of $r_{t}$ is. Note that the conditional mean can be expressed as, $E_{t-1}(r_t) = c - E_{t-1}(\left| r_t - c \right|) + 2 E_{t-1}(\left| r_t - c \right| I(r_t - c))$. Hence, $\hat{r}_{t} = c - \hat{\psi}_{t} + 2 \hat{\varepsilon}_t$, where $\varepsilon_t$ is the expected value of the cross product (second) term in $E_{t-1}(r_t)$. If the cross-product terms are conditionally independent, $\varepsilon_t = \psi_t p_t$ and thus $\hat{r}_t = c + (2\hat{p}_t - 1)\hat{\psi}_t$. Note, the prediction of $r_{t}$ includes both the directional and volatility predictions.
 
 
 A possible strategy is to invest in stocks if the predicted excess return is positive or invest in bonds if it is negative. In term of established measures of performance, the decomposition method is shown to yield somewhat superior results. \twomedskip
 
 
-\noindent\textbf{Other Non-Linear (Machine Learning) Models:} There is more and more interest in using Neural Networks for developing technical rules that have better predictive power than the baseline models such as random walk or the following AR($p$) model:
+\noindent\textbf{A Related Neural-Network Model:} There is more and more interest in using Neural Networks for developing technical rules that have better predictive power than the baseline models such as random walk or the following AR($p$) model:
 	\begin{equation} \label{eqn:ri}
 	r_t = \alpha + \sum_{i=1}^p\phi_ir_{t-i} + a_t,
 	\end{equation}
-where $a_t \sim N(0, \sigma_a^2)$. This model is augmented with term used in oscillator rule that was discussed earlier. Define $s_t^{m,n} = P_t^m - P_t^n$, the oscillator signal resulting from the short and long term moving averages of the prices and the model,
+where $a_t \sim N(0, \sigma_a^2)$. This model is augmented with term used in oscillator rule that was discussed earlier in this chapter. Define $s_t^{m,n} = P_t^m - P_t^n$, the oscillator signal resulting from the short and long term moving averages of the prices and the model,
 	\begin{equation} \label{eqn:rtsum}
 	r_t = \alpha + \sum_{i=1}^p\phi_ir_{t-i} + \sum_{i=1}^p\eta_is_{t-i}^{m,n}+ a_t
 	\end{equation}
@@ -311,26 +296,26 @@ is an extended linear model and is shown to increase the predictive power. Exten
 where the activation function $G(x) = \dfrac{1}{1 + e^{-\alpha x}}$ is of the logistic functional form. Gencay(1998)~\cite{gencay} examining the daily Dow Jones Industrial Average Index from 1877 to 1998 finds the evidence of nonlinear predictability in returns by using the oscillator signals.
 
 
-\todo{This is an area of exponential interest both from academia and practitioners ; should we somewhat acknowledge the fact we are not planning on treating this here, and instead point to some of the references in the field?}
-
-
 
 % Fair Value Models
 \section{Fair Value Models}
 
 
-The trading strategies are typically evaluated by comparing their performance against some benchmarks. Traders often face challenges to find trading opportunities that will outperform these benchmarks. In the model considered in Section~\ref{s:decomp_alg}, the quantity, `$c$' is taken to be transaction cost or simply it can be set to risk-free rate. The fair value models are based on the assumption that the fair price of a stock is influenced by some common factors. These factors are general market factors; examples of the linear factor models of returns are CAPM, Fama-French three and five factor models and Carhart factor models. As consistent with algorithmic trading principle, large deviations that are not explained by the dynamics of the established factors are taken to be abnormal and can be exploited as trading opportunities.
+The trading strategies are typically evaluated by comparing their performance against some benchmarks discussed in Section~\ref{sec:various_measures}. Traders often face challenges to find trading opportunities that will outperform these benchmarks. In the model considered in Section~\ref{s:decomp_alg}, the quantity, `$c$' is taken to be transaction cost or simply it can be set to risk-free rate. The fair value models are based on the assumption that the fair price of a stock is influenced by some common factors. These factors are general market factors; examples of the linear factor models of returns are CAPM, Fama-French three and five factor models and Carhart factor models (see below and also Chapter~\ref{chap:ch_news_an} for a detailed discussion of these factors) . As consistent with algorithmic trading principle, large deviations that are not explained by the dynamics of the established factors are taken to be abnormal and can be exploited as trading opportunities. These models are termed fair value models as they refer to reasonable benchmarks for the comparison of the strategy performance.
 
 
-For the CAPM model, where $r_t$ is the return on the asset, $r_{mt}$ is the market return, and $r_f$ is the risk-free rate,
-	\begin{equation} \label{eqn:rtmrf}
-	r_t - r_f = \alpha + \beta \,( r_{mt} - r_f ) + e_t.
+For the CAPM model \eqref{eqn:rt_minus_rf_is}, it is expected that $\alpha= 0$ if the model holds. Any deviation from the null hypothesis $H_0: \alpha= 0$ indicates the adjusted stock (alpha) performance after adjusting for the risk-return relationship. Note that $\alpha$ can be written as,
+	\begin{equation} \label{eqn:alpha_written}
+	\alpha= E(r_t) - \beta E(r_{mt}) + (\beta -1) r_f.
 	\end{equation}
-It is expected that $\alpha= 0$ if the model holds. Any deviation from the null hypothesis $H_0: \alpha= 0$ indicates the adjusted stock (alpha) performance after adjusting for the risk-return relationship. In addition it is expected in a high frequency setting, $e_t$'s are likely to exhibit some serial dependence:
+When $\beta>1$, the stock is taken to be riskier than the market. If the stock is closely aligned with the market, that is $\beta=1$, $\alpha= E(r_t) - E(r_{mt})$ and thus a positive `$\alpha$' would indicate superior performance.
+
+
+In addition it is expected in a high frequency setting, $e_t$'s are likely to exhibit some serial dependence:
 	\begin{equation} \label{eqn:et}
 	e_t = a_t - \theta a_{t-1}.
 	\end{equation}
-Estimating the model parameters can be accomplished by the methodology given in Chapter~\ref{ch:ch_uvts}; the procedure is generalized least squares and is iterative. The model in \eqref{eqn:rtmrf} can be extended to include other factors to provide a general model:
+Estimating the model parameters can be accomplished by the methodology given in Chapter~\ref{ch:ch_uvts}; the procedure is generalized least squares and is iterative. The CAPM model can be extended to include other factors to provide a general model:
 	\begin{equation} \label{eqn:rtalpha}
 	r_t = \alpha + \beta'f_{t} + e_t,
 	\end{equation}
@@ -340,7 +325,7 @@ where $f_t$ is an `$n$'-dimensional vector of factors that may include in additi
 Another variant of this type is considered in Avellaneda and Lee (2010)~\cite{avellee}. They describe a small portfolio trading algorithm. The returns of stocks in the portfolio are regressed on the returns of exchange traded funds (ETFs) or portfolios that are predictive. The resulting residuals are then examined for signals. The main practical difficulty here is that some stocks can be a part of several ETFs and so the set of predictors can be large. 
 
 
-A general comment is in order: the so-called factors mostly meant for explaining cross-sectional variation are slow-moving and hence the only factor that is likely to change in the high frequency context is the market factor. Also the error term may contain mostly the information about the market friction and hence the model \eqref{eqn:rtmrf} itself may not be reliable.
+A general comment is in order: the so-called factors mostly meant for explaining cross-sectional variation are slow-moving and hence the only factor that is likely to change in the high frequency context is the market factor. Also the error term may contain mostly the information about the market friction and hence the CAPM model itself may not hold in practice.
 
 
 
@@ -348,13 +333,13 @@ A general comment is in order: the so-called factors mostly meant for explaining
 \section{Back-Testing and Data Snooping:  In-Sample and Out-of-Sample Performance Evaluation}
 
 
-With the publication of an influential paper by Brock, Lakonishok and LeBaron (1992)~\cite{BLL} on technical rules, the main stream finance academics started paying attention to studying the properties of these rules. The rules considered are mostly the variants moving average and trading range break and applying these rules on the Dow Jones Index from 1897 to 1986, it is shown that technical strategies perform very well. Results they obtain are not consistent with the usual benchmark models: the random walk, AR(1), GARCH-M and Exponential GARCH. Buy signals generally tend to fare better than sell signals. The $p$-values for the rules are estimated through Bootstrap method. But Ready(2002)~\cite{ready} argues that the apparent success after transaction costs of the Brock et al. (1992)~\cite{BLL} moving average rules is a spurious result of data snooping. It's shown that the rules did poorly post 1986 and the average returns for 1987--2000 were higher on days when strategies suggest to be out of the market.
+With the publication of an influential paper by Brock, Lakonishok and LeBaron (1992)~\cite{BLL} on technical rules, the main stream finance academics started paying attention to studying the properties of these rules. The rules considered are mostly the variants of moving average and trading range break. Applying these rules on the Dow Jones Index from 1897 to 1986, it is shown that technical strategies perform well. Results obtained are not consistent with the usual benchmark models: the random walk, AR(1), GARCH-M and Exponential GARCH. Buy signals generally tend to fare better than sell signals. The $p$-values for the rules are estimated through Bootstrap method. But Ready(2002)~\cite{ready} argues that the apparent success after transaction costs of the Brock et al. (1992)~\cite{BLL} moving average rules is a spurious result of data snooping. It is shown that the rules did poorly post 1986 and the average returns for 1987--2000 were higher on days when strategies suggest to be out of the market. Thus the performance of the technical rules must be carefully evaluated.
 
 
-Data snooping occurs if the same data is used for both model selection and model validation. The significant results obtained can be due to pure chance. As Sullivan, Timmermann and White (1999)~\cite{sullivan1999data} suggest the data snooping may be due to survivorship bias as only successful trading rules tend to be replicated. Thus it is important to consider almost the entire universe of trading rules to study the snooping bias.
+Data snooping occurs if the same data is used for both model selection and model validation. The significant results obtained can be due to pure chance. As Sullivan, Timmermann and White (1999)~\cite{sullivan1999data} suggest the data snooping may be due to survivorship bias as only successful trading rules tend to be replicated. Thus it is important to consider almost the entire universe of trading rules to study the snooping bias. It is suggested using a bootstrap procedure studied in White (1999)~\cite{white1999} to check on data snooping bias. 
 
 
-Sullivan et al (1999)~\cite{sullivan1999data} suggest using a bootstrap procedure studied in White (1999)~\cite{white1999} to check on data snooping bias. The bias comes mainly from the application of multiple trading rules on the same set of data and thus by pure chance can yield some significant results. If there are `$l$' trading rules under consideration and they are validated over next `$n$' periods, define
+The bias comes mainly from the application of multiple trading rules on the same set of data and thus by pure chance can yield some significant results. If there are `$l$' trading rules under consideration and they are validated over next `$n$' periods, define
 	\begin{equation} \label{eqn:barf}
 	\overline{f}= \frac{1}{n} \sum_{j=1}^n\hat{f}_{t+j},
 	\end{equation}
@@ -362,11 +347,11 @@ where $\hat{f}_{t+j}$ is the observed performance measure for period `$t+j$', ba
 	\begin{equation} \label{eqn:fktj}
 	f_{k,t+j}= \ln(1+r_{t+j} s_k) - \ln(1+r_{t+j} s_0),
 	\end{equation}
-where $r_{t+j}$ is the return, $s_k$ and $s_0$ are signal functions for the $k$th trading rule and the baseline or benchmark rule, that can take three positions: long, short and neutral, taking values 1, $-1$, and zero, respectively. The signal functions are of course based on data and information available as of '$t$'. The proposed test assumes the null hypothesis that the best technical rule does no better than the benchmark rule:
+where $r_{t+j}$ is the return, $s_k$ and $s_0$ are signal functions for the $k$th trading rule. The baseline or benchmark rule can take three positions: long, short and neutral, taking values 1, $-1$, and zero, respectively. The signal functions are of course based on data and information available as of '$t$'. The proposed test assumes the null hypothesis that the best technical rule does no better than the benchmark rule:
 	\begin{equation} \label{eqn:H0}
 	H_0: \max_{k=1,\ldots,l} E(f_k) \leq 0.
 	\end{equation}
-Rejection of $H_0$ would establish that the best technical rule is superior to the benchmark rule. Hypothesis similar to \eqref{eqn:H0} can be formulated for the Sharpe ratio as well which will be a measure of risk-adjusted return. The $p$-values for $H_0$ are obtained through Bootstrap resampling procedures, to construct the following statistics:
+Rejection of $H_0$ would establish that the best technical rule is superior to the benchmark rule. Hypothesis similar to \eqref{eqn:H0} can be formulated, for the Sharpe ratio as well, which will be a measure of risk-adjusted return. The $p$-values for $H_0$ are obtained through Bootstrap resampling procedures, to construct the following statistics:
 If there are `$B$' bootstrapped values of $\overline{f}_k$ denoted by $\overline{f}_{k,i}^*, i=1,2,\ldots,B$ construct the following statistics:
 	\begin{equation} \label{eqn:linev}
 	\overline{v}_l = \max_{k=1,\ldots,l} \{ \overline{f}_k \sqrt{n} \}
@@ -378,10 +363,10 @@ If there are `$B$' bootstrapped values of $\overline{f}_k$ denoted by $\overline
 The values of $\overline{v}_l$ are compared to the quantities of $\overline{v}_{l,i}^*$ to obtain the $p$-values.
 
 
-The number of trading rules, $l=7846$, considered by Sullivan et al (1999)~\cite{sullivan1999data} is fairly exhaustive. The benchmark rule is being `always out of the market.' The difference between the two $p$-values, i.e. between the Bootstrap resampling method and the nominal method is fairly substantial for the out-of-sample periods for the universe of trading rules considered. However, there are certain trading rules that are found to outperform the benchmarks both in terms of the average return and the Sharpe ratio.
+The number of trading rules, $l=7846$, considered by Sullivan et al (1999)~\cite{sullivan1999data} is fairly exhaustive. The benchmark rule is being `always out of the market.' The difference between the two $p$-values, i.e. between the Bootstrap resampling method and the nominal method is fairly substantial, for the out-of-sample periods for the universe of trading rules considered. However, there are certain trading rules, that are found to outperform the benchmarks both in terms of the average return and the Sharpe ratio.
 
 
-Two main drawbacks of the above test are: one the test is conservative and may lose power when poor performing models are included in the universe of the tests; second the test does not identify other significant models other than the best performing model. Hsu, Hsu and Kuan (2010)~\cite{hsukuan2010} propose a stepwise modification of the `superior predictive ability (SPA)' test suggested in Hansen (2005)~\cite{hansen2005} and the modification is suggested in Romano and Wolf (2005)~\cite{romano2005}. The modified method works as follows; the test statistic is
+Two main drawbacks of the above test are: one the test is conservative and may lose power when poor performing models are included in the universe of the tests; second the test does not identify significant models other than the best performing model. Hsu, Hsu and Kuan (2010)~\cite{hsukuan2010} propose a stepwise modification of the `superior predictive ability (SPA)' test suggested in Hansen (2005)~\cite{hansen2005} and adapt the modification suggested in Romano and Wolf (2005)~\cite{romano2005}. The modified method works as follows; the test statistic is
 	\begin{equation} \label{eqn:SPA}
 	\text{SPA}_l = \max\left(\max_{k=1,\ldots,l} ( \overline{f_k} \sqrt{n}, 0 ) \right).
 	\end{equation}
@@ -396,10 +381,10 @@ By resampling, the critical values of $\text{SPA}_l$ are determined. Now
 \end{enumerate}
 
 
-The hypotheses stated in \eqref{eqn:H0} are joint hypotheses and hence the tests are judged by Family Wise Error Rate (FWE) which is the probability of rejecting at least one correct null hypothesis. Hsu et al. (2010)~\cite{hsukuan2010} consider two types of technical rules, filter and moving-average based, for several market indices and the ETFs. There are multiple rules that result in significant increase in mean return and in terms of Sharpe Ratio.
+The hypotheses stated in \eqref{eqn:H0} are joint hypotheses and hence the tests are judged by Family Wise Error Rate (FWE) which is the probability of rejecting at least one correct null hypothesis. Hsu et al. (2010)~\cite{hsukuan2010} consider two types of technical rules, filter and moving-average based, for several market indices and the ETFs. There are also several rules that result in significant increase in mean return and fare favorably in terms of Sharpe Ratio.
 
 
-Bajgrowicz and Scaillet (2012)~\cite{bajgrowicz2012technical} use the concept of false discovery rate (FDR) to reach a negative conclusion as in Ready (2002)~\cite{ready}. The FDR is studied in detail in the context of mutual fund performance by Barras, Scaillet and Wermers (2010)~\cite{barras2010false}. The methodology that we discussed last indicates if a rule outperforms a benchmark after accounting for data snooping and it does not provide any information on the other strategies. But in reality investors gather signals from multiple rules and these rules are not conceptually or empirically independent. The FDR approach by allowing for a certain number of false discoveries, accounts for the dependency and also provides an array of high performing rules. Bajgrowicz and Scaillet (2012)~\cite{bajgrowicz2012technical} address also the issue of persistence of these rules associating a realistic transaction cost with each trading signal. Their main finding based on the analysis of Dow Jones Industrial Average daily data (1897--1996) is that `we are not able to select rules whose performance is persistent and not cancelled by transaction costs.' They conclude: ``\dots investors should be wary of the common technical indicators present in any investment website\dots'', but acknowledge, ``\dots our results say little about the existence of profitable trading strategies in other markets, using different frequencies or more sophisticated rules.''
+Bajgrowicz and Scaillet (2012)~\cite{bajgrowicz2012technical} use the concept of false discovery rate (FDR) to reach a negative conclusion as in Ready (2002)~\cite{ready}. The FDR is studied in detail in the context of mutual fund performance by Barras, Scaillet and Wermers (2010)~\cite{barras2010false}. The methodology that we discussed last indicates if a rule outperforms a benchmark after accounting for data snooping and it does not provide any information on the other strategies. But in reality investors gather signals from multiple rules and these rules are not conceptually or empirically independent. The FDR approach by allowing for a certain number of false discoveries, accounts for the dependency and also provides an array of high performing rules. Bajgrowicz and Scaillet (2012)~\cite{bajgrowicz2012technical} address also the issue of persistence of these rules associating a realistic transaction cost with each trading signal. Their main finding, based on the analysis of Dow Jones Industrial Average daily data (1897--1996) is that `we are not able to select rules whose performance is persistent and not cancelled by transaction costs.' They conclude: ``\dots investors should be wary of the common technical indicators present in any investment website\dots'', but acknowledge, ``\dots our results say little about the existence of profitable trading strategies in other markets, using different frequencies or more sophisticated rules.'' These warnings do not seem to have deterred use of technical rules in practice.
 
 
 
