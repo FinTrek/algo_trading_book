@@ -524,7 +524,7 @@ In previous sections, theoretical linear models for stochastic processes and pro
 
 \item Model Checking---perform diagnostic checks on the adequacy of the estimated model, usually by examination of various features of the residuals from the fitted model.
 
-\item Model Validation---confirm that the model is appropriate for out-of-sample prediction. When multiple models are tried out on a single set of data, it may result in data snooping bias. By keeping the data for building the model and the data for validating the model separate, we avoid the snooping bias.
+\item Model Validation---confirm that the model is appropriate for out-of-sample prediction. When multiple models are tried out on a single set of data, it may result in data snooping bias. By keeping the data for building the model and the data for validating the model separate, we avoid the snooping bias. It should be kept in mind that overfit (estimated) models do not perform well in validation.
 \end{enumerate}
 
 
@@ -666,14 +666,14 @@ As several models can be entertained from specification tools such as ACF and PA
 {\noindent\bfseries\large Model Validation} \twomedskip
 
 
-The debate on the evaluation of a model for its consistency with the data at hand or its forecasting power is a long-standing one. The risk of overfitting a model purely by data exploration will be exposed through poor performance in forecasting. There is a chance to develop models that fit the features of the data that may be unique but these features may not be present in the future. We will follow in general the principle of parsimony; that is develop models with fewer parameters that can adequately represent the data. 
+The debate on the evaluation of a model for its consistency with the data at hand or its forecasting power is a long-standing one. The risk of overfitting a model purely by data exploration will be exposed through poor performance in forecasting. There is a chance to develop models that fit the features of the data that may be unique but these features may not be present in the future. We will follow in general the principle of parsimony; that is to develop models with fewer parameters that can adequately represent the data. These models should be robust to extreme values and should be stable over time.
 
 
 Ideally, model validation requires two random samples from the same population; a training set and a test set. Because of the chronological nature of the time series, usually the training set precedes in time the test set. Thus if $y_t, t= 1,2, \ldots,n_1, n_1+1, \ldots, n_1+n_2$ and if the model is built on `$n_1$' observations and the last `$n_2$' observations are used for model validation, it is usual to compare the prediction mean square error (PMSE),
 	\begin{equation} \label{eqn:pmse}
 	\text{PMSE} = \sum_{t=1}^{n_2} \frac{(y_{n_1+t} - \,\hat{y}_{n_1+t})^2}{n_2}
 	\end{equation}
-with the MSE ($\hat{\sigma}_\epsilon^2$) of the fitted model. While other forms of cross-validation methods are applicable to non-dependent data, the method suggested here is usually taken for chronological data.
+with the MSE ($\hat{\sigma}_\epsilon^2$) of the fitted model. While other forms of cross-validation methods are applicable to non-dependent data, the method suggested here is usually applied for chronological data.
 
 
 
@@ -860,6 +860,8 @@ tailed distribution such as a power-law or Pareto. \twomedskip
 \noindent\textbf{Stylized fact 3:} Asymmetry: When prices fall, they tend to fall faster
 than when they tend to rise, thus drawdowns tend to be larger than upward rises. \twomedskip
 
+\noindent\textbf{Stylized fact 4:} Positive Excess Kurtosis: Returns generally exhibit high values for the fourth moment due to different phases of high and low trading activity. \twomedskip
+
 
 These stylized facts are particularly important for risk management of strategies, and how they should be optimally incorporated in trading decisions is still a subject of much research which will be discussed later. The thicker tail distribution warrants that the chance of extreme values are more likely to occur than what is predicted by a normal distribution and the asymmetry indicates that there is a difference between positive and negative sides of variance (volatility). 
 
@@ -1003,7 +1005,7 @@ In this section, we will mainly focus on the first item and the others will be d
 Consider $r_t = \ln{(p_t) - \ln{(p_{t-1})}}$, return of an asset. We observed that `$r_t$' exhibits no serial correlation. This does not imply that the series `$r_t$' consists of independent observations. The plot of $r_t^2$ given in Figure~\ref{fig:exchrate} clearly indicates that volatility tends to cluster over certain time spans. The autocorrelations in Figure~\ref{fig:exchrate} confirms that there is some time dependence for the volatility. In fact in some cases, there is some long range dependence that spans up to sixty days. \twomedskip
 
 
-\noindent\textbf{Stylized fact 4:} Volatility clustering: High volatility events tend to cluster in time and this can be measured through positive correlations that exist over several lags.
+\noindent\textbf{Stylized fact 5:} Volatility clustering: High volatility events tend to cluster in time and this can be measured through positive correlations that exist over several lags.
 
 
 To formally model the volatility, recall the conditional mean and the conditional variance of the return, $r_t$, are: $\mu_t = E(r_t \;|\; F_{t-1})$, $\sigma_t^2 = \var(r_t \;|\; F_{t-1}) = E( (r_t - \mu_t)^2 \;|\; F_{t-1})$. We have observed for the exchange rate series that $\mu_t \approx$ constant and is generally close to zero. But $\sigma_t^2$ clusters around certain time spans and modeling variation in $\sigma_t^2$ is typically done through ARCH/GARCH models and also through stochastic volatility models. The stochastic volatility models have the advantage of modeling jumps in prices that are also often used in derivative pricing. To begin with, we can test for the heteroscedasticity using the test in \eqref{eqn:2F} or one of the following which are all equivalent asymptotically:
