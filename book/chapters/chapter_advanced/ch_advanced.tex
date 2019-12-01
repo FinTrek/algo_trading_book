@@ -270,14 +270,14 @@ To illustrate, recall Figure~\ref{fig:tradeactline}, on trading activities in Se
  The baseline distribution for the durations is exponential resulting from Poisson arrivals for a specified interval that assume a constant rate. It is suggested to plot $\log(1 - \frac{i}{n_0+1})$ against $d_{(i)}$, where $d_{(i)}$ results from the ordered durations, $d_{(1)} \leq d_{(2)} \leq \cdots \leq d_{(n_0)}$ calculated between successive $n_0 + 1$ occurrences. Departures from linearity would indicate that the exponential distribution may not hold. In addition it is also suggested to plot $d_{i+1}$ against $d_i$ to check on the dependance of durations. Cox and Lewis (1966)~\cite[p.14]{cox1966} state that, ``It is not clear how correlation in such data should be measured and tested; in particular it is not obvious that the ordinary correlation coefficient will be the most suitable measure with such data.'' Engle and Russell (1998)~\cite{engle1998} show how the dependence in the duration data can be explicitly modeled in the context of high frequency transaction data. We illustrate this with the trading data for Microsoft (MSFT) for the month of January in the year 2013. The graph (Figure~\ref{fig:survivor}) clearly indicates that the durations do not follow an exponential distribution and do exhibit some dependence. This is confirmed by the autocorrelation function for durations (Figure~\ref{fig:duration}).
 
 
-Cox and Lewis (1966)~\cite{cox1966} also observe a few issues that can arise with the point-process type data. It is possible that two or more events recorded as happening at the same time. This may be due to latency issues but if they occur due to genuine coincidences it is better to analyze the number of events attached to each occurrence time as a variate separately. Further complications are that there may be events, such as price and volume that may be interdependent and events that occur with related series that may be useful for modeling and predicting the future occurrence times.
+Cox and Lewis (1966)~\cite{cox1966} also observe a few issues that can arise with the point-process type data. It is possible that two or more events recorded are happening at the same time. This may be due to latency issues but if they occur due to genuine coincidences it is better to analyze the number of events attached to each occurrence time as a variate separately. Further complications arise from the fact there may be events, such as price and volume that may be interdependent and events that occur with related series that may be useful for modeling and predicting the future occurrence times.
 
 
 
 % Stylized Models for High Frequency Financial Data
 \subsection{Stylized Models for High Frequency Financial Data}
 
-There has been a great deal of interest in studying market microstructure to better understand the trading mechanisms and the process of price formation. With the availability of Trades and Quotes (TAQ) data that contains all equity transactions on major exchanges, it has now become possible to better model the key elements of market microstructure. The extensive details from the order books over multiple exchanges have provided massive amount of data. Analyzing these data will be taken up in later chapters as well. Here we want to present some unique characteristics of the high frequency data and present most commonly used models in practice. To reiterate, the transactions (trades, quotes, bids, etc) may occur at any point in time (Figure~\ref{fig:exchhours}) during the exchange hours as given below.
+There has been a great deal of interest in studying market microstructure to better understand the trading mechanisms and the process of price formation. With the availability of Trades and Quotes (TAQ) data that contains all equity transactions on major exchanges, it is possible to better model the key elements of market microstructure. The extensive details from the order books over multiple exchanges provide massive amount of data, the analysis of which will be taken up in later chapters as well. Here we want to present some unique characteristics of high frequency data and present most commonly used models in practice. To reiterate, the transactions (trades, quotes, bids, etc) may occur at any point in time (Figure~\ref{fig:exchhours}) during the exchange hours as given below.
 
 	\begin{figure}[!ht]
 	\centering
@@ -311,26 +311,26 @@ There has been a great deal of interest in studying market microstructure to bet
 	\caption{Exchange hours.\label{fig:exchhours}}
 	\end{figure}
 
-High frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price, quote, book imbalance, etc. that may be associated with `$t_i$.' The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange is open. Standard econometric techniques are for data in discrete time intervals. Aggregating the high frequency data to some fixed time interval will not capture the advantages of having access to detailed time-stamped transaction data. Even for some heavily traded stocks, if the aggregation intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
+High frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price, quote, book imbalance, etc. that may be associated with `$t_i$.' The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange is open. Standard econometric techniques are for data in discrete time intervals, but aggregating high frequency data to some fixed time interval would not capture the advantages of having access to detailed time-stamped transaction data. Even for some heavily traded stocks, if the aggregation intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
 
 
 \begin{itemize}
 \item \textbf{Nonsynchronicity:} Different stocks have different trade intensities and even for a single stock, the intensity can vary during the course of a day. For the aggregated low frequency (daily) data, thus, we cannot assume that daily returns occur in equally-spaced time series.
 
-\item \textbf{Multiple transactions with the same time stamp:} It is possible that in periods of heavy trading especially in the opening and closing times of the exchange, each tick may contain multiple transactions. For the analysis of this type of occurrence, simple aggregate summary measures to more elaborate measures such as the variation in prices in addition to average prices are suggested.
+\item \textbf{Multiple transactions with the same time stamp:} It is possible that in periods of heavy trading especially around the opening and closing times of the exchange, each tick may contain multiple transactions. For the analysis of this type of occurrence, simple aggregate summary measures to more elaborate measures such as the variation in prices in addition to average prices are suggested.
 
-\item \textbf{Multiple Exchanges:} In the US market there are at least thirteen known lit exchanges; due to latency issues there could be time delays in recording the submission times of orders that get dispatched at the same time. Also with the rule (NBBO) on getting best price anywhere in the market, an aggregated view of the market given a fixed time interval can miss capturing the other dependencies over exchanges. 
+\item \textbf{Multiple Exchanges:} In the US market there are currently thirteen lit exchanges; due to latency issues there could be time delays in recording the submission times of orders that get dispatched at the same time. Also with Reg NMS (NBBO) on getting best price anywhere in the market, an aggregated view of the market given a fixed time interval can miss capturing the other dependencies over exchanges. 
 
-\item \textbf{Intra-day Periodicity:} Generally, it is observed for stocks, transaction activities are higher near the open and the close than in the middle of the data. Thus volatility is higher, immediately after the opening and before the closing of the market resulting in U-shape pattern.
+\item \textbf{Intra-day Periodicity:} Generally, it is observed for stocks, transaction activities are higher near the open and the close than in the middle of the day. Thus volatility is higher, immediately after the opening and before the closing of the market resulting in U-shape pattern of activity and volume.
 
 \item \textbf{Temporal Dependence:} High frequency data generally exhibit some dependence. The dependence is due to\dots
         \begin{itemize}
-        \item price discoveries
+        \item price discovery
         \item bid-ask bounce
-        \item Execution clustering of orders
+        \item execution clustering of orders
         \end{itemize}
 
-\item Volatility, volume, spread are higher near the open and close.
+\item Volatility, volume are higher near the open and close, spreads are larger near the open and narrower near the close.
 
 \item Time between trades, shorter near open and close.
 \end{itemize}
@@ -341,9 +341,9 @@ High frequency data refer to the `tick' `$t_i$' data which contains, in addition
 	\caption{Typical Diurnal patterns. \label{fig:diurnal}}
 	\end{figure}
 
-Under aggregation with low frequency data generally the dependence tends to decrease.
+Under aggregation with low frequency data generally the dependence tends to decrease.\twomedskip
 
-\noindent\textbf{Stylized fact 6 (Continued from Chapter~\ref{ch:ch_uvts}): Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.
+\noindent\textbf{Stylized fact 6 (Continued from Chapter~\ref{ch:ch_uvts}): Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.\twomedskip
 
 
 We want to briefly again discuss the Roll model that was mentioned in Chapter~\ref{chap:ch_trading_fund}; on a typical day of trading, stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to arrival of new information about the stock. Assume that the true price (unobservable) follows a random walk model, Example~\ref{ex:driftwalk} Chapter 3, as
