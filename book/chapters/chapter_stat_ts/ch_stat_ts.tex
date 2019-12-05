@@ -1127,7 +1127,7 @@ where $b_2=E(\eta_t)$ and $b_1=E((S_t - \overline{S}) \eta_t)$. Observe `$\mu_1$
 
 % Problem
 \prob {\it Technical Rules:} Consider the data on exchange rates (in file, \texttt{rates.csv}) between the Indian Rupee and the US Dollar, British Pound and Euro; it is daily data from December 4, 2006 to November 5, 2010. In order to compare the performance of a strategy, appropriately normalize the entry point exchange rate: invest equal amounts of capital (counted in INR, which we will call the ``base currency'') in each trade. Total portfolio return on each day should be computed as a weighted sum of returns from each active trade (weighted by the current value of each trade). Evaluate the signals discussed below using the Sharpe ratios and PNL with and without transaction cost of $15$ basis points. Assume a risk free rate of $3\%$. (1 basis point = $10^{-4}$; so each dollar traded costs $0.0015$ in transaction costs)
-	\begin{enumerate}[(a.)]
+	\begin{enumerate}[(a)]
 	\item{\it Moving average trading rules}: Trading signals are generated from the relative levels of the price series and a moving average of past prices.
 		\begin{itemize}
 		\item  Rule 1: Let $\overline{p}_t^{(m)}$ as defined in \eqref{eqn:multi}; use the strategy to sell if $p_t>\overline{p}_t^{(m)}$ and to buy if  $p_t<\overline{p}_t^{(m)}$. Evaluate this strategy. What is the optimal `$m$'?
