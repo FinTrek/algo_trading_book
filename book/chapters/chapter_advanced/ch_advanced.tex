@@ -346,7 +346,7 @@ Under aggregation with low frequency data generally the dependence tends to decr
 \noindent\textbf{Stylized fact 6 (Continued from Chapter~\ref{ch:ch_uvts}): Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.\twomedskip
 
 
-We want to briefly again discuss the Roll model that was mentioned in Chapter~\ref{chap:ch_trading_fund}; on a typical day of trading, stocks exhibit price changes numerous times. These changes signify merely the market friction, the friction between the demand and supply side and they are not necessarily due to arrival of new information about the stock. Assume that the true price (unobservable) follows a random walk model, Example~\ref{ex:driftwalk} Chapter 3, as
+We want to briefly again discuss the Roll model that was mentioned in Chapter~\ref{chap:ch_trading_fund}; on a typical day of trading, stocks exhibit price changes numerous times. These changes merely represent market frictions between the demand and supply sides and are not necessarily due to arrival of new information about the stock. Assume that the true price (unobservable) follows a random walk model, Example~\ref{ex:driftwalk} Chapter 3, as
 	\begin{equation} \label{eqn:2plowstar}
 	p_t^*=p_{t-1}^* + \epsilon_t 
 	\end{equation}
@@ -369,13 +369,13 @@ The value of `$\theta$' generally tends to be small, but nevertheless significan
 	\begin{equation} \label{eqn:2lambda}
 	\lambda(t)= \lim_{\Delta \to 0} \frac{E[N(t+\Delta) - N(t) \;|\; F_t]}{\Delta},
 	\end{equation}
-where $N(t)$ denotes the number of ticks until `$t$' and $F_t$ is the information available until that time. The commonly used model for such arrival rates is Poisson that implies that the time between the two successive ticks is independent of pairwise ticks and follows an exponential distribution. But the duration data, $d_i = t_i - t_{i-1}$ exhibit some dependence, thus implying that time moves faster sometimes, faster than the clock time. The intensity rate, $\lambda(t)$ is not a constant, which is a typical characteristic of the exponential distribution. We briefly outline how the durations are modeled. For detailed discussion, see Tsay (2010)~\cite{tsay} or Lai and Xing (2008)~\cite[Section 11.2]{lai1}. The autoregressive conditional duration (ACD) model is defined as follows:
+where $N(t)$ denotes the number of ticks until `$t$' and $F_t$ is the information available until that time. The commonly used model for such arrival rates is Poisson that implies that the time between two successive ticks is independent of pairwise ticks and follows an exponential distribution. But the duration data, $d_i = t_i - t_{i-1}$ exhibit some dependence, thus implying that time moves faster sometimes, faster than the clock time. The intensity rate, $\lambda(t)$ is not a constant, which is a typical characteristic of the exponential distribution. We briefly outline how the durations are modeled. For detailed discussion, see Tsay (2010)~\cite{tsay} or Lai and Xing (2008)~\cite[Section 11.2]{lai1}. The autoregressive conditional duration (ACD) model is defined as follows:
 	\begin{flalign}\label{eqn:2dipsi}
 	&& d_i&= t_i - t_{i-1} = \psi_i \varepsilon_i, && \notag \\ 
 	\text{and} && \phantom{x} & \phantom{x} &&  \\
 	&& \psi_i&= \alpha + \sum_{j=1}^p \alpha_j d_{t-j} + \sum_{v=1}^q \beta_v \psi_{i-v}, && \notag
 	\end{flalign}
-where $\varepsilon_i$ are i.i.d. with $E(\varepsilon_i) = 1$; If $\varepsilon_t's$ are assumed to follow exponential the models \eqref{eqn:2dipsi} is called E(xpotential)ACD. Two alternative models WACD and GGACD are based on the following specification for the errors:
+where $\varepsilon_i$ are i.i.d. with $E(\varepsilon_i) = 1$; If $\varepsilon_t's$ are assumed to follow exponential the model \eqref{eqn:2dipsi} is called E(xpotential)ACD. Two alternative models WACD and GGACD are based on the following specification for the errors:
 	\begin{equation} \label{eqn:wei_gam}
 	\begin{split}
 	&\text{Weibull: } h(x)= \frac{\alpha}{\beta^{\alpha}} x^{\alpha - 1} \exp\left\{ -(\frac{x}{\beta})^{\alpha} \right\} \\
@@ -392,7 +392,7 @@ An alternative more direct ARMA type model for log durations is suggested by Ghy
 and $\varepsilon_i = \sqrt{h_i^v} u_i, h_i^v = \omega^v + \sum_{j=1}^{p^v} \alpha_j^v \varepsilon_{i-j}^2 + \sum_{j=1}^{q^v} \beta_j^v h_{i-j}^v$, where $u_i \sim N(0,1)$ i.i.d.; here the conditional mean and variance of durations are assumed to be separable. The duration volatility that is modeled using the second equation in \eqref{eqn:2dipsi} is interpreted as `liquidity' risk. \twomedskip
 
 
-\noindent \textbf{Other Duration Related Models:} So far the discussion has been around modeling the durations, but the information set, $F_t$ has information on `marks', the information associated with the past ticks, such as the number of units transacted, price etc. McCulloch and Tsay (2001)~\cite{mccullochtsay07} suggest the following model:
+\noindent \emph{Other Duration Related Models:} So far the discussion has been around modeling the durations, but the information set, $F_t$ has information on `marks', the information associated with the past ticks, such as the number of units transacted, price etc. McCulloch and Tsay (2001)~\cite{mccullochtsay07} suggest the following model:
 	\begin{equation} \label{eqn:2lndi}
 	\ln{d_i} = \beta_0 + \beta_1 \ln{(d_{t-1})} + \beta_2s_{i-1} + \sigma\varepsilon_i,
 	\end{equation}
@@ -441,7 +441,7 @@ There is a considerable interest in extending the univariate duration models to 
 	\end{tikzpicture}
 	\caption{Trades and Quotes.\label{fig:tradeactdoubline}}
 	\end{figure}
-Define $x_i = t_i - t_{i-1}$ as trade duration and $y_i = t_i^{f_w} - t_{i-1}^{f_w}$ as the forward quote duration; our goal is to model $(x_i,y_i)$ as a bivariate duration process but the underlying timings as can be noted are not synchronized. Thus, if $y_i > x_i$, define
+Define $x_i = t_i - t_{i-1}$ as trade duration and $y_i = t_i^{f_w} - t_{i-1}^{f_w}$ as the forward quote duration; our goal is to model $(x_i,y_i)$ as a bivariate duration process but the underlying timings, as can be noted, are not synchronized. Thus, if $y_i > x_i$, define
 	\begin{equation} \label{eqn:anothertildey}
 	\widetilde{y}_i = (1 - d_i)y_i + d_ix_i,
 	\end{equation}
@@ -453,14 +453,14 @@ The first term is the trade density and the second term is the quote density. Th
 	\begin{equation} \label{eqn:2fdot}
 	f(y_i \;|\; \cdot) = [h(y_i \;|\; \cdot)]^{1 - d_i} \times S(x_i \;|\; \cdot)^{d_i}.
 	\end{equation}
-The estimation of the parameters is done through quasi maximum likelihood. Using data for eight stocks, Engle and Lund (2003)~\cite{englelunde} observe that high trade arrival rates, large volume per trade, wide bid-ask spreads, all predict more rapid price revisions. The model given in Engle and Lund (2003)~\cite{englelunde} can be conceptually applied to any two point processes. Extending this concept to more than two processes could be of interest to the traders who may want to monitor the trading exchanges simultaneously. But modeling this type of data as can be seen is quite tedious. 
+The estimation of the parameters is done through quasi maximum likelihood. Using data for eight stocks, Engle and Lund (2003)~\cite{englelunde} observe that high trade arrival rates, large volume per trade, wide bid-ask spreads, all predict more rapid price revisions. The model given in Engle and Lund (2003)~\cite{englelunde} can be conceptually applied to any two point processes. Extending this concept to more than two processes could be of interest to traders who may want to monitor multiple trading exchanges simultaneously, but modeling this type of data is quite tedious. 
 
 
 
 % Realized Volatility and Econometric Models
 \section{Realized Volatility and Econometric Models}
 
-Estimating the volatility using the high frequency data has received a great deal of attention lately. In the low frequency (daily) level some estimators based on select prices were presented in Chapter~3. Intra-day dynamics of volatility is of interest to traders and that is not fully captured by the stock price indicators sampled during the day. If higher frequency data are used to estimate volatility of lower frequency data, it is important to know the model for the return at the lower frequency. To illustrate this, we consider data observed at two time scales; although they are somewhat at low frequency level, the concept can be easily extended to high frequency context. If $r_{t,i}$ is the $i$th day return in $t$th month, the $t$th month return assuming there `n' trading days, $r_t^m = \sum_{i=1}^n r_{t,i}$. Note that $\sigma_m^2 = \var(r_t^m \;|\; F_{t-1}) = \sum_{i=1}^n \var(r_{t,i} \;|\; F_{t-1}) + 2 \sum_{i<j} \cov(r_{t,i}, r_{t,j} \;|\; F_{t-1})$. If $r_{t,i}$ is white noise sequence, then
+Estimating volatility using high frequency data has received a great deal of attention lately. In the low frequency (daily) level some estimators based on select prices were presented in Chapter~3. Intra-day dynamics of volatility is of interest to traders and is usually not fully captured by the stock price indicators sampled during the day. If higher frequency data are used to estimate volatility of lower frequency data, it is important to know the model for the return at the lower frequency. To illustrate this, we consider data observed at two time scales; although they are somewhat at low frequency level, the concept can be easily extended to the high frequency context. If $r_{t,i}$ is the $i$th day return in $t$th month, the $t$th month return assuming there `n' trading days, $r_t^m = \sum_{i=1}^n r_{t,i}$. Note that $\sigma_m^2 = \var(r_t^m \;|\; F_{t-1}) = \sum_{i=1}^n \var(r_{t,i} \;|\; F_{t-1}) + 2 \sum_{i<j} \cov(r_{t,i}, r_{t,j} \;|\; F_{t-1})$. If $r_{t,i}$ is white noise sequence, then
 	\begin{equation}\label{eqn:2hatsigmasq}
 	\hat{\sigma}_m^2 = \frac{n}{n-1} \sum_{i=1}^n (r_{t,i} - \overline{r}_t)^2.
 	\end{equation}
@@ -495,7 +495,7 @@ For the estimation of efficient price variance, we need to consider an  optimal 
 % Analysis of Time Aggregated Data
 \section{Analysis of Time Aggregated Data \label{s:analysis_tad}}
 
-The commonly available data from public sources such as Yahoo Finance that are easily accessible to investors provide select price information, High, Low, Open and Close prices along with the total transaction volume in a trading day. The usual estimate of volatility is based on closing prices, but having this additional price (bars) data can help to get a better estimate of volatility. As shown in the last section, using high frequency data leads to estimators that need to be corrected for market frictions. But using the daily price bars data may not be helpful to make entry/exit decisions as they are to be made in real time; so as a compromise, many trading outfits construct price bars data from the high frequency point process data for a shorter time intervals such as 5--30~minutes. This has the effect of smoothing the noise due to market friction but also results in data in discrete time units and so the traditional discrete time series methods discussed in Chapter 3 and Chapter 4 can be effectively employed. 
+The commonly available data from public sources such as Yahoo Finance provide select price information, High, Low, Open and Close prices along with the total transaction volume in a trading day. The usual estimate of volatility is based on closing prices, but having this additional price (bars) data can help to get a better estimate of volatility. As shown in the last section, using high frequency data leads to estimators that need to be corrected for market frictions. But using the daily price bars data may not be helpful to make entry/exit decisions as they are to be made in real time; so as a compromise, many trading outfits construct price bars data from the high frequency point process data for a shorter time intervals such as 5--30~minutes. This has the effect of smoothing the noise due to market friction but also results in data in discrete time units and so the traditional discrete time series methods discussed in Chapter 3 and Chapter 4 can be effectively employed. 
 
 
 The price as assumed earlier is to follow a random walk model. Therefore, price changes (thus returns) over a time interval are distributed with mean zero and variance that is proportional to the length of the interval. Assuming that the prices follow continuous sample paths although the trading is closed for a certain duration and when trading is open, the actual transactions occur at discrete points in time. Treating the trading day as represented in a unit interval $[0,1]$ with $[0,f]$ representing the `market close' time and $[f,1]$ as `open' time, it is shown that an estimator of volatility
