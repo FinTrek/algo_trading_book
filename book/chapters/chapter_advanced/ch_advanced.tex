@@ -694,15 +694,23 @@ The second part of the above equation indicates how the value that the result fr
 	\begin{equation} \label{eqn:statevstar}
 	V^*(s)= \max_\Pi V^\Pi(s)= \max_a \sum_{s'} P_{ss'}^a(R_{ss'}^a + \gamma V^*(s')).
 	\end{equation}
+
+The uniqueness and existence of $V^\Pi$ are possible when $\gamma < 1$; it is guaranteed that eventual termination will result from all states under the policy, $\Pi$. \twomedskip
+
 Similarly, the optimal action-value function can be written as
 	\begin{equation} \label{eqn:actionvalueqstar}
 	Q^*(s,a)= \max_\Pi Q^\Pi(s,a)= \sum_{s'} P_{ss'}^a( R_{ss'}^a + \gamma \max_{a'} Q^*(s',a') ).
 	\end{equation}
 
 
-Exact solutions are possible only under idealized conditions. A possible approach to solve the above is to use dynamic programming, but in practice the methods to solve the above tend to be heuristic and computational such as using a neural network to approximate the action-value function.  
+Exact solutions are possible only under idealized conditions. A possible approach to solve the above is to use dynamic programming, but in practice the methods to solve the problem tend to be heuristic and computational such as using a neural network (Deep Queue Network - DQN) to approximate the action-value function.  
+\twomedskip
 
-The uniqueness and existence of $V^\Pi$ are possible when $\gamma < 1$; it is guaranteed that eventual termination will result from all states under the policy, $\Pi$. \twomedskip
+More generally speaking, Reinforcement Learning algorithms can be trained either using Value-based methods (Q-Learning) or Policy-based methods (Policy Gradient), so it's worth mentioning a few words about the differences.
+
+In Q-learning, as we just described, for a given state we calculate the Q value for every action in the action space and we pick the action corresponding to the max value. This means that choosing actions depends on the Q value at each decision point: Q-Learning attempts to learn the value of being in a given state (s), and taking a specific action (a) there with regards to the stated reward structure (per the Bellman equation, the expected long-term reward for a given action is equal to the immediate reward plus the discounted expected reward from the best future action taken at the following state). 
+
+In Policy-based methods, we directly learn the policy function $\Pi$ without explicitly modeling the value function, resulting in actions being taken without directly calculating Q (s,a). This tends to be closer to the actual objective of learning the optimal policy (e.g. learning to trade optimally) directly from experiences, rather that through intermediary steps which are subject to higher noise and uncertainty. An interesting specificity of financial applications -- like trading -- in favor of a Policy-based approach is that the true reward for the agent tends to be terminal (e.g. P\&L, Execution Slippage, etc.), but the reward of each individual actions are less obvious, nor do they necessarily matter. For instance, when learning to optimally slice a large trade into a multitude of child orders, what is the value of having posted a top-of-book passive order two hours into the execution compared to having posted one level below the top-of-book? While it's hard to to get to these values, one would want the agent to learn to give a value to the intermediate actions in order to guide it toward the ultimate reward. \twomedskip
 
 While still a nascent field in finance, Reinforcement Learning is evolving fast and hold promises for trading applications that naturally lend themselves to be modeled as Markov Decision Processes. We encourage the curious reader to explore further the vast literature available on this topic.
 
