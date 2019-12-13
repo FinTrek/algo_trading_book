@@ -1121,6 +1121,76 @@ where $b_2=E(\eta_t)$ and $b_1=E((S_t - \overline{S}) \eta_t)$. Observe `$\mu_1$
 
 
 
+% Machine Learning Methods
+\section{Machine Learning Methods in Trading}
+
+In Section~\ref{sec:an_mach_learn}, we covered some machine learning techniques. Here we briefly discuss the boosting methods that are applied to trading. Other methods require more detailed space for a thorough discussion and these methods are better described elsewhere in the literature. In order to follow the details here, refer to Section~\ref{sec:rein_learning}. We outline an automated layered trading method with machine learning and on line layers with an overall rank management view. Details can be found in Creamer and Freund (2010)~\cite{creamer2010}. Recall that the main idea behind boosting is to combine several weak rules of classification or prediction to arrive at a stronger rule. The authors suggest Logitboost method. For the sake of consistency in describing both the Adaboost and Logitboost, we repeat the former method  again here. 
+
+
+Associated with past features, $x_i$ (prices: close, open, high and volume etc), there is a current response variable `$y_i$' that could be binary, such as the price increase or decrease, a directional indicator. The training set, $S= \{ (x_i,y_i) \colon i= 1,2,\ldots,n\}$. We will further assume that there are `$T$' rules, and $h_i(x_i)$ are the classifications. These rules are variants of the technical rules described in this chapter. We begin with weights $w_i^t= \frac{1}{n}$ for all $t$. With $h_t(x_i)$ as the prediction rule, define the prediction score $F_t(x)= \alpha_t h_t$. Two methods, Adaboost and Logitboost are given in Creamer and Freund (2010)~\cite{creamer2010} stated below: 
+
+
+	\begin{figure}[!ht]
+	\centering
+	\begin{tabular}{l}
+	$F_0(x) \equiv 0$ \\
+	for $t= 1,\ldots,T$ \\
+	\quad\quad $w_i^t= e^{-y_i F_{t-1}(x_i)}$ \\
+	\quad\quad Get $h_t$ from \emph{weak learner} \\
+	\quad\quad $\alpha_t= \frac{1}{2} \ln \left( \dfrac{\sum_{i: h_t(x_i)= 1, y_i=1} w_i^t}{\sum_{i: h_t(x_i)=1, y_i= -1} w_i^t} \right)$ \\
+	\quad\quad  $F_{t+1}= F_t + \alpha_t h_t$ 
+	\end{tabular}
+	\caption{The Adaboost algorithm (Freund and Schapire 1997). $y_i$ is the binary label to be predicted, $x_i$ corresponds to the features of an instance $i$, $w_i^t$ is the weight of instance $i$ at time $t$, $h_t$ and $F_t(x)$ are the prediction rule and the prediction score at time $t$, respectively.}
+	\end{figure}
+
+	\begin{figure}[!ht]
+	\centering
+	\begin{tabular}{l}
+	$F_0(x) \equiv 0$ \\
+	for $t= 1,\ldots,T$ \\
+	\quad\quad $w_i^t= \dfrac{1}{1+ e^{y_i F_{t-1}(x_i)}}$ \\
+	\quad\quad Get $h_t$ from \emph{weak learner} \\
+	\quad\quad $\alpha_t= \frac{1}{2} \ln \left( \dfrac{\sum_{i: h_t(x_i)= 1, y_i=1} w_i^t}{\sum_{i: h_t(x_i)=1, y_i= -1} w_i^t} \right)$ \\
+	\quad\quad $F_{t+1}= F_t + \alpha_t h_t$ 
+	\end{tabular}
+	\caption{The Logitboost algorithm (Friedman et al. 2000). $y_i$ is the binary label to be predicted, $x_i$ corresponds to the features of an instance $i$, $w_i^t$ is the weight of instance $i$ at time $t$, $h_t$ and $F_t(x)$ are the prediction rule and the prediction score at time $t$, respectively.}
+	\end{figure}
+
+
+Thus the machine learning layer generates several `experts' using historical stock selected data. Each `expert' has a rule that combines the technical indicators and generates an investment signal. Train an initial expert ($\psi_i$) with logitboost. Every `$d$' days train a new expert, and assume we have over time several trained experts. The second layer provides a way to combine the signals from the experts. 
+
+
+Let $s_t^i$ be the prediction score of expert `$\psi_i$' at time `$t$'. Then the cumulative abnormal return (CAR) for the $i$th expert at time `$t$' is
+	\begin{equation} \label{eqn:carit}
+	\text{CAR}_t^i= \sum_{s=t_i+1}^t \text{Sign}(s_t^i) r_s^i.
+	\end{equation}
+Here $t_i$ is the time when the $i$th expert is added to the pool, and $r_s^i$ is the abnormal return for expert `$i$' at time `$s$'. Because the returns are white noise, $\text{CAR}_t^i \sum N(\epsilon,1)$, where `$\epsilon$' is the advantage that the expert exhibits over pure random guessing. Give a bigger weight to an expert with larger, `$\epsilon$' value. The weight of the first expert is,
+	\begin{equation} \label{eqn:weightone}
+	w_t^1= \text{exp} \left[ \dfrac{c \cdot \text{CAR}_t^1}{\sqrt{t}} \right],
+	\end{equation}
+where `$c$' is an exogenous parameter. 
+
+
+When a new expert gets added at $t>t_i$, the weight is
+	\begin{equation} \label{eqn:new_weight}
+	w_t^i= I_i \times \text{ramp}(t-t_i) \times \text{exp} \left[ \dfrac{c \cdot \text{CAR}_t^i}{\sqrt{t-t_i}} \right],
+	\end{equation}
+where $I_i= \sum_{j=1}^{i-1} w_{t_i}^j/(i-1)$ is the weight, which is the average value of the previous experts before time $t_i$ and $\text{ramp}(t-t_i)= \min \left[ \dfrac{t-t_i}{t_{i+1}-t_i}, 1 \right]$ that brings the new experts gradually to the pool. The overall experts weight at time `$t$' is,
+	\begin{equation} \label{eqn:overal_expert}
+	w_t= L_t - S_t,
+	\end{equation}
+where $L_t$ is the fraction of experts that suggest a long position. Thus,
+	\begin{equation} \label{eqn:weight_l_t}
+	L_t = \sum_{i \colon s_t^i>0} w_t^i/ \sum_i w_t^i.
+	\end{equation}
+Essentially, the second layer algorithms entertains new experts. The CAR for the expert system is 
+	\begin{equation} \label{eqn:car_sum}
+	\text{CAR}= \sum_t (w_t \cdot r_t - (w_t - w_{t-1}) \cdot \text{tc}),
+	\end{equation}
+where `$\text{tc}$' is the transaction cost. 
+
+
+
 % Exercises
 \section{Exercises}
 
