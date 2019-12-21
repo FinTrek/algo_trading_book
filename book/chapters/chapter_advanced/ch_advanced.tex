@@ -202,7 +202,7 @@ is positive due to the variance in $I_t$. If there is no new information or if t
 Poisson distribution and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in \eqref{eqn:2rtVt} are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their main findings: \twomedskip
 
 
-\noindent\textbf{Stylized Facts 5 (Volume--Volatility Relationship):} 
+\noindent\textbf{Stylized Fact 6 (Volume--Volatility Relationship):} 
 
         \begin{itemize}
         \item  There is a positive correlation between conditional volatility and volume.
@@ -343,7 +343,7 @@ High frequency data refer to the `tick' `$t_i$' data which contains, in addition
 
 Under aggregation with low frequency data generally the dependence tends to decrease.\twomedskip
 
-\noindent\textbf{Stylized fact 6 (Continued from Chapter~\ref{ch:ch_uvts}): Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.\twomedskip
+\noindent\textbf{Stylized Fact 7 (Continued from Chapter~\ref{ch:ch_uvts}): Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.\twomedskip
 
 
 We want to briefly again discuss the Roll model that was mentioned in Chapter~\ref{chap:ch_trading_fund}; on a typical day of trading, stocks exhibit price changes numerous times. These changes merely represent market frictions between the demand and supply sides and are not necessarily due to arrival of new information about the stock. Assume that the true price (unobservable) follows a random walk model, Example~\ref{ex:driftwalk} Chapter 3, as
@@ -760,7 +760,7 @@ The rule $h_t$ is supposed to have error $\text{err}_{D_t}(h_t)$ with respect to
         \end{table*}
  
  
-It is possible to overfit with boosting; its performance clearly depends upon how well the two decisions (enter or not enter) are clearly separated based on the past data. The use of kernels can improve local separability. It is also important to optimally extract features, $x$, that can be discriminating between the two options for $y$. The main advantage of ensembles of different rules is that it is not likely that all rules will make the same error. The algorithm described above is known as, ``adaptive boosting algorithm (a AdaBoost)'' is by Freund and Schapire (1995, 1996,1997)~\cite{freund1995decision,freund1996experiments,freund1997decision} and it automatically ``adapts'' to the data at hand. If $t^{th}$ classifier $h_t(x)$ is parameterized and the overall predictor takes the form
+It is possible to overfit with boosting; its performance clearly depends upon how well the two decisions (enter or not enter) are clearly separated based on the past data. The use of kernels can improve local separability. It is also important to optimally extract features, $x$, that can be discriminating between the two options for $y$. The main advantage of ensembles of different rules is that it is not likely that all rules will make the same error. The algorithm described above is known as, ``adaptive boosting algorithm (AdaBoost)'' is by Freund and Schapire (1995, 1996,1997)~\cite{freund1995decision,freund1996experiments,freund1997decision} and it automatically ``adapts'' to the data at hand. If $t^{th}$ classifier $h_t(x)$ is parameterized and the overall predictor takes the form
 	\begin{equation}
 	h(x)=\text{Sign} \left( \sum_{t=1}^T \alpha_t \text{Sign}(w^{(t)}x+b^{(t)}) \right)
 	\end{equation}

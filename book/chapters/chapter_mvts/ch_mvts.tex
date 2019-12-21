@@ -103,7 +103,7 @@ The application of Hotelling's $T^2$ in the context of testing related to CAPM m
 
 
 % Dimension-Reduction via Reduced-Rank Regression
-\section{Dimension-Reduction Methods \label{sec:s_dr}}
+\section{Dimension-Reduction Methods\label{sec:s_dr}}
 
 \noindent\textbf{Reduced-Rank Regression:} \twomedskip
 
@@ -187,7 +187,20 @@ Denoting by $g_j'$ and $h_j'$ the $j$th rows of the matrices $G$ and $H$, respec
 	\begin{equation} \label{eqn:rhojsqlambj}
 	\rho_j^2= \lambda_j^2 / (1+\lambda_j^2)
 	\end{equation}
-and $G$ and $H$ matrices can be obtained from the rescaled versions of $\hat{V}$, used in \eqref{eqn:covarmatrixsol}. Because of \eqref{eqn:rhojsqlambj}, testing for the rank of the matrix `$C$' can be made based on the canonical correlations, $\hat{\rho}^2$.
+and $G$ and $H$ matrices can be obtained from the rescaled versions of $\hat{V}$, used in \eqref{eqn:covarmatrixsol}. Because of \eqref{eqn:rhojsqlambj}, testing for the rank of the matrix `$C$' can be made based on the canonical correlations, $\hat{\rho}^2$. \twomedskip
+
+
+\noindent\textbf{Partial Least Squares:} Huang et al. (2015)~\cite{huang} demonstrate that the new combination of predictors based on PLS method described in Section~\ref{sec:s_dr} has much greater predictive power for the aggregate stock market and its predictability is both statistically and economically significant. Because it is a supervised learning procedure, one should expect it to fare better. The partial least squares (PLS) method advanced by Wold (1984)~\cite{wold}. This method is similar to reduced-rank regression. In PLS, the covariance between the response and predictor variables is maximized whereas in reduced-rank regression, the correlation is maximized to arrive at the linear combinations of the predictors. The $m \times 1$ multiple response, $X_t \;(m>1)$ version of partial least squares begins with a `canonical covariance' analysis, a sequential procedure to construct predictor variables as linear combinations of the original $n$-dimensional set of predictor variables $X_t$. At the first stage, the initial predictor variable $X_{1}^*=b_1'X_t$ is determined as the first `canonical covariance' variate of the $X_t$, the linear combination of $X_t$ that maximizes $\{(T - 1) \times \text{sample covariance of } b'X_t \text{ and } l'Y_t \} \equiv b' \mathbf{XY}' l$ over unit vectors $b$ (and over all associated unit vectors $l$). For given vectors $b$, we know that $l=\mathbf{YX'} b/(b' \mathbf{XY'YX'}b)^{1/2}$ is the maximizing choice of unit vector for $l$, so that we need then to maximize $b' \mathbf{XY'YX'}b$ with respect to unit vectors $b$. Thus, the first linear combination vector $b_1$ is the (normalized) eigenvector of $\mathbf{XY'YX'}$ corresponding to its largest eigenvalue. This follows easily from Result~\ref{res:3} in Chapter~\ref{ch:ch_mvts}. In the univariate case, $m=1$ and $\mathbf{Y}$ is $1 \times T$, and so this reduces to $b_1=\mathbf{XY'}/(\mathbf{YX'XY'})^{1/2}$ with associated ``eigenvalue'' equal to $\mathbf{YX'XY'}$.
+
+
+At any subsequent stage $j$ of the procedure, there are $j$ predictor variables $x_{it}^*= b_i' X_t, i=1,\ldots, j$, are to be determined and the next predictor variable $x_{j+1}^*= b_{j+1}'X_t$; that is, the next unit vector $b_{j+1}$ is to be found. It is chosen as the vector $b$ to maximize the sample covariance of $b'X_t$ and $l' Y_t$ (with unit vector $l$ also chosen to maximize the quantity); that is, we maximize $b' \mathbf{XY'YX'}b$, subject to $b_{j+1}$ being a unit vector and $x_{j+1,t}^*=b_{j+1}; X_t$ being orthogonal to the previous set of $j$ predictor variables $x_{it}^*, i=1,\ldots,j$ (i.e. $b_{j+1}' \mathbf{XX'} b_i=0$, for $i=1,\ldots,j$). The number $r$ of predictors chosen until the sequential process is stopped can be taken as a regularization parameter of the procedure ; its value is determined through cross-validation methods in terms of prediction mean square error. The final estimated regression equations are constructed by ordinary LS calculation of the response vectors $Y_k$ on the first $r$ `canonical covariance' component predictor variables, $X_k^*= (x_{1k}^*,\ldots,x_{rk}^*)' \equiv \hat{B} X_k$, where $\hat{B}=[b_1,\ldots,b_r]'$; that is, the estimated regression equations are $\hat{Y}_k= \hat{A}X_k^* \equiv \hat{A}\hat{B} X_k$ with
+	\[
+	\hat{A}=\mathbf{YX}^{*'} (\mathbf{X}^* \mathbf{X}^{*'})^{-1} \equiv \mathbf{YX'} \hat{B}' (\hat{B} \mathbf{XX'} \hat{B}')^{-1}
+	\]
+and $\mathbf{X}^*=\hat{B}\mathbf{X}$ is $r \times T$. In practice, the predictor variables $X_k$ and response variables $Y_k$ will typically already be expressed in terms of deviations from sample mean vectors.
+
+
+Discussion of the sequential computational algorithms for the construction of the `canonical covariance' components $x_{jk}^*=b_j'X_k$ required in the partial least squares regression procedure, and of various formulations and interpretations of the partial least squares method are given by Wold (1984)~\cite{wold}, Helland (1988,1990)~\cite{helland88}~\cite{helland90}, and Garthwaite (1994)~\cite{garth}. In particular, for univariate partial least squares, Garthwaite (1994)~\cite{garth} gives the interpretation of the linear combinations of predictor variables, $x_{jk}^*=b_j'X_k$, as weighted averages of predictors, where each individual predictor holds the residual information in an explanatory variable that is not contained in earlier linear combination components ($x_{ik}^*, i<j$), and the quantity to be predicted is the $1 \times T$ vector of residuals obtained from regressing $y_k$ on the earlier components. Also, for the univariate case, Helland (1988,1990)~\cite{helland88,helland90} showed that the linear combination vectors $\hat{B}=[b_1,\cdots,b_r]'$ are obtainable from nonsingular ($r \times r$) linear transformation of $[\mathbf{XY'},  (\mathbf{XX'})\mathbf{XY'}, \cdots, (\mathbf{XX'})^{r-1} \mathbf{XY'}]'$. One can notice the close similarity between reduced-rank regression and partial least squares. The former focuses on maximizing the correlation and the latter on maximizing the covariance.
 
 
 
