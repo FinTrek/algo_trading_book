@@ -149,7 +149,7 @@ Having accurate profiles is of critical importance in execution and in the next 
 As a supervised learning model, intraday periodicity is definitively not trivial to model and until recently these problems have received little coverage and the proposed models are generally complicated and take a lot of effort to create and maintain. While more sophisticated approaches are now being developed, the most common approach is to use a discrete piece-wise linear profile with uniform time bins and creating a baseline model by using a form of per-bin averaging over a variable length of history. With that as a starting point some additional processing is done to improve the predictive performance of the profiles as discussed below. For the reader interested in more quantitative approaches, one can start with Bialkowski et al. (2006)~\cite{bidafol} and Kawakatsu and Hiroyuki (2017)~\cite{kawhiro}. \twomedskip
 
 
-\noindent\textbf{Number of Bins:} As previously mentioned the most common approach for developing profiles is to use a discrete, piece-wise linear profile. The decision on the number of bins is a trade-off between, required precision and granularity during the most active periods of the day and lack of stability due to sparsity of data/change in each bin. One minute bin is the most common choice in the industry. \twomedskip
+\noindent\textbf{Number of Bins:} As previously mentioned the most common approach for developing profiles is to use a discrete, piece-wise linear profile. The decision on the number of bins is a trade-off between required precision and granularity, during the most active periods of the day and lack of stability due to sparsity of data/change in each bin. One minute bin is the most common choice in the industry. \twomedskip
 
 
 \noindent\textbf{Per Stock Profiles vs. Clustered Profiles:} One of the key decisions to be made is whether to create a profile for each individual stock in the universe or use some sort of group profiles. With a universe of several trading instruments it might be impractical to build and maintain stable individual stock profiles. The stability of the profiles is important in order for their use to be effective. Overly illiquid and slowly moving stocks are usually not good candidates for clustered profiles. 
@@ -188,11 +188,11 @@ A related measure that is of real importance in execution is related to estimati
 
 Denote the expected cumulative volume from time $t$ to $T$ as,
 	\begin{equation} \label{eq:rdv_1}
-	r \,dv_t = \text{E} \sum_j^T V_j.
+	r \,dv_t = \text{E} \sum_t^T V_j.
 	\end{equation}
 The na\"ive approach is to take the estimate volume for next day as $\tilde{V}_{T-1}$  based on the data up to the previous day and simply remove the cumulative volume up to time $t$, to estimate the rest of the day's volume to to come,
 	\begin{equation}\label{eq:rdv_2}
-	\widehat{r\,dv_t}=  \hat{V} - \sum_0^t V_t.
+	\widehat{r\,dv_t}=  \hat{V} - \sum_0^t V_j.
 	\end{equation}
 Note this approach ignores the effect of same day events and, considering how noisy the `$\hat{V}$' estimate can be, it leads to relatively poor prediction.
 
@@ -201,14 +201,14 @@ A second approach uses the historical volume profile for each discrete period an
 	\begin{equation} \label{eq:rdv_3}
 	\widetilde{r\,dv_t}= \dfrac{\hat{V}}{\sum_{j=0}^t \tilde{X}_j} - \sum_{j=0}^t V_j.
 	\end{equation}
-This is commonly used and works reasonably well after noon hour when the activity level is somewhat established. However in the first two hours of the day, the estimates turn out to be quite poor.
+This is commonly used and works reasonably well after noon hour when the activity level is somewhat established and stable. However in the first two hours of the day, the estimates turn out to be quite poor.
 
 
 The natural  model is to combine the two methods \eqref{eq:rdv_2} and \eqref{eq:rdv_3} with per bin shrinkage factor $\lambda_t$. Thus,
 	\begin{equation}\label{eq:rdv_4}
 	\widehat{r\,dv_t}^* = \lambda_t \widehat{rdv_t} + (1-\lambda_t)\, \widetilde{r\, dv_t}.
 	\end{equation}
-The shrinkage factor $\lambda_t$ is then calibrated at the bin level to give the best mix of static and dynamic weights. We will not discuss the calibration of this model here but only point out some interesting results. As we would expect $\lambda_t$ is small at the beginning of the day raising quickly to seventy-eighty percent by noon continuing to increase to one. This is reached by construction near the close. What maybe a bit surprising is that the slope after the initial jump around mid-day is relatively small implying that the estimate of the daily volume continues to provide stability and a more accurate prediction up until the close. This implies that there is some for of ``reversion to the mean'' in later parts of the day after some intraday volume surprise. There is some literature to support the view that the trading in the first two hours after market opens sets a tone for the rest of the day. For a recent study of market intraday momentum, see Gao, Han, Li and Zhou (2018)~\cite{ghliz}.
+The shrinkage factor $\lambda_t$ is then calibrated at the bin level to give the best mix of static and dynamic weights. We will not discuss the calibration of this model here but only point out some interesting results. As we would expect $\lambda_t$ is small at the beginning of the day, raising quickly to seventy-eighty percent by noon continuing to increase to one. This is reached by construction near the close. What maybe a bit surprising is that the slope after the initial jump around mid-day is relatively small implying that the estimate of the daily volume continues to provide stability and a more accurate prediction up until the close. This implies that there is some for of ``reversion to the mean'' in later parts of the day after some intraday volume surprise. There is some literature to support the view that the trading in the first two hours after market opens sets a tone for the rest of the day. For a recent study of market intraday momentum, see Gao, Han, Li and Zhou (2018)~\cite{ghliz}.
 
 
 
@@ -455,7 +455,7 @@ where $\hat{\lambda}(i)$ is extrapolated beyond five positions using the power l
 	\begin{equation} \label{eqn:hatnmt}
 	\hat{\mu}=\dfrac{N_m}{T_*} \cdot \dfrac{s_m}{s_l}
 	\end{equation}
-The cancellation rate as noted earlier is defined as proportional to the number of order at that price level,
+The cancellation rate as noted earlier, is defined as proportional to the number of order at that price level,
 	\begin{equation} \label{eqn:hatthetacase}
 	\hat{\theta}(i)=
 	\begin{cases}
@@ -466,7 +466,7 @@ The cancellation rate as noted earlier is defined as proportional to the number 
 It is understood that the cancellation is not due to executing market orders.
 
 
-While these descriptives are easy to compute and are intuitive, but the main interest in modeling high frequency dynamics of order book is to predict short-term behavior of various key quantities, that were identical earlier that may help in algorithmic trade executions. Some relevant questions are as stated before: given the state of the order book, what is the probability that mid-price will move up, what is the probability of executing both buy and sell order at the best quotes before the price changes etc.
+While these descriptives are easy to compute and are intuitive, but the main interest in modeling high frequency dynamics of order book is to predict short-term behavior of various key quantities, that were identical earlier that may help in algorithmic trade executions. Some relevant questions are as stated before: Given the state of the order book, what is the probability that mid-price will move up, what is the probability of executing both buy and sell order at the best quotes before the price changes etc.
 
 
 We present some key results in Cont et al. (2010)~\cite{contstoi}. These results generally make good intuitive sense. The probability of queue going up when there are no orders in the queue, for $1 \leq d \leq 5$, given that the best quotes are not changing is
@@ -474,7 +474,7 @@ We present some key results in Cont et al. (2010)~\cite{contstoi}. These results
 	p_{\text{up}}^d(m)=
 	\begin{cases}
 	\dfrac{\hat{\lambda}(d)}{\hat{\theta}(d)m + \hat{\lambda}(d) + \hat{\mu}}, & d=1 \\
-	\dfrac{\hat{\lambda}(d)}{\hat{\theta}(d)m + \hat{\lambda}(d)}, & d>1
+	\dfrac{\hat{\lambda}(d)}{\hat{\theta}(d)m + \hat{\lambda}(d)}, & d>1.
 	\end{cases}
 	\end{equation}
 Other questions such as the probability that the mid price goes up when the spread $\geq 1$ etc. are based on the following quantities:
@@ -487,7 +487,7 @@ Other questions such as the probability that the mid price goes up when the spre
 		\begin{equation}\label{eqn:problimitbuytick}
 		\dfrac{\lambda_B(d)}{\mu^b+\mu^a+\sum_j \big( \lambda_B(j)+\lambda_A(j)+\theta(j)Q_j^A(t)+\theta(j)Q_j^B(t) \big)}
 		\end{equation}
-	\item Probability of a cancel buy order $d$ ticks away from the best ask
+	\item Probability of a cancel buy order $d$ ticks away from the best ask:
 		\begin{equation}\label{eqn:probcanceltick}
 		\dfrac{\theta(d)Q_d^B(t)}{\mu^b+\mu^a+\sum_j \big( \lambda_B(j)+\lambda_A(j)+\theta(j)Q_j^A(t)+\theta(j)Q_j^B(t) \big)}
 		\end{equation}
@@ -687,7 +687,7 @@ With two more trading days (3rd and 9th of September 2013) data available, we ar
 	\end{figure}
 
 
-A second interesting difference was in the amount of volume on the two sides of the book (Figure~\ref{fig:losubcanfreq}). Across the three days there was a significant volume imbalance with considerably more volume on the sell side than on the buy side but the amount of imbalance between the two sides changes significantly across the days. Overall there is no explanation as to why there would be such a strong volume imbalance in favor of the sell side other than some kind of temporary anomaly. These findings seem to point out the fact that the shape and behavior of the LOB change dramatically across different days and that, in order to capture a more general/average behavior of the book, many more days of data are required. This preliminary analysis is meant to indicate the complex behavior of limit order book dynamics. \twomedskip
+A second interesting difference was in the amount of volume on the two sides of the book (Figure~\ref{fig:losubcanfreq}). Across the three days, there was a significant volume imbalance with considerably more volume on the sell side than on the buy side but the amount of imbalance between the two sides changes significantly across the days. Overall there is no explanation as to why there would be such a strong volume imbalance in favor of the sell side other than some kind of temporary anomaly. These findings seem to point out the fact that the shape and behavior of the LOB change dramatically across different days and that, in order to capture a more general/average behavior of the book, many more days of data are required. This preliminary analysis is meant to indicate the complex behavior of limit order book dynamics. \twomedskip
 	\begin{figure}[!ht]
    	\centering
    	\includegraphics[width=0.75\textwidth]{chapters/chapter_trade_data_models/figures/freqsubmit.png} 
@@ -838,7 +838,10 @@ Finally, we compared the performance of our model to that of the bi-dimensional 
 \noindent\textbf{Limitations and findings:} There are some important considerations to be made from this analysis. The first issue is related to the cleaning of the data that was necessary in order to adapt it to our needs. In fact, Hawkes processes are ``simple'' processes which means that they do not allow for more events to occur simultaneously. Unfortunately, in the INET data it is quite common to encounter clusters of 10/20 events reported with the same timestamp. This is typical of high frequency data due to the close approximation with which events are often reported and to the obvious limitation of the chosen time scale (e.g., milliseconds). In our case we decided to keep only the first event of each cluster, dropping all the others. A possible alternative used in the literature is to simply uniformly distribute the events from the clusters across the time interval given by the occurrence of the cluster and that of the next event. However, this approach could introduce bias in the parameter estimation phase. In fact, the clustering of events by itself is of interest.
 
 
-Also, an important limitation of the bi-dimensional Hawkes Process model is that it is very computationally intense. Evaluating the five parameters for one of the two intensity function using data from only one trading day took almost two days. It becomes clear that in order to evaluate the parameters of a model using data for a longer time period of if evaluating the parameters for a model with higher dimension (hence with more parameters) will require considerably more computational power. In this section, we have provided a lucid discussion of Hawkes process for modeling the limit order book. As demonstrated here with an example, the work requires further attention on empirical modeling. 
+Also, an important limitation of the bi-dimensional Hawkes Process model is that it is very computationally intense. Evaluating the five parameters for one of the two intensity function using data from only one trading day took almost two days. It becomes clear that in order to evaluate the parameters of a model using data for a longer time period of if evaluating the parameters for a model with higher dimension (hence with more parameters) will require considerably more computational power. 
+
+
+In this section, we have provided a lucid discussion of Hawkes process for modeling the limit order book. As demonstrated here with an example, the work requires further attention on empirical modeling. 
 
 
 
@@ -864,7 +867,7 @@ The predictors of the models and the sign of estimated coefficients are listed b
 It is concluded that the relationship  between decision to hide and the order aggressiveness on the opposite side is ambiguous. All other estimates generally agree with what was postulated. When order aggressiveness is used as the response variable, it is shown that the traders adjust their order submissions when they see a signal of hidden order on the opposite side. Overall conclusion is that hidden orders are posted by not informed traders. 
 
 
-Using the data from Spanish Stock Exchange, Pardo and Pascual (2012)~\cite{pardopas} study the market reaction to the presence of hidden orders, discovered during the trading process. The high frequency data reveals that traders in the opposite side become aggressive once they detect the hidden volume, but the price impact of hidden volume is purely temporary. It is not clear what the relevant information context is in the hidden orders.
+Using the data from Spanish Stock Exchange, Pardo and Pascual (2012)~\cite{pardopas} study the market reaction to the presence of hidden orders discovered during the trading process. The high frequency data reveals that traders in the opposite side become aggressive once they detect the hidden volume, but the price impact of hidden volume is purely temporary. It is not clear what the relevant information context is in the hidden orders.
 
 
 To illustrate the presence of hidden orders, we consider the Level~III data whose description is given in Section~\ref{subsec:marketdata} (Table~\ref{tab:level3data}). With this, we can construct the order book in real time (Figure~\ref{fig:limbk1}). For modeling some key elements considered are:
@@ -944,7 +947,7 @@ Recent work by Bessembinder, Panayides and Venkataraman (2009)~\cite{bessenbinde
 	\item Hidden orders are used primarily by (informed) traders to protect themselves against defensive trading strategies (not true).
 	\item Hidden orders usage is more for larger orders, aggressively priced orders and when adverse selection risk is high.
 	\end{enumerate}
-The discovery and estimation of hidden depth is of interest to traders; while discovery has been discussed in great detail in the context of dark pools, we want to comment on the existence and execution of hidden orders in the presence of a bast majority of visible orders. We study this via transition matrix; probability that the next trade is a hidden trade given that status of the current trade, whether it is visible or hidden:
+The discovery and estimation of hidden depth is of interest to traders; while discovery has been discussed in great detail in the context of dark pools, we want to comment on the existence and execution of hidden orders in the presence of a vast majority of visible orders. We study this via transition matrix; probability that the next trade is a hidden trade given that status of the current trade, whether it is visible or hidden:
 
 	\begin{table}[!ht]
 	\centering

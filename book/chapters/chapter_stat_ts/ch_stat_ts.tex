@@ -1164,7 +1164,7 @@ Let $s_t^i$ be the prediction score of expert `$\psi_i$' at time `$t$'. Then the
 	\begin{equation} \label{eqn:carit}
 	\text{CAR}_t^i= \sum_{s=t_i+1}^t \text{Sign}(s_t^i) r_s^i.
 	\end{equation}
-Here $t_i$ is the time when the $i$th expert is added to the pool, and $r_s^i$ is the abnormal return for expert `$i$' at time `$s$'. Because the returns are white noise, $\text{cAR}_i^t \sum N(\epsilon,1)$, where `$\epsilon$' is the advantage that the expert exhibits over pure random guessing. Give a bigger weight to an expert with larger, `$\epsilon$' value. The weight of the first expert is,
+Here $t_i$ is the time when the $i$th expert is added to the pool, and $r_s^i$ is the abnormal return for expert `$i$' at time `$s$'. Because the returns are white noise, $\text{CAR}_i^t \sim N(\epsilon,1)$, where `$\epsilon$' is the advantage that the expert exhibits over pure random guessing. Give a bigger weight to an expert with larger, `$\epsilon$' value. The weight of the first expert is,
 	\begin{equation} \label{eqn:weightone}
 	w_t^1= \text{exp} \left[ \dfrac{c \cdot \text{CAR}_t^1}{\sqrt{t}} \right],
 	\end{equation}
@@ -1190,7 +1190,7 @@ Essentially, the second layer algorithms entertains new experts. The CAR for the
 where `$\text{tc}$' is the transaction cost. 
 
 
-While the above two layers provide information about entry/exit decisions, the performance of their decisions are evaluated using the benchmark ratios given in Section~\ref{sec:various_measures}. Creamer and Freund (2010)~\cite{creamer2010} demonstrate that these methods yield profitable results. They do warn that, ``\dots boosting requires powerful control mechanisms in order to reduce unnecessary and unprofitable trades that increase transaction costs. Hence, the contribution of new predictive algorithms by the computer science or machine learning literature to finance still needs to be incorporated under a formal framework of risk management.'' This area remains to be explored. 
+While the above two layers provide information about entry/exit decisions, the performance of these decisions are evaluated using the benchmark ratios given in Section~\ref{sec:various_measures}. Creamer and Freund (2010)~\cite{creamer2010} demonstrate that these methods yield profitable results. They do warn that, ``\dots boosting requires powerful control mechanisms in order to reduce unnecessary and unprofitable trades that increase transaction costs. Hence, the contribution of new predictive algorithms by the computer science or machine learning literature to finance still needs to be incorporated under a formal framework of risk management.'' This area remains to be explored. 
 
 
 
