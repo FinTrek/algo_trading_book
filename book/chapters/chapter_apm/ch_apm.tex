@@ -1,5 +1,5 @@
 % !TEX root = ../../book.tex
-\chapter{Dynamic Portfolio Management and Trading Strategies\label{ch:amp}}
+\chapter{Dynamic Portfolio Management and Trading Strategies\label{ch:amp}}\label{in:portman1}
 \section{Introduction to Modern Portfolio Theory \label{s:mod_port_theory}}
 
 Of fundamental interest to financial economists is to examine the relationship between the risk of a financial security and its return. While it is obvious that risky assets can generally yield higher returns than risk-free assets, a quantification of the tradeoff between risk and expected return was made through the development of the Capital Asset Pricing Model (CAPM) for which the groundwork was laid by Markowitz (1959)~\cite{markport}. A central feature of the CAPM is that the expected return is a linear function of the risk. The risk of an asset typically is measured by the covariability between its return and that of an appropriately defined `market' portfolio. Models of expected return-risk relationships include the Sharpe (1964)~\cite{sharpcap} and Lintner (1965)~\cite{lint65} CAPM, the zero-beta CAPM of Black (1972)~\cite{blackcap}, the arbitrage pricing theory (APT) due to Ross (1976)~\cite{rossarb} and the intertemporal asset pricing model by Merton (1973)~\cite{mertonint}. The economy-wide models developed by Sharpe, Lintner and Black are based on the work of Markowitz which assumes that investors would hold a mean-variance efficient portfolio. The main difference between the work of Sharpe and Lintner and the work of Black is that the former assumes the existence of a risk-free lending and borrowing rate whereas the latter derived a more general version of the CAPM in the absence of a risk-free rate.
@@ -9,7 +9,7 @@ In this section, we briefly review the CAPM model and the implications for empir
 
 
 % Mean-Variance Portfolio Theory
-\subsection{Mean-Variance Portfolio Theory\label{sec:mean_var_port_th}}
+\subsection{Mean-Variance Portfolio Theory\label{sec:mean_var_port_th}}\label{in:mark1}
 
 A portfolio which is composed of individual assets has its risk and return characteristics based on its composition and how the individual asset characteristics correlate with each other. The optimal combination is designed to produce the best balance between risk and return. For a given level of return, it will provide the lowest risk and for an acceptable level of risk, it will provide the maximum return. The locus of the combination of risk and reward that characterizes the optimal portfolios is called the ``Efficient Frontier.''
 
@@ -87,15 +87,15 @@ where $\beta_i= \cov(r_{it} ,r_{mt})/\sigma_m^2$; note the volatility in `$r_i$'
 If $\beta_i > 1$, the asset is taken to be aggressive. The commonly used performance ratios (Section~\ref{sec:various_measures}) follow from the population version of the model \eqref{eqn:5ritrf} which is $\mu - r_f = \alpha + \beta(\mu_m - r_f)$. Sharpe ratio is given as $(\mu - r_f)/\sigma$, Treynor's ratio is $(\mu - r_f)/\beta$ and Jensen's ratio is simply the `$\alpha$'. If $\alpha > 0$, it is taken that the portfolio performs better than the market, after adjusting for the risk. 
 
 
-\noindent The CAPM model is empirically tested via \eqref{eqn:5ritrf} with added intercept terms:
+\noindent The CAPM model is empirically tested via \eqref{eqn:5ritrf}\label{in:capm2} with added intercept terms:
 	\begin{equation}\label{eqn:intercept}
 	r_{it} - r_f = \alpha_i + \beta_i (r_{mt} - r_f) + \epsilon_{it}.
 	\end{equation}
-If CAPM holds then $H_0: \alpha_i=0$, ($i=1,2,\ldots,m$) should be supported. But empirical evidence does not seem to support $H_0$; for which various explanations are possible. It is argued that the proxies such as the S\&P500 index are not theoretically true market portfolios. A true market portfolio should be based on all assets besides equities. Also, a proxy for the risk-free rate that is uncorrelated with the returns of the assets and the market is also subject to some debate. It has been shown that other asset related information provide better explanatory power for the cross-sectional variation of the asset returns. This has led to multi-factor models that are discussed next. 
+If CAPM holds then $H_0: \alpha_i=0$, ($i=1,2,\ldots,m$) should be supported. But empirical evidence does not seem to support $H_0$; for which various explanations are possible. It is argued that the proxies such as the S\&P500 index are not theoretically true market portfolios. A true market portfolio should be based on all assets besides equities. Also, a proxy for the risk-free rate that is uncorrelated with the returns of the assets and the market is also subject to some debate. It has been shown that other asset related information provide better explanatory power for the cross-sectional variation of the asset returns. This has led to multi-factor models that are discussed next. \label{in:mark2}
 
 
 % Multifactor Models
-\subsection{Multifactor Models}
+\subsection{Multifactor Models} \label{in:mfm1}
 
 Ross (1976)~\cite{rossarb} introduced the Arbitrage Pricing Theory (APT) which is more general than CAPM; the cross-sectional variation in the asset returns is postulated to be due to multiple risk factors. There is no need to identify a market portfolio nor the risk-free return. The model can be stated as:
 	\begin{equation}\label{eqn:arbrit}
@@ -108,7 +108,7 @@ and given $f_t$ is a $n \times 1$ vector of factors, $E(\epsilon_{it})=  0$, $E(
 where $\lambda_n$ is a $n \times 1$ vector of factor risk premia.
 
 
-Generally, there are two approaches to empirically model \eqref{eqn:arbrit} and test if \eqref{eqn:mewirf} holds. In the first approach, it is assumed that the factors ($f_t$) are unknown and are estimated from the ($m \times m$) covariance matrix of the returns via principal components. The number of factors, $n$, is generally determined via subjective considerations. In the second approach, it is taken that the factors are determined by macroeconomic variables that reflect systematic risk and by asset characteristics. Chen, Roll and Ross (1986)~\cite{chenecforce} consider expected inflation, spread between high and low grade bond yields, spread between long and short interest rates for U.S. government bonds etc. as known factors. The asset characteristics that are noted to be useful are: ratio of book to market value, price-earnings ratio, momentum, Farma-French factors. These factor models with known or unknown factors tend to fare better than CAPM. As we will demonstrate, they are also useful for the construction of portfolios as these factors are likely to represent different risk dimensions. 
+Generally, there are two approaches to empirically model \eqref{eqn:arbrit} and test if \eqref{eqn:mewirf} holds. In the first approach, it is assumed that the factors ($f_t$) are unknown and are estimated from the ($m \times m$) covariance matrix of the returns via principal components. The number of factors, $n$, is generally determined via subjective considerations. In the second approach, it is taken that the factors are determined by macroeconomic variables that reflect systematic risk and by asset characteristics. Chen, Roll and Ross (1986)~\cite{chenecforce} consider expected inflation, spread between high and low grade bond yields, spread between long and short interest rates for U.S. government bonds etc. as known factors. The asset characteristics that are noted to be useful are: ratio of book to market value, price-earnings ratio, momentum, Farma-French factors. These factor models with known or unknown factors tend to fare better than CAPM. As we will demonstrate, they are also useful for the construction of portfolios as these factors are likely to represent different risk dimensions. \label{in:mfm2}
 
 
 
@@ -185,7 +185,7 @@ The number of adequate factors can also be verified through the significant `$\l
 % An Illustrative Example
 \subsection{An Illustrative Example}
 
-We consider monthly data from July 1926 to October 2012 on returns from six portfolios that are formed based on the size and book-to-market (BM) ratio. This data is taken from French's data library. The titles follow the naming convention, for example, SML contains small size plus low BM to BIGH contains big size with high BM ratio. The data also contains $r_f$, $r_{mt} -  r_f$ and the two Fama-French factors SMB (small-minus-big size factors) and HML (high-minus-low BM factor).
+We consider monthly data from July 1926 to October 2012 on returns from six portfolios that are formed based on the size and book-to-market (BM) ratio. This data is taken from French's data library. The titles follow the naming convention, for example, SML contains small size plus low BM to BIGH contains big size with high BM ratio. The data also contains $r_f$, $r_{mt} -  r_f$ and the two Fama-French factors SMB (small-minus-big size factors) and HML (high-minus-low BM factor).\label{in:fama2}
 
         \begin{figure}[!ht]
 	\centering
@@ -252,7 +252,7 @@ To identify the number of factors required to capture the total variance, we per
        
        
 % Summary of Models and Implications for Investing	
-\subsection{Implications for Investing}
+\subsection{Implications for Investing} \label{in:ports1}
 
 As the focus of this book is on trading and investing we want to summarize some main takeaways from the widely used theoretical models. Some implications of these models are listed below: \twomedskip
 
@@ -266,7 +266,7 @@ As the focus of this book is on trading and investing we want to summarize some 
 \noindent\textbf{No short-selling:} When the weights, $w_i$, are restricted to be positive, typically many weights tend to be zeros, by contrast with short-selling, most of the weights tend to be non-zeros. The resulting concentrated portfolios are more likely to have higher turnover rates. This has implications for the increase in trading costs. \twomedskip
 
 
-\noindent\textbf{CAPM:} Recall the model is $r_i - r_f= \beta_i (r_m-r_f)+\epsilon_i$ with $\sigma_i^2= \beta_i^2\sigma^2_m + \sigma_\epsilon^2$; $\beta_i= \frac{\sigma_{im}}{\sigma_m^2}$ is the normalized version of covariance. If $\beta_i= 0$, $r_i \sim r_f$ even if $\sigma_i^2$ is large. There is no risk premium; the risk that is uncorrelated with the market can be diversified away. if $\beta_i < 0$, $r_i<r_f$ even if $\sigma_i^2$ is large; such an asset reduces the overall portfolio risk when it is combined with the market portfolio; they provide a form of insurance. Observe that the portfolio `Beta' is $\beta_p= \sum_{i=1}^m w_i \beta_i$. The CAPM can be used also as a pricing formula. Note if the purchase price of an asset is `$P$' (known) which may be sold at `$Q$' (unknown), from CAPM, $r= \frac{Q-P}{P}= r_f+\beta(r_m - r_f)$ which results in the pricing formula
+\noindent\textbf{CAPM:} \label{in:capm3} Recall the model is $r_i - r_f= \beta_i (r_m-r_f)+\epsilon_i$ with $\sigma_i^2= \beta_i^2\sigma^2_m + \sigma_\epsilon^2$; $\beta_i= \frac{\sigma_{im}}{\sigma_m^2}$ is the normalized version of covariance. If $\beta_i= 0$, $r_i \sim r_f$ even if $\sigma_i^2$ is large. There is no risk premium; the risk that is uncorrelated with the market can be diversified away. if $\beta_i < 0$, $r_i<r_f$ even if $\sigma_i^2$ is large; such an asset reduces the overall portfolio risk when it is combined with the market portfolio; they provide a form of insurance. Observe that the portfolio `Beta' is $\beta_p= \sum_{i=1}^m w_i \beta_i$. The CAPM can be used also as a pricing formula. Note if the purchase price of an asset is `$P$' (known) which may be sold at `$Q$' (unknown), from CAPM, $r= \frac{Q-P}{P}= r_f+\beta(r_m - r_f)$ which results in the pricing formula
 	\begin{equation}\label{eqn:pricing}
 	P=\dfrac{Q}{1 + r_f + \beta(r_m - r_f)}.
 	\end{equation}
@@ -300,7 +300,7 @@ with a typical element, $w_j= \frac{\sigma_{\text{MV}}^2}{\sigma_j^2} \left(1 - 
 Thus when $\sigma_j^2$ is small and low $\beta_j$, $w_j$ will be large. \twomedskip
 
 
-\noindent\textbf{Diversifying the Diversifiers:} In practice, finding proxies for the true tangency portfolio or a completely risk-free asset has been difficult. Practitioners traditionally have used cap-weighted equity indices as proxies for tangency portfolios but that is shown to result in inefficient risk-return trade-off. Recent studies (see Amenc, Goltz, Lodh and Martellini (2012)~\cite{amencgoltzlodhmart}) focus on diversifying across various forms of efficient portfolios, notably those formed using the maximum Sharpe ratio and the minimum variance criteria. It is empirically shown that the minimum variance portfolios provide conservative exposure to stocks that perform well in adverse conditions and Sharpe ratio portfolios provide access to higher performance stocks. Combining the two with controls on tracking error is shown to result in a smoother performance. 
+\noindent\textbf{Diversifying the Diversifiers:} In practice, finding proxies for the true tangency portfolio or a completely risk-free asset has been difficult. Practitioners traditionally have used cap-weighted equity indices as proxies for tangency portfolios but that is shown to result in inefficient risk-return trade-off. Recent studies (see Amenc, Goltz, Lodh and Martellini (2012)~\cite{amencgoltzlodhmart}) focus on diversifying across various forms of efficient portfolios, notably those formed using the maximum Sharpe ratio and the minimum variance criteria. It is empirically shown that the minimum variance portfolios provide conservative exposure to stocks that perform well in adverse conditions and Sharpe ratio portfolios provide access to higher performance stocks. Combining the two with controls on tracking error is shown to result in a smoother performance. \label{in:ports2}
 
 
 
@@ -363,7 +363,7 @@ where $w_m$ are the weights on the global market and $\sigma_m^2$ is the varianc
 	\begin{equation} \label{eqn:bleq}
 	\hat{\mu}^{\text{BL}}= (\hat{\Sigma}^{\text{BL}})^{-1} [ (\tau \Sigma)^{-1}\pi + P' \Omega^{-1}q], \quad \hat{\Sigma}^{\text{BL}}= (\tau \Sigma)^{-1} + P' \Omega^{-1}P.
 	\end{equation}
-For various interesting practical applications of this result, see Satchell and Snowcraft (2000)~\cite{snow}. Although the requirement for subjective judgments may appear to make it difficult to use the Black-Litterman model, in asset management practice, it is widely used. It is shown that there is improvement in portfolio performance of an informed trader who also learns from market prices over a dogmatic informed trader who solely relies on private information. A misspecified model can result in better performance even if private signals are not accurate. Black and Litterman model provides a unified framework.
+For various interesting practical applications of this result, see Satchell and Snowcraft (2000)~\cite{snow}. Although the requirement for subjective judgments may appear to make it difficult to use the Black-Litterman model,\label{in:allo} in asset management practice, it is widely used. It is shown that there is improvement in portfolio performance of an informed trader who also learns from market prices over a dogmatic informed trader who solely relies on private information. A misspecified model can result in better performance even if private signals are not accurate. Black and Litterman model provides a unified framework.
 
 
 It has been noted in the literature that estimating the expected returns using the past returns fails to account for likely changes in the level of market risk. Merton (1980)~\cite{merton} based on a detailed exploratory study concludes, that the investors should recognize that the expected market return in excess of risk free return should be positive and that there is heteroscedasticity in the realized returns. It must be noted that the price series is random walk and therefore with shifting means, the successive differences (essentially the returns) can exhibit different levels of variances. Predicting future returns under the random walk model for price is still an open issue.
@@ -395,7 +395,7 @@ Fan, Fan and Lv (2008)~\cite{fansq} consider high dimensional covariance matrix 
 
 
 % Portfolio Allocation Using Regularization
-\subsection{Portfolio Allocation Using Regularization}
+\subsection{Portfolio Allocation Using Regularization}\label{in:regz2}\label{in:ports3}
 
 It is noted that the poor performance of Markowitz's conceptual framework is due to the structure of the optimization problem. It is an ill-conditioned inverse problem as the solution requires the inverse of the covariance matrix that may involve highly correlated securities. A number of regularization procedures have been proposed in the literature to address the instability in the solution and we present a few of them here. \twomedskip
 
@@ -482,7 +482,7 @@ Defining the total proportions of long and short positions by $w^+=(\|w\|_1+1)/2
 	\begin{equation} \label{eqn:optproblem}
 	\max_w E[U(w'r)] \enskip \ni \enskip w'1=1, \|w\|_1 \leq C \text{ and } Aw=a.
 	\end{equation}
-Here $U(\cdot)$ is a utility function and the extra-constraints $Aw=a$ can capture allocations to various sectors. But the key added constraint, $\|w\|_1 \leq C$ can accommodate from no short sales ($C=1$) to unrestricted sales ($C= \infty$) constraints. The solution to \eqref{eqn:optproblem} can be obtained via quadratic programming. Fan et al. (2012)~\cite{fanzhanyu} advocate data-driven choice of `$C$' via minimizing the risk for a sample learning period. Using select 600 stocks from the pool of stocks that constitute Russell 3000, the constructed portfolios tend to perform well for $C \sim 2$. 
+Here $U(\cdot)$ is a utility function and the extra-constraints $Aw=a$ can capture allocations to various sectors. But the key added constraint, $\|w\|_1 \leq C$ can accommodate from no short sales ($C=1$) to unrestricted sales ($C= \infty$) constraints. The solution to \eqref{eqn:optproblem} can be obtained via quadratic programming. Fan et al. (2012)~\cite{fanzhanyu} advocate data-driven choice of `$C$' via minimizing the risk for a sample learning period. Using select 600 stocks from the pool of stocks that constitute Russell 3000, the constructed portfolios tend to perform well for $C \sim 2$. \label{in:ports4}
 
 
 
@@ -552,7 +552,7 @@ The above stated conclusions hold for multi-period portfolio policies as well wi
 
 
 % Portfolio Tracking and Rebalancing
-\section{Portfolio Tracking and Rebalancing}
+\section{Portfolio Tracking and Rebalancing} \label{in:rebalance1}
 
 The proportions of capital allocated to various assets can change over time due to asset performances and due to change in investors risk aversion. Thus, investors often engage in portfolio rebalancing to keep the portfolio on target risk exposure and exploit the market opportunities to enhance returns in the long run. First, we formulate the problem with constraints that account for these and then present the results of some empirical studies.
 
@@ -580,7 +580,7 @@ Note the criterion in \eqref{eqn:constraintprob} can also be taken as a version 
 Some practical implementation ideas are discussed in Pachmanova and Fabozzi (2014)~\cite{pachfab}. In addition to na\"ive allocation strategy discussed earlier in this chapter, other ad-hoc methods simply imitate the composition of some market indices such as S\&P 500 that weighs stocks by their market capitalizations or Dow-Jones that weighs stocks by their prices. To imitate, select the stocks with the largest weights in the benchmark. Other methods include stratification of benchmarks into groups and select stocks from each group that ensures diversification. The group can be industry-based or if it is based on past performance, the selected assets are called basis assets. The difference between the original allocation model and the rebalancing models can be due to change in the objectives and also due to change in transaction costs and taxes. If a manager wants to move toward higher alpha, the restriction on the tracking error should be added to \eqref{eqn:constraintlist}. Like other calculations related to portfolio management, the rebalancing also involves backward-looking estimates. To reflect the future more accurately, managers should arrive at forward-looking estimates of tracking error using conditioning arguments given in the earlier section. \twomedskip
 
 
-\noindent\textbf{Transaction Costs:} Bid-ask spreads, brokerage fees, taxes and the price impact of trading are covered in Chapter~\ref{chap:ch_mi_models}. Here we present some observations related to trading costs as noted in the literature. Defining the turnover as,
+\noindent\textbf{Transaction Costs:} \label{in:tradecost2} Bid-ask spreads, brokerage fees, taxes and the price impact of trading are covered in Chapter~\ref{chap:ch_mi_models}. Here we present some observations related to trading costs as noted in the literature. Defining the turnover as,
 	\begin{equation} \label{eqn:turnover}
 	\mathcal{T}= \sum_{i=1}^m \lvert w_i - w_{0i} \rvert = \sum_{i=1}^m \tau_i
 	\end{equation}
@@ -611,7 +611,7 @@ where $c_{it}$ is the cost of transaction. The `$\alpha$' is chosen using the fo
 	\begin{equation}\label{eqn:objectivefun}
 	\max_\alpha \dfrac{1}{T} \sum_{t=0}^{T-1} \dfrac{(1 + r_{pt+1})^{1-\gamma}}{1-\gamma},
 	\end{equation}
-where `$\gamma$' is the coefficient of relative risk-aversion. The parameter `$\alpha$' is chosen via grid search, outside the no-trade zone. An empirical investigation of various distance and rebalancing methods reveals that transaction cost reduction is most successful for the lower momentum and equally-weighted market portfolios but more difficult for the momentum portfolios because of higher turnover. 
+where `$\gamma$' is the coefficient of relative risk-aversion. The parameter `$\alpha$' is chosen via grid search, outside the no-trade zone. An empirical investigation of various distance and rebalancing methods reveals that transaction cost reduction is most successful for the lower momentum and equally-weighted market portfolios but more difficult for the momentum portfolios because of higher turnover. \label{in:rebalance2}
 
 
 
@@ -758,7 +758,7 @@ Some of the specific measures that are worth noting are: \twomedskip
 \noindent Downside Risk: Consider the returns on a lower quartile, then $\text{Lower Partial Moment}= \dfrac{1}{\lvert I \rvert} \; \sum_{i \in I} (r_i - r_v)^2$. For other variations of this measure, refer to the citation. \twomedskip
 
 
-\noindent Liquidity: $\text{LIQMA}= \dfrac{1}{T} \, \sum_{t=1}^T \dfrac{\lvert r_t \rvert}{v_t/\text{ME}_t}$, where $v_t$ is the traded dollar volume and $\text{ME}_t$ is the market value. 
+\noindent Liquidity: $\text{LIQMA}= \dfrac{1}{T} \, \sum_{t=1}^T \dfrac{\lvert r_t \rvert}{v_t/\text{ME}_t}$, where $v_t$ is the traded dollar volume and $\text{ME}_t$ is the market value. \label{in:portman2}
 
 
 

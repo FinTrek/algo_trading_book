@@ -1,5 +1,5 @@
 % !TEX root = ../../book.tex
-\chapter{The Research Stack}\label{chap:ch_tech_res}
+\chapter{The Research Stack\label{chap:ch_tech_res}}
 
 Designing, testing, calibrating, measuring and improving a suite of algorithmic trading strategy is not for the faint of heart. As we have discussed, it is a large scale problem that requires deep investment and can take years to set up. One of the critical components of the overall stack, one that is often underfunded and thus underdeveloped, is the research environment. For an execution business this is usually an afterthought, a setup that is scrounged together from already existing pieces of the infrastructure they know that need to operate a quantitative team often has to do with what is available.: historical market data, reference data, and historical transactional data in order to fulfill the transactions cost analysis (TCA) needs of the clients.
 
@@ -15,7 +15,7 @@ The authors wish they could dedicate a full book (and maybe one day they will) t
 
 
 % Data Infrastructure
-\section{Data Infrastructure}
+\section{Data Infrastructure}\label{in:dat_infr1}
 
 As we have seen throughout this book, without data, obviously, there is no research. It then goes without saying that the most important component of research environment must be data infrastructure. There are two main parts of a typical data infrastructure: Historical Market Data, and Historical Transactional Data. 
 
@@ -23,7 +23,7 @@ As we have seen throughout this book, without data, obviously, there is no resea
 Additionally as observed from Chapter~\ref{chap:ch_trading_fund}, we should have access to historical reference data as well. While most of the research and analytics will be intra-day and thus less dependent on historical data, it is sometimes necessary to look at prices/volumes over multiple days for consistency. This creates an added complexity of potentially having to adjust the data for corporate actions. This is not a simple thing and rarely reference data platforms store all history of ticker changes, symbology mapping and various corporate action multipliers that were used to adjust the data. \twomedskip
 
 
-\noindent\textbf{Historical Ticker Plant:} Market data, just as the case was for the production tech stack can be the most challenging and expensive component of a data infrastructure. Even for  the simplest usecase: consolidated Level I quote and trade data TAQ data from NYSE\footnote{\url{http://www.nyxdata.com/data-products/daily-taq}} at present time charges \$3000 per month of history. It is more than 18~GB per day compressed. Any respectable operation needs at least one to two years so just the simplest setup requires an investment of at least \$75,000 and storage and processing capacity for 8~TB of data. A more serious setup would have Level II data for the top exchanges with costs and sizes, several multiples of Level~I data.  
+\noindent\textbf{Historical Ticker Plant:} Market data, just as the case was for the production tech stack can be the most challenging and expensive component of a data infrastructure. Even for  the simplest usecase: consolidated Level I quote and trade data TAQ data\label{in:taq3} from NYSE\footnote{\url{http://www.nyxdata.com/data-products/daily-taq}} at present time charges \$3000 per month of history. It is more than 18~GB per day compressed. Any respectable operation needs at least one to two years so just the simplest setup requires an investment of at least \$75,000 and storage and processing capacity for 8~TB of data. A more serious setup would have Level II data for the top exchanges with costs and sizes, several multiples of Level~I data. \label{in:level2dat2}
 
 
 Once collected the data has to be processed, normalized and stored in an infrastructure that allows for analysis and for processing. While theoretically one could store this data in a relational database, realistically this never creates a usable infrastructure and historically only few vendor infrastructures have been successful in this space. Notably KDB from Kx System\footnote{\url{https://kx.com/}} has been the dominant player in this space, despite the steep cost and the terse and cryptic `q' language that is a hard to master and thus it is a very much sought-after skill.\footnote{Some people will argue that q is the reason for KDB success. The jury is out on that.} In recent years this space has evolved significantly and there are now powerful open-source contenders like InfluxDB\footnote{\url{https://www.influxdata.com/}} and many others. Others have started exploring distributed systems on top of the Hadoop/Spark ecosystem. KDB continues to maintain its dominance in large scale trading operations but its reign is no longer as certain as it used to be.
@@ -50,12 +50,12 @@ With regards to data warehousing infrastructures we can make similar considerati
 \noindent\emph{HFT Setup} \twomedskip
 
 
-As we have seen in Chapter~\ref{chap:ch_tech}, HFT and market-making setups are mostly built in as a single monolithic co-located processes. It is also a relatively simplified setup as trading initiation is completely endogenous to the trading strategy and thus does not have to be tied back to initiating order instructions coming down from the OMS. Typical solutions are more ``low-tech'' that come from processing raw log files and storing the instructions in compressed csv formatted files.
+As we have seen in Chapter~\ref{chap:ch_tech}, HFT and market-making setups are mostly built in as a single monolithic co-located processes. It is also a relatively simplified setup as trading initiation is completely endogenous to the trading strategy and thus does not have to be tied back to initiating order instructions coming down from the OMS. Typical solutions are more ``low-tech'' that come from processing raw log files and storing the instructions in compressed csv formatted files.\label{in:dat_infr2}
 
 
 
 % Calibration infrastructure
-\section{Calibration infrastructure}
+\section{Calibration infrastructure} \label{in:calb1}
 
 From the discussion presented here, it is clear that a respectable trading execution operation requires a whole slew of models and analytics that have to be created, calibrated, and delivered into the production environment. Creating a solid, nimble and flexible calibration environment that provides a high degree of automation, has strong validation capabilities and one click productionization is not a simple exercise but one that we strongly encourage investing time and resources in. This, unless one is fine with countless hours spent each month keeping all these models up-to-date, fixing production breaks and answering embarrassing questions such as why one could not trade the recent IPO. 
 
@@ -75,7 +75,7 @@ The specific details of a solution for this is very much dependent on the curren
 
 \item Maintain a history of the calibration data so that data can be used for historical simulation.
 
-\item There is generally an over-reliance on using flat files (e.g. csv) to deliver this content. A possible better approach is for the data to be stored into a database with a production tag primary key and the production process (possibly an intermediary process that actually creates flat files for the production environment) that generates these files based on the primary key which is controlled by production support. 
+\item There is generally an over-reliance on using flat files (e.g. csv) to deliver this content. A possible better approach is for the data to be stored into a database with a production tag primary key and the production process (possibly an intermediary process that actually creates flat files for the production environment) that generates these files based on the primary key which is controlled by production support. \label{in:calb2}
 \end{itemize}
 
 
@@ -175,4 +175,4 @@ Going into the full cumbersome details of such an infrastructure is unfortunatel
 % Conclusion
 \section{Conclusion}
 
-It has been the authors' experience that rarely enough time is ever spent in building a powerful and flexible research environment that provides quantitative researchers the tools to quickly access and analyze data, create supporting analytics, simulate behavior of algorithms and then to be able to analyze the behavior of the algorithms and generate post trade analytics for their own and their clients' review. Done correctly though, this should become a real engine for innovation and performance and a real competitive advantage in a highly competitive field. We hope this brief but broad review will be useful to help the reader who is involved in such a buildout, the tools needed to point in the right direction.
+It has been the authors' experience that rarely enough time is ever spent in building a powerful and flexible research environment that provides quantitative researchers the tools to quickly access and analyze data, create supporting analytics, simulate behavior of algorithms and then to be able to analyze the behavior of the algorithms and generate post trade analytics for their own and their clients' review. Done correctly though, this should become a real engine for innovation and performance and a real competitive advantage in a highly competitive field. We hope this brief but broad review will be useful to help the reader who is involved in such a buildout, the tools needed to point in the right direction.\label{in:exec_tech2}

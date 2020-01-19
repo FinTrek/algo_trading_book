@@ -9,7 +9,7 @@ Many articles and books have appeared on the topic of modeling trade data. Our g
 
 
 % Normalizing Analytics
-\section{Normalizing Analytics}
+\section{Normalizing Analytics}\label{in:normalization1}\label{in:tda1}\label{in:norm1}
 
 A challenging aspect of execution, unlike other areas in algorithmic trading, is developing strategies that are common and apply to a large number of stocks. The strategies will need to function successfully for super liquid instruments (that trade easily at the minimum tick size) as well as for illiquid stocks that trade only infrequently at wide spreads. That is, for stocks that have very stable and large sizes at the inside market, and stocks whose NBBO (best bid-best offer) changes multiple times every second.
 
@@ -164,7 +164,7 @@ A common approach is to use a statistical clustering approach using an appropria
 \noindent\textbf{Volume Profile Smoothing:} Intraday volume profiles tend to be extremely noisy and require smoothing to be effective. Without smoothing the volume profile performs worse than a flat profile. Care must be taken to avoid smoothing over real discontinuities (e.g. there is a predictable spike in volume in European profiles when the US market opens). These spikes usually are preceded by a period of reduced trading activity, as the traders wait for the event. Smoothing these spikes will have the effect of spreading the spikes over previous bins and thus reducing the precision of the profile. One common approach is to remove statistically significant spikes and replace them with a local average for the purpose of smoothing and then bring the spike back. It has been observed that this approach improves the overall predictability of the profile. As far as smoothing algorithms there are a lot of choices available. Kernel smoothing methods discussed in Chapter~\ref{ch:ch_uvts} have been proven effective. However, care must be given at the boundaries (beginning and end) of the profile. \twomedskip
 
 
-\noindent\textbf{Special Days:} Special days present additional challenges due to limited data (e.g triple witching occurs only four times a year). So using larger clusters (one cluster as a limit) is often the only option. One way to handle this would be to use these separately calibrated profiles across all special-day clusters. However this would lose the granularity of the regular day clustering. In order to maintain some of the  regular cluster level characteristics a common approach is to use a ``difference'' profile created by a normalized per-bin ratio between an average regular day profile and the special day profile. This captures the special day systematic shift that can then be multiplied back to the cluster profile essentially mixing the two components. While in most cases this has proven effective we would recommend out of sample testing at the cluster level to see in which profile this approach is effective. \twomedskip
+\noindent\textbf{Special Days:} Special days present additional challenges due to limited data (e.g triple witching occurs only four times a year). So using larger clusters (one cluster as a limit) is often the only option. One way to handle this would be to use these separately calibrated profiles across all special-day clusters. However this would lose the granularity of the regular day clustering. In order to maintain some of the  regular cluster level characteristics a common approach is to use a ``difference'' profile created by a normalized per-bin ratio between an average regular day profile and the special day profile. This captures the special day systematic shift that can then be multiplied back to the cluster profile essentially mixing the two components. While in most cases this has proven effective we would recommend out of sample testing at the cluster level to see in which profile this approach is effective. \label{in:norm2} \twomedskip
 
 	\begin{figure}[!ht]
 	\centering
@@ -176,12 +176,12 @@ A common approach is to use a statistical clustering approach using an appropria
 \noindent\textbf{Dynamic Profiles:} Volume distributions are relatively stable but for reasons we have discussed above they are subject to large distortions due to some `surprise' events such as unexpected news. In such cases the volume can spike dramatically and the overall realized distribution will end up being highly skewed. To address this issue, dynamic models that take into account the clustering of volume during surprise events skewing rest of the day's profile more towards the event must be developed. Most models used in industry are proprietary and often heuristic and some academic research is called for. They also require a sophisticated real-time analytics infrastructure, and they should be able to instantly measure and apply these adjustments while the algorithm trades.
 
 
-As a side note on a practical matter, unexpected volume spikes and the related distortion of the volume profile are likely still the most common reason why the execution coverage desks get irate calls from clients complaining of their poor performance. This is because the volume spikes usually happen in conjunction with a price dislocation. A strategy trading against a static profile would under-trade around the event thus leading to a significant deviation from the VWAP benchmark. 
+As a side note on a practical matter, unexpected volume spikes and the related distortion of the volume profile are likely still the most common reason why the execution coverage desks get irate calls from clients complaining of their poor performance. This is because the volume spikes usually happen in conjunction with a price dislocation. A strategy trading against a static profile would under-trade around the event thus leading to a significant deviation from the VWAP benchmark. \label{in:normalization2}
 
 
 
 % Remainder (of the Day) Volume
-\subsection{Remainder (of the Day) Volume}
+\subsection{Remainder (of the Day) Volume}\label{in:vol_prof1}
 
 A related measure that is of real importance in execution is related to estimating the remainder of the day's volume; how much volume is still expected before the market closes. This is important for sizing the orders to be sent so as to avoid excessive impact. As this will trade into the closing auction, it is important to plan how many shares should be reserved for the auction. We will discuss more of this in the next section.
 
@@ -213,12 +213,12 @@ The shrinkage factor $\lambda_t$ is then calibrated at the bin level to give the
 
 
 % Auctions Volume
-\subsection{Auctions Volume}
+\subsection{Auctions Volume} \label{in:close4}
 
 It is somewhat surprising that not much academic research is available on such an important aspect of trading. Even for practitioners handling the execution of the opening and closing auctions, this is probably a bit more than an afterthought. This is usually handled as part of the volume profiles estimation, in which the opening and closing auctions are respectively the first and last bin of the profile. As per our earlier discussion of volume profiles this ends up being nothing more than an average of the proportion of daily volume. The estimates can be updated  intraday using both dynamic volume profiles and rest of day's volume models as discussed above. More sophisticated approaches leveraging the auction imbalance information that is published by the exchanges (around the last 5--10~m of the trading day depending on the exchange) can be used as well.
 
 
-As mentioned, the current trend towards passive investments and ETF has driven the liquidity more and more towards the close. This means that the closing auction is becoming increasingly the center of liquidity management.  It is quite likely that no other area of research is more relevant and impactful than focusing on better understanding price and volume dynamics during the closing period. In particular in understanding the dynamics in relation to create-redeem activities, across asset classes.
+As mentioned, the current trend towards passive investments and ETF has driven the liquidity more and more towards the close. This means that the closing auction is becoming increasingly the center of liquidity management.  It is quite likely that no other area of research is more relevant and impactful than focusing on better understanding price and volume dynamics during the closing period. In particular in understanding the dynamics in relation to create-redeem activities, across asset classes. \label{in:tda2}\label{in:vol_prof2}
 
 
 
@@ -288,7 +288,7 @@ As noted in Chakraborty et al. (2012)~\cite{chakrabarty2012short}, for short sal
 
 
 % Limit Order Book (LOB): Studying Its Dynamics
-\section{Limit Order Book (LOB): Studying Its Dynamics}
+\section{Limit Order Book (LOB): Studying Its Dynamics}\label{in:labmod1}
 
 A comprehensive study that includes all the key measures discussed in the last section is desirable. Before we formally present the existing models, we want to provide a review of how the analysis of LOB data has been approached. Biais, Hillion and Spatt (1995)~\cite{spalt} study the trading activity in Paris Bourse (a fully automated limit order market), the dynamics of order flow and how the order flow varies with the state of the order book and marketplace events relevant to the asset. It is found that the conditional probability of a limit order placement is larger, when the bid-ask spread is larger and when the order book is not deep. If a market order has been placed, the chance that the next order posted provides liquidity is generally higher. The placement of orders also follows a pattern with new orders coming in the morning when the price discovery occurs and cancellations and large orders occur in the evenings. The durations between trades do indicate that the intensity of trade varies during the course of a day. The main tool used in these calculations is contingency table which provides both marginal and conditional probabilities. With the operation of multiple exchanges, the calculation of these probabilities has become quite complex. 
 
@@ -525,7 +525,7 @@ In the case of dependency where bid side and ask side are correlated to each oth
 
 
 % Models Based on Hawkes Process
-\subsection{Models Based on Hawkes Process}
+\subsection{Models Based on Hawkes Process}\label{in:hawk1}
 
 \noindent\textbf{An Introduction:} Hawkes (1971)~\cite{hawkes71} introduced a model for self-exciting and mutually exciting point processes which capture the property that occurrence of an event increases the chance of further events occurring. Before we describe its applications in LOB modeling, we want to briefly discuss the main features of the model. If we let $\lambda(t)$ be the conditional intensity measured through the change in the number of events that occur in the time interval $(0,t)$ given the information available, then the self-exciting process has the intensity
 	\begin{equation} \label{eq:seintensity}
@@ -657,7 +657,7 @@ It can be observed that very few limit orders are actually submitted close to th
 In this particular case, limit orders stay in the book for much longer if they are on the sell side, than if they are on the buy side. This life-time difference for limit orders on the two opposite sides of the book is consistent with what we saw earlier in the order imbalance of the limit order and market order submission. In fact, in this case as well we see how the buy side appears to be the more active side of the book. The shorter execution time for the orders on the buy side could be caused by either more aggressive pricing or by the price movements of the markets while the shorter lifespans and the higher number of orders on that side seem to indicate the use of more active trading strategies. However, there is another interesting observation that can be made. We see that on average a sell limit order that is filled for the first time (but that does not get completely filled), is cancelled after about 7 seconds, compared to 20 seconds that it would take had the order been on the buy side. This means that on average it takes three times longer for a partially (and never completely) filled order to be cancelled if it is on the buy side (which is the more active side) that if it is on the sell side (which is the less reactive side). The asymmetry between buy and sell side at the aggregated level has been noted in the literature.
 
 
-The next step was to observe changes in the behavior of the book when moving further away from the market. Observe the order submission and cancellation frequencies as a function of distance from the market price. Figure~\ref{fig:subfreqnear} and Figure~\ref{fig:canfreqnear} show that most limit orders are submitted and cancelled at the market (respectively, 40\% and almost 30\%) and that the rates drop sharply with each price level further away from it. This supports the conclusion that the very small percentage of executed orders is not caused by the fact that most limit orders are submitted far away from the market and hence do not get the chance to get executed. We can also see how approximately 70\% (96\%) of all Limit Orders are placed in the top 5 (20) levels of the book and that 69\% (96\%) of all cancellations also occurs in the top 5 (20) levels. This is a first indication of the fact that Level~III data offers more information than Level~II  (with the top 5 levels of the book) we are only able to capture around 70\% of all the occurring events. However, this also indicates that there is no need to use all the information provided in Level~III data since by looking at only the top 20 levels of the book we can capture nearly all of the occurring events. Both plots show a very similar behavior for the buy and sell side which led us to assume an almost symmetric behavior of the book. This assumption was later tested and confirmed at a 99\% confidence level with a two-sided Kolmogorov-Smirnov (KS) Test.\footnote{The KS test is based on the distance between two empirical cumulative distribution functions, $F_1(x)$ and $F_2(x)$; for additional details refer to any book on mathematical statistics.}
+The next step was to observe changes in the behavior of the book when moving further away from the market. Observe the order submission and cancellation frequencies as a function of distance from the market price. Figure~\ref{fig:subfreqnear} and Figure~\ref{fig:canfreqnear} show that most limit orders are submitted and cancelled at the market (respectively, 40\% and almost 30\%) and that the rates drop sharply with each price level further away from it. This supports the conclusion that the very small percentage of executed orders is not caused by the fact that most limit orders are submitted far away from the market and hence do not get the chance to get executed. We can also see how approximately 70\% (96\%) of all Limit Orders are placed in the top 5 (20) levels of the book and that 69\% (96\%) of all cancellations also occurs in the top 5 (20) levels. This is a first indication of the fact that Level~III data offers more information than Level~II  (with the top 5 levels of the book) we are only able to capture around 70\% of all the occurring events. However, this also indicates that there is no need to use all the information provided in Level~III data \label{in:level3dat3} because by looking at only the top 20 levels of the book we can capture nearly all of the occurring events. Both plots show a very similar behavior for the buy and sell side which led us to assume an almost symmetric behavior of the book. This assumption was later tested and confirmed at a 99\% confidence level with a two-sided Kolmogorov-Smirnov (KS) Test.\footnote{The KS test is based on the distance between two empirical cumulative distribution functions, $F_1(x)$ and $F_2(x)$; for additional details refer to any book on mathematical statistics.}
 	\begin{figure}[!ht]
    	\centering
    	\includegraphics[width=\textwidth]{chapters/chapter_trade_data_models/figures/subfreqnear.png} 
@@ -841,12 +841,12 @@ Finally, we compared the performance of our model to that of the bi-dimensional 
 Also, an important limitation of the bi-dimensional Hawkes Process model is that it is very computationally intense. Evaluating the five parameters for one of the two intensity function using data from only one trading day took almost two days. It becomes clear that in order to evaluate the parameters of a model using data for a longer time period of if evaluating the parameters for a model with higher dimension (hence with more parameters) will require considerably more computational power. 
 
 
-In this section, we have provided a lucid discussion of Hawkes process for modeling the limit order book. As demonstrated here with an example, the work requires further attention on empirical modeling. 
+In this section, we have provided a lucid discussion of Hawkes process for modeling the limit order book. As demonstrated here with an example, the work requires further attention on empirical modeling. \label{in:hawk2}
 
 
 
 % Models for Hidden Liquidity
-\section{Models for Hidden Liquidity}
+\section{Models for Hidden Liquidity} \label{in:hidden2}
 
 Investors have the option to place limit orders that are not visible to other traders but they are observable to exchange officials. These are called `hidden' or `iceberg' orders. The invisible order retains price but not time priority. It is possible to place a fraction of order visible but the rest hidden. When a visible portion gets executed, another fraction of the hidden order becomes visible. In NYSE, an order improving the quotes can be fully hidden. The posting of hidden orders is a second stage decision by the traders after choosing between market and limit orders. The risk of placing a limit order has been discussed earlier and an important element of that is the transparency or exposure risk that can signal to market participants the motive of the trader. This may result in other traders engaging in front-running strategies in anticipation of certain market movements. It is also speculated that orders are hidden when there is increased participation of informed traders and to minimize price impact when the execution probability is fairly high. 
 
@@ -960,7 +960,7 @@ The discovery and estimation of hidden depth is of interest to traders; while di
 	\end{tabular}
 	\end{table}
 
-\noindent This information along with depth information in Table~\ref{tab:transmatrix} indicate that hidden orders are executed somewhat together at the top of the book. 
+\noindent This information along with depth information in Table~\ref{tab:transmatrix} indicate that hidden orders are executed somewhat together at the top of the book. \label{in:hidden3}
 
 
 
@@ -984,4 +984,4 @@ With the availability of voluminous high frequency data, as we saw in this chapt
 	\item A higher volatility decreases the aggressiveness in market order trading and increases the aggressiveness in limit order trading.
 	\item The higher the bid-ask spread, the lower the aggressiveness in market trading and the higher the aggressiveness in limit order trading. 
 	\end{enumerate}
-It is empirically demonstrated that it is important to take into account the state of the order book to better understand the submission and cancellation behaviors. It is also clear based on the INET data analysis provided earlier, Hawkes process does better, but there is a lot of room to improve on the models presented in this chapter.
+It is empirically demonstrated that it is important to take into account the state of the order book to better understand the submission and cancellation behaviors. It is also clear based on the INET data analysis provided earlier, Hawkes process does better, but there is a lot of room to improve on the models presented in this chapter.\label{in:labmod2}

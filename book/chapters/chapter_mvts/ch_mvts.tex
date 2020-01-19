@@ -1,5 +1,5 @@
 % !TEX root = ../../book.tex
-\chapter{Multivariate Time Series Models\label{ch:ch_mvts}}
+\chapter{Multivariate Time Series Models\label{ch:ch_mvts}} \label{in:multimod1}
 
 The methods developed in this chapter are natural extensions of the methods presented in Chapter~\ref{ch:ch_uvts} in the multivariate setting. But the underlying data is of large dimension and hence they present some unique challenges. These include unwieldy estimation problems as well as making meaningful interpretation of the estimates. But these methods are essential to address portfolio construction and issues related to trading multiple stocks. Readers will find the main tools described in this chapter are useful to follow the latest research in the areas of commonality and co-movement of multiple stocks. We want to present some basic tools in multivariate regression and tools for dimension-reduction, which provide a direct foundation for modeling multiple time series. Although several multivariate time series models are well-studied in the literature, the focus has been on the multivariate (vector) autoregressive (VAR) models which falls neatly in the framework of multivariate regression with necessary constraints on the regression coefficient matrices that can guarantee stationarity. Thus a good understanding of multivariate regression will lay a solid foundation for studying VAR models.
 
@@ -9,7 +9,7 @@ In the area of multivariate analysis, there are two broad themes that have emerg
 
 
 % Multivariate Regression
-\section{Multivariate Regression \label{s:s_mr}} 
+\section{Multivariate Regression \label{s:s_mr}} \label{in:multreg1}
 
 We begin with the general multivariate linear regression model,
 	\begin{equation} \label{eqn:5lmyk}
@@ -98,12 +98,12 @@ A related problem of interest is the prediction of values of a new response vect
 	&\leq \{1 + X_0'(\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T - n)}{T - n - m + 1} F_{m,T - n - m + 1}(\alpha) \right].
 	\end{split}
 	\end{equation}
-The application of Hotelling's $T^2$ in the context of testing related to CAPM model when the number of stocks, `$m$' larger than the available data, `$T$' has been a subject of active research recently. 
+The application of Hotelling's $T^2$ in the context of testing related to CAPM model when the number of stocks, `$m$' larger than the available data, `$T$' has been a subject of active research recently. \label{in:multreg2}
 
 
 
 % Dimension-Reduction via Reduced-Rank Regression
-\section{Dimension-Reduction Methods\label{sec:s_dr}}
+\section{Dimension-Reduction Methods\label{sec:s_dr}}\label{in:dimred1}
 
 \noindent\textbf{Reduced-Rank Regression:} \twomedskip
 
@@ -150,7 +150,7 @@ where $\hat{\Sigma}_{yx}= (1/T) \mathbf{Y} \mathbf{X}'$, $\hat{\Sigma}_{xx}= (1/
 It should be mentioned, perhaps, that estimation results are sensitive to the choice of scaling of the response variables $Y_t$, and in applications it is often suggested that the component variables $y_{it}$ be standardized to have unit variances before applying the LS procedure. \twomedskip
 
 
-\noindent\textbf{Principal Component Analysis (PCA)} \twomedskip
+\noindent\textbf{Principal Component Analysis (PCA)} \label{in:pca} \twomedskip
 
 
 Principal component analysis, originally developed by Hotelling (1933)~\cite{hotelling33}, is concerned with explaining the covariance structure of a large number of variables through a small number of linear combinations of the original variables. The principal components are descriptive tools that do not usually rest on any modeling or distributional assumptions. 
@@ -159,10 +159,10 @@ Principal component analysis, originally developed by Hotelling (1933)~\cite{hot
 Let the $m \times 1$ random vector $Y_t$ have the covariance matrix $\Sigma_{yy}$ with eigenvlaues $\lambda_1^2 \geq \lambda_2^2 \geq \cdots \geq \lambda_m^2 \geq 0$. Consider the linear combinations $y_1^*= l_1' Y_t, \ldots, Y_m^* = l_m' Y_t$, normalized so that $l_i' l_i=1$, $i=1, \ldots, m$. These linear combinations have $\var(y_i^*)= l_i' \Sigma_{yy} l_i$, $i= 1, 2, \ldots, m$, and $\cov(y_i^*,y_j^*)= l_i' \Sigma_{yy} l_j$, $i,j= 1, 2, \ldots, m$. In a principal component analysis, the linear combinations $y_i^*$ are chosen so that they are not correlated but their variances are as large as possible. That is, $y_1^*= l_1' Y_t$ is chosen to have the largest variance among linear combinations so that $l_1' l_1= 1$, $y_2^*= l_2' Y_t$ is chosen to have the largest variance subject to $l_2' l_2=1$ and the condition that $\cov(y_2^*,y_1^*)= l_2' \Sigma_{yy}l_1=0$, and so on. It can be easily shown that the $l_i$'s are chosen to be the (normalized) eigenvectors that correspond to the eigenvalues $\lambda_i^2$ of the matrix $\Sigma_{yy}$, so that the normalized eigenvectors satisfy $l_i' \Sigma_{yy}l_i= \lambda_i^2 \equiv \var(y_i^*)$ and $l_i' l_i=1$. Often, the first $r$ ($r<m$) components $y_i^*$, corresponding to the $r$ largest eigenvalues, will contain nearly most of the variation that arises from all $m$ variables. For such cases, in studying variations of $Y_t$, attention can be directed on these $r$ linear combinations only, thus resulting in a reduction in dimension of the variables involved. 
 
 
-The principal component problem can be represented as a reduced-rank problem, in the sense that a reduced-rank model can be written for this situation as $Y_t= ABY_t + \epsilon_t$,with $X_t \equiv Y_t$. From the solutions of reduced-rank regression, by setting $\Gamma= I_m$, we have $A^{(r)}= [V_1, \ldots, V_r]$ and $B^{(r)}= V'$ because $\Sigma_{yx}= \Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $l_i$ in PCA are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$. If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_t$ appear to be superfluous but it provides a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \twomedskip
+The principal component problem can be represented as a reduced-rank problem, in the sense that a reduced-rank model can be written for this situation as $Y_t= ABY_t + \epsilon_t$,with $X_t \equiv Y_t$. From the solutions of reduced-rank regression, by setting $\Gamma= I_m$, we have $A^{(r)}= [V_1, \ldots, V_r]$ and $B^{(r)}= V'$ because $\Sigma_{yx}= \Sigma_{yy}$. The $V_j$'s refer to the eigenvectors of $\Sigma_{yy}$. Thus, a correspondence is easily established. The $l_i$ in PCA are the same as the $V_i$ that result from the solution for the matrices $A$ and $B$. If both approaches provide the same solutions, one might ask, then, what is the advantage of formulating the principal component analysis in terms of reduced-rank regression model. The inclusion of the error term $\epsilon_t$ appear to be superfluous but it provides a useful framework to perform the residual analysis to detect outliers, influential observations, and so on, for the principal components method. \label{in:dimred2} \twomedskip
 
 
-\noindent \textbf{Canonical Correlation Analysis:} \twomedskip
+\noindent \textbf{Canonical Correlation Analysis:} \label{in:cancor1} \twomedskip
 
 
 \noindent Canonical correlation analysis was introduced by Hotelling~(1935, 1936)~\cite{hotelling35,hotelling36} as a method of summarizing relationships between two sets of variables. The objective is to find that linear combination of one set of variables which is most highly correlated with any linear combination of a second set of variables. The technique has not received its due attention because of difficulty in its interpretation. By exploring the connection between the reduced-rank regression and canonical correlations, we provide an additional method of interpreting the canonical variates. Because the role of any descriptive tool such as canonical correlations is in better model building, the connection we display below provides an avenue for interpreting and further using the canonical correlations for better model building.
@@ -187,13 +187,13 @@ Denoting by $g_j'$ and $h_j'$ the $j$th rows of the matrices $G$ and $H$, respec
 	\begin{equation} \label{eqn:rhojsqlambj}
 	\rho_j^2= \lambda_j^2 / (1+\lambda_j^2)
 	\end{equation}
-and $G$ and $H$ matrices can be obtained from the rescaled versions of $\hat{V}$, used in \eqref{eqn:covarmatrixsol}. Because of \eqref{eqn:rhojsqlambj}, testing for the rank of the matrix `$C$' can be made based on the canonical correlations, $\hat{\rho}^2$. \twomedskip
+and $G$ and $H$ matrices can be obtained from the rescaled versions of $\hat{V}$, used in \eqref{eqn:covarmatrixsol}. Because of \eqref{eqn:rhojsqlambj}, testing for the rank of the matrix `$C$' can be made based on the canonical correlations, $\hat{\rho}^2$. \label{in:cancor2} \twomedskip
 
 
 \noindent\textbf{Partial Least Squares:} The partial least squares (PLS) method advanced by Wold (1984)~\cite{wold}. This method is similar to reduced-rank regression. In PLS, the covariance between the response and predictor variables is maximized whereas in reduced-rank regression, the correlation is maximized to arrive at the linear combinations of the predictors. The $m \times 1$ multiple response, $X_t \;(m>1)$ version of partial least squares begins with a `canonical covariance' analysis, a sequential procedure to construct predictor variables as linear combinations of the original $n$-dimensional set of predictor variables $X_t$. At the first stage, the initial predictor variable $X_{1}^*=b_1'X_t$ is determined as the first `canonical covariance' variate of the $X_t$, the linear combination of $X_t$ that maximizes $\{(T - 1) \times \text{sample covariance of } b'X_t \text{ and } l'Y_t \} \equiv b' \mathbf{XY}' l$ over unit vectors $b$ (and over all associated unit vectors $l$). For given vectors $b$, we know that $l=\mathbf{YX'} b/(b' \mathbf{XY'YX'}b)^{1/2}$ is the maximizing choice of unit vector for $l$, so that we need then to maximize $b' \mathbf{XY'YX'}b$ with respect to unit vectors $b$. Thus, the first linear combination vector $b_1$ is the (normalized) eigenvector of $\mathbf{XY'YX'}$ corresponding to its largest eigenvalue. This follows easily from Result~\ref{res:3} in Chapter~\ref{ch:ch_mvts}. In the univariate case, $m=1$ and $\mathbf{Y}$ is $1 \times T$, and so this reduces to $b_1=\mathbf{XY'}/(\mathbf{YX'XY'})^{1/2}$ with associated ``eigenvalue'' equal to $\mathbf{YX'XY'}$.
 
 
-At any subsequent stage $j$ of the procedure, there are $j$ predictor variables $x_{it}^*= b_i' X_t, i=1,\ldots, j$, are to be determined and the next predictor variable $x_{j+1}^*= b_{j+1}'X_t$; that is, the next unit vector $b_{j+1}$ is to be found. It is chosen as the vector $b$ to maximize the sample covariance of $b'X_t$ and $l' Y_t$ (with unit vector $l$ also chosen to maximize the quantity); that is, we maximize $b' \mathbf{XY'YX'}b$, subject to $b_{j+1}$ being a unit vector and $x_{j+1,t}^*=b_{j+1}; X_t$ being orthogonal to the previous set of $j$ predictor variables $x_{it}^*, i=1,\ldots,j$ (i.e. $b_{j+1}' \mathbf{XX'} b_i=0$, for $i=1,\ldots,j$). The number $r$ of predictors chosen until the sequential process is stopped can be taken as a regularization parameter of the procedure ; its value is determined through cross-validation methods in terms of prediction mean square error. The final estimated regression equations are constructed by ordinary LS calculation of the response vectors $Y_k$ on the first $r$ `canonical covariance' component predictor variables, $X_k^*= (x_{1k}^*,\ldots,x_{rk}^*)' \equiv \hat{B} X_k$, where $\hat{B}=[b_1,\ldots,b_r]'$; that is, the estimated regression equations are $\hat{Y}_k= \hat{A}X_k^* \equiv \hat{A}\hat{B} X_k$ with
+At any subsequent stage $j$ of the procedure, there are $j$ predictor variables $x_{it}^*= b_i' X_t, i=1,\ldots, j$, are to be determined and the next predictor variable $x_{j+1}^*= b_{j+1}'X_t$; that is, the next unit vector $b_{j+1}$ is to be found. It is chosen as the vector $b$ to maximize the sample covariance of $b'X_t$ and $l' Y_t$ (with unit vector $l$ also chosen to maximize the quantity); that is, we maximize $b' \mathbf{XY'YX'}b$, subject to $b_{j+1}$ being a unit vector and $x_{j+1,t}^*=b_{j+1}; X_t$ being orthogonal to the previous set of $j$ predictor variables $x_{it}^*, i=1,\ldots,j$ (i.e. $b_{j+1}' \mathbf{XX'} b_i=0$, for $i=1,\ldots,j$). The number $r$ of predictors chosen until the sequential process is stopped can be taken as a regularization parameter of the procedure;\label{in:regz1} its value is determined through cross-validation methods in terms of prediction mean square error. The final estimated regression equations are constructed by ordinary LS calculation of the response vectors $Y_k$ on the first $r$ `canonical covariance' component predictor variables, $X_k^*= (x_{1k}^*,\ldots,x_{rk}^*)' \equiv \hat{B} X_k$, where $\hat{B}=[b_1,\ldots,b_r]'$; that is, the estimated regression equations are $\hat{Y}_k= \hat{A}X_k^* \equiv \hat{A}\hat{B} X_k$ with
 	\[
 	\hat{A}=\mathbf{YX}^{*'} (\mathbf{X}^* \mathbf{X}^{*'})^{-1} \equiv \mathbf{YX'} \hat{B}' (\hat{B} \mathbf{XX'} \hat{B}')^{-1}
 	\]
@@ -205,10 +205,9 @@ Discussion of the sequential computational algorithms for the construction of th
 
 
 % Multiple Time Series Modeling
-\section{Multiple Time Series Modeling \label{sec:mutimserimod}}
+\section{Multiple Time Series Modeling \label{sec:mutimserimod}} \label{in:mts1}
 
-
-Multiple time series analysis is concerned with modeling and estimation of dynamic relationships among `$m$' related time series $y_{1t}, \ldots, y_{mt}$, based on observations over $T$ equally spaced time points $t= 1, \ldots, T$, and also between these series and potential exogenous time series variables $x_{1t}, \ldots, x_{nt}$, observed over the same time period. We shall explore the use of these techniques in leveraging statistical arbitrage in multiple markets in Chapters~\ref{ch:stat_ts}~\&~\ref{ch:amp}. We first introduce a general model for multiple time series modeling, but will specialize to vector autoregressive (VAR) models for more detailed investigation. As some concepts are similar to those of the univariate models discussed in Chapter~\ref{ch:ch_uvts}, the presentation will be brief.
+Multiple time series analysis is concerned with modeling and estimation of dynamic relationships among `$m$' related time series $y_{1t}, \ldots, y_{mt}$, based on observations over $T$ equally spaced time points $t= 1, \ldots, T$, and also between these series and potential exogenous time series variables $x_{1t}, \ldots, x_{nt}$, observed over the same time period. We shall explore the use of these techniques in leveraging statistical arbitrage in multiple markets in Chapters~\ref{ch:stat_ts}~\&~\ref{ch:amp}. We first introduce a general model for multiple time series modeling, but will specialize to vector autoregressive (VAR)\label{in:var} models for more detailed investigation. As some concepts are similar to those of the univariate models discussed in Chapter~\ref{ch:ch_uvts}, the presentation will be brief.
 
 
 Let $Y_t= (y_{1t}, \ldots, y_{mt})'$ be an $m \times 1$ multiple time series vector of response variables and let $X_t=(x_{1t}, \ldots, x_{nt})'$ be an $n \times 1$ vector of input or predictor time series variables. Let $\epsilon_t$ denote an $m \times 1$ white noise vector of errors, independently distributed over time with $E(\epsilon_t)= 0$ and $\cov(\epsilon_t)= \Sigma_{\epsilon\epsilon}$, a positive-definite matrix. We consider the multivariate time series model
@@ -266,13 +265,13 @@ An important property of VAR$(p)$ models is worth noting and will be used later.
 
 
 \begin{result} \label{res:6} 
-Let $Y_t \sim \text{VAR}(p)$, then $Z_t= l' Y_t$, where $l$ is a $m \times 1$ known vector, follows ARMA with maximum orders $[mp, (m-1)p]$. Thus any single component under the VAR($p$) structure will also follow ARMA with the maximum orders indicated here.
+Let $Y_t \sim \text{VAR}(p)$, then $Z_t= l' Y_t$, where $l$ is a $m \times 1$ known vector, follows ARMA with maximum orders $[mp, (m-1)p]$. Thus any single component under the VAR($p$) structure will also follow ARMA with the maximum orders indicated here. \label{in:mts2}
 \end{result}
 
 
 
 % Co-integration, Co-movement and commonality in Multiple Time Series
-\section{Co-integration, Co-movement and commonality in Multiple Time Series \label{sec:comts}}
+\section{Co-integration, Co-movement and commonality in Multiple Time Series \label{sec:comts}}\label{in:coint1}\label{in:comove1}
 
 
 The financial time series generally exhibit non-stationary behavior. For the stationary series, the dynamic relationships among components of the vector time series, $Y_t$, has been studied in various ways. While the estimation and inference aspects are similar to the univariate series discussed in Chapter~\ref{ch:ch_uvts}, because of the sheer dimension of $Y_t$, there are more challenges in the precise estimation of the model coefficients but there are also more opportunities to study the linkages among the components of $Y_t$ that may be insightful. For example, this provides an opportunity to investigate the behavior of portfolio of stocks. The number of unknown elements in \eqref{eqn:ytphi0} is $m^2 (p+1)$ which can be quite large even for modest values of `$m$' and `$p$'; therefore considerations of the dimension reduction aspects in modeling \eqref{eqn:ytphi0} have been given by Box and Tiao (1977)~\cite{box77} and Brillinger (1981)~\cite{brill81} among others. The traditional tool used in multivariate analysis for dimension reduction, principal components method is based on the contemporaneous covariance matrix, and thus it ignores the time dependence. While Result~\ref{res:6}, stated in the previous section, indicates that the linear combination can exhibit time dependence, we should expect the optimal linear combination to exhibit other desirable features, which are described here. 
@@ -295,7 +294,7 @@ The main implication of the result in Box and Tiao (1977)~\cite{box77} is that t
 	\begin{equation} \label{eqn:2Wtequiv}
 	W_t \equiv Y_t - Y_{t-1} = - (I - \Phi ) Y_{t-1} + \epsilon_t, 
 	\end{equation}
-which is referred to as an error-correction form.  Notice that if $\Phi$ has eigenvalues approaching unity then $I - \Phi$ will have eigenvalues approaching zero (and will be of reduced rank).  The methodology of interest for exploring the number of unit roots in the AR(1) model is motivated by the model from \eqref{eqn:2Wtequiv}, and consists of a canonical correlation analysis between $W_t = Y_t - Y_{t-1}$ and $Y_{t-1}$ ($\equiv X_t$).  Under stationarity of the process $Y_t$, note that the covariance matrix between $W_t$ and $Y_{t-1}$ is equal to $\Sigma_{wx} = - (I - \Phi )\, \Gamma(0)$.  Thus, the squared canonical correlations between $W_t$ and $Y_{t-1}$ are the eigenvalues of
+which is referred to as an error-correction form.\label{in:vec1} Notice that if $\Phi$ has eigenvalues approaching unity then $I - \Phi$ will have eigenvalues approaching zero (and will be of reduced rank).  The methodology of interest for exploring the number of unit roots in the AR(1) model is motivated by the model from \eqref{eqn:2Wtequiv}, and consists of a canonical correlation analysis between $W_t = Y_t - Y_{t-1}$ and $Y_{t-1}$ ($\equiv X_t$).  Under stationarity of the process $Y_t$, note that the covariance matrix between $W_t$ and $Y_{t-1}$ is equal to $\Sigma_{wx} = - (I - \Phi )\, \Gamma(0)$.  Thus, the squared canonical correlations between $W_t$ and $Y_{t-1}$ are the eigenvalues of
 	\begin{equation} \label{eqn:2doublesigma}
 	\Sigma_{ww}^{-1} \Sigma_{wx} \Sigma_{xx}^{-1} \Sigma_{xw}= \Sigma_{ww}^{-1} ( I - \Phi )\, \Gamma(0) \,(I  - \Phi )', 
 	\end{equation}
@@ -328,11 +327,11 @@ Economic time series share some common characteristics such as trends, seasonali
 where $f_t$ is a lower dimensional common feature vector so that a linear combination of $Y_t$, $l' Y_t$ can be independent of this feature. Observe that this implies $l'C=0$, which is the result of `$C$' being a lower rank matrix. The $f_t$-vector can either be constructed from the past values of $Y_t$-which is the focal view of comovement or can be constructed from exogenous variables, sat $X_t$, which is the basis of many studies on commonality in finance literature. We briefly summarize the two aspects here. 
 
 
-The comovement relationships among non-stationary series that result from cointegration are known as long-run equilibrium relationships. Relationships that result from stationary series are known as short-run equilibrium relationships. The cointegrating relationships resulting \eqref{eqn:2Wtequiv} are given by $\hat{Q}$ that leads to $\hat{Q}' \hat{A}=0$. A generalization of this concept relates to serial correlation common feature; to define this, write VAP($p$) model in its error correction form as
+The comovement relationships among non-stationary series that result from cointegration are known as long-run equilibrium relationships. Relationships that result from stationary series are known as short-run equilibrium relationships. The cointegrating relationships resulting \eqref{eqn:2Wtequiv} are given by $\hat{Q}$ that leads to $\hat{Q}' \hat{A}=0$. A generalization of this concept relates to serial correlation common feature; to define this, write VAP($p$) model in its error correction form as\label{in:vec2}
 	\begin{equation} \label{eqn:2WteqAD}
 	W_t=  \begin{bmatrix} A & D \end{bmatrix} \; \begin{bmatrix} BY_{t-1} \\ W_{t-1}^* \end{bmatrix} + \epsilon_t.
 	\end{equation}
-Here $W_{t-1}^*= [W_{t-1}', \ldots, W_{t-p+1}']'$, with $W_{t-i}= Y_{t-i} - Y_{t-i+1}$. The combination that is free of serial correlation is $\hat{Q} W_t= Q' \epsilon_t$ which implies that $Q' \,[A \;\; D] \sim 0$; from the results given in Section~\ref{sec:s_dr}, it easily follows that the linear combination can be constructed from canonical vectors associated with the smallest canonical correlation between $Y_t$ and its past lags.
+Here $W_{t-1}^*= [W_{t-1}', \ldots, W_{t-p+1}']'$, with $W_{t-i}= Y_{t-i} - Y_{t-i+1}$. The combination that is free of serial correlation is $\hat{Q} W_t= Q' \epsilon_t$ which implies that $Q' \,[A \;\; D] \sim 0$; from the results given in Section~\ref{sec:s_dr}, it easily follows that the linear combination can be constructed from canonical vectors associated with the smallest canonical correlation between $Y_t$ and its past lags.\label{in:coint2}\label{in:comove2}
 
 
 
@@ -388,7 +387,7 @@ where the coefficient matrix, $\Lambda$ is of lower rank. Thus the relationships
 
 
 % Multivariate GARCH Models
-\section{Multivariate GARCH Models}
+\section{Multivariate GARCH Models}\label{in:multgarch1}
 
 
 It is well known that financial volatilities across assets and markets move together over time. It is of interest to study how a shock in one market increases the volatility on another market and in general, how correlations among asset returns change over time. For example, in the computation of hedge-ratio which is the slope of the regression line of spot returns on the futures return, both the covariance between spot and future returns and the variance of future returns can change over time. It must be noted that variances and covariances are generally sensitive to mean shifts. In addition, unlike modeling the mean behavior where a fewer number of quantities are involved, modeling the variance-covariance behavior involves a substantially larger number of quantities and hence various models that account for some redundancy are proposed in the literature. We cover only a select few in this section. Interested readers should refer to the excellent survey paper by Bauwens, Laurent and Rombouts (2006)~\cite{laurent}.
@@ -446,7 +445,7 @@ For the linearly transformed series, $z_t= My_t$ where $M$ is a $m \times m$ ful
 	\begin{equation} \label{eqn:obtainM}
 	\Gamma_\infty M= M \Lambda
 	\end{equation}
-with $m_v$ is the $v$th PVC, note $m_v' \gamma_{l \cdot ij} m_v$ is a measure of dependence in volatility. Thus the smaller values of $\Lambda$ would indicate that certain combinations will be independent of volatility dependence which implies that there is common volatility component. The larger elements of $\Lambda$ would provide the most volatile combinations via the corresponding eigenvectors, $m_v$. This approach has potential to uncover relationships in volatilities that may be helpful for developing good trading algorithms. 
+with $m_v$ is the $v$th PVC, note $m_v' \gamma_{l \cdot ij} m_v$ is a measure of dependence in volatility. Thus the smaller values of $\Lambda$ would indicate that certain combinations will be independent of volatility dependence which implies that there is common volatility component. The larger elements of $\Lambda$ would provide the most volatile combinations via the corresponding eigenvectors, $m_v$. This approach has potential to uncover relationships in volatilities that may be helpful for developing good trading algorithms. \label{in:multgarch2}
 
 
 
@@ -663,7 +662,7 @@ For the five exchange rate series, the computational details are presented in Ta
 	[4,] & 0.849 & $-0.512$ & $-0.002$ & 0.129 & 0.150 \\ \hline
 	[5,] & $-0.468$ & $-0.180$ & $-0.142$ & 0.455 & 0.601 \\
 	\end{tabular}
-	\end{table}
+	\end{table} \label{in:multimod2}
 
 
 

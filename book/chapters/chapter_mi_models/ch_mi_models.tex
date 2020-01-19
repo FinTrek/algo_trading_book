@@ -1,5 +1,5 @@
 % !TEX root = ../../book.tex
-\chapter{Market Impact Models\label{chap:ch_mi_models}}
+\chapter{Market Impact Models\label{chap:ch_mi_models}} \label{in:impact1}
 \section{Introduction}
 
 Market Impact (MI in short) is the single most important concern today in trading. It is also complex and the least understood. It is something every trader experiences, but it cannot be easily measured a priori (only the execution costs are directly observed) but can be only estimated ex-post and even then far from any accuracy. We can broadly identify  where it comes from  and we intuitively sense that we can, at least partially, control it through our trading approach, but we do not fully understand its dynamics and how to alter it as many, many players are involved in a market.
@@ -46,7 +46,7 @@ These effects are then propagated through the system with various levels of feed
 
 
 % Transaction Costs
-\section{Modeling Transaction Costs}
+\section{Modeling Transaction Costs}\label{in:transcost1}
 
 As discussed, MI is quantity that cannot be directly observed but can be inferred. What is observed are the prices that one pays to execute an order of a certain size, for a particular instrument, over a specified time period. These prices incorporate different components that can be broadly grouped into specific categories:
 
@@ -76,7 +76,7 @@ We begin with a review of some commonly used TC models: Average TC models. These
          \end{itemize} 
 
 
-Under these assumptions the price evolution accounts only for uncorrelated noise in the cost estimate and can be ignored. Thus in our simplified framework for transaction cost we have two remaining components: market impact and spread costs. 
+Under these assumptions the price evolution accounts only for uncorrelated noise in the cost estimate and can be ignored. Thus in our simplified framework for transaction cost we have two remaining components: market impact and spread costs.
         \begin{equation} \label{eq:tc_1}
         \text{TC}= f(\text{mi},\text{sc})= \text{mi} + \text{sc}.
         \end{equation}
@@ -104,7 +104,7 @@ The functional form of most models assume a multiplicative power law relationshi
 It is well established in MI research that the exponent $\gamma$ for relative size is less than one (relatively) well approximated by $0.5$ and thus \eqref{eq:tc_3_2} is known as a square root law. This is an empirical fact and there are several theories for why this is the case. See Gatheral (2010)~\cite{gatheral} for a discussion about this. The square root formula implies that the cost of trading is independent of time that is taken to liquidate. If ADV and $\sigma$ are fixed, the price impact depends only on the trade size. 
 
 
-For the exponent $\delta$ of volatility there is some debate and the data seem to point that the model is somewhat mis-specified. On one hand, there is some evidence that a stock twice as volatile is twice as expensive to trade, so many models suggest $\delta = 1$. On the other hand when we compare average costs in different volatility regimes, it has been shown that if the whole market were to dramatically increase in volatility, like at the height of the 2008 financial crisis, the average cost did not increase by the same amount, indicating that $\delta < 1$. One way to account for that would be to use two measures of volatility: overall market volatility, $\sigma_M$, with an exponent less than 1 and relative volatility $\frac{\sigma}{\sigma_M}$ that has exponent of 1. The most common approach is to re-calibrate the model over time fixing $\delta=1$ and allowing varying $\alpha_t$ to absorb the effect of any regime change. We thus come to the ``standard'' functional form for a TC model:
+For the exponent $\delta$ of volatility there is some debate and the data seem to point that the model is somewhat mis-specified. On one hand, there is some evidence that a stock twice as volatile is twice as expensive to trade, so many models suggest $\delta = 1$. On the other hand when we compare average costs in different volatility regimes, it has been shown that if the whole market were to dramatically increase in volatility, like at the height of the 2008 financial crisis, the average cost did not increase by the same amount, indicating that $\delta < 1$. One way to account for that would be to use two measures of volatility: overall market volatility, $\sigma_M$, with an exponent less than 1 and relative volatility $\frac{\sigma}{\sigma_M}$ that has exponent of 1. The most common approach is to re-calibrate the model over time fixing $\delta=1$ and allowing varying $\alpha_t$ to absorb the effect of any regime change. We thus come to the ``standard'' functional form for a TC model:\label{in:sqmodel}
         \begin{equation}\label{eq:tc_3}
 	\text{TC}= \alpha  \sigma \sqrt{\frac{Q}{\text{ADV}}} +  \beta\, \text{ba}_{\text{sp}}.
         \end{equation}
@@ -122,7 +122,7 @@ The square-root formula as stated in \eqref{eqn:spreadcost} refers only to the s
 where $T$ is the duration for the execution of the parent-order. Immediately after completion of a parent-order, the price begins to revert. Models used in industry are mostly functions of the determinants identified above in Equations~\eqref{eqn:spreadcost} and \eqref{eqn:ptalpha}.
 
 
-The reader may notice that MI and thus TCs are highly dependent on the trading approach but standard models do not seem to incorporate anything that accounts for the type of trading strategy. An important reason for this has to do with data availability. To calibrate such a model, we need data that will allow us to calibrate the average effect of the use of different strategies to trade the same amount of stock over the same amount of time. Such experimental data is not readily available. 
+The reader may notice that MI and thus TCs are highly dependent on the trading approach but standard models do not seem to incorporate anything that accounts for the type of trading strategy. An important reason for this has to do with data availability. To calibrate such a model, we need data that will allow us to calibrate the average effect of the use of different strategies to trade the same amount of stock over the same amount of time. Such experimental data is not readily available. \label{in:transcost2}
 
 
 
@@ -152,14 +152,14 @@ In asset management, with the competitive focus of the industry on cost manageme
 The study of price impact dates back to Bagehot (1971)~\cite{bagehot} who postulated that the market consists of heterogeneously informed traders. The specialist cannot distinguish between informed and uninformed (liquidity) traders and fixes a spread that can balance the trading cost. The asymmetric information models based on this notion have been extensively studied in finance literature. The traders do convey information and Hasbrouck (1991)~\cite{hasbrouk} provides empirical evidence that the market maker can infer information from the characteristics of the sequence of trades. The seminal work by Kyle (1985)~\cite{kyle1985} and Huberman and Stanzl (2004)~\cite{huberstan} indicate that an order of large size (parent order) must be sliced into a number of small order (child orders) so that the volume per se will not signal informed trading. The hypothesis that time between the trades could convey the intensity of information flow (Easley and O'Hara (1992)~\cite{easleyo}) and its impact on price is studied in Dufour and Engle (2000)~\cite{dufour}. Long durations are usually associated with no news and the variations in trading intensity are taken to be positively correlated with the behavior of the informed traders. \twomedskip
 
 
-\noindent \textbf{Origins of Market Impact:} Most conventional definitions of the MI of a trade equate it with the deviation of the post-trade market price from the market price that would have prevailed had the trade not occurred. Figure~\ref{fig:marketimpt} shows an idealized MI picture of $n$-share sell order from Fabozzi, Focardi and Kolm (2006)~\cite{ffk} but it is augmented to include other information:
+\noindent \textbf{Origins of Market Impact:} \label{in:permimp} Most conventional definitions of the MI of a trade equate it with the deviation of the post-trade market price from the market price that would have prevailed had the trade not occurred. Figure~\ref{fig:marketimpt} shows an idealized MI picture of $n$-share sell order from Fabozzi, Focardi and Kolm (2006)~\cite{ffk} but it is augmented to include other information:
 	\begin{enumerate}[(i)]
 	\item The state of the order book that establishes a pre-trade equilibrium.
 	\item How this equilibrium is disturbed by a market order to sell.
 	\item As the sell order depletes the bid order book, it obtains an increasingly lower trade price and results in the trade print, and, 
 	\item How over time the price gradually moves up back to recover some of the price drops.
 	\end{enumerate}
-Accordingly, the difference between (iv) and (iii) is called temporary impact, whereas the difference between (iv) and (i) is called permanent impact. If we are looking to model the MI effect of sequential trades, as shown in Figure~\ref{fig:marketimpt}, the temporary and permanent impact will be superpositions of those of individual trades. The permanent impact is often assumed to be immediate and linear in the parent trade size, and the post-trade equilibrium to be the same for the order of `$n$' shares or a sequence of `$m$' orders of `$n/m$' shares each (Almgren, Thum, Hauptmann and Li (2005)~\cite{athl}, Fabozzi et al., (2006)~\cite{ffk}). By contrast, the temporary impact is a function of how the ``parent'' trade is split into smaller ``child'' trades.
+Accordingly, the difference between (iv) and (iii) is called temporary impact, whereas the difference between (iv) and (i) is called permanent impact. If we are looking to model the MI effect of sequential trades, as shown in Figure~\ref{fig:marketimpt}, the temporary and permanent impact will be superpositions of those of individual trades. The permanent impact is often assumed to be immediate and linear in the parent trade size, and the post-trade equilibrium to be the same for the order of `$n$' shares or a sequence of `$m$' orders of `$n/m$' shares each (Almgren, Thum, Hauptmann and Li (2005)~\cite{athl}, Fabozzi et al., (2006)~\cite{ffk}). By contrast, the temporary impact is a function of how the ``parent'' trade is split into smaller ``child'' trades.\label{in:tempimpact}
 
 	\begin{figure}[!ht]
 	\centering
@@ -343,7 +343,7 @@ Some interesting conclusions that could be useful for trading are drawn. The imp
 
 
 % Empirical Estimation of Transaction Costs
-\section{Empirical Estimation of Transaction Costs}
+\section{Empirical Estimation of Transaction Costs} \label{in:transcost3}
 
 As noted earlier, a key aspect of MI modeling is to provide information about expected pre-trade costs. The studies that have been reviewed on empirical analysis thus far can help us to understand how the price formation and the market impact function evolve during a trading period. But most clients who trade large quantities of equities want to know the trading costs a priori. Here we review the relevant studies and augment with our own research in this area. First we review the factors that are found to influence these costs in block trades. Although block trades differ in fundamental ways to algorithmic trades, they can be treated as all equivalent to a parent trade except that no splitting into child orders occurs. \twomedskip
 
@@ -370,7 +370,7 @@ At the higher frequency levels other determinants to consider are:
 	\item Spread
 	\item Intraday Price Dynamics
 	\item VIX level and return \twomedskip
-	\end{itemize}
+	\end{itemize} \label{in:transcost4}
 
 
 
@@ -409,7 +409,7 @@ Limited access to broker-proprietary algorithmic trading data has stifled detail
 A recent study by Frazzini, Israel and Moskowitz (2018)~\cite{frazzini} presents results on trading costs and price impact function using a large number of trade executions over several countries, but the data is from a single large trader. It is argued that the cost estimates based on effective spreads ignore the price impact. The results confirm that trade size is a critical component of trading cost function; but the cost function produces lower cost estimates than estimates based on TAQ data which is a market wide data representing traders with different trading skills. The price impact measure as a function of trade size on a ratio to average daily volume can be modeled via square root function. More volatile stocks have higher transaction costs and costs are higher during the time of high market volatility. \twomedskip
 
 
-\noindent\textbf{Our Study:} Velu, Gretchika, Benaroch, Nehren and Kuber (2015)~\cite{unpub} address these issues using a large algorithmic trading dataset. The data contains ``parent'' algorithmic executions, including the initial arrival price and fill price as well as the child trades' average fill price (computed as the share-weighted average executing price of the child orders). The algorithmic executions are generated using Volume Weighted Average Price (VWAP) and Percent of Volume (POV) strategies.Recall the volume weighted average price (VWAP) strategy schedules to trade some constant percentage of the expected market volume regularly throughout the day, where the proportion traded is adjusted based on historical market volume profiles and the predicted volume. Hence, in VWAP, the trading schedule is predetermined based on a prediction of the daily market volume distribution, although the timing of executions can be randomized so as to make the trading pattern less predictable. In any case for efficient execution, it is essential to have good predictive models for volume. 
+\noindent\textbf{Our Study:} Velu, Gretchika, Benaroch, Nehren and Kuber (2015)~\cite{unpub} address these issues using a large algorithmic trading dataset. The data contains ``parent'' algorithmic executions, including the initial arrival price and fill price as well as the child trades' average fill price (computed as the share-weighted average executing price of the child orders). The algorithmic executions are generated using Volume Weighted Average Price (VWAP) and Percent of Volume (POV) strategies.\label{in:pov1} Recall the volume weighted average price (VWAP) strategy schedules to trade some constant percentage of the expected market volume regularly throughout the day, where the proportion traded is adjusted based on historical market volume profiles and the predicted volume. Hence, in VWAP, the trading schedule is predetermined based on a prediction of the daily market volume distribution, although the timing of executions can be randomized so as to make the trading pattern less predictable. In any case for efficient execution, it is essential to have good predictive models for volume. 
 
 
 By contrast, the percent of volume (POV) strategy trades a fixed percentage of the current market volume where the trading schedule is dynamically determined based on a historical analysis of volume profiles used to anticipate trading volumes. Unlike implementation shortfall strategies, VWAP and POV do not explicitly take into account the expected MI in generating their algorithmic executions. Moreover, although firms typically implement proprietary versions of these strategies with parameters reflecting their experience and clients' profiles, VWAP and POV nonetheless generate relatively standardized algorithmic executions. In other words, from the perspective of MI, these two strategies can be safely considered ``plain vanilla'' in the sense that firm-to-firm differences in their behavior and performance are too insignificant. The measures employed, therefore, do not depend on any unique traits of the strategies and so they do not have any influence on the cost estimates per se. The unique aspect of the data is that if the meta order is on the buy side or sell side is explicitly provided. 
@@ -506,4 +506,4 @@ There are several practical considerations that may limit the use of these model
 	\item MI is a noisy measure which is hard to calibrate ex-post.
 	\item Sometimes, market moves at a much larger magnitude than MI.
 	\item Use of raw data results in a poor predictive models; thus a need for aggregation. But aggregation obviously ignores the wide variation within the aggregated unit. 
-	\end{enumerate}
+	\end{enumerate} \label{in:impact2}

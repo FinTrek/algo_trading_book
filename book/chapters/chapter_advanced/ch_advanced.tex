@@ -199,7 +199,7 @@ where $Z_{1t}$ and $Z_{2t}$ are standard normal variables and $Z_{1t},  Z_{2t}$,
 	\end{split}
 	\end{equation}
 is positive due to the variance in $I_t$. If there is no new information or if there is no variation in the mixing variable, $\var(I_t)= 0$ and thus the relationship vanishes. The theory of arrival rates suggest a
-Poisson distribution and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in \eqref{eqn:2rtVt} are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their main findings: \twomedskip
+Poisson distribution\label{in:poisson} and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in \eqref{eqn:2rtVt} are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their main findings: \twomedskip
 
 
 \noindent\textbf{Stylized Fact 6 (Volume--Volatility Relationship):} 
@@ -247,8 +247,7 @@ The model in \eqref{eqn:2rtVt} is extended to cover multiple stocks in He and Ve
 
 
 % Models for Point Processes
-\section{Models for Point Processes}
-
+\section{Models for Point Processes} \label{in:point1}
 
 In many fields of study, observations occur in a continuum, space or time in the form of point events. The continuum can be multi-dimensional, but our focus is on the one-dimensional time scale with points distributed irregularly along the time scale. The main interest lies in estimating the mean rate of occurrence of events or more broadly on the patterns of occurrences. There are excellent monographs on this topic: Cox and Lewis (1966)~\cite{cox1966}, Daley and Vere-Jones (2003)~\cite{daley2003}, etc. But the interest in financial applications was revived by the seminal paper by Engle and Russell (1998)~\cite{engle1998}. Financial market microstructure theories as discussed in Kyle (1985)~\cite{kyle1985}, Admati and Pfleiderer (1988)~\cite{admati1988theory} and Easley and O' Hara (1992)~\cite{easley1992} suggest that the frequency and the timing of trade-related activities, that include posting, canceling and executing an order, carry information about the state of the market. The transactions generally tend to cluster during certain times of the day and the change in the mean rate of occurrences may suggest a new information flow about a stock.
 
@@ -277,7 +276,7 @@ Cox and Lewis (1966)~\cite{cox1966} also observe a few issues that can arise wit
 % Stylized Models for High Frequency Financial Data
 \subsection{Stylized Models for High Frequency Financial Data}
 
-There has been a great deal of interest in studying market microstructure to better understand the trading mechanisms and the process of price formation. With the availability of Trades and Quotes (TAQ) data that contains all equity transactions on major exchanges, it is possible to better model the key elements of market microstructure. The extensive details from the order books over multiple exchanges provide massive amount of data, the analysis of which will be taken up in later chapters as well. Here we want to present some unique characteristics of high frequency data and present most commonly used models in practice. To reiterate, the transactions (trades, quotes, bids, etc) may occur at any point in time (Figure~\ref{fig:exchhours}) during the exchange hours as given below.
+There has been a great deal of interest in studying market microstructure to better understand the trading mechanisms and the process of price formation. With the availability of Trades and Quotes (TAQ)\label{in:taq2} data that contains all equity transactions on major exchanges, it is possible to better model the key elements of market microstructure. The extensive details from the order books over multiple exchanges provide massive amount of data, the analysis of which will be taken up in later chapters as well. Here we want to present some unique characteristics of high frequency data and present most commonly used models in practice. To reiterate, the transactions (trades, quotes, bids, etc) may occur at any point in time (Figure~\ref{fig:exchhours}) during the exchange hours as given below.
 
 	\begin{figure}[!ht]
 	\centering
@@ -311,7 +310,7 @@ There has been a great deal of interest in studying market microstructure to bet
 	\caption{Exchange hours.\label{fig:exchhours}}
 	\end{figure}
 
-High frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price, quote, book imbalance, etc. that may be associated with `$t_i$.' The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange is open. Standard econometric techniques are for data in discrete time intervals, but aggregating high frequency data to some fixed time interval would not capture the advantages of having access to detailed time-stamped transaction data. Even for some heavily traded stocks, if the aggregation intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
+High frequency data refer to the `tick' `$t_i$' data which contains, in addition to the exact time of even occurrence, `$y_i$' called marks that may refer to all other elements of the limit order book such as traded price, quote, book imbalance, etc. that may be associated with `$t_i$.' The traditional time series methods that we discussed in the context of low frequency data analysis are not applicable here as the ticks can occur at any point in time when the exchange is open. Standard econometric techniques are for data in discrete time intervals, but aggregating\label{in:agg} high frequency data to some fixed time interval would not capture the advantages of having access to detailed time-stamped transaction data. Even for some heavily traded stocks, if the aggregation intervals are chosen to be short, there may be many intervals with no data and if the intervals are long, the microstructure features will be lost. Also certain key features such as the imbalance between bid side and ask side of the limit order book and when and how the market orders cross the spread are not easy to aggregate in a fixed time interval, however short or long it may be. Moreover, the timings of transactions provide valuable information for trading. Some noted features of high frequency data are:
 
 
 \begin{itemize}
@@ -369,7 +368,7 @@ The value of `$\theta$' generally tends to be small, but nevertheless significan
 	\begin{equation} \label{eqn:2lambda}
 	\lambda(t)= \lim_{\Delta \to 0} \frac{E[N(t+\Delta) - N(t) \;|\; F_t]}{\Delta},
 	\end{equation}
-where $N(t)$ denotes the number of ticks until `$t$' and $F_t$ is the information available until that time. The commonly used model for such arrival rates is Poisson that implies that the time between two successive ticks is independent of pairwise ticks and follows an exponential distribution. But the duration data, $d_i = t_i - t_{i-1}$ exhibit some dependence, thus implying that time moves faster sometimes, faster than the clock time. The intensity rate, $\lambda(t)$ is not a constant, which is a typical characteristic of the exponential distribution. We briefly outline how the durations are modeled. For detailed discussion, see Tsay (2010)~\cite{tsay} or Lai and Xing (2008)~\cite[Section 11.2]{lai1}. The autoregressive conditional duration (ACD) model is defined as follows:
+where $N(t)$ denotes the number of ticks until `$t$' and $F_t$ is the information available until that time. The commonly used model for such arrival rates is Poisson that implies that the time between two successive ticks is independent of pairwise ticks and follows an exponential distribution. But the duration data, $d_i = t_i - t_{i-1}$ exhibit some dependence, thus implying that time moves faster sometimes, faster than the clock time. The intensity rate, $\lambda(t)$ is not a constant, which is a typical characteristic of the exponential distribution. We briefly outline how the durations are modeled. For detailed discussion, see Tsay (2010)~\cite{tsay} or Lai and Xing (2008)~\cite[Section 11.2]{lai1}. The autoregressive conditional duration (ACD) model\label{in:acd} is defined as follows:
 	\begin{flalign}\label{eqn:2dipsi}
 	&& d_i&= t_i - t_{i-1} = \psi_i \varepsilon_i, && \notag \\ 
 	\text{and} && \phantom{x} & \phantom{x} &&  \\
@@ -453,7 +452,7 @@ The first term is the trade density and the second term is the quote density. Th
 	\begin{equation} \label{eqn:2fdot}
 	f(y_i \;|\; \cdot) = [h(y_i \;|\; \cdot)]^{1 - d_i} \times S(x_i \;|\; \cdot)^{d_i}.
 	\end{equation}
-The estimation of the parameters is done through quasi maximum likelihood. Using data for eight stocks, Engle and Lund (2003)~\cite{englelunde} observe that high trade arrival rates, large volume per trade, wide bid-ask spreads, all predict more rapid price revisions. The model given in Engle and Lund (2003)~\cite{englelunde} can be conceptually applied to any two point processes. Extending this concept to more than two processes could be of interest to traders who may want to monitor multiple trading exchanges simultaneously, but modeling this type of data is quite tedious. 
+The estimation of the parameters is done through quasi maximum likelihood. Using data for eight stocks, Engle and Lund (2003)~\cite{englelunde} observe that high trade arrival rates, large volume per trade, wide bid-ask spreads, all predict more rapid price revisions. The model given in Engle and Lund (2003)~\cite{englelunde} can be conceptually applied to any two point processes. Extending this concept to more than two processes could be of interest to traders who may want to monitor multiple trading exchanges simultaneously, but modeling this type of data is quite tedious. \label{in:point2}
 
 
 % Analysis of Time Aggregated Data
@@ -464,7 +463,7 @@ The commonly available data from public sources such as Yahoo Finance provide se
 
 
 % Realized Volatility and Econometric Models
-\subsection{Realized Volatility and Econometric Models}
+\subsection{Realized Volatility and Econometric Models} \label{in:disc_time_unit2}
 
 Estimating volatility using high frequency data has received a great deal of attention as intra-day strategies became more prevalent. In the low frequency (daily) level some estimators based on select prices were presented in Chapter~3. Intra-day dynamics of volatility is of interest to traders and is usually not fully captured by the stock price indicators sampled during the day. If higher frequency data are used to estimate volatility of lower frequency data, it is important to know the model for the return at the lower frequency. To illustrate this, we consider data observed at two time scales; although they are somewhat at low frequency level, the concept can be easily extended to the high frequency context. If $r_{t,i}$ is the $i$th day return in $t$th month, the $t$th month return assuming there `n' trading days, $r_t^m = \sum_{i=1}^n r_{t,i}$. Note that $\sigma_m^2 = \var(r_t^m \;|\; F_{t-1}) = \sum_{i=1}^n \var(r_{t,i} \;|\; F_{t-1}) + 2 \sum_{i<j} \cov(r_{t,i}, r_{t,j} \;|\; F_{t-1})$. If $r_{t,i}$ is white noise sequence, then
 	\begin{equation}\label{eqn:2hatsigmasq}
@@ -503,7 +502,8 @@ For the estimation of efficient price variance, we need to consider an  optimal 
 %
 %The commonly available data from public sources such as Yahoo Finance provide select price information, High, Low, Open and Close prices along with the total transaction volume in a trading day. The usual estimate of volatility is based on closing prices, but having this additional price (bars) data can help to get a better estimate of volatility. As shown in the last section, using high frequency data leads to estimators that need to be corrected for market frictions. But using daily price bars data may not be helpful to make entry/exit decisions as they are to be made in real time; so as a compromise, many traders construct price bars data from high frequency point process data for a shorter time intervals such as 5--30~minutes. This has the effect of smoothing the noise arising from market frictions but also results in data in discrete time units allowing the traditional discrete time series methods discussed in Chapter 3 and Chapter 4 to be effectively employed. 
 
-\subsection{Volatility and Bar Data}
+% Volatility and Price Bar Data
+\subsection{Volatility and Price Bar Data}
 
 The price as assumed earlier is to follow a random walk model. Therefore, price changes (thus returns) over a time interval are distributed with mean zero and variance that is proportional to the length of the interval. Assuming that the prices follow continuous sample paths although the trading is closed for a certain duration and when trading is open, the actual transactions occur at discrete points in time. Treating the trading day as represented in a unit interval $[0,1]$ with $[0,f]$ representing the `market close' time and $[f,1]$ as `open' time, it is shown that an estimator of volatility
 	\begin{equation} \label{eqn:estvol}
