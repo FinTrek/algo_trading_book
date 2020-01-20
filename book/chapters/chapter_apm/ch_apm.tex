@@ -138,7 +138,7 @@ Maximizing $t_a^2$ is therefore equivalent to minimizing $a' \hat{\Sigma}a$ subj
 	\begin{equation} \label{eqn:5a}
 	a= \dfrac{c}{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\alpha}} \cdot \hat{\Sigma}^{-1} \hat{\alpha}
 	\end{equation}
-and thus $t_a^2= T \cdot \frac{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\alpha}}{1+\hat{\theta}_p^2}= \frac{T}{T - m - 1} \cdot m \cdot F$. Thus, the portfolio based on `$a$' can provide information about creating a better model. The portfolio based on `$a$' is termed as an active portfolio and Gibbons et al. show that when this is combined with the `market' portfolio results in ex-post efficient portfolio. To make the comparison between the three portfolios, average returns for all three are set equal which results in the choice of $c= \overline{r}_m \cdot \frac{\hat{\alpha} \hat{\Sigma}^{-1} \hat{\alpha}}{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\gamma}}$ and thus the active portfolio results in 
+and thus $t_a^2= T \cdot \frac{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\alpha}}{1+\hat{\theta}_p^2}= \frac{T}{T - m - 1} \cdot m \cdot F$. Thus, the portfolio based on `$a$' can provide information about creating a better model. The portfolio based on `$a$' is termed an active portfolio and Gibbons et al. show that when this is combined with the `market' portfolio results in ex-post efficient portfolio. To make the comparison between the three portfolios, average returns for all three are set equal which results in the choice of $c= \overline{r}_m \cdot \frac{\hat{\alpha} \hat{\Sigma}^{-1} \hat{\alpha}}{\hat{\alpha}' \hat{\Sigma}^{-1} \hat{\gamma}}$ and thus the active portfolio results in 
 	\begin{equation} \label{eqn:5a2}
 	a= \overline{r}_m \cdot \dfrac{\hat{\Sigma}^{-1} \hat{\alpha}}{\hat{\alpha}' \hat{\Sigma}^{-1} \overline{r}}
 	\end{equation}	
@@ -355,7 +355,7 @@ where $I W_m(\psi,n_0)$ is the inverted Wishart with `$n_0$' degrees of freedom 
 where $S= \frac{1}{T} \sum_{t=1}^T (r_t - \overline{r})(r_t - \overline{r})'$, the residual covariance matrix. If `$\kappa$' and `$n_0$' are taken to be large, it implies that the investor puts more emphasis on the priors. To use \eqref{eqn:5posterior}, the investor has to specify these values. 
 
 
-Black and Litterman (1992)~\cite{blacklit} propose shrinking the prior estimate of $\mu$ to a vector `$\pi$' representing excess equilibrium returns, such as the one implied by CAPM which is termed as the return on the global market. Thus
+Black and Litterman (1992)~\cite{blacklit} propose shrinking the prior estimate of $\mu$ to a vector `$\pi$' representing excess equilibrium returns, such as the one implied by CAPM which is termed the return on the global market. Thus
 	\begin{equation} \label{eqn:bigpi}
 	\pi = \dfrac{\mu_m-r_f}{\sigma_m^2} \cdot \Sigma \cdot w_m,
 	\end{equation}
@@ -513,7 +513,7 @@ with the first two terms denoting excess returns from investing in the risk free
 	\begin{equation}\label{eqn:optimalweights}
 	w= \frac{1}{\gamma} E\left[ r^{p}_{t \to t+2} {r'}^p_{t\to t+2} \right] E[r^{p}_{t \to t+2}].
 	\end{equation}
-The solution reflects the choice between holding the risky assets in the first period only and holding them in the second period only and thus is termed as ``timing portfolios''. The above result can be extended to any number of periods. \twomedskip
+The solution reflects the choice between holding the risky assets in the first period only and holding them in the second period only and thus is termed ``timing portfolios''. The above result can be extended to any number of periods. \twomedskip
 
 
 \noindent\textbf{Conditioning Information in Portfolio Construction:} It has been debated that portfolio managers may use conditioning information they have about assets in forming their portfolios, not simply using the mean and variance of the past returns. Thus the managers' conditionally efficient portfolios may not appear efficient to the investor with no knowledge of that information. Ferson and Siegel (2001)~\cite{fersie} study the properties of unconditional minimum-variance portfolios when the conditioning information is present and suggest that, ``For extreme signals about the returns of risky assets, the efficient solution requires a conservative response.'' Managers can reduce risk by taking a small position in the risky asset while keeping the same level of portfolio performance. In its basic formulation, assuming that the investment alternatives are a risky asset and risk-free return, with $w(\tilde{S})$---the proportion invested in the risky-asset, the portfolio return and the variance are: 

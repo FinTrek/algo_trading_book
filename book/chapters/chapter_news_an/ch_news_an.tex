@@ -23,7 +23,7 @@
 In an extended article, Baker and Wurgler (2007)~\cite{baker2007investor} consider some additional proxies as well and these are able to better discriminate the two factors that could lead to mispricing, a change in sentiment of the irrational traders and a limit to arbitrage from the rational investors. Market turnover, defined as the ratio of trading volume to the number of listed shares, Market Volatility Index (VIX),\label{in:vix} equity issues as a ratio of total new issues that includes debt issues as well and a measure of insiders trading pattern are all considered to be other proxies for sentiment. The constructed index is orthogonalized to a set of state variables: real growth in durables, nondurables and services consumption; growth in employment and the National Bureau of Economic Research recession indicator. The time-varying index constructed from these is shown to match up well with the anecdotal accounts of the timing of bubbles and crashes.
  
  
-It must be noted that the sentiment index constructed by Baker and Wurgler (2006, 2007)~\cite{baker2006investor}~\cite{baker2007investor} is based on monthly data, as the underlying variables are somewhat slow-moving. At low frequency, the index does provide a predictive direction for the stock performance. The index given in Figure~\ref{fig:sentimentindex} is updated and posted in the authors' website;\footnote{\url{https://www.dropbox.com/s/ip2812eich83tw2/Investor_Sentiment_Data_20190327_POST.xlsx?dl=0}}. Yu and Yuan (2011)~\cite{yuyuan} and Stambaugh, Yu and Yuan (2012)~\cite{stamb} show how the index can shed light on well-documented anomalies. These anomalies include unexpected deviations in performance during the time of financial distress; the firms with high probability of failure have lower, not higher, subsequent returns, which is not expected by the standard asset pricing models. Another one is the momentum effect, which refers to empirical observation that high past returns generally forecast high future returns. Also it is noted that higher past investment predicts abnormally lower future returns. 
+It must be noted that the sentiment index constructed by Baker and Wurgler (2006, 2007)~\cite{baker2006investor,baker2007investor} is based on monthly data, as the underlying variables are somewhat slow-moving. At low frequency, the index does provide a predictive direction for the stock performance. The index given in Figure~\ref{fig:sentimentindex} is updated and posted in the authors' website;\footnote{\url{https://www.dropbox.com/s/ip2812eich83tw2/Investor_Sentiment_Data_20190327_POST.xlsx?dl=0}}. Yu and Yuan (2011)~\cite{yuyuan} and Stambaugh, Yu and Yuan (2012)~\cite{stamb} show how the index can shed light on well-documented anomalies. These anomalies include unexpected deviations in performance during the time of financial distress; the firms with high probability of failure have lower, not higher, subsequent returns, which is not expected by the standard asset pricing models. Another one is the momentum effect, which refers to empirical observation that high past returns generally forecast high future returns. Also it is noted that higher past investment predicts abnormally lower future returns. 
 	 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{chapters/chapter_news_an/figures/ch4sec1sentimentindex.png}
@@ -103,7 +103,7 @@ Stambaugh et al. (2012)~\cite{stamb} consider several asset-pricing anomalies th
 As noted in Chapter~\ref{chap:ch_trading_fund}, trading now mostly occurs at a relatively high frequency level and hence any news related to a stock gets processed almost instantaneously. The literature reviewed in the last section refers to low frequency sentiment data and hence its influence on returns is not easy to notice. New technologies that can handle automatic news collection, extraction and categorization of relevant information are fast-emerging. Quantitative models that incorporate this information in investment decisions are being actively researched and automation of these activities can greatly help traders shorten their reaction time to emerging news feeds. There has been a surge of academic interest in this topic (see Mitra and Mitra (2011)~\cite{mitra2} and Peterson (2016)~\cite{peterson}). Several technology companies (iSentium, SMA, MarketPsych, RavenPack, etc.) have sprung up in the last decade offering the service of aggregating the web information or sentiment, related to stocks. 
 
 
-Financial news can be classified into two main groups. Some financial news related to a stock are released on a regular basis, such as earnings statements and models to analyze such events are well structured. The expectations on the earnings are formed based on the stock's other performance indicators and when the actual earnings differ from the trader's expectations, the trading decisions are normally adjusted for the a priori speculation. Then there are other news related to the product or personnel of the company that may come unscheduled and may affect trading decisions. Although these are unstructured, they can also be easily processed. Usually the early exploiters of this type of information can expect to gain some advantage over others. These are generally termed as news-based event strategies and have been fairly well-studied in the finance literature. 
+Financial news can be classified into two main groups. Some financial news related to a stock are released on a regular basis, such as earnings statements and models to analyze such events are well structured. The expectations on the earnings are formed based on the stock's other performance indicators and when the actual earnings differ from the trader's expectations, the trading decisions are normally adjusted for the a priori speculation. Then there are other news related to the product or personnel of the company that may come unscheduled and may affect trading decisions. Although these are unstructured, they can also be easily processed. Usually the early exploiters of this type of information can expect to gain some advantage over others. These are generally termed news-based event strategies and have been fairly well-studied in the finance literature. 
 
 
 Unstructured news streams do not come at regular intervals, tend to be qualitative and are usually in the form of a text. In order to correlate this information with the stock performance, they need to be appropriately quantified. Because this information originates from numerous sources such as in the case of social media, it needs to be properly aggregated. Without any aggregation and smoothing of news flows, it may be difficult to extract the signal from the noise. Some common steps involved in making the news usable for trading are:
@@ -145,7 +145,7 @@ We have reviewed select studies that have clearly documented the influence of ne
 	
 	\begin{figure}[!ht]
 	\centering
-	\begin{tikzpicture}
+	\begin{tikzpicture}[scale=0.95]
 	\draw[very thick,->] (0,0) -- (10,0);
 	\node at (11,0) {\textbf{Time}};
 	\node at (0.5,-0.3) {$\cdots$};
@@ -159,8 +159,8 @@ We have reviewed select studies that have clearly documented the influence of ne
 	
 		\node at (\i+5.5,-0.3) {$\mathbf{I_{\i}}$};
 		}
-	\node at (11,-1) {\textbf{Stock}};
-	\node at (11,-1.4) {\textbf{Characteristics}};
+	\node at (11,-0.8) {\textbf{Stock}};
+	\node at (11,-1.1) {\textbf{Characteristics}};
 	\foreach \i in {-4,...,3}
 	{
 	

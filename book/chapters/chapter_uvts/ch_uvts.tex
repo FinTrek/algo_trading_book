@@ -1,7 +1,7 @@
 % !TEX root = ../../book.tex
-\chapter{Univariate Time Series Models\label{ch:ch_uvts}}
+\chapter{Univariate Time Series Models\label{ch:ch_uvts}} \label{in:tsm1}
 
-With the advent of electronic trading a vast amount of data on orders is now recorded and is available to traders to make real-time decisions. The Trades and Quotes (TAQ)\label{in:taq1} data on time-stamped sequence of trades with the updates on the price and depth of the best bid and ask quotes was used by researchers and traders initially. This was later expanded to the so-called Level~II data, with time-stamped sequence of trades and quotes for the top 5 levels of the order book. Both TAQ and Level~II data still do not provide the complete story of the buy and sell sides. With Level III data now available, we can obtain time-stamped sequence of all events that occur (with the exception of the information on hidden orders), resulting in a quite voluminous, but irregularly spaced, data set. We take a broad view that for making strategic decisions to enter and exit the market, the trader needs to take an aggregate view of the trading activities, but that for the optimal execution of the strategies the trader needs to understand the market microstructure that relates to the actual process of trading. With the increased speed of decisions in an HFT world, the difference between the two steps, strategic and execution decisions, may be blurred but the aggregation process can help to look beyond trading frictions. In Section~\ref{sec:tradesandquotes}, we discuss the Trades and Quotes data and aggregation issues. In Section~\ref{sec:trad_dec_stfd}, we define trading algorithms that depend on prediction of short-term price movement.
+With the advent of electronic trading a vast amount of data on orders is now recorded and is available to traders to make real-time decisions. The Trades and Quotes (TAQ)\label{in:taq1} data on time-stamped sequence of trades with the updates on the price and depth of the best bid and ask quotes was used by researchers and traders initially. This was later expanded to the so-called Level~II data, with time-stamped sequence of trades and quotes for the top 5 levels of the order book. Both TAQ and Level~II data still do not provide the complete story of the buy and sell sides. With Level~III data now available, we can obtain time-stamped sequence of all events that occur (with the exception of the information on hidden orders), resulting in a quite voluminous, but irregularly spaced, data set. We take a broad view that for making strategic decisions to enter and exit the market, the trader needs to take an aggregate view of the trading activities, but that for the optimal execution of the strategies the trader needs to understand the market microstructure that relates to the actual process of trading. With the increased speed of decisions in an HFT world, the difference between the two steps, strategic and execution decisions, may be blurred but the aggregation process can help to look beyond trading frictions. In Section~\ref{sec:tradesandquotes}, we discuss the Trades and Quotes data and aggregation issues. In Section~\ref{sec:trad_dec_stfd}, we define trading algorithms that depend on prediction of short-term price movement.
 
 
 The price movement, whether it is due to pure market friction or due to information related to a stock, is captured through a drift term in the random walk model that needs to be carefully monitored. Because time series models for discrete time units are still widely used by traders in the form of aggregated price-bars, we focus on these methods in Sections~\ref{sec:model_mean} to Section~\ref{sec:sty_mod_var}. We broadly classify these methods into modeling the mean (return) and into modeling the variance (volatility). As these techniques are well-documented and can be found elsewhere in the literature, we only present a brief but relevant overview. The established facts about the stock returns and variances are reviewed along with the methodology as these will provide expected benchmarks; successful algorithms as one would notice, generally exploit the deviations from these benchmarks.
@@ -9,7 +9,7 @@ The price movement, whether it is due to pure market friction or due to informat
 
 
 % Trades and Quotes Data and their Aggregation
-\section{Trades and Quotes Data and their Aggregation: From Point Processes to Discrete Time Series \label{sec:tradesandquotes}}
+\section{Trades and Quotes Data and their Aggregation: From Point Processes to Discrete Time Series\label{sec:tradesandquotes}}
 
 In its simplest form, the trading activities through an exchange that opens at 9:30~a.m. and closes at 4~p.m. can be described by a sequence of time stamps (``ticks'') $t_0 < t_1 < \cdots < t_n$ and the ``marks'' $y_i$ at time $t_i$, in which $t_0$ denotes 9:30~a.m. and after and $t_n$ denotes the time of the last trade that occurs before or at 4~p.m. The marks $y_i$ can be price, volume of an order placed on either the buy or sell side of the book and in general can represent the characteristics of the order book at the time of $i$th activity (see Figure~\ref{fig:tradeactline}). The events with the marks associated with the ticks can be described mathematically as a marked point process. But our goal here is to first show how these data points can be aggregated over regularly spaced time intervals and how methods for linear homogeneous time series can be used to analyze the aggregated data. Some tools that are relevant for the analysis of point processes will be presented in Chapter~\ref{ch:ch_advanced}. \label{in:disc_time_unit1} \label{in:level3dat2}
 	\begin{figure}[!ht]
@@ -49,7 +49,7 @@ The typical Level~III data for CISCO on a single day in 2011 is given below in T
 	\begin{table}[!ht]
    	\centering
    	\caption{CISCO--Trade Data \label{tab:CISCO}}
-   	\begin{tabular}{cccccc} 
+   	\hspace{-1cm}\begin{tabular}{cccccc} 
 	Timestamp & Order Number & Event & Quantity & Price & Exchange \\ \hline
 	$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
 	34561915 & 4254917 & D & 0 & 0 & J \\
@@ -105,15 +105,15 @@ Answers to these questions involve in some way predicting the market movement an
 
 Let $p_{it}= \ln P_{it}$ denote the price of the $i$th asset at time $t$ and let $p_t = (p_{1t}, p_{2t}, \ldots, p_{nt})$ denote the price vector for `$n$' assets. Let $y_{it}$ denote a vector of characteristics, e.g. volume of transactions, price volatility, number of transactions and the intensity of trading as captured by the average duration between transactions, etc of the $i$th asset at time $t$. These quantities are aggregated from high frequency data of the type given in Table~\ref{tab:CISCO} and illustrated in Figure~\ref{fig:tradeactline} to be used as the characteristics associated with the price changes. In addition, we can also consider $r$ factors $f_t = (f_{1t}, f_{2t}, \ldots, f_{rt})$ that may include market and industry factors as well as asset characteristics such as market capitalization, book-to-market ratio etc. The trading rules can be broadly grouped as follows:
         \begin{itemize}
-        \item[A.] Statistical Arbitrage Rules: $E(p_{i,t+1}\,|\,p_{i,t},p_{i,t-1},\ldots,y_{i,t},y_{i,t-1},\ldots)$
+        \item[A.] Statistical Arbitrage Rules: $\Ex(p_{i,t+1}\,|\,p_{i,t},p_{i,t-1},\ldots,y_{i,t},y_{i,t-1},\ldots)$
         \begin{itemize}
         \item[$\bullet$] Predicting the price of $i$th stock at t+1 based on the past trading information; this is sometimes labelled as time series momentum.
         \end{itemize}
-        \item[B.] Momentum: $E(p_{t+1}\,|\,p_{t},p_{t-1},\ldots,y_{t},y_{t-1},\ldots)$
+        \item[B.] Momentum: $\Ex(p_{t+1}\,|\,p_{t},p_{t-1},\ldots,y_{t},y_{t-1},\ldots)$
         \begin{itemize}
         \item[$\bullet$] Predicting the cross-sectional momentum of a subset of stocks based on their past trading characteristics. This is not only useful for portfolio formation and rebalancing, also for pairs trading which is based on tracking two stocks simultaneously so that their price divergence can be exploited. 
         \end{itemize}
-        \item[C.] Fair Value: $E(p_{t+1}\,|\,p_{t},p_{t-1},\ldots,y_{t},y_{t-1},\ldots,f_t,f_{t-1},\ldots)$
+        \item[C.] Fair Value: $\Ex(p_{t+1}\,|\,p_{t},p_{t-1},\ldots,y_{t},y_{t-1},\ldots,f_t,f_{t-1},\ldots)$
         \begin{itemize}
         \item[$\bullet$] Predicting the price using all relevant quantities. The factors normally include market and Fama-French factors. Many of these factors are at a more macro level than the time scale considered for the price prediction, but nevertheless could be useful, as explained in Chapter~\ref{ch:ch_mvts}.
         \end{itemize}
@@ -137,11 +137,11 @@ The means, variances, and covariances are useful summary descriptions of the sto
 \noindent\textbf{Stationarity} \twomedskip
 
 
-A time series $\{Y_t \}$ is said to be stationary if for every integer $m$, the set of variables $Y_{t_1}, Y_{t_2}, \ldots, \, Y_{t_m}$ depend only on the distance between the times $t_1, t_2, \ldots, t_m$, rather than on their actual values.  So a stationary process $\{Y_t \}$ tends to behave in a homogeneous manner as it moves through time. The means and variances of the $Y_t$ are the same for all $t$, that is, $E(Y_t) = \mu$ and  $\var(Y_t)= \sigma^2$ are constant, for all $t$. So we may express the autocovariance function as 
+A time series $\{Y_t \}$ is said to be stationary if for every integer $m$, the set of variables $Y_{t_1}, Y_{t_2}, \ldots, \, Y_{t_m}$ depend only on the distance between the times $t_1, t_2, \ldots, t_m$, rather than on their actual values.  So a stationary process $\{Y_t \}$ tends to behave in a homogeneous manner as it moves through time. The means and variances of the $Y_t$ are the same for all $t$, that is, $\Ex(Y_t) = \mu$ and  $\var(Y_t)= \sigma^2$ are constant, for all $t$. So we may express the autocovariance function as 
 	\begin{equation} \label{eqn:2gammas}
-	\gamma(s)= \cov(Y_t,Y_{t - s})= E[(Y_t - \mu)(Y_{t - s} - \mu)], \text{ for all } s= 0, \pm 1, \ldots
+	\gamma(s)= \cov(Y_t,Y_{t - s})= \Ex[(Y_t - \mu)(Y_{t - s} - \mu)], \text{ for all } s= 0, \pm 1, \ldots
 	\end{equation}
-Note that by this notation, $\gamma(0) = E[(Y_t - \mu)^2] = \var(Y_t)$. Also, the \emph{autocorrelation function} of the stationary process may be expressed
+Note that by this notation, $\gamma(0) = \Ex[(Y_t - \mu)^2] = \var(Y_t)$. Also, the \emph{autocorrelation function} of the stationary process may be expressed
         	\begin{equation} \label{eqn:2rhos}
 	\rho(s)= \corr(Y_t,Y_{t - s})= \dfrac{\cov(Y_t,Y_{t - s})}{\big( \var(Y_t) \var(Y_{t-s}) \big)^{1/2}} = \dfrac{\gamma(s)}{\gamma(0)},  \quad  s= 0, \pm 1, \ldots
 	\end{equation}
@@ -154,7 +154,7 @@ $\rho(s)$ will be referred to as the autocorrelation of the process at lag $s$. 
 Now we present some select models, as examples, that tend to be the most useful in financial applications. The properties of these models would become relevant as we look at data. 
 
 
-\begin{ex}[White Noise] \label{ex:whitenoise} Let $\epsilon_0, \epsilon_1, \epsilon_2, \ldots$ be a sequence of independent random variables defined on the discrete time points $0,1, 2, \ldots$, with mean $E(\epsilon_{t})= 0$ and variance $E(\epsilon_{t}^2)= \sigma^2$, for all $t$. Set $Y_t = \mu + \epsilon_t, \, t= 0, 1, 2, \ldots$. Then $E(Y_t)= \mu$ for all $t$, and since independence implies that the random variables are uncorrelated, we have $\cov(Y_t,Y_{t-s})= \var(Y_t)= \sigma^2$ if $s=0$ and $\cov(Y_t,Y_{t-s})= 0$ if $s \neq 0$. Thus the process is stationary. Such a process is referred to as purely random process or a \emph{white noise process}, and is the foundation for the construction of many other processes of interest. \xqed
+\begin{ex}[White Noise] \label{ex:whitenoise} Let $\epsilon_0, \epsilon_1, \epsilon_2, \ldots$ be a sequence of independent random variables defined on the discrete time points $0,1, 2, \ldots$, with mean $\Ex(\epsilon_{t})= 0$ and variance $\Ex(\epsilon_{t}^2)= \sigma^2$, for all $t$. Set $Y_t = \mu + \epsilon_t, \, t= 0, 1, 2, \ldots$. Then $\Ex(Y_t)= \mu$ for all $t$, and since independence implies that the random variables are uncorrelated, we have $\cov(Y_t,Y_{t-s})= \var(Y_t)= \sigma^2$ if $s=0$ and $\cov(Y_t,Y_{t-s})= 0$ if $s \neq 0$. Thus the process is stationary. Such a process is referred to as purely random process or a \emph{white noise process}, and is the foundation for the construction of many other processes of interest. \xqed
 \end{ex}
 
 
@@ -162,7 +162,7 @@ Now we present some select models, as examples, that tend to be the most useful 
 	\[
 	Y_t = \mu + \epsilon_t + \epsilon_{t-1}, \qquad t=0, 1, 2, \ldots,
 	\]
-where $\mu$ is a constant.  Then $E(Y_t)= \mu$, for all $t$, and
+where $\mu$ is a constant.  Then $\Ex(Y_t)= \mu$, for all $t$, and
 	\[
 	\cov(Y_t,Y_{t-s})= \gamma(s) =
 	\begin{cases}
@@ -178,37 +178,37 @@ which depends only on the time lag $1$ and not on $t$.  Hence the process $\{ Y_
                 \subfloat[Figure 1a]
                         [Time series plot of $0.5 + \epsilon_t$]
                         {
-                        \includegraphics[scale=0.26]{chapters/chapter_uvts/figures/ch1fig1y1ts.eps}
+                        \includegraphics[scale=0.2]{chapters/chapter_uvts/figures/ch1fig1y1ts.eps}
                         }
                         \hfill
                 \subfloat[Figure 1b]
                         [ACF]
                         {
-                        \includegraphics[scale=0.26]{chapters/chapter_uvts/figures/ch1fig1y1acf.eps}
+                        \includegraphics[scale=0.2]{chapters/chapter_uvts/figures/ch1fig1y1acf.eps}
                         } 
                         
                 \subfloat[Figure 1c]
                         [$Y_t$ vs. $Y_{t-1}$]
                         {
-                        \includegraphics[scale=0.26]{chapters/chapter_uvts/figures/ch1fig1y1lagplot.eps}
+                        \includegraphics[scale=0.2]{chapters/chapter_uvts/figures/ch1fig1y1lagplot.eps}
                         }
                         \hfill
                 \subfloat[Figure 1d]
                         [Time series plot of $1.0 + \epsilon_t + \epsilon_{t-1}$]
                         {
-                        \includegraphics[scale=0.26]{chapters/chapter_uvts/figures/ch1fig1y2ts.eps}
+                        \includegraphics[scale=0.2]{chapters/chapter_uvts/figures/ch1fig1y2ts.eps}
                         }
                         
                 \subfloat[Figure 1e]
                         [ACF]
                         {
-                        \includegraphics[scale=0.26]{chapters/chapter_uvts/figures/ch1fig1y2acf.eps}
+                        \includegraphics[scale=0.2]{chapters/chapter_uvts/figures/ch1fig1y2acf.eps}
                         }
                         \hfill
                 \subfloat[Figure 1f]
                         [$Y_t$ vs. $Y_{t-1}$]
                         {
-                        \includegraphics[scale=0.26]{chapters/chapter_uvts/figures/ch1fig1y2lagplot.eps}
+                        \includegraphics[scale=0.2]{chapters/chapter_uvts/figures/ch1fig1y2lagplot.eps}
                         }
                \caption{Processes \& Diagnostics from $Y_t = 0.5 + \epsilon_t$ and from $Y_t = 1.0 + \epsilon_t + \epsilon_{t-1}$. \label{fig:sideways}}
             \end{sidewaysfigure}
@@ -218,7 +218,7 @@ Figure~\ref{fig:sideways}~(a) shows a time series plot of a computer simulated s
 \end{ex} 
 
 
-\noindent \textbf{Examples of Nonstationary Stochastic Processes} \twomedskip
+\noindent \textbf{Examples of Nonstationary Stochastic Processes} \label{in:nonstat1} \twomedskip
 
 
 Many time series that occur in finance do not exhibit stationary behavior.  For example, stock price series show a trend or shifting mean level over time, reflecting information flow about the stock or investors' behavior. Series also exhibit seasonal behavior, either in the form of nonstationary or deterministic seasonal patterns, both of which need to be distinguished from purely nondeterministic stationary stochastic behavior. Other departures from stationarity include changes in variability of the process over time (nonconstant variance or volatility regimes), abrupt shifts in the mean level, and changes in the autocorrelation structure of the process over time which is a feature of the series which would typically be more difficult to detect.  An important practical matter in the analysis of time series data involves methods of transforming a nonstationary time series into a stationary series, and accounting for and modeling of the nonstationary aspects of the original series. Many of the methods that are found useful in practice involve considering successive changes or differences over time in the original series to remove the nonstationary features of the series, especially changes in the mean level, or using linear regression techniques to help account for the nonstationary mean behavior.  We will illustrate this with a few simple but commonly occurring examples. 
@@ -233,7 +233,7 @@ where $\delta$ is a constant.  By successive substitutions in the above relation
 	\[
 	Y_t = \delta \, t + \sum_{j=1}^t \epsilon_j = \delta \, t + \epsilon_{t} + \epsilon_{t-1} + \cdots + \epsilon_{1}, \qquad t= 1, 2, \ldots .
 	\]
-Hence we see that $E(Y_t)= \delta t$ and $\var(Y_t)= \var(\sum_{j=1}^t \epsilon_j)= \sum_{j=1}^t \var(\epsilon_j)= t \, \sigma^2$, so that the process $\{ Y_t \}$ is not stationary and exhibits change in both mean and variance.  Moreover, for any $s > 0$, we find that
+Hence we see that $\Ex(Y_t)= \delta t$ and $\var(Y_t)= \var(\sum_{j=1}^t \epsilon_j)= \sum_{j=1}^t \var(\epsilon_j)= t \, \sigma^2$, so that the process $\{ Y_t \}$ is not stationary and exhibits change in both mean and variance.  Moreover, for any $s > 0$, we find that
 	\[
 	\cov(Y_t,Y_{t+s})= \cov \left( \sum_{j=1}^t \epsilon_j, \sum_{i=1}^{t+s} \epsilon_i \right)= \sum_{j=1}^t \var(\epsilon_j) = t \, \sigma^2 ,
 	\]
@@ -260,14 +260,14 @@ Usually one only computes $\hat{\gamma}(s)$ for lags $s$ much smaller than $T$, 
 which is called the sample ACF.  
 
 
-We now briefly discuss a few properties of the sampling distributions of the above estimators, with particular emphasis on the sample ACF $r(s)$.  The mean of $\overline{Y}$ is easily seen to be $E(\overline{Y})= (1/T) \sum_{t=1}^T E(Y_t) = \mu$, so that $\overline{Y}$ is an unbiased estimator of $\mu$.  The variance of $\overline{Y}$ is
+We now briefly discuss a few properties of the sampling distributions of the above estimators, with particular emphasis on the sample ACF $r(s)$.  The mean of $\overline{Y}$ is easily seen to be $\Ex(\overline{Y})= (1/T) \sum_{t=1}^T \Ex(Y_t) = \mu$, so that $\overline{Y}$ is an unbiased estimator of $\mu$.  The variance of $\overline{Y}$ is
 	\begin{equation} \label{eqn:var}
         \var(\overline{Y})= \frac{\gamma(0)}{T} \left[ 1 + 2 \sum_{u=1}^{T-1} \left(\dfrac{T - u}{T}\right)\, \rho(u) \right].
         \end{equation}
 Note that the variance of $\overline{Y}$ needs to account for the autocorrelations. 
 
 
-The sampling properties of the sample ACF $r(s)$ are quite complicated and exact results are not available except in a few special cases. [See Anderson and Walker (1964)~\cite{anderwalk}.] In the white noise case where the $Y_t$ are independent r.v.'s, we then have $\rho(s)= 0$ for all $s \neq 0$ it can be shown that $E(r(s)) \approx 0$, $\var(r(s)) \approx (T-s)/T^2$, and $\cov(r(s), r(u)) \approx 0$. Hence we can use these results to check for ``non-randomness'' of a series of comparing the sample values $r(s)$ at various lags $s=1, \ldots, k$ with the approximate 95\% limits $\pm \, 2 \sqrt{(T-s)/T^2} \approx 2 / \sqrt{T}$ for the normal distribution to see whether the $r(s)$ generally fall within these limits. We will use this test repeatedly on the residuals as a diagnostic tool for model adequacy. 
+The sampling properties of the sample ACF $r(s)$ are quite complicated and exact results are not available except in a few special cases. [See Anderson and Walker (1964)~\cite{anderwalk}.] In the white noise case where the $Y_t$ are independent r.v.'s, we then have $\rho(s)= 0$ for all $s \neq 0$ it can be shown that $\Ex(r(s)) \approx 0$, $\var(r(s)) \approx (T-s)/T^2$, and $\cov(r(s), r(u)) \approx 0$. Hence we can use these results to check for ``non-randomness'' of a series of comparing the sample values $r(s)$ at various lags $s=1, \ldots, k$ with the approximate 95\% limits $\pm \, 2 \sqrt{(T-s)/T^2} \approx 2 / \sqrt{T}$ for the normal distribution to see whether the $r(s)$ generally fall within these limits. We will use this test repeatedly on the residuals as a diagnostic tool for model adequacy. 
 
 
 In the second case, suppose it is assumed that the theoretical ACF satisfies $\rho(s) = 0$ for all $|s| > q$.  Then for any $s > q$,
@@ -290,7 +290,7 @@ The plot of ACF for a white noise sequence for a large number of lags may have a
 
 
 % Time Series Models for Aggregated Data:  Modeling the Mean
-\section{Time Series Models for Aggregated Data:  Modeling the Mean \label{sec:model_mean}}
+\section{Time Series Models for Aggregated Data:  Modeling the Mean \label{sec:model_mean}} \label{in:modelmean}
 
 In this section, we present a broad overview of the time series models for data aggregated over discrete time intervals. This data as mentioned in Section~\ref{sec:tradesandquotes} is called price bars and the methodologies discussed in this chapter apply to any aggregated data for fixed time unit of aggregation that is of equal length. As a close substitute for the high frequency data, data aggregated over short time intervals such as two or five minutes can be used. \twomedskip
 
@@ -306,7 +306,7 @@ where the $\epsilon_t$ are independent with 0 mean and variance $\sigma^2_{\epsi
 	\[
 	Y_t = \mu + \sum_{j=0}^{\infty} \psi_j B^j \epsilon_t = \mu + \psi(B) \epsilon_t,
 	\]
-where $\psi(B) = \psi_0 + \psi_1 \, B + \psi_2 \, B^2 + \cdots$. Since the input $\{\epsilon_t\}$ is a stationary process, it follows that $\{ Y_t \}$ in \eqref{eqn:yt} forms a stationary process, with mean $E(Y_t)=\mu$ and autocovariance function
+where $\psi(B) = \psi_0 + \psi_1 \, B + \psi_2 \, B^2 + \cdots$. Since the input $\{\epsilon_t\}$ is a stationary process, it follows that $\{ Y_t \}$ in \eqref{eqn:yt} forms a stationary process, with mean $\Ex(Y_t)=\mu$ and autocovariance function
 	\begin{equation} \label{eqn:covyt}
 	\gamma(s)= \cov(Y_t, Y_{t+s})= \sigma^2_{\epsilon} \sum_{j=0}^{\infty} \psi_j \psi_{j+s},
 	\end{equation}      
@@ -330,7 +330,7 @@ where the $\epsilon_t$ are independent with mean 0 and variance $\sigma^2$. Usin
 	\begin{equation*}
          Y_t= \mu + \theta(B) \, \epsilon_t,	
 	\end{equation*}
-where $\theta(B) = 1 - \sum_{j=1}^q \theta_j B^j$.  An MA($q$)  process is always stationary, by Wold's Theorem, because $\sum_{j=0}^{\infty} \lvert \psi_j \rvert= 1 + \sum_{j=1}^q \lvert \theta_j \rvert$ is always finite. The mean of the process is $\mu = E(Y_t)$, and the autocovariance function is (from \eqref{eqn:covyt})
+where $\theta(B) = 1 - \sum_{j=1}^q \theta_j B^j$.  An MA($q$)  process is always stationary, by Wold's Theorem, because $\sum_{j=0}^{\infty} \lvert \psi_j \rvert= 1 + \sum_{j=1}^q \lvert \theta_j \rvert$ is always finite. The mean of the process is $\mu = \Ex(Y_t)$, and the autocovariance function is (from \eqref{eqn:covyt})
 	\begin{equation*}
             \gamma(s)= \cov (Y_t, Y_{t+s})= \sigma^2 \sum_{j=0}^{q-s} \theta_j \theta_{j+s}, \quad s = 0, 1, 2, \ldots, q,	
 	\end{equation*}
@@ -365,7 +365,7 @@ We want to introduce another useful class of models, autoregressive models with 
 \begin{ex}[Autoregressive Model of Order 1 (AR(1))] \label{ex:autoregor1}
 Consider the process \eqref{eqn:yt} with coefficients given by $\psi_j = \phi^j$, $j= 0,1,\ldots$,  for some $\phi$ with $\lvert \phi \rvert < 1$. Then the process $Y_t = \mu + \sum_{j=0}^{\infty} \phi^j \epsilon_{t-j}$ is stationary, because $\sum_{j=0}^{\infty} \lvert \psi_j \rvert= \sum_{j=0}^{\infty} \lvert \phi \rvert^j = 1/(1 - \lvert \phi \rvert)$ is absolutely convergent for $\lvert \phi \rvert < 1$. From \eqref{eqn:covyt}, the autocovariance function of $\{ Y_t \}$ is
 	\[
-	\gamma(s)= \sigma^2_{\epsilon} \sum_{j=0}^{\infty} \phi^j \phi^{j+s}= \sigma^2_{\epsilon} \phi^s \sum_{j=0}^{\infty} \phi^{2j}= \frac{\sigma^2_{\epsilon} \phi^s}{1 - \phi^2}, \quad s \geq 0.
+	\gamma(s)= \sigma^2_{\epsilon} \sum_{j=0}^{\infty} \phi^j \phi^{j+s}= \sigma^2_{\epsilon}\ \phi^s \sum_{j=0}^{\infty} \phi^{2j}= \frac{\sigma^2_{\epsilon} \phi^s}{1 - \phi^2}, \quad s \geq 0.
 	\]
 In particular, $\gamma(0) = \var(Y_t) = \sigma^2_{\epsilon}/(1-\phi^2)$. Hence the autocorrelation function of $\{ Y_t \}$ is $\rho(s)= \gamma(s) / \gamma(0)= \phi^s$, $ s \geq 0$ which declines exponentially (geometrically) as the lag $s$ increases.
 
@@ -396,7 +396,7 @@ If the roots of $\phi(z) = 1- \phi_1 z - \cdots - \phi_p z^p = 0$ are greater th
 	\begin{equation} \label{eqn:ytthm}
 	Y_t= \mu + \sum_{j=0}^\infty \Psi_j\varepsilon_{t-j},
 	\end{equation}
-where $\mu = E(Y_t) = \delta / (1 - \phi_1 - \cdots - \phi_p)$, $\Psi(B) = \sum_{j=0}^\infty \Psi_j B^j$. 
+where $\mu = \Ex(Y_t) = \delta / (1 - \phi_1 - \cdots - \phi_p)$, $\Psi(B) = \sum_{j=0}^\infty \Psi_j B^j$. 
 \end{result}
 
 
@@ -433,7 +433,7 @@ because $\cov(Y_t, \varepsilon_t)= \sigma^2$. Hence $\sigma^2$ can be determined
 Also note that a measure of the strength of association or ``predictability'' of $Y_t$ based on its past values $Y_{t-1}, \ldots, Y_{t-p}$ can be given by the (squared) multiple correlation coefficients of $Y_t$ with $(Y_{t-1}, \ldots, Y_{t-p})$, which is $R^2= (\gamma(0) - \sigma^2)/\gamma(0) = 1 - ( \sigma^2 / \gamma(0) ) = \phi_1 \rho(1) + \cdots + \phi_p \rho(p)$. Since $\gamma(0)$ represents the ``total'' variance of $Y_t$, and $\sigma^2$ may be interpreted as the ``unexplained'' or error variance (i.e., that portion of the variance not explained by the past values), the quantity $R^2$ has the usual interpretation as in linear regression of representing the proportion of the total variance of the variable $Y_t$ that is explained by (auto)regression on the past values $Y_{t-1}, \ldots, Y_{t-p}$. \twomedskip
 
 
-\noindent\textbf{Partial Autocorrelation Function} \twomedskip
+\noindent\textbf{Partial Autocorrelation Function} \label{in:partac1} \twomedskip
 
 
 When an AR model is being fit to observed time series data, the sample version of the Yule-Walker equations \eqref{eqn:rhos2}, \eqref{eqn:matrix}, in which the values $\rho(j)$ are replaced by the sample ACF values r(j), can be solved to obtain estimates $\hat{\phi}_j$ of the autoregressive parameters. However, initially it is not known which order $p$ is appropriate to fit to the data. The sample partial autocorrelation function (PACF) will be seen to be useful for determination of the appropriate order of an AR process as how the autocorrelation function (ACF) is useful for the determination of the appropriate order of an MA process. First, we discuss the concept of PACF in general.
@@ -443,7 +443,7 @@ Suppose $\{ Y_t \}$ is a stationary process, not necessarily an AR process, with
 	\begin{equation} \label{eqn:rhoj}
 	\rho(j) = \phi_1 \rho(j-1) + \phi_2 \rho(j-2) + \cdots + \phi_k \rho(j-k), \quad j = 1, 2,\ldots, k
 	\end{equation}
-and let $\phi_{1k}, \phi_{2k}, \ldots, \phi_{kk}$ denote the solution for $\phi_1, \phi_2, \ldots, \phi_k$ to these equations. Given the ACF $\rho(j)$, \eqref{eqn:rhoj} can be solved for each value $k= 1,2, \ldots$, and the quantity $\phi_{kk}$, regarded as a function of the lag $k$, is called the (theoretical) \emph{partial autocorrelation function} (PACF) of the process $\{ Y_t \}$. The values $\phi_{1k},  \phi_{2k}, \ldots, \phi_{kk}$ which are the solution to \eqref{eqn:rhoj} are the regression coefficients in the regression of $Y_t$ on $Y_{t-1}, \ldots, Y_{t-k}$; that is, values of coefficients $b_1, \ldots, b_k$ which minimize $E[(Y_t - b_0 - \sum_{i=1}^k b_iY_{t-i})^2]$.
+and let $\phi_{1k}, \phi_{2k}, \ldots, \phi_{kk}$ denote the solution for $\phi_1, \phi_2, \ldots, \phi_k$ to these equations. Given the ACF $\rho(j)$, \eqref{eqn:rhoj} can be solved for each value $k= 1,2, \ldots$, and the quantity $\phi_{kk}$, regarded as a function of the lag $k$, is called the (theoretical) \emph{partial autocorrelation function} (PACF) of the process $\{ Y_t \}$. The values $\phi_{1k},  \phi_{2k}, \ldots, \phi_{kk}$ which are the solution to \eqref{eqn:rhoj} are the regression coefficients in the regression of $Y_t$ on $Y_{t-1}, \ldots, Y_{t-k}$; that is, values of coefficients $b_1, \ldots, b_k$ which minimize $\Ex[(Y_t - b_0 - \sum_{i=1}^k b_iY_{t-i})^2]$.
 
 
 If $\{ Y_t \}$ is truly an AR process of order $p$, the $\phi_{kk}$ will generally be nonzero for $k \leq p$, but $\phi_{kk}$ will always be zero for $k > p$. This is so since the ACF $\rho(j)$ actually satisfies the Yule-Walker equations \eqref{eqn:rhoj} for $k= p$, and hence for any $k > p$ the solution to \eqref{eqn:rhoj} must be $\phi_{kk}= \phi_1, \ldots, \phi_{pk}= \phi_p$, $\phi_{p+1,k} = 0, \ldots,\phi_{kk} = 0$, where $\phi_1, \ldots, \phi_p$ are the true AR coefficients. Thus, the PACF $\phi_{kk}$ of an AR($p$) process ``cuts off'' (is zero) after lag $p$, and this property serves to distinguish (identify) an AR($p$) process.
@@ -456,10 +456,10 @@ Based on a sample $Y_1, \ldots, Y_T$ from a process $\{ Y_t \}$, the sample PACF
 	\begin{equation} \label{eqn:rjequation}
 	r(j) = \hat{\phi}_{tk} r(j-1) + \cdots + \hat{\phi}_{kk} r(j-k), \quad j = 1, \ldots ,k,
 	\end{equation}
-for each $k= 1, 2, \ldots$. These are the same form as the equations \eqref{eqn:rhoj} but with sample ACF values $r(j)$ used in place of the theoretical ACF values $\rho(j)$. In matrix notation similar to that used in \eqref{eqn:matrix}, the solution is $\hat{\phi} = R_k^{-1} r$. Now under the assumption that the process $\{ Y_t \}$ is an AR of order $p$, the estimated PACF values $\hat{\phi}_{kk}$ for lags $k > p$ are approximately independently and normally distributed for large $T$, with mean $E(\hat{\phi}_{kk})= 0$ and St.Dev. $\hat{\phi}_{kk} = 1 / \sqrt{T}$ for $k > p$. These facts concerning the sampling properties of the sample PACF $\hat{\phi}_{kk}$ can be used to assess whether the coefficients in estimated AR models may be treated as close to zero after some lag $p$ (e.g. if $\lvert \hat{\phi}_{kk} \rvert < 2 / \sqrt{T}$ for $k > p$), and hence can be useful in the selection of an appropriate order $p$ for fitting an AR model to sample data. \twomedskip
+for each $k= 1, 2, \ldots$. These are the same form as the equations \eqref{eqn:rhoj} but with sample ACF values $r(j)$ used in place of the theoretical ACF values $\rho(j)$. In matrix notation similar to that used in \eqref{eqn:matrix}, the solution is $\hat{\phi} = R_k^{-1} r$. Now under the assumption that the process $\{ Y_t \}$ is an AR of order $p$, the estimated PACF values $\hat{\phi}_{kk}$ for lags $k > p$ are approximately independently and normally distributed for large $T$, with mean $\Ex(\hat{\phi}_{kk})= 0$ and St.Dev. $\hat{\phi}_{kk} = 1 / \sqrt{T}$ for $k > p$. These facts concerning the sampling properties of the sample PACF $\hat{\phi}_{kk}$ can be used to assess whether the coefficients in estimated AR models may be treated as close to zero after some lag $p$ (e.g. if $\lvert \hat{\phi}_{kk} \rvert < 2 / \sqrt{T}$ for $k > p$), and hence can be useful in the selection of an appropriate order $p$ for fitting an AR model to sample data. \label{in:partac2} \twomedskip
 
 
-\noindent\textbf{Linear Models for Nonstationary Time Series} \twomedskip
+\noindent\textbf{Linear Models for Nonstationary Time Series} \label{in:nonstat2} \twomedskip
 
 
 Often, in practice, series $\{ Y_t \}$ will be encountered which are nonstationary. One type of nonstationary series that occurs commonly, are series that exhibit some homogeneous behavior over time in the sense that, except for local level and or local trend, one segment of the series may behave much like other parts of the series. In those cases, it may be found that the first difference of the series, $(1 - B)\, Y_t = Y_t - Y_{t-1}$, is a stationary series. For seasonal nonstationary time series that exhibit homogeneous behavior apart from a seasonal mean level or trend, with seasonal period $S$, the seasonal difference of the series, $(1 - B^s)\, Y_t = Y_t - Y_{t-s}$, may be stationary. More generally, a useful class of models for this type of homogeneous nonstationary time series $\{Y_t\}$ is obtained by assuming that the $d$th difference, $W_t = (1 - B)^d\,Y_t$, is a stationary series, and $W_t$ can be represented by an ARMA($p,q$) model. The most common case is $d=1$, for financial time series. \twomedskip
@@ -479,7 +479,7 @@ The use of the term ``integrated'' came as follows. When $d=1$ so that the proce
 	\[
 	Y_t = (1 - B)^{-1}W_t = (1 + B + B^2 + \cdots)\, W_t = \sum_{j=0}^\infty W_{t-j}. 
 	\]
-More generally, with $d > 1$, the stationary process $W_t = (1 - B)^d\, Y_t$ must be summed $d$ times to obtain the process $Y_t$. Note that the random walk process $Y_t = Y_{t-1} + \delta + \varepsilon_t$ is the simplest example of an integrated process, and is also the most commonly observed in the context of financial time series. Since then the first differences $W_t = Y_t - Y_{t-1} = \delta + \varepsilon_t$ form a (stationary) white noise process, i.e., the process $\{ Y_t \}$ is ARIMA(0,1,0). As noted earlier, this is called a random walk model with a drift.
+More generally, with $d > 1$, the stationary process $W_t = (1 - B)^d\, Y_t$ must be summed $d$ times to obtain the process $Y_t$. Note that the random walk process \label{in:random1} $Y_t = Y_{t-1} + \delta + \varepsilon_t$ is the simplest example of an integrated process, and is also the most commonly observed in the context of financial time series. Since then the first differences $W_t = Y_t - Y_{t-1} = \delta + \varepsilon_t$ form a (stationary) white noise process, i.e., the process $\{ Y_t \}$ is ARIMA(0,1,0). As noted earlier, this is called a random walk model with a drift.
 
 
 Differencing is appropriate to apply to processes which contain a stochastic trend component (not a deterministic trend component), and stochastic trend behavior is often more likely to be present in financial time series than deterministic trend behavior. Some observations are in order. First, if a series does not require differencing, over differencing will lead to unnecessarily more complicated models. Second, the differencing can sometimes wipe out all the information leaving series with white noise behavior. Some authors have suggested fractional differencing; that is, $0<d<1$, but there is no theoretic motivation for an appropriate choice of the value of `$d$'. Third, there are identifiability issues in ARMA models; it is possible to model the same data with various ARMA structures, but we will follow the principle of parsimony in modeling. 
@@ -513,7 +513,7 @@ These types of models have potential applications in studying aggregate market b
 
 
 % Key Steps for Model Building
-\section{Key Steps for Model Building \label{sec:key_step}}
+\section{Key Steps for Model Building \label{sec:key_step}} \label{in:validation1}
 
 In previous sections, theoretical linear models for stochastic processes and properties implied by these models were discussed. We now consider the problem of identifying appropriate models and fitting them to time series data. The following four steps advocated by George Box highlight the basic stages in the proposed model building and testing procedure:
 
@@ -537,7 +537,7 @@ If the estimated model is assessed as being adequate, it can then be used for fo
 Given the time series data $Y_1, \ldots, Y_T$, basic time series  plotting of the series is a fundamental step in the initial model building, along with other data plots that might seem informative. We will then consider the sample ACF and PACF of the original series $Y_t$, and of certain transformed series, such as first and possibly second differences, seasonal differences, logarithms or other instantaneous transformation of the original series, residuals from regression to remove deterministic seasonal component or linear trend, and so on. That is, if the original time series appears to be nonstationary we consider differencing or using residuals from regression methods, of the original series which will yield a \emph{stationary} series. More formal procedures to `test' for certain (unit-root) type nonstationarity can also be considered, and will be discussed later in the context of estimation for AR models.  While dealing with financial time series the following considerations are usually made: for example, $r_t= \text{return} = \ln(P_t) - \ln(P_{t-1})$, where $P_t$ is the price of the stock, the differencing of the log price is naturally considered and for volume $V_t$, because of its size is usually logged $\text{v}_t= \ln(V_t)$ to avoid heteroscedasticity.
 
 
-The sample ACF and PACF of the stationary series are then compared against features of the theoretical ACFs and PACFs of various types of ARMA models to find an appropriate model for the observed series on the basis of close correspondence in features between sample and theoretical correlation functions. Of course, the sample ACF values that are defined in \eqref{eqn:hatrho} are only \emph{estimates}, and hence are subject to sampling errors. Thus, we must recognize that the sample ACF of an observed series will never correspond in all exact details to an underlying theoretical ACF, and we need to look for correspondence in broad features. To properly interpret the sample ACF $[\hat{\rho}(j)]$, we will use the sampling properties of the estimates $\hat{\rho}(j)$. In particular, under the assumption that $\rho(j) = 0$ for all $j  > q$, we have $E[\hat{\rho}(j)]= 0$ and $\text{St.Dev.}[\hat{\rho}(j)]= \frac{1}{\sqrt{T}}[1 + 2 \sum_{i=1}^q \hat{\rho}(i)^2]^{1/2}$ for $j > q$ and the $\hat{\rho}(j)$ are approximately normally distributed, for moderate and large $T$, a result given in \eqref{eqn:varrs}. Similarly, it is known that if the process $\{Y_t\}$ is an AR of order $p$, then the estimated PACFs for lags $p + 1$ and higher are approximately independently and normally distributed, with $E[\hat{\phi}_{kk}] = 0$ and $\text{St.Dev.}[\hat{\phi}_{kk}] = 1/\sqrt{T}$ for $k > p$. These facts may be used to assess whether the last coefficient in an estimated AR model is essentially zero. We summarize some general patterns of the sample ACF and PACF, which might be useful in the initial model identification step. 
+The sample ACF and PACF of the stationary series are then compared against features of the theoretical ACFs and PACFs of various types of ARMA models to find an appropriate model for the observed series on the basis of close correspondence in features between sample and theoretical correlation functions. Of course, the sample ACF values that are defined in \eqref{eqn:hatrho} are only \emph{estimates}, and hence are subject to sampling errors. Thus, we must recognize that the sample ACF of an observed series will never correspond in all exact details to an underlying theoretical ACF, and we need to look for correspondence in broad features. To properly interpret the sample ACF $[\hat{\rho}(j)]$, we will use the sampling properties of the estimates $\hat{\rho}(j)$. In particular, under the assumption that $\rho(j) = 0$ for all $j  > q$, we have $\Ex[\hat{\rho}(j)]= 0$ and $\text{St.Dev.}[\hat{\rho}(j)]= \frac{1}{\sqrt{T}}[1 + 2 \sum_{i=1}^q \hat{\rho}(i)^2]^{1/2}$ for $j > q$ and the $\hat{\rho}(j)$ are approximately normally distributed, for moderate and large $T$, a result given in \eqref{eqn:varrs}. Similarly, it is known that if the process $\{Y_t\}$ is an AR of order $p$, then the estimated PACFs for lags $p + 1$ and higher are approximately independently and normally distributed, with $\Ex[\hat{\phi}_{kk}] = 0$ and $\text{St.Dev.}[\hat{\phi}_{kk}] = 1/\sqrt{T}$ for $k > p$. These facts may be used to assess whether the last coefficient in an estimated AR model is essentially zero. We summarize some general patterns of the sample ACF and PACF, which might be useful in the initial model identification step. 
 
 
 \begin{enumerate}
@@ -553,7 +553,7 @@ The sample ACF and PACF of the stationary series are then compared against featu
 \item ARMA$(p,q)$ process has ACF $[\rho(j)]$ which can have an irregular pattern for the first $q$ lags and then similar behavior to a corresponding AR$(p)$ process for lags greater than $q$. For example, the ARMA(1,1) has $\rho(j) = \phi \rho(j-1)$, or $\rho(j)= \phi^{j-1} \rho(1)$, for $j \geq 2$, which is similar behavior to the AR(1) after lag 1.
 \end{itemize}
 
-\item[\textbf{3.}] The sample PACF $\hat{\phi}_{kk}$ is useful to identify the order $p$ of a finite order AR$(p)$ process, because for an AR$(p)$ process the theoretical PACF $\phi_{kk}$ `cuts off' after lag $p$; that is, $\phi_{kk}= 0$ for all $k>p$. For the sample PACF $\hat{\phi}_{kk}$ of an AR$(p)$, we have $E[\hat{\phi}_{kk}]= 0$ and $\text{St.Dev.}[\hat{\phi}_{kk}]=1 / \sqrt{T}$, for $k > p$. 
+\item[\textbf{3.}] The sample PACF $\hat{\phi}_{kk}$ is useful to identify the order $p$ of a finite order AR$(p)$ process, because for an AR$(p)$ process the theoretical PACF $\phi_{kk}$ `cuts off' after lag $p$; that is, $\phi_{kk}= 0$ for all $k>p$. For the sample PACF $\hat{\phi}_{kk}$ of an AR$(p)$, we have $\Ex[\hat{\phi}_{kk}]= 0$ and $\text{St.Dev.}[\hat{\phi}_{kk}]=1 / \sqrt{T}$, for $k > p$. 
 \end{enumerate} \twomedskip
 
 
@@ -576,7 +576,7 @@ Assuming that $W_t= (1 - B)^d\, Y_t$ follows an ARMA$(p,q)$ model, we know that 
 	\begin{equation} \label{eqn:rhohatsum}
 	\hat{\rho}(j) - \sum_{i=1}^p \hat{\phi}_i \hat{\rho}(j-i) = 0, \quad j= q+1, \ldots, q+p.
 	\end{equation}
-Note that these equations could also be useful in identifying the orders $(p,q)$ of an ARMA model. Since the mean $\mu_w = E(W_t)$ of the stationary process $W_t$ in \eqref{eqn:phiBdy} is $\mu_w = \delta/(1 - \phi_1 - \cdots - \phi_p)$, we estimate $\mu_w$ by sample mean $\hat{\mu}_w = \overline{W}$ and hence the constant term $\delta$ by $\hat{\delta}_0 = (1 - \hat{\phi}_1 - \cdots - \hat{\phi}_p)\, \hat{\mu}_w$.
+Note that these equations could also be useful in identifying the orders $(p,q)$ of an ARMA model. Since the mean $\mu_w = \Ex(W_t)$ of the stationary process $W_t$ in \eqref{eqn:phiBdy} is $\mu_w = \delta/(1 - \phi_1 - \cdots - \phi_p)$, we estimate $\mu_w$ by sample mean $\hat{\mu}_w = \overline{W}$ and hence the constant term $\delta$ by $\hat{\delta}_0 = (1 - \hat{\phi}_1 - \cdots - \hat{\phi}_p)\, \hat{\mu}_w$.
 
 
 Initial estimates of the MA parameters could then be based on the autocovariances of the `derived' MA(q) process, $W_t^* = \phi(B) W_t = \theta_0 + \theta(B) \varepsilon_t$. The autocovariances of $W_t^*$ are related to those of $W_t$ by
@@ -657,7 +657,7 @@ One approach to selecting among competing models is the use of information crite
 where $\hat{\sigma}_\varepsilon^2$ is the estimated model error variance, and $n^*= p + q + 1$ denote the number of parameters estimated in the model, including the constant term. The first term in the above equations results from the maximized likelihood and can be made smaller with more parameters, while the second term acts as a ``penalty factor'' for the parameters used in the model. In this approach, models which yield a minimum value for the criterion are to be preferred, as these criteria penalize for overfitting. \twomedskip
 
 
-{\noindent\bfseries\large Model Diagnostics} \twomedskip
+{\noindent\bfseries\large Model Diagnostics} \label{in:validation2} \twomedskip
 
 
 As several models can be entertained from specification tools such as ACF and PACF, one quick way to check if all the informative dependencies are captured is to use the model residuals and examine if these residuals reflect the features that are assumed. One key feature is the assumption of independence that can be tested through ACF. Another feature is the constancy in the variance which again can be examined by the plot of squared residuals versus time scale and the time dependence by the ACF of the squared residuals. Thus residuals or functions of the residuals play an important role in model diagnostics. We recommend that descriptive tools should be complemented with visualization tools. \\
@@ -688,7 +688,7 @@ Consider for the simple AR(1) model $Y_t = \phi Y_{t-1} + \varepsilon_t$, $t = 1
 	\begin{equation} \label{eqn:futurereffirst}
 	\hat{\phi} = \dfrac{\sum_{t=2}^T Y_{t-1}Y_t}{\sum_{t=2}^T Y_{t-1}^2} = \phi + \dfrac{\sum_{t=2}^T Y_{t-1}\varepsilon_t}{\sum_{t=2}^T Y_{t-1}^2}.
 	\end{equation}
-If the process is stationary, $\lvert \phi \rvert< 1$ as it has been noted earlier, $T^{1/2}(\hat{\phi} - \phi)$ has an approximate normal distribution with zero mean and variance $(1 - \phi^2)$. However, when $\phi = 1$, so $Y_t = \sum_{j=0}^{t-1}\varepsilon_{t-j} + Y_0$, with $\var(Y_t) = E(Y_t^2) = t \sigma^2$, it can be shown that $T(\hat{\phi} - 1) = T^{-1} \sum_{t=2}^T Y_{t-1} \varepsilon_t/T^{-2} \sum_{t=2}^T Y_{t-1}^2$, the estimator $\hat{\phi}$ approaches its true value $\phi = 1$ with increasing sample size $T$ at a faster rate than in the stationary case. Both the numerator and the denominator of the above expression have non-normal limiting distributions. 
+If the process is stationary, $\lvert \phi \rvert< 1$ as it has been noted earlier, $T^{1/2}(\hat{\phi} - \phi)$ has an approximate normal distribution with zero mean and variance $(1 - \phi^2)$. However, when $\phi = 1$, so $Y_t = \sum_{j=0}^{t-1}\varepsilon_{t-j} + Y_0$, with $\var(Y_t) = \Ex(Y_t^2) = t \sigma^2$, it can be shown that $T(\hat{\phi} - 1) = T^{-1} \sum_{t=2}^T Y_{t-1} \varepsilon_t/T^{-2} \sum_{t=2}^T Y_{t-1}^2$, the estimator $\hat{\phi}$ approaches its true value $\phi = 1$ with increasing sample size $T$ at a faster rate than in the stationary case. Both the numerator and the denominator of the above expression have non-normal limiting distributions. 
 
 
 We present the commonly used ``Studentized'' statistic, for testing $H_0: \, \lvert \phi \rvert=1$ vs $H_a: \, \lvert \phi \rvert < 1$,
@@ -736,7 +736,7 @@ When conditional LS estimation of an AR(2) model for $Y_t$, as represented in \e
 	\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{chapters/chapter_uvts/figures/uscompaper.eps}
-	\caption{U.S. Commercial Paper Interest Rate. \label{fig:exchratefirst}}
+	\caption{U.S. Commercial Paper Interest Rate.\label{fig:exchratefirst}}
 	\end{figure}
 The use of the unit root test statistics will become apparent when we discuss pairs trading based on co-integration (see Chapter~\ref{ch:stat_ts}). A precondition for forming co-integrated pairs is that each series must be non-stationary on its own. \xqed
 \end{ex}
@@ -744,8 +744,7 @@ The use of the unit root test statistics will become apparent when we discuss pa
 
 
 % Forecasting for ARIMA Processes
-\section{Forecasting for ARIMA Processes}
-
+\section{Forecasting for ARIMA Processes} \label{in:forecast1}
 
 Given a realization of ARIMA($p,d,q$) process through time t, $\{ Y_s, s \leq t \}$, we consider the problem of forecasting of future values $Y_{t+l}, l = 1,2, \ldots$. For this purpose, it is assumed that the model for $\{ Y_t \}$ is known exactly including the values of the model parameters. Although, in practice, the model parameters are estimated from available sample data, errors due to estimation of parameters will not have too much effect on forecast properties for sufficiently large sample sizes. Also, the practical problem of future values based on the finite past sample data $Y_1, \ldots, Y_T$ will be considered briefly, but results based on the infinite past data assumption usually provide an adequate approximation to the finite past data prediction problem. \twomedskip
 
@@ -753,7 +752,7 @@ Given a realization of ARIMA($p,d,q$) process through time t, $\{ Y_s, s \leq t 
 \noindent \textbf{Minimum Mean Squared Error Prediction} \twomedskip
 
 
-Before presenting details of forecasting for ARIMA processes, we review some basic principles concerning prediction in the regression setting. Let $Y$ be a r.v. and let $X = (X_1, \ldots, X_p)'$ be an $p$-dimensional random vector related to $Y$, and consider the problem of predicting (estimating) the unknown value of $Y$ by some function of $X$, say $\hat{Y} = g(x)$. The mean squared error (MSE) of a predictor $\hat{Y}$ is $E[(Y - \hat{Y})^2]$. We refer to the minimum mean squared error (minimum MSE) predictor of $Y$ as that function $\hat{Y} = g^*(X)$ such that, among all possible functions of $X$, $\hat{Y}$ minimizes the MSE $E[(Y - \hat{Y})^2]$. Then it is well-known that the \emph{minimum mean squared error} predictor is given by $\hat{Y} = E(Y\;|\;X)$, the conditional expectation of $Y$ given $X$, with prediction error $e = Y - \hat{Y} = Y - E(Y\;|\;X)$. One can also restrict prediction to consider only linear functions of $X$, and hence consider the minimum MSE \emph{linear} predictor as the linear function $\hat{Y}^* = a + b' X$ which minimizes the prediction MSE among all linear functions of $X$. It is well-known that the minimum MSE linear predictor is
+Before presenting details of forecasting for ARIMA processes, we review some basic principles concerning prediction in the regression setting. Let $Y$ be a r.v. and let $X = (X_1, \ldots, X_p)'$ be an $p$-dimensional random vector related to $Y$, and consider the problem of predicting (estimating) the unknown value of $Y$ by some function of $X$, say $\hat{Y} = g(x)$. The mean squared error (MSE) of a predictor $\hat{Y}$ is $\Ex[(Y - \hat{Y})^2]$. We refer to the minimum mean squared error (minimum MSE) predictor of $Y$ as that function $\hat{Y} = g^*(X)$ such that, among all possible functions of $X$, $\hat{Y}$ minimizes the MSE $\Ex[(Y - \hat{Y})^2]$. Then it is well-known that the \emph{minimum mean squared error} predictor is given by $\hat{Y} = \Ex(Y\;|\;X)$, the conditional expectation of $Y$ given $X$, with prediction error $e = Y - \hat{Y} = Y - \Ex(Y\;|\;X)$. One can also restrict prediction to consider only linear functions of $X$, and hence consider the minimum MSE \emph{linear} predictor as the linear function $\hat{Y}^* = a + b' X$ which minimizes the prediction MSE among all linear functions of $X$. It is well-known that the minimum MSE linear predictor is
 	\begin{equation} \label{eqn:2yhatstar}
 	\hat{Y}^* = \mu_y + \Sigma_{yx}\,\Sigma_{xx}^{-1}(X - \mu_x)
 	\end{equation}
@@ -761,26 +760,26 @@ with the prediction error $e^* = Y - \hat{Y}^*$ having mean zero and prediction 
 	\begin{equation} \label{eqn:2varestar}
 	\var(e^*) = \var(Y - \hat{Y}^*) = \sigma_y^2 - \Sigma_{yx}\,\Sigma_{xx}^{-1}\,\Sigma_{xy},
 	\end{equation}
-where $\mu_y = E(Y), \mu_x = E(X)$, $\sigma_y^2 = \var(Y)$, $\Sigma_{yx} = \cov(Y,X)$, and $\Sigma_{xx} = \cov(X)$. Note $\Sigma_{yx}$ is a $1 \times p$ row vector and $\Sigma_{xx}$ is a $p \times p$ variance-covariance matrix. Moreover, if the prediction error $e^* = Y - \hat{Y}^*$ of the best linear predictor is such that $E(e^*\;|\;X) = 0$ (e.g., if $e^*$ is independent of $X$), then $\hat{Y}^*$ is also the minimum MSE predictor, i.e. $\hat{Y}^* = \hat{Y} = E(Y\;|\;X)$ is a linear function of $X$ and the prediction error $e = e^* = Y - \hat{Y}$ has variance $\var(e^*)$ as given above in \eqref{eqn:2varestar}. \twomedskip
+where $\mu_y = \Ex(Y), \mu_x = \Ex(X)$, $\sigma_y^2 = \var(Y)$, $\Sigma_{yx} = \cov(Y,X)$, and $\Sigma_{xx} = \cov(X)$. Note $\Sigma_{yx}$ is a $1 \times p$ row vector and $\Sigma_{xx}$ is a $p \times p$ variance-covariance matrix. Moreover, if the prediction error $e^* = Y - \hat{Y}^*$ of the best linear predictor is such that $\Ex(e^*\;|\;X) = 0$ (e.g., if $e^*$ is independent of $X$), then $\hat{Y}^*$ is also the minimum MSE predictor, i.e. $\hat{Y}^* = \hat{Y} = \Ex(Y\;|\;X)$ is a linear function of $X$ and the prediction error $e = e^* = Y - \hat{Y}$ has variance $\var(e^*)$ as given above in \eqref{eqn:2varestar}. \twomedskip
 
 
 \noindent\textbf{Forecasting for ARIMA Processes and Properties of Forecast Errors} \twomedskip
 
 
-For forecasting in the time series setting, we assume that the process $\{ Y_t \}$ follows an ARIMA$(p,d,q)$ model, $\phi(B)(1 - B)^d\,  Y_t = \theta(B) \varepsilon_t$, and we assume the white noise series $\varepsilon_t$ are mutually independent random variables. We are interested in forecasting the future value $Y_{t+l}$ based on observations $Y_t,Y_{t-1},\cdots$. From the result in previous section, the minimum MSE forecast of $Y_{t+l}$ based on $Y_t, Y_{t-1}, \ldots$, which we will denote as $\hat{Y}_t(l)$, is such that $\hat{Y}_t(l) = E(Y_{t+l} \;|\; Y_t,Y_{t-1},\ldots)$. The prediction $\hat{Y}_t(l)$ is called the lead $l$ or $l$-step ahead forecast of $Y_{t+l}$, $l$ is the lead time, and $t$ is the forecast origin.
+For forecasting in the time series setting, we assume that the process $\{ Y_t \}$ follows an ARIMA$(p,d,q)$ model, $\phi(B)(1 - B)^d\,  Y_t = \theta(B) \varepsilon_t$, and we assume the white noise series $\varepsilon_t$ are mutually independent random variables. We are interested in forecasting the future value $Y_{t+l}$ based on observations $Y_t,Y_{t-1},\cdots$. From the result in previous section, the minimum MSE forecast of $Y_{t+l}$ based on $Y_t, Y_{t-1}, \ldots$, which we will denote as $\hat{Y}_t(l)$, is such that $\hat{Y}_t(l) = \Ex(Y_{t+l} \;|\; Y_t,Y_{t-1},\ldots)$. The prediction $\hat{Y}_t(l)$ is called the lead $l$ or $l$-step ahead forecast of $Y_{t+l}$, $l$ is the lead time, and $t$ is the forecast origin.
 
 
 To obtain a representation for $\hat{Y}_t(l)$, recall the ARIMA process has the ``infinite'' MA form $Y_t = \psi(B) \varepsilon_t = \sum_{i=0}^{\infty}\psi_i \varepsilon_{t-i},$ and hence a future value $Y_{t+l}$ at time $t+l$, relative to the current time or ``forecast origin'' t, can be expressed as
 	\begin{equation} \label{eqn:2ytl}
 	Y_{t+l} = \sum_{i=0}^\infty \psi_i \varepsilon_{t+l-i} = \sum_{i=0}^{l-1} \psi_i \varepsilon_{t+l-i} + \sum_{i=l}^\infty \psi_i \varepsilon_{t+l-i}.
 	\end{equation}
-The information contained in the past history of the $Y_t's, \{ Y_s, s \leq t \}$, is the same as that contained in the past random shocks $\varepsilon_t$'s (because the $Y_t$'s are generated by the $\varepsilon_t$'s). Also, $\varepsilon_{t+h}$, for $h > 0$ is independent of present and past values $Y_{t}, Y_{t-1}, \ldots$, so that $E(\varepsilon_{t+h} \;|\; Y_t,Y_{t-1},\ldots) = 0, h>0$. Thus
+The information contained in the past history of the $Y_t's, \{ Y_s, s \leq t \}$, is the same as that contained in the past random shocks $\varepsilon_t$'s (because the $Y_t$'s are generated by the $\varepsilon_t$'s). Also, $\varepsilon_{t+h}$, for $h > 0$ is independent of present and past values $Y_{t}, Y_{t-1}, \ldots$, so that $\Ex(\varepsilon_{t+h} \;|\; Y_t,Y_{t-1},\ldots) = 0, h>0$. Thus
 	\begin{equation} \label{eqn:2yhatt}
-	\hat{Y}_t(l) = E(Y_{t+l} \;|\; Y_t,Y_{t-1},\ldots) = E(Y_{t+l} \;|\; \varepsilon_t, \varepsilon_{t-1}, \ldots) = \sum_{i=l}^\infty \psi_i \varepsilon_{t+l-i},
+	\hat{Y}_t(l) = \Ex(Y_{t+l} \;|\; Y_t,Y_{t-1},\ldots) = \Ex(Y_{t+l} \;|\; \varepsilon_t, \varepsilon_{t-1}, \ldots) = \sum_{i=l}^\infty \psi_i \varepsilon_{t+l-i},
 	\end{equation}
-using the additional property that $E(\varepsilon_{t+l-i} \;|\; \varepsilon_t,  \varepsilon_{t-1}, \ldots) = \varepsilon_{t+l-i}$ if $i \geq l$. The $l$-step ahead prediction error is given by $e_t(l) = Y_{t+l} - \hat{Y}_t(l) = \sum_{i=0}^{l-1} \psi_i \varepsilon_{t+l-i}$. So we have $E[e_t(l)]=0$ and the mean squared error or variance of the $l$-step prediction error is
+using the additional property that $\Ex(\varepsilon_{t+l-i} \;|\; \varepsilon_t,  \varepsilon_{t-1}, \ldots) = \varepsilon_{t+l-i}$ if $i \geq l$. The $l$-step ahead prediction error is given by $e_t(l) = Y_{t+l} - \hat{Y}_t(l) = \sum_{i=0}^{l-1} \psi_i \varepsilon_{t+l-i}$. So we have $\Ex[e_t(l)]=0$ and the mean squared error or variance of the $l$-step prediction error is
 	\begin{equation} \label{eqn:2sigmasq}
-	\sigma^2(l) = \var(e_t(l)) = E[e_t^2(l)] = \var \left(\sum_{i=0}^{l-1} \psi_i \varepsilon_{t+l-i} \right) = \sigma^2 \sum_{i=0}^{l-1} \psi_i^2,
+	\sigma^2(l) = \var(e_t(l)) = \Ex[e_t^2(l)] = \var \left(\sum_{i=0}^{l-1} \psi_i \varepsilon_{t+l-i} \right) = \sigma^2 \sum_{i=0}^{l-1} \psi_i^2,
 	\end{equation}
 with St.Dev. $(e_t(l)) = \sigma(l) = \sigma(1 + \psi_1^2 + \cdots + \psi_{l-1}^2)^{1/2}$. Note, in particular, that for $l = 1$ step we have $e_t(1) = Y_{t+1} - \hat{Y}(1) = \varepsilon_{t+1}$ with error variance $\sigma^2 = \var(\varepsilon_{t+1})$, so that the white noise series $\varepsilon_t$ can also be interpreted as the one-step ahead forecast errors for the process. Under the normality assumption that the $\varepsilon_t$ are normally distributed as i.i.d. $N(0, \sigma^2)$, the $l$-step ahead forecast errors $e_t(l) = Y_{t+l} - \hat{Y}_t(l) = \sum_{i=0}^{l-1} \psi_i \varepsilon_{t+l-i}$ will also be normally distributed with mean 0 and variance $\sigma^2(l) = \sigma^2 \sum_{i=0}^{l-1} \psi_i^2$. Hence, the conditional distribution of $Y_{t+l}$, given $Y_t,Y_{t-1}, \ldots$, is normal with mean $\hat{Y}_t(l)$ and variance $\sigma^2(l)$.
 
@@ -799,13 +798,12 @@ So the ``eventual'' forecast function $\hat{Y}_t(l)$ is a straight line with a d
 
 
 % Stylized Models for Asset Returns
-\section{Stylized Models for Asset Returns}
-
+\section{Stylized Models for Asset Returns} \label{in:assetret1} \label{in:style1}
 
 It is generally known that the equity market is extremely efficient in quickly absorbing information about stocks: When new information arrives, it gets incorporated in the price without delay. Thus the efficient market hypothesis, is widely accepted by financial economists. It would imply that neither technical analysts that study the past prices in an attempt to predict future prices nor fundamental analysts of financial information related to company earnings and asset values would carry any advantage over the returns obtained from a randomly selected portfolio of individual stocks.
 
 
-The efficient market hypothesis is usually associated with the idea of the ``random walk'', which implies that all future price changes represent random departures from past prices. As stated in Malkiel (2012)~\cite{malkiel}: ``The logic of the random walk is that if the flow of information is unimpeded and information is immediately reflected in stock prices, then tomorrow's price change will reflect only tomorrow's news and will be independent of the price changes today. But news by definition is unpredictable, and, thus resulting price changes must be unpredictable and random.''
+The efficient market hypothesis is usually associated with the idea of the ``random walk'',\label{in:random2} which implies that all future price changes represent random departures from past prices. As stated in Malkiel (2012)~\cite{malkiel}: ``The logic of the random walk is that if the flow of information is unimpeded and information is immediately reflected in stock prices, then tomorrow's price change will reflect only tomorrow's news and will be independent of the price changes today. But news by definition is unpredictable, and, thus resulting price changes must be unpredictable and random.''
 
 
 The random walk (RW) model (Example~\ref{ex:driftwalk}) without the drift term can be stated as:
@@ -815,7 +813,7 @@ The random walk (RW) model (Example~\ref{ex:driftwalk}) without the drift term c
 where $\varepsilon_t \sim N(0,\sigma^2)$ i.i.d and $p_t = \ln{(P_t)}$. Note as observed earlier, this model is a particular case of AR(1) model if the constant term is assumed to be zero and the slope, $\phi$, is assumed to be one. Thus, the RW model is a non-stationary model and considering $\varepsilon_t = p_t - p_{t-1}=r_t$ is the differencing of the series, $p_t$, makes the series $\varepsilon_t$ stationary. Note $r_t \approx \frac{P_t - P_{t-1}}{P_{t-1}}$,  the returns are purely random and are unpredictable. For any chronological data the decision concerning the need for differencing is based, informally, on the features of time series plot of $p_t$, its sample autocorrelation function; that is, its failure to dampen out sufficiently quickly. \twomedskip
 
 
-\noindent\textbf{Testing for a RW model:} Consider the AR(1) model $p_t = \phi p_{t-1} + \varepsilon_t$, $t = 1,\ldots,T$ and $p_0$ is fixed; we want to test $\phi = 1$. The details of this test are given in Section~\ref{sec:diffornot}, along with the table of the percentiles of the distribution of the test statistics. While the results for testing for non-stationarity for higher order autoregressive models were discussed earlier, the price series once differenced does not generally exhibit autocorrelation structure that requires modeling beyond AR(1).
+\noindent\textbf{Testing for a RW model:} \label{in:nonstat3} Consider the AR(1) model $p_t = \phi p_{t-1} + \varepsilon_t$, $t = 1,\ldots,T$ and $p_0$ is fixed; we want to test $\phi = 1$. The details of this test are given in Section~\ref{sec:diffornot}, along with the table of the percentiles of the distribution of the test statistics. While the results for testing for non-stationarity for higher order autoregressive models were discussed earlier, the price series once differenced does not generally exhibit autocorrelation structure that requires modeling beyond AR(1).
 
 
 It will become obvious in subsequent discussions, that in order to exploit any pattern in the returns, one has to look beyond linear time dependencies. We observe a series of established stylized facts regarding stock prices (returns). \twomedskip
@@ -850,7 +848,7 @@ follow a normal distribution. But in practice, the errors (or returns) tend to h
 	\begin{equation} \label{eqn:2JB}
 	\text{JB }= n \left( \frac{\widehat{\text{SK}}^2}{6} + \frac{(\hat{K} - 3)^2}{24} \right) \sim \chi_2^2,
 	\end{equation}
-where $\text{SK} \text{(ewness)}= E( \frac{X-\mu}{\sigma} )^3, \text{K} \text{(urtosis)} = E( \frac{X-\mu}{\sigma} )^4$. The corresponding sample numbers are substituted in JB (see Jarque and Bera (1980)~\cite{jarque80}). Alternatively, the probability (Q--Q) plot of $r_t = \ln{(p_t)} - \ln{(p_{t-1})}$ as given in Figure~\ref{fig:exchrate} clearly indicates that the distribution has somewhat heavy tails. (For this data $\widehat{SK} = -0.31$ and $\hat{K} = 3.67$ resulting in $\text{JB}= 129.7$ with $n= 3236$, thus rejecting the normal distribution.) \twomedskip
+where $\text{SK} \text{(ewness)}= \Ex( \frac{X-\mu}{\sigma} )^3, \text{K} \text{(urtosis)} = \Ex( \frac{X-\mu}{\sigma} )^4$. The corresponding sample numbers are substituted in JB (see Jarque and Bera (1980)~\cite{jarque80}). Alternatively, the probability (Q--Q) plot of $r_t = \ln{(p_t)} - \ln{(p_{t-1})}$ as given in Figure~\ref{fig:exchrate} clearly indicates that the distribution has somewhat heavy tails. (For this data $\widehat{SK} = -0.31$ and $\hat{K} = 3.67$ resulting in $\text{JB}= 129.7$ with $n= 3236$, thus rejecting the normal distribution.) \twomedskip
 
 
 \noindent\textbf{Stylized fact 2:} Heavy Tails: The returns are likely to display a heavy
@@ -863,21 +861,20 @@ than when they tend to rise, thus drawdowns tend to be larger than upward rises.
 \noindent\textbf{Stylized fact 4:} Positive Excess Kurtosis: Returns generally exhibit high values for the fourth moment due to different phases of high and low trading activity. \twomedskip
 
 
-These stylized facts are particularly important for risk management of strategies, and how they should be optimally incorporated in trading decisions is still a subject of much research which will be discussed later. The thicker tail distribution warrants that the chance of extreme values are more likely to occur than what is predicted by a normal distribution and the asymmetry indicates that there is a difference between positive and negative sides of variance (volatility). 
+These stylized facts are particularly important for risk management of strategies, and how they should be optimally incorporated in trading decisions is still a subject of much research which will be discussed later. The thicker tail distribution warrants that the chance of extreme values are more likely to occur than what is predicted by a normal distribution and the asymmetry indicates that there is a difference between positive and negative sides of variance (volatility). \label{in:assetret2} \label{in:style2}
 
 
 
 % Time Series Models for Aggregated Data
-\section{Time Series Models for Aggregated Data: Modeling the Variance}
-
+\section{Time Series Models for Aggregated Data: Modeling the Variance} \label{in:modelvar1}
 
 In the ARMA$(p,q)$ model $\phi(B)Y_t= \delta + \theta(B) \,\varepsilon_t$ for series $\{ Y_t \}$, when the errors $\varepsilon_t$ are \emph{independent} r.v.'s (with the usual assumptions of zero mean and constant variance $\sigma^2$), an implication is that the \textit{conditional} variance of $\varepsilon_t$ given the past information is a constant not depending on the past. This, in turn, implies the same feature for $l$-step ahead forecast errors $e_t(l) = \sum_{i=0}^{l-1} \psi_i \varepsilon_{t+l-i}$. However, in some settings, particularly for financial data, the variability of errors may exhibit dependence on the past variability. Modeling the variance, which is essential for studying the risk-return relationship is an important topic in finance. \twomedskip
 
 
-\noindent \textbf{Autoregressive Conditional Heteroscedastic (ARCH) Models} \twomedskip
+\noindent \textbf{Autoregressive Conditional Heteroscedastic (ARCH) Models} \label{in:arch} \twomedskip
 
 
-The autoregressive conditional heteroscedastic (ARCH) models were originally proposed by Engle (1982)~\cite{engle1982}, Engle and Kraft (1983)~\cite{engle1983}, to allow for the conditional error variance in an ARMA process to depend on the past squared innovations, rather than be a constant as in ARMA models with independent errors. For example, an AR$(p)$ process with ARCH$(q)$ model errors is given as $Y_t = \sum_{i=1}^p\phi_iY_{t-i} + \delta + \varepsilon_t$, where, $E(\varepsilon_t \;|\; \varepsilon_{t-1},\varepsilon_{t-2},\ldots)= 0$ and
+The autoregressive conditional heteroscedastic (ARCH) models were originally proposed by Engle (1982)~\cite{engle1982}, Engle and Kraft (1983)~\cite{engle1983}, to allow for the conditional error variance in an ARMA process to depend on the past squared innovations, rather than be a constant as in ARMA models with independent errors. For example, an AR$(p)$ process with ARCH$(q)$ model errors is given as $Y_t = \sum_{i=1}^p\phi_iY_{t-i} + \delta + \varepsilon_t$, where, $\Ex(\varepsilon_t \;|\; \varepsilon_{t-1},\varepsilon_{t-2},\ldots)= 0$ and \label{in:modelvar2}
 	\begin{equation} \label{eqn:2ht}
 	h_t= \var(\varepsilon_t \;|\; \varepsilon_{t-1}, \varepsilon_{t-2}, \ldots) = \omega_0 + \sum_{i=1}^q \omega_i \varepsilon_{t-i}^2
 	\end{equation}
@@ -888,27 +885,27 @@ with $\omega_0 > 0$ and $\omega_i \geq 0$ for $i= 1, \ldots, q$. In the generali
 where $\beta_i \geq 0$ for all $i = 1,\ldots,k$. Much subsequent research on and applications of the ARCH and GARCH models have occurred since the publication of their research papers. It is not possible to cover the range of applications resulted from this research here, but these results are widely available to the curious reader.
 
 
-Let us briefly discuss some basic results and implications of the ARCH and GARCH models. The errors $\varepsilon_t$ in the model have zero mean, since $E(\varepsilon_t) = E[E(\varepsilon_t \;|\; \varepsilon_{t-1} \ldots)] = 0$, and they are serially uncorrelated; that is, $E(\varepsilon_t \varepsilon_{t-j}) = 0$ for $j \not= 0$ (since for $j > 0$, for example, $E(\varepsilon_t \varepsilon_{t-j}) = E[E(\varepsilon_t \varepsilon_{t-j} \;|\; \varepsilon_{t-1} \ldots)] = E[\varepsilon_{t-j} E(\varepsilon_t \;|\; \varepsilon_{t-1} \ldots)] = 0$). But the $\varepsilon_t$ are not mutually independent r.v.'s since they are inter-related through their conditional variances (i.e., their second moment). We will also assume that the $\varepsilon_t$ have equal unconditional variances, $\var(\varepsilon_t) = \sigma^2$, for all $t$, so they are weakly stationary. Consider then, the simple case of the first-order ARCH or ARCH(1) model,
+Let us briefly discuss some basic results and implications of the ARCH and GARCH models.\label{in:garch_model} The errors $\varepsilon_t$ in the model have zero mean, since $\Ex(\varepsilon_t) = \Ex[\Ex(\varepsilon_t \;|\; \varepsilon_{t-1} \ldots)] = 0$, and they are serially uncorrelated; that is, $\Ex(\varepsilon_t \varepsilon_{t-j}) = 0$ for $j \not= 0$ (since for $j > 0$, for example, $\Ex(\varepsilon_t \varepsilon_{t-j}) = \Ex[\Ex(\varepsilon_t \varepsilon_{t-j} \;|\; \varepsilon_{t-1} \ldots)] = \Ex[\varepsilon_{t-j} \Ex(\varepsilon_t \;|\; \varepsilon_{t-1} \ldots)] = 0$). But the $\varepsilon_t$ are not mutually independent r.v.'s since they are inter-related through their conditional variances (i.e., their second moment). We will also assume that the $\varepsilon_t$ have equal unconditional variances, $\var(\varepsilon_t) = \sigma^2$, for all $t$, so they are weakly stationary. Consider then, the simple case of the first-order ARCH or ARCH(1) model,
 	\begin{equation} \label{eqn:2htE}
 	h_t = \omega_0 + \omega_1 \varepsilon_{t-1}^2,
 	\end{equation}
-Assuming that $\omega_1 < 1$ ($\omega_0$ and $\omega_1 \geq 0$ is always assumed), the \emph{unconditional} variance of $\varepsilon_t$ is $\sigma^2= \var(\varepsilon_t) = \frac{\omega_0}{1 - \omega_1}$, since $\sigma^2 = E(\varepsilon_t^2) = E[E(\varepsilon_t^2 \,|\, \varepsilon_{t-1}, \ldots)] = E[\omega_0 + \omega_1\varepsilon_{t-1}^2] = \omega_0 + \omega_1\sigma^2$. Therefore, the conditional variance of $\varepsilon_t$ can be written as
+Assuming that $\omega_1 < 1$ ($\omega_0$ and $\omega_1 \geq 0$ is always assumed), the \emph{unconditional} variance of $\varepsilon_t$ is $\sigma^2= \var(\varepsilon_t) = \frac{\omega_0}{1 - \omega_1}$, since $\sigma^2 = \Ex(\varepsilon_t^2) = \Ex[\Ex(\varepsilon_t^2 \,|\, \varepsilon_{t-1}, \ldots)] = \Ex[\omega_0 + \omega_1\varepsilon_{t-1}^2] = \omega_0 + \omega_1\sigma^2$. Therefore, the conditional variance of $\varepsilon_t$ can be written as
 	\begin{equation} \label{eqn:2htw}
 	h_t = \omega_0 + \omega_1 \varepsilon_{t-1}^2 = \sigma^2 + \omega_1 (\varepsilon_{t-1}^2 - \sigma^2),
 	\end{equation}
-or in the form of deviation from the unconditional variance as $h_t - \sigma^2= \omega_1 (\varepsilon_{t-1}^2 - \sigma^2)$. So the conditional variance will be above the unconditional variance whenever $\varepsilon_{t-1}^2$ exceeds its unconditional variance $\sigma^2$. If $\varepsilon_t$ were conditionally normally distributed, given the past, the fourth unconditional moment $E(\varepsilon_t^4)$ will exceed $3 \sigma^4$ (the value in the normal distribution), so that the marginal distribution of $\varepsilon_t$ will exhibit fatter tails that the normal distribution. Conditional variances of multi-step ahead forecast errors can also be established to depend on the past squared errors. 
+or in the form of deviation from the unconditional variance as $h_t - \sigma^2= \omega_1 (\varepsilon_{t-1}^2 - \sigma^2)$. So the conditional variance will be above the unconditional variance whenever $\varepsilon_{t-1}^2$ exceeds its unconditional variance $\sigma^2$. If $\varepsilon_t$ were conditionally normally distributed, given the past, the fourth unconditional moment $\Ex(\varepsilon_t^4)$ will exceed $3 \sigma^4$ (the value in the normal distribution), so that the marginal distribution of $\varepsilon_t$ will exhibit fatter tails that the normal distribution. Conditional variances of multi-step ahead forecast errors can also be established to depend on the past squared errors. 
 
 
 These basic results indicate that the properties of the ARCH(1) model also tend to hold for the higher order ARCH$(q)$ models. A basic impact of the ARCH errors in a process is an assessment of the accuracy of forecast, since the forecast errors will have conditional variances that depend on the past. This allows for formation of correct and more informative (conditional) prediction intervals than that would be obtained under the usual assumption that conditional error variances were constant independent of the past.
 
 
-Now consider briefly the popular GARCH(1,1) model, $h_t = E(\varepsilon_t^2 \;|\; \varepsilon_{t-1}, \ldots) = \omega_0 + \omega_1\varepsilon_{t-1}^2 + \beta_1h_{t-1}$. Similar to the result for the ARCH(1) model, assuming that $\omega_1 + \beta_1 < 1$, it is readily shown that the unconditional variance of $\varepsilon_t$ is equal to $\sigma^2 = \var(\varepsilon_t) = \omega_0/[1 - (\omega_1 + \beta_1)]$. Let $v_t = \varepsilon_t^2 - h_t$, so that the random variables $v_t$ have zero mean, and they are serially uncorrelated since
+Now consider briefly the popular GARCH(1,1) model, $h_t = \Ex(\varepsilon_t^2 \;|\; \varepsilon_{t-1}, \ldots) = \omega_0 + \omega_1\varepsilon_{t-1}^2 + \beta_1h_{t-1}$. Similar to the result for the ARCH(1) model, assuming that $\omega_1 + \beta_1 < 1$, it is readily shown that the unconditional variance of $\varepsilon_t$ is equal to $\sigma^2 = \var(\varepsilon_t) = \omega_0/[1 - (\omega_1 + \beta_1)]$. Let $v_t = \varepsilon_t^2 - h_t$, so that the random variables $v_t$ have zero mean, and they are serially uncorrelated since
 	\[
-	E( (\varepsilon_t^2 - h_t) (\varepsilon_{t-j}^2 - h_{t-j}) )= E[(\varepsilon_{t-j}^2 - h_{t-j}) E\{(\varepsilon_t^2 - h_t) \,|\, \varepsilon_{t-1},\ldots\}] = 0.
+	E\big( (\varepsilon_t^2 - h_t) (\varepsilon_{t-j}^2 - h_{t-j}) \big)= \Ex[(\varepsilon_{t-j}^2 - h_{t-j}) E\{(\varepsilon_t^2 - h_t) \,|\, \varepsilon_{t-1},\ldots\}] = 0.
 	\]
 Then, since $h_t = \varepsilon_t^2 - v_t$, note that the GARCH(1,1) model can be rearranged as $\varepsilon_t^2 - v_t = \omega_0 + \omega_1\varepsilon_{t-1}^2 + \beta_1(\varepsilon_{t-1}^2 - v_{t-1})$, or
 	\begin{equation} \label{eqn:2ept}
-	\varepsilon_t^2 = \omega_0 + (\omega_1 + \beta_1)\varepsilon_{t-1}^2 + v_t - \beta_1v_{t-1}.
+	\varepsilon_t^2 = \omega_0 + (\omega_1 + \beta_1)\ \varepsilon_{t-1}^2 + v_t - \beta_1v_{t-1}.
 	\end{equation}
 This form reveals that the process of squared errors, $\{\varepsilon_t^2\}$, follows an ARMA(1,1) model with uncorrelated innovations $v_t$; however, the $v_t$ are conditionally heteroscedastic. Although this process looks like a linear process, it is not, since $ \{ v_t \}$ are uncorrelated but dependent. This fact motivates the use of the ACF and PACF of the squares $\varepsilon_t^2$ for model specification and for basic preliminary checking for the presence of ARCH/GARCH effects in the errors $\varepsilon_t$. In practice, a starting point would be examination of the sample ACF and PACF of the squared residuals $\hat{\varepsilon}_t^2$, where $\hat{\varepsilon}_t$ are residuals obtained from fitting of a usual ARMA$(p,q)$ model. The correspondence between ARCH and ARMA is further noted via the condition, $0 < \sum_{i=1}^q \omega_i < 1$, that implies the roots of its characteristic equation lie outside the unit circle (like a causal ARMA).
 
@@ -932,7 +929,7 @@ We use $\chi^2$ instead of $F$ due to the fact that $\varepsilon_t$'s are estima
 
 \noindent\textbf{IGARCH:} The variance can persist for extended periods and can change at different time spans, thus leading to non-stationary behavior. In the GARCH(1,1) model, it is possible that $w_1 + \beta_1 = 1$, so that IGARCH(1,1) (Integrated GARCH) can be written as
 	\begin{equation} \label{eqn:2eptsqrt}
-	\varepsilon_t = \sqrt{h_t} \cdot a_t, \quad h_t = w_0 + w_1h_{t-1} + (1 - w_1) \varepsilon_{t-1}^2.
+	\varepsilon_t = \sqrt{h_t} \cdot a_t, \quad h_t = w_0 + w_1h_{t-1} + (1 - w_1)\ \varepsilon_{t-1}^2.
 	\end{equation}
 If $h_t$ is proxied by $\varepsilon_t^2$, the above model leads to $\varepsilon_t^2 - \varepsilon_{t-1}^2 = w_0 + w_1(\varepsilon_{t-1}^2 - \varepsilon_{t-2}^2)$, which is similar in form to non-stationary autoregressive model. In practice because of frequent level shifts in volatility, IGARCH appears to be a natural model to fit. Because the IGARCH(1,1) is similar to ARIMA(0,1,1), the model can be taken as an exponential smoothing model for the $\varepsilon_t^2$ series; By iterative substitutions, we can show that
 	\begin{equation} \label{eqn:2ht1w}
@@ -941,10 +938,10 @@ If $h_t$ is proxied by $\varepsilon_t^2$, the above model leads to $\varepsilon_
 where $w_1$ can be taken as a discount factor. \twomedskip
 
 
-\noindent\textbf{Prediction Performance of GARCH:} The predictive power of GARCH based on ex-post forecast evaluation criteria tend to suggest that the model provides poor forecasts, although the in-sample parameter estimates turn out to be highly significant. As Andersen and Bollerslev (1998)~\cite{andersen1998} note, in the model \eqref{eqn:2ept}, the latent volatility, $h_t$, evolves over time. The approach to evaluate the performance of the model for $h_t$ via $\hat{\varepsilon}_t^2$ is not appropriate. While $\hat{\varepsilon}_t^2$ provides an unbiased estimate of $h_t$, it is a noisy measurement due to idiosyncratic error terms associated with it; these error terms may be due to the result of compounding frictions in the trading process. This will be further clarified when we discuss the analysis of high frequency data. \twomedskip
+\noindent\textbf{Prediction Performance of GARCH:} \label{in:forecast2} The predictive power of GARCH based on ex-post forecast evaluation criteria tend to suggest that the model provides poor forecasts, although the in-sample parameter estimates turn out to be highly significant. As Andersen and Bollerslev (1998)~\cite{andersen1998} note, in the model \eqref{eqn:2ept}, the latent volatility, $h_t$, evolves over time. The approach to evaluate the performance of the model for $h_t$ via $\hat{\varepsilon}_t^2$ is not appropriate. While $\hat{\varepsilon}_t^2$ provides an unbiased estimate of $h_t$, it is a noisy measurement due to idiosyncratic error terms associated with it; these error terms may be due to the result of compounding frictions in the trading process. This will be further clarified when we discuss the analysis of high frequency data. \twomedskip
 
 
-\noindent \textbf{Time--Varying ARCH Processes (tvARCH)} \twomedskip
+\noindent \textbf{Time--Varying ARCH Processes (tvARCH)} \label{in:tvarch} \twomedskip
 
 
 The underlying assumptions of ARCH models is stationarity and with changing pace of economic conditions, the assumption of stationarity is not appropriate for modeling financial returns over long intervals. We may obtain a better fit by relaxing the assumption of stationarity in all the time series models. It is also appropriate for building models with local variations. Dahlhaus and Subba Rao (2006)~\cite{dahlhaus2006} generalize the ARCH model with time-varying parameters:
@@ -986,8 +983,7 @@ The methodology presented here is useful because of the changing nature of finan
 
 
 % Stylized Models for Variance of Asset Returns
-\section{Stylized Models for Variance of Asset Returns \label{sec:sty_mod_var}}
-
+\section{Stylized Models for Variance of Asset Returns \label{sec:sty_mod_var}} \label{in:assetvol1} \label{in:style3}
 
 Volatility has many important implications in finance. It is one of the most commonly used risk measure and plays a vital role in asset allocation. The estimate of volatility of an asset is obtained using the prices of stock or options or both. Three different measures that are normally studied are stated below:
 
@@ -1005,10 +1001,10 @@ In this section, we will mainly focus on the first item and the others will be d
 Consider $r_t = \ln{(p_t) - \ln{(p_{t-1})}}$, return of an asset. We observed that `$r_t$' exhibits no serial correlation. This does not imply that the series `$r_t$' consists of independent observations. The plot of $r_t^2$ given in Figure~\ref{fig:exchrate} clearly indicates that volatility tends to cluster over certain time spans. The autocorrelations in Figure~\ref{fig:exchrate} confirms that there is some time dependence for the volatility. In fact in some cases, there is some long range dependence that spans up to sixty days. \twomedskip
 
 
-\noindent\textbf{Stylized fact 5:} Volatility clustering: High volatility events tend to cluster in time and this can be measured through positive correlations that exist over several lags.
+\noindent\textbf{Stylized fact 5:} Volatility clustering: \label{in:volclust1} High volatility events tend to cluster in time and this can be measured through positive correlations that exist over several lags.
 
 
-To formally model the volatility, recall the conditional mean and the conditional variance of the return, $r_t$, are: $\mu_t = E(r_t \;|\; F_{t-1})$, $\sigma_t^2 = \var(r_t \;|\; F_{t-1}) = E( (r_t - \mu_t)^2 \;|\; F_{t-1})$. We have observed for the exchange rate series that $\mu_t \approx$ constant and is generally close to zero. But $\sigma_t^2$ clusters around certain time spans and modeling variation in $\sigma_t^2$ is typically done through ARCH/GARCH models and also through stochastic volatility models. The stochastic volatility models have the advantage of modeling jumps in prices that are also often used in derivative pricing. To begin with, we can test for the heteroscedasticity using the test in \eqref{eqn:2F} or one of the following which are all equivalent asymptotically:
+To formally model the volatility, recall the conditional mean and the conditional variance of the return, $r_t$, are: $\mu_t = \Ex(r_t \;|\; F_{t-1})$, $\sigma_t^2 = \var(r_t \;|\; F_{t-1}) = \Ex( (r_t - \mu_t)^2 \;|\; F_{t-1})$. We have observed for the exchange rate series that $\mu_t \approx$ constant and is generally close to zero. But $\sigma_t^2$ clusters around certain time spans and modeling variation in $\sigma_t^2$ is typically done through ARCH/GARCH models and also through stochastic volatility models. The stochastic volatility models have the advantage of modeling jumps in prices that are also often used in derivative pricing. To begin with, we can test for the heteroscedasticity using the test in \eqref{eqn:2F} or one of the following which are all equivalent asymptotically: \label{in:assetvol2} \label{in:style4}
 
 
 \begin{itemize}
@@ -1076,11 +1072,11 @@ Among the conditional heteroscedasticity models ARCH/GARCH that were discussed i
 \item Plot histograms of the returns and test if the distributions are normal, via Q--Q plots.
 \item Compute the auto-correlation function and identify which lags are significant. What is the tentative ARMA model?
 \item Is there any ARCH effect? Why?
-\item Fit GARCH(1,1,) and IGARCH(1,1) models using both normal and t-distributions for the innovations. Which volatility model appears to be the best? \twomedskip
+\item Fit GARCH(1,1) and IGARCH(1,1) models using both normal and $t$-distributions for the innovations. Which volatility model appears to be the best? \twomedskip
 \end{enumerate}
 
 
- % Problem
+% Problem
 \prob Exchange rates: Consider the original series, $p_t$, for the duration starting June 11, 2003.
  Answer the following after dividing each series by $p_1$, so that the starting points are the same.
  
@@ -1113,10 +1109,10 @@ Among the conditional heteroscedasticity models ARCH/GARCH that were discussed i
 % Problem
 \prob The \textit{Roll} model for trade prices discussed in the text can be more specifically stated as,
 	\[
-	\begin{split}
-	p_t^*&= p_{t-1} + \epsilon_t, \;\;\;\;\; \epsilon_t \sim N(0,\sigma^2) \\
-	\text{and } p_t&= p_t^* + c s_t, \;\;\;\;\; \text{where }s_t \in \{+1,-1\}
-	\end{split}
+	\begin{aligned}
+	p_t^*&= p_{t-1} + \epsilon_t, \;\;\;\;\; \epsilon_t \sim N(0,\sigma^2) \;\;\text{and} \\
+	p_t&= p_t^* + c s_t, \;\;\;\;\; \text{where }s_t \in \{+1,-1\}
+	\end{aligned}
 	\]
 Here $p_t^*$ is the ``true'' value of a security and $p_t$ is the observed trade price, which differ because of the bid-offer spread: $c$ is the half-spread and $s_t$ is the direction of the $t$th trade. $s_t$ and $\epsilon$ are serially independent and independent of each other.
 \begin{enumerate}[(a)]
@@ -1127,13 +1123,13 @@ Here $p_t^*$ is the ``true'' value of a security and $p_t$ is the observed trade
 
 
 % Problem
-\prob Consider the level III data for the ticker, ``BIOF'' for a single day. The data description follows the similar details as given in Table~\ref{tab:CISCO}. This exercises consists of two parts; in the first part, we want to construct the limit order book and the second part we want to study the effect of time aggregation. 
+\prob Consider the Level~III data for the ticker, ``BIOF'' for a single day. The data description follows the similar details as given in Table~\ref{tab:CISCO}. This exercises consists of two parts; in the first part, we want to construct the limit order book and the second part we want to study the effect of time aggregation. 
 
 \begin{enumerate}[(a)]
 \item At any point in time, a limit-order book contains a number of buy and sell orders.
 	\begin{enumerate}[(i)]
-	\item Develop a program that can visually present a limit order book. Present the order book diagram as of 11:00~A.M. for the first tern positions on both sides.
-	\item Aggregate demand and supply are represented as step functions of shares accumulated at each price level. The height of step `$i$' on the demand side is the price side is the price difference between $(i-1)$th and $i$th best price. The height of the first step is the mid price; the length of a step, `$i$', on the demand side is the total number of shares across all orders until $i$th price. Similarly, the supply side can be constructed. Normalize a step height by the cumulative length from the first step to tenth step. Present the aggregate curve as of 11:00~a.m.. 
+	\item Develop a program that can visually present a limit order book. Present the order book diagram as of 11:00~a.m. for the first tern positions on both sides.
+	\item Aggregate demand and supply are represented as step functions of shares accumulated at each price level. The height of step `$i$' on the demand side is the price side is the price difference between $(i-1)$th and $i$th best price. The height of the first step is the mid price; the length of a step, `$i$', on the demand side is the total number of shares across all orders until $i$th price. Similarly, the supply side can be constructed. Normalize a step height by the cumulative length from the first step to tenth step. Present the aggregate curve as of 11:00~a.m.
 	\item Using the aggregate graph give in (ii), suggest measures for the order book imbalance---which is a key determinant in some entry/exit algorithms in the high-frequency setting.
 	\end{enumerate}
 

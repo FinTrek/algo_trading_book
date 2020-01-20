@@ -15,18 +15,18 @@ We begin with the general multivariate linear regression model,
 	\begin{equation} \label{eqn:5lmyk}
 	Y_t = C X_t + \epsilon_t,
 	\end{equation}
-where $Y_t= (Y_{1t}, \ldots,Y_{mk})'$ is an $m \times 1$ vector of responsive variables and $X_t= (X_{1t}, \ldots, X_{nt})'$ is an $n \times 1$ vector of predictors, $C$ is an $m \times n$ coefficient matrix and $\epsilon_t= (\epsilon_{it}, \ldots, \epsilon_{mt})'$ is the $m \times 1$ vector of random errors. In the cross-sectional modeling of asset returns, the popular model introduced by Fama and French (2015)~\cite{fama2015}, falls into this regression set-up. The response vector has the returns on `$m$' stocks and the predictor set contains the Fama-French factors. If we restrict the first component of $X_t$, $X_{1t}= 1$, the model in \eqref{eqn:5lmyk} can include the means of the variables in $Y_t$. We assume $E(\epsilon_t)= 0$ and $\cov(\epsilon_t)= \Sigma_{\epsilon \epsilon}$ is a $m \times m$ positive definite covariance matrix. The errors are independent over `$t$', the time index. Thus if we arrange the data and error as matrices,
+where $Y_t= (Y_{1t}, \ldots,Y_{mk})'$ is an $m \times 1$ vector of responsive variables and $X_t= (X_{1t}, \ldots, X_{nt})'$ is an $n \times 1$ vector of predictors, $C$ is an $m \times n$ coefficient matrix and $\epsilon_t= (\epsilon_{it}, \ldots, \epsilon_{mt})'$ is the $m \times 1$ vector of random errors. In the cross-sectional modeling of asset returns, the popular model introduced by Fama and French (2015)~\cite{fama2015}, falls into this regression set-up. The response vector has the returns on `$m$' stocks and the predictor set contains the Fama-French factors. If we restrict the first component of $X_t$, $X_{1t}= 1$, the model in \eqref{eqn:5lmyk} can include the means of the variables in $Y_t$. We assume $\Ex(\epsilon_t)= 0$ and $\cov(\epsilon_t)= \Sigma_{\epsilon \epsilon}$ is a $m \times m$ positive definite covariance matrix. The errors are independent over `$t$', the time index. Thus if we arrange the data and error as matrices,
 	\begin{equation} \label{eqn:5yyt}
 	Y= [Y_1,\ldots,Y_T], \enskip X=[X_1,\ldots,X_T] \text{ and } \epsilon= [\epsilon_1, \ldots,\epsilon_T],
 	\end{equation}
 and if $e=\text{vec}(\epsilon')$,
 	\begin{equation} \label{eqn:5Ee0}
-	E(e)=0, \quad \cov(e)= \Sigma_{\epsilon \epsilon} \otimes I_T,
+	\Ex(e)=0, \quad \cov(e)= \Sigma_{\epsilon \epsilon} \otimes I_T,
 	\end{equation}
 where the symbol $\otimes$ signifies the Kronecker's product.\footnote{The Kronecker product of two matrices is defined as $A \otimes B= \begin{pmatrix} a_{11} B & \cdots & a_{1m} B \\ \vdots & \ddots & \vdots \\ a_{m1} B & \cdots & a_{mm}B \end{pmatrix}$, where $A= \begin{pmatrix} a_{11} & \cdots & a_{1m} \\ \vdots & \ddots & \vdots \\ a_{m1} & \cdots & a_{mm} \end{pmatrix}$.} 
 
 
-The unknown parameters in model \eqref{eqn:5lmyk} are the ($mn$) elements of the regression coefficient matrix $C$ and ($m(m+1)/2$) elements of the error covariance matrix $\Sigma_{\epsilon \epsilon}$. These can be estimated by the method of maximum likelihood under the assumption of normality of the $\epsilon_t$ which is equivalent to least squares estimation. Note we can rewrite the model \eqref{eqn:5lmyk} in terms of the data matrices $\mathbf{Y}$ and $\mathbf{X}$ as
+The unknown parameters in model \eqref{eqn:5lmyk} are the ($mn$) elements of the regression coefficient matrix $C$ and $m(m+1)/2$ elements of the error covariance matrix $\Sigma_{\epsilon \epsilon}$. These can be estimated by the method of maximum likelihood under the assumption of normality of the $\epsilon_t$ which is equivalent to least squares estimation. Note we can rewrite the model \eqref{eqn:5lmyk} in terms of the data matrices $\mathbf{Y}$ and $\mathbf{X}$ as
 	\begin{equation} \label{eqn:rewrite}
 	\mathbf{Y} = C \mathbf{X} + \mathbf{\epsilon}.
 	\end{equation}
@@ -84,8 +84,8 @@ Another problem of interest in regard to the multivariate linear regression mode
 has the Hotelling's $T^2$-distribution with $T - n$ degrees of freedom, Anderson (1984)~\cite[Chap. 5]{andersontw2}. Thus, $\{(T - n - m + 1)/ m(T - n)\} \mathcal{T}^2$ has the $F$-distribution with $m$ and $T - n - m + 1$ degrees of freedom, so that a $100(1 - \alpha)\%$ confidence ellipsoid for the true mean response $CX_0$ at $X_0$ is given by 
 	\begin{equation} \label{eqn:52line}
 	\begin{split}
-	(\tilde{C}X_0 & -CX_0)' \overline{\Sigma}_{\epsilon\epsilon}^{-1} (\tilde{C}X_0 - CX_0) \\
-	&\leq \{X_0' (\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T - n)}{T - n - m + 1} F_{m,T - n - m + 1}(\alpha) \right],
+	(\tilde{C}X_0 & -CX_0)' \, \overline{\Sigma}_{\epsilon\epsilon}^{-1} (\tilde{C}X_0 - CX_0) \\
+	&\leq \{X_0' (\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T - n)}{T - n - m + 1}\, F_{m,T - n - m + 1}(\alpha) \right],
 	 \end{split}
 	\end{equation}
 where $F_{m,T - n - m + 1}(\alpha)$ is the upper 100$\alpha$th percentile of the $F$-distribution with $m$ and $T - n - m + 1$ degrees of freedom. In testing the validity of CAPM model in a large cross-section of stocks, the common test, whether the constant terms are simultaneously zero, is based on \eqref{eqn:tcal}. More details will follow in a later chapter.
@@ -94,8 +94,8 @@ where $F_{m,T - n - m + 1}(\alpha)$ is the upper 100$\alpha$th percentile of the
 A related problem of interest is the prediction of values of a new response vector $Y_0= CX_0 + \epsilon_0$ corresponding to the predictor variables $X_0$, where it is assumed that $Y_0$ is independent of the values $Y_1, \ldots, Y_T$. The predictor of $Y_0$ is given by $\hat{Y}_0= \tilde{C}X_0$, and it follows similarly to the above result \eqref{eqn:52line} that a $100(1 - \alpha)\%$ prediction ellipsoid for $Y_0$ is
 	\begin{equation} \label{eqn:52another2}
 	\begin{split}
-	(Y_0 & -\tilde{C}X_0)' \overline{\Sigma}_{\epsilon\epsilon}^{-1} (Y_0 - \tilde{C} X_0) \\
-	&\leq \{1 + X_0'(\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T - n)}{T - n - m + 1} F_{m,T - n - m + 1}(\alpha) \right].
+	(Y_0 & -\tilde{C}X_0)' \, \overline{\Sigma}_{\epsilon\epsilon}^{-1} (Y_0 - \tilde{C} X_0) \\
+	&\leq \{1 + X_0'(\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T - n)}{T - n - m + 1} \, F_{m,T - n - m + 1}(\alpha) \right].
 	\end{split}
 	\end{equation}
 The application of Hotelling's $T^2$ in the context of testing related to CAPM model when the number of stocks, `$m$' larger than the available data, `$T$' has been a subject of active research recently. \label{in:multreg2}
@@ -172,13 +172,13 @@ More formally, in canonical correlation analysis, for random vectors $X$ and $Y$
 
 
 \begin{result} \label{res:4} 
-We assume $\Sigma_{yy}$ is nonsingular. Then the $r \times n$ matrix $G$ and the $r \times m$ matrix $H$, with $H \Sigma_{yy}H'= I_r$, that minimize simultaneously all the eigenvalues of $E[(HY-GX)(HY-GX)']$ are given by,
+We assume $\Sigma_{yy}$ is nonsingular. Then the $r \times n$ matrix $G$ and the $r \times m$ matrix $H$, with $H \Sigma_{yy}H'= I_r$, that minimize simultaneously all the eigenvalues of $\Ex[(HY-GX)(HY-GX)']$ are given by,
 	\begin{equation}
-	G= V_*'  \Sigma_{yy}^{-1/2} \Sigma_{yx} \Sigma_{xx}^{-1}, \qquad H= V_*'  \Sigma_{yy}^{-1/2},
+	G= V_*'\  \Sigma_{yy}^{-1/2}\ \Sigma_{yx}\ \Sigma_{xx}^{-1}, \qquad H= V_*'  \Sigma_{yy}^{-1/2},
 	\end{equation}
 where $V_*= [V_1^*, \ldots, V_r^*]$ and $V_j^*$ is the (normalized) eigenvector corresponding to the $j$th largest eigenvalue $\rho_j^2$ of the (squared correlation) matrix
 	\begin{equation} \label{eqn:eigenlargestmatrix}
-	R_*= \Sigma_{yy}^{-1/2} \Sigma_{yx} \Sigma_{xx}^{-1} \Sigma_{xy} \Sigma_{yy}^{-1/2}.
+	R_*= \Sigma_{yy}^{-1/2}\ \Sigma_{yx}\ \Sigma_{xx}^{-1}\ \Sigma_{xy}\ \Sigma_{yy}^{-1/2}.
 	\end{equation}
 \end{result}
 
@@ -200,7 +200,7 @@ At any subsequent stage $j$ of the procedure, there are $j$ predictor variables 
 and $\mathbf{X}^*=\hat{B}\mathbf{X}$ is $r \times T$. In practice, the predictor variables $X_k$ and response variables $Y_k$ will typically already be expressed in terms of deviations from sample mean vectors.
 
 
-Discussion of the sequential computational algorithms for the construction of the `canonical covariance' components $x_{jk}^*=b_j'X_k$ required in the partial least squares regression procedure, and of various formulations and interpretations of the partial least squares method are given by Wold (1984)~\cite{wold}, Helland (1988,1990)~\cite{helland88}~\cite{helland90}, and Garthwaite (1994)~\cite{garth}. In particular, for univariate partial least squares, Garthwaite (1994)~\cite{garth} gives the interpretation of the linear combinations of predictor variables, $x_{jk}^*=b_j'X_k$, as weighted averages of predictors, where each individual predictor holds the residual information in an explanatory variable that is not contained in earlier linear combination components ($x_{ik}^*, i<j$), and the quantity to be predicted is the $1 \times T$ vector of residuals obtained from regressing $y_k$ on the earlier components. Also, for the univariate case, Helland (1988,1990)~\cite{helland88,helland90} showed that the linear combination vectors $\hat{B}=[b_1,\cdots,b_r]'$ are obtainable from nonsingular ($r \times r$) linear transformation of $[\mathbf{XY'},  (\mathbf{XX'})\mathbf{XY'}, \cdots, (\mathbf{XX'})^{r-1} \mathbf{XY'}]'$. One can notice the close similarity between reduced-rank regression and partial least squares. The former focuses on maximizing the correlation and the latter on maximizing the covariance.
+Discussion of the sequential computational algorithms for the construction of the `canonical covariance' components $x_{jk}^*=b_j'X_k$ required in the partial least squares regression procedure, and of various formulations and interpretations of the partial least squares method are given by Wold (1984)~\cite{wold}, Helland (1988, 1990)~\cite{helland88,helland90}, and Garthwaite (1994)~\cite{garth}. In particular, for univariate partial least squares, Garthwaite (1994)~\cite{garth} gives the interpretation of the linear combinations of predictor variables, $x_{jk}^*=b_j'X_k$, as weighted averages of predictors, where each individual predictor holds the residual information in an explanatory variable that is not contained in earlier linear combination components ($x_{ik}^*, i<j$), and the quantity to be predicted is the $1 \times T$ vector of residuals obtained from regressing $y_k$ on the earlier components. Also, for the univariate case, Helland (1988,1990)~\cite{helland88,helland90} showed that the linear combination vectors $\hat{B}=[b_1,\ldots,b_r]'$ are obtainable from nonsingular ($r \times r$) linear transformation of $[\mathbf{XY'},  (\mathbf{XX'})\mathbf{XY'}, \cdots, (\mathbf{XX'})^{r-1} \mathbf{XY'}]'$. One can notice the close similarity between reduced-rank regression and partial least squares. The former focuses on maximizing the correlation and the latter on maximizing the covariance.
 
 
 
@@ -210,7 +210,7 @@ Discussion of the sequential computational algorithms for the construction of th
 Multiple time series analysis is concerned with modeling and estimation of dynamic relationships among `$m$' related time series $y_{1t}, \ldots, y_{mt}$, based on observations over $T$ equally spaced time points $t= 1, \ldots, T$, and also between these series and potential exogenous time series variables $x_{1t}, \ldots, x_{nt}$, observed over the same time period. We shall explore the use of these techniques in leveraging statistical arbitrage in multiple markets in Chapters~\ref{ch:stat_ts}~\&~\ref{ch:amp}. We first introduce a general model for multiple time series modeling, but will specialize to vector autoregressive (VAR)\label{in:var} models for more detailed investigation. As some concepts are similar to those of the univariate models discussed in Chapter~\ref{ch:ch_uvts}, the presentation will be brief.
 
 
-Let $Y_t= (y_{1t}, \ldots, y_{mt})'$ be an $m \times 1$ multiple time series vector of response variables and let $X_t=(x_{1t}, \ldots, x_{nt})'$ be an $n \times 1$ vector of input or predictor time series variables. Let $\epsilon_t$ denote an $m \times 1$ white noise vector of errors, independently distributed over time with $E(\epsilon_t)= 0$ and $\cov(\epsilon_t)= \Sigma_{\epsilon\epsilon}$, a positive-definite matrix. We consider the multivariate time series model
+Let $Y_t= (y_{1t}, \ldots, y_{mt})'$ be an $m \times 1$ multiple time series vector of response variables and let $X_t=(x_{1t}, \ldots, x_{nt})'$ be an $n \times 1$ vector of input or predictor time series variables. Let $\epsilon_t$ denote an $m \times 1$ white noise vector of errors, independently distributed over time with $\Ex(\epsilon_t)= 0$ and $\cov(\epsilon_t)= \Sigma_{\epsilon\epsilon}$, a positive-definite matrix. We consider the multivariate time series model
 	\begin{equation} \label{eqn:2ytcs}
 	Y_{t} = \sum_{s=0}^{p} C_s X_{t-s} + \epsilon_t,
 	\end{equation}
@@ -224,9 +224,9 @@ The class of models stated in \eqref{eqn:2ytcs} is rather flexible and provides 
 with `$p$' lags. As in Section~\ref{sec:stoc_proc}, we can define the population versions of the mean, variance, and autocovariance functions for stationary series as follows; in addition, we have the cross-correlation matrix that captures the lead-lag relationships among all `$m$' series.
 	\begin{equation} \label{eq:meanvarianceauto}
         \begin{split}
-	\text{Mean:\qquad} & \mu= E(Y_t) \\
-	\text{Variance:\qquad} & \Gamma(0)= E[(Y_t - \mu)(Y_t - \mu)'] \\
-	\text{Autocovariance:\qquad} & \Gamma(l)= E[(Y_t - \mu)(Y_{t-l} - \mu)'] \\
+	\text{Mean:\qquad} & \mu= \Ex(Y_t) \\
+	\text{Variance:\qquad} & \Gamma(0)= \Ex[(Y_t - \mu)(Y_t - \mu)'] \\
+	\text{Autocovariance:\qquad} & \Gamma(l)= \Ex[(Y_t - \mu)(Y_{t-l} - \mu)'] \\
 	\text{Cross-correlation:\qquad} & \rho(l) = D^{-1}\Gamma(l) D^{-1}
         \end{split}
         \end{equation}
@@ -271,7 +271,7 @@ Let $Y_t \sim \text{VAR}(p)$, then $Z_t= l' Y_t$, where $l$ is a $m \times 1$ kn
 
 
 % Co-integration, Co-movement and commonality in Multiple Time Series
-\section{Co-integration, Co-movement and commonality in Multiple Time Series \label{sec:comts}}\label{in:coint1}\label{in:comove1}
+\section{Co-integration, Co-movement and Commonality in Multiple Time Series \label{sec:comts}}\label{in:coint1}\label{in:comove1}
 
 
 The financial time series generally exhibit non-stationary behavior. For the stationary series, the dynamic relationships among components of the vector time series, $Y_t$, has been studied in various ways. While the estimation and inference aspects are similar to the univariate series discussed in Chapter~\ref{ch:ch_uvts}, because of the sheer dimension of $Y_t$, there are more challenges in the precise estimation of the model coefficients but there are also more opportunities to study the linkages among the components of $Y_t$ that may be insightful. For example, this provides an opportunity to investigate the behavior of portfolio of stocks. The number of unknown elements in \eqref{eqn:ytphi0} is $m^2 (p+1)$ which can be quite large even for modest values of `$m$' and `$p$'; therefore considerations of the dimension reduction aspects in modeling \eqref{eqn:ytphi0} have been given by Box and Tiao (1977)~\cite{box77} and Brillinger (1981)~\cite{brill81} among others. The traditional tool used in multivariate analysis for dimension reduction, principal components method is based on the contemporaneous covariance matrix, and thus it ignores the time dependence. While Result~\ref{res:6}, stated in the previous section, indicates that the linear combination can exhibit time dependence, we should expect the optimal linear combination to exhibit other desirable features, which are described here. 
@@ -304,7 +304,7 @@ where $\Sigma_{ww} = \cov(W_t) = 2 \Gamma(0) - \Phi\, \Gamma (0) - \Gamma(0)\, \
 Thus for a vector process, $Y_t$, it is possible that each component series $y_{it}$ be nonstationary with its first difference $(1 - B)\, y_{it}$ stationary (in which case $y_{it}$ is said to be integrated of order one), but such that certain linear combinations $z_{it} = b_i' Y_t $ of $Y_t$ will be stationary. The process $Y_t$ then is said to be \emph{co-integrated} with co-integrating vectors $b_i$ (e.g., Engle and Granger (1987)~\cite{engle1987co}).  A possible interpretation, particularly related to economics, is that the individual components $y_{it}$ share some common nonstationary components or ``common trends'' and, hence, they tend to have certain similar movements in their long-term behavior.  A related interpretation is that the component series $y_{it}$, although they may exhibit nonstationary behavior, satisfy (approximately) a long-run equilibrium relation $b_i' Y_t \approx 0$ such that the process $z_{it} = b_i' Y_t$, which represents the deviations from the equilibrium, exhibits stable behavior and so is a stationary process. This fact is exploited in `pairs trading' or more broadly in trading multiple stocks and can be very useful also in the context of portfolio rebalancing. 
 
 
-Results related to the general VAR$(p)$ model, $\Phi(B) Y_t = Y_t - \sum_{j=1}^p \Phi_j Y_{t-j} = \epsilon_t$ are studied in Engle and Granger (1987)~\cite{engle1987co} and Johansen (1988,1991)~\cite{johansen1988statistical,johansen1991estimation}. As the details are too technical for this book, we suggest that readers may want to refer to these original sources or Reinsel and Velu~\cite{velurein} for a summary.
+Results related to the general VAR$(p)$ model, $\Phi(B) Y_t = Y_t - \sum_{j=1}^p \Phi_j Y_{t-j} = \epsilon_t$ are studied in Engle and Granger (1987)~\cite{engle1987co} and Johansen (1988, 1991)~\cite{johansen1988statistical,johansen1991estimation}. As the details are too technical for this book, we suggest that readers may want to refer to these original sources or Reinsel and Velu~\cite{velurein} for a summary.
  
 
 Within the context of model \eqref{eqn:2Wtequiv}, it is necessary to specify or determine the rank $r$ of co-integration or the number $d$ of unit roots in the model. Thus, it is also of interest to test the hypothesis $H_0: \rank(C) \leq r$, which is equivalent to the hypothesis that the number of unit roots in the AR model is greater than or equal to $d$ ($d = m - r$), against the general alternative that $\rank(C) = m$.  The \emph{likelihood ratio test} for this hypothesis is considered by Johansen (1988)~\cite{johansen1988statistical} and the test statistic is given as 
@@ -324,7 +324,7 @@ Economic time series share some common characteristics such as trends, seasonali
 	\begin{equation} \label{eqn:discyt}
 	Y_t= Cf_t + a_t,
 	\end{equation}  
-where $f_t$ is a lower dimensional common feature vector so that a linear combination of $Y_t$, $l' Y_t$ can be independent of this feature. Observe that this implies $l'C=0$, which is the result of `$C$' being a lower rank matrix. The $f_t$-vector can either be constructed from the past values of $Y_t$-which is the focal view of comovement or can be constructed from exogenous variables, sat $X_t$, which is the basis of many studies on commonality in finance literature. We briefly summarize the two aspects here. 
+where $f_t$ is a lower dimensional common feature vector so that a linear combination of $Y_t$, $l' Y_t$ can be independent of this feature. Observe that this implies $l'C=0$, which is the result of `$C$' being a lower rank matrix. The $f_t$-vector can either be constructed from the past values of $Y_t$, which is the focal view of comovement, or can be constructed from exogenous variables, sat $X_t$, which is the basis of many studies on commonality in finance literature. We briefly summarize the two aspects here. 
 
 
 The comovement relationships among non-stationary series that result from cointegration are known as long-run equilibrium relationships. Relationships that result from stationary series are known as short-run equilibrium relationships. The cointegrating relationships resulting \eqref{eqn:2Wtequiv} are given by $\hat{Q}$ that leads to $\hat{Q}' \hat{A}=0$. A generalization of this concept relates to serial correlation common feature; to define this, write VAP($p$) model in its error correction form as\label{in:vec2}
@@ -340,10 +340,10 @@ Here $W_{t-1}^*= [W_{t-1}', \ldots, W_{t-p+1}']'$, with $W_{t-i}= Y_{t-i} - Y_{t
 
 There is a vast literature on commonality in finance and the summary presented here is based on a few select studies. In addition to price and return variables of stocks, the commonality is studied on liquidity and turnover measures as well, which we define below
 	\begin{equation} \label{eqn:turnovermeasure}
-	\begin{split}
+	\begin{aligned}
 	\text{Liq}_d&= - \log \left( 1 + \dfrac{|r_d|}{P_d} \right) \\
 	\text{TO}_d&= \log \left( 1 + \dfrac{v_d}{\text{NSH}} \right).
-	\end{split}
+	\end{aligned}
 	\end{equation}
 Here $r_d$ is the return on day `$d$', $P_d$ is the price, $v_d$ is the volume traded and NSH is the number of outstanding shares at the beginning of the year. The turnover measure is adjusted by a moving average based on `$K$' days past `$d$'. As outlined in Chordia, Roll and Subrahmanyam (2000)~\cite{chordia} the commonality in liquidity can come from several sources: 
 	\begin{enumerate}[--]
@@ -372,7 +372,7 @@ Hasbrouck and Seppi (2001)~\cite{seppi2001} provide a framework that examines th
 	\end{equation}
 Here $F_t$ is lower (than `$n$') dimensional factor that is assumed to have orthogonal structure. A similar factor model can be written for the returns:
 	\begin{equation} \label{eqn:returnflows}
-	r_t= \phi G_t + \eta_t.
+	r_t= \phi\ G_t + \eta_t.
 	\end{equation}
 The common factors `$F_t$' can be due to dynamic hedging strategies, na\"{i}ve momentum trading etc and the factors, $G$, can be due to expectation of future cash flows. To connect the two models \eqref{eqn:orderflows} and \eqref{eqn:returnflows}, it is argued that the factors $F_t$ is linearly related to $G_t$, but its relationship to `$r_t$' is subject to further restriction. But in the high frequency context, we expect `$G_t$' and `$F_t$' also share common features. These factors are estimated through the principal components of $r_t$ and $X_t$, respectively. If we assume that the factors `$G_t$' are determined by $X_t$, then
 	\begin{equation} \label{eqn:determinedfactors}
@@ -380,15 +380,14 @@ The common factors `$F_t$' can be due to dynamic hedging strategies, na\"{i}ve m
 	\end{equation}
 Relating $X_t$ to $r_t$ via multivariate regression model, yields 
 	\begin{equation} \label{eqn:mrmr}
-	r_t= \Lambda X_t + u_t = \phi \delta X_t + u_t,
+	r_t= \Lambda X_t + u_t = \phi\ \delta X_t + u_t,
 	\end{equation}
 where the coefficient matrix, $\Lambda$ is of lower rank. Thus the relationships between the returns and order flows can be studied through canonical correlations. The specification in \eqref{eqn:mrmr} can be easily expanded to include other variables related to equity trading such as volume of trade, etc. in the regression framework presented in this chapter. In fact, the direct relationship between returns and order flows in \eqref{eqn:mrmr} is a more efficient way to model than relating the factors from two sets of series as in Hasbrouck and Seppi (2001)~\cite{seppi2001}. Using the data for 30-Dow stocks for 1994, it is shown that the rank of the matrix `$\Lambda$' in \eqref{eqn:mrmr} can be taken to be unity, as the first canonical correlation between returns and signed trade, an order flow measure tends to dominate.
 
 
 
 % Multivariate GARCH Models
-\section{Multivariate GARCH Models}\label{in:multgarch1}
-
+\section{Multivariate GARCH Models}\label{in:multgarch1} \label{in:modelvar2}
 
 It is well known that financial volatilities across assets and markets move together over time. It is of interest to study how a shock in one market increases the volatility on another market and in general, how correlations among asset returns change over time. For example, in the computation of hedge-ratio which is the slope of the regression line of spot returns on the futures return, both the covariance between spot and future returns and the variance of future returns can change over time. It must be noted that variances and covariances are generally sensitive to mean shifts. In addition, unlike modeling the mean behavior where a fewer number of quantities are involved, modeling the variance-covariance behavior involves a substantially larger number of quantities and hence various models that account for some redundancy are proposed in the literature. We cover only a select few in this section. Interested readers should refer to the excellent survey paper by Bauwens, Laurent and Rombouts (2006)~\cite{laurent}.
 
@@ -404,7 +403,7 @@ where $\mu_t=CX_t$ and $\epsilon_t \sim N(0,\Sigma_{\epsilon\epsilon})$. As $\Si
 where $H_t$ is the conditional variance-covariance matrix.
 
 
-There are two versions of model formulation of the elements of the $H_t$-matrix. Note this $m \times m$ matrix, because of symmetry, has only $[m \times (m+1)]/2$ distinct elements. Writing $h_t= \text{Vech}(H_t)$ that stacks these distinct elements as a vector, the $\text{Vec}(1,1)$ model (similar to GARCH(1,1) in the univariate case) is defined as:
+There are two versions of model formulation of the elements of the $H_t$-matrix. Note this $m \times m$ matrix, because of symmetry, has only $m(m+1)/2$ distinct elements. Writing $h_t= \text{Vech}(H_t)$ that stacks these distinct elements as a vector, the $\text{Vec}(1,1)$ model (similar to GARCH(1,1) in the univariate case) is defined as:
 	\begin{equation} \label{eqn:vecmodel}
 	h_t= c + A \eta_{t-1} + G h_{t-1},
 	\end{equation}
@@ -429,7 +428,7 @@ where $a_k,\alpha_k,\gamma_k$ are scalars and $\beta_k$ is a vector. Note this i
 Empirical applications of the models related to covariances face the curse of dimensionality. As the number of variables ($m$) increases, the number of conditional variances and covariances, $\frac{m(m+1)}{2}$ increases exponentially. Also any application should guarantee that the estimated volatility matrices are positive definite. Recall that a descriptive approach in the case of independent (with no temporal dependence) observations, the principal component analysis (PCA) plays an important role. It is based on the eigenvalue decomposition of the variance-covariance matrix, as discussed in Section~\ref{sec:s_dr}. Hu and Tsay (2014)~\cite{hutsay14} extend this idea by defining a generalized kurtosis matrix for multivariate volatility and by carrying out the spectral decomposition of this matrix. Note that this matrix is based on the fourth moment, that accounts for both serial and cross-sectional aspects of a vector time series.
 
 
-To start with, assume that the conditional volatility matrix, $\Sigma_t= E(y_ty_t' \;|\; F_{t-1})$, where $F_{t-1}$ denotes the information available at time `$t-1$', can be modeled as
+To start with, assume that the conditional volatility matrix, $\Sigma_t= \Ex(y_ty_t' \;|\; F_{t-1})$, where $F_{t-1}$ denotes the information available at time `$t-1$', can be modeled as
 	\begin{equation} \label{eqn:vtmodel}
 	\tbvec(\Sigma_t)= c_0 + \sum_{i=1}^\infty c_i \tbvec(y_{t-i} y_{t-i}'),
 	\end{equation}
@@ -530,11 +529,11 @@ The results for the testing co-integration for the full duration and the regime 
 	\begin{table}[!ht]
 	\caption{Full Duration \label{tab:fulldur}}
 	\centering
-	Eigenvalues ($\lambda$): 0.0054, 0.0030, 0.0018, 0.0008, 0.0003
+	{\small Eigenvalues ($\lambda$): 0.0054, 0.0030, 0.0018, 0.0008, 0.0003}
 
-	Values of test statistic and critical values of test for various ranks: \\[0.1cm]
+	{\small Values of test statistic and critical values of test for various ranks:} \\[0.1cm]
 	
-	\begin{tabular}{| l | c | c |} \hline
+	\hspace{-4.5cm} \begin{tabular}{| l | c | c |} 
 	$r$  & test & 5pct \\ \hline
 	$r \leq 4$ &  1.26 & 8.18 \\ \hline
 	$r \leq 3$ &  3.71 & 14.90 \\ \hline
@@ -543,9 +542,9 @@ The results for the testing co-integration for the full duration and the regime 
 	$r=0$  & 24.19  & 33.32
 	\end{tabular}
 	
-	Eigenvectors, normalised to first column: (These are the co-integrating relations) \\[0.1cm]
+	{\small Eigenvectors, normalised to first column: (These are the co-integrating relations)} \\[0.1cm]
 	
-	\begin{tabular}{| l | c | c | c | c | c |} \hline
+	\hspace{-2cm}\begin{tabular}{| l | c | c | c | c | c |} 
 	          & EUR &   GBP  &   CAD  &   AUD   &  JPY \\ \hline
 	EUR & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\ \hline
 	GBP & $-0.172$ & $-1.105$ & $-1.721$ &  2.163 & $-0.487$ \\ \hline
@@ -558,11 +557,11 @@ The results for the testing co-integration for the full duration and the regime 
 	\begin{table}[!ht]
 	\caption{Regime 2007--2009 \label{tab:fulldur2}}
 	\centering
-	Eigenvalues ($\lambda$): 0.0592, 0.0367, 0.0298, 0.0039, 0.0038
+	{\small Eigenvalues ($\lambda$): 0.0592, 0.0367, 0.0298, 0.0039, 0.0038}
 
-	Values of test statistic and critical values of test of co-integrating rank: \\[0.1cm]
+	{\small Values of test statistic and critical values of test of co-integrating rank:} \\[0.1cm]
 	
-	\begin{tabular}{| l | c | c |} \hline
+	\hspace{-4.5cm}\begin{tabular}{| l | c | c |} 
 	r               &  test & 5pct \\ \hline
 	r $\leq$ 4 &  1.97 &  8.18 \\ \hline
 	r $\leq$ 3 &  2.01 & 14.90 \\ \hline
@@ -571,9 +570,9 @@ The results for the testing co-integration for the full duration and the regime 
 	r = 0  & 31.84 & 33.32 
 	\end{tabular}
 
-	Eigenvectors, normalised to first column: (These are the co-integration relations) \\[0.1cm]
+	{\small Eigenvectors, normalised to first column: (These are the co-integration relations)} \\[0.1cm]
 	
-	\begin{tabular}{| l | c | c | c | c | c |} \hline
+	\hspace{-2cm}\begin{tabular}{| l | c | c | c | c | c |} 
 	         &  EUR  &   GBP  &   CAD   &  AUD  &   JPY \\ \hline
 	EUR & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\ \hline
 	GBP & $-0.628$ & 0.392 & $-0.606$ & 0.379 & $-0.241$ \\ \hline
@@ -603,7 +602,7 @@ with $\Delta_t$ being time-variant but $c_1$ is time-independent. For a forerunn
 \end{result}
 
 
-For the five exchange rate series, the computational details are presented in Table~\ref{tab:pvctable}. It can be seen that the last two eigenvalues are fairly small. The linear combinations, $Mr_t$ are plotted in Figure~\ref{fig:transpvc}. The plot of squared values of the two extremes are plotted in Figure~\ref{fig:volextreme}. The autocorrelation functions of the transformed series are plotted in Figure~\ref{fig:autooverall} a \& b; the combination, $0.6835 \text{ EURR} + 0.2054 \text{ GBPR} - 0.3271 \text{ CADR} + 0.1496 \text{ AUDR} + 0.6010 \text{ JPYR}$ exhibits the lowest volatility. It would obviously be interesting to test this out over different regimes.
+For the five exchange rate series, the computational details are presented in Table~\ref{tab:pvctable}. It can be seen that the last two eigenvalues are fairly small. The linear combinations, $Mr_t$ are plotted in Figure~\ref{fig:transpvc}. The plot of squared values of the two extremes are plotted in Figure~\ref{fig:volextreme}. The autocorrelation functions of the transformed series are plotted in Figure~\ref{fig:autooverall} a \& b; the combination, $0.6835 \text{ EURR} + 0.2054 \text{ GBPR} - 0.3271 \text{ CADR} + 0.1496 \text{ AUDR} + 0.6010 \text{ JPYR}$ exhibits the lowest volatility. It would obviously be interesting to test this out over different regimes.\label{in:tsm2}
 
 	\begin{figure}[H]
 	\centering
@@ -639,11 +638,11 @@ For the five exchange rate series, the computational details are presented in Ta
 	\begin{table}[H]
 	\centering
 	\caption{Principal Volatility Components \label{tab:pvctable}}
-	Eigenvalues ($\lambda$): 21.096, 4.453, 1.623, 0.728, 0.435 \\
+	{\small Eigenvalues ($\lambda$): 21.096, 4.453, 1.623, 0.728, 0.435} \\
 	
-	Eigenvectors
+	{\small Eigenvectors}
 	
-	\begin{tabular}{| l | c | c | c | c | c |} \hline
+	\hspace{-2.5cm}\begin{tabular}{| l | c | c | c | c | c |} 
         &    [,1]   &    [,2]    &   [,3]    &   [,4]   &     [,5] \\ \hline
 	[1,] & 0.015 & 0.208 & $-0.225$ & $-0.694$ &  0.651 \\ \hline
 	[2,] & 0.173 & 0.495 & 0.753 & 0.219 & 0.331 \\ \hline
@@ -652,9 +651,9 @@ For the five exchange rate series, the computational details are presented in Ta
 	[5,] & $-0.440$ & $-0.228$ & $-0.191$ & 0.571 & 0.626 \\
 	\end{tabular}
 	
-	$M$--Matrix \\[0.1cm]
+	{\small $M$--Matrix} \\[0.1cm]
 	
-	\begin{tabular}{| l | c | c | c | c | c |} \hline
+	\hspace{-2.5cm}\begin{tabular}{| l | c | c | c | c | c |} 
 	         &   [,1]   &     [,2]    &     [,3]   &    [,4]   &    [,5] \\ \hline
 	[1,] & $-0.196$ & 0.077 & $-0.283$ & $-0.755$ & 0.684 \\ \hline
 	[2,] & 0.128 & 0.437 & 0.793 d & 0.319 & 0.205 \\ \hline
@@ -677,7 +676,7 @@ For the five exchange rate series, the computational details are presented in Ta
 \item The file {\tt d\_indexes.csv} and {\tt m\_indexes.csv} contain daily and monthly returns data for the volume-weighted and equal-weighted S\&P500 market indices (VWRETD and EWRETD, respectively) from Jan 11, 2000 to Mar 31, 2013.
 \end{itemize}
 
-Using daily and monthly returns data for 15 individual stocks from {\tt d\_15stocks.csv} and {\tt m\_15stocks.csv}, and the equal-weighted and value-weighted CRSP market indexes (EWRETD and VWRETD, respectively) from {\tt d\_indexes.csv} and {\tt m\_indexes.csv}, perform the following statistical analyses using R. For the subsample analyses, split the available observations into equal-sized subsamples or at regime changes visually noticeable from the time series plots.
+Using daily and monthly returns data for 15 individual stocks from {\tt d\_15stocks.} {\tt csv} and {\tt m\_15stocks.csv}, and the equal-weighted and value-weighted CRSP market indexes (EWRETD and VWRETD, respectively) from {\tt d\_indexes.csv} and {\tt m\_indexes.csv}, perform the following statistical analyses using R. For the subsample analyses, split the available observations into equal-sized subsamples or at regime changes visually noticeable from the time series plots.
 
 \begin{enumerate}[(a)]
 \item Compute the sample mean $\hat\mu$, standard deviation $\hat{\sigma}$, and first-order autocorrelation coefficient $\hat{\rho}(1)$ for daily simple returns over the entire sample period for the 15 stocks and two indexes. Split the sample into 4 equal subperiods and compute the same statistics in each subperiod---are they stable over time?

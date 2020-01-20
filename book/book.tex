@@ -7,11 +7,13 @@
 	comment,
 	enumerate,
 	etoolbox,
+	fix-cm,
 	float,
 	graphicx,
 	indentfirst,
 	listings,
 	mleftright,
+	multicol,
 	multirow,
 	placeins,
 	stix,
@@ -19,7 +21,9 @@
 	threeparttable,
 	totcount
 }
-\usepackage{fix-cm}
+\usepackage{graphicx}
+\usepackage{epstopdf} % Load after graphiccx
+%\usepackage[justification=centering]{caption}
 \usepackage[figuresright]{rotating}
 \usepackage[toc,page]{appendix}
 \usepackage[autostyle]{csquotes}
@@ -33,6 +37,15 @@
 
 
 % ------------------------
+% Warning Tolerances 
+% ------------------------
+\hfuzz=20pt
+\vfuzz=20pt
+\hbadness=2000
+\vbadness=\maxdimen
+
+
+% ------------------------
 %  Font
 % ------------------------
 \usepackage[T1]{fontenc}
@@ -42,12 +55,15 @@
 % ------------------------
 % Tikz & PGF
 % ------------------------
+
+% PGF
 \usepackage{pgfplots}
-\usepackage{epstopdf}
+\pgfplotsset{compat=newest}
 \usepgfplotslibrary{fillbetween}
+
+% Tikz
 \usepackage{tikz}
 \usetikzlibrary{shapes.misc,shadows,arrows,decorations.pathmorphing,patterns}
-\pgfplotsset{compat=newest}
 
 
 % ------------------------
@@ -63,14 +79,15 @@
 % ------------------------
 % Commands
 % ------------------------
-\newcommand{\twomedskip}{\medskip\medskip}
 
+% Letter Commands
 \newcommand{\Tau}{\mathcal{T}}
 \newcommand{\bm}[1]{\mbox{\boldmath{$#1$}}}
 \newcommand{\bX}{\bm{X}}
 \newcommand{\bY}{\bm{Y}}
 \newcommand{\bZ}{\bm{Z}}
 
+% Operators
 \DeclareMathOperator{\var}{Var}
 \DeclareMathOperator{\cov}{Cov}
 \DeclareMathOperator{\corr}{Corr}
@@ -81,7 +98,36 @@
 \DeclareMathOperator{\diag}{diag}
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\Prob}{Prob}
+\DeclareMathOperator{\Ex}{E}
+
+% Spacing Commands
+\newcommand{\twomedskip}{\medbreak\medbreak}
+\newcommand{\twoindent}{\indent\indent}
+
+% Other Commands
 \newcommand{\xqed}{\hfill \lower-0.3ex\hbox{$\triangleleft$}}
+\newcommand{\zeropartnum}[1]{
+	\ifcase\value{#1}\relax 0\else%
+	\Roman{#1}\fi}% 
+	\renewcommand{\thepart}{\zeropartnum{part}
+}
+
+
+% ------------------------
+% Exercise Commands
+% ------------------------
+\newcounter{problem}
+\newcommand{\prob}{
+\stepcounter{problem} %
+\noindent \theproblem. }
+\counterwithin*{problem}{chapter}
+
+
+% ------------------------
+% Table Counter
+% ------------------------
+\counterwithin{table}{chapter}
+\counterwithin{figure}{chapter}
 
 
 % ------------------------
@@ -116,82 +162,68 @@
 
 
 % ------------------------
-% Exercises
+% Title 
 % ------------------------
-\newcounter{problem}
-\newcommand{\prob}{
-\stepcounter{problem} %
-\noindent \theproblem. }
-\counterwithin*{problem}{chapter}
 
+% Title
+\title{Algorithmic Trading and Quantitative Strategies \\ \vspace{3cm}  (Version: \today)} %This is a placeholder titlepage, it will not be final.
 
-% ------------------------
-% Table Counter
-% ------------------------
-\counterwithin{table}{chapter}
-\counterwithin{figure}{chapter}
+% Author
+\author{\scalebox{1.5}{ Raja Velu\footnote{Department of Finance \hfill \newline \indent \indent Whitman School of Management \hfill \newline \indent \indent Syracuse University}, Maxence Hardy\footnote{Linear Quantitative Research \hfill \newline \indent \indent J.P. Morgan} and Daniel Nehren\footnote{Statistical Modeling \& Development \hfill \newline \indent \indent Barclays}}}
 
 
 % ------------------------
 % Document
 % ------------------------
-
-\include{frontmatter/preamble} 
 \begin{document}
+\raggedbottom
+
+% Front Matter
 \frontmatter
-\title{Algorithmic Trading and Quantitative Strategies \\ \vspace{3cm}  (Version: \today)} %This is a placeholder titlepage, it will not be final.
-
-\author{\scalebox{1.5}{ Raja Velu\footnote{Department of Finance \hfill \newline \indent \indent Whitman School of Management \hfill \newline \indent \indent Syracuse University}, Maxence Hardy\footnote{Linear Quantitative Research \hfill \newline \indent \indent J.P. Morgan} and Daniel Nehren\footnote{Statistical Modeling \& Development \hfill \newline \indent \indent Barclays}}}
-
-
+\setcounter{page}{0}
 \include{chapters/title/title}
 \include{chapters/preface/preface}
 
-
+% Table of Contents
 \cleardoublepage
-\setcounter{part}{-1}
-\setcounter{page}{7} % previous pages will be reserved for frontmatter to be added in later.
 \tableofcontents
-\raggedbottom
 
-
-%%%%%%%%%%%%%%%%
-% To be removed
+% To-Do
 %\listoftodos[Todo and Focus List]
-\newcommand{\zeropartnum}[1]{
-	\ifcase\value{#1}\relax 0\else%
-	\Roman{#1}\fi}% 
-	\renewcommand{\thepart}{\zeropartnum{part}
-}
-%%%%%%%%%%%%%%%%
 
-\setcounter{part}{-1}
 
+% Main Matter
 \mainmatter
 
+% Context: Introduction and Overviews
+\setcounter{part}{-1}
 \part{Context: Introduction and Overview}
 \include{chapters/parts/part_zero/part_zero}
 \include{chapters/chapter_intro/ch_intro}
 \include{chapters/chapter_trading_fund/ch_trading_fund}
 
+% Foundations: Basic Models and Empirics
 \part{Foundations: Basic Models and Empirics}
 \include{chapters/parts/part_one/part_one}
 \include{chapters/chapter_uvts/ch_uvts}
 \include{chapters/chapter_mvts/ch_mvts}
 \include{chapters/chapter_advanced/ch_advanced}
 
+% Trading Algorithms
 \part{Trading Algorithms}
 \include{chapters/parts/part_two/part_two}
 \include{chapters/chapter_stat_ts/ch_stat_ts}
 \include{chapters/chapter_apm/ch_apm}
 \include{chapters/chapter_news_an/ch_news_an}
 
+% Execution Algorithms
 \part{Execution Algorithms}
 \include{chapters/parts/part_three/part_three}
 \include{chapters/chapter_trade_data_models/ch_trade_data_models}
 \include{chapters/chapter_mi_models/ch_mi_models}
 \include{chapters/chapter_exec_models/ch_exec_models}
 
+% Technology Considerations
 \part{Technology Considerations}
 \include{chapters/parts/part_four/part_four}
 \include{chapters/chapter_tech/ch_tech}
@@ -202,4 +234,5 @@
 \bibliography{bibtex}
 \include{chapters/index/index}
 \include{chapters/back/back}
+
 \end{document}

@@ -22,17 +22,17 @@ where it is assumed that $a_t$ and $N_t$ are independent white-noise processes; 
 The state space form of an ARIMA$(p,d,q)$ process $\Phi(B)Y_t= \theta(B)\epsilon_t$ has been extensively studied (see Reinsel (2002)~\cite[Section~2.6]{2002reinsel}). Observe if $\Phi_t \equiv \Phi$ and $H_t \equiv H$ for all $t$ then the system \eqref{eqn:2zt}--\eqref{eqn:2yt} is said to be time-invariant. A nice feature of expressing a model in state-space form is that an updating procedure can be readily used when a new observation becomes available to revise the current state vector and to produce forecasts. These forecasts in general tend to fare better. 
 
 
-For the state-space model, define the finite sample estimates of the state vector $Z_{t+1}$ based on observations $Y_t, \ldots, Y_l$, as $\hat{Z}_{t+l|t} = E[Z_{t+l} \;|\; Y_t,\cdots,Y_l],\text{ with } V_{t+l \;|\; t} = E[(Z_{t+l} - \hat{Z}_{t+l \;|\; t})(Z_{t+l} - \hat{Z}_{t+l \;|\; t})']$. A convenient computational procedure, known as the \emph{Kalman filter equations},\label{in:kalman} is used to obtain the current estimate $\hat{Z}_{t\;|\;t}$, in particular. It is known that (see Reinsel (2002)~\cite{2002reinsel}), starting from some reasonable initial values $Z_0 \equiv \hat{Z}_{0 \;|\; 0}$ and $V_0 \equiv V_{0\;|\;0}$, the estimate, $\hat{Z}_{t \;|\; t}$, can be obtained through the following recursive relations:
+For the state-space model, define the finite sample estimates of the state vector $Z_{t+1}$ based on observations $Y_t, \ldots, Y_l$, as $\hat{Z}_{t+l|t} = \Ex[Z_{t+l} \;|\; Y_t,\cdots,Y_l],\text{ with } V_{t+l \;|\; t} = \Ex[(Z_{t+l} - \hat{Z}_{t+l \;|\; t})(Z_{t+l} - \hat{Z}_{t+l \;|\; t})']$. A convenient computational procedure, known as the \emph{Kalman filter equations},\label{in:kalman} is used to obtain the current estimate $\hat{Z}_{t\;|\;t}$, in particular. It is known that (see Reinsel (2002)~\cite{2002reinsel}), starting from some reasonable initial values $Z_0 \equiv \hat{Z}_{0 \;|\; 0}$ and $V_0 \equiv V_{0\;|\;0}$, the estimate, $\hat{Z}_{t \;|\; t}$, can be obtained through the following recursive relations:
 	\begin{equation}\label{eqn:2hatz}
 	\hat{Z}_{t \;|\; t} = \hat{Z}_{t \;|\; t-1} + K_t(Y_t - H_t \hat{Z}_{t \;|\; t-1}),
 	\end{equation}
 where $K_t= V_{t \;|\; t-1} H_t'[H_t V_{t \;|\; t-1} H_t' + \sigma_N^2]^{-1}$ with $\hat{Z}_{t \;|\; t-1} = \Phi_t \hat{Z}_{t-1\;|\; t-1},V_{t \;|\; t-1} = \Phi_t V_{t-1\;|\; t-1} \Phi_t' + \Sigma_{a}$ and $V_{t \;|\; t} = [I - K_t H_t] V_{t \;|\; t-1} = V_{t\;|\; t-1} - V_{t\;|\; t-1} H_t' [H_t V_{t \;|\; t-1} H_t' + \sigma_N^2]^{-1} H_t V_{t \;|\; t-1}$ for $t= 1,2, \ldots$.
 
 
-In \eqref{eqn:2hatz}, the quantity $\varepsilon_{t \;|\; t-1}= Y_t - H_t \hat{Z}_{t \;|\; t-1} \equiv Y_t - \hat{Y}_{t \;|\; t-1}$ at time $t$ is the new information provided by the measurement $Y_t$, which was not available from the previous observed (finite) history of the system. The factor $K_t$ is termed as the ``Kalman gain'' matrix. The filtering procedure in \eqref{eqn:2hatz} has the recursive ``updating'' form, and these equations represent the minimum mean square error predictor property. For example, note that $E[Z_t \,|\,Y_t,\ldots,Y_1]= E[Z_t \,|\,Y_{t-1},\cdots,Y_1] + E[Z_t \,|\, Y_t - \hat{Y}_{t \;|\; t-1}]$, since $\varepsilon_{t \;|\; t-1} = Y_t - \hat{Y}_{t \;|\; t-1}$ is independent of $Y_{t-1}, \ldots, Y_1$. Note from \eqref{eqn:2hatz}, the estimate of $Z_t$ equals the prediction of $Z_t$ from observations through time $t-1$ updated by the factor $K_t$ times the innovation $\varepsilon_{t|t-1}$. The quantity $K_t$ can be taken as the regression coefficients of $Z_t$ on the innovation $\varepsilon_{t|t-1}$, with $\var(\varepsilon_{t\;|\; t-1}) = H_t V_{t\;|\; t-1} H_t' + \sigma_N^2$ and $\cov(Z_t,\varepsilon_{t\;|\; t-1})= V_{t \;|\; t-1} H_t'$. Thus, the general \emph{updating relation} is $\hat{Z}_{t\;|\;t} = \hat{Z}_{t\;|\; t-1} + \cov(Z_t,\varepsilon_{t\;|\; t-1}) \{ \var(\varepsilon_{t\;|\; t-1}) \}^{-1} \varepsilon_{t\;|\; t-1}$, where $\varepsilon_{t \;|\; t-1} = Y_t - \hat{Y}_{t\;|\; t-1}$, and the relation in $V_t$ is the usual updating of the error covariance matrix to account for the new information available from the innovation $\varepsilon_{t\;|\; t-1}$. Forecasts of future state values are available as $\hat{Z}_{t+l\;|\;t} = \Phi_{t+l} \hat{Z}_{t+l-1\;|\;t}$ for $l = 1,2,\ldots$. 
+In \eqref{eqn:2hatz}, the quantity $\varepsilon_{t \;|\; t-1}= Y_t - H_t \hat{Z}_{t \;|\; t-1} \equiv Y_t - \hat{Y}_{t \;|\; t-1}$ at time $t$ is the new information provided by the measurement $Y_t$, which was not available from the previous observed (finite) history of the system. The factor $K_t$ is termed the ``Kalman gain'' matrix. The filtering procedure in \eqref{eqn:2hatz} has the recursive ``updating'' form, and these equations represent the minimum mean square error predictor property. For example, note that $\Ex[Z_t \,|\,Y_t,\ldots,Y_1]= \Ex[Z_t \,|\,Y_{t-1},\cdots,Y_1] + \Ex[Z_t \,|\, Y_t - \hat{Y}_{t \;|\; t-1}]$, since $\varepsilon_{t \;|\; t-1} = Y_t - \hat{Y}_{t \;|\; t-1}$ is independent of $Y_{t-1}, \ldots, Y_1$. Note from \eqref{eqn:2hatz}, the estimate of $Z_t$ equals the prediction of $Z_t$ from observations through time $t-1$ updated by the factor $K_t$ times the innovation $\varepsilon_{t|t-1}$. The quantity $K_t$ can be taken as the regression coefficients of $Z_t$ on the innovation $\varepsilon_{t|t-1}$, with $\var(\varepsilon_{t\;|\; t-1}) = H_t V_{t\;|\; t-1} H_t' + \sigma_N^2$ and $\cov(Z_t,\varepsilon_{t\;|\; t-1})= V_{t \;|\; t-1} H_t'$. Thus, the general \emph{updating relation} is $\hat{Z}_{t\;|\;t} = \hat{Z}_{t\;|\; t-1} + \cov(Z_t,\varepsilon_{t\;|\; t-1}) \{ \var(\varepsilon_{t\;|\; t-1}) \}^{-1} \varepsilon_{t\;|\; t-1}$, where $\varepsilon_{t \;|\; t-1} = Y_t - \hat{Y}_{t\;|\; t-1}$, and the relation in $V_t$ is the usual updating of the error covariance matrix to account for the new information available from the innovation $\varepsilon_{t\;|\; t-1}$. Forecasts of future state values are available as $\hat{Z}_{t+l\;|\;t} = \Phi_{t+l} \hat{Z}_{t+l-1\;|\;t}$ for $l = 1,2,\ldots$. 
 
 
-Note for ARIMA models with $Y_t = HZ_t$ and $H = [1,0,\ldots,0]$, this Kalman filtering procedure provides an alternate way to obtain finite sample forecasts, based on data $Y_t,Y_{t-1}, \cdots, Y_1$, for future values in the ARIMA process, subject to specification of appropriate initial conditions to use in the terms in \eqref{eqn:2hatz}. For stationary $Y_t$ with $E(Y_t)= 0$, the appropriate initial values are $\hat{Z}_{0 \;|\;0} = 0$, a vector of zeros, and $V_{0 \;|\;0} = \cov(Z_0) \equiv V_*$, the covariance matrix of $Z_0$. Specifically, because the state vector $Z_t$ follows the stationary vector AR(1) model $Z_t = \Phi Z_{t-1} + \psi \varepsilon_t$, its covariance matrix $V_*= \cov(Z_t)$ satisfies $V_*= \Phi V_* \Phi' + \sigma_{\varepsilon}^2 \Psi \Psi'$, which can be readily solved for $V_*$. For nonstationary ARIMA processes, additional assumptions need to be specified. The ``steady-state'' values of the Kalman filtering procedure $l$-step ahead forecasts $\hat{Y}_{t+l\;|\;t}$ and their forecast error variances $v_{t+l\;|\;t}$ will be identical to the expressions given in Chapter~\ref{ch:ch_uvts}, $\hat{Y}_t(l)$ and $\sigma^2(l) = \sigma^2 (1 + \sum_{i=1}^{i-1}\psi_{i}^2 )$. 
+Note for ARIMA models with $Y_t = HZ_t$ and $H = [1,0,\ldots,0]$, this Kalman filtering procedure provides an alternate way to obtain finite sample forecasts, based on data $Y_t,Y_{t-1}, \cdots, Y_1$, for future values in the ARIMA process, subject to specification of appropriate initial conditions to use in the terms in \eqref{eqn:2hatz}. For stationary $Y_t$ with $\Ex(Y_t)= 0$, the appropriate initial values are $\hat{Z}_{0 \;|\;0} = 0$, a vector of zeros, and $V_{0 \;|\;0} = \cov(Z_0) \equiv V_*$, the covariance matrix of $Z_0$. Specifically, because the state vector $Z_t$ follows the stationary vector AR(1) model $Z_t = \Phi Z_{t-1} + \psi \varepsilon_t$, its covariance matrix $V_*= \cov(Z_t)$ satisfies $V_*= \Phi V_* \Phi' + \sigma_{\varepsilon}^2 \Psi \Psi'$, which can be readily solved for $V_*$. For nonstationary ARIMA processes, additional assumptions need to be specified. The ``steady-state'' values of the Kalman filtering procedure $l$-step ahead forecasts $\hat{Y}_{t+l\;|\;t}$ and their forecast error variances $v_{t+l\;|\;t}$ will be identical to the expressions given in Chapter~\ref{ch:ch_uvts}, $\hat{Y}_t(l)$ and $\sigma^2(l) = \sigma^2 (1 + \sum_{i=1}^{i-1}\psi_{i}^2 )$. 
 
 
 An alternative set-up, alternative to is to assume that the deviations in the observation and transition equations are related. With the observation equation stated in \eqref{eqn:2yt}, the transition equation is modified as 
@@ -114,11 +114,11 @@ and estimate of $\lambda$ is obtained by maximizing the likelihood function $L(\
 	\end{equation}
 \noindent Optimal forecast:
 	\begin{equation} \label{eqn:optfore}
-	E(y_t \;|\; F_{t-1})= \sum_{i=1}^2 (\phi_0+\phi_1 \mu_i) \text{Prob}(s_{t-1}=i \;|\; F_{t-1}).
+	\Ex(y_t \;|\; F_{t-1})= \sum_{i=1}^2 (\phi_0+\phi_1 \mu_i) \text{Prob}(s_{t-1}=i \;|\; F_{t-1}).
 	\end{equation}
 The forecast for `$k$' period ahead can be stated as:
 	\begin{equation} \label{eqn:period}
-	E(y_{t+k} \;|\; F_{t-1}) = \mu+\phi_1^k \sum_{i=1}^2 (\mu_i-\mu)\, \text{Prob}(s_t=i \;|\; F_{t-1}),
+	\Ex(y_{t+k} \;|\; F_{t-1}) = \mu+\phi_1^k \sum_{i=1}^2 (\mu_i-\mu)\, \text{Prob}(s_t=i \;|\; F_{t-1}),
 	\end{equation}
 where $\mu=\phi_0/(1-\phi_1)$.
 
@@ -178,8 +178,7 @@ In practical applications of these regime-shifting models, it is not easy to dis
 
 
 % A Model for Volume-Volatility Relationship
-\section{A Model for Volume-Volatility Relationship \label{s:model_volvol_rel}}
-
+\section{A Model for Volume-Volatility Relationship \label{s:model_volvol_rel}} \label{in:volvol1}
 
 While the price information via returns and the volatility can be modeled through methods described earlier, it has become important to incorporate other relevant trading data to augment the trading strategies. To that effect, we want to seek some guidance from economic theory how that information is linked to price movements.
 
@@ -194,7 +193,7 @@ In the market microstructure theory, it is assumed that price movements occur pr
 where $Z_{1t}$ and $Z_{2t}$ are standard normal variables and $Z_{1t},  Z_{2t}$, and $I_t$ are mutually independent. Thus the volatility-volume relationship,
 	\begin{equation} \label{eqn:2covVt}
 	\begin{split}
-	\cov(r_t^2,V_t)& = E(r_{t}^2V_t) - E(r_t^2) \,E(V_t) \\ 
+	\cov(r_t^2,V_t)& = \Ex(r_{t}^2V_t) - \Ex(r_t^2) \,\Ex(V_t) \\ 
 	&= \sigma_1^2 \mu_V \var(I_t) > 0
 	\end{split}
 	\end{equation}
@@ -202,7 +201,7 @@ is positive due to the variance in $I_t$. If there is no new information or if t
 Poisson distribution\label{in:poisson} and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in \eqref{eqn:2rtVt} are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their main findings: \twomedskip
 
 
-\noindent\textbf{Stylized Fact 6 (Volume--Volatility Relationship):} 
+\noindent\textbf{Stylized Fact 6 (Volume--Volatility Relationship):} \label{in:style5}
 
         \begin{itemize}
         \item  There is a positive correlation between conditional volatility and volume.
@@ -242,7 +241,7 @@ These and other studies generally confirm the information content of the volume 
 In algorithmic trading a key ingredient of many strategies is forecast of intra-day volume. Typically a parent order is split into several child orders and the timing of the submission of child orders could depend on the volume forecast for an interval of time that is considered for trading and when child orders are sent out. Brownlees, Cipollini and Gallo (2011)~\cite{brownless} provide prediction model for intra-day volume. This will be described in detail in the next chapter.
 
 
-The model in \eqref{eqn:2rtVt} is extended to cover multiple stocks in He and Velu (2014)~\cite{hevelu}. The role of common cross-equity variation in trade related variables is of interest in financial economics. The factors that influence the prices, order flows and liquidity are most likely to be common among equities that are exposed to the same risk factors. Exploring commonality is useful for institutional trading such as portfolio rebalancing. The mixture distribution in \eqref{eqn:2rtVt} is developed by assuming that factor structures for returns and trading volume stem from the same valuation fundamentals and depend on a common latent information flow.  
+The model in \eqref{eqn:2rtVt} is extended to cover multiple stocks in He and Velu (2014)~\cite{hevelu}. The role of common cross-equity variation in trade related variables is of interest in financial economics. The factors that influence the prices, order flows and liquidity are most likely to be common among equities that are exposed to the same risk factors. Exploring commonality is useful for institutional trading such as portfolio rebalancing. The mixture distribution in \eqref{eqn:2rtVt} is developed by assuming that factor structures for returns and trading volume stem from the same valuation fundamentals and depend on a common latent information flow. \label{in:volvol2} \label{in:style6}
 
 
 
@@ -257,7 +256,7 @@ To illustrate, recall Figure~\ref{fig:tradeactline}, on trading activities in Se
  	\begin{figure}[!ht]
 	\centering	
 	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/survivor.png}
-	\caption{Empirical Survivor Function and Serial Correlation plots. \label{fig:survivor}}
+	\caption{Empirical Survivor Function and Serial Correlation plots.\label{fig:survivor}}
 	\end{figure}
 	
 	\begin{figure}[!ht]
@@ -274,7 +273,7 @@ Cox and Lewis (1966)~\cite{cox1966} also observe a few issues that can arise wit
 
 
 % Stylized Models for High Frequency Financial Data
-\subsection{Stylized Models for High Frequency Financial Data}
+\subsection{Stylized Models for High Frequency Financial Data} \label{in:style7}
 
 There has been a great deal of interest in studying market microstructure to better understand the trading mechanisms and the process of price formation. With the availability of Trades and Quotes (TAQ)\label{in:taq2} data that contains all equity transactions on major exchanges, it is possible to better model the key elements of market microstructure. The extensive details from the order books over multiple exchanges provide massive amount of data, the analysis of which will be taken up in later chapters as well. Here we want to present some unique characteristics of high frequency data and present most commonly used models in practice. To reiterate, the transactions (trades, quotes, bids, etc) may occur at any point in time (Figure~\ref{fig:exchhours}) during the exchange hours as given below.
 
@@ -366,7 +365,7 @@ The value of `$\theta$' generally tends to be small, but nevertheless significan
 
 \noindent \emph{Commonly used duration models:} The timing aspect of transaction was discussed in Easley and O'Hara (1992)~\cite{easley1992} and a rigorous set of tools was developed by Engle and Russell (1998)~\cite{engle1998}, as an alternative to fixed interval analysis. Treating the ticks as random variables that follow a point process, the intensity of transactions in an interval of length, $\Delta$, is defined as
 	\begin{equation} \label{eqn:2lambda}
-	\lambda(t)= \lim_{\Delta \to 0} \frac{E[N(t+\Delta) - N(t) \;|\; F_t]}{\Delta},
+	\lambda(t)= \lim_{\Delta \to 0} \frac{\Ex[N(t+\Delta) - N(t) \;|\; F_t]}{\Delta},
 	\end{equation}
 where $N(t)$ denotes the number of ticks until `$t$' and $F_t$ is the information available until that time. The commonly used model for such arrival rates is Poisson that implies that the time between two successive ticks is independent of pairwise ticks and follows an exponential distribution. But the duration data, $d_i = t_i - t_{i-1}$ exhibit some dependence, thus implying that time moves faster sometimes, faster than the clock time. The intensity rate, $\lambda(t)$ is not a constant, which is a typical characteristic of the exponential distribution. We briefly outline how the durations are modeled. For detailed discussion, see Tsay (2010)~\cite{tsay} or Lai and Xing (2008)~\cite[Section 11.2]{lai1}. The autoregressive conditional duration (ACD) model\label{in:acd} is defined as follows:
 	\begin{flalign}\label{eqn:2dipsi}
@@ -374,12 +373,12 @@ where $N(t)$ denotes the number of ticks until `$t$' and $F_t$ is the informatio
 	\text{and} && \phantom{x} & \phantom{x} &&  \\
 	&& \psi_i&= \alpha + \sum_{j=1}^p \alpha_j d_{t-j} + \sum_{v=1}^q \beta_v \psi_{i-v}, && \notag
 	\end{flalign}
-where $\varepsilon_i$ are i.i.d. with $E(\varepsilon_i) = 1$; If $\varepsilon_t's$ are assumed to follow exponential the model \eqref{eqn:2dipsi} is called E(xpotential)ACD. Two alternative models WACD and GGACD are based on the following specification for the errors:
+where $\varepsilon_i$ are i.i.d. with $\Ex(\varepsilon_i) = 1$; If $\varepsilon_t's$ are assumed to follow exponential the model \eqref{eqn:2dipsi} is called E(xpotential)ACD. Two alternative models WACD and GGACD are based on the following specification for the errors:
 	\begin{equation} \label{eqn:wei_gam}
-	\begin{split}
+	\begin{aligned}
 	&\text{Weibull: } h(x)= \frac{\alpha}{\beta^{\alpha}} x^{\alpha - 1} \exp\left\{ -(\frac{x}{\beta})^{\alpha} \right\} \\
 	&\text{Generalized Gamma: } y= \lambda \frac{x}{\beta},
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where $\lambda = \frac{\sqrt{K}}{\sqrt{K + \frac{1}{\alpha}}}$. The hazard function of Generalized Gamma is quite flexible and may fit better various patterns. The stationary conditions would require that the roots of $\alpha(B) = 1 - \sum_{j=1}^q (\alpha_j + \beta_j)\, B^j$ are outside the unit circle when $g= \max(p,q)$ and $B$ is the back-shift operator. It is clear that the model \eqref{eqn:2dipsi} is similar to GARCH model given in \eqref{eqn:2secondht}. The estimation is typically done through conditional maximum likelihood and all inferences are asymptotic.
 
@@ -395,7 +394,7 @@ and $\varepsilon_i = \sqrt{h_i^v} u_i, h_i^v = \omega^v + \sum_{j=1}^{p^v} \alph
 	\begin{equation} \label{eqn:2lndi}
 	\ln{d_i} = \beta_0 + \beta_1 \ln{(d_{t-1})} + \beta_2s_{i-1} + \sigma\varepsilon_i,
 	\end{equation}
-where $s_i$ is the size of the $i$th price change measured in ticks; other relevant variables can be easily added to this model.
+where $s_i$ is the size of the $i$th price change measured in ticks; other relevant variables can be easily added to this model. \label{in:style8}
 
 
 
@@ -597,11 +596,12 @@ There are two main reasons for the exposition of price bar data to capture the e
 The technical trading rules that are to be discussed in Chapter~6 involve a relatively small information set to carry out predictions.\label{in:machine1} It treats each of the `$n$' time series of asset returns as autonomous. As pointed out by Malkiel (2012)~\cite{malkiel}, these rules can be easily implemented by most market participants if such opportunities should emerge, and market efficiency would rule them out as winning strategies. More powerful prediction methods using a very large set of potential predictors and yet capable of avoiding overfitting are needed to take advantage of transient opportunities. We gave an overview of recent advances in high-dimensional regression in Chapter~4. The classification techniques can also be formulated with high-dimensional feature vector. In machine learning and in computer science the focus is to handle rapidly different types of data (including text). The literature in this field is vast and so richly detailed that a single chapter wouldn't do justice to the topic. Consequently, here we will only briefly mention tools that are deemed to be relevant to trading and invite interested readers to further their knowledge with dedicated references such as Goodfellow, Bengio, and Courville (2016)~\cite{goodfellow} and Lopez de Prado (2018)~\cite{LopezDePradoML}.
 
 
-Machine learning is a still-growing area of computer science that encompasses other well-established areas such as statistics, computational algorithms, control theory, etc.. The focus in machine learning is on developing efficient algorithms for prediction or for classification using large data sets. The efficiency is gauged by predictive validation accuracy. The inferential aspects of statistical theory, such as standard error of the estimates, confidence intervals, etc., are generally not of much concern. Some areas where machine learning methods have led to significant contribution are classification, clustering and multi-dimensional regression. The attractiveness of these methods lies in the fact that they do not need any a priori theory to suggest which relevant variables to consider. Therefore with no prescription of variables, the variable or feature selection becomes an important process in machine learning. The statistical foundations of machine learning methods are also alternatively referred to as statistical learning methods. We provide a brief description of a select few methods in this section. \twomedskip
+Machine learning is a still-growing area of computer science that encompasses other well-established areas such as statistics, computational algorithms, control theory, etc.. The focus in machine learning is on developing efficient algorithms for prediction or for classification using large data sets. The efficiency is gauged by predictive validation accuracy. The inferential aspects of statistical theory, such as standard error of the estimates, confidence intervals, etc., are generally not of much concern. Some areas where machine learning methods have led to significant contribution are classification, clustering and multi-dimensional regression. The attractiveness of these methods lies in the fact that they do not need any a priori theory to suggest which relevant variables to consider. Therefore with no prescription of variables, the variable or feature selection becomes an important process in machine learning. The statistical foundations of machine learning methods are also alternatively referred to as statistical learning methods. We provide a brief description of a select few methods in this section. 
+
 
 
 % Neural Networks
-\subsection{Neural Networks}
+\subsection{Neural Networks\label{sec:neural_networks}}
 
 This is one of the main methods of machine learning where a performance of a task is learnt by analyzing training examples that have been hand-labeled in advance. The neural network in its simplest form can be represented as follows:
 
@@ -614,7 +614,8 @@ This is one of the main methods of machine learning where a performance of a tas
 	\draw[->,line width=0.4mm] (Z) edge (Y);
 	\end{tikzpicture}
 	\end{equation}
-	
+
+
 Here, the square boxes contain `$n$' dimensional input or feature vector, $X$ and `$m$' dimensional output vector, $Y$ and the circular box indicates hidden or unknown layer in-between that connects the input to the output. Structurally, neural networks are a two-stage regression or classification model with intermediary layers, and conceptually the model is similar to the reduced-rank regression model \ref{eqn:ykabxk}. But, $Z$ is generally a non-linear function of $X$. In the ordinary least squares regression model, the goal is to get `$m$' linear combinations of `$X$' that best predicts `$Y$'. Here `$r$' dimensional intermediaries can vary based on the assumption of `hidden' layers, but the `key' is that the output vector, `$Y$', can be a non-linear function of `$X$' via the hidden layers and `$r$' can be larger than `$n$'. In its simplest form the neural network model can be written as follows:
 	\begin{equation} \label{eqn:neurallabel}
 	\begin{split}
@@ -637,7 +638,7 @@ and in the classification setting the criterion is,
 	\begin{equation} \label{eqn:bigwtheta2}
 	W(\theta)= - \sum_{i=1}^n \sum_{k=1}^m y_{ik} \ln f_k(x_i),
 	\end{equation}
-which is also termed as a measure of deviance. The method to estimate the unknown parameters, `$\theta$' is a gradient descent, also-called as back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
+which is also termed a measure of deviance. The method to estimate the unknown parameters, `$\theta$' is a gradient descent, also-called as back-propagation method. This is essentially based on the first differential of $W_i(\theta)$; the `$r \times 1$' iteration is
 	\begin{equation} \label{eqn:rby1it}
 	\hat{\theta}^{(r+1)}= \hat{\theta}^{(r)} - \gamma_r \sum_{i=1}^n \dfrac{\delta W_i(\theta)}{\delta \theta},
 	\end{equation}
@@ -649,10 +650,9 @@ A more general form of neural net is given in Figure~\ref{fig:neural_net} below.
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/input_output.png}	
+	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/input_output.png}
 	\caption{Feed-forward neural nets. \label{fig:neural_net}}
 	\end{figure}
-
 
 
 \begin{enumerate}[--]
@@ -678,13 +678,13 @@ The set of techniques covered in this area is quite broad and generally refers t
 	\begin{equation} \label{eqn:pstpone}
 	P(s_{t+1}=S', r_{t+1}=r'  \;|\; F_t)= P(s_{t+1}=S', r_{t+1}=r'  \;|\; s_t,a_t),
 	\end{equation}
-where $F_t$ is the set of values of all the prior events until `$t$.' It is useful to note that the key quantities that define the dynamics of the decision process under the assumptions are the transition probabilities, $P_{ss'}= P(s_{t+1}=s' \;|\; s_t=s, a_t=a)$ and the anticipated value of the next reward, $R_{ss'}= E(r_{t+1} \;|\; s_t= s, a_t= a, s_{t+1}= s')$. The reinforcement learning algorithms are based on estimating future value functions of state-action pairs which depend on the agent's policy, $\Pi\, (s,a)$. Formally, the state-value function is,
+where $F_t$ is the set of values of all the prior events until `$t$.' It is useful to note that the key quantities that define the dynamics of the decision process under the assumptions are the transition probabilities, $P_{ss'}= P(s_{t+1}=s' \;|\; s_t=s, a_t=a)$ and the anticipated value of the next reward, $R_{ss'}= \Ex(r_{t+1} \;|\; s_t= s, a_t= a, s_{t+1}= s')$. The reinforcement learning algorithms are based on estimating future value functions of state-action pairs which depend on the agent's policy, $\Pi\, (s,a)$. Formally, the state-value function is,
 	\begin{equation} \label{eqn:statevalue}
-	V^\Pi(s)= E_\Pi \left[ \sum_{k=0}^\infty \gamma^k r_{t+k+1} \;|\; s_t=s \right],
+	V^\Pi(s)= \Ex_\Pi \left[ \sum_{k=0}^\infty \gamma^k r_{t+k+1} \;|\; s_t=s \right],
 	\end{equation}
 and the action-value function is,
 	\begin{equation} \label{eqn:actionvalue}
-	q^\Pi(s,a)= E_\Pi \left[ \sum_{k=0}^\infty \gamma^k r_{t+k+1} \;|\; s_t=s, a_t=a \right].
+	q^\Pi(s,a)= \Ex_\Pi \left[ \sum_{k=0}^\infty \gamma^k r_{t+k+1} \;|\; s_t=s, a_t=a \right].
 	\end{equation}
 While the above formulation appears to be quite general, consistency conditions imposed to satisfy some recursive relationships lead to a form for $V^\Pi(s)$ called the Bellman equation:
 	\begin{equation} \label{eqn:vprods}
@@ -697,29 +697,34 @@ The second part of the above equation indicates how the value that the result fr
 
 The uniqueness and existence of $V^\Pi$ are possible when $\gamma < 1$; it is guaranteed that eventual termination will result from all states under the policy, $\Pi$. \twomedskip
 
+
 Similarly, the optimal action-value function can be written as
 	\begin{equation} \label{eqn:actionvalueqstar}
 	Q^*(s,a)= \max_\Pi Q^\Pi(s,a)= \sum_{s'} P_{ss'}^a( R_{ss'}^a + \gamma \max_{a'} Q^*(s',a') ).
 	\end{equation}
 
 
-Exact solutions are possible only under idealized conditions. A possible approach to solve the above is to use dynamic programming, but in practice the methods to solve the problem tend to be heuristic and computational such as using a neural network (Deep Queue Network - DQN) to approximate the action-value function.  
-\twomedskip
+Exact solutions are possible only under idealized conditions. A possible approach to solve the above is to use dynamic programming, but in practice the methods to solve the problem tend to be heuristic and computational such as using a neural network (Deep Queue Network---DQN) to approximate the action-value function.  
+
+
 
 More generally speaking, Reinforcement Learning algorithms can be trained either using Value-based methods (Q-Learning) or Policy-based methods (Policy Gradient), so it's worth mentioning a few words about the differences.
 
+
 In Q-learning, as we just described, for a given state we calculate the Q value for every action in the action space and we pick the action corresponding to the max value. This means that choosing actions depends on the Q value at each decision point: Q-Learning attempts to learn the value of being in a given state (s), and taking a specific action (a) there with regards to the stated reward structure (per the Bellman equation, the expected long-term reward for a given action is equal to the immediate reward plus the discounted expected reward from the best future action taken at the following state). 
 
-In Policy-based methods, we directly learn the policy function $\Pi$ without explicitly modeling the value function, resulting in actions being taken without directly calculating Q (s,a). This tends to be closer to the actual objective of learning the optimal policy (e.g. learning to trade optimally) directly from experiences, rather that through intermediary steps which are subject to higher noise and uncertainty. An interesting specificity of financial applications -- like trading -- in favor of a Policy-based approach is that the true reward for the agent tends to be terminal (e.g. P\&L, Execution Slippage, etc.), but the reward of each individual actions are less obvious, nor do they necessarily matter. For instance, when learning to optimally slice a large trade into a multitude of child orders, what is the value of having posted a top-of-book passive order two hours into the execution compared to having posted one level below the top-of-book? While it's hard to to get to these values, one would want the agent to learn to give a value to the intermediate actions in order to guide it toward the ultimate reward. \twomedskip
+
+In Policy-based methods, we directly learn the policy function $\Pi$ without explicitly modeling the value function, resulting in actions being taken without directly calculating Q (s,a). This tends to be closer to the actual objective of learning the optimal policy (e.g. learning to trade optimally) directly from experiences, rather that through intermediary steps which are subject to higher noise and uncertainty. An interesting specificity of financial applications---like trading---in favor of a Policy-based approach is that the true reward for the agent tends to be terminal (e.g. P\&L, Execution Slippage, etc.), but the reward of each individual actions are less obvious, nor do they necessarily matter. For instance, when learning to optimally slice a large trade into a multitude of child orders, what is the value of having posted a top-of-book passive order two hours into the execution compared to having posted one level below the top-of-book? While it's hard to to get to these values, one would want the agent to learn to give a value to the intermediate actions in order to guide it toward the ultimate reward. 
+
 
 While still a nascent field in finance, Reinforcement Learning is evolving fast and hold promises for trading applications that naturally lend themselves to be modeled as Markov Decision Processes. We encourage the curious reader to explore further the vast literature available on this topic.
 
 
 
 % Multiple Indicators and Boosting Methods
-\subsection{Multiple Indicators and Boosting Methods \label{sec:multindboostmeth}}
+\subsection{Multiple Indicators and Boosting Methods\label{sec:multindboostmeth}}
 
-In developing models that capture the main features of the data, it must be noted that there are no unique models. Thus they yield different forecasts. It is well-known in the forecasting literature that a combined forecast generally does perform overall better than the individual forecasts. If there are `$T$' models and thus `$T$' forecasts, $\hat{f}_1,\ldots, \hat{f}_T$, how do we combine them to get a single forecast? Because these are all based on the same data, the estimates are likely to be correlated, resulting in a covariance matrix, $\hat{\Sigma}_f$. Three estimates that are proposed in the literature are described in Table~\ref{tab:estimators}. \twomedskip
+In developing models that capture the main features of the data, it must be noted that there are no unique models. Thus they yield different forecasts. It is well-known in the forecasting literature that a combined forecast generally does perform overall better than the individual forecasts. If there are `$T$' models and thus `$T$' forecasts, $\hat{f}_1,\ldots, \hat{f}_T$, how do we combine them to get a single forecast? Because these are all based on the same data, the estimates are likely to be correlated, resulting in a covariance matrix, $\hat{\Sigma}_f$. Three estimates that are proposed in the literature are described in Table~\ref{tab:estimators}. 
 
 	\begin{table}[!ht]
 	\caption{Three proposed estimates}\label{tab:estimators}
@@ -740,7 +745,7 @@ As mentioned,\label{in:bagging}\label{in:boost1} the idea of combining multiple 
 
 
 To motivate, we will assume that we want to determine whether the price of an asset will go up or down. Under the random walk model, the error in guessing randomly is 0.5. But any rule should result in an error less than 0.5. We begin with a training set, $S=\{ (x_i,y_i), i=1,2, \ldots n\}$ where $x_i$ is the information and $y_i$ is a binary variable that indicates whether to enter the market or not. Assume that there are `$T$' rules, $h_t(x)$ are the classifiers and $D_t$ is the distribution over the training set with the error,
-	\begin{equation}
+	\begin{equation} \label{eq:errdh}
 	\text{err}_D(h)=Pr_{(x,y) \sim D}(h(x) \neq y).
 	\end{equation}
 The rule $h_t$ is supposed to have error $\text{err}_{D_t}(h_t)$ with respect to `$D_t$'. \twomedskip
@@ -755,13 +760,13 @@ The rule $h_t$ is supposed to have error $\text{err}_{D_t}(h_t)$ with respect to
         & where $\alpha_t=\frac{1}{2}\text{ln} \left( \frac{1-\text{err}_{D_t}(h_t)}{\text{err}_{D_t}(h_t)} \right), z_t=$ normalizing constant \\
         \textbf{Stopping Time:} & Stop when the error on a validation data set does \\
         & not improve \\
-        \textbf{Final Rule:} & $\text{Sign}(\sum_{t=1}^T \alpha_t h_t(x))$  \\
+        \textbf{Final Rule:} & $\text{Sign}\left(\sum_{t=1}^T \alpha_t h_t(x)\right)$  \\
         \end{tabular}
         \end{table*}
  
  
 It is possible to overfit with boosting; its performance clearly depends upon how well the two decisions (enter or not enter) are clearly separated based on the past data. The use of kernels can improve local separability. It is also important to optimally extract features, $x$, that can be discriminating between the two options for $y$. The main advantage of ensembles of different rules is that it is not likely that all rules will make the same error. The algorithm described above is known as, ``adaptive boosting algorithm (AdaBoost)'' is by Freund and Schapire (1995, 1996,1997)~\cite{freund1995decision,freund1996experiments,freund1997decision} and it automatically ``adapts'' to the data at hand. If $t^{th}$ classifier $h_t(x)$ is parameterized and the overall predictor takes the form
-	\begin{equation}
+	\begin{equation} \label{eq:hxsign}
 	h(x)=\text{Sign} \left( \sum_{t=1}^T \alpha_t \text{Sign}(w^{(t)}x+b^{(t)}) \right)
 	\end{equation}
 is a two-layer neural network with `$T$' hidden units. One can see the identical underlying nature of the structure between neural network and boosting algorithm.
@@ -803,7 +808,7 @@ The dataset consists of (CSV) file that contains the entire trading session, inc
 %\end{table}
 
 
-For the analysis of Problems 1--3, we consider the data for CISCO. The details of level~III data are given in Table~\ref{tab:level3data}. \twomedskip
+For the analysis of Problems 1--3, we consider the data for CISCO. The details of Level~III data are given in Table~\ref{tab:level3data}. \twomedskip
 
 
 % Problem

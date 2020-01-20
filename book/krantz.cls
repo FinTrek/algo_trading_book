@@ -1910,5 +1910,4 @@
 %\HeadingsChapterSection
 \endinput
 %%
-%% End of file `krantz.cls'.
-         
+%% End of file `krantz.cls'
