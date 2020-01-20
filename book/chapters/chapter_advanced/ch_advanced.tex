@@ -110,11 +110,11 @@ and estimate of $\lambda$ is obtained by maximizing the likelihood function $L(\
 
 \noindent Predicted regime: 
 	\begin{equation} \label{eqn:predreg}
-	\text{Prob}(s_t= j \;|\; F_{t-1})= p_{1j} \text{Prob}(s_{t-1}=1 \;|\; F_{t-1}) + p_{2j} \,\text{Prob}(s_{t-1}=2 \;|\; F_{t-1}).
+	\text{Prob}(s_t= j \;|\; F_{t-1})= p_{1j}\, \text{Prob}(s_{t-1}=1 \;|\; F_{t-1}) + p_{2j} \,\text{Prob}(s_{t-1}=2 \;|\; F_{t-1}).
 	\end{equation}
 \noindent Optimal forecast:
 	\begin{equation} \label{eqn:optfore}
-	\Ex(y_t \;|\; F_{t-1})= \sum_{i=1}^2 (\phi_0+\phi_1 \mu_i) \text{Prob}(s_{t-1}=i \;|\; F_{t-1}).
+	\Ex(y_t \;|\; F_{t-1})= \sum_{i=1}^2 (\phi_0+\phi_1 \mu_i)\, \text{Prob}(s_{t-1}=i \;|\; F_{t-1}).
 	\end{equation}
 The forecast for `$k$' period ahead can be stated as:
 	\begin{equation} \label{eqn:period}
@@ -158,8 +158,8 @@ where $h_t \sim \text{GARCH}(p,q)$ and $\beta_t$ and $v_t$ are piecewise linear.
 We want to conclude this section with some simple ideas borrowed from the area of statistical process control. Recall that if the market is efficient, the return $r_t= \ln P_t - \ln P_{t-1} \sim \text{ IID}(\mu_t, \sigma^2)$, where $\mu_t=0$. But assume that $\mu_t=c\delta$ when $t\geq t_0$ and zero elsewhere. The cumulative sum chart (CUSUM) to detect the positive and negative mean shift are based on recursive calculations:
 	\begin{equation} \label{eqn:cdouble}
 	\begin{split}
-	c_t^+&= \max(0, c_{t-1}^+ + (r_t-k)) \\
-	c_t^-&= \min(0, c_{t-1}^- - (r_t-k)),
+	c_t^+&= \max\big(0, c_{t-1}^+ + (r_t-k)\big) \\
+	c_t^-&= \min\big(0, c_{t-1}^- - (r_t-k)\big),
 	\end{split}
 	\end{equation}
 where $k= \delta/2$. The chart signals as sown as $c_t^+$ reaches `$h$'---a decision point set by the user. Jiang, Shu and Apley (2008)~\cite{shuap} modify \eqref{eqn:cdouble} with exponentially weighted moving average (EWMA) type of estimates that is adaptive in nature. It can be stated as,
@@ -251,7 +251,7 @@ The model in \eqref{eqn:2rtVt} is extended to cover multiple stocks in He and Ve
 In many fields of study, observations occur in a continuum, space or time in the form of point events. The continuum can be multi-dimensional, but our focus is on the one-dimensional time scale with points distributed irregularly along the time scale. The main interest lies in estimating the mean rate of occurrence of events or more broadly on the patterns of occurrences. There are excellent monographs on this topic: Cox and Lewis (1966)~\cite{cox1966}, Daley and Vere-Jones (2003)~\cite{daley2003}, etc. But the interest in financial applications was revived by the seminal paper by Engle and Russell (1998)~\cite{engle1998}. Financial market microstructure theories as discussed in Kyle (1985)~\cite{kyle1985}, Admati and Pfleiderer (1988)~\cite{admati1988theory} and Easley and O' Hara (1992)~\cite{easley1992} suggest that the frequency and the timing of trade-related activities, that include posting, canceling and executing an order, carry information about the state of the market. The transactions generally tend to cluster during certain times of the day and the change in the mean rate of occurrences may suggest a new information flow about a stock.
 
 
-To illustrate, recall Figure~\ref{fig:tradeactline}, on trading activities in Section 3.1. If we denote the observed intervals between successive activities as durations by $d_1, d_2, \ldots,d_r$, the time of occurrences are obtained by forming the cumulative sums of the $d$'s, $t_1= d_1, t_2= t_1 + d_2, \ldots, t_r=t_{r-1} + d_r$. Cox and Lewis (1966)~\cite{cox1966} suggest two ways to present this type of data graphically. One method is based on cumulative numbers of events that have occurred at or before `$t$' against `$t$'. The slope of the line between any two points is the average number of events per unit for that period. One way to standardize the plot would be to approximate the graph by a line, `$at$' when `$a$' is the slope of the graph indicating the average rate of occurrence for the entire duration. The second method calls for dividing the time scale into equally spaced time intervals and count the number of events in each interval; this also can be alternatively studied by fixing a certain number of events and count on the time it takes for this number to occur. In the context of stock data, this could mean simply recording not when the trade occurs but when the price changes. The advantage of the second plot is that the local fluctuations are readily observed and the advantage of the first plot is that it enables us to see systematic changes in the rate of occurrence.
+To illustrate, recall Figure~\ref{fig:tradeactline}, on trading activities in Section 3.1. If we denote the observed intervals between successive activities as durations by $d_1, d_2, \ldots,d_r$, the time of occurrences are obtained by forming the cumulative sums of the $d$'s, $t_1= d_1, t_2= t_1 + d_2, \ldots, t_r=t_{r-1} + d_r$. Cox and Lewis (1966)~\cite{cox1966} suggest two ways to present this type of data graphically. One method is based on cumulative numbers of events that have occurred at or before `$t$' against `$t$'. The slope of the line between any two points is the average number of events per unit for that period. One way to standardize the plot would be to approximate the graph by a line, `$a\,t$' when `$a$' is the slope of the graph indicating the average rate of occurrence for the entire duration. The second method calls for dividing the time scale into equally spaced time intervals and count the number of events in each interval; this also can be alternatively studied by fixing a certain number of events and count on the time it takes for this number to occur. In the context of stock data, this could mean simply recording not when the trade occurs but when the price changes. The advantage of the second plot is that the local fluctuations are readily observed and the advantage of the first plot is that it enables us to see systematic changes in the rate of occurrence.
  
  	\begin{figure}[!ht]
 	\centering	
@@ -335,7 +335,7 @@ High frequency data refer to the `tick' `$t_i$' data which contains, in addition
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_advanced/figures/Sec2-10Fig8.png}	
+	\includegraphics[width=0.8\textwidth]{chapters/chapter_advanced/figures/Sec2-10Fig8.png}
 	\caption{Typical Diurnal patterns. \label{fig:diurnal}}
 	\end{figure}
 
@@ -441,11 +441,11 @@ There is a considerable interest in extending the univariate duration models to 
 	\end{figure}
 Define $x_i = t_i - t_{i-1}$ as trade duration and $y_i = t_i^{f_w} - t_{i-1}^{f_w}$ as the forward quote duration; our goal is to model $(x_i,y_i)$ as a bivariate duration process but the underlying timings, as can be noted, are not synchronized. Thus, if $y_i > x_i$, define
 	\begin{equation} \label{eqn:anothertildey}
-	\widetilde{y}_i = (1 - d_i)y_i + d_ix_i,
+	\widetilde{y}_i = (1 - d_i)\, y_i + d_ix_i,
 	\end{equation}
 where $d_i$ is indicator variable, $d_i = I_{\{y_i>x_i\}}$. Model $(x_i,\widetilde{y}_i)$ as censored process. The equation \eqref{eqn:anothertildey} provides a mechanism in a way to align the two processes. The joint distribution is given by
 	\begin{equation} \label{eqn:2pxiyi}
-	p(x_i,\widetilde{y}_i \;|\; F_{i-1}, \omega) = g(x_i \;|\; F_{i-1}, \omega_1) f(\widetilde{y}_i \;|\; x_i, F_{i-1}, \omega_2).
+	p(x_i,\widetilde{y}_i \;|\; F_{i-1}, \omega) = g(x_i \;|\; F_{i-1}, \omega_1)\, f(\widetilde{y}_i \;|\; x_i, F_{i-1}, \omega_2).
 	\end{equation}
 The first term is the trade density and the second term is the quote density. The $\psi_i$ terms as in \eqref{eqn:2dipsi} are modeled as EACD, $\psi_i= f(\psi_{i-1}, x_{i-1}, z_{i-1})$ and quote density is also modeled as EACD after adjusting for censoring:
 	\begin{equation} \label{eqn:2fdot}
@@ -729,7 +729,7 @@ In developing models that capture the main features of the data, it must be note
 	\begin{table}[!ht]
 	\caption{Three proposed estimates}\label{tab:estimators}
 	\begin{tabular}{l l r}
-	\textbf{Weighted Estimator 1: \hskip 1mm} & $\hat{f}_{w_1}=\hat{f}' \hat{\Sigma}_f^{-1} \hat{f}$ \\
+	\textbf{Weighted Estimator 1: \hskip 1mm} & $\hat{f}_{w_1}=\hat{f}' \, \hat{\Sigma}_f^{-1} \, \hat{f}$ \\
 	\textbf{Weighted Estimator 2: \hskip 1mm} & $\hat{f}_{w_2} = \hat{f}' (\text{diag}\hat{\Sigma}_f)^{-1} \hat{f}$ \\
 	\textbf{Simple Average Estimator: \hskip 1mm} & $\sum_{i=1}^T \frac{\hat{f}_i}{T}$ 
 	 \end{tabular}
@@ -783,29 +783,6 @@ The gradient boosting method introduced by Breiman (1999)~\cite{breiman1999predi
 \section{Exercises}
 
 The dataset consists of (CSV) file that contains the entire trading session, including early and late hours from 6:00~a.m. to 8:00~p.m. EST. It contains intraday depth book activity several major tickers from up to 5 major national exchanges: Nasdaq, Direct Edge, NYSE, ARCA, and BATS (exact number of exchanges depends on the historical period). All messages are consolidated into one file ordered by timestamp. This dataset allows to build a full national depth book (super book) at any moment intraday. 
-
-%\begin{table}[h!]
-%   \caption{Column Format}
-%   \centering
-%   \begin{tabular}{p{2cm}p{8cm}} 
-%   \textbf{Column} & \text{Description} \\ \hline
-%   Timestamp & Number of milliseconds after the midnight. \\ \hline
-%   Ticker & Equity symbol (up to 8 characters) \\ \hline
-%   Order & Unique order ID. \\ \hline
-%   T & Message type. Allowed Values: \newline
-%	~~\llap{\textbullet}~~ ``B''--Add buy order \newline
-%	~~\llap{\textbullet}~~ ``S''--Add sell order \newline
-%	~~\llap{\textbullet}~~ ``E''--Execute outstanding order in part \newline
-%	~~\llap{\textbullet}~~ ``F''--Execute outstanding order in full \newline
-%	~~\llap{\textbullet}~~ ``D''--Delete outstanding order in full \newline 
-%	~~\llap{\textbullet}~~ ``X''--Bulk volume for the cross event \newline
-%	~~\llap{\textbullet}~~ ``T''--Execute non-displayed order  \\ \hline
-%   Shares & Order quantity, available for the ``B'', ``S'', ``E'', ``X'', ``C'', ``T'' messages. Zero for ``F'' and ``D'' messages. \\ \hline
-%   Price & Order price, available for the ``B'', ``S'', ``X'', and ``T'' order messages. Zero for cancellation and executions. The last 4 digits are decimal digits. The decimal portion is padded on the right with zeros. The decimal point is implied by position; it does not appear inside the price field. Divide by 10000 to convert into currency value. \\ \hline
-%   MPID & Market Participant ID associated with the transaction (4 characters) \\ \hline
-%   MCID &U Market Center Code (originating exchange--1 character)
-%   \end{tabular}
-%\end{table}
 
 
 For the analysis of Problems 1--3, we consider the data for CISCO. The details of Level~III data are given in Table~\ref{tab:level3data}. \twomedskip

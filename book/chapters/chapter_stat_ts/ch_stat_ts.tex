@@ -16,14 +16,14 @@ In this section, we want to lay out how trading strategies are generally evaluat
 	\begin{equation} \label{eqn:rt_minus_rf_is}
 	r_{t} - r_f = \alpha + \beta (r_{mt} - r_f) + \varepsilon_{t},
 	\end{equation}
-where $r_t$ is the return on the asset and $r_f$ is the return from a risk-free asset; the slope coefficient, $\beta$ measures the riskiness of the asset and `$\alpha$' denotes the excess return. Also $\overline{r}$ and $s$ be the sample average and standard deviation of the returns over the evaluation period and these are substituted for $E(r_t)$ and `$\sigma$', respectively, in the measures given below.\label{in:benchmark}
+where $r_t$ is the return on the asset and $r_f$ is the return from a risk-free asset; the slope coefficient, $\beta$ measures the riskiness of the asset and `$\alpha$' denotes the excess return. Also $\overline{r}$ and $s$ be the sample average and standard deviation of the returns over the evaluation period and these are substituted for $\Ex(r_t)$ and `$\sigma$', respectively, in the measures given below.\label{in:benchmark}
 
 \begin{enumerate}[--]
 \item \textbf{Excess return}: $\alpha$: Positive value indicating better performance, as it reflects risk adjusted return. \twomedskip
 
-\item \textbf{Sharpe Ratio: } $\dfrac{E(r_{t}) - r_f}{\sigma}$: This measure is standardized by the volatility of the asset. This is the widely used benchmark measure. \twomedskip
+\item \textbf{Sharpe Ratio: } $\dfrac{\Ex(r_{t}) - r_f}{\sigma}$: This measure is standardized by the volatility of the asset. This is the widely used benchmark measure. \twomedskip
 
-\item \textbf{Treynor Ratio: } $\dfrac{E(r_{t}) - r_f}{\left|\beta \right|}$: This measure is alternate to Sharpe ratio where the excess return is standardized by market risk. \twomedskip
+\item \textbf{Treynor Ratio: } $\dfrac{\Ex(r_{t}) - r_f}{\left|\beta \right|}$: This measure is alternate to Sharpe ratio where the excess return is standardized by market risk. \twomedskip
 
 \item \textbf{Information Ratio: } $\dfrac{\alpha}{\sigma(\varepsilon_{t})}$: This is a modified version of excess return.
 \end{enumerate}
@@ -33,7 +33,7 @@ While the above ratios take a long-term view of the investments, two others that
 
 
 \begin{enumerate}[--]
-\item \textbf{Sortino Ratio: } $\dfrac{E(r_{t}) - r_{\text{target}}}{DR(r_{t})}$, \twomedskip
+\item \textbf{Sortino Ratio: } $\dfrac{\Ex(r_{t}) - r_{\text{target}}}{\text{DR}(r_{t})}$, \twomedskip
 
 \noindent where $r_{\text{target}}$ is the target rate chosen by the investor and DR($r_t$) denotes the downside volatility or the draw down. The target can be $r_f$ or the average market return or return of the competitors. Another measure is, \twomedskip
 
@@ -78,35 +78,35 @@ The general logic behind this rule is that if the price moved up $x$\%, it is li
 The initial application of this rule on daily data for S\&P industrials showed that the trading rules with 5\%, 6\% and 8\% filters generated larger gross profits than the buy and hold strategy. This study did not account for transaction costs. But a later study that incorporated a commission of 2\% for each round-trip, showed only the larger filter  $\sim$ 46\% rule beat the buy and hold strategy and all the other filters adjusting for transaction costs did not perform any better than simple buy and hold  strategy. 
 
 
-Fama and Blume (1966)~\cite{famablume} after applying Alexander's filter technique for each of the individual securities in Dow Jones Industrial Average for the daily data during a five year period, 1957--1962, concluded, ``When commissions are taken into account, the larger profits under the filter technique are those of the brokers. When commissions are omitted, the returns from the filter techniques are, of course, greatly improved but are still not as large as the returns from simply buying and holding.'' It is argued that under random walk (RW) model, the average return on long positions should be approximately equal to the buy and hold average returns. This may not be true if the drift occurs at the time of entry or at the time of exit; the filter rule can be stated under RW model as follows; let the return, $r_{t} = \ln{P_{t}} - \ln{P_{t-1}} = \mu_{t} + a_{t}$, when $a_{t} \sim$ N(0,$\sigma_{a}^2$) and `$\mu_{t}$' is the random drift term and $\sigma_{a}^2$ is the volatility; as per the filter rule, enter if $r_{t} > r$ and suppose this occurs at time $t_{0}$. If the drift term is approximately picked up at time `$t_{0}$', so that $\mu_{t} = 0$, for $t < t_{0}$ but $\mu_{t} = \mu > 0$ for $t \geq t_{0}$, the returns from the filter should fare better. The lasting of the drift is to be carefully monitored and using the exit strategy when $r_{t} < r$ will guarantee any undue losses.
+Fama and Blume (1966)~\cite{famablume} after applying Alexander's filter technique for each of the individual securities in Dow Jones Industrial Average for the daily data during a five year period, 1957--1962, concluded, ``When commissions are taken into account, the larger profits under the filter technique are those of the brokers. When commissions are omitted, the returns from the filter techniques are, of course, greatly improved but are still not as large as the returns from simply buying and holding.'' It is argued that under random walk (RW) model, the average return on long positions should be approximately equal to the buy and hold average returns. This may not be true if the drift occurs at the time of entry or at the time of exit; the filter rule can be stated under RW model as follows; let the return, $r_{t} = \ln{P_{t}} - \ln{P_{t-1}} = \mu_{t} + a_{t}$, when $a_{t} \sim N(0, \sigma_{a}^2)$ and `$\mu_{t}$' is the random drift term and $\sigma_{a}^2$ is the volatility; as per the filter rule, enter if $r_{t} > r$ and suppose this occurs at time $t_{0}$. If the drift term is approximately picked up at time `$t_{0}$', so that $\mu_{t} = 0$, for $t < t_{0}$ but $\mu_{t} = \mu > 0$ for $t \geq t_{0}$, the returns from the filter should fare better. The lasting of the drift is to be carefully monitored and using the exit strategy when $r_{t} < r$ will guarantee any undue losses.
 
 
 When the time intervals are small it has been observed that there is evidence of positive dependence in returns and that may be useful to predict short term dependence. This may signal opportunities for more frequent transactions but the cost of transactions can erode the profits. \twomedskip
 
 
-\noindent \textbf{Risk-adjusted Filter:} Sweeney (1988)~\cite{sweet} develops a test for profits when risk-adjusted filters are used. The stocks considered in Fama and Blume (1966)~\cite{famablume} that are ``winners'' in one period tend to persist as winners in later periods as well. Thus focusing only on winners rather than entire set of stocks gives better results. Assume that the investor uses the filter rule each day to decide to enter or exit based solely as past information. Consider the span of $N$ days and with a filter strategy, that the asset is held on $N_{\text{in}}$ days and is not held on $N_{\text{out}}$ days. At the end of $N$ days, the filter's performance is evaluated. The average excess rate of buy and hold is $\overline{R}_{\text{BH}}=\dfrac{1}{N} \sum_{i=1}^N \, (r_t - r_f )$. Assume that `$f$' is the proportion of days, the asset is not held; then the average excess rate of the filter is, $\overline{R}_{F}=\dfrac{1-f}{N_{\text{in}}} \sum_{t \in I} (r_t - r_f)$. Assume that under CAPM, expected excess rate of return equals a constant risk premium, $\text{PR}_{j}$. Further, that $E(\overline{R}_{\text{BH}}) = \text{PR}$ and $E(\overline{R}_{F}) = (1 - f)\,\text{PR}$; Use the adjusted statistic
+\noindent \textbf{Risk-adjusted Filter:} Sweeney (1988)~\cite{sweet} develops a test for profits when risk-adjusted filters are used. The stocks considered in Fama and Blume (1966)~\cite{famablume} that are ``winners'' in one period tend to persist as winners in later periods as well. Thus focusing only on winners rather than entire set of stocks gives better results. Assume that the investor uses the filter rule each day to decide to enter or exit based solely as past information. Consider the span of $N$ days and with a filter strategy, that the asset is held on $N_{\text{in}}$ days and is not held on $N_{\text{out}}$ days. At the end of $N$ days, the filter's performance is evaluated. The average excess rate of buy and hold is $\overline{R}_{\text{BH}}=\dfrac{1}{N} \sum_{i=1}^N \, (r_t - r_f )$. Assume that `$f$' is the proportion of days, the asset is not held; then the average excess rate of the filter is, $\overline{R}_{F}=\dfrac{1-f}{N_{\text{in}}} \sum_{t \in I} (r_t - r_f)$. Assume that under CAPM, expected excess rate of return equals a constant risk premium, $\text{PR}_{j}$. Further, that $\Ex(\overline{R}_{\text{BH}}) = \text{PR}$ and $\Ex(\overline{R}_{F}) = (1 - f)\,\text{PR}$; Use the adjusted statistic
 	\begin{equation} \label{eqn:xbarfirst}
 	x= \overline{R}_{F} - (1 - f)\, \overline{R}_{\text{BH}}
 	\end{equation}
-to judge the filter rule; observe $E(x) = 0$ and $\sigma_{x} = \sigma[\frac{f(1-f)}{N}]^{1/2}$, where `$\sigma$' is the standard deviation of excess return $r_t - r_f$. Fama and Blume (1966)~\cite{famablume} use
+to judge the filter rule; observe $\Ex(x) = 0$ and $\sigma_{x} = \sigma[\frac{f(1-f)}{N}]^{1/2}$, where `$\sigma$' is the standard deviation of excess return $r_t - r_f$. Fama and Blume (1966)~\cite{famablume} use
 	\begin{equation} \label{eqn:bigxbar}
 	X = \overline{R}_{FI} - \overline{R}_{BH}
 	\end{equation}
-where $\overline{R}_{fI} = \frac{1}{N_{\text{in}}} \sum_{t \in I}(r_t - r_F)$. Further, note that $E(X) = 0$ and $\sigma_{x} = \sigma_{X}$.
+where $\overline{R}_{fI} = \frac{1}{N_{\text{in}}} \sum_{t \in I}(r_t - r_F)$. Further, note that $\Ex(X) = 0$ and $\sigma_{x} = \sigma_{X}$.
 
 
 The main advantage of $X$ is that it measures profits for each day in the duration of `$N$' days and $x$ measures profits per day for those days when the stock is held. The above results hold for the case of time varying risk premia as well; Suppose $R_f - r_f = \text{PR} + a_t$, where $a_t$ is stochastic; thus
 	\begin{equation} \label{eqn:anotherxeq}
 	x = \dfrac{1}{N_{in}} \sum_{t \in I} a_t - \dfrac{1}{N} \sum_{t=1}^N a_t + (\overline{\text{PR}}_{N_{in} }+\overline{\text{PR}}_N ).
 	\end{equation}
-If the investor has no insight into changes in risk premia, then $E(\overline{\text{PR}}_{N_{\text{in}}} - \overline{\text{PR}}_{N}) = 0$; If the investor has no insight about the stochastic, $a_t$, the filter rule may be forecasting the risk premia.
+If the investor has no insight into changes in risk premia, then $\Ex(\overline{\text{PR}}_{N_{\text{in}}} - \overline{\text{PR}}_{N}) = 0$; If the investor has no insight about the stochastic, $a_t$, the filter rule may be forecasting the risk premia.
 
 
 It has been pointed out that Fama and Blume measure is biased against finding successful filter rules. The statistics $X$ and $x$ are meant for long strategies where the investor has the funds in the risk free asset when not holding. If we define the difference in cumulative excess returns between days investor holds and does not hold,
 	\begin{equation} \label{eqn:rfprime}
 	\overline{R}_{F'} = \dfrac{1}{N} \left( \sum_{t\in I} (r_t - r_f) - \sum_{t \in O} (r_t - r_f) \right)
 	\end{equation}
-and it is shown that $E(\overline{R}_{{F}'} - \overline{R}_{\text{BH}}) = (1 - 2f) \text{PR} - \text{PR} = -2f \text{PR}$, a proportion of constant risk premium, thus resulting in a bias. \label{in:filter2}
+and it is shown that $\Ex(\overline{R}_{{F}'} - \overline{R}_{\text{BH}}) = (1 - 2f) \text{PR} - \text{PR} = -2f \text{PR}$, a proportion of constant risk premium, thus resulting in a bias. \label{in:filter2}
 
 
 
@@ -119,7 +119,7 @@ The moving average trading rules are generally based on comparing the current pr
 	&\text{{\small Exponentially Weighted Average (EWA): }} \overline{P}_t^{(m)} = \left(\dfrac{1}{\sum_{i=0}^{m-1} \lambda^{i+1}} \right) \sum_{i=0}^{m-1} \lambda^{i+1} P_{t-i} \\
 	&\text{{\small Bollinger Weighted Moving Average (BWMA): }}  \hat{P}_t^{(m)}= \left(\dfrac{1}{\sum_{i=1}^m i}\right) \sum_{i=0}^{m-1} (m-i) P_{t-i} \notag
 	\end{flalign}
-Note that the smoothing constant, `$\lambda$', must be between zero and one. The rules based on indicators of the above kind tend to be profitable in markets that exhibit definite trends and so they are generally known as ``trend-following'' or some times, called as ``momentum'' indicators. Some simple rules that are used in practice are: \medbreak
+Note that the smoothing constant, `$\lambda$', must be between zero and one. The rules based on indicators of the above kind tend to be profitable in markets that exhibit definite trends and so they are generally known as ``trend-following'' or some times, called ``momentum'' indicators. Some simple rules that are used in practice are: \medbreak
 
 
 \begin{center}
@@ -136,7 +136,7 @@ Note that the smoothing constant, `$\lambda$', must be between zero and one. The
 The two types of potential strategies are broadly known as ``Reversal'' vs ``Momentum'' and they differ mainly on when the entry is carried out. The contrarian or reversal, in a way, looks for local minimum to enter the market and the momentum follower looks for a local maximum to enter.
 
 
-While the above rules are easy to implement and one may observe that they do not take into account the variance or the volatility of the price (return) process. The widely used Bollinger band, conceptually similar to monitoring the quality of a manufacturing process, is based on a weighted moving average and the variance. Define the standard deviation as, $\hat{\sigma}_{t}^{(m)} = \{ \frac{1}{m-1} \sum_{i=0}^{m-1} (P_{t-i} - \overline{P}_{t}^{(m)})^2 \}^{1/2}$ and the rule can be stated as follows: \medbreak
+While the above rules are easy to implement and one may observe that they do not take into account the variance or the volatility of the price (return) process. The widely used Bollinger band, conceptually similar to monitoring the quality of a manufacturing process, is based on a weighted moving average and the variance. Define the standard deviation as, $\hat{\sigma}_{t}^{(m)} = \left\{ \frac{1}{m-1} \sum_{i=0}^{m-1} (P_{t-i} - \overline{P}_{t}^{(m)})^2 \right\}^{1/2}$ and the rule can be stated as follows: \medbreak
 
 
 \begin{center}
@@ -169,7 +169,7 @@ Broadly the key quantities such as moving average, weighted (exponentially or ot
 
 \noindent\textbf{RSI Oscillator:} Another oscillator that is designed to measure the strength of price movement in a particular direction is the relative strength indicator (RSI). The logic being that if the changes in price are too rapid in one direction, a correction in the opposite direction is likely to follow and may occur soon. Thus, these types of rules are called `reversal' or `overbought/oversold' indicators. To define RSI, let $U_{t} = \sum_{i=1}^m I(P_{t-i} - P_{t-i-1} > 0)\,\lvert P_{t-i} - P_{t-i-1} \rvert$ and $D_{t} = \sum_{i=1}^m I_{t} (P_{t-i} - P_{t-i-1} < 0)\,\lvert S_{t-i} - S_{t-i-1}\rvert$ where $I(\cdot)$ is an indicator function. Thus $U_t$ and $D_t$ aggregate the positive and negative side of the price changes. Now define $\text{RS}_{t} = \frac {U_{t}}{D_{t}}$, which can be taken as a measure of odds ratio, and define
 	\begin{equation} \label{eqn:rsi}
-	\text{RSI}_{t} = 100 \times \frac{U_{t}}{U_{t} + D_{t}} = 100 - 100 \left( \dfrac{1}{1 + \text{RS}_t} \right).
+	\text{RSI}_{t} = 100 \cdot \frac{U_{t}}{U_{t} + D_{t}} = 100 - 100 \left( \dfrac{1}{1 + \text{RS}_t} \right).
 	\end{equation}
 By construction, RSI is normalized and it takes values between 0 and 100. \medbreak
 
@@ -191,7 +191,7 @@ These rules that appear to be somewhat ad hoc can all be related back to the ran
 	\begin{equation} \label{eqn:anotherpt}
 	p_t = \mu + p_{t-1} + a_t,
 	\end{equation}
-where $a_t \sim \text{N}(0,\sigma^2)$, $\sigma^2$ is the volatility of the stock and note the return, $r_t= p_t - p_{t-1}$; thus, $r_t \sim \text{N}(\mu,\sigma^2)$. If there is any autocorrelation in `$r_t$', and if $\overline{r}_n$ is the average based on the last `$n$' observations, then $\overline{r}_n \sim \text{N}\left(\mu,\sum_{\mid h \mid < n}\left(1-\frac{\mid h \mid}{n}\right)\frac{\gamma(h)}{n}\right)$, where $\gamma(h)$ is the autocovariance function of lag `$h$', with $\gamma(0)=\sigma^2$. When $\gamma(h)=0 \text{ for } h > 0$, that P($\overline{r}_n > 0)= \text{P}(\overline{a}_n > -\mu)= \text{P}\left( \frac{\overline{a}_n}{\sigma} > \frac{-\mu}{\sigma} \right)= 1 - \Phi\left( -\frac{\mu}{\sigma} \right)$, where $\Phi$ is the c.d.f. of the standard normal distribution. Thus we can evaluate $\text{RS}_t$ by the odds ratio, $(1 - \Phi(-\frac{\mu}{\sigma}))/(\Phi(-\frac{\mu}{\sigma}))$. In fact the reversal rule stated above implies, for $\text{RSI}_t$ to be greater than 70, the odds ratio, $\text{RS}_t > 2.33$. All the rules stated in this section can be written in the form of the c.d.f. of the underlying distribution of the return. This model-based interpretation of the rules can help us in accommodating other factors such as volume more formally in the model and evaluate their value added to the strategy performance. While there are many areas where technical rules are shown to perform well, the use of the technical rules in the foreign exchange market is well documented (see Menkhoff and Taylor (2007)~\cite{MalTay}). \label{in:mva2}
+where $a_t \sim \text{N}(0,\sigma^2)$, $\sigma^2$ is the volatility of the stock and note the return, $r_t= p_t - p_{t-1}$; thus, $r_t \sim \text{N}(\mu,\sigma^2)$. If there is any autocorrelation in `$r_t$', and if $\overline{r}_n$ is the average based on the last `$n$' observations, then $\overline{r}_n \sim \text{N}\left(\mu,\sum_{\mid h \mid < n}\left(1-\frac{\mid h \mid}{n}\right)\frac{\gamma(h)}{n}\right)$, where $\gamma(h)$ is the autocovariance function of lag `$h$', with $\gamma(0)=\sigma^2$. When $\gamma(h)=0 \text{ for } h > 0$, that P($\overline{r}_n > 0)= \text{P}(\overline{a}_n > -\mu)= \text{P}\left( \frac{\overline{a}_n}{\sigma} > \frac{-\mu}{\sigma} \right)= 1 - \Phi\left( -\frac{\mu}{\sigma} \right)$, where $\Phi$ is the c.d.f. of the standard normal distribution. Thus we can evaluate $\text{RS}_t$ by the odds ratio, $\left(1 - \Phi\left(-\frac{\mu}{\sigma}\right)\right)/\Phi(-\frac{\mu}{\sigma})$. In fact the reversal rule stated above implies, for $\text{RSI}_t$ to be greater than 70, the odds ratio, $\text{RS}_t > 2.33$. All the rules stated in this section can be written in the form of the c.d.f. of the underlying distribution of the return. This model-based interpretation of the rules can help us in accommodating other factors such as volume more formally in the model and evaluate their value added to the strategy performance. While there are many areas where technical rules are shown to perform well, the use of the technical rules in the foreign exchange market is well documented (see Menkhoff and Taylor (2007)~\cite{MalTay}). \label{in:mva2}
 
 
 
@@ -213,7 +213,7 @@ where the weights $\{w_{t}(x)\}$ are large for those $P_{t}$'s paired with $x_{t
 	\begin{equation} \label{eqn:3mhat}
 	\hat{m}_{h}(x) = \frac{1}{T}\sum_{t=1}^T w_{t,h}(x)P_{t} = \dfrac{\sum_{t=1}^T K_{h}(x-x_{t})P_{t}}{\sum_{t=1}^T K_{h}(x-x_{t})},
 	\end{equation}
-where $K(x)$ is a probability density function and is also-called as `Kernel', and $\hat{m}_{h}(x)$ is called Nadaraya-Watson kernel estimator. A popular density is that of a standard normal distribution, $K(t)=\frac{e^{-t^2/2}}{\sqrt{2\pi}}$.
+where $K(x)$ is a probability density function and is also-called `kernel', and $\hat{m}_{h}(x)$ is called Nadaraya-Watson kernel estimator. A popular density is that of a standard normal distribution, $K(t)=\frac{e^{-t^2/2}}{\sqrt{2\pi}}$.
 
 
 Selecting an appropriate bandwidth, `$h$' is important as a small `$h$' may not smooth much and a large `$h$' may result in too smooth a graph. The choice of `$h$' is made through cross-validation, by minimizing
@@ -309,9 +309,9 @@ The trading strategies are typically evaluated by comparing their performance ag
 
 For the CAPM model \eqref{eqn:rt_minus_rf_is}, it is expected that $\alpha= 0$ if the model holds. Any deviation from the null hypothesis $H_0: \alpha= 0$ indicates the stock (alpha) performance after adjusting for the risk-return relationship. Note that $\alpha$ can be written as,
 	\begin{equation} \label{eqn:alpha_written}
-	\alpha= E(r_t) - \beta E(r_{mt}) + (\beta -1) r_f.
+	\alpha= \Ex(r_t) - \beta \Ex(r_{mt}) + (\beta -1) r_f.
 	\end{equation}
-When $\beta>1$, the stock is taken to be riskier than the market. If the stock is closely aligned with the market, that is $\beta=1$, $\alpha= E(r_t) - E(r_{mt})$ and thus a positive `$\alpha$' would indicate performance superior to market performance.
+When $\beta>1$, the stock is taken to be riskier than the market. If the stock is closely aligned with the market, that is $\beta=1$, $\alpha= \Ex(r_t) - \Ex(r_{mt})$ and thus a positive `$\alpha$' would indicate performance superior to market performance.
 
 
 In addition, it is expected in a high frequency setting, $\epsilon_t$'s are likely to exhibit some serial dependence:
@@ -351,7 +351,7 @@ where $\hat{f}_{t+j}$ is the observed performance measure for period `$t+j$', ba
 	\end{equation}
 where $r_{t+j}$ is the return, $s_k$ and $s_0$ are signal functions for the $k$th trading rule. The baseline or benchmark rule can take three positions: long, short and neutral, taking values 1, $-1$, and zero, respectively. The signal functions are of course based on data and information available as of '$t$'. The proposed test assumes the null hypothesis that the best technical rule does no better than the benchmark rule:
 	\begin{equation} \label{eqn:H0}
-	H_0: \max_{k=1,\ldots,l} E(f_k) \leq 0.
+	H_0: \max_{k=1,\ldots,l} \Ex(f_k) \leq 0.
 	\end{equation}
 Rejection of $H_0$ would establish that the best technical rule is superior to the benchmark rule. Hypothesis similar to \eqref{eqn:H0} can be formulated, for the Sharpe ratio as well, which will be a measure of risk-adjusted return. The $p$-values for $H_0$ are obtained through Bootstrap resampling procedures, to construct the following statistics:
 If there are `$B$' bootstrapped values of $\overline{f}_k$ denoted by $\overline{f}_{k,i}^*, i=1,2,\ldots,B$ construct the following statistics:
@@ -417,7 +417,7 @@ Scruggs (2007)~\cite{scruggs} also discusses another pair. Unilever NV and Unile
 	\caption{Unilever NV/PLC. \label{fig:3nvplc}}
 	\end{figure}
 
-The first step in developing a pairs trading strategy is selecting two or more stocks that are closer to each other. Two examples discussed here are natural-pairs, as the parent company is the same and they can be called as twins. Finding such natural twins is hard in practice. As substitutes generally, mature companies with long trading histories and have similar exposure to macro factors are considered as candidates for forming pairs; usually they tend to be from the same industry. We will discuss in detail how pairs can be formed later. First we present some formal procedures for implementing the pairs trading strategy.
+The first step in developing a pairs trading strategy is selecting two or more stocks that are closer to each other. Two examples discussed here are natural-pairs, as the parent company is the same and they can be called twins. Finding such natural twins is hard in practice. As substitutes generally, mature companies with long trading histories and have similar exposure to macro factors are considered as candidates for forming pairs; usually they tend to be from the same industry. We will discuss in detail how pairs can be formed later. First we present some formal procedures for implementing the pairs trading strategy.
 
 
 % Distance-Based Algorithms
@@ -472,7 +472,7 @@ With the error-correlation form of the bivariate series (follows from \eqref{eqn
 	a_{1t} \\ a_{2t} 
 	\end{bmatrix},
 	\end{equation}
-where $\mu_w = E(w_t)$ is the mean of $w_t$, which is the spread between the two log prices. The quantity $w_{t-1} - \mu_w$ denotes the deviation from equilibrium, $\alpha$'s show the effect of this past deviation on the current returns and should exhibit opposite signs. Going long with one share of stock 1 and shorting $\gamma$ shares of stock 2, will result in the return of the portfolio, $r_{p,t+i} = w_{t+i} - w_t$, at time `t'. The increment does not depend on $\mu_w$.
+where $\mu_w = \Ex(w_t)$ is the mean of $w_t$, which is the spread between the two log prices. The quantity $w_{t-1} - \mu_w$ denotes the deviation from equilibrium, $\alpha$'s show the effect of this past deviation on the current returns and should exhibit opposite signs. Going long with one share of stock 1 and shorting $\gamma$ shares of stock 2, will result in the return of the portfolio, $r_{p,t+i} = w_{t+i} - w_t$, at time `t'. The increment does not depend on $\mu_w$.
 
 
 Based on the above discussion the following strategy can be followed. \medbreak
@@ -614,16 +614,16 @@ To better understand the sources of profit from a momentum strategy Lo and MacKi
 	\begin{equation} \label{eqn:witkrdiff}
 	w_{i,t}^k= \frac{1}{N} (r_{i,t-1}^k - r_{m,t-1}^k), \quad i= 1,\ldots, N.
 	\end{equation}
-For ease of interpretation, $w_{i,t}^k = w_{i,t}$ and focus on only one previous month's return for allocation; Note that for each `$t$', the weights $w_{i,t}$ sum to zero. Let $r_t$ be a $N \times 1$ vector of returns, with the mean return $\mu = E(r_t)$ and $\Omega = E[(r_{t-1} - \mu)(r_t - \mu)']$ the autocovariance matrix of returns. Let $w_t$ be $N \times 1$ vector of weights, $w_{it}$; the portfolio return for month `t' is $\pi_t = w_t'r_t$. It is easy to show
+For ease of interpretation, $w_{i,t}^k = w_{i,t}$ and focus on only one previous month's return for allocation; Note that for each `$t$', the weights $w_{i,t}$ sum to zero. Let $r_t$ be a $N \times 1$ vector of returns, with the mean return $\mu = \Ex(r_t)$ and $\Omega = \Ex[(r_{t-1} - \mu)(r_t - \mu)']$ the autocovariance matrix of returns. Let $w_t$ be $N \times 1$ vector of weights, $w_{it}$; the portfolio return for month `t' is $\pi_t = w_t'r_t$. It is easy to show
 	\begin{equation} \label{eqn:epitomega}
 	\begin{split}
-	E(\pi_t)&= \frac{1}{N}\, E\left[\sum_i r_{i,t-1} \cdot r_{it} \right] - \frac{1}{N} E\left[r_{m,t-1} \cdot \sum_i r_{it} \right] \\
+	\Ex(\pi_t)&= \frac{1}{N}\, \Ex\left[\sum_i r_{i,t-1} \cdot r_{it} \right] - \frac{1}{N} \Ex\left[r_{m,t-1} \cdot \sum_i r_{it} \right] \\
 	&= \frac{1}{N}\sum_i (\rho_i + \mu_i^2) - (\rho_m + \mu_m^2),
 	\end{split}
 	\end{equation}
 where $\rho_i$ and $\rho_m$ are lag 1 autocovariances of asset `$i$' and the equal weighted index. Note that the average autocovariance is $\text{tr}(\Omega)/N$ and the autocovariance for the market as a whole is $(1' \Omega 1)/N^2$. The $\text{tr}(\Omega)$ denotes the sum of the diagonal elements of $N \times N$ matrix $\Omega$; recall that the diagonal elements are the autocovariance, $\rho_i$, of individual stocks. Hence \eqref{eqn:epitomega} can be written as,
 	\begin{equation} \label{eqn:3epi}
-	E(\pi_t) = \left(\frac{N-1}{N^2}\right)\cdot \text{tr}(\Omega) + \frac{1}{N^2} [\text{tr}(\Omega) - 1' \Omega 1] + \sigma_{\mu}^2.
+	\Ex(\pi_t) = \left(\frac{N-1}{N^2}\right)\cdot \text{tr}(\Omega) + \frac{1}{N^2} [\text{tr}(\Omega) - 1' \Omega 1] + \sigma_{\mu}^2.
 	\end{equation}
 The three terms in \eqref{eqn:3epi} precisely identify three sources of profits (see Lo and Mackinlay (1990)~\cite{lo1990}):
 
@@ -1099,7 +1099,7 @@ In order to implement this in practice, good estimates of `$p$' and `$q$' are ne
 
 The usefulness of statistical arbitrage rules can be extended beyond the entry-exit decisions, but the size of entry-exit decisions must be made with alternatives such as investing in risk-free assets. It is shown in Zhu and Zhou (2009)~\cite{zhuzhou09} that when there is uncertainty about the future returns, fixed allocation rules can be enhanced by technical analysis. The fixed allocation rule follows from the portfolio theory presented in Chapter~\ref{ch:amp}. With a single risky asset, whose behavior is monitored through the technical analysis and a risk free asset, the optimal allocation rule follows from Chapter~\ref{ch:amp} in the form of Sharpe ratio structure, $w= (\mu - r_f)/\sigma^2$, where $\mu$ and $\sigma^2$ are estimated from the past data and are expected to remain stable in the near future. Assuming that the investor with the initial wealth, $X_0$, wants to maximize the expected value,
 	\begin{equation} \label{eqn:euxn}
-	E(U(X_n))= E \left[ \dfrac{X_n^{1-\gamma}}{1 - \gamma}\right],
+	\Ex(U(X_n))= \Ex\left[ \dfrac{X_n^{1-\gamma}}{1 - \gamma}\right],
 	\end{equation}
 where `$\gamma$' is the risk aversion parameter, with the budget constraint,
 	\begin{equation} \label{eqn:dxtxt}
@@ -1127,7 +1127,7 @@ Under this set-up the optimal bet-size is shown to be
 	\begin{equation} \label{eqn:wstarmurf}
 	w^*= \dfrac{\mu - r_f}{\sigma^2} + \dfrac{\mu_1}{\sigma^2} \cdot \dfrac{b_1}{b_2},
 	\end{equation}
-where $b_2=E(\eta_t)$ and $b_1=E((S_t - \overline{S}) \eta_t)$. Observe `$\mu_1$' is the effect of information-based state variable, $S_t$, on the price formation, `$b_2$' is the average number of entries and `$b_1$' provides the average excess of the state variable. While other quantities in \eqref{eqn:wstarmurf} have been historically well-studied, the key ratio that is new here is over $(\mu_1 \cdot b_1)/b_2$ which can be taken as the total size $(\mu_1 b_1)$ that can be distributed over `$b_2$' entries. If $\mu_1= 0$, observe that the moving average rule may not add any flexibility to the fixed size entry. 
+where $b_2= \Ex(\eta_t)$ and $b_1= \Ex((S_t - \overline{S}) \eta_t)$. Observe `$\mu_1$' is the effect of information-based state variable, $S_t$, on the price formation, `$b_2$' is the average number of entries and `$b_1$' provides the average excess of the state variable. While other quantities in \eqref{eqn:wstarmurf} have been historically well-studied, the key ratio that is new here is over $(\mu_1 \cdot b_1)/b_2$ which can be taken as the total size $(\mu_1 b_1)$ that can be distributed over `$b_2$' entries. If $\mu_1= 0$, observe that the moving average rule may not add any flexibility to the fixed size entry. 
 
 
 
