@@ -48,11 +48,11 @@ We provide two examples to illustrate the application of the models \eqref{eqn:2
 \begin{ex}[Generalized Local Trend]
 The slope in a local linear trend is a random walk. Specifically,
 	\begin{equation} \label{eqn:randomwalk}
-	\begin{split}
+	\begin{aligned}
 	p_t&= \mu_t + e_t \\
 	\mu_t&= \mu_{t-1} + \delta_{t-1} + \eta_{0t} \\
 	\delta_t&= \delta_{t-1} + \eta_{1t}
-	\end{split}
+	\end{aligned}
 	\end{equation}
 Here the trend is composed of level `$\mu_t$' and slope `$\delta_t$'. The slope `$\delta_t$' when written as 
 	\begin{equation} \label{eqn:slopewritten}
@@ -65,10 +65,10 @@ in AR(1) form is sometimes known as generalized local linear trend. These models
 \begin{ex}[Price Discovery in Multiple Markets]
 Menkveld, Koopman and Lucas (2007)~\cite{menkkoop} study the price discovery process for stocks that are cross-listed in two different markets via state-space models. The question if the trading location matters more than business location is of interest to finance researchers. Consider a stock traded in Amsterdam and in NY exchanges. Because of the time difference, there is only an hour of overlap in trading. Ignoring this aspect, write the two-dimensional price vector as
 	\begin{equation}
-	\begin{split}
+	\begin{aligned}
 	p_t&= \mu_t + e_T \\
 	&=\mu_t + \theta(\mu_t - \mu_{t-1}) + e_t
-	\end{split}
+	\end{aligned}
 	\end{equation}
 as the observational equation with delayed price reaction and the state equation is
 	\begin{equation}
@@ -157,10 +157,10 @@ where $h_t \sim \text{GARCH}(p,q)$ and $\beta_t$ and $v_t$ are piecewise linear.
 
 We want to conclude this section with some simple ideas borrowed from the area of statistical process control. Recall that if the market is efficient, the return $r_t= \ln P_t - \ln P_{t-1} \sim \text{ IID}(\mu_t, \sigma^2)$, where $\mu_t=0$. But assume that $\mu_t=c\delta$ when $t\geq t_0$ and zero elsewhere. The cumulative sum chart (CUSUM) to detect the positive and negative mean shift are based on recursive calculations:
 	\begin{equation} \label{eqn:cdouble}
-	\begin{split}
+	\begin{aligned}
 	c_t^+&= \max\big(0, c_{t-1}^+ + (r_t-k)\big) \\
 	c_t^-&= \min\big(0, c_{t-1}^- - (r_t-k)\big),
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where $k= \delta/2$. The chart signals as sown as $c_t^+$ reaches `$h$'---a decision point set by the user. Jiang, Shu and Apley (2008)~\cite{shuap} modify \eqref{eqn:cdouble} with exponentially weighted moving average (EWMA) type of estimates that is adaptive in nature. It can be stated as,
 	\begin{equation}\label{eqn:elma}
@@ -185,20 +185,25 @@ While the price information via returns and the volatility can be modeled throug
 
 In the market microstructure theory, it is assumed that price movements occur primarily due to the arrival of new information and this information is incorporated efficiently into market price. Other variables such as trading volume, bid-ask spread and market liquidity are observed to be related to the volatility of the returns. Early empirical studies have documented a positive relationship between daily trading volume and volatility (See Clark (1973)~\cite{clark}). Epps and Epps (1976)~\cite{epps} and Tauchen and Pitts (1983)~\cite{tauchenpitts} assume that both the volume and price are driven by the underlying `latent' information ($I$) and provide a theoretical framework to incorporate this information. Assuming that there are fixed number of traders who trade in a day and the number of daily equilibria, $I$ is random because the number of new pieces of information is random, the return and the volume are written as a bivariate normal (continuous) mixture model with the same mixing variable $I$. Conditional on $I$:
 	\begin{equation} \label{eqn:2rtVt}
-	\begin{split}
+	\begin{aligned}
 	 r_t&= \sigma_1 \sqrt{I_t}Z_{1t} \\
 	 V_t&= \mu_VI_t + \sigma_2 \sqrt{I_t}Z_{2t}
-	 \end{split}
+	 \end{aligned}
 	 \end{equation}
 where $Z_{1t}$ and $Z_{2t}$ are standard normal variables and $Z_{1t},  Z_{2t}$, and $I_t$ are mutually independent. Thus the volatility-volume relationship,
 	\begin{equation} \label{eqn:2covVt}
-	\begin{split}
+	\begin{aligned}
 	\cov(r_t^2,V_t)& = \Ex(r_{t}^2V_t) - \Ex(r_t^2) \,\Ex(V_t) \\ 
 	&= \sigma_1^2 \mu_V \var(I_t) > 0
-	\end{split}
+	\end{aligned}
 	\end{equation}
 is positive due to the variance in $I_t$. If there is no new information or if there is no variation in the mixing variable, $\var(I_t)= 0$ and thus the relationship vanishes. The theory of arrival rates suggest a
 Poisson distribution\label{in:poisson} and based on empirical evidence, the lognormal distribution is taken to be a candidate for distribution of mixing variable, $I_t$. The parameters of the model in \eqref{eqn:2rtVt} are estimated through maximum likelihood. Gallant, Rossi and Tauchen (1992)~\cite{grt} using a semi-parametric estimate of the joint density of $r_t$ and $V_t$ conduct a comprehensive study of NYSE data from 1925 to 1987. The following summarizes their main findings: \twomedskip
+
+
+
+\pagebreak
+
 
 
 \noindent\textbf{Stylized Fact 6 (Volume--Volatility Relationship):} \label{in:style5}
@@ -333,13 +338,36 @@ High frequency data refer to the `tick' `$t_i$' data which contains, in addition
 \item Time between trades, shorter near open and close.
 \end{itemize}
 
+
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.8\textwidth]{chapters/chapter_advanced/figures/Sec2-10Fig8.png}
-	\caption{Typical Diurnal patterns. \label{fig:diurnal}}
+	\pgfplotsset{every axis/.style={scale only axis}}
+	\begin{tikzpicture}
+	\begin{axis}[
+	hide axis,
+	height=6cm,
+	width=12cm,
+	xmin=-2,xmax=6,
+	ymin=-2,ymax=10
+	]
+	\addplot[domain=0:10,very thick,->] ({0},{x});
+	\addplot[domain=0:4,very thick,->] ({x},{0});
+	\addplot[domain= 0.5:3.5,smooth,ultra thick] {-1.6*(x-2)^2+9.5};
+	\addplot[domain= 0.5:3.5,dashed,smooth,ultra thick] {(x-2)^2+2};
+	\node at (2,-1) {\bfseries Time of Day};
+	\node at (-0.7,5.9) {\bfseries Cents/};
+	\node at (-0.7,4.9) {\bfseries Seconds};
+	\node at (3.6,9) {\bfseries Duration};
+	\node at (4.1,2) {\bfseries Standard deviation of};
+	\node at (4.2,0.9) {\bfseries mid-quote price change};
+	\end{axis}
+	\end{tikzpicture}
+	\caption{Typical Diurnal patterns.\label{fig:diurnal}}
 	\end{figure}
 
-Under aggregation with low frequency data generally the dependence tends to decrease.\twomedskip
+
+Under aggregation with low frequency data generally the dependence tends to decrease. \twomedskip
+
 
 \noindent\textbf{Stylized Fact 7 (Continued from Chapter~\ref{ch:ch_uvts}): Negative autocorrelation in returns:} Non-synchronous trading and bid-ask bounce both can introduce negative lag-1 autocorrelation in the returns. See Roll (1984)~\cite{roll1984} and Lo and Mackinlay (1990)~\cite{lo1990}.\twomedskip
 
@@ -517,22 +545,22 @@ with optimal choice of `$a$'$=0.17$ yields even higher efficiency.
 
 The estimators like the above assume that either the price process has no drift or no price jumps between the previous day's closing price and current day's opening price. The former assumption leads to overestimating the volatility and the later to underestimating volatility. Yang and Zhang~\cite{yangzhang2000} provide an estimator based on several periods of low, high, open and close prices that is independent of the drifts and the jumps. Although several estimators are discussed in this paper, we mention only two of them that have high efficiency. Denoting
 	\[
-	\begin{split}
+	\begin{aligned}
 	o&= \ln O_1 - \ln C_0, \text{ the normalized open}; \\
 	u&= \ln H_1 - \ln O_1, \text{ the normalized high}; \\
 	d&= \ln L_1 - \ln O_1, \text{ the normalized low}; \\
 	c&= \ln C_1 - \ln O_1,  \text{ the normalized close},
-	\end{split}
+	\end{aligned}
 	\]
 the classical estimator based on $n$-period historical data is
 	\begin{equation} \label{eqn:nperioddata}
 	V_{cc}= \dfrac{1}{n-1} \cdot \sum_{i=1}^n [(o_i + c_i) - (\overline{o} + \overline{c})]^2
 	\end{equation}
-and the estimator given in Rogers and Satchell~\cite{rogerssatchell1991}
+and the estimator given in Rogers and Satchell (1991)~\cite{rogerssatchell1991}
 	\begin{equation} \label{eqn:rogerssatchell}
 	V_{\text{RS}}= \dfrac{1}{n} \cdot \sum_{i=1}^n [u_i(u_i - c_i) + d_i(d_i-c_i)]
 	\end{equation}
-The estimator suggested in Yang and Zhang~\cite{yangzhang2000} takes the form,
+The estimator suggested in Yang and Zhang (2000)~\cite{yangzhang2000} takes the form,
 	\begin{equation} \label{eqn:yang2000}
 	V_{\text{YZ}}= V_0 + k V_c + (1-k)V_{\text{RS}}
 	\end{equation}
@@ -555,10 +583,10 @@ The range based statistics can also be used to estimate bid-ask spreads. Recall 
 
 Assume that the true or actual price follows a diffusion process. Actual price differs from the true price by $s/2$, where $s$ is the spread that remains constant over two consecutive days. Further, it is assumed that daily high price is a buyer-initiated trade while the daily low price is a seller initiated trade. Write,
 	\begin{equation} \label{eqn:sellertrade}
-	\begin{split}
+	\begin{aligned}
 	\left[ \ln \left( \dfrac{H_t^0}{L_t^0} \right) \right]^2&= \left[ \ln \left( \dfrac{H_t^A(1+s/2)}{L_t^A(1-s/2)} \right) \right]^2 \\
 	&=\left[ \ln \left( \dfrac{H_t^A}{L_t^A} \right) \right]^2 + 2 \alpha \ln\left( \dfrac{H_t^A}{L_t^A} \right) + \alpha^2,
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where $\alpha=\ln\left( \frac{1+s/2}{1-s/2} \right)$ is taken to be fixed. Taking expectations on both sides, we have
 	\begin{equation} \label{eqn:expsides}
@@ -618,10 +646,10 @@ This is one of the main methods of machine learning where a performance of a tas
 
 Here, the square boxes contain `$n$' dimensional input or feature vector, $X$ and `$m$' dimensional output vector, $Y$ and the circular box indicates hidden or unknown layer in-between that connects the input to the output. Structurally, neural networks are a two-stage regression or classification model with intermediary layers, and conceptually the model is similar to the reduced-rank regression model \ref{eqn:ykabxk}. But, $Z$ is generally a non-linear function of $X$. In the ordinary least squares regression model, the goal is to get `$m$' linear combinations of `$X$' that best predicts `$Y$'. Here `$r$' dimensional intermediaries can vary based on the assumption of `hidden' layers, but the `key' is that the output vector, `$Y$', can be a non-linear function of `$X$' via the hidden layers and `$r$' can be larger than `$n$'. In its simplest form the neural network model can be written as follows:
 	\begin{equation} \label{eqn:neurallabel}
-	\begin{split}
+	\begin{aligned}
 	Z_i&= \sigma(\beta_i'X), \quad i=1,2,\ldots,r \\
 	Y_j&= g_j(Z), \quad j=1,2,\ldots,m,
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where the function $\sigma(u)=\frac{1}{1+e^{-u}}$ is the sigmoid function. Note that this is the  function used in logistic regression. In the regression set-up, $g_j(Z)=\alpha_j' Z$, but in the $m$-class classification,
 	\begin{equation} \label{eqn:gjzclass}
@@ -708,13 +736,13 @@ Exact solutions are possible only under idealized conditions. A possible approac
 
 
 
-More generally speaking, Reinforcement Learning algorithms can be trained either using Value-based methods (Q-Learning) or Policy-based methods (Policy Gradient), so it's worth mentioning a few words about the differences.
+More generally speaking, Reinforcement Learning algorithms can be trained either using Value-based methods ($Q$-Learning) or Policy-based methods (Policy Gradient), so it's worth mentioning a few words about the differences.
 
 
-In Q-learning, as we just described, for a given state we calculate the Q value for every action in the action space and we pick the action corresponding to the max value. This means that choosing actions depends on the Q value at each decision point: Q-Learning attempts to learn the value of being in a given state (s), and taking a specific action (a) there with regards to the stated reward structure (per the Bellman equation, the expected long-term reward for a given action is equal to the immediate reward plus the discounted expected reward from the best future action taken at the following state). 
+In $Q$-learning, as we just described, for a given state we calculate the $Q$ value for every action in the action space and we pick the action corresponding to the max value. This means that choosing actions depends on the $Q$ value at each decision point: $Q$-Learning attempts to learn the value of being in a given state (s), and taking a specific action (a) there with regards to the stated reward structure (per the Bellman equation, the expected long-term reward for a given action is equal to the immediate reward plus the discounted expected reward from the best future action taken at the following state). 
 
 
-In Policy-based methods, we directly learn the policy function $\Pi$ without explicitly modeling the value function, resulting in actions being taken without directly calculating Q (s,a). This tends to be closer to the actual objective of learning the optimal policy (e.g. learning to trade optimally) directly from experiences, rather that through intermediary steps which are subject to higher noise and uncertainty. An interesting specificity of financial applications---like trading---in favor of a Policy-based approach is that the true reward for the agent tends to be terminal (e.g. P\&L, Execution Slippage, etc.), but the reward of each individual actions are less obvious, nor do they necessarily matter. For instance, when learning to optimally slice a large trade into a multitude of child orders, what is the value of having posted a top-of-book passive order two hours into the execution compared to having posted one level below the top-of-book? While it's hard to to get to these values, one would want the agent to learn to give a value to the intermediate actions in order to guide it toward the ultimate reward. 
+In Policy-based methods, we directly learn the policy function $\Pi$ without explicitly modeling the value function, resulting in actions being taken without directly calculating $Q(s,a)$. This tends to be closer to the actual objective of learning the optimal policy (e.g. learning to trade optimally) directly from experiences, rather that through intermediary steps which are subject to higher noise and uncertainty. An interesting specificity of financial applications---like trading---in favor of a Policy-based approach is that the true reward for the agent tends to be terminal (e.g. P\&L, Execution Slippage, etc.), but the reward of each individual actions are less obvious, nor do they necessarily matter. For instance, when learning to optimally slice a large trade into a multitude of child orders, what is the value of having posted a top-of-book passive order two hours into the execution compared to having posted one level below the top-of-book? While it's hard to to get to these values, one would want the agent to learn to give a value to the intermediate actions in order to guide it toward the ultimate reward. 
 
 
 While still a nascent field in finance, Reinforcement Learning is evolving fast and hold promises for trading applications that naturally lend themselves to be modeled as Markov Decision Processes. We encourage the curious reader to explore further the vast literature available on this topic.

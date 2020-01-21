@@ -83,20 +83,20 @@ Another problem of interest in regard to the multivariate linear regression mode
 	\end{equation}
 has the Hotelling's $T^2$-distribution with $T - n$ degrees of freedom, Anderson (1984)~\cite[Chap. 5]{andersontw2}. Thus, $\{(T - n - m + 1)/ m(T - n)\} \mathcal{T}^2$ has the $F$-distribution with $m$ and $T - n - m + 1$ degrees of freedom, so that a $100(1 - \alpha)\%$ confidence ellipsoid for the true mean response $CX_0$ at $X_0$ is given by 
 	\begin{equation} \label{eqn:52line}
-	\begin{split}
+	\begin{aligned}
 	(\tilde{C}X_0 & -CX_0)' \, \overline{\Sigma}_{\epsilon\epsilon}^{-1} (\tilde{C}X_0 - CX_0) \\
 	&\leq \{X_0' (\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T - n)}{T - n - m + 1}\, F_{m,T - n - m + 1}(\alpha) \right],
-	 \end{split}
+	 \end{aligned}
 	\end{equation}
 where $F_{m,T - n - m + 1}(\alpha)$ is the upper 100$\alpha$th percentile of the $F$-distribution with $m$ and $T - n - m + 1$ degrees of freedom. In testing the validity of CAPM model in a large cross-section of stocks, the common test, whether the constant terms are simultaneously zero, is based on \eqref{eqn:tcal}. More details will follow in a later chapter.
 
 
 A related problem of interest is the prediction of values of a new response vector $Y_0= CX_0 + \epsilon_0$ corresponding to the predictor variables $X_0$, where it is assumed that $Y_0$ is independent of the values $Y_1, \ldots, Y_T$. The predictor of $Y_0$ is given by $\hat{Y}_0= \tilde{C}X_0$, and it follows similarly to the above result \eqref{eqn:52line} that a $100(1 - \alpha)\%$ prediction ellipsoid for $Y_0$ is
 	\begin{equation} \label{eqn:52another2}
-	\begin{split}
+	\begin{aligned}
 	(Y_0 & -\tilde{C}X_0)' \, \overline{\Sigma}_{\epsilon\epsilon}^{-1} (Y_0 - \tilde{C} X_0) \\
 	&\leq \{1 + X_0'(\mathbf{X}\mathbf{X}')^{-1} X_0\} \left[ \dfrac{m(T - n)}{T - n - m + 1} \, F_{m,T - n - m + 1}(\alpha) \right].
-	\end{split}
+	\end{aligned}
 	\end{equation}
 The application of Hotelling's $T^2$ in the context of testing related to CAPM model when the number of stocks, `$m$' larger than the available data, `$T$' has been a subject of active research recently. \label{in:multreg2}
 
@@ -223,22 +223,22 @@ The class of models stated in \eqref{eqn:2ytcs} is rather flexible and provides 
 	\end{equation}
 with `$p$' lags. As in Section~\ref{sec:stoc_proc}, we can define the population versions of the mean, variance, and autocovariance functions for stationary series as follows; in addition, we have the cross-correlation matrix that captures the lead-lag relationships among all `$m$' series.
 	\begin{equation} \label{eq:meanvarianceauto}
-        \begin{split}
+        \begin{aligned}
 	\text{Mean:\qquad} & \mu= \Ex(Y_t) \\
 	\text{Variance:\qquad} & \Gamma(0)= \Ex[(Y_t - \mu)(Y_t - \mu)'] \\
 	\text{Autocovariance:\qquad} & \Gamma(l)= \Ex[(Y_t - \mu)(Y_{t-l} - \mu)'] \\
 	\text{Cross-correlation:\qquad} & \rho(l) = D^{-1}\Gamma(l) D^{-1}
-        \end{split}
+        \end{aligned}
         \end{equation}
 Here $D$ is the diagonal matrix consisting of the `$m$' standard deviations, from the square root of diagonal elements of $\Gamma(0)$. It is easy to observe,  $\Gamma(l)= \Gamma(-l)'$ and $\rho(l)= \rho(-l)'$. The linear dependence among all the variables in terms of leads-lags is fully captured by examining $\rho_{ij}(l)$. There are excellent sources to study about modeling multiple time series (see Tsay (2010)~\cite{tsay} and Reinsel (2002)~\cite{2002reinsel}). We focus mainly on the use of  VAR$(p)$ model in studying the relationships among stocks or markets; we elaborate on VAR($p$) below.
 
 
 Using the back-shift operator $B$, the model \eqref{eqn:ytphi0}, VAR$(p)$ can be written as, $ \Phi(B)Y_t= \Phi_0 + \epsilon_t$, where $\Phi(B)= I - \Phi_1 B - \cdots - \Phi_p B^p$ is a matrix polynomial. It can be shown for the process $Y_t$ to be stationary, the roots of $\lvert \Phi(\lambda)-I \rvert= 0$ should all lie outside the unit circle. If $Y_t$ is stationary, then $\mu= [\Phi(1)]^{-1} \Phi_0$ where $\Phi(1)= I - \Phi_1 - \cdots - \Phi_p$. An easy consequence of this form is the result of the Yule-Walker equations, which are useful to identify, $\Phi$'s, the autoregressive coefficients from the moment conditions:
 	\begin{equation} \label{eqn:2gammarho}
-	\begin{split}
+	\begin{aligned}
 	\Gamma(l)&= \Phi_1 \,\Gamma(l-1) +\cdots + \Phi_p\, \Gamma(l-p) \\
 	\rho(l)&= \Phi_1^* \,\rho(l-1) + \cdots + \Phi_p^* \, \rho(l-p).
-	\end{split}
+	\end{aligned}
 	\end{equation}
 Here $\Phi_i^*= D^{-\frac{1}{2}} \,\Phi_i\, D^{-\frac{1}{2}}$. A general approach to building a VAR model is to sequentially increase the lag value, `$p$' and check if the added lag is significant. The lag coefficients are estimated with their sample counter-parts and they provide good initial estimates. 
 
@@ -253,10 +253,10 @@ where $ \Hat{\epsilon}_t^{(i)}= Y_t - \Hat{\Phi}_0^{(i)} - \Hat{\Phi}_1^{(i)}Y_{
 	\end{equation}
 This is distributed asymptotically as a Chi-squared distribution with $m^2$ degrees of freedom. Alternatively, the AIC or BIC criteria that penalize for over parameterization can be used; 
 	\begin{equation} \label{eqn:2aicbic}
-	\begin{split}
+	\begin{aligned}
 	\text{AIC}(i)&= \ln\left(\lvert\tilde{\Sigma_i} \rvert \right)+\frac{2m^2 \cdot i}{T} \\
 	\text{BIC}(i)&= \ln\left( \lvert \tilde{\Sigma_i} \rvert \right)+\frac{m^2 \cdot i \cdot \ln(T)}{T}.
-	\end{split}
+	\end{aligned}
 	\end{equation}
 Here $\tilde{\Sigma_i}$ is the maximum likelihood estimate of $\Sigma_i$ where the divisor in \eqref{eqn:2hatsigma} is $T$ instead of $T - 2i - 1$.
 
@@ -324,7 +324,7 @@ Economic time series share some common characteristics such as trends, seasonali
 	\begin{equation} \label{eqn:discyt}
 	Y_t= Cf_t + a_t,
 	\end{equation}  
-where $f_t$ is a lower dimensional common feature vector so that a linear combination of $Y_t$, $l' Y_t$ can be independent of this feature. Observe that this implies $l'C=0$, which is the result of `$C$' being a lower rank matrix. The $f_t$-vector can either be constructed from the past values of $Y_t$, which is the focal view of comovement, or can be constructed from exogenous variables, sat $X_t$, which is the basis of many studies on commonality in finance literature. We briefly summarize the two aspects here. 
+where $f_t$ is a lower dimensional common feature vector so that a linear combination of $Y_t$, $l' Y_t$ can be independent of this feature. Observe that this implies $l'C=0$, which is the result of `$C$' being a lower rank matrix. The $f_t$-vector can either be constructed from the past values of $Y_t$, which is the focal view of comovement, or can be constructed from exogenous variables, say $X_t$, which is the basis of many studies on commonality in finance literature. We briefly summarize the two aspects here. 
 
 
 The comovement relationships among non-stationary series that result from cointegration are known as long-run equilibrium relationships. Relationships that result from stationary series are known as short-run equilibrium relationships. The cointegrating relationships resulting \eqref{eqn:2Wtequiv} are given by $\hat{Q}$ that leads to $\hat{Q}' \hat{A}=0$. A generalization of this concept relates to serial correlation common feature; to define this, write VAP($p$) model in its error correction form as\label{in:vec2}
@@ -401,7 +401,7 @@ where $\mu_t=CX_t$ and $\epsilon_t \sim N(0,\Sigma_{\epsilon\epsilon})$. As $\Si
 	\epsilon_t=H^{1/2}_t a_t,
 	\end{equation}
 where $H_t$ is the conditional variance-covariance matrix.
-
+s
 
 There are two versions of model formulation of the elements of the $H_t$-matrix. Note this $m \times m$ matrix, because of symmetry, has only $m(m+1)/2$ distinct elements. Writing $h_t= \text{Vech}(H_t)$ that stacks these distinct elements as a vector, the $\text{Vec}(1,1)$ model (similar to GARCH(1,1) in the univariate case) is defined as:
 	\begin{equation} \label{eqn:vecmodel}
@@ -529,56 +529,49 @@ The results for the testing co-integration for the full duration and the regime 
 	\begin{table}[!ht]
 	\caption{Full Duration \label{tab:fulldur}}
 	\centering
-	{\small Eigenvalues ($\lambda$): 0.0054, 0.0030, 0.0018, 0.0008, 0.0003}
-
-	{\small Values of test statistic and critical values of test for various ranks:} \\[0.1cm]
-	
-	\hspace{-4.5cm} \begin{tabular}{| l | c | c |} 
+	{\small Eigenvalues ($\lambda$): 0.0054, 0.0030, 0.0018, 0.0008, 0.0003} \par
+	{\small Values of test statistic and critical values of test for various ranks:} \par
+	\begin{tabular}{| l | c | c |} \hline
 	$r$  & test & 5pct \\ \hline
 	$r \leq 4$ &  1.26 & 8.18 \\ \hline
 	$r \leq 3$ &  3.71 & 14.90 \\ \hline
 	$r \leq 2$ &  7.87 & 21.07 \\ \hline
 	$r \leq 1$ & 13.47 & 27.14 \\ \hline
-	$r=0$  & 24.19  & 33.32
-	\end{tabular}
-	
-	{\small Eigenvectors, normalised to first column: (These are the co-integrating relations)} \\[0.1cm]
-	
-	\hspace{-2cm}\begin{tabular}{| l | c | c | c | c | c |} 
+	$r=0$  & 24.19  & 33.32 \\ \hline
+	\end{tabular} \par
+	{\small Eigenvectors, normalised to first column: (These are the co-integrating relations)} \par
+	\begin{tabular}{| l | c | c | c | c | c |} \hline
 	          & EUR &   GBP  &   CAD  &   AUD   &  JPY \\ \hline
 	EUR & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\ \hline
 	GBP & $-0.172$ & $-1.105$ & $-1.721$ &  2.163 & $-0.487$ \\ \hline
 	CAD & $-0.890$ &  4.537 & $-0.810$ &  0.707 &  1.666 \\ \hline
 	AUD & $-0.343$ & $-3.838$ &  0.829 & $-0.431$ &  0.214 \\ \hline
-	JPY &  0.305 & $-0.318$ & $-1.300$ & $-2.242$ & 0.889
+	JPY &  0.305 & $-0.318$ & $-1.300$ & $-2.242$ & 0.889 \\ \hline
 	\end{tabular}
 	\end{table}
+	
 	
 	\begin{table}[!ht]
 	\caption{Regime 2007--2009 \label{tab:fulldur2}}
 	\centering
-	{\small Eigenvalues ($\lambda$): 0.0592, 0.0367, 0.0298, 0.0039, 0.0038}
-
-	{\small Values of test statistic and critical values of test of co-integrating rank:} \\[0.1cm]
-	
-	\hspace{-4.5cm}\begin{tabular}{| l | c | c |} 
+	{\small Eigenvalues ($\lambda$): 0.0592, 0.0367, 0.0298, 0.0039, 0.0038} \par
+	{\small Values of test statistic and critical values of test of co-integrating rank:} \par
+	\begin{tabular}{| l | c | c |} \hline
 	r               &  test & 5pct \\ \hline
 	r $\leq$ 4 &  1.97 &  8.18 \\ \hline
 	r $\leq$ 3 &  2.01 & 14.90 \\ \hline
 	r $\leq$ 2 & 15.77 & 21.07 \\ \hline
 	r $\leq$ 1 & 19.50 & 27.14 \\ \hline
-	r = 0  & 31.84 & 33.32 
-	\end{tabular}
-
-	{\small Eigenvectors, normalised to first column: (These are the co-integration relations)} \\[0.1cm]
-	
-	\hspace{-2cm}\begin{tabular}{| l | c | c | c | c | c |} 
+	r = 0  & 31.84 & 33.32 \\ \hline
+	\end{tabular} \par
+	{\small Eigenvectors, normalised to first column: (These are the co-integration relations)} \par
+	\begin{tabular}{| l | c | c | c | c | c |} \hline
 	         &  EUR  &   GBP  &   CAD   &  AUD  &   JPY \\ \hline
 	EUR & 1.000 & 1.000 & 1.000 & 1.000 & 1.000 \\ \hline
 	GBP & $-0.628$ & 0.392 & $-0.606$ & 0.379 & $-0.241$ \\ \hline
 	CAD & 1.733 & $-0.615$ & $-1.009$ & $-1.189$ & $-0.456$ \\ \hline
 	AUD & $-0.919$ & $-0.452$  & 0.519  & 0.103 & $-0.588$ \\ \hline
-	JPY & $-0.289$  & 0.522 & $-0.500$ & $-0.567$ & $-0.856$
+	JPY & $-0.289$  & 0.522 & $-0.500$ & $-0.567$ & $-0.856$ \\ \hline
 	\end{tabular}
 	\end{table}
 
@@ -637,29 +630,25 @@ For the five exchange rate series, the computational details are presented in Ta
 
 	\begin{table}[H]
 	\centering
-	\caption{Principal Volatility Components \label{tab:pvctable}}
-	{\small Eigenvalues ($\lambda$): 21.096, 4.453, 1.623, 0.728, 0.435} \\
-	
-	{\small Eigenvectors}
-	
-	\hspace{-2.5cm}\begin{tabular}{| l | c | c | c | c | c |} 
+	\caption{Principal Volatility Components\label{tab:pvctable}}
+	{\small Eigenvalues ($\lambda$): 21.096, 4.453, 1.623, 0.728, 0.435} \par
+	{\small Eigenvectors} \par
+	\begin{tabular}{| l | c | c | c | c | c |} \hline
         &    [,1]   &    [,2]    &   [,3]    &   [,4]   &     [,5] \\ \hline
 	[1,] & 0.015 & 0.208 & $-0.225$ & $-0.694$ &  0.651 \\ \hline
 	[2,] & 0.173 & 0.495 & 0.753 & 0.219 & 0.331 \\ \hline
 	[3,] & 0.195 & 0.717 & $-0.577$ & 0.331 & $-0.080$ \\ \hline
 	[4,] & 0.859 & $-0.383$ & $-0.114$ & 0.185 & 0.260 \\ \hline
-	[5,] & $-0.440$ & $-0.228$ & $-0.191$ & 0.571 & 0.626 \\
-	\end{tabular}
-	
-	{\small $M$--Matrix} \\[0.1cm]
-	
-	\hspace{-2.5cm}\begin{tabular}{| l | c | c | c | c | c |} 
+	[5,] & $-0.440$ & $-0.228$ & $-0.191$ & 0.571 & 0.626 \\ \hline
+	\end{tabular} \par
+	{\small $M$--Matrix} \par
+	\begin{tabular}{| l | c | c | c | c | c |} \hline 
 	         &   [,1]   &     [,2]    &     [,3]   &    [,4]   &    [,5] \\ \hline
 	[1,] & $-0.196$ & 0.077 & $-0.283$ & $-0.755$ & 0.684 \\ \hline
 	[2,] & 0.128 & 0.437 & 0.793 d & 0.319 & 0.205 \\ \hline
 	[3,]& $-0.070$ & 0.713 & $-0.520$ & 0.321 & $-0.327$ \\ \hline
 	[4,] & 0.849 & $-0.512$ & $-0.002$ & 0.129 & 0.150 \\ \hline
-	[5,] & $-0.468$ & $-0.180$ & $-0.142$ & 0.455 & 0.601 \\
+	[5,] & $-0.468$ & $-0.180$ & $-0.142$ & 0.455 & 0.601 \\ \hline
 	\end{tabular}
 	\end{table} \label{in:multimod2}
 

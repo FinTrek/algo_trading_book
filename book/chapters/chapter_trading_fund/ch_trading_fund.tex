@@ -290,7 +290,7 @@ The first step is to organize orders by limit price, segregating buys and sells 
    	\centering
    	\caption{Cumulative Order Book Quantities\label{tab:openAuct3}}
    	\begin{tabular}{lcrrrrr}
-	Price & Seq. Number & Cum. Buy Qty & Buy Qty & Sell Qty & Cum. Sell Qty & Qty Crossed at Price \\ \hline
+	Price & \makecell{Sequence \\ Number} & \makecell{Cumulative \\ Buy Quantity} & \makecell{Buy \\ Quantity} & \makecell{Sell \\ Quantity} & \makecell{Cumulative \\ Sell Quantity} & \makecell{Quantity Crossed \\ at Price} \\ \hline
 	12.35 &  17 & 5500  & 5500 &  & 38130 & 5500 \\
 	12.34 & 12 & 7500 & 2000 & & 38130 & 7500  \\	
 	12.33 & 7  &  8000 & 500 &  & 38130 & 8000 \\	
@@ -326,7 +326,7 @@ The list of buy orders executed during the auction is shown in Table~\ref{tab:op
 	\begin{table}[!ht]
    	\centering
    	\caption{Crossed Buy Orders\label{tab:openAuct4}}
-   	\hspace{-3.5cm}\begin{tabular}{lcr} 
+   	\begin{tabular}{lcr} 
 	Price & Seq. Number & Buy Qty  \\ \hline
 	12.35 &  17 & 5500 \\
 	12.34 & 12 & 2000 \\	
@@ -336,7 +336,7 @@ The list of buy orders executed during the auction is shown in Table~\ref{tab:op
 	12.23 & 6 & 1200 \\		
 	12.21  & 10& 1000 \\		
 	12.19$^*$ &  14  & 2050 		
-   	\end{tabular}
+   	\end{tabular} \par
 	\begin{minipage}[t]{0.75\textwidth}
 	{\small *Order number 14 was for 2750 shares but did not get fully executed as the bid quantity up to 12.19 exceeded the offered quantity at that price. The balance of order 14 will then be posted as a limit order in the continuous trading session}
 	\end{minipage}   
@@ -346,7 +346,6 @@ The list of buy orders executed during the auction is shown in Table~\ref{tab:op
 	\begin{table}[!ht]
    	\centering
    	\caption{Crossed Sell Orders\label{tab:openAuct5}}
-   	\hspace*{-3.3cm}
    	\begin{tabular}{ccc} 
 	Price & Seq. Number & Sell Qty  \\ \hline
 	12.19 &  20 & 1200 \\
@@ -511,7 +510,7 @@ Running a successful trading operation requires availability of different data s
 \begin{comment}
 Historical market data available to researchers and practitioners alike but varied in degrees of granularity over time. From daily trade data (closing price and volume), to tick-by-tick trade and quote data (also known as TAQ data), to full message data, the progression in granularity not only reflects the focus in intraday trading complexity but also opens up the way for more advanced strategies. 
 
-Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The level II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available level III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime.\footnote{Level III data has been available for years to firm subscribing and storing the raw binary exchange format (pcap) and the re-building the orderbook sequentially from there for their research. It is still the main method used for HFT research. One recently this data became available historically to a broader subset of users and researchers} \twomedskip
+Initially researchers studying the dynamic of LOB had to be content with Trades and Quotes (TAQ) data which provide a time-stamped sequence of trades (Market Orders) and updates in the price and depth of bid and ask quotes. No other information beyond the best bid and the best offer was made available. Also, the updates contained changes at the two best quotes and were aggregated. The aggregation was clearly a limiting factor as one could not discern the kind of events that led to the changing status of the book. The Level~II data that became available is a time-stamped sequence of trades and quotes for the top 5-levels of the LOB. This data is little deeper than TAQ data, but was still in aggregated form. But recently made available Level~III data contains time-stamped sequence of all (except for the submission of hidden orders) events that occur in the LOB. Every order is identified by a unique order-id and thus it can be tracked through its lifetime.\footnote{Level~III data has been available for years to firm subscribing and storing the raw binary exchange format (pcap) and the re-building the orderbook sequentially from there for their research. It is still the main method used for HFT research. One recently this data became available historically to a broader subset of users and researchers} \twomedskip
 
 \end{comment}
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -664,7 +663,7 @@ While the above discussion provides a non-exhaustive list of issues on the refer
 While historically a large swath of modeling for developing strategies was carried out on daily or minute bar datasets, the past fifteen years have seen a significant rise in the usage raw market data in an attempt to extract as much information as possible, and act on it before the opportunity (or market inefficiency) dissipates. Market data, itself, comes in various levels of granularity (and price!) and can be subscribed to either directly from exchanges (known as ``direct feeds'') or from data vendors aggregating and distributing it. The level of detail of the feed subscribed to is generally described as Level~I, Level~II or Level~III market data.\twomedskip
 
 
-\noindent\textbf{Level~I Data: Trade and BBO Quotes:} Level I market data is the most basic form of tick-by-tick data. Historically, the level I data feed would only refer to trade information (Price, Size, Time of each trade reported to the tape) but has grown over time into a term generally accepted to mean both trades and top of book quotes. While the trade feed updates with each trade printed on the tape, the quote feed tends to update much more frequently each time liquidity is added to, or removed from the top of book (a rough estimate in liquid markets is the quotes present more updates than the trades by about an order of magnitude). 
+\noindent\textbf{Level~I Data: Trade and BBO Quotes:} Level~I market data is the most basic form of tick-by-tick data. Historically, the Level~I data feed would only refer to trade information (Price, Size, Time of each trade reported to the tape) but has grown over time into a term generally accepted to mean both trades and top of book quotes. While the trade feed updates with each trade printed on the tape, the quote feed tends to update much more frequently each time liquidity is added to, or removed from the top of book (a rough estimate in liquid markets is the quotes present more updates than the trades by about an order of magnitude). 
 
 
 In order to build strategies, the timing of each event must be as precise as possible. While the time reported for trade and quotes is the matching engine time at the exchange, most databases also store a reception or record time to reflect the potential latency between the trade event and one being aware that it did happen and be able to start making decision on it. Accounting for this real-world latency is a necessary step for researchers building strategies on raw market data for which opportunities may be very short lived and may be impossible to exploit by participants who are not fast enough.
@@ -682,10 +681,10 @@ Capturing raw market data, whether to build a research database or to process it
 \noindent\textbf{Level~II Data: Market Depth:}  Level~II market data contains the same information as Level~I, but with the addition of quote depth data. The quote feed displays all lit limit order book updates (price changes, addition or removal of shares quoted) at any level in the book, and for all of the lit venues in fragmented markets. Given the volume of data generated and the decreasing actionable value of quotes updates as their distance to top of book increases, some users limit themselves to the top five or ten levels of the order book  when they collect and/or process the data. \label{in:level2dat1} \twomedskip
 
 
-\noindent\textbf{Level~III Data: Full Order View:} Level~III market data---also known as message data---provides the most granular view of the activity in the limit order book. Each order arriving is attributed a unique ID, which allows for its tracking over time, and is precisely known when it is executed, canceled or amended. Similar to Level~II, the dataset contains intraday depth of book activity for all securities in an exchange. Once all messages from different exchanges are consolidated into one single dataset ordered by timestamp, it is possible to build a full (with national depth) book at any moment intraday. For illustration purposes, we take the example of U.S. Level III data and provide a short description below in Table~\ref{tab:level3data}. \label{in:level3dat1}
+\noindent\textbf{Level~III Data: Full Order View:} Level~III market data---also known as message data---provides the most granular view of the activity in the limit order book. Each order arriving is attributed a unique ID, which allows for its tracking over time, and is precisely known when it is executed, canceled or amended. Similar to Level~II, the dataset contains intraday depth of book activity for all securities in an exchange. Once all messages from different exchanges are consolidated into one single dataset ordered by timestamp, it is possible to build a full (with national depth) book at any moment intraday. For illustration purposes, we take the example of U.S. Level~III data and provide a short description below in Table~\ref{tab:level3data}. \label{in:level3dat1}
 	\begin{table}[!ht]
 	\centering
-	\caption{Level III data\label{tab:level3data}}
+	\caption{Level~III data\label{tab:level3data}}
 	\begin{tabular}{lp{0.8\textwidth}} 
 	Variable & Description \\
 	& \\
@@ -719,7 +718,7 @@ While the display and issuance of new ID to the modified order varies from excha
         \end{enumerate}
 
 
-The richness of the dataset allows sophisticated players, such as market makers, to know not only the depth of book at a given price and the depth profile of the book on both sides, but more importantly the relative position of an order from the top position of the side (buy or sell).Among the most common granular microstructure behaviors studied with Level III data, we can mention:
+The richness of the dataset allows sophisticated players, such as market makers, to know not only the depth of book at a given price and the depth profile of the book on both sides, but more importantly the relative position of an order from the top position of the side (buy or sell).Among the most common granular microstructure behaviors studied with Level~III data, we can mention:
         \begin{itemize}
         \item The pattern of inter-arrival times of various events.
         \item Arrival and cancellation rates as a function of distance from nearest touch price.

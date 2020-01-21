@@ -459,6 +459,11 @@ Based on a sample $Y_1, \ldots, Y_T$ from a process $\{ Y_t \}$, the sample PACF
 for each $k= 1, 2, \ldots$. These are the same form as the equations \eqref{eqn:rhoj} but with sample ACF values $r(j)$ used in place of the theoretical ACF values $\rho(j)$. In matrix notation similar to that used in \eqref{eqn:matrix}, the solution is $\hat{\phi} = R_k^{-1} r$. Now under the assumption that the process $\{ Y_t \}$ is an AR of order $p$, the estimated PACF values $\hat{\phi}_{kk}$ for lags $k > p$ are approximately independently and normally distributed for large $T$, with mean $\Ex(\hat{\phi}_{kk})= 0$ and St.Dev. $\hat{\phi}_{kk} = 1 / \sqrt{T}$ for $k > p$. These facts concerning the sampling properties of the sample PACF $\hat{\phi}_{kk}$ can be used to assess whether the coefficients in estimated AR models may be treated as close to zero after some lag $p$ (e.g. if $\lvert \hat{\phi}_{kk} \rvert < 2 / \sqrt{T}$ for $k > p$), and hence can be useful in the selection of an appropriate order $p$ for fitting an AR model to sample data. \label{in:partac2} \twomedskip
 
 
+
+\pagebreak
+
+
+
 \noindent\textbf{Linear Models for Nonstationary Time Series} \label{in:nonstat2} \twomedskip
 
 
@@ -491,10 +496,10 @@ Two useful results that we present below to illustrate how the general class of 
 \begin{result}[Aggregation]
 Consider a process $Y_t$, composed of a trend component $U_t$ and a noise component $N_t$, $Y_t = U_t + N_t$. We assume that the (random) trend component follows a random walk model (possibly with a drift), $(1 - B)\, U_t = \delta + a_t$, and we assume that $N_t$ is a stationary AR(1) process $(1 - \phi B)\, N_t = b_t$, where $\{ a_t \}$ and $\{ b_t \}$ are independent white noise processes with zero means and variances $\sigma_a^2$ and $\sigma_b^2$, respectively. Then, applying the first differencing operator, we have $(1 - B)\, Y_t = (1 - B)\, U_t + (1 - B)\, N_t = \delta + a_t + (1 - B)\, N_t$, and hence
 	\begin{equation} \label{eqn:bphi}
-	\begin{split}
+	\begin{aligned}
 	(1 - \phi B)(1 - B)\,Y_t&= (1 - \phi B)\, \delta + (1 - \phi B)\, a_t + (1 - \phi B)(1 - B)\, N_t \\
 	&= (1 - \phi)\, \delta + (1 - \phi B)\, a_t + (1 - B)\, b_t.
-	\end{split}
+	\end{aligned}
 	\end{equation}
 It can be shown that $Z_t = (1 - \phi B)\, a_t + (1 - B)\, b_t$ is the sum of two independent MA(1) processes and thus an MA(1) process, so that $Y_t$ is an ARIMA(1,1,1) process. Thus ARIMA $(p, d, q)$ can arise naturally when several stochastic elements with different behaviors are added together. These stochastic elements may come from sources that can be justified by a priori theories. \xqed
 \end{result}
@@ -649,10 +654,10 @@ The maximum likelihood estimation is based on the augmented conditional likeliho
 
 One approach to selecting among competing models is the use of information criteria such as AIC proposed by Akaike (1974)~\cite{akaike74} or the BIC of Schwarz (1978)~\cite{sch78}. They are
 	\begin{equation} \label{eqn:aicbic}
-	\begin{split}
+	\begin{aligned}
 	\text{AIC}_{p,q}&= \log \hat{\sigma}_\varepsilon^2 + n^* \left( \dfrac{2}{T} \right) \\
 	\text{BIC}_{p,q}&=\log\hat{\sigma}_\varepsilon^2 + n^* \left( \dfrac{\log T}{T} \right),
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where $\hat{\sigma}_\varepsilon^2$ is the estimated model error variance, and $n^*= p + q + 1$ denote the number of parameters estimated in the model, including the constant term. The first term in the above equations results from the maximized likelihood and can be made smaller with more parameters, while the second term acts as a ``penalty factor'' for the parameters used in the model. In this approach, models which yield a minimum value for the criterion are to be preferred, as these criteria penalize for overfitting. \twomedskip
 
@@ -763,6 +768,11 @@ with the prediction error $e^* = Y - \hat{Y}^*$ having mean zero and prediction 
 where $\mu_y = \Ex(Y), \mu_x = \Ex(X)$, $\sigma_y^2 = \var(Y)$, $\Sigma_{yx} = \cov(Y,X)$, and $\Sigma_{xx} = \cov(X)$. Note $\Sigma_{yx}$ is a $1 \times p$ row vector and $\Sigma_{xx}$ is a $p \times p$ variance-covariance matrix. Moreover, if the prediction error $e^* = Y - \hat{Y}^*$ of the best linear predictor is such that $\Ex(e^*\;|\;X) = 0$ (e.g., if $e^*$ is independent of $X$), then $\hat{Y}^*$ is also the minimum MSE predictor, i.e. $\hat{Y}^* = \hat{Y} = \Ex(Y\;|\;X)$ is a linear function of $X$ and the prediction error $e = e^* = Y - \hat{Y}$ has variance $\var(e^*)$ as given above in \eqref{eqn:2varestar}. \twomedskip
 
 
+
+\pagebreak
+
+
+
 \noindent\textbf{Forecasting for ARIMA Processes and Properties of Forecast Errors} \twomedskip
 
 
@@ -866,7 +876,7 @@ These stylized facts are particularly important for risk management of strategie
 
 
 % Time Series Models for Aggregated Data
-\section{Time Series Models for Aggregated Data: Modeling the Variance} \label{in:modelvar1}
+\section{Time Series Models for Aggregated Data: Modeling the Variance}\label{in:modelvar1}
 
 In the ARMA$(p,q)$ model $\phi(B)Y_t= \delta + \theta(B) \,\varepsilon_t$ for series $\{ Y_t \}$, when the errors $\varepsilon_t$ are \emph{independent} r.v.'s (with the usual assumptions of zero mean and constant variance $\sigma^2$), an implication is that the \textit{conditional} variance of $\varepsilon_t$ given the past information is a constant not depending on the past. This, in turn, implies the same feature for $l$-step ahead forecast errors $e_t(l) = \sum_{i=0}^{l-1} \psi_i \varepsilon_{t+l-i}$. However, in some settings, particularly for financial data, the variability of errors may exhibit dependence on the past variability. Modeling the variance, which is essential for studying the risk-return relationship is an important topic in finance. \twomedskip
 
@@ -874,7 +884,7 @@ In the ARMA$(p,q)$ model $\phi(B)Y_t= \delta + \theta(B) \,\varepsilon_t$ for se
 \noindent \textbf{Autoregressive Conditional Heteroscedastic (ARCH) Models} \label{in:arch} \twomedskip
 
 
-The autoregressive conditional heteroscedastic (ARCH) models were originally proposed by Engle (1982)~\cite{engle1982}, Engle and Kraft (1983)~\cite{engle1983}, to allow for the conditional error variance in an ARMA process to depend on the past squared innovations, rather than be a constant as in ARMA models with independent errors. For example, an AR$(p)$ process with ARCH$(q)$ model errors is given as $Y_t = \sum_{i=1}^p\phi_iY_{t-i} + \delta + \varepsilon_t$, where, $\Ex(\varepsilon_t \;|\; \varepsilon_{t-1},\varepsilon_{t-2},\ldots)= 0$ and \label{in:modelvar2}
+The autoregressive conditional heteroscedastic (ARCH) models were originally proposed by Engle (1982)~\cite{engle1982}, Engle and Kraft (1983)~\cite{engle1983}, to allow for the conditional error variance in an ARMA process to depend on the past squared innovations, rather than be a constant as in ARMA models with independent errors. For example, an AR$(p)$ process with ARCH$(q)$ model errors is given as $Y_t = \sum_{i=1}^p\phi_iY_{t-i} + \delta + \varepsilon_t$, where, $\Ex(\varepsilon_t \;|\; \varepsilon_{t-1},\varepsilon_{t-2},\ldots)= 0$ and
 	\begin{equation} \label{eqn:2ht}
 	h_t= \var(\varepsilon_t \;|\; \varepsilon_{t-1}, \varepsilon_{t-2}, \ldots) = \omega_0 + \sum_{i=1}^q \omega_i \varepsilon_{t-i}^2
 	\end{equation}

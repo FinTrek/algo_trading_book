@@ -227,7 +227,7 @@ The histogram of the portfolio returns is given in Figure~\ref{fig:monreturns}. 
         BIGL & $0.077^*$ & $1.02^*$ & $-0.0965^*$ & $-0.231^*$ & 0.978 \\
         BIG2 & $-0.0507$ & $0.966^*$ & $-0.122^*$ & $0.729^*$ & 0.954 \\
         BIGH & $-0.112^*$ & $1.079^*$ & 0.0205 & $0.819^*$ & 0.968
-        \end{tabular}
+        \end{tabular} \par
         {\small*Significant at 5\% level}
         \end{table}
 
@@ -312,7 +312,7 @@ The implementation of the portfolio theory in practice when the means and covari
 
 The following numerical illustration taken from Bruder, Gaussel, Richard and Roncalli (2013)~\cite{bruder} is quite telling. Consider the universe of four assets with the average return vector and the covariance matrix as given below.
 	\begin{equation} \label{eqn:ovrsighat}
-	\begin{split}
+	\begin{aligned}
 	\overline{r}'&= (0.05, 0.06, 0.07, 0.08) \\
 	\hat{\Sigma}&=\begin{pmatrix}
 	0.01 & 0.0084 & 0.0098 & 0.0105 \\
@@ -320,7 +320,7 @@ The following numerical illustration taken from Bruder, Gaussel, Richard and Ron
 	        &             & 0.0156 & 0.0147 \\
 	        &             &             & 0.0225
 	\end{pmatrix}
-	\end{split}
+	\end{aligned}
 	\end{equation}
 If the risk tolerance parameter `$\lambda$' is set at 0.1, then the resulting optimal portfolio has the following weights: $w^*= (0.2349, 0.1957, 0.1878, 0.2844)$. If the standard deviation (volatility) of the second asset increases by 3\%, the weight attached to this asset changes to $-0.1404$ and if the return of the first asset changes from 5\% to 6\%, the optimal weight goes to 0.6319 from 0.2349. The sensitivity of the efficient portfolio weights even to minor perturbations is quite obvious. 
 
@@ -347,10 +347,10 @@ The model begins with the following distributions:
 	\end{equation}
 where $I W_m(\psi,n_0)$ is the inverted Wishart with `$n_0$' degrees of freedom with $E(\Sigma)= \psi/(n_0 - m - 1)$ (for details on inverted Wishart, see Anderson (1984)~\cite{andersontw2}). These priors are known as conjugate priors as their functional forms closely match the likelihood functional form. When the degree of freedom `$\kappa$' goes to zero, the prior is non-informative. The posterior estimates are:
 	\begin{equation}\label{eqn:5posterior}
-	\begin{split}
+	\begin{aligned}
 	\hat{\mu}&= \dfrac{\kappa}{T+\kappa} \cdot \nu + \dfrac{T}{T+\kappa} \overline{r} \\
 	\hat{\Sigma}&= \dfrac{\psi}{T+n_0-m-1} + \dfrac{T}{T+n_0-m-1} \cdot \left\{S + \dfrac{\kappa}{T+\kappa} (\overline{r}-\nu)(\overline{r}-\nu)' \right\},
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where $S= \frac{1}{T} \sum_{t=1}^T (r_t - \overline{r})(r_t - \overline{r})'$, the residual covariance matrix. If `$\kappa$' and `$n_0$' are taken to be large, it implies that the investor puts more emphasis on the priors. To use \eqref{eqn:5posterior}, the investor has to specify these values. 
 
@@ -388,7 +388,7 @@ where $\phi_{ij}= E[\alpha s_{ij}^0 + (1 - \alpha) s_{ij}]$. It is further shown
 	\begin{equation}\label{eqn:alphastarsim}
 	\alpha^* \sim \dfrac{1}{T} \cdot \dfrac{\pi - \rho}{\gamma},
 	\end{equation}
-where the asymptotic quantities, $\pi= \sum_i \sum_j \text{Asy} \var(\sqrt{T} s_{ij})$, $\rho= \sum_i \sum_j \text{Asy} \cov(\sqrt{T}\,s_{ij}^0, s_{ij})$ and $\gamma= \sum_i \sum_j (\phi_{ij} - \sigma_{ij})^2$. Note that with CAPM specification which can be taken as a single index model, the `$\gamma$' quantity represents the misspecification of the single index. 
+where the asymptotic quantities, $\pi= \sum_i \sum_j \text{Asy} \var(\sqrt{T} s_{ij})$, $\rho= \sum_i \sum_j$ $\text{Asy} \cov(\sqrt{T}\,s_{ij}^0, s_{ij})$ and $\gamma= \sum_i \sum_j (\phi_{ij} - \sigma_{ij})^2$. Note that with CAPM specification which can be taken as a single index model, the `$\gamma$' quantity represents the misspecification of the single index. 
 
 
 Fan, Fan and Lv (2008)~\cite{fansq} consider high dimensional covariance matrix estimation via factor model \eqref{eqn:arbrit}. The multifactor model generally captures well the cross-sectional variations and thus the number of parameters that need to be estimated can be significantly reduced. It is possible that the number of factors `$n$' can grow with the number of assets, `$m$', and the sample period, `$T$'. Comparing $\hat{\Sigma}_{rr}= \hat{B} \hat{\Omega} \hat{B}' + \hat{V}$ in \eqref{eqn:covdouble} with the sample covariance matrix of the returns, `$S$', it is shown that the former performs better if the underlying factor model is true. In calculations that involve the inverse of the covariance matrix, such as the calculation of portfolio weights, factor model based estimates tend to perform better but it does not make a difference in the actual risk calculation $(\hat{w}' \hat{\Sigma} \hat{w})$, which involves the estimate of the covariance matrix. Recent studies have focused on providing tighter bounds on the risk; the calculations are somewhat complicated as they involve studying estimates of the weight vector as well as the estimates of the covariance matrix. See Fan, Han, Liu and Vickers (2016)~\cite{vickers} and the references therein for additional details.
@@ -433,7 +433,7 @@ Here, $R$ is the $m\times T$ matrix of the returns where rows represent assets a
 As stated in Brodie, Daubechies, De Mol, Giannone and Loris (2009)~\cite{brodic} adding the $L_1$-constraint results in several useful advantages. In addition to introducing sparsity that is helpful for managing large portfolios; the procedure provides a framework for regulating the amount of shorting which can be a proxy for transaction costs. More importantly it provides a solution that is more stable which was a main concern in the original optimization setup as small perturbations in the estimates of $\mu$ and $\Sigma$ can lead to very different solutions.
 
 
-The algorithm that is most convenient to solve \eqref{eqn:anotherhatwargmin} is Least Angle Regression (LAR) developed in Efron, Hastie, Johnstone and Tibshirani (2004)~\cite{efron}. It starts with a large value of `$\tau$' in \eqref{eqn:anotherhatwargmin} and as `$\tau$' decreases the optimal solution, $\hat{w}^{(\tau)}$, changes in a piecewise linear fashion and thus it is essential to find only the critical points where the slope changes. More relevant details can be found in Brodie et al. (2009)~\cite{brodic}. The LASSO procedure was evaluated using Fama-French 100 portfolios sorted by size and book-to-market as the universe. The efficient portfolio was constructed on a rolling basis using monthly data for five years and its performance is evaluated in the following year. It is concluded, see Brodie et al. (2009; Figure 2)~\cite{brodic}, that optimal sparse portfolios that allow short portfolios tend to outperform both the optimal no-short-positions portfolio and the na\"ive evenly weighted portfolio. 
+The algorithm that is most convenient to solve \eqref{eqn:anotherhatwargmin} is Least Angle Regression (LAR) developed in Efron, Hastie, Johnstone and Tibshirani (2004)~\cite{efron}. It starts with a large value of `$\tau$' in \eqref{eqn:anotherhatwargmin} and as `$\tau$' decreases the optimal solution, $\hat{w}^{(\tau)}$, changes in a piecewise linear fashion and thus it is essential to find only the critical points where the slope changes. More relevant details can be found in Brodie et al. (2009)~\cite{brodic}. The LASSO procedure was evaluated using Fama-French 100 portfolios sorted by size and book-to-market as the universe. The efficient portfolio was constructed on a rolling basis using monthly data for five years and its performance is evaluated in the following year. It is concluded, see Brodie et al. (2009)~\cite[Figure 2]{brodic}, that optimal sparse portfolios that allow short portfolios tend to outperform both the optimal no-short-positions portfolio and the na\"ive evenly weighted portfolio. 
 
 
 
@@ -567,17 +567,22 @@ The optimization function is to minimize $\lambda \sqrt{\text{TE}} - (1 - \lambd
 	\end{equation}
 subject to the following constraints:
 	\begin{equation} \label{eqn:constraintlist}
-	\begin{split}
+	\begin{aligned}
 	&\text{long only:} \quad w \geq 0 \\
 	&\text{turn-over:} \quad \sum_{i=1}^m |x_i| \leq u \\
 	&\text{maximum exposure to a factor:} \quad \sum_{i=1}^m \beta_{ik} w_i \leq u_k \\
 	&\text{holding:} \quad l_i \leq w_i \leq u_i
-	\end{split}
+	\end{aligned}
 	\end{equation}
 Note the criterion in \eqref{eqn:constraintprob} can also be taken as a version of tracking error. 
 
 
 Some practical implementation ideas are discussed in Pachmanova and Fabozzi (2014)~\cite{pachfab}. In addition to na\"ive allocation strategy discussed earlier in this chapter, other ad-hoc methods simply imitate the composition of some market indices such as S\&P 500 that weighs stocks by their market capitalizations or Dow-Jones that weighs stocks by their prices. To imitate, select the stocks with the largest weights in the benchmark. Other methods include stratification of benchmarks into groups and select stocks from each group that ensures diversification. The group can be industry-based or if it is based on past performance, the selected assets are called basis assets. The difference between the original allocation model and the rebalancing models can be due to change in the objectives and also due to change in transaction costs and taxes. If a manager wants to move toward higher alpha, the restriction on the tracking error should be added to \eqref{eqn:constraintlist}. Like other calculations related to portfolio management, the rebalancing also involves backward-looking estimates. To reflect the future more accurately, managers should arrive at forward-looking estimates of tracking error using conditioning arguments given in the earlier section. \twomedskip
+
+
+
+\pagebreak
+
 
 
 \noindent\textbf{Transaction Costs:} \label{in:tradecost2} Bid-ask spreads, brokerage fees, taxes and the price impact of trading are covered in Chapter~\ref{chap:ch_mi_models}. Here we present some observations related to trading costs as noted in the literature. Defining the turnover as,

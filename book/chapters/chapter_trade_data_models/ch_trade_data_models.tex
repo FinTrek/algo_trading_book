@@ -81,10 +81,10 @@ Time scale normalization is a 'horizontal' normalization (in a price chart the $
 
 It must be noted that the characteristics of microstructure noise in mid-quote prices are somewhat different from actual transaction prices. It is argued that mid-quotes are less impacted by bid-ask bounce than the transaction prices and is probably closer to the underlying `efficient' price. The local discrepancies between the observed and the efficient price may be due to delays in acquiring and processing of the relevant information. Anderson, Archakov, Cebiroglu and Hautsch (2017)~\cite{archcebha17} postulate are elegant model extending Roll's model \eqref{eqn:2plowstar}. Taking `$p_t$' as the log quote-midpoint, the model for price dynamics is stated as:
 	\begin{equation}\label{eqn:pricedynam}	
-	\begin{split}
+	\begin{aligned}
 	p_t&= p_{t-1} - \alpha (p_{t-1} - p_{t-1}^*) + a_t \\
 	p_t^*&= p_{t-1}^* + \epsilon_t; \quad 0<\alpha<2,
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where `$p_t^*$' is the efficient price. Note the first equation, when $\alpha=1$ is the same as Roll's model if `$p_t$' is taken to be the transaction price. In this formulation, $\mu_t= p_t - p_t^*$ is taken to be the mispricing component. From \eqref{eqn:pricedynam}, note that the return variance, because $r_t= -\alpha \mu_{t-1} + a_t$,
 	\begin{equation}  \label{eqn:signalrationoise}
@@ -341,7 +341,7 @@ To illustrate we consider the same data used in Cao et al. (2009)~\cite{caohansc
 Figure~\ref{fig:presentshape} below presents the shape of the limit order book. With high frequency trading it must be noted that this figure changes quite frequently. 
 	\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_trade_data_models/figures/lobshape.png} 
+	\includegraphics[width=0.8\textwidth]{chapters/chapter_trade_data_models/figures/lobshape.png} 
 	\caption{The limit order book.\label{fig:presentshape}}
 	\end{figure}
 
@@ -431,12 +431,12 @@ Modeling of LOB dynamics has drawn on ideas from economics, physics, statistics 
 
 It is taken that the price grid as $P(n)=\{ 1, 2, \ldots,n \}$ multiples of a price tick. The number of outstanding orders in the book $|X_t^i|$ at price $i$, collectively, $X_t \equiv (X_t^1,\ldots, X_t^n)$ is taken to be continuous-time Markov chain; if $X_t^i<0$, then there are $-X_t^i$ bid orders at price `$i$' and if $X_t^i>0$, then there are $X_t^i$ ask orders at price $i$. Now we have,
 	\begin{equation}\label{eqn:bestmidspread}
-	\begin{split}
+	\begin{aligned}
 	\text{Best Ask Price: }& p_A(t)= \inf\{i \colon X_t^i > 0 \} \\
 	\text{Best Bid Price: }& p_B(t)= \sup\{i \colon X_t^i < 0 \} \\
 	\text{Mid Price: }& p_M(t)= (p_A(t) + p_B(t))/2 \\
 	\text{Spread: }& p_S(t)= p_A(t) - p_B(t)
-	\end{split}
+	\end{aligned}
 	\end{equation}
 The depth of the order book is stated relative to best bid and best ask on either side of the book. This way the model can be applied to order book at any moment of time. Define
 	\begin{flalign} \label{eqn:qaqb}
@@ -553,20 +553,20 @@ In the case of dependency where bid side and ask side are correlated to each oth
 	\end{equation}
 where $0 < T_1 < T_2 < \cdots < T_n < \cdots$ are the times when events occur. When $\mu > 0$ and $\gamma(u)= 0$ this provides a Poisson base level for the process. The function $\gamma(u) \geq 0$ is called the exciting kernel. Each event will increase the intensity and then will decrease until the next event occurs again when the intensity will go up again. Some of the kernels suggested in the literature are:
 	\begin{equation} \label{eq:suggex}
-	\begin{split}
+	\begin{aligned}
 	\text{Exponential kernel: }& \gamma(u)= \alpha \cdot \beta \cdot e^{-\beta u}, \quad\quad \mu>0 \\
 	\text{Power law kernel: }& \gamma(u)= \dfrac{\alpha \beta}{(1+\beta u)^{1+p}}.
-	\end{split}
+	\end{aligned}
 	\end{equation}
 Here `$\alpha$' represents the overall strength of excitation and `$\beta$' controls the relaxation time. 
 
 
 Hawkes (2018)~\cite{hawkes18} provides a review of these processes in financial applications. Two extensions that are found to be useful are: one related to marked point processes, where associated marks with the event can trigger the excitement and the second relates to the processes when there are different types of events and how they can influence each other:
 	\begin{equation} \label{eq:markedhawk}
-	\begin{split}
+	\begin{aligned}
 	&\text{Marked Hawkes Process:   } \eta(\lambda_t)= \mu(t) + \sum_{T_i < t} \gamma(t - T_i, \xi_i), \quad \quad T_i < t \\
 	&\text{Mutually Exciting Process: } \lambda_{i,t}= \mu_i + \sum_{j=1}^D \sum_{T_{j:r} < t} \gamma_{ij} (t - T_{j:r}).
-	\end{split}
+	\end{aligned}
 	\end{equation}
 Here `$\xi_i$' are marks such as `volume' and `$D$' is the different types of events with their own point processes. \twomedskip
 
@@ -574,10 +574,10 @@ Here `$\xi_i$' are marks such as `volume' and `$D$' is the different types of ev
 % Models for Volatility Clustering:
 \noindent\textbf{Models for Volatility Clustering:} \label{in:volclust2} The features of volatility clustering and the significant autocorrelations in durations between order arrivals and significant cross-correlation of arrival rates across various event types are better captured by multi-dimensional Hawkes process. For a given $M$-dimensional point process, let $N_t=(N_t^1,\ldots,N_t^M)$ denote the associated counting process and the Hawkes process is characterized by intensities, $\lambda^m(t), m=1,\ldots,M$ as
 	\begin{equation} \label{eqn:lambdamdoub}
-	\begin{split}
+	\begin{aligned}
 	\lambda^m(t)&= \lambda_0^m(t) + \sum_{n=1}^M \int_0^t \sum_{j=1}^P \alpha_j^{mn} e^{-\beta_j^{mn}(t - s)} dN_s^n \\
 	&=\lambda_0(t) + \sum_{n=1}^M \sum_{t_j<t} \sum_{j=1}^P \alpha_j^{mn} e^{-\beta_j^{mn}(t_j -t_i^n)},
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where the number of exponential kernels, $P$, is fixed and $t_i^n$ is the $i$th jumping time of the $m$th variate. The scale and decay parameters, $\alpha^{mn}$ and $\beta^{mn}$, express the influence of the past events $t_i^n$ of type `$n$'. The baseline model in \eqref{eqn:lambdamdoub} does not incorporate the effect of bid-ask spread on order flow. It is shown in the literature that $\alpha$ and $\beta$ parameters do depend on the bid-ask spread. A simulated Hawkes process (Toke 2011~\cite{toke}) is given in Figure~\ref{fig:hawkes}. As noted earlier, the main characteristic of the Hawkes process is that intensity goes up at each event and decays exponentially between events. 
 	\begin{figure}[!ht]

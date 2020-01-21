@@ -325,10 +325,10 @@ Hautsch and Huang (2012)~\cite{hauthuang} estimate the market impact using the d
 
 Cont, Kukanov and Stoikov (2014)~\cite{contkulst} consider the dynamics of market liquidity that is a function of limit orders, market orders and cancellations to model the price impact function. The outstanding limit orders provide a measure of depth in the market on both buy and sell sides and thus also provide a measure of order flow imbalance (OFI). By setting the number of shares (depth) or price levels beyond the best bid and ask is equal to $D$, define the price change in the interval $(t_{k-1},t_k)$ as,
 	\begin{equation}\label{eqn:doubleeq}
-	\begin{split}
+	\begin{aligned}
 	\Delta P_k^b&= \delta \left[ \dfrac{L_k^b - C_k^b - M_k^s}{D} \right] \\
 	\Delta P_k^s&= -\delta \left[\dfrac{L_k^s-C_k^s-M_k^b}{D}\right],
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where $L_k^i$, $C_k^i$ and $M_k^i$ for $i=b,s$ denote arrival of the limit orders, cancellations and market orders in the defined interval. Here $\delta$ is the tick size. If $P_k=\dfrac{P_k^b+P_k^s}{2\delta}$, that is mid-price normalized by tick size, for any short interval, $(t_{k-1,i},t_{k,i})$, it is postulated that
 	\begin{equation}\label{eqn:postulated}
@@ -364,7 +364,7 @@ As noted earlier, a key aspect of MI modeling is to provide information about ex
 
 \item \textbf{Price Volatility.} Price volatility has been found to be positively related to MI (Chiyachantana, Jain, Jiang and Wood (2004)~\cite{chiya2004}). One explanation is that elevated volatility is associated with greater dispersion in beliefs, with risk averse traders less inclined to participate in markets, thereby resulting in larger price concessions or MI (Domowitz et al. (2001)~\cite{domo2001})
 
-\item \textbf{Trading Activity.} Dufour and Engle (2000, p. 2467)~\cite{dufour} find that the price impact of trades increases, as the time duration between transactions decreases, and more broadly that the price impact is especially large due to increased trading activity, as measured by high trading rates. In their view, ``times when markets are most active are times when there is an increased presence of informed traders; we interpret such markets as having reduced liquidity.'' Likewise, Yang (2011)~\cite[p.91]{yang2011} finds that ``a trade shortly after the previous trade results in higher price impact than one after a long period.'' He also offers ``evidence that increased trading activity (as measured by short durations between trades) is associated with larger price impact, therefore implying a higher degree of information-based trading.''
+\item \textbf{Trading Activity.} Dufour and Engle (2000)~\cite[p. 2467]{dufour} find that the price impact of trades increases, as the time duration between transactions decreases, and more broadly that the price impact is especially large due to increased trading activity, as measured by high trading rates. In their view, ``times when markets are most active are times when there is an increased presence of informed traders; we interpret such markets as having reduced liquidity.'' Likewise, Yang (2011)~\cite[p.91]{yang2011} finds that ``a trade shortly after the previous trade results in higher price impact than one after a long period.'' He also offers ``evidence that increased trading activity (as measured by short durations between trades) is associated with larger price impact, therefore implying a higher degree of information-based trading.''
 
 \item \textbf{Time of Day.} It is reported that the MI for buy trades decreases as time passes during the day, with the highest impact in the first trading hours (Frino, Jarnecic and Leopone (2007)~\cite{frino}).
 \end{itemize}
@@ -489,7 +489,7 @@ Table~\ref{fig:mivsrs} shows the results of power-law models ; the standard erro
         	& (0.34) & (1.07) & (0.9) & (1.3) & (0.46) & (1.3) \\ \hline
         $\hat{\sigma}_{\text{error}}^2$ & 143 & 136 & 125 & 124 & 114 & N/A \\
         $R^2$ & 0.37 & 0.40 & 0.45 & 0.45 & 0.50 & 0.03 \\
-        \end{tabular}
+        \end{tabular} 
         {\small*Response Variable $= \frac{\text{MI}(\text{bps})}{(\text{Vol})(\text{RS})^{0.6}}$}
         \end{table}
 Building empirical models for noisy data almost always requires some smoothing of raw data. While there are excellent methods such as kernel smoothing, smoothing in a higher dimension is not easy due to `curse of dimensionality' problem. Thus, we chose this simple approach of binning. 

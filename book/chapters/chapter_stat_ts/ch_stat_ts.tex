@@ -454,7 +454,7 @@ There is some evidence that stock prices are co-integrated (for a discussion on 
 
 
 A model based co-integration approach to pairs trading is elegantly presented in Tsay (2010)~\cite[Section 8-8]{tsay}. It is based on the assumption that prices follow a random walk and on the additional expectation that if two stocks have similar risk factors, they should have similar returns; writing $p_{it} = \ln(P_{it})$ and with $p_{it}$ following a random walk, $p_{it} = p_{it-1} + r_{it}$ where $r_{it}$ is the return. Thus, bivariate price series are said to be cointegrated, if there exists a linear combination, $w_t = p_{1t} - \gamma p_{2t}$ which is stationary and therefore it is mean reverting.
-
+s
 
 With the error-correlation form of the bivariate series (follows from \eqref{eqn:2Wtequiv} in Chapter~\ref{ch:ch_mvts}),
 	\begin{equation} \label{eqn:errorbivar}
@@ -616,10 +616,10 @@ To better understand the sources of profit from a momentum strategy Lo and MacKi
 	\end{equation}
 For ease of interpretation, $w_{i,t}^k = w_{i,t}$ and focus on only one previous month's return for allocation; Note that for each `$t$', the weights $w_{i,t}$ sum to zero. Let $r_t$ be a $N \times 1$ vector of returns, with the mean return $\mu = \Ex(r_t)$ and $\Omega = \Ex[(r_{t-1} - \mu)(r_t - \mu)']$ the autocovariance matrix of returns. Let $w_t$ be $N \times 1$ vector of weights, $w_{it}$; the portfolio return for month `t' is $\pi_t = w_t'r_t$. It is easy to show
 	\begin{equation} \label{eqn:epitomega}
-	\begin{split}
+	\begin{aligned}
 	\Ex(\pi_t)&= \frac{1}{N}\, \Ex\left[\sum_i r_{i,t-1} \cdot r_{it} \right] - \frac{1}{N} \Ex\left[r_{m,t-1} \cdot \sum_i r_{it} \right] \\
 	&= \frac{1}{N}\sum_i (\rho_i + \mu_i^2) - (\rho_m + \mu_m^2),
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where $\rho_i$ and $\rho_m$ are lag 1 autocovariances of asset `$i$' and the equal weighted index. Note that the average autocovariance is $\text{tr}(\Omega)/N$ and the autocovariance for the market as a whole is $(1' \Omega 1)/N^2$. The $\text{tr}(\Omega)$ denotes the sum of the diagonal elements of $N \times N$ matrix $\Omega$; recall that the diagonal elements are the autocovariance, $\rho_i$, of individual stocks. Hence \eqref{eqn:epitomega} can be written as,
 	\begin{equation} \label{eqn:3epi}
@@ -655,10 +655,10 @@ Here the weights $\delta^i (1 - \delta)$ add up to one, $\overline{r}_t$ is the 
 
 We can also investigate the profitability of strategies based on time series momentum with varying look-back period ($k$) and holding period ($h$). The trading strategy is that if the excess return over the past $k$ months is positive, go long or otherwise go short. The position size is taken to be, $1/\sigma_{t-1}^s$, inversely proportional to the ex-ante volatility of the instruments, `$s$'. With this choice it is argued that it will be easier to aggregate the outcome of the strategies across instruments with different volatilities and it will also lead to somewhat stable time series. For each trading strategy $(k, h)$, a single time series of returns, $r_t^{\text{TSMOM}(k,h)}$, which is the average return across all portfolios active at time, `$t$' is computed. To evaluate the overall value of the time series momentum strategies, the returns are adjusted for possible risk factors:
 	\begin{equation} \label{eqn:tsmom}
-	\begin{split}
+	\begin{aligned}
 	r_t^{\text{TSMOM}(k,h)}&= \alpha + \beta_1 \text{MKT}_t + \beta_2 \text{BOND}_t + \beta_3 \text{GSCI}_t + \beta_4 \text{SMB}_t \\
 	&=  + \beta_5 \text{HML}_t + \beta_6 \text{UMD}_t + a_t,
-	\end{split}
+	\end{aligned}
 	\end{equation}
 where $\text{MKT}_t$ is the excess return on the MSCI World index, $\text{BOND}_t$ is Barclay's Aggregate Bond Index, $\text{GSCI}_t$ is S\&P GSCI commodity index and the others are Fama-French factors for the size, value and cross-sectional momentum premiums.\label{in:fama1}
 
@@ -671,11 +671,11 @@ The role of trading volume in explaining the results of momentum strategies is s
 
 It is worth mentioning that while most documented applications of the momentum strategy are in equity markets, there is a growing academic interest in their use in foreign exchange (FX) markets. The FX markets are traditionally cited as markets where technical rules such as trend following have been successful. But studies such as Menkhoff, Sarno, Schemeling and Schrimpf (2012)~\cite{menkhoff2012} have explored the cross-sectional momentum and have demonstrated their profitability (up to 10\%) in FX markets. The momentum portfolios in FX markets are observed to be skewed toward minor currencies but trading these currencies have somewhat higher transaction costs. The base currency returns, $r_t= \ln(S_t) - \ln(S_{t-1})$ where $S_t$ is the spot exchange rate, and the interest-adjusted return, where $F_{t-1}$ is the future price at $t$-1,
 	\begin{equation}
-	\begin{split}
+	\begin{aligned}
 	r_t^* &= \ln(S_t) - \ln(F_{t-1}) \\
 	&= \ln(S_t) - \ln(S_{t-1}) + \ln(S_{t-1}) - \ln(F_{t-1}) \\
 	&\sim r_t + \dfrac{r_f - r_d}{12},
-	\end{split}
+	\end{aligned}
 	\end{equation}
 which is the sum of pure currency appreciation and the return due to interest rate appreciation. Here $r_f$ is the foreign interest rate and $r_d$ is the domestic interest rate; See Okunev and White (2003)~\cite{okunev2003} for the details of this decomposition. It is found that the profitability is clearly originating from spot rate changes themselves and not necessarily driven by the interest rate differential.
 
@@ -683,11 +683,13 @@ which is the sum of pure currency appreciation and the return due to interest ra
 In the equity markets, it is argued that momentum strategies are successful because of slow information processing and investor overreaction. However FX markets are dominated by professionals and thus any information should be impounded in the FX rate almost instantaneously. But if the portfolios are mostly made up with minor currencies, they are likely to exhibit higher volatility, higher country risk and higher interest-rate changes, thus imposing effective limits to arbitrage. It is further observed that the cross-section based currency momentum is not related to benchmark technical trading strategies and even after adjusting for them, the cross-sectional momentum profits are found to be higher. \twomedskip
 
 
+% Other Sorting Criteria:
 \noindent \textbf{Other Sorting Criteria:} \twomedskip
 
 The classical momentum studies described above tend to focus on stratifying the stocks in ten deciles based on the past average returns. Han, Yang and Zhou (2013)~\cite{hanyangzhou} suggest sorting based on volatility which reflects the information uncertainty. Other sorting criteria may include credit rating, distance to default, etc. Generally, after sorting by a criterion, the decile portfolios are formed. The strategy then is to use the moving average based rule (see Section~\ref{s:trading_rules_tad}) as follows: if the price is above the moving average, buy or continue to hold or else invest in a risk-free asset. The performance of this strategy is then compared with buy and hold method. It is shown that the volatility based strategy results in positive returns and generally these returns increase with the volatility. If the returns are further adjusted for market risk (CAPM) and Fama-French factors, the average returns are greater and increase with the volatility levels. Two items of note here: as the returns are adjusted for the risk factors, they are likely to result in fewer trading opportunities as these models become more restrictive; if results are not adjusted for transaction costs and buying and selling a portfolio of stocks can be expensive and so the results may be too optimistic.  \twomedskip
 
 
+% Practical Considerations:
 \noindent \textbf{Practical Considerations:} \twomedskip
 
 The research indicates that the momentum factor is quite robust and works across markets with average return that is ten percent higher than the market per year, before taxes and fees. But it is a short-term, high-turnover strategy with deep drawdowns. Israel, Moskowitz, Ross and Serban (2017)~\cite{israel} discuss the implementation cost for a live momentum portfolio. Their results indicate that with judicious choice of execution algorithms, the profitability of momentum can be still maintained, after accounting for trading costs. Some suggestions that come from practitioners are:
@@ -734,10 +736,10 @@ where $N_p$ is the number of securities in each combination ($p=1, \ldots, 4$). 
 
 The discussion thus far refers to the use of low frequency data. Most of the studies present results for daily or weekly aggregated data. Simply using the end of the period closing price and the volume for the period is not appropriate as transactions occur at specified prices and at specified times over the trading period. The availability of high frequency data has enabled to study the evolving influence of volume after controlling for order book imbalances. Because the parent order now gets sliced into small child orders, both the number of trades and size of trades need to be considered together in place of volume. As argued in Kyle (1985)~\cite{kyle1985}, the price volatility is induced by net order flow. Market makers tend to infer information from the net order flow and revise their prices. For a study of return and volume using a random sample of approximately three hundred stocks in NYSE, Chan and Fong (2000)~\cite{chanfong} consider a two-step model for daily data: 
 	\begin{equation} \label{eqn:riteit}
-	\begin{split}
+	\begin{aligned}
 	r_{it} &= \sum_{k=1}^4 d_{ik} D_{kt} + \sum_{j=1}^{12} \beta_{ij} r_{it-j} + \epsilon_{it} \\
 	\epsilon_{it} &= \phi_{i_0} + \phi_{im} M_t + \sum_{j=1}^{12} \phi_{ij} |\epsilon_{it-j}| + \gamma_i (V_i \text{ or }T_i) + \eta_{it}.
-	\end{split}
+	\end{aligned}
 	\end{equation}
 Here, $D$ is the day-of-the week indicator, $M_t$ is an indicator for Monday, $V$ and $T$ are share volume and number of trades. The second equation that measures the volume-volatility relationship indicates that the number of trades ($T$) has a somewhat better explanatory power than share volume ($V$). The relationship between order book imbalance and volatility is captured by modifying the first equation in \eqref{eqn:riteit} as,
 	\begin{equation} \label{eqn:rit32}
@@ -856,6 +858,7 @@ similar to a measure defined for the daily data in Section~\ref{s:analysis_tad}.
         \includegraphics[width=\textwidth]{chapters/chapter_stat_ts/figures/avgvol.png}
         \caption{Plot of average volume. \label{fig:averagevolume}}
         \end{figure}
+
 
 The plot of price and volume data is given in Figure~\ref{fig:treasuryyields}. The price data generally shows an upward trend, but it is difficult to see the pattern in volume, especially during the course of the day. A simple average volume plot clearly indicates most of the trading occurs between 8~a.m. and 4~p.m. (Figure~\ref{fig:averagevolume}). The autocorrelation function of the log volume ($v_{tm}$) clearly demonstrates the intra-day variations in the data. There is a great deal of interest among practitioners to model the volume accurately as volume is commonly used in entry/exit decisions in a trading strategy. VWAP execution strategy, for example, assumes that volume is known a priori. Other benefits cited in Satish, Saxena and Palmer (2014)~\cite{satish} are if a trader receives a large order ten minutes before the close with an instruction to complete the order, having a reliable estimate of expected volume that is possible before the market close can help evaluate the feasibility of that order execution. The other benefit that is mentioned is how improved volume forecast can aid alpha capture. Brownlees, Cipollini and Gallo (2011)~\cite{brownless} propose a dynamic model,
 	\begin{equation} \label{eqn:dynamic}
@@ -1066,8 +1069,8 @@ To illustrate, we consider the data on WIPRO---an Indian stock that is traded in
 	$p_{1t-1}$ & $0.91^*$ & --- \\
 	$p_{2t-1}$ & $-0.026$ & $0.3626^*$ \\ \hline
 	$R^2$ & 0.79 & 0.91 
-	\end{tabular}
-	\hspace{2.3cm}*Significant at 5\% levels
+	\end{tabular} \par
+	*Significant at 5\% levels
 	\end{table}
 These results would indicate that the markets are not fully efficient and there is some information transfer from one market to other. The dependence of the US market price on the closing price of the Indian market is clearly evident. This can be favorably used for better US price forecasts. 
 

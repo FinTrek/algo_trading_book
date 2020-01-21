@@ -65,6 +65,7 @@ To classify the sentiment into low and high, Baker and Wurgler (2006)~\cite{bake
 
 
         \begin{table}[!ht]
+        \centering
         \caption{Fama \& French Factors Across Sentiment Levels \label{tab:famafrench}}
         \begin{tabular}{lllll}
         & Low &     Normal      & High & All \\ \hline
@@ -303,7 +304,9 @@ There is some memory in the series as the first few autocorrelations are found t
 	\end{tabular} 
 	\end{table}
 
+
 The techniques described in Chapter~\ref{ch:stat_ts} (see Section~\ref{s:trading_rules_tad}) can easily be applied to develop strategies leveraging sentiment data. For illustration, we propose two na\"ive strategies for trading using such data; both in the spirit of the discussion related to sentiment data by Baker and Wurgler (2006)~\cite{baker2006investor}. The first one develops rules based on the sentiment scores and the second one is based on the more direct regression relationship between returns and the sentiment scores: 
+
 
 \begin{enumerate}[1.]
 \item Crossover Strategy: If the difference between 3-day EWMA and 30-day EWMA of sentiment scores is positive, go long; otherwise go short. 
