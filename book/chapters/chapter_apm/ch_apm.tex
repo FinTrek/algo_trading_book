@@ -580,11 +580,6 @@ Note the criterion in \eqref{eqn:constraintprob} can also be taken as a version 
 Some practical implementation ideas are discussed in Pachmanova and Fabozzi (2014)~\cite{pachfab}. In addition to na\"ive allocation strategy discussed earlier in this chapter, other ad-hoc methods simply imitate the composition of some market indices such as S\&P 500 that weighs stocks by their market capitalizations or Dow-Jones that weighs stocks by their prices. To imitate, select the stocks with the largest weights in the benchmark. Other methods include stratification of benchmarks into groups and select stocks from each group that ensures diversification. The group can be industry-based or if it is based on past performance, the selected assets are called basis assets. The difference between the original allocation model and the rebalancing models can be due to change in the objectives and also due to change in transaction costs and taxes. If a manager wants to move toward higher alpha, the restriction on the tracking error should be added to \eqref{eqn:constraintlist}. Like other calculations related to portfolio management, the rebalancing also involves backward-looking estimates. To reflect the future more accurately, managers should arrive at forward-looking estimates of tracking error using conditioning arguments given in the earlier section. \twomedskip
 
 
-
-\pagebreak
-
-
-
 \noindent\textbf{Transaction Costs:} \label{in:tradecost2} Bid-ask spreads, brokerage fees, taxes and the price impact of trading are covered in Chapter~\ref{chap:ch_mi_models}. Here we present some observations related to trading costs as noted in the literature. Defining the turnover as,
 	\begin{equation} \label{eqn:turnover}
 	\mathcal{T}= \sum_{i=1}^m \lvert w_i - w_{0i} \rvert = \sum_{i=1}^m \tau_i

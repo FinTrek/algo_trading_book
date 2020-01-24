@@ -1,4 +1,4 @@
-\documentclass[krantz1,ChapterTOCs]{style/krantz}
+\documentclass[krantz1]{style/krantz} % ChapterTOCs for Chapter TOC
 \usepackage{style/style}
 
 % ------------------------
@@ -25,36 +25,34 @@
 \mainmatter
 
 % Context: Introduction and Overviews
-\setcounter{part}{-1}
-\part{Context: Introduction and Overview}
-\include{chapters/parts/part_zero/part_zero}
-\include{chapters/chapter_intro/ch_intro}
+\part{Introduction to Trading\label{part:one}}
+\include{chapters/parts/part_one/part_one}
 \include{chapters/chapter_trading_fund/ch_trading_fund}
 
 % Foundations: Basic Models and Empirics
-\part{Foundations: Basic Models and Empirics}
-\include{chapters/parts/part_one/part_one}
+\part{Foundations: Basic Models and Empirics\label{part:two}}
+\include{chapters/parts/part_two/part_two}
 \include{chapters/chapter_uvts/ch_uvts}
 \include{chapters/chapter_mvts/ch_mvts}
 \include{chapters/chapter_advanced/ch_advanced}
 
 % Trading Algorithms
-\part{Trading Algorithms}
-\include{chapters/parts/part_two/part_two}
+\part{Trading Algorithms\label{part:three}}
+\include{chapters/parts/part_three/part_three}
 \include{chapters/chapter_stat_ts/ch_stat_ts}
 \include{chapters/chapter_apm/ch_apm}
 \include{chapters/chapter_news_an/ch_news_an}
 
 % Execution Algorithms
-\part{Execution Algorithms}
-\include{chapters/parts/part_three/part_three}
+\part{Execution Algorithms\label{part:four}}
+\include{chapters/parts/part_four/part_four}
 \include{chapters/chapter_trade_data_models/ch_trade_data_models}
 \include{chapters/chapter_mi_models/ch_mi_models}
 \include{chapters/chapter_exec_models/ch_exec_models}
 
 % Technology Considerations
-\part{Technology Considerations}
-\include{chapters/parts/part_four/part_four}
+\part{Technology Considerations\label{part:five}}
+\include{chapters/parts/part_five/part_five}
 \include{chapters/chapter_tech/ch_tech}
 \include{chapters/chapter_tech_res/ch_tech_res}
 %\include{chapters/chapter_rm_reg/ch_rm_reg}
