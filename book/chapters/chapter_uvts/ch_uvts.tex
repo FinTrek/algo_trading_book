@@ -378,6 +378,11 @@ $t= \ldots ,-1, 0, 1, \ldots$, with $\delta = \mu(1 - \phi)$. This process is ca
 \end{ex}
 
 
+
+\pagebreak
+
+
+
 \noindent\textbf{General Order Autoregressive Processes} \twomedskip
 
 
@@ -419,8 +424,8 @@ The Yule-Walker equations \eqref{eqn:rhos2} for $s= 1, 2, \ldots, p$ are particu
 	\rho(1) & 1 & \rho(1) & \cdots & \rho(p-2)\\
 	\vdots & & \ddots & & \vdots \\
 	\rho(p-1) & \cdots & & \rho(1) & 1
-	\end{bmatrix}, \quad
-	\phi= \begin{bmatrix} \phi_1 \\ \phi_2 \\ \vdots \\ \phi_p \end{bmatrix}, \quad
+	\end{bmatrix}, \;\;
+	\phi= \begin{bmatrix} \phi_1 \\ \phi_2 \\ \vdots \\ \phi_p \end{bmatrix},\;\;
 	\rho= \begin{bmatrix} \rho(1) \\ \rho(2) \\ \vdots \\ \rho(p) \end{bmatrix}.
 	\end{equation}
 These equations can be used to solve for $\phi_1, \ldots, \phi_p$ in terms of $\rho(1), \ldots, \rho(p)$, with solution $\phi = P_p^{-1} \rho$. Note also, that the variance of the process, $\gamma(0) = \var(Y_t)$, and $\sigma^2= \var(\varepsilon)$, are related by
@@ -939,6 +944,11 @@ where $w_1$ can be taken as a discount factor. \twomedskip
 
 
 \noindent\textbf{Prediction Performance of GARCH:} \label{in:forecast2} The predictive power of GARCH based on ex-post forecast evaluation criteria tend to suggest that the model provides poor forecasts, although the in-sample parameter estimates turn out to be highly significant. As Andersen and Bollerslev (1998)~\cite{andersen1998} note, in the model \eqref{eqn:2ept}, the latent volatility, $h_t$, evolves over time. The approach to evaluate the performance of the model for $h_t$ via $\hat{\varepsilon}_t^2$ is not appropriate. While $\hat{\varepsilon}_t^2$ provides an unbiased estimate of $h_t$, it is a noisy measurement due to idiosyncratic error terms associated with it; these error terms may be due to the result of compounding frictions in the trading process. This will be further clarified when we discuss the analysis of high frequency data. \twomedskip
+
+
+
+\pagebreak
+
 
 
 \noindent \textbf{Time--Varying ARCH Processes (tvARCH)} \label{in:tvarch} \twomedskip
