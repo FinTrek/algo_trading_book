@@ -133,16 +133,16 @@ As we had discussed at the beginning of this chapter, one of the main focuses of
 
 In asset management, with the competitive focus of the industry on cost management and with the diminishing returns of crowded strategies, understanding and managing MI has become a crucial component of a systematic investment process. For an estimate of its size among the transaction costs that include explicit costs such as brokerage commissions and fees. See Table~\ref{tab:empttrans} from Berkovec and Heidle (2010)~\cite{borkoheidle} for cost estimates. Managing MI has important implications on three aspects of algorithmic trading: pre-trade TC estimation, post-trade TC analysis and the design of optimal trading strategies (Almgren (2008)~\cite{alm2008}). The post-trade analytics provides a necessary diagnostics for a client to reflect on the choice of trading strategies as well. 
 
+
 	\begin{table}[!ht]
 	\caption{Empirical Transaction Cost Estimates$^1$\label{tab:empttrans}}	
-	\begin{tabular}{|c|c|c|}
+	\begin{tabular}{c|c|c}
 	Type & Fixed & Variable \\ \hline 
-	Explicit & Commissions (7.4bp) & Bid-ask spreads (1.9bp) \\ \hline
+	Explicit & Commissions (7.4bp) & Bid-ask spreads (1.9~bp) \\ 
 	& Fees & Taxes \\ \hline 
-	Implicit & & Delay Cost (9.5bp) \\ \hline
-	& & Price Movement Risk \& \\
-	& & Market Impact Costs* (35.6bp) \\ \hline
-	& & Timing Risk \& Opportunity Costs (11.7bp) \\  
+	Implicit & & Delay Cost (9.5bp) \\ 
+	& & Market Impact Cost* (35.6~bp) \\ 
+	& & Timing Risk \& Opportunity Cost (11.7~bp) \\  
 	\end{tabular}
 	{\small *Major Component \\ 1: Readers should note changes in the market that have taken place since these numbers were reported. The commissions are quite expensive for current trading. Most developed markets  have commissions less than 1~bps, while E.M. markets are in the range of 2--5~bps for e-trading. The bid-ask spread makes sense if it is half a spread of liquid U.S. stocks. For other markets, it can be much higher.}
 	\end{table}
