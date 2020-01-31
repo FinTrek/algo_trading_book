@@ -1,5 +1,5 @@
 % !TEX root = ../../book.tex
-\chapter{The Technology Stack\label{chap:ch_tech}} \label{in:exec_tech1}
+\chapter{The Technology Stack\label{chap:ch_tech}} \label{in:exec_tech1}\label{in:tech_stack1}
 
 There is a broad range of trading infrastructures and operations depending on the size and trading needs. None, however,  is as broad and complex as a low touch trading operation of a large Broker-Dealer. For this reason we use that as a template for our exploration of the technology stack necessary to support such an operation. We start by reviewing the end to end flow of information and provide some detail on various components. As previously discussed all large Electronic Trading (ET) businesses also operate their own Alternative Trading System (ATS) so we will  look at the technology setup needed to support that use case as well.
 
@@ -108,7 +108,7 @@ The core of an Algorithmic Trader infrastructure is a software framework generic
 
 	\begin{figure}[!ht]
 	\centering
-	\includegraphics[width=\textwidth]{chapters/chapter_tech/figures/MainLoop.png} 
+	\includegraphics[width=0.8\textwidth]{chapters/chapter_tech/figures/MainLoop.png} 
 	\caption{Sample Main Strategy Loop.\label{fig:MainLoop}}
 	\end{figure}
 	
@@ -133,7 +133,7 @@ For these and other reasons of convenience needed in calculating real-time analy
 
 
 % Algorithm Switching Engine:
-\noindent\textbf{Algorithm Switching Engine:} Most execution strategies have limited flexibility to change behavior in particular situations and opinionated traders may have strong beliefs that a different trading approach might be warranted in certain situations. Historically that trader may work with one of their favorite brokers to build a customized strategy for the purpose but that usually can take a long time and then the trader can use this approach with only one broker. 
+\noindent\textbf{Algorithm Switching Engine:}\label{in:algo_swit_eng} Most execution strategies have limited flexibility to change behavior in particular situations and opinionated traders may have strong beliefs that a different trading approach might be warranted in certain situations. Historically that trader may work with one of their favorite brokers to build a customized strategy for the purpose but that usually can take a long time and then the trader can use this approach with only one broker. 
 
 
 To provide simple dynamic customization, brokers began offering Algo of Algos functionality around what is commonly called an Algo Switching Engine. This Engine is a combination of a simple strategy container and a limited real-time analytics engine, where an Algo is represented by a simple set of if-then-else rules. The condition part of these rules will be simple combinations of the available signal and the action part will define a particular algorithm with associated parameters. Once the order is received by the switching engine, the rules are evaluated and an order for the specified strategy is sent to the strategy container. The rules are then re-evaluated every few seconds and if the conditions change the switching engine will send a cancel/replace message to the strategy container to change the underlying strategy. \twomedskip
@@ -144,6 +144,12 @@ With this simple approach, one can build very sophisticated dynamic algorithms t
 
 \begin{itemize}
 \item The rules that make up a custom strategy encode certain beliefs on the value of a particular triggering condition. If that condition had true predictive power it would be better integrated as an alpha signal and leveraged in a more nuanced way within the strategy rather than as a blunt instrument of an algo switching instruction. If the condition is actually, as most often the case, not predictive then the realized performance of the strategy will be, in general, made worse by the customization. Thus, while in principle, it is a good idea in practice, it should be discouraged unless its real value can be measured. This would make algorithm switching engine ideal as a temporary exploratory tool rather than the overused tool as it currently is.
+
+
+
+\pagebreak
+
+
 
 \item  Algorithms are usually poor at persisting state across a cancel/replace transition. This usually implies that all state of the algorithm is lost and a completely new order is created. Algos also perform relatively poor at the beginning of the order as various analytics and execution bands exhibit poor performance when initialized (e.g. participation bands unless handled correctly have a discontinuity at zero). Frequent use of switching transitions will have severe negative impact on algorithm performance.
 
@@ -179,7 +185,7 @@ This workflow is already quite complex but there are several additional mechanic
 
 
 % HFT Infrastructure
-\section{HFT Infrastructure\label{sec:hft_infra}}
+\section{HFT Infrastructure\label{sec:hft_infra}}\label{in:hpi}
 
 We have completed the whirlwind tour of the technology stack that one would find in a standard execution business. As mentioned, we did  that because it is probably the most complex and broad use case. For other setups, some of the components may be very similar, but others may differ. There are probably a dozen different configurations and discussing all of the nuances in detail is well beyond the scope of this brief chapter but as a comparison we take a quick look at the other extreme, an HFT infrastructure.
 
@@ -198,7 +204,7 @@ What other areas then do the technical complexities that exist beyond standard i
 
 
 % ATS Infrastructure
-\section{ATS Infrastructure\label{sec:ats_infra}}
+\section{ATS Infrastructure\label{sec:ats_infra}} \label{in:ats}
 \subsection{Regulatory Considerations\label{sec:reg_considerations}}
 
 Alternative Trading Systems (ATS), are private US\footnote{Under European regulations, ATS are designated as Multilateral Trading Facilities (MTF) and are governed by their own set of rules.} securities trading platforms that meet the definition of ``exchange'' under federal securities laws but are exempt from registration as national securities exchange so long as they comply with the specific rules\footnote{Rules 300--304} of Regulation ATS.
@@ -231,7 +237,7 @@ To address the increasing reliance on technology of the US market place, the SEC
 
 
 % Matching Engine
-\subsection{Matching Engine\label{sec:match_engine}}
+\subsection{Matching Engine\label{sec:match_engine}}\label{in:matcheng1}
 
 In today's low latency trading landscape, the speed of the matching engine is also regarded as a significant competitive advantage among venues. Consequently, ATS  matching engines and market data processing layers are often built leveraging technology of similar grade as the ones employed by main exchanges, using third party software.\footnote{\url{www.cinnober.com}, \url{www.reconart.com}}
 
@@ -284,4 +290,4 @@ Registered ATS offer a range of differences over regular public exchanges, mainl
 \end{itemize}
 
 
-These examples are not meant to be exhaustive, but nonetheless highlight the flexibility that exists for ATS compared to traditional exchanges and help explain their rise in popularity over time.
+These examples are not meant to be exhaustive, but nonetheless highlight the flexibility that exists for ATS compared to traditional exchanges and help explain their rise in popularity over time. \label{in:tech_stack2}

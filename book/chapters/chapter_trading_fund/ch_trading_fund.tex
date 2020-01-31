@@ -70,6 +70,11 @@ With the context presented in the previous section, we now provide a brief revie
 \noindent\textbf{Long-Short Asset Managers and Hedge Funds:} These are large and small firms catering to institutional clients and wealthy investors. They often run multiple strategies, most often market-neutral long-short strategies, holding long and short positions in order to have reduced market exposure and  thus hopefully perform well in both raising and falling markets. Investors of this type include firms like Bridgewater, Renaissance Technologies, Citadel, Point~72 (former SAC Capital), and many others. Their time horizon is varied, as with the strategies they employ, but in general they are shorter than their Long Only counterparts. They also tend to be more sophisticated traders who are really careful to minimize transaction cost, because they often make many more smaller bets and the transaction costs can add to be a significant fraction of their expected profits. \twomedskip
 
 
+
+\pagebreak
+
+
+
 % Broker-Dealers (a.k.a. Sell Side):
 \noindent\textbf{Broker-Dealers (a.k.a. Sell Side):} These firms reside between the ``Buy Side'' (generic term for asset management firms and hedge funds) and the various exchanges.\footnote{Note that only member firms are allowed to trade on exchange and most asset management firms are non-members thus need an intermediary to trade on their behalf} They can act either as Agent for the client (i.e. Broker) or provide liquidity as Principal (i.e. Dealer) from their own accounts. They historically had  also large proprietary trading desks investing the firm's capital using strategies not dissimilar to the strategies that hedge funds use. Since the introduction of the Dodd-Frank Act,\footnote{\url{https://www.cftc.gov/LawRegulation/DoddFrankAct/index.htm}} the amount of proprietary risk that a firm can carry has dramatically decreased and most banks have shed large part of their proprietary trading activities either shutting down the desks or spinning them off into independent hedge funds. \twomedskip
 
@@ -375,22 +380,207 @@ A limit order has an associated side (Buy or Sell), a quantity and a price which
 
 
 Orders on the buy side are called ``bids'' while those on the sell side are called ``asks''. The above events are illustrated in Figure~\ref{fig:limbk1} to Figure~\ref{fig:limbk3}. When a market (or marketable) order is submitted, it decreases the number of outstanding orders at the opposite best price. For example, if a market bid order arrives, it will decrease the number of outstanding asks at the best price. All unexecuted limit orders can be canceled. When a cancellation occurs, it will decrease the number of outstanding orders at the specified price level.
+	
 	\begin{figure}[!ht]
-	   \centering
-	   \includegraphics[width=0.9\textwidth]{chapters/chapter_trading_fund/figures/limitbk1.png} 
+	\centering
+	\begin{tikzpicture}[scale=1.0]
+	\def\borderwidth{0.7pt}
+	\def\barthick{0.5pt}
+	\def\barwidth{0.4/2}
+	
+	% Axes Label
+	\node at (-1.4,3.2) {\rotatebox{90}{volume}};
+	\node at (5.0,-1) {price};
+	
+	% Border
+	\draw[line width=\borderwidth] (-0.4,0) -- (-0.4,6.8) -- (10.2,6.8) -- (10.2,0) -- (-0.4,0);	
+	
+	% X Ticks
+	\foreach \x in {0,...,7} 
+	\draw (0+0.7*2*\x,0) -- (0+0.7*2*\x,-0.2);
+	\node at (0,-0.4) {73600};
+	\node at (1.4,-0.4) {73800};	
+	\node at (2.8,-0.4) {74000};	
+	\node at (4.2,-0.4) {74200};	
+	\node at (5.6,-0.4) {74400};	
+	\node at (7.0,-0.4) {74600};
+	\node at (8.4,-0.4) {74800};
+	\node at (9.8,-0.4) {75000};	
+	
+	% Y Ticks
+	\foreach \x in {0,...,6}
+		\draw (-0.4,\x+0.2) -- (-0.4-0.2,\x+0.2);
+	\node at (-0.8,0.2) {0};
+	\node at (-0.8,1.2) {10};
+	\node at (-0.8,2.2) {20};
+	\node at (-0.8,3.2) {30};
+	\node at (-0.8,4.2) {40};
+	\node at (-0.8,5.2) {50};
+	\node at (-0.8,6.2) {60};	
+	
+	% Corner Label
+	\draw (-0.4,5.6) -- (1.3,5.6) -- (1.3,6.8);
+	
+	\node at (0.7,6.5) {bids};
+	\draw[fill=mypurple] (-0.1,6.3) rectangle (0.2,6.6);
+	\node at (0.7,6.0) {asks};
+	\draw[fill=mypink] (-0.1,5.8) rectangle (0.2,6.1);
+	
+	% Bars
+	\draw[line width=\barthick,fill=mypurple] (0-\barwidth,0.1) rectangle (0+\barwidth,0.55);
+	\draw[line width=\barthick,fill=mypurple] (0.7-\barwidth,0.1) rectangle (0.7+\barwidth,2.4);
+	\draw[line width=\barthick,fill=mypurple] (1.4-\barwidth,0.1) rectangle (1.4+\barwidth,1.4);
+	\draw[line width=\barthick,fill=mypurple] (2.1-\barwidth,0.1) rectangle (2.1+\barwidth,5.0);
+	\draw[line width=\barthick,fill=mygray] (2.1-\barwidth,3.0) rectangle (2.1+\barwidth,5.0);
+	\draw[line width=\barthick,fill=mypurple] (2.8-\barwidth,0.1) rectangle (2.8+\barwidth,0.65);
+	
+	\draw[line width=\barthick,fill=mypink] (7.0-\barwidth,0.1) rectangle (7.0+\barwidth,2.0);
+	\draw[line width=\barthick,fill=mypink] (7.7-\barwidth,0.1) rectangle (7.7+\barwidth,6.7);
+	\draw[line width=\barthick,fill=mypink] (8.4-\barwidth,0.1) rectangle (8.4+\barwidth,3.8);
+	\draw[line width=\barthick,fill=mypink] (9.1-\barwidth,0.1) rectangle (9.1+\barwidth,0.65);
+	\draw[line width=\barthick,fill=mypink] (9.8-\barwidth,0.1) rectangle (9.8+\barwidth,4.0);
+	
+	% Bracket
+	\draw[snake=brace,line width=0.75pt,mirror snake] (2.5,3) -- ++(0,2);
+	\node at (3.3,4) {limit bid};
+	\end{tikzpicture}
 	   \caption{Limit Order Book---Limit Bid. \label{fig:limbk1}}
 	\end{figure}
 	
-	\begin{figure}[!ht]
-	   \centering
-	   \includegraphics[width=\textwidth]{chapters/chapter_trading_fund/figures/limitbk2.png} 
-	   \caption{Limit Order Book---Marketable Bid. \label{fig:limbk2}}
-	\end{figure}
+	
 	
 	\begin{figure}[!ht]
-	   \centering
-	   \includegraphics[width=\textwidth]{chapters/chapter_trading_fund/figures/limitbk3.png} 
-	   \caption{Limit Order Book---Ask Cancellation. \label{fig:limbk3}}
+	\centering
+	\begin{tikzpicture}[scale=1.0]
+	\def\borderwidth{0.7pt}
+	\def\barthick{0.5pt}
+	\def\barwidth{0.4/2}
+	
+	% Axes Label
+	\node at (-1.4,3.2) {\rotatebox{90}{volume}};
+	\node at (5.0,-1) {price};
+	
+	% Border
+	\draw[line width=\borderwidth] (-0.4,0) -- (-0.4,6.8) -- (10.2,6.8) -- (10.2,0) -- (-0.4,0);	
+	
+	% X Ticks
+	\foreach \x in {0,...,7} 
+	\draw (0+0.7*2*\x,0) -- (0+0.7*2*\x,-0.2);
+	\node at (0,-0.4) {73600};
+	\node at (1.4,-0.4) {73800};	
+	\node at (2.8,-0.4) {74000};	
+	\node at (4.2,-0.4) {74200};	
+	\node at (5.6,-0.4) {74400};	
+	\node at (7.0,-0.4) {74600};
+	\node at (8.4,-0.4) {74800};
+	\node at (9.8,-0.4) {75000};	
+	
+	% Y Ticks
+	\foreach \x in {0,...,6}
+		\draw (-0.4,\x+0.2) -- (-0.4-0.2,\x+0.2);
+	\node at (-0.8,0.2) {0};
+	\node at (-0.8,1.2) {10};
+	\node at (-0.8,2.2) {20};
+	\node at (-0.8,3.2) {30};
+	\node at (-0.8,4.2) {40};
+	\node at (-0.8,5.2) {50};
+	\node at (-0.8,6.2) {60};	
+	
+	% Corner Label
+	\draw (-0.4,5.6) -- (1.3,5.6) -- (1.3,6.8);
+	
+	\node at (0.7,6.5) {bids};
+	\draw[fill=mypurple] (-0.1,6.3) rectangle (0.2,6.6);
+	\node at (0.7,6.0) {asks};
+	\draw[fill=mypink] (-0.1,5.8) rectangle (0.2,6.1);
+	
+	% Bars
+	\draw[line width=\barthick,fill=mypurple] (0-\barwidth,0.1) rectangle (0+\barwidth,0.55);
+	\draw[line width=\barthick,fill=mypurple] (0.7-\barwidth,0.1) rectangle (0.7+\barwidth,2.4);
+	\draw[line width=\barthick,fill=mypurple] (1.4-\barwidth,0.1) rectangle (1.4+\barwidth,1.4);
+	\draw[line width=\barthick,fill=mypurple] (2.1-\barwidth,0.1) rectangle (2.1+\barwidth,5.0);
+	\draw[line width=\barthick,fill=mypurple] (2.8-\barwidth,0.1) rectangle (2.8+\barwidth,0.65);
+	
+	\draw[line width=\barthick,fill=mypink] (7.0-\barwidth,0.1) rectangle (7.0+\barwidth,2.0);
+	\draw[line width=\barthick,fill=mygray] (7.0-\barwidth,0.8) rectangle (7.0+\barwidth,2.0);
+	\draw[line width=\barthick,fill=mypink] (7.7-\barwidth,0.1) rectangle (7.7+\barwidth,6.7);
+	\draw[line width=\barthick,fill=mypink] (8.4-\barwidth,0.1) rectangle (8.4+\barwidth,3.8);
+	\draw[line width=\barthick,fill=mypink] (9.1-\barwidth,0.1) rectangle (9.1+\barwidth,0.65);
+	\draw[line width=\barthick,fill=mypink] (9.8-\barwidth,0.1) rectangle (9.8+\barwidth,4.0);
+	
+	% Bracket
+	\draw[snake=brace,line width=0.75pt] (6.6,0.8) -- ++(0,1.2);
+	\node at (5.6,1.4) {market bid};
+	\end{tikzpicture}
+	\caption{Limit Order Book---Marketable Bid. \label{fig:limbk2}}
+	\end{figure}
+	
+	
+	
+	\begin{figure}[!ht]
+	\centering
+	\begin{tikzpicture}[scale=1.0]
+	\def\borderwidth{0.7pt}
+	\def\barthick{0.5pt}
+	\def\barwidth{0.4/2}
+	
+	% Axes Label
+	\node at (-1.4,3.2) {\rotatebox{90}{volume}};
+	\node at (5.0,-1) {price};
+	
+	% Border
+	\draw[line width=\borderwidth] (-0.4,0) -- (-0.4,6.8) -- (10.2,6.8) -- (10.2,0) -- (-0.4,0);	
+	
+	% X Ticks
+	\foreach \x in {0,...,7} 
+         	\draw (0+0.7*2*\x,0) -- (0+0.7*2*\x,-0.2);
+	\node at (0,-0.4) {73600};
+	\node at (1.4,-0.4) {73800};	
+	\node at (2.8,-0.4) {74000};	
+	\node at (4.2,-0.4) {74200};	
+	\node at (5.6,-0.4) {74400};	
+	\node at (7.0,-0.4) {74600};
+	\node at (8.4,-0.4) {74800};
+	\node at (9.8,-0.4) {75000};	
+	
+	% Y Ticks
+	\foreach \x in {0,...,6}
+		\draw (-0.4,\x+0.2) -- (-0.4-0.2,\x+0.2);
+	\node at (-0.8,0.2) {0};
+	\node at (-0.8,1.2) {10};
+	\node at (-0.8,2.2) {20};
+	\node at (-0.8,3.2) {30};
+	\node at (-0.8,4.2) {40};
+	\node at (-0.8,5.2) {50};
+	\node at (-0.8,6.2) {60};	
+	
+	% Corner Label
+	\draw (-0.4,5.6) -- (1.3,5.6) -- (1.3,6.8);
+	
+	\node at (0.7,6.5) {bids};
+	\draw[fill=mypurple] (-0.1,6.3) rectangle (0.2,6.6);
+	\node at (0.7,6.0) {asks};
+	\draw[fill=mypink] (-0.1,5.8) rectangle (0.2,6.1);
+	
+	% Bars
+	\draw[line width=\barthick,fill=mypurple] (0-\barwidth,0.1) rectangle (0+\barwidth,0.55);
+	\draw[line width=\barthick,fill=mypurple] (0.7-\barwidth,0.1) rectangle (0.7+\barwidth,2.4);
+	\draw[line width=\barthick,fill=mypurple] (1.4-\barwidth,0.1) rectangle (1.4+\barwidth,1.4);
+	\draw[line width=\barthick,fill=mypurple] (2.1-\barwidth,0.1) rectangle (2.1+\barwidth,5.0);
+	\draw[line width=\barthick,fill=mypurple] (2.8-\barwidth,0.1) rectangle (2.8+\barwidth,0.65);
+	
+	\draw[line width=\barthick,fill=mypink] (7.0-\barwidth,0.1) rectangle (7.0+\barwidth,2.0);
+	\draw[line width=\barthick,fill=mypink] (7.7-\barwidth,0.1) rectangle (7.7+\barwidth,6.7);
+	\draw[line width=\barthick,fill=mygray] (7.7-\barwidth,5.2) rectangle (7.7+\barwidth,6.7);
+	\draw[line width=\barthick,fill=mypink] (8.4-\barwidth,0.1) rectangle (8.4+\barwidth,3.8);
+	\draw[line width=\barthick,fill=mypink] (9.1-\barwidth,0.1) rectangle (9.1+\barwidth,0.65);
+	\draw[line width=\barthick,fill=mypink] (9.8-\barwidth,0.1) rectangle (9.8+\barwidth,4.0);
+	
+	% Bracket
+	\draw[snake=brace,line width=0.75pt] (7.3,5.2) -- ++(0,1.5);
+  	\node at (6.0,6.0) {ask cancellation};
+	\end{tikzpicture} 
+	\caption{Limit Order Book---Ask Cancellation. \label{fig:limbk3}}
 	\end{figure}
 
 
@@ -601,6 +791,11 @@ Additionally, exchanges also have specific rules governing the mechanics of trad
 Because these values and their potential activation threshold can vary over time, one needs to maintain historic values as well, in order to run realistic historical backtests.
 
 
+
+\pagebreak
+
+
+
 \item \textbf{Market Data Condition Codes:} With ever-growing complexity in market microstructure, the dissemination of market data has grown complex as well. While it is possible to store daily data as a single entry per day and per instrument, investors building intraday strategies likely need tick by tick data of all the events occurring in the market place. To help classify these events, exchanges and market data providers attribute so-called condition codes to the trades and quotes they publish. These condition codes vary per exchange and per asset class, and each market event can be attributed to several codes at once. So, to aggregate intraday market data properly and efficiently, and decide which events to keep and which ones to exclude, it is necessary to build a mapping table of these condition codes and what they mean: auction trade, lit or dark trade, canceled or corrected trade, regular trade, off-exchange trade reporting, block-size trade, trade originating from a multi-leg order such as an option spread trade, etc.
 
 
@@ -634,6 +829,11 @@ The fact futures contracts expire on a regular basis has further implications in
 	\end{figure}
 
 Finally, futures markets are characterized by the existence of different market phases during the day, with significantly different liquidity characteristics. For instance, equity index futures are much more liquid during the hours when the corresponding equities markets are open. However, one can trade during the overnight session if they want to. The overnight session being much less liquid, the expected execution cost tends to be higher, and as such, the various market data metrics (volume profile, average spread, average bid-ask sizes, ...) should be computed separately for each market phase, which requires maintaining a table of the start and end times of each session for each contract. 
+
+
+
+\pagebreak
+
 
 
 \item \textbf{Options-Specific Reference Data (Options Chain):} Similar to futures contracts, options contracts present a certain number of specificities for which reference data need to be collected. On top of the similar feature of having a particular expiry date, options contracts are also defined by their strike price. The combination of expiries and strikes is known as the option chain for a given underlier. The ability to map equity tickers to option tickers and their respective strike and expiry dates allow for the design of more complex investment and hedging strategies. For instance, distance to strike, change in open interest of puts and calls, etc. can all be used as signals for the underlying security price. For an interesting article on how deviations in put-call parity contains information about future equity returns, refer to Cremers and Weinbaum (2010)~\cite{weinbaum2010}.
@@ -971,7 +1171,7 @@ Finally, it has been observed that there is a positive correlation of market mak
 In the context of market making, two important price behaviors are relevant to model: momentum and mean-reversion. Both of these price dynamics represent a departure from the pure random walk assumption for asset prices as well as the efficient market hypothesis developed by Eugene Fama that states that asset prices reflect all available information and consequently that past prices cannot predict future performance. Jegadeesh and Titman (1993)~\cite{JeTit1993} identified the potential profitability of momentum in equities documenting the outperformance of strategies that suggest buying stocks that have performed well in the recent past while selling stocks that have performed poorly. CTA funds are among the first to have implemented momentum strategies in a systematic way, in the commodities futures space, both on single and multiple assets (such as baskets of commodities where momentum metrics can be applied either to the single assets or to the relative performance of assets within the basket). 
 
 
-The most na\"ive momentum strategies rely on simple time series analysis such as price return over a period of time to decide which asset go long (previous positive return) and which asset go short (previous negative return). Other commonly used momentum signals include simple moving averages (MA), moving averages crossovers (of a short-term MA with a longer term MA), exponential weighted moving averages  (EWMA), as well as more sophisticated techniques leveraging machine learning tools. The key characteristic of momentum strategies is their flexibility and relative low complexity. They can be designed at various time intervals (from minutes to months), make use of cross-sectional indicators, be corrected for seasonal effects, and so on. Chapter 2 on Time Series will provide in-depth coverage of techniques that are commonly used by practitioners. In discrete time, the AR(1) process is typically used to model mean-reversion, and it will be described in more details in Chapter 2 as well. 
+The most na\"ive momentum strategies rely on simple time series analysis such as price return over a period of time to decide which asset go long (previous positive return) and which asset go short (previous negative return). Other commonly used momentum signals include simple moving averages (MA), moving averages crossovers (of a short-term MA with a longer term MA), exponential weighted moving averages  (EWMA), as well as more sophisticated techniques leveraging machine learning tools. The key characteristic of momentum strategies is their flexibility and relative low complexity. They can be designed at various time intervals (from minutes to months), make use of cross-sectional indicators, be corrected for seasonal effects, and so on. Chapter~\ref{ch:ch_uvts} on Time Series will provide in-depth coverage of techniques that are commonly used by practitioners. In discrete time, the AR(1) process is typically used to model mean-reversion, and it will be described in more details in Chapter~\ref{ch:ch_uvts} as well. 
 
 
 In continuous time, one well known mean-reverting process is the Ornstein-Uhlenbeck (OU) stochastic process (Uhlenbeck and Ornstein (1930)~\cite{uhlenbeck}). It is described by the following stochastic differential equation:
