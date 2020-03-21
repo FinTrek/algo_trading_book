@@ -9,7 +9,7 @@ The price movement, whether it is due to pure market friction or due to informat
 
 
 % Trades and Quotes Data and their Aggregation
-\section{Trades and Quotes Data and their Aggregation: From Point Processes to Discrete Time Series\label{sec:tradesandquotes}}
+\section{Trades and Quotes Data and Their Aggregation: From Point Processes to Discrete Time Series\label{sec:tradesandquotes}}
 
 In its simplest form, the trading activities through an exchange that opens at 9:30~a.m. and closes at 4~p.m. can be described by a sequence of time stamps (``ticks'') $t_0 < t_1 < \cdots < t_n$ and the ``marks'' $y_i$ at time $t_i$, in which $t_0$ denotes 9:30~a.m. and after and $t_n$ denotes the time of the last trade that occurs before or at 4~p.m. The marks $y_i$ can be price, volume of an order placed on either the buy or sell side of the book and in general can represent the characteristics of the order book at the time of $i$th activity (see Figure~\ref{fig:tradeactline}). The events with the marks associated with the ticks can be described mathematically as a marked point process. But our goal here is to first show how these data points can be aggregated over regularly spaced time intervals and how methods for linear homogeneous time series can be used to analyze the aggregated data. Some tools that are relevant for the analysis of point processes will be presented in Chapter~\ref{ch:ch_advanced}. \label{in:disc_time_unit1} \label{in:level3dat2}
 	\begin{figure}[!ht]
@@ -246,7 +246,7 @@ Of course, a more general class of models is obtained by supposing that a nonsta
 
 
 % Some Descriptive Tools and their Properties
-\section{Some Descriptive Tools and their Properties} 
+\section{Some Descriptive Tools and Their Properties} 
 
 
 Suppose we have a sample realization of $T$ observations $Y_1, Y_2, \ldots, Y_T$ from a stationary process $\{Y_t\}$. We are naturally interested in obtaining estimates of $\mu$, $\gamma(s)$, and $\rho(s)$ from the sample data. First, a natural estimator of $\mu$ is the sample mean $\overline{Y}= (1/T) \sum_{t=1}^T Y_t$. The most common estimator used for $\gamma(s)$ is the sample autocovariance function defined by
